@@ -6,6 +6,8 @@ import onnxruntime as ort
 
 from loadgen.model import Model, ModelFactory, ModelInput, ModelInputSampler
 
+xinput = input
+
 ONNX_TO_NP_TYPE_MAP = {
     "tensor(bool)": bool,
     "tensor(int)": np.int32,
@@ -23,16 +25,17 @@ ONNX_TO_NP_TYPE_MAP = {
 }
 
 
-class ORTModel(Model):
+class XModel(Model):
     def __init__(self, session: ort.InferenceSession):
         assert session is not None
         self.session = session
 
     def predict(self, input: ModelInput):
-        return self.session.run(None, input)
+        output = self.session.run(None, input)
+        return output
 
 
-class ORTModelFactory(ModelFactory):
+class XModelFactory(ModelFactory):
     def __init__(
         self,
         model_path: str,
@@ -40,6 +43,9 @@ class ORTModelFactory(ModelFactory):
         execution_mode="",
         intra_op_threads=0,
         inter_op_threads=0,
+        model_code='',         # Not used here
+        model_cfg={},          # Not used here
+        model_sample_pickle='' # Not used here
     ):
         self.model_path = model_path
         self.execution_provider = execution_provider
@@ -59,11 +65,11 @@ class ORTModelFactory(ModelFactory):
 #            model.SerializeToString(), self.session_options, providers=session_eps
             self.model_path, self.session_options, providers=session_eps
         )
-        return ORTModel(session)
+        return XModel(session)
 
 
-class ORTModelInputSampler(ModelInputSampler):
-    def __init__(self, model_factory: ORTModelFactory):
+class XModelInputSampler(ModelInputSampler):
+    def __init__(self, model_factory: XModelFactory):
         model = model_factory.create()
         input_defs = model.session.get_inputs()
         self.inputs: typing.Dict[str, typing.Tuple[np.dtype, typing.List[int]]] = dict()
