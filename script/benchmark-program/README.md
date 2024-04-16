@@ -12,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *benchmark,program*
 * Output cached? *False*
@@ -30,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -81,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="benchmark,program"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=benchmark,program) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "benchmark program[variations]" `
@@ -125,21 +123,21 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/_cm.json)***
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * set,performance,mode,_performance
        * `if (CM_SET_PERFORMANCE_MODE in ['on', 'yes', 'True', True])`
-       - CM script: [set-performance-mode](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-performance-mode)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/_cm.json)
+       - CM script: [set-performance-mode](https://github.com/mlcommons/cm4mlops/tree/master/script/set-performance-mode)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/_cm.json)
   1. ***Run native script if exists***
-     * [run-ubuntu.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/run-ubuntu.sh)
-     * [run.bat](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/run.bat)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/benchmark-program/_cm.json)
+     * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/run-ubuntu.sh)
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/run.bat)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/_cm.json)
 
 ___
 ### Script output

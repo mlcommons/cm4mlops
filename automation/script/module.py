@@ -3686,7 +3686,7 @@ class CAutomation(Automation):
                                     [ (artifact alias, artifact UID) ] or
                                     [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-          (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+          (repos) (str): list of repositories to search for automations
 
           (output_dir) (str): output directory (../docs by default)
 
@@ -3751,7 +3751,7 @@ class CAutomation(Automation):
                                     [ (artifact alias, artifact UID) ] or
                                     [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-          (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+          (repos) (str): list of repositories to search for automations
 
           (output_dir) (str): output directory (./ by default)
 
@@ -3779,7 +3779,7 @@ class CAutomation(Automation):
                                     [ (artifact alias, artifact UID) ] or
                                     [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-          (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+          (repos) (str): list of repositories to search for automations
 
           (output_dir) (str): output directory (./ by default)
 
