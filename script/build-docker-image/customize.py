@@ -48,7 +48,7 @@ def preprocess(i):
     if env.get("CM_DOCKER_IMAGE_TAG", "") == '':
         env['CM_DOCKER_IMAGE_TAG'] = "latest"
 
-    if env.get("CM_DOCKER_CACHE", "yes") == "no":
+    if env.get("CM_DOCKER_CACHE", "yes") in ["no", "False", False]:
         env["CM_DOCKER_CACHE_ARG"] = " --no-cache"
 
     CMD = ''
