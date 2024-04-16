@@ -89,7 +89,7 @@ def page(st, params, extra):
     elif repo_index == 'zenodo':
         cm_repo = '--url=https://zenodo.org/records/10787459/files/cm-mlops-repo-20240306.zip'
     elif repo_index == 'zip-github':
-        cm_repo = '--url=https://github.com/mlcommons/cm4mlops/archive/refs/tags/r20240416.zip --skip_parent_dir'
+        cm_repo = '--url=https://github.com/mlcommons/cm4mlops/archive/refs/tags/r20240416.zip --skip-zip-parent-dir'
     else:
         cm_repo = 'mlcommons@cm4mlops'
     
