@@ -70,7 +70,8 @@ def page(st, params, extra):
     choices = [
                ('Development GitHub version: mlcommons@cm4mlops', 'dev'),
                ('Stable GitHub version: mlcommons@cm4mlops', 'main'),
-               ('Small and stable ZIP from Zenodo: 20240223', 'zenodo')
+               ('Stable ZIP archive from Zenodo: 20240306', 'zenodo'),
+               ('Stable ZIP archive from GitHub: 20240416', 'zip-github')
               ]
 
     repo = st.selectbox('Select repository with [automation recipes (CM scripts)](https://access.cknowledge.org/playground/?action=scripts):',
@@ -87,6 +88,8 @@ def page(st, params, extra):
         cm_repo = 'mlcommons@cm4mlops --checkout=dev'
     elif repo_index == 'zenodo':
         cm_repo = '--url=https://zenodo.org/records/10787459/files/cm-mlops-repo-20240306.zip'
+    elif repo_index == 'zip-github':
+        cm_repo = '--url=https://github.com/mlcommons/cm4mlops/archive/refs/tags/r20240416.zip --skip_parent_dir'
     else:
         cm_repo = 'mlcommons@cm4mlops'
     
