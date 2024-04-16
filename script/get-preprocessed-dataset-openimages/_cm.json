@@ -1,0 +1,351 @@
+{
+  "alias": "get-preprocessed-dataset-openimages",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "cache": true,
+  "category": "AI/ML datasets",
+  "deps": [
+    {
+      "names": [
+        "python3",
+        "python"
+      ],
+      "tags": "get,python3"
+    },
+    {
+      "names": [
+        "original-dataset"
+      ],
+      "tags": "get,dataset,object-detection,openimages,original"
+    },
+    {
+      "names": [
+        "inference-src"
+      ],
+      "tags": "mlperf,mlcommons,inference,source,src"
+    },
+    {
+      "names": [
+        "pycocotools"
+      ],
+      "tags": "get,generic-python-lib,_pycocotools"
+    },
+    {
+      "tags": "get,generic-python-lib,_opencv-python"
+    },
+    {
+      "tags": "get,generic-python-lib,_pillow"
+    },
+    {
+      "tags": "get,generic-python-lib,_package.ujson"
+    },
+    {
+      "names": [ "numpy" ],
+      "tags": "get,generic-python-lib,_numpy"
+    },
+    {
+      "names": [ "numpy" ],
+      "tags": "get,generic-python-lib,_numpy"
+    }
+  ],
+  "default_env": {
+    "CM_DATASET": "OPENIMAGES",
+    "CM_DATASET_DTYPE": "fp32",
+    "CM_DATASET_INPUT_SQUARE_SIDE": "800",
+    "CM_DATASET_CROP_FACTOR": "100.0",
+    "CM_DATASET_QUANT_SCALE": "1",
+    "CM_DATASET_QUANTIZE": "0",
+    "CM_DATASET_QUANT_OFFSET": "0"
+  },
+  "input_mapping": {
+    "dir": "CM_DATASET_PREPROCESSED_PATH",
+    "threads": "CM_NUM_PREPROCESS_THREADS"
+  },
+  "new_env_keys": [
+    "CM_DATASET_*"
+  ],
+  "tags": [
+    "get",
+    "dataset",
+    "openimages",
+    "open-images",
+    "object-detection",
+    "preprocessed"
+  ],
+  "uid": "9842f1be8cba4c7b",
+  "variations": {
+    "generic-preprocessor": {
+      "group": "preprocessing-source",
+      "deps": [
+        {
+          "tags": "get,generic-python-lib,_torch",
+          "names": [
+            "torch", "pytorch"
+          ]
+        },
+        {
+          "tags": "get,generic-python-lib,_torchvision",
+          "names": [
+            "torchvision"
+          ]
+        }
+      ],
+      "prehook_deps": [
+        {
+          "tags": "get,generic,image-preprocessor"
+        }
+      ],
+      "env": {
+        "CM_DATASET_REFERENCE_PREPROCESSOR": "0"
+      }
+    },
+    "mlcommons-reference-preprocessor": {
+      "group": "preprocessing-source",
+      "default": true,
+      "env": {
+        "CM_DATASET_REFERENCE_PREPROCESSOR": "1"
+      }
+    },
+    "size.#": {
+      "group": "dataset-count",
+      "env": {
+        "CM_DATASET_SIZE": "#"
+      },
+      "ad": {
+        "original-dataset": {
+          "tags": "_size.#"
+        }
+      }
+    },
+    "50": {
+      "group": "dataset-count",
+      "default": true,
+      "env": {
+        "CM_DATASET_SIZE": "50"
+      },
+      "ad": {
+        "original-dataset": {
+          "tags": "_50"
+        }
+      }
+    },
+    "500": {
+      "group": "dataset-count",
+      "env": {
+        "CM_DATASET_SIZE": "500"
+      },
+      "ad": {
+        "original-dataset": {
+          "tags": "_500"
+        }
+      }
+    },
+    "full": {
+      "group": "dataset-count"
+    },
+    "full,validation": {
+      "ad": {
+        "original-dataset": {
+          "tags": "_full"
+        }
+      },
+      "env": {
+        "CM_DATASET_SIZE": "24781"
+      }
+    },
+    "NCHW": {
+      "group": "dataset-layout",
+      "default": true,
+      "env": {
+        "CM_DATASET_DATA_LAYOUT": "NCHW"
+      }
+    },
+    "NHWC": {
+      "group": "dataset-layout",
+      "env": {
+        "CM_DATASET_DATA_LAYOUT": "NHWC"
+      }
+    },
+    "calibration": {
+      "group": "dataset-type",
+      "ad": {
+        "original-dataset": {
+          "tags": "_calibration"
+        }
+      },
+      "default_variations": {
+        "dataset-count": "500"
+      },
+      "env": {
+        "CM_DATASET_PATH": "<<<CM_CALIBRATION_DATASET_PATH>>>",
+        "CM_DATASET_ANNOTATIONS_FILE_PATH": "<<<CM_DATASET_CALIBRATION_ANNOTATIONS_FILE_PATH>>>",
+        "CM_DATASET_TYPE": "calibration"
+      }
+    },
+    "filter-size.#": {
+      "group": "filter-size",
+      "ad": {
+        "original-dataset": {
+          "tags": "_filter-size.#"
+        }
+      }
+    },
+    "filter": {
+      "ad": {
+        "original-dataset": {
+          "tags": "_filter"
+        }
+      }
+    },
+    "filter,calibration": {
+      "env": {
+        "CM_DATASET_CALIBRATION_FILTER": "yes"
+      }
+    },
+    "validation": {
+      "group": "dataset-type",
+      "default": true,
+      "env": {
+        "CM_DATASET_TYPE": "validation"
+      },
+      "ad": {
+        "original-dataset": {
+          "tags": "_validation"
+        }
+      }
+    },
+    "nvidia": {
+      "env": {
+        "CM_PREPROCESSING_BY_NVIDIA": "yes"
+      }
+    },
+    "custom-annotations": {
+      "group": "annotations",
+      "ad": {
+        "original-dataset": {
+          "tags": "_custom-annotations"
+        }
+      }
+    },
+    "default-annotations": {
+      "group": "annotations",
+      "default": true,
+      "ad": {
+        "original-dataset": {
+          "tags": "_default-annotations"
+        }
+      }
+    },
+    "for.retinanet.onnx": {
+      "default_variations": {
+        "preprocessing-source": "generic-preprocessor",
+        "interpolation-method": "inter.linear",
+        "dataset-layout": "NCHW"
+      },
+      "env": {
+        "CM_ML_MODEL_NAME": "retinanet",
+        "CM_DATASET_SUBTRACT_MEANS": "1",
+        "CM_DATASET_GIVEN_CHANNEL_MEANS": "0.485 0.456 0.406",
+        "CM_DATASET_GIVEN_CHANNEL_STDS": "0.229 0.224 0.225",
+        "CM_DATASET_NORMALIZE_DATA": "0",
+        "CM_DATASET_NORMALIZE_LOWER": "0.0",
+        "CM_DATASET_NORMALIZE_UPPER": "1.0",
+        "CM_DATASET_CONVERT_TO_BGR": "0",
+        "CM_DATASET_CROP_FACTOR": "100.0"
+      }
+    },
+    "for.retinanet.onnx,fp32": {
+      "env": {
+      }
+    },
+    "for.retinanet.onnx,uint8": {
+      "env": {
+        "CM_DATASET_QUANT_SCALE": "0.0186584499",
+        "CM_DATASET_QUANT_OFFSET": "114"
+      }
+    },
+    "quant-scale.#": {
+      "const": {
+        "CM_DATASET_QUANT_SCALE": "#"
+      }
+    },
+    "quant-offset.#": {
+      "const": {
+        "CM_DATASET_QUANT_OFFSET": "#"
+      }
+    },
+    "inter.linear": {
+      "group": "interpolation-method",
+      "env": {
+        "CM_DATASET_INTERPOLATION_METHOD": "INTER_LINEAR"
+      }
+    },
+    "inter.area": {
+      "group": "interpolation-method",
+      "env": {
+        "CM_DATASET_INTERPOLATION_METHOD": "INTER_AREA"
+      }
+    },
+    "rgb8": {
+      "group": "extension",
+      "env": {
+        "CM_DATASET_PREPROCESSED_EXTENSION": "rgb8"
+      }
+    },
+    "rgb32": {
+      "group": "extension",
+      "env": {
+        "CM_DATASET_PREPROCESSED_EXTENSION": "rgb32"
+      }
+    },
+    "npy": {
+      "group": "extension",
+      "env": {
+        "CM_DATASET_PREPROCESSED_EXTENSION": "npy"
+      }
+    },
+    "raw": {
+      "group": "extension",
+      "env": {
+        "CM_DATASET_PREPROCESSED_EXTENSION": "raw"
+      }
+    },
+    "fp32": {
+      "group": "dataset-precision",
+      "default_variations": {
+        "extension": "raw"
+      },
+      "default": true,
+      "env": {
+        "CM_DATASET_DTYPE": "fp32",
+        "CM_DATASET_INPUT_DTYPE": "fp32",
+        "CM_DATASET_QUANTIZE": "0",
+        "CM_DATASET_CONVERT_TO_UNSIGNED": "0"
+      }
+    },
+    "uint8": {
+      "group": "dataset-precision",
+      "default_variations": {
+        "extension": "rgb8"
+      },
+      "env": {
+        "CM_DATASET_DTYPE": "uint8",
+        "CM_DATASET_INPUT_DTYPE": "fp32",
+        "CM_DATASET_QUANTIZE": "1",
+        "CM_DATASET_CONVERT_TO_UNSIGNED": "1"
+      }
+    },
+    "int8": {
+      "group": "dataset-precision",
+      "default_variations": {
+        "extension": "rgb8"
+      },
+      "env": {
+        "CM_DATASET_DTYPE": "int8",
+        "CM_DATASET_INPUT_DTYPE": "fp32",
+        "CM_DATASET_QUANTIZE": "1",
+        "CM_DATASET_CONVERT_TO_UNSIGNED": "0"
+      }
+    }
+  }
+}

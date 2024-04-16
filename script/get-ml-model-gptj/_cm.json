@@ -1,0 +1,293 @@
+{
+  "alias": "get-ml-model-gptj",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "cache": true,
+  "category": "AI/ML models",
+  "env": {
+    "CM_ML_MODEL": "GPTJ",
+    "CM_ML_MODEL_DATASET": "cnndm",
+    "CM_ML_MODEL_WEIGHT_TRANSFORMATIONS": "no"
+  },
+  "input_mapping": {
+    "checkpoint": "GPTJ_CHECKPOINT_PATH",
+    "download_path": "CM_DOWNLOAD_PATH",
+    "to": "CM_DOWNLOAD_PATH"
+  },
+  "new_env_keys": [
+    "CM_ML_MODEL_*",
+    "GPTJ_CHECKPOINT_PATH"
+  ],
+  "prehook_deps": [
+    {
+      "env": {
+        "CM_DOWNLOAD_FINAL_ENV_NAME": "GPTJ_CHECKPOINT_PATH",
+        "CM_EXTRACT_FINAL_ENV_NAME": "GPTJ_CHECKPOINT_PATH",
+        "CM_EXTRACT_TO_FOLDER": "gpt-j"
+      },
+      "tags": "download-and-extract",
+      "update_tags_from_env_with_prefix": {
+        "_url.": [
+          "CM_DOWNLOAD_URL"
+        ]
+      },
+      "enable_if_env": {
+        "CM_TMP_REQUIRE_DOWNLOAD": [ "yes" ]
+      },
+      "force_cache": true,
+      "names": [
+        "dae"
+      ],
+      "extra_cache_tags": "gptj,model"
+    }
+  ],
+  "tags": [
+    "get",
+    "raw",
+    "ml-model",
+    "gptj",
+    "gpt-j",
+    "large-language-model"
+  ],
+  "uid": "a41166210f294fbf",
+  "variations": {
+    "batch_size.#": {
+      "env": {
+        "CM_ML_MODEL_BATCH_SIZE": "#"
+      }
+    },
+    "fp32": {
+      "env": {
+        "CM_ML_MODEL_INPUT_DATA_TYPES": "fp32",
+        "CM_ML_MODEL_PRECISION": "fp32",
+        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "fp32"
+      },
+      "group": "precision"
+    },
+    "int8": {
+      "env": {
+        "CM_ML_MODEL_INPUT_DATA_TYPES": "int8",
+        "CM_ML_MODEL_PRECISION": "int8",
+        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "int8"
+      },
+      "group": "precision"
+    },
+    "pytorch": {
+      "env": {
+        "CM_ML_MODEL_DATA_LAYOUT": "NCHW",
+        "CM_ML_MODEL_FRAMEWORK": "pytorch",
+        "CM_ML_STARTING_WEIGHTS_FILENAME": "<<<CM_PACKAGE_URL>>>"
+      },
+      "group": "framework",
+      "default": true
+    },
+    "pytorch,fp32": {
+      "env": {
+        "CM_DOWNLOAD_EXTRA_OPTIONS": " --output-document checkpoint.zip",
+        "CM_UNZIP": "yes",
+        "CM_DOWNLOAD_CHECKSUM_NOT_USED": "e677e28aaf03da84584bb3073b7ee315",
+        "CM_PACKAGE_URL": "https://cloud.mlcommons.org/index.php/s/QAZ2oM94MkFtbQx/download",
+        "CM_RCLONE_CONFIG_CMD": "rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com",
+        "CM_RCLONE_URL": "mlc-inference:mlcommons-inference-wg-public/gpt-j"
+      },
+      "required_disk_space": 22700
+    },
+    "pytorch,fp32,wget": {
+      "add_deps_recursive": {
+        "dae": {
+          "tags": "_extract"
+        }
+      }
+    },
+    "saxml": {
+      "group": "framework"
+    },
+    "saxml,fp32": {
+      "env": {
+        "CM_TMP_MODEL_SAXML": "fp32"
+      },
+      "new_env_keys": [
+        "GPTJ_SAXML_CHECKPOINT_PATH"
+      ],
+      "deps": [
+        {
+          "tags": "get,ml-model,gptj,_pytorch,_fp32"
+        },
+        {
+          "tags": "get,python3",
+          "names": [
+            "python",
+            "python3"
+          ]
+        },
+        {
+          "tags": "get,generic-python-lib,_package.jax[cpu]"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.paxml"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.praxis"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.transformers"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.accelerate"
+        }
+      ]
+    },
+    "saxml,int8": {
+      "env": {
+        "CM_TMP_MODEL_SAXML": "int8"
+      },
+      "deps": [
+        {
+          "tags": "get,ml-model,gptj,_saxml,_fp32"
+        },
+        {
+          "tags": "get,python3",
+          "names": [
+            "python",
+            "python3"
+          ],
+          "version": "3.10.0"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.praxis"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.apache-beam"
+        },
+        {
+          "tags": "get,git,repo,_repo.https://github.com/google/saxml",
+          "extra_cache_tags": "saxml",
+          "env": {
+            "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_SAXML_REPO_PATH"
+          },
+          "names": [
+            "saxml"
+          ]
+        }
+      ]
+    },
+    "int4": {
+      "env": {
+        "CM_ML_MODEL_INPUT_DATA_TYPES": "int4",
+        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "int4"
+      },
+      "group": "precision"
+    },
+    "uint8": {
+      "env": {
+        "CM_ML_MODEL_INPUT_DATA_TYPES": "uint8",
+        "CM_ML_MODEL_PRECISION": "uint8",
+        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "uint8"
+      },
+      "group": "precision"
+    },
+    "mlcommons": {
+      "default_variations": {
+        "precision": "fp32"
+      },
+      "group": "model-provider",
+      "default": true
+    },
+    "intel": {
+      "default_variations": {
+        "framework": "pytorch"
+      },
+      "group": "model-provider"
+    },
+    "pytorch,intel": {
+      "default_variations": {
+        "precision": "int8"
+      },
+      "adr": {
+        "conda-package": {
+          "tags": "_name.gptj-pt"
+        }
+      },
+      "deps": [
+        {
+          "tags": "get,mlperf,inference,results",
+          "version": "v3.1"
+        },
+        {
+          "tags": "get,ml-model,gpt-j,_fp32,_pytorch",
+          "env": {
+            "CM_GPTJ_INTEL_MODEL": ""
+          },
+          "force_new_env_keys": [
+            "GPTJ_CHECKPOINT_PATH"
+          ]
+        },
+        {
+          "tags": "get,conda,_name.gptj-pt"
+        },
+        {
+          "tags": "get,python,_conda.gptj-pt"
+        },
+        {
+          "names": [
+            "conda-package",
+            "intel-openmp"
+          ],
+          "tags": "get,generic,conda-package,_package.intel-openmp,_source.intel",
+          "version": "2023.1.0"
+        },
+        {
+          "tags": "get,generic,conda-package,_package.jemalloc,_source.conda-forge",
+          "names": [
+            "conda-package",
+            "jemalloc"
+          ]
+        },
+        {
+          "tags": "install,ipex,from.src,_for-intel-mlperf-inference-v3.1-gptj"
+        },
+        {
+          "tags": "get,dataset,cnndm,_calibration"
+        }
+      ],
+      "env": {
+        "CM_GPTJ_INTEL_MODEL": "yes"
+      }
+    },
+    "wget": {
+      "group": "download-tool",
+      "add_deps_recursive": {
+        "dae": {
+          "tags": "_wget"
+        }
+      },
+      "env": {
+        "CM_DOWNLOAD_URL": "<<<CM_PACKAGE_URL>>>",
+        "CM_DOWNLOAD_FILENAME": "checkpoint.zip"
+      }
+    },
+    "rclone": {
+      "group": "download-tool",
+      "default": true,
+      "add_deps_recursive": {
+        "dae": {
+          "tags": "_rclone"
+        }
+      },
+      "env": {
+        "CM_DOWNLOAD_FILENAME": "checkpoint",
+        "CM_DOWNLOAD_URL": "<<<CM_RCLONE_URL>>>"
+      }
+    },
+    "pytorch,int8,intel": {
+    },
+    "pytorch,int4,intel": {
+    }
+  },
+  "print_env_at_the_end" : {
+    "CM_ML_MODEL_FILE_WITH_PATH": "Path to the ML model"
+  },
+  "docker": {
+    "run": false
+  }
+}

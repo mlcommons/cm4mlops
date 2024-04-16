@@ -1,0 +1,48 @@
+{
+  "alias": "get-onnxruntime-prebuilt",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "category": "AI/ML frameworks",
+  "cache": true,
+  "clean_files": [],
+  "default_version": "1.16.3",
+  "deps": [
+    {
+      "tags": "detect,os"
+    }
+  ],
+  "new_env_keys": [
+    "CM_ONNXRUNTIME_LIB_PATH",
+    "CM_ONNXRUNTIME_INCLUDE_PATH",
+    "+PATH",
+    "+C_INCLUDE_PATH",
+    "+CPLUS_INCLUDE_PATH",
+    "+LD_LIBRARY_PATH",
+    "+DYLD_FALLBACK_LIBRARY_PATH"
+  ],
+  "tags": [
+    "install",
+    "onnxruntime",
+    "get",
+    "prebuilt",
+    "lib",
+    "lang-c",
+    "lang-cpp"
+  ],
+  "uid": "be02c84ff57c4244",
+  "variations": {
+    "cpu": {
+      "group": "device",
+      "default": true,
+      "env": {
+        "CM_ONNXRUNTIME_DEVICE": ""
+      }
+    },
+    "cuda": {
+      "group": "device",
+      "env": {
+        "CM_ONNXRUNTIME_DEVICE": "gpu"
+      }
+    }
+  }
+}

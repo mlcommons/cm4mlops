@@ -1,0 +1,124 @@
+{
+  "alias": "get-git-repo",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "cache": true,
+  "category": "DevOps automation",
+  "default_env": {
+    "CM_GIT_DEPTH": "--depth 4",
+    "CM_GIT_CHECKOUT_FOLDER": "repo",
+    "CM_GIT_PATCH": "no",
+    "CM_GIT_RECURSE_SUBMODULES": " --recurse-submodules",
+    "CM_GIT_URL": "https://github.com/mlcommons/ck.git"
+  },
+  "input_mapping": {
+    "branch": "CM_GIT_CHECKOUT",
+    "depth": "CM_GIT_DEPTH",
+    "folder": "CM_GIT_CHECKOUT_FOLDER",
+    "patch": "CM_GIT_PATCH",
+    "update": "CM_GIT_REPO_PULL",
+    "env_key": "CM_GIT_ENV_KEY",
+    "submodules": "CM_GIT_RECURSE_SUBMODULES"
+  },
+  "deps": [
+    {
+      "tags": "detect,os"
+    }
+  ],
+  "post_deps": [
+    {
+      "tags": "pull,git,repo",
+      "names": [ "pull-git-repo" ],
+      "dynamic": true,
+      "enable_if_env": {
+        "CM_GIT_REPO_PULL": [ "yes", "True" ]
+      },
+      "force_env_keys": [
+        "CM_GIT_CHECKOUT_PATH"
+      ]
+    }
+  ],
+  "new_env_keys": [
+    "CM_GIT_CHECKOUT_PATH",
+    "CM_GIT_REPO_*",
+    "<<<CM_GIT_CHECKOUT_PATH_ENV_NAME>>>"
+  ],
+  "tags": [
+    "get",
+    "git",
+    "repo",
+    "repository",
+    "clone"
+  ],
+  "uid": "ed603e7292974f10",
+  "variations": {
+    "full-history": {
+      "group": "git-history",
+      "env": {
+        "CM_GIT_DEPTH": ""
+      }
+    },
+    "no-recurse-submodules": {
+      "env": {
+        "CM_GIT_RECURSE_SUBMODULES": ""
+      }
+    },
+    "patch": {
+      "env": {
+        "CM_GIT_PATCH": "yes"
+      }
+    },
+    "short-history": {
+      "group": "git-history",
+      "default": true,
+      "env": {
+        "CM_GIT_DEPTH": "--depth 5"
+      }
+    },
+    "branch.#": {
+      "group": "checkout",
+      "env": {
+        "CM_GIT_BRANCH": "#"
+      }
+    },
+    "sha.#": {
+      "group": "checkout",
+      "env": {
+        "CM_GIT_SHA": "#"
+      },
+      "default_variations": {
+        "git-history": "full-history"
+      }
+    },
+    "tag.#": {
+      "group": "checkout",
+      "env": {
+        "CM_GIT_CHECKOUT_TAG": "#"
+      }
+    },
+    "submodules.#": {
+      "env": {
+        "CM_GIT_SUBMODULES": "#"
+      }
+    },
+    "repo.#": {
+      "group": "repo",
+      "env": {
+        "CM_GIT_URL": "#"
+      }
+    },
+    "lfs": {
+      "env": {
+        "CM_GIT_REPO_NEEDS_LFS": "yes"
+      },
+      "deps": [
+        {
+          "tags": "get,generic,sys-util,_git-lfs"
+        }
+      ]
+    }
+  },
+  "print_env_at_the_end" : {
+    "CM_GIT_CHECKOUT_PATH": "CM cache path to the Git repo"
+  }
+}

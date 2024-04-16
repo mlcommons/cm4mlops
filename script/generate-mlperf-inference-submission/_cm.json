@@ -1,0 +1,124 @@
+{
+  "alias": "generate-mlperf-inference-submission",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "category": "MLPerf benchmark support",
+  "cache": false,
+  "deps": [
+    {
+      "names": [
+        "python",
+        "python3"
+      ],
+      "tags": "get,python3"
+    },
+    {
+      "names": [
+        "inference-src"
+      ],
+      "tags": "mlcommons,inference,src"
+    },
+    {
+      "tags": "get,sut,system-description"
+    },
+    {
+      "tags": "install,pip-package,for-cmind-python,_package.tabulate"
+    },
+    {
+      "tags": "get,mlperf,inference,utils"
+    },
+    {
+      "tags": "get,mlperf,results,dir",
+      "names": [
+        "get-mlperf-results-dir"
+      ],
+      "skip_if_env": {
+        "CM_MLPERF_INFERENCE_RESULTS_DIR_": [ "on" ]
+      }
+    },
+    {
+      "tags": "get,mlperf,submission,dir",
+      "names": [
+        "get-mlperf-submission-dir"
+      ],
+      "skip_if_env": {
+        "CM_MLPERF_INFERENCE_SUBMISSION_DIR": [ "on" ]
+      }
+    }
+  ],
+  "input_mapping": {
+    "device": "CM_MLPERF_DEVICE",
+    "results_dir": "CM_MLPERF_INFERENCE_RESULTS_DIR_",
+    "run_checker": "CM_RUN_SUBMISSION_CHECKER",
+    "run_style": "CM_MLPERF_RUN_STYLE",
+    "skip_truncation": "CM_SKIP_TRUNCATE_ACCURACY",
+    "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
+    "clean": "CM_MLPERF_CLEAN_SUBMISSION_DIR",
+    "hw_name": "CM_HW_NAME",
+    "sw_notes_extra": "CM_MLPERF_SUT_SW_NOTES_EXTRA",
+    "hw_notes_extra": "CM_MLPERF_SUT_HW_NOTES_EXTRA",
+    "duplicate": "CM_MLPERF_DUPLICATE_SCENARIO_RESULTS",
+    "dashboard": "CM_MLPERF_DASHBOARD",
+    "dashboard_wb_project": "CM_MLPERF_DASHBOARD_WANDB_PROJECT",
+    "division": "CM_MLPERF_SUBMISSION_DIVISION",
+    "category": "CM_MLPERF_SUBMISSION_CATEGORY",
+    "analyzer_settings_file": "CM_MLPERF_POWER_ANALYZER_SETTINGS_FILE_PATH",
+    "power_settings_file": "CM_MLPERF_POWER_SETTINGS_FILE_PATH",
+    "infer_scenario_results": "CM_MLPERF_DUPLICATE_SCENARIO_RESULTS",
+    "submitter": "CM_MLPERF_SUBMITTER",
+    "preprocess": "CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR",
+    "preprocess_submission": "CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR",
+    "tar": "CM_TAR_SUBMISSION_DIR"
+  },
+  "default_env": {
+    "CM_RUN_MLPERF_ACCURACY": "on",
+    "CM_MLPERF_RUN_STYLE": "valid"
+  },
+  "post_deps": [
+    {
+      "enable_if_env": {
+        "CM_RUN_MLPERF_ACCURACY": [
+          "on"
+        ]
+      },
+      "skip_if_env": {
+        "CM_SKIP_TRUNCATE_ACCURACY": [
+          "yes"
+        ]
+      },
+      "tags": "accuracy,truncate,mlc"
+    },
+    {
+      "enable_if_env": {
+        "CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR": [
+          "on", "True", "yes", true
+        ]
+      },
+      "tags": "preprocess,mlperf,submission"
+    },
+    {
+      "enable_if_env": {
+        "CM_RUN_SUBMISSION_CHECKER": [
+          "yes"
+        ]
+      },
+      "tags": "submission,inference,checker,mlc",
+      "names": [
+        "mlperf-inference-submission-checker",
+        "submission-checker"
+      ]
+    }
+  ],
+  "tags": [
+    "generate",
+    "submission",
+    "mlperf",
+    "mlperf-inference",
+    "inference",
+    "mlcommons",
+    "inference-submission",
+    "mlperf-inference-submission",
+    "mlcommons-inference-submission"
+  ],
+  "uid": "5f8ab2d0b5874d53"
+}

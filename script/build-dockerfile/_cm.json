@@ -1,0 +1,69 @@
+{
+  "alias": "build-dockerfile",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "category": "Docker automation",
+  "cache": false,
+  "input_mapping": {
+    "extra_sys_deps": "CM_DOCKER_EXTRA_SYS_DEPS",
+    "build": "CM_BUILD_DOCKER_IMAGE",
+    "cache": "CM_DOCKER_CACHE",
+    "cm_repo": "CM_MLOPS_REPO",
+    "cm_repo_flags": "CM_DOCKER_ADD_FLAG_TO_CM_MLOPS_REPO",
+    "cm_repos": "CM_DOCKER_EXTRA_CM_REPOS",
+    "docker_os": "CM_DOCKER_OS",
+    "docker_os_version": "CM_DOCKER_OS_VERSION",
+    "docker_base_image": "CM_DOCKER_IMAGE_BASE",
+    "fake_run_option": "CM_DOCKER_FAKE_RUN_OPTION",
+    "file_path": "CM_DOCKERFILE_WITH_PATH",
+    "gh_token": "CM_GH_TOKEN",
+    "fake_docker_deps": "CM_DOCKER_FAKE_DEPS",
+    "image_repo": "CM_DOCKER_IMAGE_REPO",
+    "image_tag": "CM_DOCKER_IMAGE_TAG",
+    "real_run": "CM_REAL_RUN",
+    "run_cmd": "CM_DOCKER_RUN_CMD",
+    "script_tags": "CM_DOCKER_RUN_SCRIPT_TAGS",
+    "comments": "CM_DOCKER_RUN_COMMENTS",
+    "run_cmd_extra": "CM_DOCKER_RUN_CMD_EXTRA",
+    "pre_run_cmds": "CM_DOCKER_PRE_RUN_COMMANDS",
+    "post_run_cmds": "CM_DOCKER_POST_RUN_COMMANDS",
+    "post_file": "DOCKER_IMAGE_POST_FILE",
+    "copy_files": "CM_DOCKER_COPY_FILES",
+    "pip_extra_flags": "CM_DOCKER_PIP_INSTALL_EXTRA_FLAGS",
+    "package_manager_update_cmd": "CM_PACKAGE_MANAGER_UPDATE_CMD"
+  },
+  "default_env": {
+    "CM_DOCKER_BUILD_SLIM": "no",
+    "CM_DOCKER_OS": "ubuntu",
+    "CM_DOCKER_IMAGE_EOL": "\n"
+  },
+  "new_env_keys": [
+    "CM_DOCKERFILE_*"
+  ],
+  "post_deps": [
+    {
+      "enable_if_env": {
+        "CM_BUILD_DOCKER_IMAGE": [
+          "yes",
+          "1"
+        ]
+      },
+      "names": [
+        "build-docker-image"
+      ],
+      "tags": "build,docker,image"
+    }
+  ],
+  "tags": [
+    "build",
+    "dockerfile"
+  ],
+  "uid": "e66a7483230d4641",
+  "variations": {
+    "slim": {
+      "env": {
+        "CM_DOCKER_BUILD_SLIM": "yes"
+      }
+    }
+  }
+}
