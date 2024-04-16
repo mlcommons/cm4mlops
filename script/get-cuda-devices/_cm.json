@@ -1,0 +1,36 @@
+{
+  "alias": "get-cuda-devices",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "can_force_cache": true,
+  "cache": false,
+  "category": "CUDA automation",
+  "clean_files": [
+    "tmp-run.out"
+  ],
+  "new_env_keys": [
+    "CM_CUDA_DEVICE_*"
+  ],
+  "new_state_keys": [
+    "cm_cuda_device_prop"
+  ],
+  "deps": [
+    {
+      "names": [
+        "cuda"
+      ],
+      "tags": "get,cuda,_toolkit"
+    }
+  ],
+  "print_files_if_script_error": [
+    "tmp-run.out"
+  ],
+  "tags": [
+    "get",
+    "cuda-devices"
+  ],
+  "docker": {
+    "run": false
+  },
+  "uid": "7a3ede4d3558427a"
+}

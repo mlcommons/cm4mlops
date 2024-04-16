@@ -1,0 +1,150 @@
+{
+  "alias": "get-preprocessed-dataset-criteo",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "category": "AI/ML datasets",
+  "cache": true,
+  "deps": [
+    {
+      "names": [
+        "python3",
+        "python"
+      ],
+      "tags": "get,python3"
+    },
+    {
+      "names": [
+        "original-dataset",
+        "criteo-dataset"
+      ],
+      "tags": "get,dataset,criteo,original",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
+    },
+    {
+      "names": [
+        "dlrm-src"
+      ],
+      "tags": "get,dlrm,src"
+    },
+    {
+      "names": [
+        "inference-src"
+      ],
+      "tags": "mlperf,mlcommons,inference,source,src"
+    },
+    {
+      "tags": "get,generic-python-lib,_scikit-learn"
+    },
+    {
+      "tags": "get,generic-python-lib,_torch"
+    },
+    {
+      "tags": "get,generic-python-lib,_opencv-python"
+    },
+    {
+      "tags": "get,generic-python-lib,_decorator"
+    },
+    {
+      "tags": "get,generic-python-lib,_psutil"
+    },
+    {
+      "tags": "get,generic-python-lib,_onnx"
+    },
+    {
+      "tags": "get,generic-python-lib,_tqdm"
+    },
+    {
+      "tags": "get,generic-python-lib,_mlperf_logging"
+    }
+  ],
+  "input_mapping": {
+    "dir": "CM_DATASET_PREPROCESSED_PATH",
+    "output_dir": "CM_DATASET_PREPROCESSED_OUTPUT_PATH",
+    "threads": "CM_NUM_PREPROCESS_THREADS"
+  },
+  "new_env_keys": [
+    "CM_DATASET_*"
+  ],
+  "tags": [
+    "get",
+    "dataset",
+    "criteo",
+    "recommendation",
+    "dlrm",
+    "preprocessed"
+  ],
+  "uid": "afa59956272a4ba4",
+  "variations": {
+    "1": {
+      "env": {
+        "CM_DATASET_SIZE": "1"
+      }
+    },
+    "50": {
+      "env": {
+        "CM_DATASET_SIZE": "50"
+      }
+    },
+    "full": {
+      "env": {
+      },
+      "add_deps_recursive": {
+        "original-dataset": {
+          "tags": "-_fake"
+        }
+      }
+    },
+    "validation": {
+      "add_deps": {
+        "original-dataset": {
+          "tags": "_validation"
+        }
+      }
+    },
+    "fake": {
+      "add_deps_recursive": {
+        "original-dataset": {
+          "tags": "_fake"
+        }
+      },
+      "env": {
+        "CM_CRITEO_FAKE": "yes"
+      }
+    },
+    "multihot": {
+      "group": "type",
+      "default": true,
+      "env": {
+        "CM_DATASET_CRITEO_MULTIHOT": "yes"
+      },
+      "deps": [
+        {
+          "tags": "get,mlperf,training,src",
+          "names": [
+            "mlperf-training",
+            "training-src"
+          ]
+        },
+        {
+          "tags": "get,generic-python-lib,_package.typing_inspect"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.iopath"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.fbgemm_gpu"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.torchrec"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.pyre_extensions"
+        }
+      ]
+    }
+  }
+}

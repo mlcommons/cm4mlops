@@ -1,0 +1,93 @@
+{
+  "alias": "install-python-src",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "category": "Python automation",
+  "cache": true,
+  "default_version": "3.10.13",
+  "deps": [
+    {
+      "tags": "detect,os"
+    },
+    {
+      "tags": "detect,cpu"
+    }
+  ],
+  "default_env": {
+    "CM_ENABLE_SSL": "no",
+    "CM_CUSTOM_SSL": "no",
+    "CM_SHARED_BUILD": "no",
+    "CM_PYTHON_OPTIMIZATION_FLAG": "",
+    "CM_PYTHON_LTO_FLAG": "",
+    "CM_WGET_URL": "https://www.python.org/ftp/python/[PYTHON_VERSION]/Python-[PYTHON_VERSION].tgz"
+  },
+  "new_env_keys": [
+    "CM_PYTHON_INSTALL_PATH",
+    "CM_PYTHON_BIN_WITH_PATH",
+    "+PATH",
+    "+LD_LIBRARY_PATH",
+    "+C_INCLUDE_PATH"
+  ],
+  "post_deps": [
+    {
+      "names": [
+        "python",
+        "python3"
+      ],
+      "inherit_variation_tags": "True",
+      "reuse_version": true,
+      "skip_if_env": {
+        "CM_REQUIRE_INSTALL": [
+          "yes"
+        ]
+      },
+      "tags": "get,python3"
+    }
+  ],
+  "tags": [
+    "install",
+    "src",
+    "python",
+    "python3",
+    "src-python3",
+    "src-python"
+  ],
+  "uid": "12d3a608afe14a1e",
+  "variations": {
+    "shared": {
+      "env": {
+        "CM_PYTHON_INSTALL_CACHE_TAGS": "shared",
+        "CM_SHARED_BUILD": "yes"
+      }
+    },
+    "with-ssl": {
+      "env": {
+        "CM_ENABLE_SSL": "yes",
+        "CM_PYTHON_INSTALL_CACHE_TAGS": "with-ssl"
+      }
+    },
+    "with-custom-ssl": {
+      "deps": [
+        {
+          "tags": "get,openssl"
+        }
+      ],
+      "env": {
+        "CM_CUSTOM_SSL": "yes",
+        "CM_PYTHON_INSTALL_CACHE_TAGS": "with-custom-ssl"
+      }
+    },
+    "optimized": {
+      "env": {
+        "CM_PYTHON_OPTIMIZATION_FLAG": " --enable-optimizations",
+        "CM_PYTHON_INSTALL_CACHE_TAGS": "optimized"
+      }
+    },
+    "lto": {
+      "env": {
+        "CM_PYTHON_LTO_FLAG": " --lto",
+        "CM_PYTHON_INSTALL_CACHE_TAGS": "with-lto"
+      }
+    }
+  }
+}

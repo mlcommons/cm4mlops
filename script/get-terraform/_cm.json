@@ -1,0 +1,29 @@
+{
+  "alias": "get-terraform",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "cache": true,
+  "clean_files": [],
+  "category": "Cloud automation",
+  "new_env_keys": [
+    "CM_TERRAFORM_*",
+    "+PATH"
+  ],
+  "prehook_deps": [
+    {
+      "enable_if_env": {
+        "CM_REQUIRE_INSTALL": [
+          "yes"
+        ]
+      },
+      "reuse_version": true,
+      "tags": "install,terraform"
+    }
+  ],
+  "tags": [
+    "get",
+    "terraform",
+    "get-terraform"
+  ],
+  "uid": "66b33c38a4d7461e"
+}

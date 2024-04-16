@@ -1,0 +1,38 @@
+{
+  "alias": "install-cmake-prebuilt",
+  "category": "Detection or installation of tools and artifacts",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "cache": true,
+  "default_version": "3.28.3",
+  "new_env_keys": [
+    "CM_CMAKE_*",
+    "CM_GET_DEPENDENT_CACHED_PATH",
+    "+PATH",
+    "+LD_LIBRARY_PATH",
+    "+C_INCLUDE_PATH"
+  ],
+  "deps": [
+    {
+      "tags": "detect,os"
+    }
+  ],
+  "post_deps": [
+    {
+      "skip_if_env": {
+        "CM_REQUIRE_INSTALL": [
+          "yes"
+        ]
+      },
+      "tags": "get,cmake"
+    }
+  ],
+  "tags": [
+    "install",
+    "prebuilt",
+    "cmake",
+    "prebuilt-cmake",
+    "install-prebuilt-cmake"
+  ],
+  "uid": "5a39ef05992b4103"
+}

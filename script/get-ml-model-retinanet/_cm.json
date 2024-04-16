@@ -1,0 +1,176 @@
+{
+  "alias": "get-ml-model-retinanet",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "category": "AI/ML models",
+  "cache": true,
+  "env": {
+    "CM_ML_MODEL": "retinanet",
+    "CM_ML_MODEL_DATASET": "open-images",
+    "CM_ML_MODEL_IMAGE_HEIGHT": "800",
+    "CM_ML_MODEL_IMAGE_WIDTH": "800",
+    "CM_ML_MODEL_NORMALIZE_DATA": "yes",
+    "CM_ML_MODEL_RETRAINING": "no",
+    "CM_ML_MODEL_SUBTRACT_MEANS": "yes",
+    "CM_ML_MODEL_WEIGHT_TRANSFORMATIONS": "no"
+  },
+  "new_env_keys": [
+    "CM_ML_MODEL_*",
+    "<<<CM_ENV_NAME_ML_MODEL_FILE>>>"
+  ],
+  "tags": [
+    "get",
+    "ml-model",
+    "raw",
+    "resnext50",
+    "retinanet",
+    "object-detection"
+  ],
+  "uid": "427bc5665e4541c2",
+  "prehook_deps": [
+    {
+      "tags": "download-and-extract",
+      "env": {
+        "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_FILE>>>",
+        "CM_DOWNLOAD_FINAL_ENV_NAME":  "CM_ML_MODEL_FILE_WITH_PATH",
+        "CM_EXTRACT_FINAL_ENV_NAME":  "CM_ML_MODEL_FILE_WITH_PATH"
+      },
+      "update_tags_from_env_with_prefix": {
+        "_url.": [ "CM_PACKAGE_URL" ]
+      },
+      "names": [
+        "dae"
+      ],
+      "skip_if_env": {
+        "CM_TMP_ML_MODEL_RETINANET_NO_NMS": [
+          "yes"
+        ]
+      }
+    }
+  ],
+  "variations": {
+    "fp32": {
+      "group": "precision",
+      "default": true,
+      "env": {
+        "CM_ML_MODEL_INPUT_DATA_TYPES": "fp32",
+        "CM_ML_MODEL_PRECISION": "fp32",
+        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "fp32"
+      }
+    },
+    "onnx": {
+      "group": "framework",
+      "default": true,
+      "env": {
+        "CM_ML_MODEL_DATA_LAYOUT": "NCHW",
+        "CM_ML_MODEL_FRAMEWORK": "onnx"
+      }
+    },
+    "pytorch": {
+      "group": "framework",
+      "env": {
+        "CM_ML_MODEL_DATA_LAYOUT": "NCHW",
+        "CM_ML_MODEL_FRAMEWORK": "pytorch"
+      }
+    },
+    "onnx,fp32": {
+      "env": {
+        "CM_PACKAGE_URL": "https://zenodo.org/record/6617879/files/resnext50_32x4d_fpn.onnx",
+        "CM_DOWNLOAD_CHECKSUM": "4544f4e56e0a4684215831cc937ea45c",
+        "CM_ML_MODEL_ACCURACY": "0.3757"
+      },
+      "required_disk_space": 150,
+      "warning":"This model is downloaded from Zenodo.org"
+    },
+    "pytorch,fp32": {
+      "env": {
+        "CM_PACKAGE_URL": "https://zenodo.org/record/6617981/files/resnext50_32x4d_fpn.pth",
+        "CM_ML_MODEL_ACCURACY": "0.3755"
+      }
+
+    },
+    "weights": {
+      "env": {
+        "CM_MODEL_WEIGHTS_FILE": "yes"
+      }
+    },
+    "pytorch,fp32,weights": {
+      "env": {
+        "CM_PACKAGE_URL": "https://zenodo.org/record/6605272/files/retinanet_model_10.zip?download=1",
+        "CM_UNZIP": "yes",
+        "CM_ML_MODEL_FILE": "retinanet_model_10.pth",
+        "CM_ML_MODEL_ACCURACY": "0.3755"
+      },
+      "add_deps_recursive": {
+        "dae": {
+          "tags": "_extract"
+        }
+      }
+    },
+    "no-nms": {
+      "env": {
+        "CM_TMP_ML_MODEL_RETINANET_NO_NMS": "yes",
+        "CM_ML_MODEL_RETINANET_NO_NMS": "yes",
+        "CM_QAIC_PRINT_NODE_PRECISION_INFO": "yes"
+      }
+    },
+    "onnx,no-nms": {
+      "env": {
+      },
+      "deps": [
+        {
+          "tags": "get,python3",
+          "names": [
+            "python, python3"
+          ]
+        },
+        {
+          "tags": "get,generic-python-lib,_package.onnx"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.onnxsim"
+        },
+        {
+          "tags": "download,file,_url.https://raw.githubusercontent.com/arjunsuresh/ck-qaic/main/package/model-onnx-mlperf-retinanet-no-nms/remove-nms-and-extract-priors.patch",
+          "extra_cache_tags": "retinanet,training,patch,file",
+          "force_cache": true,
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_RETINANET_NO_NMS_PATCH_FILE_PATH"
+          }
+        },
+        {
+          "tags": "get,git,repo,_repo.https://github.com/mlcommons/training.git,_patch",
+          "extra_cache_tags": "training,src,mlperf,patched",
+          "names": [
+            "mlperf-training-src"
+          ],
+          "env": {
+            "CM_GIT_PATCH_FILEPATHS": "<<<CM_RETINANET_NO_NMS_PATCH_FILE_PATH>>>",
+            "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_MLPERF_TRAINING_REPO_PATCHED_PATH"
+          }
+        },
+        {
+          "tags": "get,ml-model,retinanet,_pytorch,_fp32,_weights",
+          "names": [
+            "pytorch-weights"
+          ],
+          "env": {
+            "CM_ENV_NAME_ML_MODEL_FILE": "CM_ML_MODEL_RETINANET_PYTORCH_WEIGHTS_FILE_PATH"
+          }
+        },
+        {
+          "tags": "get,generic-python-lib,_package.torch",
+          "names": [
+            "torch",
+            "pytorch"
+          ],
+          "version_min": "1.13.1"
+        }
+      ]
+    }
+  },
+  "print_env_at_the_end" : {
+    "CM_ML_MODEL_FILE_WITH_PATH": "Path to the ML model",
+    "CM_ML_MODEL_ACCURACY": "Model accuracy"
+  }
+}

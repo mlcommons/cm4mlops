@@ -1,0 +1,38 @@
+{
+  "alias": "get-sys-utils-cm",
+  "automation_alias": "script",
+  "automation_uid": "5b4e0237da074764",
+  "cache": true,
+  "category": "Detection or installation of tools and artifacts",
+  "deps": [
+    {
+      "tags": "detect,os"
+    }
+  ],
+  "env": {
+    "CM_CLEAN_DIRS": "bin",
+    "CM_PACKAGE_WIN_URL": "https://zenodo.org/record/6501550/files/cm-artifact-os-windows-32.zip ; https://www.dropbox.com/s/2y9r2mvtu8tpexk/zlib123dllx64-bin.zip?dl=1",
+    "CM_SUDO": "sudo"
+  },
+  "input_mapping": {
+    "skip": "CM_SKIP_SYS_UTILS"
+  },
+  "new_env_keys": [
+    "+PATH"
+  ],
+  "tags": [
+    "get",
+    "sys-utils-cm"
+  ],
+  "uid": "bc90993277e84b8e",
+  "variations": {
+    "user": {
+      "env": {
+        "CM_PYTHON_PIP_USER": "--user"
+      }
+    }
+  },
+  "warnings": [
+    "This CM script will install extra OS system utils required for CM automation workflows!"
+  ]
+}
