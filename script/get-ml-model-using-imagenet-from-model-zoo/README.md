@@ -12,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-using-imagenet-from-model-zoo)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-using-imagenet-from-model-zoo)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *get,ml-model,model-zoo,zoo,imagenet,image-classification*
 * Output cached? *True*
@@ -30,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -81,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="get,ml-model,model-zoo,zoo,imagenet,image-classification"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=get,ml-model,model-zoo,zoo,imagenet,image-classification) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "get ml-model model-zoo zoo imagenet image-classification[variations]" `
@@ -102,19 +100,19 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,ml-model,zoo,deepsparse,_model-stub.#
              * CM names: `--adr.['neural-magic-zoo-downloader']...`
-             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-neuralmagic-zoo)
+             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
     * `_model.resnet101-pytorch-base`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,ml-model,zoo,deepsparse,_model-stub.zoo:cv/classification/resnet_v1-101/pytorch/sparseml/imagenet/base-none
              * CM names: `--adr.['neural-magic-zoo-downloader']...`
-             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-neuralmagic-zoo)
+             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
     * `_model.resnet50-pruned95-uniform-quant`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,ml-model,zoo,deepsparse,_model-stub.zoo:cv/classification/resnet_v1-50/pytorch/sparseml/imagenet/pruned95_uniform_quant-none
              * CM names: `--adr.['neural-magic-zoo-downloader']...`
-             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-neuralmagic-zoo)
+             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
 
     </details>
 
@@ -132,13 +130,13 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-using-imagenet-from-model-zoo/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-using-imagenet-from-model-zoo/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-using-imagenet-from-model-zoo/_cm.json)
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-using-imagenet-from-model-zoo/_cm.json)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-using-imagenet-from-model-zoo/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-using-imagenet-from-model-zoo/_cm.json)
   1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-using-imagenet-from-model-zoo/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-using-imagenet-from-model-zoo/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-using-imagenet-from-model-zoo/_cm.json)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-using-imagenet-from-model-zoo/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-using-imagenet-from-model-zoo/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-using-imagenet-from-model-zoo/_cm.json)
 
 ___
 ### Script output

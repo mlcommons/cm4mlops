@@ -12,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/preprocess-mlperf-inference-submission)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/preprocess-mlperf-inference-submission)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *run,mlc,mlcommons,mlperf,inference,submission,mlperf-inference,processor,preprocessor,preprocess*
 * Output cached? *False*
@@ -30,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -79,8 +79,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="run,mlc,mlcommons,mlperf,inference,submission,mlperf-inference,processor,preprocessor,preprocess"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=run,mlc,mlcommons,mlperf,inference,submission,mlperf-inference,processor,preprocessor,preprocess) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "run mlc mlcommons mlperf inference submission mlperf-inference processor preprocessor preprocess" [--input_flags]`
@@ -118,24 +116,24 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/preprocess-mlperf-inference-submission/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/preprocess-mlperf-inference-submission/_cm.json)***
      * get,python3
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,mlcommons,inference,src
        * CM names: `--adr.['inference-src', 'submission-checker-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,mlperf,submission,dir
        * `if (CM_MLPERF_INFERENCE_SUBMISSION_DIR  != on)`
        * CM names: `--adr.['get-mlperf-submission-dir']...`
-       - CM script: [get-mlperf-inference-submission-dir](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-submission-dir)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/preprocess-mlperf-inference-submission/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/preprocess-mlperf-inference-submission/_cm.json)
+       - CM script: [get-mlperf-inference-submission-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-submission-dir)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/preprocess-mlperf-inference-submission/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/preprocess-mlperf-inference-submission/_cm.json)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/preprocess-mlperf-inference-submission/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/preprocess-mlperf-inference-submission/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/preprocess-mlperf-inference-submission/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/preprocess-mlperf-inference-submission/_cm.json)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/preprocess-mlperf-inference-submission/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/preprocess-mlperf-inference-submission/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/preprocess-mlperf-inference-submission/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/preprocess-mlperf-inference-submission/_cm.json)
 
 ___
 ### Script output

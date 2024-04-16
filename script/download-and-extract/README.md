@@ -12,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/download-and-extract)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *download-and-extract,file*
 * Output cached? *False*
@@ -30,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -80,8 +80,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="download-and-extract,file"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=download-and-extract,file) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -138,7 +136,7 @@ ___
       - Workflow:
         1. ***Read "prehook_deps" on other CM scripts***
            * download,torrent
-             - CM script: [download-torrent](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-torrent)
+             - CM script: [download-torrent](https://github.com/mlcommons/cm4mlops/tree/master/script/download-torrent)
     * `_wget`
       - Workflow:
 
@@ -185,21 +183,21 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/download-and-extract/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/download-and-extract/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/download-and-extract/_cm.json)***
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/_cm.json)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/customize.py)***
+  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/_cm.json)***
      * download,file
        * `if (CM_DAE_DOWNLOAD_USING_TORRENT not in ['yes', 'True'])`
        * CM names: `--adr.['download-script']...`
-       - CM script: [download-file](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-file)
+       - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
   1. ***Run native script if exists***
-  1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/download-and-extract/_cm.json)***
+  1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/_cm.json)***
      * extract,file
        * `if (CM_DAE_EXTRACT_DOWNLOADED in ['yes', 'True'])`
        * CM names: `--adr.['extract-script']...`
-       - CM script: [extract-file](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/extract-file)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/download-and-extract/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/download-and-extract/_cm.json)
+       - CM script: [extract-file](https://github.com/mlcommons/cm4mlops/tree/master/script/extract-file)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/_cm.json)
 
 ___
 ### Script output

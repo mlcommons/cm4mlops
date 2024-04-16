@@ -67,9 +67,11 @@ def page(st, params, extra):
     ###################################################################
     # Select repository
 
-    choices = [('Stable Git version from GitHub: mlcommons@ck', 'stable'),
-               ('Dev Git version from GitHub: ctuning@mlcommons-ck', 'ctuning'),
-               ('Small and stable ZIP from Zenodo: 20240223', 'zenodo')]
+    choices = [
+               ('Development GitHub version: mlcommons@cm4mlops', 'dev'),
+               ('Stable GitHub version: mlcommons@cm4mlops', 'main'),
+               ('Small and stable ZIP from Zenodo: 20240223', 'zenodo')
+              ]
 
     repo = st.selectbox('Select repository with [automation recipes (CM scripts)](https://access.cknowledge.org/playground/?action=scripts):',
                          range(len(choices)),
@@ -81,12 +83,12 @@ def page(st, params, extra):
 
 
     # Add stable repo from Zenodo
-    if repo_index == 'ctuning':
-        cm_repo = 'ctuning@mlcommons-ck'
+    if repo_index == 'dev':
+        cm_repo = 'mlcommons@cm4mlops --checkout=dev'
     elif repo_index == 'zenodo':
         cm_repo = '--url=https://zenodo.org/records/10787459/files/cm-mlops-repo-20240306.zip'
     else:
-        cm_repo = 'mlcommons@ck'
+        cm_repo = 'mlcommons@cm4mlops'
     
     x =  '{} -m pip install cmind -U {}\n\n'.format(python, need_user)
     x += 'cm pull repo {}\n\n'.format(cm_repo)

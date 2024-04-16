@@ -134,7 +134,7 @@ def page(st, params):
                 x3 = misc.make_url(meta['uid'], action='scripts', md=False)
                 end_html='<center><small><i>Self links: <a href="{}">tags</a> or <a href="{}">alias</a> or <a href="{}">UID</a></i></small></center>'.format(x1,x2,x3)
 
-                extra_repo = '' if repo_meta['alias']=='mlcommons@ck' else '\ncm pull repo '+repo_meta['alias']
+                extra_repo = '' if repo_meta['alias']=='mlcommons@cm4mlops' else '\ncm pull repo '+repo_meta['alias']
 
                 xtags = tags
                 if len(variations)>0:
@@ -145,7 +145,7 @@ def page(st, params):
                 x = '''
 ```bash
 pip install cmind -U
-cm pull repo mlcommons@ck{}
+cm pull repo mlcommons@cm4mlops --checkout=dev{}
 
 cm run script "{}"
 ```

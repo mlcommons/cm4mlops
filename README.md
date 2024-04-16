@@ -1,4 +1,4 @@
-# CM repository with cross-platform scripts for DevOps, MLOps, AIOps and MLPerf
+# Cross-platform CM interface for DevOps, MLOps, AIOps and MLPerf
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE.md)
 [![Powered by CM](https://img.shields.io/badge/Powered_by-MLCommons%20CM-blue)](https://github.com/mlcommons/ck).

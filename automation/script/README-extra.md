@@ -69,17 +69,18 @@ while automatically adapting to a given environment!
 In order to reuse some CM scripts embedded into shared projects, 
 you need to install these projects via the CM interface.
 
-For example, to use automation scripts developed by the [MLCommons task force on automation and reproducibility](https://github.com/mlcommons/ck/blob/master/docs/list_of_scripts.md)
+For example, to use automation scripts developed by the 
+[MLCommons task force on automation and reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 and shared via GitHub, you just need to pull this repository via CM:
 
 ```bash
-cm pull repo --url=https://github.com/mlcommons/ck
+cm pull repo --url=https://github.com/mlcommons/cm4mlops --checkout=dev
 ```
 
 or
 
 ```bash
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops --checkout=dev
 ```
 
 You can now see all available CM scripts in your system as follows:

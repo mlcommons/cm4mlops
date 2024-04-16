@@ -106,7 +106,7 @@ def doc(i):
                                 [ (artifact alias, artifact UID) ] or
                                 [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-      (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+      (repos) (str): list of repositories to search for automations
 
       (output_dir) (str): output directory (../docs by default)
 
@@ -149,6 +149,7 @@ def doc(i):
 
     # Search for automations in repos
     lst = []
+    
     for repo in list_of_repos:
         parsed_artifact[1] = ('',repo) if utils.is_cm_uid(repo) else (repo,'')
         ii['parsed_artifact'] = parsed_artifact
@@ -611,8 +612,8 @@ def doc(i):
                              '',
                              '```cmr "cm gui" --script="'+','.join(tags)+'"```',
                              '',
-                             'Use this [online GUI](https://cKnowledge.org/cm-gui/?tags={}) to generate CM CMD.'.format(','.join(tags)),
-                             '',
+#                             'Use this [online GUI](https://cKnowledge.org/cm-gui/?tags={}) to generate CM CMD.'.format(','.join(tags)),
+#                             '',
                              '#### '+x4,
                              '',
                              '{}'.format(cli_all_tags_alternative_docker),
@@ -1339,7 +1340,7 @@ def dockerfile(i):
                                 [ (artifact alias, artifact UID) ] or
                                 [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-      (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+      (repos) (str): list of repositories to search for automations
 
       (output_dir) (str): output directory (./ by default)
 
@@ -1368,7 +1369,7 @@ def dockerfile(i):
 
     console = i.get('out') == 'con'
 
-    cm_repo = i.get('docker_cm_repo', 'mlcommons@ck')
+    cm_repo = i.get('docker_cm_repo', 'mlcommons@cm4mlops')
     cm_repo_flags = i.get('docker_cm_repo_flags', '')
 
     # Search for script(s)
@@ -1842,7 +1843,7 @@ def docker(i):
                 dockerfilename_suffix = dockerfilename_suffix[len(dockerfilename_suffix) - 1]
 
 
-        cm_repo=i.get('docker_cm_repo', 'mlcommons@ck')
+        cm_repo=i.get('docker_cm_repo', 'mlcommons@cm4mlops')
 
         docker_path = i.get('docker_path', '').strip()
         if docker_path == '': 
