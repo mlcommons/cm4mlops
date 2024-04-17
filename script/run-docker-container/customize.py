@@ -52,7 +52,8 @@ def preprocess(i):
 
     print ('')
     print ('Checking Docker images:')
-    print (CMD)
+    print ('')
+    print ('  '+CMD)
     print ('')
     
     try:
@@ -61,13 +62,14 @@ def preprocess(i):
         return {'return':1, 'error':'Docker is either not installed or not started:\n{}'.format(e)}
 
     recreate_image = env.get('CM_DOCKER_IMAGE_RECREATE', '')
-
+    
     if docker_image and recreate_image != "yes":
         print("Docker image exists with ID: " + docker_image)
         env['CM_DOCKER_IMAGE_EXISTS'] = "yes"
 
     elif recreate_image == "yes":
         env['CM_DOCKER_IMAGE_RECREATE'] = "no"
+
 
     return {'return':0}
 

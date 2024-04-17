@@ -1597,6 +1597,10 @@ def docker(i):
 
       (out) (str): if 'con', output to console
 
+      (docker_skip_build) (bool): do not generate Dockerfiles and do not recreate Docker image (must exist)
+        (docker_noregenerate) (bool): do not generate Dockerfiles
+        (docker_norecreate) (bool): do not recreate Docker image
+
       (docker_path) (str): where to create or find Dockerfile
       (docker_gh_token) (str): GitHub token for private repositories
       (docker_save_script) (str): if !='' name of script to save docker command
@@ -1632,20 +1636,31 @@ def docker(i):
     self_module = i['self_module']
     self_module.cmind.access({'action':'detect_tags_in_artifact', 'automation':'utils', 'input':i})
 
+    # CAREFUL -> artifacts and parsed_artifacts are not supported in input (and should not be?)
+    if 'artifacts' in i: del(i['artifacts'])
+    if 'parsed_artifacts' in i: del(i['parsed_artifacts'])
+    
     # Prepare "clean" input to replicate command
     r = self_module.cmind.access({'action':'prune_input', 'automation':'utils', 'input':i, 'extra_keys_starts_with':['docker_']})
     i_run_cmd_arc = r['new_input']
 
     noregenerate_docker_file = i.get('docker_noregenerate', False)
+    norecreate_docker_image = i.get('docker_norecreate', False)
 
+    if i.get('docker_skip_build', False):
+        noregenerate_docker_file = True
+        norecreate_docker_image = True
+
+    # Clean some input keys
     if not noregenerate_docker_file:
         r = utils.call_internal_module(self_module, __file__, 'module_misc', 'dockerfile', i)
         if r['return']>0: return r
 
+    # Save current directory
     cur_dir = os.getcwd()
 
     console = i.get('out') == 'con'
-
+    
     # Search for script(s)
     r = aux_search({'self_module': self_module, 'input': i})
     if r['return']>0: return r
@@ -1913,11 +1928,12 @@ def docker(i):
         print (final_run_cmd)
         print ('')
 
-
+        docker_recreate_image = 'yes' if not norecreate_docker_image else 'no'
+        
         cm_docker_input = {'action': 'run',
                            'automation': 'script',
                            'tags': 'run,docker,container',
-                           'recreate': 'yes',
+                           'recreate': docker_recreate_image,
                            'docker_base_image': docker_base_image,
                            'docker_os': docker_os,
                            'docker_os_version': docker_os_version,
