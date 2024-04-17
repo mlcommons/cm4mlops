@@ -15,7 +15,7 @@ python3 -m pip install cmind
 source .profile
 ```
 
-Next you need to install a CM repository with [cross-platform CM scripts](https://github.com/mlcommons/ck/tree/master/cm-mlops/script) for ML Systems:
+Next you need to install a CM repository with [cross-platform CM scripts](https://github.com/mlcommons/cm4mlops/tree/main/script) for ML Systems:
 
 ```bash
 cm pull repo mlcommons@ck
@@ -54,7 +54,7 @@ cm run script "app mlperf inference generic reference _python _retinanet _onnxru
 
 The first run of this CM script takes around 25 minutes on a GCP instance with 16 cores and 64GB of memory because
 CM will automatically detect, install and cache all the necessary ML components 
-while adapting them to your system using [portable CM scripts](https://github.com/mlcommons/ck/tree/master/cm-mlops/script).
+while adapting them to your system using [portable CM scripts](https://github.com/mlcommons/cm4mlops/tree/main/script).
 
 These dependencies are described using [this simple YAML file](https://github.com/octoml/ck/blob/master/cm-mlops/script/app-mlperf-inference-reference/_cm.yaml#L57)
 and can be turned on or off using different environment variables passed to this CM script using `--env.KEY=VALUE`.

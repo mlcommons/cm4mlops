@@ -33,7 +33,7 @@ See extra [notes](README-extra.md) from the authors and contributors.
 
 * Category: *Reproducibility and artifact evaluation.*
 * CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/master/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-micro-paper-2023-victima)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * CM "database" tags to find this script: *reproduce,project,paper,micro,micro-2023,victima*
 * Output cached? *False*
@@ -149,21 +149,21 @@ ___
 <details>
 <summary>Click here to expand this section.</summary>
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-micro-paper-2023-victima/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-os)
      * get,python
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/main/script/get-python3)
      * get,git,repo,_repo.https://github.com/CMU-SAFARI/Victima
-       - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-micro-paper-2023-victima/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-micro-paper-2023-victima/_cm.yaml)
+       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-micro-paper-2023-victima/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-micro-paper-2023-victima/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-micro-paper-2023-victima/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-micro-paper-2023-victima/_cm.yaml)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)
 </details>
 
 ___

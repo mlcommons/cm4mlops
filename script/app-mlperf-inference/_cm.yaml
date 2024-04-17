@@ -1194,7 +1194,7 @@ input_description:
   num_threads: 
     desc: "Number of CPU threads to launch the application with"
   hw_name: 
-    desc: "Valid value - any system description which has a config file (under same name) defined [here](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-configs-sut-mlperf-inference/configs)"
+    desc: "Valid value - any system description which has a config file (under same name) defined [here](https://github.com/mlcommons/cm4mlops/tree/main/script/get-configs-sut-mlperf-inference/configs)"
   output_dir: 
     desc: "Location where the outputs are produced"
   rerun: 

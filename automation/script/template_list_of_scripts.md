@@ -7,7 +7,7 @@ This file is generated automatically - don't edit!
 This is an automatically generated list of portable and reusable automation recipes (CM scripts)
 with a [human-friendly interface (CM)](https://github.com/mlcommons/ck) 
 to run a growing number of ad-hoc MLPerf, MLOps, and DevOps scripts
-from [MLCommons projects](https://github.com/mlcommons/ck/tree/master/cm-mlops/script)
+from [MLCommons projects](https://github.com/mlcommons/cm4mlops/tree/main/script)
 and [research papers](https://www.youtube.com/watch?v=7zpeIVwICa4) 
 in a unified way on any operating system with any software and hardware
 natively or inside containers.

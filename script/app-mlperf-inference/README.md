@@ -87,7 +87,7 @@ and collaborative design space exploration and optimization of ML Systems.
 * --**target_latency**=Target Latency
 * --**max_batchsize**=Maximum batchsize to be used
 * --**num_threads**=Number of CPU threads to launch the application with
-* --**hw_name**=Valid value - any system description which has a config file (under same name) defined [here](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-configs-sut-mlperf-inference/configs)
+* --**hw_name**=Valid value - any system description which has a config file (under same name) defined [here](https://github.com/mlcommons/cm4mlops/tree/main/script/get-configs-sut-mlperf-inference/configs)
 * --**output_dir**=Location where the outputs are produced
 * --**rerun**=Redo the run even if previous run files exist (*True*)
 * --**regenerate_files**=Regenerates measurement files including accuracy.txt files even if a previous run exists. This option is redundant if `--rerun` is used
