@@ -36,6 +36,10 @@ variations:
     env:
       CM_PRINT_HELLO_WORLD_TEXT: "#"
 
+  skip_print_env:
+    env:
+      CM_PRINT_HELLO_WORLD_SKIP_PRINT_ENV: 'yes'
+ 
 docker:
   skip_run_cmd: 'yes'
   skip_cm_sys_upgrade: 'yes'
