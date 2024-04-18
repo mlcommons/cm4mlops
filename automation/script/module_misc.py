@@ -1410,7 +1410,7 @@ def dockerfile(i):
 
         docker_settings = state['docker']
 
-        if not docker_settings.get('run', True):
+        if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
             print("docker.run set to False in _cm.json")
             continue
         '''run_config_path = os.path.join(script_path,'run_config.yml')
@@ -1664,7 +1664,8 @@ def docker(i):
         i.update(docker_input_update)
 
     
-    # Clean some input keys
+    ########################################################################################
+    # Run dockerfile
     if not noregenerate_docker_file:
         r = utils.call_internal_module(self_module, __file__, 'module_misc', 'dockerfile', i)
         if r['return']>0: return r
@@ -1736,7 +1737,7 @@ def docker(i):
 
         docker_settings = state['docker']
 
-        if not docker_settings.get('run', True):
+        if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
             print("docker.run set to False in _cm.json")
             continue
         '''
