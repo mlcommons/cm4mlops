@@ -20,6 +20,7 @@
     "image_repo": "CM_DOCKER_IMAGE_REPO",
     "image_name": "CM_DOCKER_IMAGE_NAME",
     "image_tag": "CM_DOCKER_IMAGE_TAG",
+    "image_tag_extra": "CM_DOCKER_IMAGE_TAG_EXTRA",
     "docker_os": "CM_DOCKER_OS",
     "docker_os_version": "CM_DOCKER_OS_VERSION",
     "docker_image_base": "CM_DOCKER_IMAGE_BASE",
@@ -44,8 +45,11 @@
       "names": [
         "build-docker-image"
       ],
-      "skip_if_env": {
+      "skip_if_any_env": {
         "CM_DOCKER_IMAGE_EXISTS": [
+          "yes"
+        ],
+        "CM_DOCKER_SKIP_BUILD": [
           "yes"
         ]
       },

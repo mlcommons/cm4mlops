@@ -10,7 +10,6 @@ def preprocess(i):
 
     env = i['env']
 
-
     interactive = env.get('CM_DOCKER_INTERACTIVE_MODE','')
 
     if interactive:
@@ -62,15 +61,16 @@ def preprocess(i):
         return {'return':1, 'error':'Docker is either not installed or not started:\n{}'.format(e)}
 
     recreate_image = env.get('CM_DOCKER_IMAGE_RECREATE', '')
+
+    if recreate_image != 'yes':
+        if docker_image:
+            print("Docker image exists with ID: " + docker_image)
+            env['CM_DOCKER_IMAGE_EXISTS'] = "yes"
+
+#    elif recreate_image == "yes":
+#        env['CM_DOCKER_IMAGE_RECREATE'] = "no"
+
     
-    if docker_image and recreate_image != "yes":
-        print("Docker image exists with ID: " + docker_image)
-        env['CM_DOCKER_IMAGE_EXISTS'] = "yes"
-
-    elif recreate_image == "yes":
-        env['CM_DOCKER_IMAGE_RECREATE'] = "no"
-
-
     return {'return':0}
 
 def postprocess(i):
@@ -169,7 +169,7 @@ def postprocess(i):
         CONTAINER="docker run -dt "+ run_opts + " --rm " + docker_image_repo + "/" + docker_image_name + ":" + docker_image_tag + " bash"
         CMD = "ID=`" + CONTAINER + "` && docker exec $ID bash -c '" + run_cmd + "' && docker kill $ID >/dev/null"
 
-        print ('')
+        print ('=========================')
         print ("Container launch command:")
         print ('')
         print (CMD)
@@ -252,7 +252,9 @@ def update_docker_info(env):
     docker_image_name = env.get('CM_DOCKER_IMAGE_NAME', 'cm-script-'+env['CM_DOCKER_RUN_SCRIPT_TAGS'].replace(',', '-').replace('_',''))
     env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 
-    docker_image_tag = env.get('CM_DOCKER_IMAGE_TAG', docker_image_base.replace(':','-').replace('_','') + "-latest")
+    docker_image_tag_extra = env.get('CM_DOCKER_IMAGE_TAG_EXTRA', '-latest')
+    
+    docker_image_tag = env.get('CM_DOCKER_IMAGE_TAG', docker_image_base.replace(':','-').replace('_','') + docker_image_tag_extra)
     env['CM_DOCKER_IMAGE_TAG'] = docker_image_tag
 
     return

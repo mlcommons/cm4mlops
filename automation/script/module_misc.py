@@ -30,10 +30,10 @@ def process_deps(self_module, meta, meta_url, md_script_readme, key, extra_space
 
             q2 = ''
             for e in skip_if_env:
-                if q2!='': q2 += ' OR '
+                if q2!='': q2 += ' AND '
                 q2 += e+' '
                 v = skip_if_env[e]
-                q2 += ' != '+str(v[0]) if len(v)==1 else 'not in '+str(v)
+                q2 += ' == '+str(v[0]) if len(v)==1 else 'not in '+str(v)
 
             if q2!='': q2 = '('+q2+')'
 
@@ -42,7 +42,7 @@ def process_deps(self_module, meta, meta_url, md_script_readme, key, extra_space
 
                if q1!='': q+=q1
                if q2!='':
-                  if q1!='': q+=' AND '
+                  if q1!='': q+=' AND NOT'
                   q+=q2
 
             y.append(z)
@@ -1369,9 +1369,6 @@ def dockerfile(i):
 
     console = i.get('out') == 'con'
 
-    cm_repo = i.get('docker_cm_repo', 'mlcommons@cm4mlops')
-    cm_repo_flags = i.get('docker_cm_repo_flags', '')
-
     # Search for script(s)
     r = aux_search({'self_module': self_module, 'input': i})
     if r['return']>0: return r
@@ -1470,11 +1467,16 @@ def dockerfile(i):
         run_cmd  = r['run_cmd_string']
 
 
+        cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
+        cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
+
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
         docker_os = i.get('docker_os', docker_settings.get('docker_os', 'ubuntu'))
         docker_os_version = i.get('docker_os_version', docker_settings.get('docker_os_version', '22.04'))
 
         docker_cm_repos = i.get('docker_cm_repos', docker_settings.get('cm_repos', ''))
+
+        docker_skip_cm_sys_upgrade = i.get('docker_skip_cm_sys_upgrade', docker_settings.get('skip_cm_sys_upgrade', ''))
 
         docker_extra_sys_deps = i.get('docker_extra_sys_deps', '')
 
@@ -1531,6 +1533,9 @@ def dockerfile(i):
         else:
             comments = []
 
+        if i.get('docker_push_image', '') in ['True', True, 'yes']:
+            env['CM_DOCKER_PUSH_IMAGE'] = 'yes'
+
         cm_docker_input = {'action': 'run',
                            'automation': 'script',
                            'tags': 'build,dockerfile',
@@ -1539,6 +1544,7 @@ def dockerfile(i):
                            'docker_base_image': docker_base_image,
                            'docker_os': docker_os,
                            'docker_os_version': docker_os_version,
+                           'skip_cm_sys_upgrade': docker_skip_cm_sys_upgrade,
                            'file_path': dockerfile_path,
                            'fake_run_option': fake_run_option,
                            'comments': comments,
@@ -1644,12 +1650,15 @@ def docker(i):
     r = self_module.cmind.access({'action':'prune_input', 'automation':'utils', 'input':i, 'extra_keys_starts_with':['docker_']})
     i_run_cmd_arc = r['new_input']
 
+    env=i.get('env', {})
+
     noregenerate_docker_file = i.get('docker_noregenerate', False)
     norecreate_docker_image = i.get('docker_norecreate', False)
 
     if i.get('docker_skip_build', False):
         noregenerate_docker_file = True
         norecreate_docker_image = True
+        env['CM_DOCKER_SKIP_BUILD'] = 'yes'
 
     # Clean some input keys
     if not noregenerate_docker_file:
@@ -1670,7 +1679,6 @@ def docker(i):
     if len(lst)==0:
         return {'return':1, 'error':'no scripts were found'}
 
-    env=i.get('env', {})
     env['CM_RUN_STATE_DOCKER'] = False
     script_automation = i['self_module']
     state = i.get('state', {})
@@ -1841,12 +1849,13 @@ def docker(i):
                 env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format(key, value))
 
         docker_use_host_group_id = i.get('docker_use_host_group_id', docker_settings.get('use_host_group_id'))
-        if docker_use_host_group_id and os.name != 'nt':
+        if docker_use_host_group_id in [True, 'True', 'yes'] and os.name != 'nt':
             env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('CM_ADD_DOCKER_GROUP_ID', '\\"-g $(id -g $USER) -o\\"'))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
         docker_os = i.get('docker_os', docker_settings.get('docker_os', 'ubuntu'))
         docker_os_version = i.get('docker_os_version', docker_settings.get('docker_os_version', '22.04'))
+        image_tag_extra = i.get('docker_image_tag_extra', docker_settings.get('image_tag_extra', '-latest'))
 
         if not docker_base_image:
             dockerfilename_suffix = docker_os +'_'+docker_os_version
@@ -1866,7 +1875,8 @@ def docker(i):
 
         dockerfile_path = os.path.join(docker_path, 'dockerfiles', dockerfilename_suffix +'.Dockerfile')
 
-        docker_skip_run_cmd = i.get('docker_skip_run_cmd', docker_settings.get('skip_run_cmd', False)) #skips docker run cmd and gives an interactive shell to the user
+        # Skips docker run cmd and gives an interactive shell to the user
+        docker_skip_run_cmd = i.get('docker_skip_run_cmd', docker_settings.get('skip_run_cmd', False)) 
 
         docker_pre_run_cmds = i.get('docker_pre_run_cmds', []) +  docker_settings.get('pre_run_cmds', [])
 
@@ -1890,8 +1900,11 @@ def docker(i):
         if detached == '':
             detached = docker_settings.get('detached', '')
 
-        if interactive == '':
+        if str(docker_skip_run_cmd).lower() in ['true','1','yes']:
+            interactive = 'yes'
+        elif interactive == '':
             interactive = docker_settings.get('interactive', '')
+
 
 #        # Regenerate run_cmd
 #        if i.get('cmd'):
@@ -1929,6 +1942,9 @@ def docker(i):
         print ('')
 
         docker_recreate_image = 'yes' if not norecreate_docker_image else 'no'
+
+        if i.get('docker_push_image', '') in ['True', True, 'yes']:
+            env['CM_DOCKER_PUSH_IMAGE'] = 'yes'
         
         cm_docker_input = {'action': 'run',
                            'automation': 'script',
@@ -1944,6 +1960,7 @@ def docker(i):
                            'mounts': mounts,
                            'image_name': 'cm-script-'+script_alias,
 #                            'image_tag': script_alias,
+                           'image_tag_extra': image_tag_extra,
                            'detached': detached,
                            'script_tags': f'{tag_string}',
                            'run_cmd': final_run_cmd,
