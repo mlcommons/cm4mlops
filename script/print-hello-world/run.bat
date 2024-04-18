@@ -8,7 +8,9 @@ if not "%CM_PRINT_HELLO_WORLD_SKIP_PRINT_ENV%" == "yes" (
 echo.
 echo HELLO WORLD!
 if not "%CM_PRINT_HELLO_WORLD_TEXT%" == "" (
+
   echo.
   echo %CM_PRINT_HELLO_WORLD_TEXT%
+
 )
 echo.

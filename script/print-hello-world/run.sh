@@ -10,7 +10,9 @@ fi
 echo ""
 echo "HELLO WORLD!"
 if [[ ${CM_PRINT_HELLO_WORLD_TEXT} != "" ]]; then
+
   echo ""
   echo "${CM_PRINT_HELLO_WORLD_TEXT}"
+
 fi
 echo ""
