@@ -3,9 +3,10 @@ name: Dockerfile update for CM scripts
 
 on:
   push:
-    branches: [ "master", "dev" ]
+    branches: [ "main", "dev" ]
     paths:
       - 'script/**_cm.json'
+      - 'script/**_cm.yaml'
 
 jobs:
   dockerfile:
