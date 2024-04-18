@@ -8,8 +8,8 @@ on:
     branches: [ "master", "dev" ]
     paths:
       - '.github/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml'
-      - 'cm-mlops/**'
-      - '!cm-mlops/**.md'
+      - '**'
+      - '!**.md'
 
 jobs:
   build:

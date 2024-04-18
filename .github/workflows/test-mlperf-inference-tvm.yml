@@ -9,8 +9,8 @@ on:
     branches: [ "tvm-more" ]
     paths:
       - '.github/workflows/test-mlperf-inference-tvm.yml'
-      - 'cm-mlops/**'
-      - '!cm-mlops/**.md'
+      - '**'
+      - '!**.md'
 
 jobs:
   build:

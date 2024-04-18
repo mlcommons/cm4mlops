@@ -8,8 +8,8 @@ on:
     branches: [ "test" ]
     paths:
       - '.github/workflows/test-cm-tutorial-tvm.yml'
-      - 'cm-mlops/**'
-      - '!cm-mlops/**.md'
+      - '**'
+      - '!**.md'
 
 jobs:
   build:
