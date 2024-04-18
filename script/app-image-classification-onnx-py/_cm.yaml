@@ -42,6 +42,9 @@ deps:
     - yes
 
 - tags: get,dataset,imagenet,image-classification,original
+  docker:
+    run: True
+
 - tags: get,dataset-aux,imagenet-aux,image-classification
 - tags: get,ml-model,resnet50,_onnx,image-classification
   names:
