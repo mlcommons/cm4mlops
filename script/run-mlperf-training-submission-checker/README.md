@@ -164,11 +164,13 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/_cm.json)***
      * publish-results,github
-       * `if (CM_MLPERF_RESULT_PUSH_TO_GITHUB  == on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_RESULT_PUSH_TO_GITHUB': ['on']}`
        * CM names: `--adr.['push-to-github']...`
        - CM script: [push-mlperf-inference-results-to-github](https://github.com/mlcommons/cm4mlops/tree/master/script/push-mlperf-inference-results-to-github)
      * run,tar
-       * `if (CM_TAR_SUBMISSION_DIR  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TAR_SUBMISSION_DIR': ['yes']}`
        - CM script: [tar-my-folder](https://github.com/mlcommons/cm4mlops/tree/master/script/tar-my-folder)
 
 ___

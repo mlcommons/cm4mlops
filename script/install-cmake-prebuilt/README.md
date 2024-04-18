@@ -114,7 +114,8 @@ ___
   1. Run "postrocess" function from customize.py
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-cmake-prebuilt/_cm.json)***
      * get,cmake
-       * `if (CM_REQUIRE_INSTALL  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_REQUIRE_INSTALL': ['yes']}`
        - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
 
 ___

@@ -160,7 +160,8 @@ ___
       - Workflow:
         1. ***Read "prehook_deps" on other CM scripts***
            * app,mlperf,cpp,inference
-             * `if (CM_SKIP_RUN  != True)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_SKIP_RUN': [True]}`
              * CM names: `--adr.['cpp-mlperf-inference', 'mlperf-inference-implementation']...`
              - CM script: [app-mlperf-inference-mlcommons-cpp](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-mlcommons-cpp)
     * `_intel-original`
@@ -170,7 +171,8 @@ ___
       - Workflow:
         1. ***Read "prehook_deps" on other CM scripts***
            * reproduce,mlperf,inference,intel
-             * `if (CM_SKIP_RUN  != True)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_SKIP_RUN': [True]}`
              * CM names: `--adr.['intel', 'intel-harness', 'mlperf-inference-implementation']...`
              - CM script: [app-mlperf-inference-intel](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-intel)
     * `_kilt`
@@ -180,7 +182,8 @@ ___
       - Workflow:
         1. ***Read "prehook_deps" on other CM scripts***
            * reproduce,mlperf,inference,kilt
-             * `if (CM_SKIP_RUN  != True)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_SKIP_RUN': [True]}`
              * CM names: `--adr.['kilt', 'kilt-harness', 'mlperf-inference-implementation']...`
              - CM script: [app-mlperf-inference-qualcomm](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-qualcomm)
     * `_nvidia-original`
@@ -194,11 +197,13 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,cuda-devices
-             * `if (CM_CUDA_DEVICE_PROP_GLOBAL_MEMORY not in ['yes', 'on'])`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CUDA_DEVICE_PROP_GLOBAL_MEMORY': ['yes', 'on']}`
              - CM script: [get-cuda-devices](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda-devices)
         1. ***Read "prehook_deps" on other CM scripts***
            * reproduce,mlperf,nvidia,inference,_run_harness
-             * `if (CM_SKIP_RUN  != True)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_SKIP_RUN': [True]}`
              * CM names: `--adr.['nvidia-original-mlperf-inference', 'nvidia-harness', 'mlperf-inference-implementation']...`
              - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
     * **`_reference`** (default)
@@ -213,7 +218,8 @@ ___
       - Workflow:
         1. ***Read "prehook_deps" on other CM scripts***
            * app,mlperf,reference,inference
-             * `if (CM_SKIP_RUN  != True)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_SKIP_RUN': [True]}`
              * CM names: `--adr.['python-reference-mlperf-inference', 'mlperf-inference-implementation']...`
              - CM script: [app-mlperf-inference-mlcommons-python](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-mlcommons-python)
     * `_tflite-cpp`
@@ -226,7 +232,8 @@ ___
       - Workflow:
         1. ***Read "prehook_deps" on other CM scripts***
            * app,mlperf,tflite-cpp,inference
-             * `if (CM_SKIP_RUN  != True)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_SKIP_RUN': [True]}`
              * CM names: `--adr.['tflite-cpp-mlperf-inference', 'mlperf-inference-implementation']...`
              - CM script: [app-mlperf-inference-ctuning-cpp-tflite](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-ctuning-cpp-tflite)
 
@@ -354,7 +361,8 @@ ___
              - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-aux)
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_imagenet
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
              * CM names: `--adr.['mlperf-accuracy-script', 'imagenet-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_gptj-99`
@@ -382,7 +390,8 @@ ___
              - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-aux)
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_imagenet
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
              * CM names: `--adr.['mlperf-accuracy-script', 'imagenet-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * **`_resnet50`** (default)
@@ -394,7 +403,8 @@ ___
              - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-aux)
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_imagenet
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
              * CM names: `--adr.['mlperf-accuracy-script', 'imagenet-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_retinanet`
@@ -403,7 +413,8 @@ ___
       - Workflow:
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_openimages
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
              * CM names: `--adr.['mlperf-accuracy-script', 'openimages-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_rnnt`
@@ -412,7 +423,10 @@ ___
       - Workflow:
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_librispeech
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on) AND (CM_MLPERF_IMPLEMENTATION  != nvidia)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_IMPLEMENTATION': ['nvidia']}`
              * CM names: `--adr.['mlperf-accuracy-script', 'librispeech-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_sdxl`
@@ -421,7 +435,10 @@ ___
       - Workflow:
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_coco2014
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on) AND (CM_MLPERF_IMPLEMENTATION  != nvidia)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_IMPLEMENTATION': ['nvidia']}`
              * CM names: `--adr.['mlperf-accuracy-script', 'coco2014-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
 
@@ -523,28 +540,35 @@ ___
       - Workflow:
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_kits19,_int8
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on) AND (CM_MLPERF_IMPLEMENTATION  != nvidia)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_IMPLEMENTATION': ['nvidia']}`
              * CM names: `--adr.['mlperf-accuracy-script', '3d-unet-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_bert_`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,dataset,squad,language-processing
-             * `if (CM_DATASET_SQUAD_VAL_PATH not in on)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DATASET_SQUAD_VAL_PATH': 'on'}`
              - CM script: [get-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad)
            * get,dataset-aux,squad-vocab
-             * `if (CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH not in on)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH': 'on'}`
              - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_squad
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
              * CM names: `--adr.['squad-accuracy-script', 'mlperf-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_dlrm_`
       - Workflow:
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_terabyte,_float32
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
              * CM names: `--adr.['terabyte-accuracy-script', 'mlperf-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_gptj_`
@@ -554,7 +578,10 @@ ___
       - Workflow:
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_cnndm
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on) AND (CM_MLPERF_IMPLEMENTATION  != intel)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_IMPLEMENTATION': ['intel']}`
              * CM names: `--adr.['cnndm-accuracy-script', 'mlperf-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_intel-original,gptj_`
@@ -565,7 +592,10 @@ ___
       - Workflow:
         1. ***Read "posthook_deps" on other CM scripts***
            * run,accuracy,mlperf,_open-orca,_int32
-             * `if (CM_MLPERF_LOADGEN_MODE in ['accuracy', 'all'] AND CM_MLPERF_ACCURACY_RESULTS_DIR  == on) AND (CM_MLPERF_IMPLEMENTATION  != nvidia)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['accuracy', 'all'], 'CM_MLPERF_ACCURACY_RESULTS_DIR': ['on']}`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_IMPLEMENTATION': ['nvidia']}`
              * CM names: `--adr.['mlperf-accuracy-script', 'open-orca-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
     * `_reference,bert_`

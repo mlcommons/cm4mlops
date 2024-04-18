@@ -253,10 +253,12 @@ ___
      * detect,cpu
        - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,cmake
-       * `if (CM_LLVM_CONDA_ENV  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_LLVM_CONDA_ENV': ['yes']}`
        - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
      * get,generic-sys-util,_ninja-build
-       * `if (CM_LLVM_CONDA_ENV  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_LLVM_CONDA_ENV': ['yes']}`
        - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * get,git,repo
        * CM names: `--adr.['llvm-src-repo']...`
@@ -269,7 +271,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-llvm-src/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-llvm-src/_cm.json)***
      * get,llvm
-       * `if (CM_REQUIRE_INSTALL  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_REQUIRE_INSTALL': ['yes']}`
        - CM script: [get-llvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-llvm)
 
 ___

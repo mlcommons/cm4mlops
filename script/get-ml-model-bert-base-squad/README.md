@@ -164,7 +164,8 @@ ___
   1. Run "preprocess" function from customize.py
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-base-squad/_cm.json)***
      * download-and-extract
-       * `if (CM_TMP_ML_MODEL_REQUIRE_DOWNLOAD in yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TMP_ML_MODEL_REQUIRE_DOWNLOAD': 'yes'}`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
   1. ***Run native script if exists***
   1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-base-squad/_cm.json)

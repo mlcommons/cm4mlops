@@ -162,19 +162,23 @@ ___
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,cuda
-       * `if (USE_CUDA  == True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'USE_CUDA': [True]}`
        * CM names: `--adr.['cuda']...`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,cudnn
-       * `if (USE_CUDA  == True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'USE_CUDA': [True]}`
        * CM names: `--adr.['cudnn']...`
        - CM script: [get-cudnn](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cudnn)
      * get,generic-python-lib,_package.optimum[onnxruntime]
-       * `if (USE_CUDA  != True)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'USE_CUDA': [True]}`
        * CM names: `--adr.['optimum']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_package.optimum[onnxruntime-gpu]
-       * `if (USE_CUDA  == True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'USE_CUDA': [True]}`
        * CM names: `--adr.['optimum']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_package.diffusers

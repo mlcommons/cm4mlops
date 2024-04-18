@@ -260,47 +260,58 @@ ___
      * get,generic-python-lib,_package.numpy
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,cuda
-       * `if (CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['gpu']}`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,loadgen
        * CM names: `--adr.['loadgen']...`
        - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-loadgen)
      * get,generic-python-lib,_onnxruntime
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['cpu']}`
        * CM names: `--adr.['onnxruntime']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnxruntime_gpu
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu']}`
        * CM names: `--adr.['onnxruntime']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnx
-       * `if (CM_MLPERF_BACKEND  == onnxruntime)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime']}`
        * CM names: `--adr.['onnx']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torch
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['cpu']}`
        * CM names: `--adr.['torch']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['cpu']}`
        * CM names: `--adr.['torchvision']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torch_cuda
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['gpu']}`
        * CM names: `--adr.['torch']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision_cuda
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['gpu']}`
        * CM names: `--adr.['torchvision']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,ml-model,resnet50,_onnx
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,ml-model,retinanet,_onnx,_fp32
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
      * get,ml-model,retinanet,_onnx,_fp32
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/customize.py)***
   1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/_cm.yaml)

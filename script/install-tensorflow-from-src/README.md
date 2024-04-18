@@ -140,7 +140,8 @@ ___
      * detect,os
        - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * get,generic-sys-util,_zlib
-       * `if (CM_HOST_OS_FLAVOR  == ubuntu AND CM_HOST_OS_VERSION  == 18.04)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_HOST_OS_FLAVOR': ['ubuntu'], 'CM_HOST_OS_VERSION': ['18.04']}`
        - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * get,generic-python-lib,_package.numpy
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)

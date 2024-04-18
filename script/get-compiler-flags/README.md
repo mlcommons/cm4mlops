@@ -104,7 +104,8 @@ ___
      * detect,cpu
        - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,compiler
-       * `if (CM_C_COMPILER_BIN  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_C_COMPILER_BIN': ['on']}`
        * CM names: `--adr.['compiler']...`
        - CM script: [get-cl](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cl)
        - CM script: [get-gcc](https://github.com/mlcommons/cm4mlops/tree/master/script/get-gcc)

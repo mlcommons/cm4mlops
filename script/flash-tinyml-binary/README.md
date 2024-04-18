@@ -156,7 +156,8 @@ ___
        * CM names: `--adr.['zephyr-sdk']...`
        - CM script: [get-zephyr-sdk](https://github.com/mlcommons/cm4mlops/tree/master/script/get-zephyr-sdk)
      * reproduce,tiny,mlperf
-       * `if (CM_TINY_BUILD_DIR  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_TINY_BUILD_DIR': ['on']}`
        - CM script: [reproduce-mlperf-octoml-tinyml-results](https://github.com/mlcommons/cm4mlops/tree/master/script/reproduce-mlperf-octoml-tinyml-results)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/flash-tinyml-binary/customize.py)***
   1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/flash-tinyml-binary/_cm.json)

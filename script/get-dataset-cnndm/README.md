@@ -146,7 +146,8 @@ ___
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * mlperf,inference,source
-       * `if (CM_CNNDM_INTEL_VARIATION  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CNNDM_INTEL_VARIATION': ['yes']}`
        * CM names: `--adr.['inference-src']...`
        - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,generic-python-lib,_package.simplejson

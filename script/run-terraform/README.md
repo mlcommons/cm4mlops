@@ -463,7 +463,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-terraform/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-terraform/_cm.json)***
      * destroy,terraform
-       * `if (CM_DESTROY_TERRAFORM  == on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DESTROY_TERRAFORM': ['on']}`
        * CM names: `--adr.['destroy-cmd']...`
        - CM script: [destroy-terraform](https://github.com/mlcommons/cm4mlops/tree/master/script/destroy-terraform)
 

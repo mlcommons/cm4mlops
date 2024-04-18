@@ -197,11 +197,13 @@ ___
            * install,ipex,from.src,_for-intel-mlperf-inference-v3.1-gptj
              - CM script: [install-ipex-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-ipex-from-src)
            * get,generic,conda-package,_package.ninja
-             * `if (INTEL_GPTJ_INT4  == yes)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'INTEL_GPTJ_INT4': ['yes']}`
              * CM names: `--adr.['conda-package', 'ninja']...`
              - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * install,tpp-pex,from.src,_for-intel-mlperf-inference-v3.1-gptj
-             * `if (INTEL_GPTJ_INT4  == yes)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'INTEL_GPTJ_INT4': ['yes']}`
              - CM script: [install-tpp-pytorch-extension](https://github.com/mlcommons/cm4mlops/tree/master/script/install-tpp-pytorch-extension)
            * get,generic-python-lib,_package.transformers
              * CM names: `--adr.['pip-package', 'transformers']...`
@@ -565,23 +567,28 @@ ___
        * CM names: `--adr.['mlperf-logging']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,ml-model,resnet50,_fp32,_onnx,_from-tf
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['resnet50-model', 'ml-model']...`
        - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * compile,intel,model,_resnet50
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['resnet50-compiler']...`
        - *Warning: no scripts found*
      * get,dataset,imagenet,preprocessed,_for.resnet50,_NHWC,_full
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['imagenet-preprocessed', 'dataset-preprocessed']...`
        - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * compile,intel,model,_retinanet
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['retinanet-compiler']...`
        - *Warning: no scripts found*
      * get,dataset,preprocessed,openimages,_for.retinanet.onnx,_NCHW,_validation,_custom-annotations
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['openimages-preprocessed', 'dataset-preprocessed']...`
        - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openimages)
      * get,mlperf,inference,results,_ctuning
@@ -596,7 +603,10 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/_cm.yaml)***
      * benchmark-mlperf
-       * `if (CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE  == run_harness) AND (CM_MLPERF_SKIP_RUN not in ['yes', True])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE': ['run_harness']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes', True]}`
        * CM names: `--adr.['runner', 'mlperf-runner']...`
        - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
      * save,mlperf,inference,state

@@ -199,7 +199,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)***
      * flash,tiny,mlperf
-       * `if (CM_FLASH_BOARD  == True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_FLASH_BOARD': ['True']}`
        - CM script: [flash-tinyml-binary](https://github.com/mlcommons/cm4mlops/tree/master/script/flash-tinyml-binary)
 
 ___

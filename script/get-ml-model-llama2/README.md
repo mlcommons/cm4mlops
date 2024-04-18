@@ -201,7 +201,8 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-llama2/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-llama2/_cm.json)***
      * get,ml-model,huggingface,zoo,_clone-repo
-       * `if (CM_TMP_REQUIRE_DOWNLOAD  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TMP_REQUIRE_DOWNLOAD': ['yes']}`
        * CM names: `--adr.['hf-zoo']...`
        - CM script: [get-ml-model-huggingface-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-huggingface-zoo)
   1. ***Run native script if exists***

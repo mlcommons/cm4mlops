@@ -984,3 +984,25 @@ class CAutomation(Automation):
         """
 
         return utils.call_internal_module(self, __file__, 'module_cfg', 'load_cfg', i)
+
+    ############################################################
+    def select_cfg(self, i):
+        """
+        Select cfg interactively
+
+        Args:
+          (CM input dict):
+            tags (str): list of tags to find cfg
+            alias (str): alias of a cfg file
+
+        Returns:
+          (CM return dict):
+
+          * return (int): return code == 0 if no error and >0 if error
+          * (error) (str): error string if return>0
+
+        """
+
+        i['self_module'] = self
+        
+        return utils.call_internal_module(self, __file__, 'module_cfg', 'select_cfg', i)

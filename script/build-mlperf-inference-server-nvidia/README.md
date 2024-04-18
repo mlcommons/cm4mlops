@@ -181,11 +181,15 @@ ___
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,cuda,_cudnn
-       * `if (CM_MLPERF_DEVICE in ['cuda', 'inferentia'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['cuda', 'inferentia']}`
        * CM names: `--adr.['cuda']...`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,tensorrt,_dev
-       * `if (CM_MLPERF_DEVICE in ['cuda', 'inferentia']) AND (CM_TENSORRT_SYSTEM_DETECT  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['cuda', 'inferentia']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_TENSORRT_SYSTEM_DETECT': [True]}`
        * CM names: `--adr.['tensorrt']...`
        - CM script: [get-tensorrt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-tensorrt)
      * get,gcc
@@ -212,7 +216,8 @@ ___
      * get,generic-python-lib,_package.pybind11
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_pycuda
-       * `if (CM_RUN_STATE_DOCKER not in ['yes', True, 'True'])`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_RUN_STATE_DOCKER': ['yes', True, 'True']}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_opencv-python
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
@@ -229,7 +234,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/_cm.yaml)***
      * add,custom,system,nvidia
-       * `if (CM_CUSTOM_SYSTEM_NVIDIA not in ['no', False, 'False'])`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CUSTOM_SYSTEM_NVIDIA': ['no', False, 'False']}`
        * CM names: `--adr.['custom-system-nvidia', 'nvidia-inference-common-code']...`
        - CM script: [add-custom-nvidia-system](https://github.com/mlcommons/cm4mlops/tree/master/script/add-custom-nvidia-system)
 

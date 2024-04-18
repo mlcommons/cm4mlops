@@ -133,7 +133,8 @@ ___
      * detect,os
        - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * get,cuda
-       * `if (CM_CUDA_PATH_LIB  != on OR CM_CUDA_PATH_INCLUDE  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CUDA_PATH_LIB': ['on'], 'CM_CUDA_PATH_INCLUDE': ['on']}`
        * CM names: `--adr.['cuda']...`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cudnn/customize.py)***

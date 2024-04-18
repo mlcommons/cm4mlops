@@ -221,7 +221,8 @@ ___
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-openimages/run.sh)
   1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-openimages/_cm.json)***
      * get,openimages,annotations
-       * `if (CM_DATASET_OPENIMAGES_CUSTOM_ANNOTATIONS  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DATASET_OPENIMAGES_CUSTOM_ANNOTATIONS': ['yes']}`
        - CM script: [get-dataset-openimages-annotations](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages-annotations)
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-openimages/customize.py)***
   1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-openimages/_cm.json)

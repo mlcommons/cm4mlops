@@ -181,14 +181,17 @@ ___
            * get,generic-python-lib,_package.absl-py
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_protobuf
-             * `if (CM_MLPERF_BACKEND in ['tf', 'tflite'])`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tf', 'tflite']}`
              * CM names: `--adr.['protobuf']...`
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_boto3
-             * `if (CM_MLPERF_BACKEND  == pytorch)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch']}`
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torch
-             * `if (CM_MLPERF_DEVICE  != gpu)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['gpu']}`
              * CM names: `--adr.['ml-engine-pytorch', 'pytorch']...`
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_dlrm`
@@ -324,10 +327,12 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_deepsparse
-             * `if (CM_HOST_PLATFORM_FLAVOR  != aarch64)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_HOST_PLATFORM_FLAVOR': ['aarch64']}`
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.deepsparse-nightly
-             * `if (CM_HOST_PLATFORM_FLAVOR  == aarch64)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_HOST_PLATFORM_FLAVOR': ['aarch64']}`
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_ncnn`
       - Environment variables:
@@ -480,7 +485,8 @@ ___
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
         1. ***Read "prehook_deps" on other CM scripts***
            * get,generic-python-lib,_protobuf
-             * `if (CM_MLPERF_BACKEND in ['tf', 'tflite'])`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tf', 'tflite']}`
              * CM names: `--adr.['protobuf']...`
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_retinanet`
@@ -675,157 +681,209 @@ ___
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,cuda,_cudnn
-       * `if (CM_MLPERF_DEVICE  == gpu AND CM_MLPERF_BACKEND in ['onnxruntime', 'tf', 'tflite', 'pytorch'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['gpu'], 'CM_MLPERF_BACKEND': ['onnxruntime', 'tf', 'tflite', 'pytorch']}`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,nvidia,tensorrt
-       * `if (CM_MLPERF_BACKEND  == tensorrt)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tensorrt']}`
        - CM script: [get-tensorrt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-tensorrt)
      * get,generic-python-lib,_onnxruntime
-       * `if (CM_MLPERF_BACKEND in ['onnxruntime', 'tvm-onnx'] AND CM_MLPERF_DEVICE in ['cpu', 'rocm'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime', 'tvm-onnx'], 'CM_MLPERF_DEVICE': ['cpu', 'rocm']}`
        * CM names: `--adr.['ml-engine-onnxruntime', 'onnxruntime']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnxruntime_gpu
-       * `if (CM_MLPERF_BACKEND in ['onnxruntime', 'tvm-onnx'] AND CM_MLPERF_DEVICE  == gpu) AND (CM_MODEL not in ['3d-unet-99', '3d-unet-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime', 'tvm-onnx'], 'CM_MLPERF_DEVICE': ['gpu']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['3d-unet-99', '3d-unet-99.9']}`
        * CM names: `--adr.['ml-engine-onnxruntime-cuda']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnxruntime
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == gpu AND CM_MODEL in ['3d-unet-99', '3d-unet-99.9', 'resnet50'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu'], 'CM_MODEL': ['3d-unet-99', '3d-unet-99.9', 'resnet50']}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnxruntime_gpu
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == gpu AND CM_MODEL in ['3d-unet-99', '3d-unet-99.9', 'resnet50'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu'], 'CM_MODEL': ['3d-unet-99', '3d-unet-99.9', 'resnet50']}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torch
-       * `if (CM_MLPERF_BACKEND in ['pytorch', 'tvm-pytorch'] AND CM_MLPERF_DEVICE in ['cpu', 'rocm'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch', 'tvm-pytorch'], 'CM_MLPERF_DEVICE': ['cpu', 'rocm']}`
        * CM names: `--adr.['ml-engine-pytorch', 'pytorch']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torch_cuda
-       * `if (CM_MLPERF_BACKEND in ['pytorch', 'tvm-pytorch', 'ray'] AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch', 'tvm-pytorch', 'ray'], 'CM_MLPERF_DEVICE': ['gpu']}`
        * CM names: `--adr.['ml-engine-pytorch', 'pytorch']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision
-       * `if (CM_MLPERF_BACKEND in ['pytorch', 'tvm-pytorch'] AND CM_MLPERF_DEVICE  == cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch', 'tvm-pytorch'], 'CM_MLPERF_DEVICE': ['cpu']}`
        * CM names: `--adr.['ml-engine-torchvision']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision_cuda
-       * `if (CM_MLPERF_BACKEND in ['pytorch', 'tvm-pytorch', 'ray'] AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch', 'tvm-pytorch', 'ray'], 'CM_MLPERF_DEVICE': ['gpu']}`
        * CM names: `--adr.['ml-engine-torchvision']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_tensorrt
-       * `if (CM_MLPERF_BACKEND  == ray)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['ray']}`
        * CM names: `--adr.['ml-engine-tensorrt']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torch_tensorrt
-       * `if (CM_MLPERF_BACKEND  == ray)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['ray']}`
        * CM names: `--adr.['ml-engine-torch_tensorrt']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_ray
-       * `if (CM_MLPERF_BACKEND  == ray)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['ray']}`
        * CM names: `--adr.['ray']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_async_timeout
-       * `if (CM_MLPERF_BACKEND  == ray)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['ray']}`
        * CM names: `--adr.['async_timeout']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_transformers
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9', 'gptj-99', 'gptj-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9', 'gptj-99', 'gptj-99.9']}`
        * CM names: `--adr.['ml-engine-transformers']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_tensorflow
-       * `if (CM_MLPERF_BACKEND in ['tf', 'tflite'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tf', 'tflite']}`
        * CM names: `--adr.['ml-engine-tensorflow', 'tensorflow']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_package.ncnn
-       * `if (CM_MLPERF_BACKEND  == ncnn)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['ncnn']}`
        * CM names: `--adr.['ml-engine-ncnn']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,ml-model,neural-magic,zoo
-       * `if (CM_MLPERF_NEURALMAGIC_MODEL_ZOO_STUB  == on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_NEURALMAGIC_MODEL_ZOO_STUB': ['on']}`
        * CM names: `--adr.['custom-ml-model']...`
        - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
      * get,ml-model,image-classification,resnet50
-       * `if (CM_MODEL  == resnet50) AND (CM_MLPERF_CUSTOM_MODEL_PATH  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_CUSTOM_MODEL_PATH': ['on']}`
        * CM names: `--adr.['ml-model', 'resnet50-model']...`
        - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,ml-model,object-detection,retinanet
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['ml-model', 'retinanet-model']...`
        - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
      * get,ml-model,large-language-model,gptj
-       * `if (CM_MODEL in ['gptj-99', 'gptj-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['gptj-99', 'gptj-99.9']}`
        * CM names: `--adr.['ml-model', 'gptj-model', 'gpt-j-model']...`
        - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
      * get,ml-model,object-detection,resnext50,fp32,_pytorch-weights
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_IMPLEMENTATION  == nvidia AND CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_IMPLEMENTATION': ['nvidia'], 'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['ml-model', 'retinanet-model']...`
        - *Warning: no scripts found*
      * get,ml-model,language-processing,bert-large
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9']) AND (CM_MLPERF_CUSTOM_MODEL_PATH  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_CUSTOM_MODEL_PATH': ['on']}`
        * CM names: `--adr.['ml-model', 'bert-model']...`
        - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
      * get,ml-model,stable-diffusion,text-to-image,sdxl
-       * `if (CM_MODEL  == stable-diffusion-xl) AND (CM_MLPERF_CUSTOM_MODEL_PATH  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['stable-diffusion-xl']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_CUSTOM_MODEL_PATH': ['on']}`
        * CM names: `--adr.['ml-model', 'sdxl-model']...`
        - CM script: [get-ml-model-stable-diffusion](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-stable-diffusion)
      * get,ml-model,llama2
-       * `if (CM_MODEL in ['llama2-70b-99', 'llama2-70b-99.9']) AND (CM_MLPERF_CUSTOM_MODEL_PATH  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['llama2-70b-99', 'llama2-70b-99.9']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_CUSTOM_MODEL_PATH': ['on']}`
        * CM names: `--adr.['ml-model', 'llama2-model']...`
        - CM script: [get-ml-model-llama2](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-llama2)
      * get,ml-model,medical-imaging,3d-unet
-       * `if (CM_MODEL in ['3d-unet-99', '3d-unet-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['3d-unet-99', '3d-unet-99.9']}`
        * CM names: `--adr.['ml-model', '3d-unet-model']...`
        - CM script: [get-ml-model-3d-unet-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-3d-unet-kits19)
      * get,ml-model,speech-recognition,rnnt
-       * `if (CM_MODEL  == rnnt)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['rnnt']}`
        * CM names: `--adr.['ml-model', 'rnnt-model']...`
        - CM script: [get-ml-model-rnnt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-rnnt)
      * get,ml-model,recommendation,dlrm
-       * `if (CM_MODEL in ['dlrm-99', 'dlrm-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-99', 'dlrm-99.9']}`
        * CM names: `--adr.['ml-model', 'dlrm-model']...`
        - CM script: [get-ml-model-dlrm-terabyte](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-dlrm-terabyte)
      * get,dataset,image-classification,imagenet,preprocessed
-       * `if (CM_MODEL  == resnet50) AND (CM_MLPERF_VISION_DATASET_OPTION  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_VISION_DATASET_OPTION': [True]}`
        * CM names: `--adr.['imagenet-preprocessed']...`
        - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * get,dataset,image-classification,imagenet,preprocessed,_pytorch
-       * `if (CM_MODEL  == resnet50 AND CM_MLPERF_VISION_DATASET_OPTION  == imagenet_pytorch)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50'], 'CM_MLPERF_VISION_DATASET_OPTION': ['imagenet_pytorch']}`
        * CM names: `--adr.['imagenet-preprocessed']...`
        - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * get,dataset-aux,image-classification,imagenet-aux
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-aux)
      * get,dataset,object-detection,open-images,openimages,preprocessed,_validation
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['openimages-preprocessed']...`
        - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openimages)
      * get,dataset,cnndm,_validation
-       * `if (CM_MODEL in ['gptj-99', 'gptj-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['gptj-99', 'gptj-99.9']}`
        * CM names: `--adr.['cnndm-preprocessed']...`
        - CM script: [get-dataset-cnndm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-cnndm)
      * get,dataset,squad,original
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
        * CM names: `--adr.['cnndm-preprocessed']...`
        - CM script: [get-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad)
      * get,dataset-aux,squad-vocab
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
        - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
      * get,dataset,coco2014,_validation
-       * `if (CM_MODEL  == stable-diffusion-xl)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['stable-diffusion-xl']}`
        * CM names: `--adr.['coco2014-preprocessed']...`
        - CM script: [get-dataset-coco2014](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-coco2014)
      * get,preprocessed,dataset,openorca,_validation
-       * `if (CM_MODEL in ['llama2-70b-99', 'llama2-70b-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['llama2-70b-99', 'llama2-70b-99.9']}`
        * CM names: `--adr.['openorca-preprocessed']...`
        - CM script: [get-preprocessed-dataset-openorca](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openorca)
      * get,dataset,kits19,preprocessed
-       * `if (CM_MODEL in ['3d-unet-99', '3d-unet-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['3d-unet-99', '3d-unet-99.9']}`
        * CM names: `--adr.['kits19-preprocessed']...`
        - CM script: [get-preprocessed-dataset-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-kits19)
      * get,dataset,librispeech,preprocessed
-       * `if (CM_MODEL  == rnnt)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['rnnt']}`
        * CM names: `--adr.['librispeech-preprocessed']...`
        - CM script: [get-preprocessed-dataset-librispeech](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-librispeech)
      * get,dataset,criteo,preprocessed
-       * `if (CM_MODEL in ['dlrm-99', 'dlrm-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-99', 'dlrm-99.9']}`
        * CM names: `--adr.['criteo-preprocessed']...`
        - CM script: [get-preprocessed-dataset-criteo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-criteo)
      * generate,user-conf,mlperf,inference
@@ -845,13 +903,15 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/_cm.yaml)***
      * remote,run,cmds
-       * `if (CM_ASSH_RUN_COMMANDS  == on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_ASSH_RUN_COMMANDS': ['on']}`
        * CM names: `--adr.['remote-run-cmds']...`
        - CM script: [remote-run-commands](https://github.com/mlcommons/cm4mlops/tree/master/script/remote-run-commands)
   1. ***Run native script if exists***
   1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/_cm.yaml)***
      * benchmark-mlperf
-       * `if (CM_MLPERF_SKIP_RUN  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['on']}`
        * CM names: `--adr.['mlperf-runner']...`
        - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/customize.py)***

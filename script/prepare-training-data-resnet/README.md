@@ -182,7 +182,8 @@ ___
      * download,file,_wget,_url.https://raw.githubusercontent.com/tensorflow/models/master/research/slim/datasets/imagenet_2012_validation_synset_labels.txt
        - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
      * download,file,_wget,_url.https://raw.githubusercontent.com/tensorflow/tpu/master/tools/datasets/imagenet_to_gcs.py
-       * `if (CM_TMP_VARIATION  == reference)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TMP_VARIATION': ['reference']}`
        - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
   1. ***Run native script if exists***
      * [run-nvidia.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/run-nvidia.sh)

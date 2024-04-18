@@ -13,42 +13,23 @@ def process_deps(self_module, meta, meta_url, md_script_readme, key, extra_space
             d_tags = d.get('tags', '')
 
             z = extra_space+'     * '+d_tags
-
-            names = d.get('names', [])
-            enable_if_env = d.get('enable_if_env', {})
-            skip_if_env = d.get('skip_if_env', {})
-
-            q = ''
-
-            q1 = ''
-            for e in enable_if_env:
-                if q1!='': q1 += ' AND '
-                q1 += e+' '
-                v = enable_if_env[e]
-                q1 += ' == '+str(v[0]) if len(v)==1 else 'in '+str(v)
-            if q1!='': q1 = '('+q1+')'
-
-            q2 = ''
-            for e in skip_if_env:
-                if q2!='': q2 += ' AND '
-                q2 += e+' '
-                v = skip_if_env[e]
-                q2 += ' == '+str(v[0]) if len(v)==1 else 'not in '+str(v)
-
-            if q2!='': q2 = '('+q2+')'
-
-            if q1!='' or q2!='':
-               q = 'if '
-
-               if q1!='': q+=q1
-               if q2!='':
-                  if q1!='': q+=' AND NOT'
-                  q+=q2
-
             y.append(z)
 
-            if q!='': 
-               y.append(extra_space+'       * `'+q+'`')
+            names = d.get('names', [])
+
+            for kk in [
+                       ('enable_if_env', 'Enable this dependency only if all ENV vars are set'),
+                       ('enable_if_any_env', 'Enable this dependency only if any of ENV vars are set'),
+                       ('skip_if_env', 'Skip this dependenecy only if all ENV vars are set'),
+                       ('skip_if_any_env', 'Skip this dependenecy only if any of ENV vars are set')
+                      ]:
+
+                k1 = kk[0]
+                k2 = kk[1]
+
+                conditions = d.get(k1, {})
+                if len(conditions)>0:
+                    y.append(extra_space+'       * {}:<br>\n`{}`'.format(k2, str(conditions)))
 
             if len(names)>0:
                y.append(extra_space+'       * CM names: `--adr.'+str(names)+'...`')
@@ -1610,6 +1591,8 @@ def docker(i):
       (docker_path) (str): where to create or find Dockerfile
       (docker_gh_token) (str): GitHub token for private repositories
       (docker_save_script) (str): if !='' name of script to save docker command
+      (docker_interactive) (bool): if True, run in interactive mode
+      (docker_cfg) (str): if True, show all available basic docker configurations, otherwise pre-select one
 
     Returns:
       (CM return dict):
@@ -1660,6 +1643,27 @@ def docker(i):
         norecreate_docker_image = True
         env['CM_DOCKER_SKIP_BUILD'] = 'yes'
 
+    # Check available configurations
+    docker_cfg = i.get('docker_cfg', '')
+    if docker_cfg != '':
+        # Check if docker_cfg is turned on but not selected
+        if type(docker_cfg) == bool or str(docker_cfg).lower() in ['true','yes']:
+            docker_cfg= ''
+        
+        r = self_module.cmind.access({'action':'select_cfg', 'automation':'utils,dc2743f8450541e3', 
+                                      'tags':'basic,docker,configurations', 'title':'docker', 'alias':docker_cfg})
+        if r['return'] > 0: 
+            if r['return'] == 16:
+                return {'return':1, 'error':'Docker configuration {} was not found'.format(docker_cfg)}
+            return r
+
+        selection = r['selection']
+
+        docker_input_update = selection['meta']['input']
+        
+        i.update(docker_input_update)
+
+    
     # Clean some input keys
     if not noregenerate_docker_file:
         r = utils.call_internal_module(self_module, __file__, 'module_misc', 'dockerfile', i)

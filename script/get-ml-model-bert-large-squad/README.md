@@ -331,7 +331,8 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/_cm.json)***
      * download-and-extract
-       * `if (CM_ML_MODEL_BERT_PACKED  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_ML_MODEL_BERT_PACKED': ['yes']}`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
   1. ***Run native script if exists***
      * [run-packed.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/run-packed.sh)

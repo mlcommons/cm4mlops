@@ -187,13 +187,15 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/_cm.json)***
      * download,file
-       * `if (CM_DAE_DOWNLOAD_USING_TORRENT not in ['yes', 'True'])`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DAE_DOWNLOAD_USING_TORRENT': ['yes', 'True']}`
        * CM names: `--adr.['download-script']...`
        - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
   1. ***Run native script if exists***
   1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/_cm.json)***
      * extract,file
-       * `if (CM_DAE_EXTRACT_DOWNLOADED in ['yes', 'True'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DAE_EXTRACT_DOWNLOADED': ['yes', 'True']}`
        * CM names: `--adr.['extract-script']...`
        - CM script: [extract-file](https://github.com/mlcommons/cm4mlops/tree/master/script/extract-file)
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/download-and-extract/customize.py)***

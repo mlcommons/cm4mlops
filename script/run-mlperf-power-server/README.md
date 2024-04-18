@@ -139,11 +139,13 @@ ___
        * CM names: `--adr.['power-damenon']...`
        - CM script: [get-spec-ptd](https://github.com/mlcommons/cm4mlops/tree/master/script/get-spec-ptd)
      * get,generic,sys-util,_screen
-       * `if (CM_HOST_OS_TYPE not in windows)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_HOST_OS_TYPE': 'windows'}`
        * CM names: `--adr.['screen']...`
        - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * get,generic-python-lib,_package.pypiwin32
-       * `if (CM_HOST_OS_TYPE in windows)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_HOST_OS_TYPE': 'windows'}`
        * CM names: `--adr.['win32']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-power-server/customize.py)***

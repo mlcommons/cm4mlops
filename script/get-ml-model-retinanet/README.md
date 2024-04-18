@@ -201,7 +201,8 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-retinanet/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-retinanet/_cm.json)***
      * download-and-extract
-       * `if (CM_TMP_ML_MODEL_RETINANET_NO_NMS  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_TMP_ML_MODEL_RETINANET_NO_NMS': ['yes']}`
        * CM names: `--adr.['dae']...`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
   1. ***Run native script if exists***

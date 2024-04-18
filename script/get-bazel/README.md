@@ -104,7 +104,8 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-bazel/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-bazel/_cm.json)***
      * install,bazel
-       * `if (CM_REQUIRE_INSTALL  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_REQUIRE_INSTALL': ['yes']}`
        - CM script: [install-bazel](https://github.com/mlcommons/cm4mlops/tree/master/script/install-bazel)
   1. ***Run native script if exists***
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-bazel/run.bat)

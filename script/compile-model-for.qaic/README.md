@@ -380,15 +380,20 @@ ___
      * detect,cpu
        - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,qaic,apps,sdk
-       * `if (CM_REGISTER_CACHE  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_REGISTER_CACHE': ['on']}`
        * CM names: `--adr.['qaic-apps-sdk']...`
        - CM script: [get-qaic-apps-sdk](https://github.com/mlcommons/cm4mlops/tree/master/script/get-qaic-apps-sdk)
      * qaic,calibrate,_retinanet
-       * `if (CM_COMPILE_RETINANET  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_COMPILE_RETINANET': ['yes']}`
        * CM names: `--adr.['retinanet-profile', 'qaic-profile']...`
        - CM script: [calibrate-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/calibrate-model-for.qaic)
      * qaic,calibrate,_resnet50
-       * `if (CM_COMPILE_RESNET  == on) AND (CM_REGISTER_CACHE  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_COMPILE_RESNET': ['on']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_REGISTER_CACHE': ['on']}`
        * CM names: `--adr.['resnet-profile', 'qaic-profile']...`
        - CM script: [calibrate-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/calibrate-model-for.qaic)
      * get,ml-model

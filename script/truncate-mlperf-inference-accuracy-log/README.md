@@ -125,7 +125,8 @@ ___
        * CM names: `--adr.['inference-src']...`
        - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,mlperf,submission,dir
-       * `if (CM_MLPERF_INFERENCE_SUBMISSION_DIR  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_INFERENCE_SUBMISSION_DIR': ['on']}`
        * CM names: `--adr.['get-mlperf-submission-dir']...`
        - CM script: [get-mlperf-inference-submission-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-submission-dir)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/truncate-mlperf-inference-accuracy-log/customize.py)***

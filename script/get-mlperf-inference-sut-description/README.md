@@ -131,10 +131,12 @@ ___
        - CM script: [get-gcc](https://github.com/mlcommons/cm4mlops/tree/master/script/get-gcc)
        - CM script: [get-llvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-llvm)
      * get,cuda-devices
-       * `if (CM_MLPERF_DEVICE in ['gpu', 'cuda'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['gpu', 'cuda']}`
        - CM script: [get-cuda-devices](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda-devices)
      * detect,sudo
-       * `if (CM_DETERMINE_MEMORY_CONFIGURATION  == yes AND CM_HOST_OS_TYPE  == linux)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DETERMINE_MEMORY_CONFIGURATION': ['yes'], 'CM_HOST_OS_TYPE': ['linux']}`
        - CM script: [detect-sudo](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-sudo)
      * get,generic-python-lib,_package.dmiparser
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)

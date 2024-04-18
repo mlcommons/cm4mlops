@@ -127,7 +127,8 @@ ___
      * detect,cpu
        - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * set,performance,mode,_performance
-       * `if (CM_SET_PERFORMANCE_MODE in ['on', 'yes', 'True', True])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_SET_PERFORMANCE_MODE': ['on', 'yes', 'True', True]}`
        - CM script: [set-performance-mode](https://github.com/mlcommons/cm4mlops/tree/master/script/set-performance-mode)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/customize.py)***
   1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-program/_cm.json)

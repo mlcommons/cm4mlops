@@ -196,10 +196,12 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,dataset-aux,openimages,annotations
-             * `if (CM_MLPERF_RUN_STYLE  == valid)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_RUN_STYLE': ['valid']}`
              - CM script: [get-dataset-openimages-annotations](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages-annotations)
            * get,dataset,openimages,original
-             * `if (CM_MLPERF_RUN_STYLE  != valid)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_RUN_STYLE': ['valid']}`
              * CM names: `--adr.['openimages-original']...`
              - CM script: [get-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages)
            * get,generic-python-lib,_package.kiwisolver
@@ -214,10 +216,12 @@ ___
            * get,generic-python-lib,_package.transformers
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,dataset,squad,language-processing
-             * `if (CM_DATASET_SQUAD_VAL_PATH not in [])`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DATASET_SQUAD_VAL_PATH': []}`
              - CM script: [get-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad)
            * get,dataset-aux,squad-vocab
-             * `if (CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH  != on)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH': ['on']}`
              - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
            * get,generic-python-lib,_torch
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)

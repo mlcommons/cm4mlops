@@ -157,7 +157,8 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * install,numactl,from.src
-             * `if (CM_HOST_OS_FLAVOR  == rhel AND CM_HOST_OS_VERSION in ['9.1', '9.2', '9.3'])`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_HOST_OS_FLAVOR': ['rhel'], 'CM_HOST_OS_VERSION': ['9.1', '9.2', '9.3']}`
              - CM script: [install-numactl-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-numactl-from-src)
     * `_nvidia-cuda-toolkit`
       - Environment variables:

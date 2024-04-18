@@ -99,6 +99,8 @@ ___
       - Workflow:
     * `_2012-full`
       - Workflow:
+    * `_run-during-docker-build`
+      - Workflow:
 
     </details>
 
@@ -179,10 +181,12 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-val/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-val/_cm.json)***
      * download-and-extract,file,_extract
-       * `if (CM_DATASET_IMAGENET_VAL_REQUIRE_DAE in ['yes', 'True'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DATASET_IMAGENET_VAL_REQUIRE_DAE': ['yes', 'True']}`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
      * file,extract,_no-remove-extracted
-       * `if (CM_DAE_ONLY_EXTRACT in ['yes', 'True'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DAE_ONLY_EXTRACT': ['yes', 'True']}`
        - CM script: [extract-file](https://github.com/mlcommons/cm4mlops/tree/master/script/extract-file)
   1. ***Run native script if exists***
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-val/run.bat)

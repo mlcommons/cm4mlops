@@ -181,7 +181,8 @@ ___
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/run.sh)
   1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/_cm.yaml)***
      * get,coco2014,annotations
-       * `if (CM_DATASET_COCO2014_CUSTOM_ANNOTATIONS  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DATASET_COCO2014_CUSTOM_ANNOTATIONS': ['yes']}`
        - *Warning: no scripts found*
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/customize.py)***
   1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/_cm.yaml)
