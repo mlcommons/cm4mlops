@@ -5,7 +5,7 @@ name: CM tutorial tvm pip install
 
 on:
   pull_request:
-    branches: [ "master", "test" ]
+    branches: [ "main", "test" ]
     paths:
       - '.github/workflows/test-cm-tutorial-tvm-pip.yml'
       - '**'
@@ -32,7 +32,7 @@ jobs:
         cm run script --quiet --tags=get,sys-utils-cm
     - name: Test CM Tutorial TVM pip install with VirtualMachine Runtime
       run: |
-        python tests/tutorials/test_tutorial_tvm_pip_vm.py
+        python script/test-cm-core/src/tutorials/test_tutorial_tvm_pip_vm.py
 
   test_ge_runtime:
     runs-on: ubuntu-latest
@@ -54,4 +54,4 @@ jobs:
         cm run script --quiet --tags=get,sys-utils-cm
     - name: Test CM Tutorial TVM pip install with GraphExecutor Runtime
       run: |
-        python tests/tutorials/test_tutorial_tvm_pip_ge.py
+        python script/test-cm-core/src/tutorials/test_tutorial_tvm_pip_ge.py

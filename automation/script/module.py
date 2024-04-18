@@ -4387,7 +4387,7 @@ and deterministic. Thank you'''
             utils.merge_dicts({'dict1':env, 'dict2':updated_env, 'append_lists':True, 'append_unique':True})
  
 
-    if postprocess != '' and customize_code is not None:
+    if postprocess != '' and customize_code is not None and postprocess in dir(customize_code):
         print (recursion_spaces+'       ! call "{}" from {}'.format(postprocess, customize_code.__file__))
     
     if len(posthook_deps)>0 and (postprocess == "postprocess"):
