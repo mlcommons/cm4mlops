@@ -5,3 +5,7 @@ echo CM_ENV_TEST3 = %CM_ENV_TEST3%
 
 echo.
 echo HELLO WORLD!
+if not "%CM_PRINT_HELLO_WORLD_TEXT%" == "" (
+  echo %CM_PRINT_HELLO_WORLD_TEXT%
+)
+echo.

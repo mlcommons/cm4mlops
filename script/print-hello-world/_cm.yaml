@@ -31,6 +31,11 @@ tags:
 - native
 - script
 
+variations:
+  text.#:
+    env:
+      CM_PRINT_HELLO_WORLD_TEXT: "#"
+
 docker:
   skip_run_cmd: 'yes'
   skip_cm_sys_upgrade: 'yes'
