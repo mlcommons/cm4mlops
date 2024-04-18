@@ -174,6 +174,12 @@ class CAutomation(Automation):
           (repro_dir) (str): if !='', use this directory to dump info
 
           (script_call_prefix) (str): how to call script in logs and READMEs (cm run script)
+
+          (skip_sys_utils) (bool): if True, set env['CM_SKIP_SYS_UTILS']='yes' 
+                                   to skip CM sys installation
+          (skip_sudo) (bool): if True, set env['CM_TMP_SKIP_SUDO']='yes'
+                              to let scripts deal with that
+
           ...
 
         Returns:
@@ -328,6 +334,11 @@ class CAutomation(Automation):
         
         fake_deps = i.get('fake_deps', False)
         if fake_deps: env['CM_TMP_FAKE_DEPS']='yes'
+
+        if str(i.get('skip_sys_utils', '')).lower() in ['true', 'yes']:
+            env['CM_SKIP_SYS_UTILS']='yes' 
+        if str(i.get('skip_sudo', '')).lower() in ['true', 'yes']:
+            env['CM_TMP_SKIP_SUDO']='yes' 
 
         run_state = i.get('run_state', self.run_state)
         if not run_state.get('version_info', []):
