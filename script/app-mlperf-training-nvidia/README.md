@@ -101,7 +101,8 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_protobuf
-             * `if (CM_MLPERF_BACKEND in ['tf', 'tflite'])`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tf', 'tflite']}`
              * CM names: `--adr.['protobuf']...`
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torch
@@ -205,16 +206,19 @@ ___
        * CM names: `--adr.['training-results', 'mlperf-training-results']...`
        - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
      * get,cuda
-       * `if (CM_MLPERF_DEVICE  == cuda)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['cuda']}`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,generic-python-lib,_torchvision_cuda
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == cuda)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['cuda']}`
        * CM names: `--adr.['ml-engine-torchvision']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_mlperf_logging
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * prepare,mlperf,training,data,bert,_nvidia
-       * `if (CM_MLPERF_MODEL  == bert)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_MODEL': ['bert']}`
        * CM names: `--adr.['prepare-data', 'bert-model']...`
        - CM script: [prepare-training-data-bert](https://github.com/mlcommons/cm4mlops/tree/master/script/prepare-training-data-bert)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-training-nvidia/customize.py)***

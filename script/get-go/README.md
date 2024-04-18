@@ -104,7 +104,8 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-go/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-go/_cm.json)***
      * install,go
-       * `if (CM_REQUIRE_INSTALL  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_REQUIRE_INSTALL': ['yes']}`
        - *Warning: no scripts found*
   1. ***Run native script if exists***
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-go/run.sh)

@@ -261,7 +261,8 @@ ___
      * get,sys-utils-cm
        - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
      * get,cuda,_cudnn
-       * `if (CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['gpu']}`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,loadgen
        * CM names: `--adr.['loadgen']...`
@@ -270,24 +271,30 @@ ___
        * CM names: `--adr.['inference-src']...`
        - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,lib,onnxruntime,lang-cpp,_cpu
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['cpu']}`
        - CM script: [get-onnxruntime-prebuilt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-onnxruntime-prebuilt)
      * get,lib,onnxruntime,lang-cpp,_cuda
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu']}`
        - CM script: [get-onnxruntime-prebuilt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-onnxruntime-prebuilt)
      * get,dataset,preprocessed,imagenet,_NCHW
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['imagenet-preprocessed']...`
        - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * get,ml-model,raw,resnet50,_onnx
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,dataset,preprocessed,openimages,_validation,_NCHW
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['openimages-preprocessed']...`
        - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openimages)
      * get,ml-model,retinanet,_onnx,_fp32
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
      * generate,user-conf,mlperf,inference
        * CM names: `--adr.['user-conf-generator']...`
@@ -299,11 +306,13 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-cpp/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-cpp/_cm.yaml)***
      * compile,cpp-program
-       * `if (CM_MLPERF_SKIP_RUN  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes']}`
        * CM names: `--adr.['compile-program']...`
        - CM script: [compile-program](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-program)
      * benchmark-mlperf
-       * `if (CM_MLPERF_SKIP_RUN  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes']}`
        * CM names: `--adr.['mlperf-runner']...`
        - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
      * save,mlperf,inference,state

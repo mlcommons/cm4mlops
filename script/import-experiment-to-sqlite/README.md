@@ -29,7 +29,7 @@
 
 * Category: *DevOps automation.*
 * CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/master/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/import-experiment-to-sqlite)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/main/script/import-experiment-to-sqlite)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * CM "database" tags to find this script: *import,experiment2sqlite*
 * Output cached? *False*
@@ -126,20 +126,20 @@ ___
 <details>
 <summary>Click here to expand this section.</summary>
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/import-experiment-to-sqlite/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/import-experiment-to-sqlite/_cm.yaml)***
      * get,python3
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/main/script/get-python3)
      * set,sqlite-dir
-       - CM script: [set-sqlite-dir](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-sqlite-dir)
+       - CM script: [set-sqlite-dir](https://github.com/mlcommons/cm4mlops/tree/main/script/set-sqlite-dir)
   1. Run "preprocess" function from customize.py
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/import-experiment-to-sqlite/_cm.yaml)
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/import-experiment-to-sqlite/_cm.yaml)
   1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/import-experiment-to-sqlite/run.bat)
-     * [run.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/import-experiment-to-sqlite/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/import-experiment-to-sqlite/_cm.yaml)
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/import-experiment-to-sqlite/run.bat)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/import-experiment-to-sqlite/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/import-experiment-to-sqlite/_cm.yaml)
   1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/import-experiment-to-sqlite/_cm.yaml)
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/import-experiment-to-sqlite/_cm.yaml)
 </details>
 
 ___

@@ -162,7 +162,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-python-src/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-python-src/_cm.json)***
      * get,python3
-       * `if (CM_REQUIRE_INSTALL  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_REQUIRE_INSTALL': ['yes']}`
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
 

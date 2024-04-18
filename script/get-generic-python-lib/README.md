@@ -392,7 +392,8 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,rust-compiler
-             * `if (CM_HOST_PLATFORM_FLAVOR  != x86_64)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_HOST_PLATFORM_FLAVOR': ['x86_64']}`
              - CM script: [get-compiler-rust](https://github.com/mlcommons/cm4mlops/tree/master/script/get-compiler-rust)
     * `_scikit-learn`
       - Environment variables:
@@ -649,17 +650,20 @@ ___
      * detect,cpu
        - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,python3
-       * `if (CM_TMP_USE_CUSTOM_PYTHON  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_TMP_USE_CUSTOM_PYTHON': ['on']}`
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,generic-python-lib,_pip
-       * `if (CM_GENERIC_PYTHON_PACKAGE_NAME  != pip)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_GENERIC_PYTHON_PACKAGE_NAME': ['pip']}`
        * CM names: `--adr.['python-pip', 'pip']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)***
      * install,onnxruntime,from.src,_cuda
-       * `if (CM_INSTALL_ONNXRUNTIME_GPU_FROM_SRC  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_INSTALL_ONNXRUNTIME_GPU_FROM_SRC': ['yes']}`
        - CM script: [install-onnxruntime-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-onnxruntime-from-src)
   1. ***Run native script if exists***
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/run.bat)

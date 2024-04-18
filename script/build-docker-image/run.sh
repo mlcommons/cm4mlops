@@ -10,4 +10,6 @@ if [ -f "${CM_DOCKERFILE_WITH_PATH}" ]; then
 
   eval "${CM_DOCKER_BUILD_CMD}"
   test $? -eq 0 || exit 1
+
+  echo ""
 fi

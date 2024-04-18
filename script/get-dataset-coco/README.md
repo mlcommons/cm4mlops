@@ -176,11 +176,13 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco/_cm.json)***
      * download-and-extract,file,_wget,_extract
-       * `if (CM_DATASET_COCO_DETECTED  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DATASET_COCO_DETECTED': ['yes']}`
        * CM names: `--adr.['get-dataset-coco-data', '746e5dad5e784ad6']...`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
      * download-and-extract,file,_wget,_extract
-       * `if (CM_DATASET_COCO_DETECTED  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DATASET_COCO_DETECTED': ['yes']}`
        * CM names: `--adr.['get-dataset-coco-annotations', 'edb6cd092ff64171']...`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
   1. ***Run native script if exists***

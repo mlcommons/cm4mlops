@@ -120,7 +120,8 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-llvm/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-llvm/_cm.json)***
      * install,llvm
-       * `if (CM_REQUIRE_INSTALL  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_REQUIRE_INSTALL': ['yes']}`
        * CM names: `--adr.llvm-install...`
        - CM script: [install-llvm-prebuilt](https://github.com/mlcommons/cm4mlops/tree/master/script/install-llvm-prebuilt)
        - CM script: [install-llvm-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-llvm-src)

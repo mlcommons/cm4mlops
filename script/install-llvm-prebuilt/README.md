@@ -115,7 +115,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-llvm-prebuilt/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-llvm-prebuilt/_cm.json)***
      * get,llvm
-       * `if (CM_REQUIRE_INSTALL  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_REQUIRE_INSTALL': ['yes']}`
        - CM script: [get-llvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-llvm)
 
 ___

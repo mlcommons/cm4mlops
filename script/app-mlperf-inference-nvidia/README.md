@@ -1031,13 +1031,16 @@ ___
              * CM names: `--adr.['nvidia-inference-server']...`
              - CM script: [build-mlperf-inference-server-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/build-mlperf-inference-server-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_preprocess_data
-             * `if (CM_MODEL not in ['dlrm-v2-99', 'dlrm-v2-99.9'])`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-v2-99', 'dlrm-v2-99.9']}`
              - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_download_model
-             * `if (CM_MODEL not in ['retinanet_old', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9'])`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet_old', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9']}`
              - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_calibrate
-             * `if (CM_MODEL  == retinanet)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
              - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
     * `_calibrate`
       - Environment variables:
@@ -1046,7 +1049,8 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * reproduce,mlperf,inference,nvidia,harness,_download_model
-             * `if (CM_MODEL not in ['retinanet_old', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9'])`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet_old', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9']}`
              - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
     * `_download_model`
       - Environment variables:
@@ -1055,7 +1059,8 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_torch_cuda
-             * `if (CM_MODEL  == retinanet)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
              - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_prebuild`
       - Environment variables:
@@ -1087,10 +1092,12 @@ ___
              * CM names: `--adr.['build-engine']...`
              - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_preprocess_data
-             * `if (CM_MODEL not in ['dlrm-v2-99', 'dlrm-v2-99.9'])`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-v2-99', 'dlrm-v2-99.9']}`
              - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_download_model
-             * `if (CM_MODEL not in ['retinanet', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9'])`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9']}`
              - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
 
     </details>
@@ -1213,51 +1220,67 @@ ___
        * CM names: `--adr.['mlperf-logging']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,dataset,original,imagenet,_full
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['imagenet-original']...`
        - CM script: [get-dataset-imagenet-val](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-val)
      * get,ml-model,resnet50,_fp32,_onnx,_opset-8
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['resnet50-model', 'ml-model']...`
        - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,dataset,original,kits19
-       * `if (CM_MODEL in ['3d-unet-99-disabled', '3d-unet-99.9-disabled'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['3d-unet-99-disabled', '3d-unet-99.9-disabled']}`
        * CM names: `--adr.['kits19-original']...`
        - CM script: [get-dataset-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-kits19)
      * get,dataset,original,librispeech
-       * `if (CM_MODEL  == rnnt)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['rnnt']}`
        * CM names: `--adr.['librispeech-original']...`
        - CM script: [get-dataset-librispeech](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-librispeech)
      * get,dataset,preprocessed,criteo
-       * `if (CM_MODEL in ['dlrm-v2-99', 'dlrm-v2-99.9']) AND (DLRM_DATA_PATH  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-v2-99', 'dlrm-v2-99.9']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'DLRM_DATA_PATH': [True]}`
        * CM names: `--adr.['criteo-preprocessed']...`
        - CM script: [get-preprocessed-dataset-criteo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-criteo)
      * get,ml-model,dlrm,_pytorch
-       * `if (CM_MODEL in ['dlrm-v2-99', 'dlrm-v2-99.9']) AND (DLRM_DATA_PATH  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-v2-99', 'dlrm-v2-99.9']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'DLRM_DATA_PATH': [True]}`
        * CM names: `--adr.['dlrm-model']...`
        - CM script: [get-ml-model-dlrm-terabyte](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-dlrm-terabyte)
      * get,ml-model,bert,_onnx,_fp32
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
        * CM names: `--adr.['bert-model', 'bert-model-fp32']...`
        - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
      * get,ml-model,bert,_onnx,_int8
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
        * CM names: `--adr.['bert-model', 'bert-model-int8']...`
        - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
      * get,squad-vocab
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
        * CM names: `--adr.['bert-vocab']...`
        - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
      * get,dataset,original,openimages,_validation,_full,_custom-annotations
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['openimages-original']...`
        - CM script: [get-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages)
      * get,dataset,original,openimages,_calibration
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['openimages-calibration']...`
        - CM script: [get-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages)
      * get,dataset,original,openorca
-       * `if (CM_MODEL in ['gptj-99', 'gptj-99.9'] AND CM_MLPERF_NVIDIA_HARNESS_RUN_MODE  == preprocess_dataset)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['gptj-99', 'gptj-99.9'], 'CM_MLPERF_NVIDIA_HARNESS_RUN_MODE': ['preprocess_dataset']}`
        * CM names: `--adr.['openorca-original']...`
        - CM script: [get-dataset-openorca](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openorca)
      * get,mlcommons,inference,src
@@ -1267,19 +1290,23 @@ ___
        * CM names: `--adr.['nvidia-inference-common-code']...`
        - CM script: [get-mlperf-inference-nvidia-common-code](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-nvidia-common-code)
      * generate,user-conf,mlperf,inference
-       * `if (CM_MLPERF_NVIDIA_HARNESS_RUN_MODE  == run_harness)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_NVIDIA_HARNESS_RUN_MODE': ['run_harness']}`
        * CM names: `--adr.['user-conf-generator']...`
        - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-user-conf)
      * get,generic-python-lib,_package.nvmitten,_path./opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl
-       * `if (CM_RUN_STATE_DOCKER in ['yes', True, 'True'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_RUN_STATE_DOCKER': ['yes', True, 'True']}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,nvidia,mitten
-       * `if (CM_RUN_STATE_DOCKER not in ['yes', True, 'True'])`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_RUN_STATE_DOCKER': ['yes', True, 'True']}`
        - CM script: [get-nvidia-mitten](https://github.com/mlcommons/cm4mlops/tree/master/script/get-nvidia-mitten)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/_cm.yaml)***
      * get,ml-model,gptj,_pytorch,_rclone
-       * `if (CM_REQUIRE_GPTJ_MODEL_DOWNLOAD  == yes AND CM_MLPERF_NVIDIA_HARNESS_RUN_MODE in ['download_model', 'preprocess_data'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_REQUIRE_GPTJ_MODEL_DOWNLOAD': ['yes'], 'CM_MLPERF_NVIDIA_HARNESS_RUN_MODE': ['download_model', 'preprocess_data']}`
        * CM names: `--adr.['gptj-model']...`
        - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
   1. ***Run native script if exists***
@@ -1288,7 +1315,10 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/_cm.yaml)***
      * benchmark-mlperf
-       * `if (CM_CALL_MLPERF_RUNNER  == True) AND (CM_MLPERF_SKIP_RUN not in ['yes', True])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_CALL_MLPERF_RUNNER': [True]}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes', True]}`
        * CM names: `--adr.['runner', 'mlperf-runner']...`
        - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
      * save,mlperf,inference,state

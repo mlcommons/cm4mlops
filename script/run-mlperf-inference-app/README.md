@@ -241,7 +241,8 @@ ___
       - Workflow:
         1. ***Read "post_deps" on other CM scripts***
            * generate,mlperf,inference,submission
-             * `if (CM_MLPERF_SKIP_SUBMISSION_GENERATION in ['no', 'false', 'False', '0'])`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_SUBMISSION_GENERATION': ['no', 'false', 'False', '0']}`
              * CM names: `--adr.['submission-generator']...`
              - CM script: [generate-mlperf-inference-submission](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-submission)
 
@@ -361,13 +362,16 @@ ___
 
   1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-app/_cm.yaml)***
      * detect,os
-       * `if (CM_MLPERF_USE_DOCKER  != True)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_USE_DOCKER': [True]}`
        - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       * `if (CM_MLPERF_USE_DOCKER  != True)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_USE_DOCKER': [True]}`
        - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,python3
-       * `if (CM_MLPERF_USE_DOCKER  != True)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_USE_DOCKER': [True]}`
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,mlcommons,inference,src
@@ -376,7 +380,10 @@ ___
      * get,sut,description
        - CM script: [get-mlperf-inference-sut-description](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-sut-description)
      * get,mlperf,inference,results,dir
-       * `if (CM_MLPERF_USE_DOCKER  == False) AND (OUTPUT_BASE_DIR  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_USE_DOCKER': [False]}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'OUTPUT_BASE_DIR': [True]}`
        * CM names: `--adr.['get-mlperf-inference-results-dir']...`
        - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results-dir)
      * install,pip-package,for-cmind-python,_package.tabulate

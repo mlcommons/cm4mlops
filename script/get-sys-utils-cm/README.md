@@ -14,7 +14,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 * CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
 * GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
+* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *get,sys-utils-cm*
 * Output cached? *True*
 * See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
@@ -131,11 +131,11 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.yaml)***
      * detect,os
        - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.json)
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.yaml)
   1. ***Run native script if exists***
      * [run-arch.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-arch.sh)
      * [run-debian.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-debian.sh)
@@ -143,9 +143,9 @@ ___
      * [run-rhel.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-rhel.sh)
      * [run-sles.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-sles.sh)
      * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-ubuntu.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.json)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.yaml)
   1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.json)
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.yaml)
 
 ___
 ### Script output

@@ -192,7 +192,8 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-tiny-resnet/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-tiny-resnet/_cm.json)***
      * download-and-extract
-       * `if (CM_PACKAGE_URL  == on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_PACKAGE_URL': ['on']}`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
   1. ***Run native script if exists***
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-tiny-resnet/run.sh)

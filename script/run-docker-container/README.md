@@ -14,7 +14,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 * CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
 * GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
+* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *run,docker,container*
 * Output cached? *False*
 * See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
@@ -106,6 +106,7 @@ ___
 * `--image_name=value`  &rarr;  `CM_DOCKER_IMAGE_NAME=value`
 * `--image_repo=value`  &rarr;  `CM_DOCKER_IMAGE_REPO=value`
 * `--image_tag=value`  &rarr;  `CM_DOCKER_IMAGE_TAG=value`
+* `--image_tag_extra=value`  &rarr;  `CM_DOCKER_IMAGE_TAG_EXTRA=value`
 * `--interactive=value`  &rarr;  `CM_DOCKER_INTERACTIVE_MODE=value`
 * `--it=value`  &rarr;  `CM_DOCKER_INTERACTIVE=value`
 * `--mounts=value`  &rarr;  `CM_DOCKER_VOLUME_MOUNTS=value`
@@ -144,17 +145,18 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.json)
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.yaml)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.json)***
+  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.yaml)***
      * build,docker,image
-       * `if (CM_DOCKER_IMAGE_EXISTS  != yes)`
+       * Skip this dependenecy only if any of ENV vars are set:<br>
+`{'CM_DOCKER_IMAGE_EXISTS': ['yes'], 'CM_DOCKER_SKIP_BUILD': ['yes']}`
        * CM names: `--adr.['build-docker-image']...`
        - CM script: [build-docker-image](https://github.com/mlcommons/cm4mlops/tree/master/script/build-docker-image)
   1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.json)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.yaml)
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.json)
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.yaml)
 
 ___
 ### Script output

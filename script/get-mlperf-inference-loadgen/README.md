@@ -160,21 +160,25 @@ ___
        * CM names: `--adr.['python3', 'python']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,mlcommons,inference,src
-       * `if (CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD  != YES)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD': ['YES']}`
        * CM names: `--adr.['inference-src-loadgen']...`
        - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * download-and-extract,file,_wget,_extract
-       * `if (CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD  == YES)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD': ['YES']}`
        * CM names: `--adr.['inference-src-loadgen-download']...`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
      * get,compiler
-       * `if (CM_HOST_OS_TYPE  != windows)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_HOST_OS_TYPE': ['windows']}`
        * CM names: `--adr.['compiler']...`
        - CM script: [get-cl](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cl)
        - CM script: [get-gcc](https://github.com/mlcommons/cm4mlops/tree/master/script/get-gcc)
        - CM script: [get-llvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-llvm)
      * get,cl
-       * `if (CM_HOST_OS_TYPE  == windows)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_HOST_OS_TYPE': ['windows']}`
        * CM names: `--adr.['compiler']...`
        - CM script: [get-cl](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cl)
      * get,cmake

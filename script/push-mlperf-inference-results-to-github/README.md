@@ -127,7 +127,8 @@ ___
      * get,generic-sys-util,_rsync
        - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * get,mlperf,submission,dir
-       * `if (CM_MLPERF_INFERENCE_SUBMISSION_DIR  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_INFERENCE_SUBMISSION_DIR': ['on']}`
        * CM names: `--adr.['get-mlperf-submission-dir']...`
        - CM script: [get-mlperf-inference-submission-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-submission-dir)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-mlperf-inference-results-to-github/customize.py)***

@@ -163,14 +163,16 @@ ___
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,cuda
-       * `if (USE_CUDA  == True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'USE_CUDA': [True]}`
        * CM names: `--adr.['cuda']...`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,cudnn
-       * `if (USE_CUDA  == True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'USE_CUDA': [True]}`
        * CM names: `--adr.['cudnn']...`
        - CM script: [get-cudnn](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cudnn)
-     * get,dataset,imagenet,image-classification,original
+     * get,dataset,imagenet,image-classification,original,_run-during-docker-build
        - CM script: [get-dataset-imagenet-val](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-val)
      * get,dataset-aux,imagenet-aux,image-classification
        - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-aux)
@@ -184,11 +186,13 @@ ___
      * get,generic-python-lib,_package.opencv-python
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnxruntime
-       * `if (USE_CUDA  != True)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'USE_CUDA': [True]}`
        * CM names: `--adr.['onnxruntime']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnxruntime_gpu
-       * `if (USE_CUDA  == True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'USE_CUDA': [True]}`
        * CM names: `--adr.['onnxruntime']...`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-image-classification-onnx-py/customize.py)***

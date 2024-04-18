@@ -113,7 +113,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-tiny-submission/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-tiny-submission/_cm.json)***
      * 
-       * `if (CM_MLPERF_RUN_STYLE  == valid)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_RUN_STYLE': ['valid']}`
        - CM script: [outdated-test-abtf-ssd-pytorch](outdated-test-abtf-ssd-pytorch)
        - CM script: [run-how-to-run-server](https://github.com/how-to-run/server/tree/master/script/run-how-to-run-server)
        - CM script: [get-dataset-cognata-mlcommons](https://github.com/mlcommons/cm4abtf/tree/master/script/get-dataset-cognata-mlcommons)
@@ -397,6 +398,7 @@ ___
        - CM script: [set-sqlite-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/set-sqlite-dir)
        - CM script: [set-venv](https://github.com/mlcommons/cm4mlops/tree/master/script/set-venv)
        - CM script: [tar-my-folder](https://github.com/mlcommons/cm4mlops/tree/master/script/tar-my-folder)
+       - CM script: [test-deps-conditions](https://github.com/mlcommons/cm4mlops/tree/master/script/test-deps-conditions)
        - CM script: [test-download-and-extract-artifacts](https://github.com/mlcommons/cm4mlops/tree/master/script/test-download-and-extract-artifacts)
        - CM script: [test-mlperf-inference-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/test-mlperf-inference-retinanet)
        - CM script: [test-set-sys-user-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/test-set-sys-user-cm)

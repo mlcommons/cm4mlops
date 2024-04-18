@@ -133,17 +133,20 @@ ___
      * get,ml-model,retinanet,_pytorch,_fp32,_weights
        - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
      * get,generic-python-lib,_torch
-       * `if (CM_TORCH_DEVICE in cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TORCH_DEVICE': 'cpu'}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_mlperf_logging
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,cuda
-       * `if (CM_TORCH_DEVICE in cuda)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TORCH_DEVICE': 'cuda'}`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,generic-python-lib,_torch_cuda
-       * `if (CM_TORCH_DEVICE in cuda)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TORCH_DEVICE': 'cuda'}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,nvidia,mlperf,inference,common-code,-_custom
        - CM script: [get-mlperf-inference-nvidia-common-code](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-nvidia-common-code)

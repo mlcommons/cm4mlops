@@ -2,3 +2,9 @@ alias: mlcommons@cm4mlops
 uid: 9e97bb72b0474657
 
 git: true
+
+deps:
+  - alias: mlcommons@ck
+    uid: a4705959af8e447a
+    conflict: True
+

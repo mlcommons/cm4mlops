@@ -180,7 +180,8 @@ ___
        * CM names: `--adr.['python3', 'python']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,dataset,criteo,original
-       * `if (CM_DATASET_PREPROCESSED_PATH  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DATASET_PREPROCESSED_PATH': ['on']}`
        * CM names: `--adr.['original-dataset', 'criteo-dataset']...`
        - CM script: [get-dataset-criteo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-criteo)
      * get,dlrm,src

@@ -167,11 +167,13 @@ ___
      * detect,cpu
        - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,python3
-       * `if (CM_CONDA_ENV  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CONDA_ENV': ['yes']}`
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,pytorch,from.src
-       * `if (CM_CONDA_ENV  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CONDA_ENV': ['yes']}`
        * CM names: `--adr.['pytorch']...`
        - CM script: [install-pytorch-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pytorch-from-src)
      * get,git,repo

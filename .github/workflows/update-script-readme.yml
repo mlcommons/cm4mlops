@@ -5,7 +5,7 @@ on:
   push:
     branches: [ "master", "dev" ]
     paths:
-      - 'cm-mlops/script/**_cm.json'
+      - 'script/**_cm.json'
 
 jobs:
   doreadme:

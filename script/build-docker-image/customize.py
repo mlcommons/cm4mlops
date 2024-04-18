@@ -48,10 +48,13 @@ def preprocess(i):
     if env.get("CM_DOCKER_IMAGE_TAG", "") == '':
         env['CM_DOCKER_IMAGE_TAG'] = "latest"
 
-    if env.get("CM_DOCKER_CACHE", "yes") == "no":
+    if env.get("CM_DOCKER_CACHE", "yes") in ["no", "False", False]:
         env["CM_DOCKER_CACHE_ARG"] = " --no-cache"
 
     CMD = ''
+
+    image_name = get_image_name(env)
+
     if not build_dockerfile:
         # Write .dockerignore
         with open('.dockerignore', 'w') as f:
@@ -62,9 +65,7 @@ def preprocess(i):
                'docker build ' + env.get('CM_DOCKER_CACHE_ARG',''),
                 ' ' + build_args,
                 ' -f "' + dockerfile_path + '"',
-                ' -t "' + env.get('CM_DOCKER_IMAGE_REPO', '') + '/' + \
-                env.get('CM_DOCKER_IMAGE_NAME', '') + ':' + \
-                env.get('CM_DOCKER_IMAGE_TAG', '') + '"',
+                ' -t "' + image_name,
                 ' .'
                ]
 
@@ -76,7 +77,7 @@ def preprocess(i):
 
         CMD = ''.join(XCMD)
 
-        print ('')
+        print ('================================================')
         print ('CM generated the following Docker build command:')
         print ('')
         print (CMD)
@@ -84,5 +85,47 @@ def preprocess(i):
         print ('')
 
     env['CM_DOCKER_BUILD_CMD'] = CMD
+
+    return {'return':0}
+
+def get_image_name(env):
+
+    image_name = env.get('CM_DOCKER_IMAGE_REPO', '') + '/' + \
+                 env.get('CM_DOCKER_IMAGE_NAME', '') + ':' + \
+                 env.get('CM_DOCKER_IMAGE_TAG', '') + '"'
+
+    return image_name
+
+def postprocess(i):
+
+    env = i['env']
+
+    # Check if need to push docker image to the Docker Hub
+    if env.get('CM_DOCKER_PUSH_IMAGE', '') in ['True', True, 'yes']:
+        image_name = get_image_name(env)
+
+        # Prepare CMD to build image
+        PCMD = 'docker image push ' + image_name
+
+        dockerfile_path = env.get('CM_DOCKERFILE_WITH_PATH', '')
+        if dockerfile_path!='' and os.path.isfile(dockerfile_path):
+            with open(dockerfile_path + '.push.sh', 'w') as f:
+                f.write(PCMD + '\n')
+
+            with open(dockerfile_path + '.build.bat', 'w') as f:
+                f.write(PCMD + '\n')
+
+        print ('================================================')
+        print ('CM generated the following Docker push command:')
+        print ('')
+        print (PCMD)
+
+        print ('')
+
+        r = os.system(PCMD)
+        print ('')
+
+        if r>0: 
+            return {'return':1, 'error':'pushing to Docker Hub failed'}
 
     return {'return':0}

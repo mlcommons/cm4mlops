@@ -37,7 +37,7 @@ def page(st, params):
         x = '''
              <i>
              <small>
-             <a href="https://github.com/mlcommons/ck/tree/master/cm-mlops/script">Collective Mind</a> is a collection of open-source, portable, extensible and ready-to-use 
+             <a href="https://github.com/mlcommons/cm4mlops/tree/main/script">Collective Mind</a> is a collection of open-source, portable, extensible and ready-to-use 
              automation scripts with a human-friendly interface and minimal dependencies to make it easier to compose, benchmark and optimize 
              complex AI, ML and other applications and systems across diverse and continuously changing models, data sets, software and hardware.
              Note that this is a <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">collaborative engineering effort</a> 

@@ -174,6 +174,12 @@ class CAutomation(Automation):
           (repro_dir) (str): if !='', use this directory to dump info
 
           (script_call_prefix) (str): how to call script in logs and READMEs (cm run script)
+
+          (skip_sys_utils) (bool): if True, set env['CM_SKIP_SYS_UTILS']='yes' 
+                                   to skip CM sys installation
+          (skip_sudo) (bool): if True, set env['CM_TMP_SKIP_SUDO']='yes'
+                              to let scripts deal with that
+
           ...
 
         Returns:
@@ -328,6 +334,11 @@ class CAutomation(Automation):
         
         fake_deps = i.get('fake_deps', False)
         if fake_deps: env['CM_TMP_FAKE_DEPS']='yes'
+
+        if str(i.get('skip_sys_utils', '')).lower() in ['true', 'yes']:
+            env['CM_SKIP_SYS_UTILS']='yes' 
+        if str(i.get('skip_sudo', '')).lower() in ['true', 'yes']:
+            env['CM_TMP_SKIP_SUDO']='yes' 
 
         run_state = i.get('run_state', self.run_state)
         if not run_state.get('version_info', []):
@@ -2773,8 +2784,17 @@ class CAutomation(Automation):
                     if not enable_or_skip_script(d["enable_if_env"], env):
                         continue
 
+                if "enable_if_any_env" in d:
+                    if not any_enable_or_skip_script(d["enable_if_any_env"], env):
+                        continue
+
                 if "skip_if_env" in d:
                     if enable_or_skip_script(d["skip_if_env"], env):
+                        continue
+
+                if "skip_if_any_env" in d:
+                    x = any_enable_or_skip_script(d["skip_if_any_env"], env)
+                    if x:
                         continue
 
                 if from_cache and not d.get("dynamic", None):
@@ -4038,6 +4058,7 @@ def find_cached_script(i):
 def enable_or_skip_script(meta, env):
     """
     Internal: enable a dependency based on enable_if_env and skip_if_env meta information
+    (AND function)
     """
     for key in meta:
         if key in env:
@@ -4054,7 +4075,36 @@ def enable_or_skip_script(meta, env):
             elif value in meta_key:
                 continue
         return False
+
     return True
+
+##############################################################################
+def any_enable_or_skip_script(meta, env):
+    """
+    Internal: enable a dependency based on enable_if_env and skip_if_env meta information
+    (OR function)
+    """
+    for key in meta:
+        found = False
+        if key in env:
+            value = str(env[key]).lower()
+
+            meta_key = [str(v).lower() for v in meta[key]]
+
+            if set(meta_key) & set(["yes", "on", "true", "1"]):
+                if value not in ["no", "off", "false", "0"]:
+                    found = True
+            elif set(meta_key) & set(["no", "off", "false", "0"]):
+                if value in ["no", "off", "false", "0"]:
+                    found = True
+            elif value in meta_key:
+                found = True
+        
+        # If found any match from the list (OR), return
+        if found:
+            return True
+
+    return False
 
 ############################################################################################################
 def update_env_with_values(env, fail_on_not_found=False):

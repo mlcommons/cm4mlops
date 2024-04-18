@@ -400,25 +400,34 @@ ___
 
   1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-imagenet/_cm.json)***
      * get,python3
-       * `if (CM_IMAGENET_PREPROCESSED_PATH  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_IMAGENET_PREPROCESSED_PATH': ['on']}`
        * CM names: `--adr.['python3', 'python']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,dataset,image-classification,original
-       * `if (CM_IMAGENET_PREPROCESSED_PATH  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_IMAGENET_PREPROCESSED_PATH': ['on']}`
        * CM names: `--adr.['original-dataset']...`
        - CM script: [get-dataset-imagenet-val](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-val)
      * get,dataset-aux,image-classification,imagenet-aux
-       * `if (CM_DATASET_TYPE  == validation) AND (CM_IMAGENET_PREPROCESSED_PATH  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DATASET_TYPE': ['validation']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_IMAGENET_PREPROCESSED_PATH': ['on']}`
        - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-aux)
      * get,dataset,imagenet,calibration
-       * `if (CM_DATASET_TYPE  == calibration)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DATASET_TYPE': ['calibration']}`
        - CM script: [get-dataset-imagenet-calibration](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-calibration)
      * get,generic-python-lib,_package.opencv-python-headless
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_pillow
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * mlperf,mlcommons,inference,source,src
-       * `if (CM_DATASET_REFERENCE_PREPROCESSOR  == 1) AND (CM_IMAGENET_PREPROCESSED_PATH  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DATASET_REFERENCE_PREPROCESSOR': ['1']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_IMAGENET_PREPROCESSED_PATH': ['on']}`
        * CM names: `--adr.['inference-src']...`
        - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-imagenet/customize.py)***

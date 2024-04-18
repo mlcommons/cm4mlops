@@ -111,7 +111,8 @@ ___
              - CM script: [benchmark-program](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program)
         1. ***Read "post_deps" on other CM scripts***
            * run,mlperf,power,client
-             * `if (CM_MLPERF_LOADGEN_MODE  == performance)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_LOADGEN_MODE': ['performance']}`
              * CM names: `--adr.['mlperf-power-client']...`
              - CM script: [run-mlperf-power-client](https://github.com/mlcommons/cm4mlops/tree/master/script/run-mlperf-power-client)
 

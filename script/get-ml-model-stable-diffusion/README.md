@@ -232,11 +232,13 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion/_cm.json)***
      * get,ml-model,huggingface,zoo,_clone-repo,_model-stub.stabilityai/stable-diffusion-xl-base-1.0
-       * `if (CM_TMP_REQUIRE_DOWNLOAD  == yes AND CM_DOWNLOAD_TOOL  == git)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TMP_REQUIRE_DOWNLOAD': ['yes'], 'CM_DOWNLOAD_TOOL': ['git']}`
        * CM names: `--adr.['hf-zoo']...`
        - CM script: [get-ml-model-huggingface-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-huggingface-zoo)
      * download-and-extract
-       * `if (CM_TMP_REQUIRE_DOWNLOAD  == yes AND CM_DOWNLOAD_TOOL  == rclone)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TMP_REQUIRE_DOWNLOAD': ['yes'], 'CM_DOWNLOAD_TOOL': ['rclone']}`
        * CM names: `--adr.['dae']...`
        - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
   1. ***Run native script if exists***

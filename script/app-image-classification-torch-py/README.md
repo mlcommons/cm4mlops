@@ -138,16 +138,20 @@ ___
      * get,ml-model,image-classification,resnet50,_pytorch,_fp32
        - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,generic-python-lib,_torch
-       * `if (USE_CUDA  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'USE_CUDA': ['yes']}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torch_cuda
-       * `if (USE_CUDA  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'USE_CUDA': ['yes']}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision
-       * `if (USE_CUDA  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'USE_CUDA': ['yes']}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision_cuda
-       * `if (USE_CUDA  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'USE_CUDA': ['yes']}`
        - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
   1. Run "preprocess" function from customize.py
   1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-image-classification-torch-py/_cm.json)

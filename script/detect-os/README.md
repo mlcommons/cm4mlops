@@ -110,7 +110,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-os/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-os/_cm.json)***
      * get,sys-utils-min
-       * `if (CM_HOST_OS_TYPE  == windows)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_HOST_OS_TYPE': ['windows']}`
        - CM script: [get-sys-utils-min](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-min)
 
 ___

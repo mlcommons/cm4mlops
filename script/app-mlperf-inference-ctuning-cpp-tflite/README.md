@@ -283,7 +283,8 @@ ___
      * get,sys-utils-cm
        - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
      * get,cuda
-       * `if (CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['gpu']}`
        - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,loadgen
        * CM names: `--adr.['loadgen']...`
@@ -292,25 +293,30 @@ ___
        * CM names: `--adr.['inference-src']...`
        - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,ml-model,mobilenet,raw,_tflite
-       * `if (CM_MLPERF_BACKEND in ['tflite', 'armnn_tflite'] AND CM_MODEL  == mobilenet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tflite', 'armnn_tflite'], 'CM_MODEL': ['mobilenet']}`
        * CM names: `--adr.['ml-model', 'tflite-model', 'mobilenet-model']...`
        - CM script: [get-ml-model-mobilenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-mobilenet)
      * get,ml-model,resnet50,raw,_tflite,_no-argmax
-       * `if (CM_MLPERF_BACKEND in ['tflite', 'armnn_tflite'] AND CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tflite', 'armnn_tflite'], 'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['ml-model', 'tflite-model', 'resnet50-model']...`
        - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,ml-model,resnet50,raw,_tf
-       * `if (CM_MLPERF_BACKEND  == tf AND CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tf'], 'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['ml-model', 'tflite-model', 'resnet50-model']...`
        - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,ml-model,efficientnet,raw,_tflite
-       * `if (CM_MLPERF_BACKEND in ['tflite', 'armnn_tflite'] AND CM_MODEL  == efficientnet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['tflite', 'armnn_tflite'], 'CM_MODEL': ['efficientnet']}`
        * CM names: `--adr.['ml-model', 'tflite-model', 'efficientnet-model']...`
        - CM script: [get-ml-model-efficientnet-lite](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-efficientnet-lite)
      * get,tensorflow,lib,_tflite
        - CM script: [install-tensorflow-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-tensorflow-from-src)
      * get,lib,armnn
-       * `if (CM_MLPERF_TFLITE_USE_ARMNN  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_TFLITE_USE_ARMNN': ['yes']}`
        * CM names: `--adr.['armnn', 'lib-armnn']...`
        - CM script: [get-lib-armnn](https://github.com/mlcommons/cm4mlops/tree/master/script/get-lib-armnn)
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-ctuning-cpp-tflite/customize.py)***
@@ -319,19 +325,27 @@ ___
        * CM names: `--adr.['user-conf-generator']...`
        - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-user-conf)
      * get,dataset,preprocessed,imagenet,_for.resnet50,_rgb32,_NHWC
-       * `if (CM_MLPERF_SKIP_RUN  == no AND CM_MODEL  == resnet50) AND (CM_DATASET_COMPRESSED  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['no'], 'CM_MODEL': ['resnet50']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DATASET_COMPRESSED': ['on']}`
        * CM names: `--adr.['imagenet-preprocessed', 'preprocessed-dataset']...`
        - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * get,dataset,preprocessed,imagenet,_for.mobilenet,_rgb32,_NHWC
-       * `if (CM_MLPERF_SKIP_RUN  == no AND CM_MODEL in ['mobilenet', 'efficientnet']) AND (CM_DATASET_COMPRESSED  != on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['no'], 'CM_MODEL': ['mobilenet', 'efficientnet']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DATASET_COMPRESSED': ['on']}`
        * CM names: `--adr.['imagenet-preprocessed', 'preprocessed-dataset']...`
        - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * get,dataset,preprocessed,imagenet,_for.mobilenet,_rgb8,_NHWC
-       * `if (CM_DATASET_COMPRESSED  == on AND CM_MLPERF_SKIP_RUN  == no AND CM_MODEL in ['mobilenet', 'efficientnet'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DATASET_COMPRESSED': ['on'], 'CM_MLPERF_SKIP_RUN': ['no'], 'CM_MODEL': ['mobilenet', 'efficientnet']}`
        * CM names: `--adr.['imagenet-preprocessed', 'preprocessed-dataset']...`
        - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * get,dataset,preprocessed,imagenet,_for.resnet50,_rgb8,_NHWC
-       * `if (CM_DATASET_COMPRESSED  == on AND CM_MLPERF_SKIP_RUN  == no AND CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_DATASET_COMPRESSED': ['on'], 'CM_MLPERF_SKIP_RUN': ['no'], 'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['imagenet-preprocessed', 'preprocessed-dataset']...`
        - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
   1. ***Run native script if exists***
@@ -339,11 +353,13 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-ctuning-cpp-tflite/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-ctuning-cpp-tflite/_cm.json)***
      * compile,program
-       * `if (CM_MLPERF_SKIP_RUN  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes']}`
        * CM names: `--adr.['compiler-program']...`
        - CM script: [compile-program](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-program)
      * benchmark-mlperf
-       * `if (CM_MLPERF_SKIP_RUN  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes']}`
        * CM names: `--adr.['mlperf-runner']...`
        - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
      * save,mlperf,inference,state

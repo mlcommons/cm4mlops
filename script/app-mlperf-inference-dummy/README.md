@@ -337,7 +337,8 @@ ___
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/customize.py)***
   1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/_cm.yaml)***
      * benchmark-mlperf
-       * `if (CM_MLPERF_SKIP_RUN not in ['yes', True])`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes', True]}`
        * CM names: `--adr.['runner', 'mlperf-runner']...`
        - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
      * save,mlperf,inference,state

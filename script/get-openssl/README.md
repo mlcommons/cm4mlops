@@ -104,7 +104,8 @@ ___
   1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-openssl/customize.py)***
   1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-openssl/_cm.json)***
      * install,openssl
-       * `if (CM_REQUIRE_INSTALL  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_REQUIRE_INSTALL': ['yes']}`
        - CM script: [install-openssl](https://github.com/mlcommons/cm4mlops/tree/master/script/install-openssl)
   1. ***Run native script if exists***
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-openssl/run.sh)

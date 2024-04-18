@@ -147,7 +147,8 @@ ___
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,mlperf,results,dir
-       * `if (OUTPUT_BASE_DIR  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'OUTPUT_BASE_DIR': ['on']}`
        * CM names: `--adr.['get-mlperf-results-dir']...`
        - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results-dir)
      * get,mlcommons,inference,src

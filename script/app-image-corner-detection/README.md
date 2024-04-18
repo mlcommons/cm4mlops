@@ -111,10 +111,12 @@ ___
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-image-corner-detection/run.sh)
   1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-image-corner-detection/_cm.json)***
      * compile,cpp-program
-       * `if (CM_SKIP_COMPILE  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_SKIP_COMPILE': ['on']}`
        - CM script: [compile-program](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-program)
      * benchmark-program
-       * `if (CM_SKIP_RUN  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_SKIP_RUN': ['on']}`
        - CM script: [benchmark-program](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program)
   1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-image-corner-detection/customize.py)***
   1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-image-corner-detection/_cm.json)

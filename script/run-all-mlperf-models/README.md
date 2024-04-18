@@ -29,7 +29,7 @@
 
 * Category: *MLPerf benchmark support.*
 * CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/master/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * CM "database" tags to find this script: *run,natively,all,mlperf-models*
 * Output cached? *False*
@@ -204,24 +204,24 @@ ___
 <details>
 <summary>Click here to expand this section.</summary>
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/_cm.yaml)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/_cm.yaml)
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/_cm.yaml)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/_cm.yaml)
   1. ***Run native script if exists***
-     * [run-bert-macos.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-bert-macos.sh)
-     * [run-bert.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-bert.sh)
-     * [run-cpp-implementation.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-cpp-implementation.sh)
-     * [run-mobilenet-models.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-mobilenet-models.sh)
-     * [run-nvidia-4090.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-nvidia-4090.sh)
-     * [run-nvidia-a100.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-nvidia-a100.sh)
-     * [run-nvidia-t4.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-nvidia-t4.sh)
-     * [run-pruned-bert.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-pruned-bert.sh)
-     * [run-reference-models.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-reference-models.sh)
-     * [run-resnet50-macos.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-resnet50-macos.sh)
-     * [run-resnet50.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/run-resnet50.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-all-mlperf-models/_cm.yaml)
+     * [run-bert-macos.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-bert-macos.sh)
+     * [run-bert.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-bert.sh)
+     * [run-cpp-implementation.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-cpp-implementation.sh)
+     * [run-mobilenet-models.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-mobilenet-models.sh)
+     * [run-nvidia-4090.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-nvidia-4090.sh)
+     * [run-nvidia-a100.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-nvidia-a100.sh)
+     * [run-nvidia-t4.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-nvidia-t4.sh)
+     * [run-pruned-bert.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-pruned-bert.sh)
+     * [run-reference-models.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-reference-models.sh)
+     * [run-resnet50-macos.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-resnet50-macos.sh)
+     * [run-resnet50.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/run-resnet50.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/run-all-mlperf-models/_cm.yaml)
 </details>
 
 ___

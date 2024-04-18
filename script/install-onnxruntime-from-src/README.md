@@ -156,7 +156,8 @@ ___
      * fail,filter,_windows
        - CM script: [fail](https://github.com/mlcommons/cm4mlops/tree/master/script/fail)
      * get,python3
-       * `if (CM_CONDA_ENV  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CONDA_ENV': ['yes']}`
        * CM names: `--adr.['python', 'python3']...`
        - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,cmake

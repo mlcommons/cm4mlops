@@ -30,7 +30,7 @@
 
 * Category: *Modular MLPerf benchmarks.*
 * CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/master/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-dummy)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * CM "database" tags to find this script: *reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy,dummy-harness,dummy*
 * Output cached? *False*
@@ -110,9 +110,9 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,ml-model,gptj
              * CM names: `--adr.['gptj-model']...`
-             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-gptj)
+             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-gptj)
            * get,dataset,cnndm,_validation
-             - CM script: [get-dataset-cnndm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-cnndm)
+             - CM script: [get-dataset-cnndm](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-cnndm)
     * `_llama2-70b_`
       - Workflow:
 
@@ -127,12 +127,12 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_torch
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-python-lib)
     * `_pytorch,cuda`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_torch_cuda
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-python-lib)
     * `_singlestream,resnet50`
       - Workflow:
     * `_singlestream,retinanet`
@@ -323,42 +323,42 @@ ___
 <details>
 <summary>Click here to expand this section.</summary>
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-dummy/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy/_cm.yaml)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-cpu)
      * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-cm)
+       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/main/script/get-sys-utils-cm)
      * get,mlcommons,inference,src
        * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-inference-src)
      * get,mlcommons,inference,loadgen
        * CM names: `--adr.['inference-loadgen']...`
-       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-loadgen)
+       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-inference-loadgen)
      * generate,user-conf,mlperf,inference
        * CM names: `--adr.['user-conf-generator']...`
-       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/generate-mlperf-inference-user-conf)
+       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/main/script/generate-mlperf-inference-user-conf)
      * get,generic-python-lib,_mlperf_logging
        * CM names: `--adr.['mlperf-logging']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-python-lib)
      * get,git,repo
        * CM names: `--adr.inference-results...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-dummy/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-dummy/_cm.yaml)
+       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy/_cm.yaml)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-dummy/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-dummy/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-dummy/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-dummy/_cm.yaml)***
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy/customize.py)***
+  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy/_cm.yaml)***
      * benchmark-mlperf
        * `if (CM_MLPERF_SKIP_RUN not in ['yes', True])`
        * CM names: `--adr.['runner', 'mlperf-runner']...`
-       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/benchmark-program-mlperf)
+       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/main/script/benchmark-program-mlperf)
      * save,mlperf,inference,state
        * CM names: `--adr.['save-mlperf-inference-state']...`
-       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/save-mlperf-inference-implementation-state)
+       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/cm4mlops/tree/main/script/save-mlperf-inference-implementation-state)
 </details>
 
 ___
