@@ -33,4 +33,4 @@ jobs:
         cm run script --quiet --tags=get,sys-utils-cm
     - name: Test CM Script Automation
       run: |
-        python tests/script/test_deps.py
+        python script/test-cm-core/src/script/test_deps.py

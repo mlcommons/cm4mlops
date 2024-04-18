@@ -33,6 +33,6 @@ jobs:
         cm run script --quiet --tags=get,sys-utils-cm
     - name: Test CM Script Features
       run: |
-        python tests/script/test_install.py
-        python tests/script/test_docker.py
-        python tests/script/test_features.py
+        python script/test-cm-core/src/script/test_install.py
+        python script/test-cm-core/src/script/test_docker.py
+        python script/test-cm-core/src/script/test_features.py
