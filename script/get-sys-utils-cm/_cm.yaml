@@ -31,3 +31,7 @@ variations:
   user:
     env:
       CM_PYTHON_PIP_USER: --user
+
+  skip_python_deps:
+    env:
+      CM_SKIP_PYTHON_DEPS: "yes"

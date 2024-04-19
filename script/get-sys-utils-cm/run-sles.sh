@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "************************************************"
-echo "Installing some system dependencies via package manager"
+echo "***************************************************"
+echo "Installing some system dependencies via sudo zypper"
 
 
 if [[ "$CM_QUIET" != "yes" ]]; then 
@@ -34,5 +34,9 @@ ${CM_SUDO} ${CM_PACKAGE_TOOL} update && \
            xz \
            zip 
 
-. ${CM_TMP_CURRENT_SCRIPT_PATH}/do_pip_installs.sh
-test $? -eq 0 || exit $?
+# Install Python deps though preference is to install them 
+# via cmr "get generic-python-lib _package.{Python PIP package name}"
+if [[ "${CM_SKIP_PYTHON_DEPS}" != "yes" ]]; then
+ . ${CM_TMP_CURRENT_SCRIPT_PATH}/do_pip_installs.sh
+ test $? -eq 0 || exit $?
+fi

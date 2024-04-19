@@ -56,5 +56,9 @@ ${CM_SUDO} ${CM_APT_TOOL} update && \
            libgl1-mesa-glx \
            zlib1g-dev
 
-. ${CM_TMP_CURRENT_SCRIPT_PATH}/do_pip_installs.sh
-test $? -eq 0 || exit $?
+# Install Python deps though preference is to install them 
+# via cmr "get generic-python-lib _package.{Python PIP package name}"
+if [[ "${CM_SKIP_PYTHON_DEPS}" != "yes" ]]; then
+ . ${CM_TMP_CURRENT_SCRIPT_PATH}/do_pip_installs.sh
+ test $? -eq 0 || exit $?
+fi
