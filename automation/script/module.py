@@ -180,6 +180,9 @@ class CAutomation(Automation):
           (skip_sudo) (bool): if True, set env['CM_TMP_SKIP_SUDO']='yes'
                               to let scripts deal with that
 
+          (silent) (bool): if True, attempt to suppress all info if supported
+                           (sets CM_TMP_SILENT=yes)
+          (s) (bool): the same as 'silent'
           ...
 
         Returns:
@@ -309,14 +312,6 @@ class CAutomation(Automation):
 
         print_env = i.get('print_env', False)
 
-        verbose = False
-
-        if 'verbose' in i: verbose=i['verbose']
-        elif 'v' in i: verbose=i['v']
-
-        if verbose:
-           env['CM_VERBOSE']='yes'
-
         show_time = i.get('time', False)
         show_space = i.get('space', False)
 
@@ -347,6 +342,28 @@ class CAutomation(Automation):
             run_state['parent'] = None
         if fake_deps:
             run_state['fake_deps'] = True
+
+        # Check verbose and silent
+        verbose = False
+
+        silent = True if str(i.get('silent', '')).lower() in ['true', 'yes', 'on'] else False
+
+        if not silent:
+            silent = True if str(i.get('s', '')).lower() in ['true', 'yes', 'on'] else False
+        
+        if silent:
+            if 'verbose' in i: del(i['verbose'])
+            if 'v' in i: del(i['v'])
+            env['CM_TMP_SILENT']='yes'
+            run_state['tmp_silent']=True
+        
+        if 'verbose' in i: verbose=i['verbose']
+        elif 'v' in i: verbose=i['v']
+        
+        if verbose:
+           env['CM_VERBOSE']='yes'
+           run_state['tmp_verbose']=True
+
 
         print_deps = i.get('print_deps', False)
         print_readme = i.get('print_readme', False)
@@ -517,8 +534,9 @@ class CAutomation(Automation):
 #        if verbose:
 #            print ('')
 
-        print ('')
-        print (recursion_spaces + '* ' + cm_script_info)
+        if not run_state.get('tmp_silent', False):
+            print ('')
+            print (recursion_spaces + '* ' + cm_script_info)
 
 
         #############################################################################
@@ -1081,7 +1099,8 @@ class CAutomation(Automation):
                     if r['return']>0: return r
                     version = r['meta'].get('version')
 
-                    print (recursion_spaces + '     ! load {}'.format(path_to_cached_state_file))
+                    if not run_state.get('tmp_silent', False):
+                        print (recursion_spaces + '     ! load {}'.format(path_to_cached_state_file))
 
 
                     ################################################################################################
@@ -1763,19 +1782,20 @@ class CAutomation(Automation):
             input ('Press Enter to continue ...')
 
         # Check if need to print some final info such as path to model, etc
-        print_env_at_the_end = meta.get('print_env_at_the_end',{})
-        if len(print_env_at_the_end)>0:
-            print ('')
+        if not run_state.get('tmp_silent', False):
+            print_env_at_the_end = meta.get('print_env_at_the_end',{})
+            if len(print_env_at_the_end)>0:
+                print ('')
 
-            for p in sorted(print_env_at_the_end):
-                t = print_env_at_the_end[p]
-                if t == '': t = 'ENV[{}]'.format(p)
+                for p in sorted(print_env_at_the_end):
+                    t = print_env_at_the_end[p]
+                    if t == '': t = 'ENV[{}]'.format(p)
 
-                v = new_env.get(p, None)
+                    v = new_env.get(p, None)
 
-                print ('{}: {}'.format(t, str(v)))
+                    print ('{}: {}'.format(t, str(v)))
 
-            print ('')
+                print ('')
 
         return rr
 
@@ -2887,6 +2907,7 @@ class CAutomation(Automation):
 
                     # Run collective script via CM API:
                     # Not very efficient but allows logging - can be optimized later
+
                     ii = {
                             'action':'run',
                             'automation':utils.assemble_cm_object(self.meta['alias'], self.meta['uid']),
@@ -2900,6 +2921,7 @@ class CAutomation(Automation):
                             'add_deps_recursive':add_deps_recursive,
                             'debug_script_tags':debug_script_tags,
                             'verbose':verbose,
+                            'silent':run_state.get('tmp_silent', False),
                             'time':show_time,
                             'run_state':run_state
 
@@ -4295,8 +4317,9 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
             print (recursion_spaces + '  - Running native script "{}" from temporal script "{}" in "{}" ...'.format(path_to_run_script, run_script, cur_dir))
             print ('')
 
-        print (recursion_spaces + '       ! cd {}'.format(cur_dir))
-        print (recursion_spaces + '       ! call {} from {}'.format(path_to_run_script, run_script))
+        if not run_state.get('tmp_silent', False):
+            print (recursion_spaces + '       ! cd {}'.format(cur_dir))
+            print (recursion_spaces + '       ! call {} from {}'.format(path_to_run_script, run_script))
 
 
         # Prepare env variables
@@ -4388,7 +4411,8 @@ and deterministic. Thank you'''
  
 
     if postprocess != '' and customize_code is not None and postprocess in dir(customize_code):
-        print (recursion_spaces+'       ! call "{}" from {}'.format(postprocess, customize_code.__file__))
+        if not run_state.get('tmp_silent', False):
+            print (recursion_spaces+'       ! call "{}" from {}'.format(postprocess, customize_code.__file__))
     
     if len(posthook_deps)>0 and (postprocess == "postprocess"):
         r = script_automation._call_run_deps(posthook_deps, local_env_keys, local_env_keys_from_meta, env, state, const, const_state,
