@@ -16,6 +16,7 @@
   "input_description": {},
   "input_mapping": {
     "download_path": "CM_DOWNLOAD_PATH",
+    "output_file": "CM_DOWNLOAD_FILENAME",
     "from": "CM_DOWNLOAD_LOCAL_FILE_PATH",
     "local_path": "CM_DOWNLOAD_LOCAL_FILE_PATH",
     "store": "CM_DOWNLOAD_PATH",
