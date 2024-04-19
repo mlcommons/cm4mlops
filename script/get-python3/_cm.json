@@ -71,5 +71,9 @@
     "shared": {},
     "with-ssl": {},
     "with-custom-ssl": {}
+  },
+  "print_env_at_the_end" : {
+    "CM_PYTHON_BIN_WITH_PATH": "Path to Python",
+    "CM_PYTHON_VERSION": "Python version"
   }
 }
