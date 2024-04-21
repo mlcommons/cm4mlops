@@ -150,6 +150,8 @@ class CAutomation(Automation):
                                       inside a script specified by these tags
 
           (debug_script) (bool): if True, debug current script (set debug_script_tags to the tags of a current script)
+          (debug_uid) (str): if True, set CM_TMP_DEBUG_UID to this number to enable
+                             remote python debugging of scripts and wrapped apps/tools
           (detected_versions) (dict): All the used scripts and their detected_versions
 
           (verbose) (bool): if True, prints all tech. info about script execution (False by default)
@@ -326,6 +328,10 @@ class CAutomation(Automation):
         fake_run = i.get('fake_run', False)
         fake_run = i.get('fake_run', False) if 'fake_run' in i else i.get('prepare', False)
         if fake_run: env['CM_TMP_FAKE_RUN']='yes'
+
+        debug_uid = i.get('debug_uid', '')
+        if debug_uid!='':
+            env['CM_TMP_DEBUG_UID'] = debug_uid
         
         fake_deps = i.get('fake_deps', False)
         if fake_deps: env['CM_TMP_FAKE_DEPS']='yes'
