@@ -9,7 +9,7 @@ category: Tests
 developers: "Grigori Fursin"
 
 default_env:
-  CM_PRINT_ANY_TEXT: any
+  CM_PRINT_ANY_TEXT: ''
 
 input_mapping:
   text: CM_PRINT_ANY_TEXT
