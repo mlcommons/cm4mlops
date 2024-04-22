@@ -1,0 +1,1 @@
+echo %CM_PRINT_ANY_TEXT%

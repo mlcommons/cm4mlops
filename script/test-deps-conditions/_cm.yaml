@@ -6,6 +6,8 @@ automation_uid: 5b4e0237da074764
 
 category: Tests
 
+developers: "Grigori Fursin"
+
 deps:
   - tags: print,native,hello-world,_skip_print_env
   - tags: print,native,hello-world,_skip_print_env,_text.SKIP_IF_ALL_ENV
