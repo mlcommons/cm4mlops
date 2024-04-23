@@ -16,6 +16,7 @@ cache: true
 
 input_mapping:
   env_key: CM_CUSTOM_CACHE_ENTRY_ENV_KEY
+  env_key2: CM_CUSTOM_CACHE_ENTRY_ENV_KEY2
   path: CM_CUSTOM_CACHE_ENTRY_PATH
   to: CM_CUSTOM_CACHE_ENTRY_PATH
 

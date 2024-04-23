@@ -31,8 +31,14 @@ def postprocess(i):
     x = ''
     env_key = env.get('CM_CUSTOM_CACHE_ENTRY_ENV_KEY', '')
     if env_key != '': x = env_key+'_'
-    
+
     env['CM_CUSTOM_CACHE_ENTRY_{}PATH'.format(x)] = path
     env['CM_CUSTOM_CACHE_ENTRY_PATH'] = path
+
+    env_key2 = env.get('CM_CUSTOM_CACHE_ENTRY_ENV_KEY2', '')
+    v = env.get(env_key2, '')
+    real_path = v if v != '' else path
+
+    env['CM_CUSTOM_CACHE_ENTRY_{}REAL_PATH'.format(x)] = real_path
 
     return {'return': 0}

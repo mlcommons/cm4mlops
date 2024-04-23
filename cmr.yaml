@@ -3,6 +3,8 @@ uid: 9e97bb72b0474657
 
 git: true
 
+version: 2.2.0
+
 deps:
   - alias: mlcommons@ck
     uid: a4705959af8e447a

@@ -14,6 +14,7 @@ import os
 
 from cmind.automation import Automation
 from cmind import utils
+from cmind import __version__ as current_cm_version
 
 class CAutomation(Automation):
     """
@@ -726,6 +727,15 @@ class CAutomation(Automation):
 
         meta = script_artifact.meta
         path = script_artifact.path
+
+        # Check min CM version requirement
+        min_cm_version = meta.get('min_cm_version','').strip()
+        if min_cm_version != '':
+            # Check compare version while avoiding craches for older version
+            if 'compare_versions' in dir(utils):
+                comparison = utils.compare_versions(current_cm_version, min_cm_version)
+                if comparison < 0:
+                    return {'return':1, 'error':'CM script requires CM version >= {} while current CM version is {} - please update using "pip install cmind -U"'.format(min_cm_version, current_cm_version)}
 
         # Check path to repo
         script_repo_path = script_artifact.repo_path
