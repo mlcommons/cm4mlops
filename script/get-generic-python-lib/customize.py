@@ -114,7 +114,8 @@ def detect_version(i):
     version = r['version']
     current_detected_version = version
 
-    print (i['recursion_spaces'] + '      Detected version: {}'.format(version))
+    if env.get('CM_TMP_SILENT','')!='yes':
+        print (i['recursion_spaces'] + '      Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 

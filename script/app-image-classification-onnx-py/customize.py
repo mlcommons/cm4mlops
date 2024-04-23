@@ -7,8 +7,8 @@ def preprocess(i):
     os_info = i['os_info']
     env = i['env']
 
-    print ('')
-    print ('Running preprocess function in customize.py ...')
+#    print ('')
+#    print ('Running preprocess function in customize.py ...')
 
     return {'return':0}
 
@@ -55,10 +55,11 @@ def postprocess(i):
 
     top_classification = data.get('top_classification','')
 
-    if top_classification!='':
-        print ('')
-        x = 'Top classification: {}'.format(top_classification)
-        print ('='*len(x))
-        print (x)
+    if env.get('CM_TMP_SILENT','')!='yes':
+        if top_classification!='':
+            print ('')
+            x = 'Top classification: {}'.format(top_classification)
+            print ('='*len(x))
+            print (x)
 
     return {'return':0}
