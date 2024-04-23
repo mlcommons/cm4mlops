@@ -20,13 +20,19 @@ def postprocess(i):
 
     env = i['env']
 
-    cur_dir = os.getcwd()
+    path = env.get('CM_CUSTOM_CACHE_ENTRY_PATH','').strip()
+
+    if path!='':
+        if not os.path.isdir(path):
+            os.makedirs(path)
+    else:
+       path = os.getcwd()
 
     x = ''
     env_key = env.get('CM_CUSTOM_CACHE_ENTRY_ENV_KEY', '')
     if env_key != '': x = env_key+'_'
     
-    env['CM_CUSTOM_CACHE_ENTRY_{}PATH'.format(x)] = cur_dir
-    env['CM_CUSTOM_CACHE_ENTRY_PATH'] = cur_dir
+    env['CM_CUSTOM_CACHE_ENTRY_{}PATH'.format(x)] = path
+    env['CM_CUSTOM_CACHE_ENTRY_PATH'] = path
 
     return {'return': 0}
