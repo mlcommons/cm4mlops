@@ -1,14 +1,13 @@
-# CM "script" automation that wraps native scripts with a unified CLI, Python API 
-# and JSON/YAML meta descriptions.
 #
-# It is a stable prototype being developed by Grigori Fursin and Arjun Suresh.
+# CM "script" automation helps users to encode their MLOps, DevOps and other knowledge
+# as portable and reusable automation recipes with simple tags, native scripts 
+# and a unified CLI, Python API and JSON/YAML meta descriptions.
+#
+# This is a stable prototype of the CM script developed by Grigori Fursin and Arjun Suresh.
 # 
-# We think to develop a simpler version of this automation at some point
+# We think to develop a simpler and cleaner version of this automation
 # while keeping full backwards compatibility.
 #
-# Join the MLCommons taskforce on automation and reproducibility
-# to discuss further developments: 
-# https://github.com/mlcommons/ck/blob/master/docs/taskforce.md
 
 import os
 
@@ -175,6 +174,8 @@ class CAutomation(Automation):
 
           (repro_prefix) (str): if !='', use it to record above files {repro-prefix)-input.json ...                
           (repro_dir) (str): if !='', use this directory to dump info
+
+          (dump_version_info) (bool): dump info about resolved versions of tools in dependencies
 
           (script_call_prefix) (str): how to call script in logs and READMEs (cm run script)
 
@@ -1724,19 +1725,33 @@ class CAutomation(Automation):
         if not version and detected_version:
           version = detected_version
 
+        # Add detected or forced version to the CM script run time state
+        # to aggregate all resolved versions and dump them at the end
+        # if requested (for better reproducibility/replicability)
         if version:
             script_uid = script_artifact.meta.get('uid')
             script_alias = script_artifact.meta.get('alias')
             script_tags = script_artifact.meta.get('tags')
+
             version_info = {}
-            version_info_tags = ",".join(script_tags + variation_tags)
-            version_info[version_info_tags] = {}
-            version_info[version_info_tags]['script_uid'] = script_uid
-            version_info[version_info_tags]['script_alias'] = script_alias
-            version_info[version_info_tags]['version'] = version
-            version_info[version_info_tags]['parent'] = run_state['parent']
+
+            version_info_tags = ",".join(script_tags)
+
+            if len(variation_tags)>0:
+                for vt in variation_tags:
+                    version_info_tags += ',_' + vt
+
+            version_info[version_info_tags] = {
+              'script_uid': script_uid,
+              'script_alias': script_alias,
+              'version': version,
+              'parent': run_state['parent']
+            }
+
             run_state['version_info'].append(version_info)
+
             script_versions = detected_versions.get(meta['uid'], [])
+
             if not script_versions:
                 detected_versions[meta['uid']] = [ version ]
             else:
@@ -1760,7 +1775,7 @@ class CAutomation(Automation):
                 f.write(readme)
 
         if i.get('dump_version_info'):
-            r = self._dump_version_info_for_script()
+            r = self._dump_version_info_for_script(quiet=quiet, silent=silent)
             if r['return'] > 0:
                 return r
 
@@ -1816,10 +1831,17 @@ class CAutomation(Automation):
         return rr
 
     ######################################################################################
-    def _dump_version_info_for_script(self, output_dir = os.getcwd()):
-        import json
-        with open(os.path.join(output_dir, 'version_info.json'), 'w') as f:
-            f.write(json.dumps(self.run_state['version_info'], indent=2))
+    def _dump_version_info_for_script(self, output_dir = os.getcwd(), quiet = False, silent = False):
+
+        if not quiet and not silent:
+            print ('')
+
+        for f in ['cm-run-script-versions.json', 'version_info.json']:
+            if not quiet and not silent:
+                print ('Dumping versions to {}'.format(f))           
+            r = utils.save_json(f, self.run_state.get('version_info', []))
+            if r['return']>0: return r
+
         return {'return': 0}
 
     ######################################################################################
