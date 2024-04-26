@@ -1,3 +1,6 @@
+### 20240426
+ * Improved cm run script --repro function to dump dependencies, versions and generate README
+
 ### 20240425
  * CM script automation: fixed dumping versions (variations didn't have _ prefix)
 
