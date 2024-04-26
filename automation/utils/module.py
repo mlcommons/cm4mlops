@@ -1006,3 +1006,65 @@ class CAutomation(Automation):
         i['self_module'] = self
         
         return utils.call_internal_module(self, __file__, 'module_cfg', 'select_cfg', i)
+
+    ############################################################
+    def print_yaml(self, i):
+        """
+        Print YAML file
+
+        Args:
+          (CM input dict):
+            file (str): input file
+
+        Returns:
+          (CM return dict):
+
+          * return (int): return code == 0 if no error and >0 if error
+          * (error) (str): error string if return>0
+
+        """
+
+        filename = i.get('file', '')
+        if filename == '':
+            return {'return':1, 'error':'please specify --file={YAML file}'}
+        
+        r = utils.load_yaml(filename,check_if_exists = True)
+        if r['return']>0: return r
+
+        meta = r['meta']
+
+        import json
+        print (json.dumps(meta, indent=2))
+        
+        return {'return':0}
+
+    ############################################################
+    def print_json(self, i):
+        """
+        Print YAML file
+
+        Args:
+          (CM input dict):
+            file (str): input file
+
+        Returns:
+          (CM return dict):
+
+          * return (int): return code == 0 if no error and >0 if error
+          * (error) (str): error string if return>0
+
+        """
+
+        filename = i.get('file', '')
+        if filename == '':
+            return {'return':1, 'error':'please specify --file={JSON file}'}
+        
+        r = utils.load_json(filename,check_if_exists = True)
+        if r['return']>0: return r
+
+        meta = r['meta']
+
+        import json
+        print (json.dumps(meta, indent=2))
+        
+        return {'return':0}
