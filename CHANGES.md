@@ -1,3 +1,6 @@
+### 20240427
+ * Added cm run script --print_versions to print resolved versions of dependencies at the end of the run
+
 ### 20240426
  * Improved cm run script --repro function to dump dependencies, versions and generate README
 

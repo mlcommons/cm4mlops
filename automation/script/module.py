@@ -379,6 +379,7 @@ class CAutomation(Automation):
 
 
         print_deps = i.get('print_deps', False)
+        print_versions = i.get('print_versions', False)
         print_readme = i.get('print_readme', False)
         dump_version_info = i.get('dump_version_info', False)
 
@@ -1822,11 +1823,6 @@ class CAutomation(Automation):
                 print (recursion_spaces+'  - used disk space: {} MB'.format(used_disk_space_in_mb))
 
 
-        # Check if pause (useful if running a given script in a new terminal that may close automatically)
-        if i.get('pause', False):
-            print ('')
-            input ('Press Enter to continue ...')
-
         # Check if need to print some final info such as path to model, etc
         if not run_state.get('tmp_silent', False):
             print_env_at_the_end = meta.get('print_env_at_the_end',{})
@@ -1842,6 +1838,15 @@ class CAutomation(Automation):
                     print ('{}: {}'.format(t, str(v)))
 
                 print ('')
+
+        # Check if print nice versions
+        if print_versions:
+            self._print_versions(run_state)
+
+        # Check if pause (useful if running a given script in a new terminal that may close automatically)
+        if i.get('pause', False):
+            print ('')
+            input ('Press Enter to continue ...')
 
         return rr
 
@@ -3106,6 +3111,31 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             content += "```\n\n"
 
         return content
+
+    ##############################################################################
+    def _print_versions(self, run_state):
+        """
+        Print versions in the nice format
+        """
+
+        version_info = run_state.get('version_info', [])
+
+        print ('=========================')
+        print ('Versions of dependencies:')
+        print ('')
+
+        for v in version_info:
+            k = list(v.keys())[0]
+            version_info_dict=v[k]
+
+            version = version_info_dict.get('version','')
+
+            if version !='' :
+                print ('* {}: {}'.format(k, version))
+
+        print ('=========================')
+
+        return {}
 
     ##############################################################################
     def _markdown_cmd(self, cmd):
