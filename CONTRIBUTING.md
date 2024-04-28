@@ -12,12 +12,11 @@ MLCommons project work is tracked with issue trackers and pull requests. Modify 
 
 ## CM project coordinator
 
-* [Grigori Fursin](https://cKnowledge.org/gfursin)
+* Grigori Fursin (cTuning.org and cKnowledge.org)
 
-## CM authors
+## CM tech lead for MLPerf inference
 
-* [Grigori Fursin](https://cKnowledge.org/gfursin) (CM core and CM scripts for MLOps)
-* [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh) (CM scripts for MLPerf and MLOps)
+* Arjun Suresh (cTuning.org and cKnowledge.org)
 
 ## CM contributors in alphabetical order (suggestions and/or scripts)
 
@@ -30,6 +29,7 @@ MLCommons project work is tracked with issue trackers and pull requests. Modify 
 * Himanshu Dutta (Indian Institute of Technology)
 * Justin Faust (One Stop Systems)
 * Diane Feddema (Red Hat)
+* Grigori Fursin (cTuning.org and cKnowledge.org)
 * Leonid Fursin (United Silicon Carbide)
 * Anirban Ghosh (Nvidia)
 * Michael Goin (Neural Magic)
@@ -67,6 +67,7 @@ MLCommons project work is tracked with issue trackers and pull requests. Modify 
 * Aditya Kumar Shaw (Indian Institute of Science)
 * Ilya Slavutin (Deelvin)
 * Jinho Suh (Nvidia)
+* Arjun Suresh (cTuning.org and cKnowledge.org)
 * Badhri Narayanan Suresh (Intel)
 * David Tafur (MLCommons)
 * Chloe Tessier

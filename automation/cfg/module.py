@@ -50,3 +50,32 @@ class CAutomation(Automation):
         print (json.dumps(i, indent=2))
 
         return {'return':0}
+
+    ############################################################
+    def xset(self, i):
+        """
+        Set keys in configuration
+
+        Args:
+          (CM input dict): 
+
+            (out) (str): if 'con', output to console
+
+            (artifact) (str): artifact as CM string object
+
+          ...
+
+        Returns:
+          (CM return dict):
+
+          * return (int): return code == 0 if no error and >0 if error
+          * (error) (str): error string if return>0
+
+          * Output from this automation action
+
+        """
+
+        import json
+        print (json.dumps(i, indent=2))
+
+        return {'return':0}

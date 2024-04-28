@@ -145,6 +145,7 @@ def page(st, params):
                 x = '''
 ```bash
 pip install cmind -U
+cm test core
 cm pull repo mlcommons@cm4mlops --checkout=dev{}
 
 cm run script "{}"

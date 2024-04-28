@@ -94,6 +94,7 @@ def page(st, params, extra):
         cm_repo = 'mlcommons@cm4mlops'
     
     x =  '{} -m pip install cmind -U {}\n\n'.format(python, need_user)
+    x += 'cm test core \n\n'
     x += 'cm pull repo {}\n\n'.format(cm_repo)
     
     clean_cm_cache = st.toggle('Clean CM cache', value=True, key = 'install_clean_cm_cache')
