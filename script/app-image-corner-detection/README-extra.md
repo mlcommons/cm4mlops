@@ -3,10 +3,10 @@
 First download images:
 
 ```bash
-cmr "download file _wget" --url=https://cKnowledge.org/ai/data/data.pgm --verify=no --env.CM_DOWNLOAD_CHECKSUM=0af279e557a8de252d7ff0751a999379
-cmr "download file _wget" --url=https://cKnowledge.org/ai/data/computer_mouse.jpg --verify=no --env.CM_DOWNLOAD_CHECKSUM=45ae5c940233892c2f860efdf0b66e7e
-cmr "download file _wget" --url=https://cKnowledge.org/ai/data/computer_mouse2.jpg --verify=no --env.CM_DOWNLOAD_CHECKSUM=e7e2050b41e0b85cedca3ca87ab55390
-cmr "download file _wget" --url=https://cKnowledge.org/ai/data/computer_mouse2.pgm --verify=no --env.CM_DOWNLOAD_CHECKSUM=a4e48556d3eb09402bfc98e375b41311
+cmr "download file _wget" --url=https://cKnowledge.org/ai/data/data.pgm --ssl-verify=no --md5sum=0af279e557a8de252d7ff0751a999379
+cmr "download file _wget" --url=https://cKnowledge.org/ai/data/computer_mouse.jpg --ssl-verify=no --md5sum=45ae5c940233892c2f860efdf0b66e7e
+cmr "download file _wget" --url=https://cKnowledge.org/ai/data/computer_mouse2.jpg --ssl-verify=no --md5sum=e7e2050b41e0b85cedca3ca87ab55390
+cmr "download file _wget" --url=https://cKnowledge.org/ai/data/computer_mouse2.pgm --ssl-verify=no --md5sum=a4e48556d3eb09402bfc98e375b41311
 ```
 
 Then run app
