@@ -7,6 +7,7 @@
    should be reported at https://github.com/mlcommons/inference .
  * Added saving running script from different deps without CM to tmp-run-without-cm.bat.
    Example: `cmr "app image corner-detection" --debug-script-tags=benchmark,program`
+ * Generate Docker container sample during --repro (prototype)
 
 
 ### 20240427

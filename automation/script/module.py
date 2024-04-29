@@ -1800,6 +1800,23 @@ class CAutomation(Automation):
         if print_readme or repro_prefix!='':
             readme = self._get_readme(cmd, run_state)
 
+        # Copy Docker sample
+        if repro_prefix!='' and repro_dir!='':
+            docker_template_path = os.path.join(self.path, 'docker_repro_example')
+            if os.path.isdir(docker_template_path):
+                try:
+                   shutil.copytree(docker_template_path, repro_dir, dirs_exist_ok=True)
+                except Exception as e:
+                   pass
+
+            docker_container = self._get_docker_container(cmd, run_state)
+
+            try:
+               with open (os.path.join(repro_dir, 'ubuntu-23.04.Dockerfile'), 'a+') as f:
+                  f.write(docker_container)
+            except:
+               pass
+
         if print_readme:
             with open('README-cm.md', 'w') as f:
                 f.write(readme)
@@ -3129,6 +3146,58 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             content += "```\n\n"
 
         return content
+
+    ##############################################################################
+    def _get_docker_container(self, cmd_parts, run_state):
+        """
+        Outputs a Markdown README file listing the CM run commands for the dependencies
+        """
+
+        deps = run_state['deps']
+
+        version_info = run_state.get('version_info', [])
+        version_info_dict = {}
+
+        for v in version_info:
+            k = list(v.keys())[0]
+            version_info_dict[k]=v[k]
+
+        content = ''
+
+        content += """
+
+# The following CM commands were automatically generated (prototype)
+
+cm pull repo mlcommons@cm4mlops --checkout=dev
+
+"""
+        current_cm_repo = run_state['script_repo_alias']
+        if current_cm_repo not in ['mlcommons@ck', 'mlcommons@cm4mlops']:
+            content += '\ncm pull repo ' + run_state['script_repo_alias'] + '\n\n'
+
+
+        deps_ = ''
+
+        for dep_tags in deps:
+
+            xversion = ''
+            version = version_info_dict.get(dep_tags, {}).get('version','')
+            if version !='' :
+                xversion = ' --version={}\n'.format(version)
+
+            content += "# cm run script --tags=" + dep_tags + "{}\n\n".format(xversion)
+
+        cmd="cm run script "
+
+        for cmd_part in cmd_parts:
+            x = '"' if ' ' in cmd_part and not cmd_part.startswith('-') else ''
+            cmd = cmd + " " + x + cmd_part + x
+
+        content += cmd + '\n'
+
+
+        return content
+
 
     ##############################################################################
     def _print_versions(self, run_state):
