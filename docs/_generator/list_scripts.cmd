@@ -1,1 +1,0 @@
-cm doc script --output_dir=..
