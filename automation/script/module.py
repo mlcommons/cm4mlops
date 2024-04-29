@@ -247,6 +247,18 @@ class CAutomation(Automation):
             if not can_write_to_current_directory():
                 return {'return':1, 'error':'Current directory "{}" is not writable - please change it'.format(os.getcwd())}
 
+            # Check if has default config
+            r = self.cmind.access({'action':'load', 'automation':'cfg,88dce9c160324c5d', 'artifact':'default'})
+            if r['return'] == 0:
+                config = r['config']
+
+                script_input = config.get('script',{})
+
+                if len(script_input)>0:
+                    utils.merge_dicts({'dict1':i, 'dict2':script_input})
+               
+
+
         recursion_int = int(i.get('recursion_int',0))+1
 
         start_time = time.time()

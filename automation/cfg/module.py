@@ -1,3 +1,7 @@
+# Universal cfg for CM automations
+#
+# Written by Grigori Fursin
+
 import os
 
 from cmind.automation import Automation
@@ -182,6 +186,19 @@ class CAutomation(Automation):
         artifact_obj = parsed_artifact[0] if len(parsed_artifact)>0 else None
         artifact_repo = parsed_artifact[1] if len(parsed_artifact)>1 else None
 
+        artifact = i.get('artifact', '')
+
+        if artifact == '': 
+            ii['artifact'] = 'default'
+
+        tags = ii.get('tags', '')
+
+        if 'cm-universal-cfg' not in tags:
+            if tags!='': tags+=','
+            tags+='cm-universal-cfg'
+
+        ii['tags'] = tags
+
         automation = ii['automation']
         if automation!='.' and ',' not in automation: 
             ii['automation'] = automation + ',' + self.meta['uid']
@@ -201,6 +218,7 @@ class CAutomation(Automation):
             ii['action'] = 'add'
             ii['meta'] = {}
 
+            # Tags must be unique for default
             r=self.cmind.access(ii)
             if r['return']>0: return r
 
