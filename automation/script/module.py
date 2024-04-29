@@ -775,6 +775,12 @@ class CAutomation(Automation):
         run_state['script_tags'] = script_tags
         run_state['script_variation_tags'] = variation_tags
         run_state['script_repo_alias'] = script_artifact.repo_meta.get('alias', '')
+        run_state['script_repo_git'] = script_artifact.repo_meta.get('git', False)
+
+        if not recursion:
+            run_state['script_entry_repo_to_report_errors'] = meta.get('repo_to_report_errors', '')
+            run_state['script_entry_repo_alias'] = script_artifact.repo_meta.get('alias', '')
+            run_state['script_entry_repo_git'] = script_artifact.repo_meta.get('git', False)
 
         deps = meta.get('deps',[])
         post_deps = meta.get('post_deps',[])
@@ -4528,14 +4534,32 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
                            print (r['string'])
                            print ("")
 
+
+            # Check where to report errors and failures
+            repo_to_report = run_state.get('script_entry_repo_to_report_errors', '')
+
+            if repo_to_report == '':
+                script_repo_alias = run_state.get('script_repo_alias', '')
+                script_repo_git = run_state.get('script_repo_git', False)
+
+                if script_repo_git and script_repo_alias!='':
+                    repo_to_report = 'https://github.com/'+script_repo_alias.replace('@','/')+'/issues'
+            
+            if repo_to_report == '':
+                repo_to_report = 'https://github.com/mlcommons/ck/issues'
+
             note = '''
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Note that it may be a portability issue of a third-party tool or a native script 
-wrapped and unified by this automation recipe (CM script). In such case, 
-please report this issue with a full log at "https://github.com/mlcommons/ck". 
+Note that it is often a portability issue of a third-party tool or a native script 
+wrapped and unified by this CM script (automation recipe). Please re-run
+this script with --repro flag and report this issue with the original
+command line, cm-repro directory and full log here:
+
+{}
+
 The CM concept is to collaboratively fix such issues inside portable CM scripts 
 to make existing tools and native scripts more portable, interoperable 
-and deterministic. Thank you'''
+and deterministic. Thank you'''.format(repo_to_report)
 
             rr = {'return':2, 'error':'Portable CM script failed (name = {}, return code = {})\n\n{}'.format(meta['alias'], rc, note)}
 

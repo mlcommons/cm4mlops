@@ -1,6 +1,10 @@
 ### 20240429
  * Added `cm set cfg` automation. For example, we can set default CM script to silent
    using `cm set cfg default --key.script.silent`
+ * Added key `script_entry_repo_to_report_errors` to CM script meta
+   to customize where to report errors instead of the default repo.
+   For example, issues with the CM script `run-mlperf-inference-app` 
+   should be reported at https://github.com/mlcommons/inference .
 
 ### 20240427
  * Added cm run script --print_versions to print resolved versions of dependencies at the end of the run
