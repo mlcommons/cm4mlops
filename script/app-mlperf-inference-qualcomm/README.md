@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-qualcomm).**
-
-
-
 Automatically generated README for this automation recipe: **app-mlperf-inference-qualcomm**
 
 Category: **Modular MLPerf benchmarks**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-qualcomm)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt[variations]" [--input_flags]`
@@ -115,11 +109,11 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_transformers
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_safetensors
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_onnx
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
 
     </details>
 
@@ -142,9 +136,10 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * compile,qaic,model,_bert-99,_pc.99.9980
-             * `if (CM_MLPERF_SKIP_RUN  != True)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
              * CM names: `--adr.['qaic-model-compiler', 'bert-99-compiler']...`
-             - CM script: [compile-model-for.qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/compile-model-for.qaic)
+             - CM script: [compile-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-model-for.qaic)
     * `_bert-99.9,offline`
       - Workflow:
     * `_bert-99.9,qaic`
@@ -155,9 +150,10 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * compile,qaic,model,_bert-99.9
-             * `if (CM_MLPERF_SKIP_RUN  != True)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
              * CM names: `--adr.['qaic-model-compiler', 'bert-99.9-compiler']...`
-             - CM script: [compile-model-for.qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/compile-model-for.qaic)
+             - CM script: [compile-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-model-for.qaic)
     * `_bert_,network-client`
       - Environment variables:
         - *CM_BENCHMARK*: `NETWORK_BERT_CLIENT`
@@ -229,35 +225,35 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * set,device,qaic,_vc.15
-             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-device-settings-qaic)
+             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/set-device-settings-qaic)
     * `_pro,num-devices.4,bert-99,server`
       - Environment variables:
         - *qaic_activation_count*: `16`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * set,device,qaic,_vc.13
-             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-device-settings-qaic)
+             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/set-device-settings-qaic)
     * `_pro,num-devices.4,bert-99.9,offline`
       - Environment variables:
         - *qaic_activation_count*: `8`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * set,device,qaic,_vc.13
-             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-device-settings-qaic)
+             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/set-device-settings-qaic)
     * `_pro,num-devices.4,bert-99.9,server`
       - Environment variables:
         - *qaic_activation_count*: `8`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * set,device,qaic,_vc.13
-             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-device-settings-qaic)
+             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/set-device-settings-qaic)
     * `_pro,num-devices.4,resnet50,offline`
       - Environment variables:
         - *qaic_activation_count*: `4`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * set,device,qaic,_vc.16
-             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-device-settings-qaic)
+             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/set-device-settings-qaic)
     * `_pro,num-devices.4,resnet50,server`
       - Environment variables:
         - *qaic_activation_count*: `4`
@@ -268,7 +264,7 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * set,device,qaic,_vc.17
-             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-device-settings-qaic)
+             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/set-device-settings-qaic)
     * `_pro,num-devices.4,retinanet,server`
       - Environment variables:
         - *qaic_activation_count*: `16`
@@ -367,17 +363,21 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,qaic,platform,sdk
-             * `if (CM_MLPERF_SKIP_RUN  != True)`
-             - CM script: [get-qaic-platform-sdk](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-qaic-platform-sdk)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
+             - CM script: [get-qaic-platform-sdk](https://github.com/mlcommons/cm4mlops/tree/master/script/get-qaic-platform-sdk)
            * get,lib,protobuf,_tag.v3.11.4
-             * `if (CM_MLPERF_SKIP_RUN  != True)`
-             - CM script: [get-lib-protobuf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-lib-protobuf)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
+             - CM script: [get-lib-protobuf](https://github.com/mlcommons/cm4mlops/tree/master/script/get-lib-protobuf)
            * set,device,mode,qaic
-             * `if (CM_QAIC_VC in on)`
-             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-device-settings-qaic)
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_QAIC_VC': 'on'}`
+             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/set-device-settings-qaic)
            * set,device,mode,qaic,_ecc
-             * `if (CM_QAIC_ECC in yes)`
-             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/set-device-settings-qaic)
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_QAIC_ECC': 'yes'}`
+             - CM script: [set-device-settings-qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/set-device-settings-qaic)
 
     </details>
 
@@ -493,17 +493,17 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_Pillow
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torch
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torchvision
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_opencv-python
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_numpy
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_pycocotools
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
 
     </details>
 
@@ -655,80 +655,105 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-qualcomm/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/_cm.yaml)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-cm)
+       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
      * get,git,repo
        * CM names: `--adr.['kilt-repo']...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
+       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
      * get,mlcommons,inference,src
        * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,mlcommons,inference,loadgen
        * CM names: `--adr.['inference-loadgen']...`
-       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-loadgen)
+       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-loadgen)
      * generate,user-conf,mlperf,inference
        * CM names: `--adr.['user-conf-generator']...`
-       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/generate-mlperf-inference-user-conf)
+       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-user-conf)
      * get,generic-python-lib,_mlperf_logging
        * CM names: `--adr.['mlperf-logging']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,ml-model,resnet50,_fp32,_onnx,_from-tf
-       * `if (CM_MODEL  == resnet50) AND (CM_MLPERF_DEVICE  != qaic)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['qaic']}`
        * CM names: `--adr.['resnet50-model', 'ml-model']...`
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-resnet50)
+       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * compile,qaic,model,_resnet50
-       * `if (CM_MODEL  == resnet50 AND CM_MLPERF_DEVICE  == qaic) AND (CM_MLPERF_SKIP_RUN  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50'], 'CM_MLPERF_DEVICE': ['qaic']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
        * CM names: `--adr.['qaic-model-compiler', 'resnet50-compiler']...`
-       - CM script: [compile-model-for.qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/compile-model-for.qaic)
+       - CM script: [compile-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-model-for.qaic)
      * get,dataset,imagenet,preprocessed,_for.resnet50,_NHWC,_full
-       * `if (CM_MODEL  == resnet50) AND (CM_MLPERF_SKIP_RUN  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
        * CM names: `--adr.['imagenet-preprocessed', 'dataset-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-imagenet)
+       - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * get,squad-vocab
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9']) AND (CM_MLPERF_SKIP_RUN  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
        * CM names: `--adr.['bert-vocab']...`
-       - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-squad-vocab)
+       - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
      * get,dataset,tokenized,squad,_raw
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9']) AND (CM_MLPERF_SKIP_RUN  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
        * CM names: `--adr.['squad-tokenized']...`
-       - CM script: [get-preprocessed-dataset-squad](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-squad)
+       - CM script: [get-preprocessed-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-squad)
      * compile,qaic,model,_retinanet
-       * `if (CM_MODEL  == retinanet AND CM_MLPERF_DEVICE  == qaic) AND (CM_MLPERF_SKIP_RUN  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet'], 'CM_MLPERF_DEVICE': ['qaic']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
        * CM names: `--adr.['qaic-model-compiler', 'retinanet-compiler']...`
-       - CM script: [compile-model-for.qaic](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/compile-model-for.qaic)
+       - CM script: [compile-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-model-for.qaic)
      * get,dataset,preprocessed,openimages,_for.retinanet.onnx,_NCHW,_validation,_custom-annotations
-       * `if (CM_MODEL  == retinanet) AND (CM_MLPERF_SKIP_RUN  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
        * CM names: `--adr.['openimages-preprocessed', 'dataset-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-openimages)
+       - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openimages)
      * get,lib,onnxruntime,lang-cpp,_cpu
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == cpu)`
-       - CM script: [get-onnxruntime-prebuilt](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-onnxruntime-prebuilt)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['cpu']}`
+       - CM script: [get-onnxruntime-prebuilt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-onnxruntime-prebuilt)
      * get,lib,onnxruntime,lang-cpp,_cuda
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == gpu)`
-       - CM script: [get-onnxruntime-prebuilt](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-onnxruntime-prebuilt)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-qualcomm/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-qualcomm/_cm.yaml)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu']}`
+       - CM script: [get-onnxruntime-prebuilt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-onnxruntime-prebuilt)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/_cm.yaml)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-qualcomm/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-qualcomm/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-qualcomm/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-qualcomm/_cm.yaml)***
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/customize.py)***
+  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/_cm.yaml)***
      * compile,cpp-program
-       * `if (CM_MLPERF_SKIP_RUN  != True)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': [True]}`
        * CM names: `--adr.['compile-program']...`
-       - CM script: [compile-program](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/compile-program)
+       - CM script: [compile-program](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-program)
      * benchmark-mlperf
-       * `if (CM_MLPERF_SKIP_RUN not in ['yes', True])`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes', True]}`
        * CM names: `--adr.['runner', 'mlperf-runner']...`
-       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/benchmark-program-mlperf)
+       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
      * save,mlperf,inference,state
        * CM names: `--adr.['save-mlperf-inference-state']...`
-       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/save-mlperf-inference-implementation-state)
+       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/cm4mlops/tree/master/script/save-mlperf-inference-implementation-state)
 
 ___
 ### Script output

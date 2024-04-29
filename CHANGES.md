@@ -1,3 +1,26 @@
+### 20240429
+ * Added `cm set cfg` automation. For example, we can set default CM script to silent
+   using `cm set cfg default --key.script.silent`
+ * Added key `script_entry_repo_to_report_errors` to CM script meta
+   to customize where to report errors instead of the default repo.
+   For example, issues with the CM script `run-mlperf-inference-app` 
+   should be reported at https://github.com/mlcommons/inference .
+ * Added saving running script from different deps without CM to tmp-run-without-cm.bat.
+   Example: `cmr "app image corner-detection" --debug-script-tags=benchmark,program`
+ * Generate Docker container sample during --repro (prototype)
+
+
+### 20240427
+ * Added cm run script --print_versions to print resolved versions of dependencies at the end of the run
+
+### 20240426
+ * Improved cm run script --repro function to dump dependencies, versions and generate README
+
+### 20240425
+ * CM script automation: fixed dumping versions (variations didn't have _ prefix)
+
+---
+
 Since March 2023, all updates to CM automations are submitted via PRs.
 You can follow our PRs at
 * https://github.com/ctuning/mlcommons-ck/commits/master

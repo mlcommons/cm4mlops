@@ -6,7 +6,7 @@ name: "ML models with LoadGen (Python; Linux/MacOS/Windows) - dev"
 
 urls:
 - name: "GitHub dev page"
-  url: "https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-loadgen-generic-python"
+  url: "https://github.com/mlcommons/cm4mlops/tree/main/script/app-loadgen-generic-python"
 
 supported_compute:
 - cpu,x64

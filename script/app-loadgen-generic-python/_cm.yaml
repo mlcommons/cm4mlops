@@ -305,6 +305,7 @@ docker:
     - env.CM_ML_MODEL_FILE_WITH_PATH
     - env.CM_ML_MODEL_CODE_WITH_PATH
     - output_dir
+    - repro_dir
   skip_input_for_fake_run:
     - modelpath
     - modelsamplepath
@@ -313,6 +314,7 @@ docker:
     - output_dir
     - scenario
     - runner
+    - repro_dir
     - concurrency
     - intraop
     - interop
@@ -320,3 +322,4 @@ docker:
     - samples
     - modelcfg.num_classes
     - modelcfg.config
+    - repro

@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/install-ipex-from-src).**
-
-
-
 Automatically generated README for this automation recipe: **install-ipex-from-src**
 
 Category: **Compiler automation**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-ipex-from-src)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-ipex-from-src)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *install,get,src,from.src,ipex,src-ipex*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="install,get,src,from.src,ipex,src-ipex"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=install,get,src,from.src,ipex,src-ipex) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "install get src from.src ipex src-ipex[variations]" `
@@ -112,18 +106,18 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,conda,_name.gptj-pt
              * CM names: `--adr.['conda']...`
-             - CM script: [get-conda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-conda)
+             - CM script: [get-conda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-conda)
            * get,generic,conda-package,_package.python
              * CM names: `--adr.['conda-package', 'python3']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.wheel,_source.conda-forge
              * CM names: `--adr.['conda-package', 'wheel']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.setuptools,_source.conda-forge
              * CM names: `--adr.['conda-package', 'setuptools']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * install,llvm,src,_for-intel-mlperf-inference-v3.1-gptj
-             - CM script: [install-llvm-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-llvm-src)
+             - CM script: [install-llvm-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-llvm-src)
     * `_sha.#`
       - Environment variables:
         - *CM_GIT_CHECKOUT_SHA*: `#`
@@ -169,29 +163,31 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-ipex-from-src/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-ipex-from-src/_cm.json)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,python3
-       * `if (CM_CONDA_ENV  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CONDA_ENV': ['yes']}`
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,pytorch,from.src
-       * `if (CM_CONDA_ENV  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CONDA_ENV': ['yes']}`
        * CM names: `--adr.['pytorch']...`
-       - CM script: [install-pytorch-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-pytorch-from-src)
+       - CM script: [install-pytorch-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pytorch-from-src)
      * get,git,repo
        * CM names: `--adr.['ipex-src-repo']...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-ipex-from-src/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-ipex-from-src/_cm.json)
+       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-ipex-from-src/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-ipex-from-src/_cm.json)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-ipex-from-src/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-ipex-from-src/_cm.json)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-ipex-from-src/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-ipex-from-src/_cm.json)
   1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-ipex-from-src/_cm.json)
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-ipex-from-src/_cm.json)
 
 ___
 ### Script output

@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-octoml-tinyml-results).**
-
-
-
 Automatically generated README for this automation recipe: **reproduce-mlperf-octoml-tinyml-results**
 
 Category: **Reproduce MLPerf benchmarks**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-octoml-tinyml-results)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *reproduce,tiny,results,mlperf,octoml,mlcommons*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -84,8 +80,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="reproduce,tiny,results,mlperf,octoml,mlcommons"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=reproduce,tiny,results,mlperf,octoml,mlcommons) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -170,43 +164,44 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-cm)
+       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
      * get,python3
        * CM names: `--adr.['python3', 'python']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,zephyr
        * CM names: `--adr.['zephyr']...`
-       - CM script: [get-zephyr](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-zephyr)
+       - CM script: [get-zephyr](https://github.com/mlcommons/cm4mlops/tree/master/script/get-zephyr)
      * get,zephyr-sdk
        * CM names: `--adr.['zephyr-sdk']...`
-       - CM script: [get-zephyr-sdk](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-zephyr-sdk)
+       - CM script: [get-zephyr-sdk](https://github.com/mlcommons/cm4mlops/tree/master/script/get-zephyr-sdk)
      * get,cmsis
        * CM names: `--adr.['cmsis']...`
-       - CM script: [get-cmsis_5](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cmsis_5)
+       - CM script: [get-cmsis_5](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmsis_5)
      * get,microtvm
        * CM names: `--adr.['microtvm']...`
-       - CM script: [get-microtvm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-microtvm)
+       - CM script: [get-microtvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-microtvm)
      * get,cmake
        * CM names: `--adr.['cmake']...`
-       - CM script: [get-cmake](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cmake)
+       - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
      * get,gcc
-       - CM script: [get-gcc](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-gcc)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-octoml-tinyml-results/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)
+       - CM script: [get-gcc](https://github.com/mlcommons/cm4mlops/tree/master/script/get-gcc)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-octoml-tinyml-results/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-octoml-tinyml-results/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)***
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/customize.py)***
+  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-octoml-tinyml-results/_cm.json)***
      * flash,tiny,mlperf
-       * `if (CM_FLASH_BOARD  == True)`
-       - CM script: [flash-tinyml-binary](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/flash-tinyml-binary)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_FLASH_BOARD': ['True']}`
+       - CM script: [flash-tinyml-binary](https://github.com/mlcommons/cm4mlops/tree/master/script/flash-tinyml-binary)
 
 ___
 ### Script output

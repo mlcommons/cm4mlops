@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/install-tensorflow-from-src).**
-
-
-
 Automatically generated README for this automation recipe: **install-tensorflow-from-src**
 
 Category: **AI/ML frameworks**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-tensorflow-from-src)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tensorflow-from-src)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *get,install,tensorflow,lib,source,from-source,from-src,src,from.src*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -84,8 +80,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="get,install,tensorflow,lib,source,from-source,from-src,src,from.src"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=get,install,tensorflow,lib,source,from-source,from-src,src,from.src) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -140,23 +134,24 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-tensorflow-from-src/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tensorflow-from-src/_cm.json)***
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * get,generic-sys-util,_zlib
-       * `if (CM_HOST_OS_FLAVOR  == ubuntu AND CM_HOST_OS_VERSION  == 18.04)`
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_HOST_OS_FLAVOR': ['ubuntu'], 'CM_HOST_OS_VERSION': ['18.04']}`
+       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * get,generic-python-lib,_package.numpy
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-tensorflow-from-src/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-tensorflow-from-src/_cm.json)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tensorflow-from-src/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tensorflow-from-src/_cm.json)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-tensorflow-from-src/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-tensorflow-from-src/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-tensorflow-from-src/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-tensorflow-from-src/_cm.json)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tensorflow-from-src/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tensorflow-from-src/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tensorflow-from-src/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tensorflow-from-src/_cm.json)
 
 ___
 ### Script output

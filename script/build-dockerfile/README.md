@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/build-dockerfile).**
-
-
-
 Automatically generated README for this automation recipe: **build-dockerfile**
 
 Category: **Docker automation**
@@ -16,9 +12,9 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/build-dockerfile)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-dockerfile)*
+* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *build,dockerfile*
 * Output cached? *False*
 * See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="build,dockerfile"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=build,dockerfile) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "build dockerfile[variations]" [--input_flags]`
@@ -135,10 +129,12 @@ ___
 * `--post_file=value`  &rarr;  `DOCKER_IMAGE_POST_FILE=value`
 * `--post_run_cmds=value`  &rarr;  `CM_DOCKER_POST_RUN_COMMANDS=value`
 * `--pre_run_cmds=value`  &rarr;  `CM_DOCKER_PRE_RUN_COMMANDS=value`
+* `--push_image=value`  &rarr;  `CM_DOCKER_PUSH_IMAGE=value`
 * `--real_run=value`  &rarr;  `CM_REAL_RUN=value`
 * `--run_cmd=value`  &rarr;  `CM_DOCKER_RUN_CMD=value`
 * `--run_cmd_extra=value`  &rarr;  `CM_DOCKER_RUN_CMD_EXTRA=value`
 * `--script_tags=value`  &rarr;  `CM_DOCKER_RUN_SCRIPT_TAGS=value`
+* `--skip_cm_sys_upgrade=value`  &rarr;  `CM_DOCKER_SKIP_CM_SYS_UPGRADE=value`
 
 **Above CLI flags can be used in the Python CM API as follows:**
 
@@ -156,9 +152,9 @@ r=cm.access({... , "build":...}
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * CM_DOCKER_BUILD_SLIM: `no`
-* CM_DOCKER_OS: `ubuntu`
 * CM_DOCKER_IMAGE_EOL: `
 `
+* CM_DOCKER_OS: `ubuntu`
 
 </details>
 
@@ -166,17 +162,18 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/build-dockerfile/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/build-dockerfile/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/build-dockerfile/_cm.json)
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-dockerfile/_cm.yaml)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-dockerfile/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-dockerfile/_cm.yaml)
   1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/build-dockerfile/_cm.json)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-dockerfile/_cm.yaml)
   1. Run "postrocess" function from customize.py
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/build-dockerfile/_cm.json)***
+  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-dockerfile/_cm.yaml)***
      * build,docker,image
-       * `if (CM_BUILD_DOCKER_IMAGE in ['yes', '1'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_BUILD_DOCKER_IMAGE': ['yes', '1']}`
        * CM names: `--adr.['build-docker-image']...`
-       - CM script: [build-docker-image](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/build-docker-image)
+       - CM script: [build-docker-image](https://github.com/mlcommons/cm4mlops/tree/master/script/build-docker-image)
 
 ___
 ### Script output

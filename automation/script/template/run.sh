@@ -7,21 +7,11 @@
 
 #${CM_PYTHON_BIN_WITH_PATH} contains the path to python binary if "get,python" is added as a dependency
 
+echo "Running: "
+echo "${CM_RUN_CMD}"
+echo ""
 
-
-function exit_if_error() {
-  test $? -eq 0 || exit $?
-}
-
-function run() {
-  echo "Running: "
-  echo "$1"
-  echo ""
-  if [[ ${CM_FAKE_RUN} != 'yes' ]]; then
-    eval "$1"
-    exit_if_error
-  fi
-}
-
-#Add your run commands here...
-# run "$CM_RUN_CMD"
+if [[ ${CM_FAKE_RUN} != "yes" ]]; then
+  eval "${CM_RUN_CMD}"
+  test $? -eq 0 || exit 1
+fi

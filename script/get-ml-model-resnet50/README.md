@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-resnet50).**
-
-
-
 Automatically generated README for this automation recipe: **get-ml-model-resnet50**
 
 Category: **AI/ML models**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-resnet50)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-resnet50)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *get,raw,ml-model,resnet50,ml-model-resnet50,image-classification*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="get,raw,ml-model,resnet50,ml-model-resnet50,image-classification"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=get,raw,ml-model,resnet50,ml-model-resnet50,image-classification) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "get raw ml-model resnet50 ml-model-resnet50 image-classification[variations]" `
@@ -114,7 +108,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,python3
              * CM names: `--adr.['python', 'python3']...`
-             - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
     * `_from-tf`
       - Workflow:
     * `_huggingface_default`
@@ -127,7 +121,7 @@ ___
       - Workflow:
         1. ***Read "post_deps" on other CM scripts***
            * download-and-extract,_url.https://zenodo.org/record/8073420/files/resnet50_v1.param?download=
-             - CM script: [download-and-extract](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-and-extract)
+             - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
     * `_onnx,from-tf`
       - Environment variables:
         - *CM_ML_MODEL_DATA_LAYOUT*: `NHWC`
@@ -167,7 +161,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_package.tensorflow
              * CM names: `--adr.['tensorflow']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_tflite,argmax`
       - Environment variables:
         - *CM_DAE_EXTRACT_DOWNLOADED*: `yes`
@@ -337,17 +331,17 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-resnet50/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-resnet50/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-resnet50/_cm.json)***
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-resnet50/_cm.json)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-resnet50/customize.py)***
+  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-resnet50/_cm.json)***
      * download-and-extract
        * CM names: `--adr.['model-downloader']...`
-       - CM script: [download-and-extract](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-and-extract)
+       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
   1. ***Run native script if exists***
-     * [run-fix-input.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-resnet50/run-fix-input.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-resnet50/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-resnet50/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-resnet50/_cm.json)
+     * [run-fix-input.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-resnet50/run-fix-input.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-resnet50/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-resnet50/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-resnet50/_cm.json)
 
 ___
 ### Script output

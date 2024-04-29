@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/process-mlperf-accuracy).**
-
-
-
 Automatically generated README for this automation recipe: **process-mlperf-accuracy**
 
 Category: **MLPerf benchmark support**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *run,mlperf,mlcommons,accuracy,mlc,process,process-accuracy*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="run,mlperf,mlcommons,accuracy,mlc,process,process-accuracy"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=run,mlperf,mlcommons,accuracy,mlc,process,process-accuracy) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "run mlperf mlcommons accuracy mlc process process-accuracy[variations]" [--input_flags]`
@@ -105,18 +99,18 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_pycocotools
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,mlcommons,mlperf,inference,src,-_openimages-nvidia-pycocotools
              * CM names: `--adr.['for-pycocotools', 'accuracy-check-src']...`
-             - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+             - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
     * `_nvidia-pycocotools,openimages`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_nvidia-pycocotools
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,mlcommons,mlperf,inference,src,_openimages-nvidia-pycocotools
              * CM names: `--adr.['for-pycocotools', 'accuracy-check-src']...`
-             - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+             - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
 
     </details>
 
@@ -143,17 +137,17 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,dataset,cnndm,_validation
-             - CM script: [get-dataset-cnndm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-cnndm)
+             - CM script: [get-dataset-cnndm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-cnndm)
            * get,generic-python-lib,_package.rouge_score
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.nltk
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.evaluate
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.absl-py
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.rouge_score
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_coco2014`
       - Environment variables:
         - *CM_DATASET*: `coco2014`
@@ -161,30 +155,30 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,dataset,coco2014,original
              * CM names: `--adr.['coco2014-dataset', 'coco2014-original']...`
-             - CM script: [get-dataset-coco2014](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-coco2014)
+             - CM script: [get-dataset-coco2014](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-coco2014)
     * **`_imagenet`** (default)
       - Environment variables:
         - *CM_DATASET*: `imagenet`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,dataset-aux,image-classification,imagenet-aux
-             - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-imagenet-aux)
+             - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-aux)
            * get,generic-python-lib,_numpy
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_kits19`
       - Environment variables:
         - *CM_DATASET*: `kits19`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,dataset,preprocessed,medical-imaging,kits19
-             - CM script: [get-preprocessed-dataset-kits19](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-kits19)
+             - CM script: [get-preprocessed-dataset-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-kits19)
     * `_librispeech`
       - Environment variables:
         - *CM_DATASET*: `librispeech`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,dataset,preprocessed,speech-recognition,librispeech
-             - CM script: [get-preprocessed-dataset-librispeech](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-librispeech)
+             - CM script: [get-preprocessed-dataset-librispeech](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-librispeech)
     * `_open-orca`
       - Environment variables:
         - *CM_DATASET*: `openorca`
@@ -192,54 +186,58 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,dataset,openorca,preprocessed
              * CM names: `--adr.['openorca-dataset']...`
-             - CM script: [get-preprocessed-dataset-openorca](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-openorca)
+             - CM script: [get-preprocessed-dataset-openorca](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openorca)
            * get,ml-model,llama2
              * CM names: `--adr.['llama2-model']...`
-             - CM script: [get-ml-model-llama2](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-llama2)
+             - CM script: [get-ml-model-llama2](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-llama2)
     * `_openimages`
       - Environment variables:
         - *CM_DATASET*: `openimages`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,dataset-aux,openimages,annotations
-             * `if (CM_MLPERF_RUN_STYLE  == valid)`
-             - CM script: [get-dataset-openimages-annotations](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-openimages-annotations)
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_RUN_STYLE': ['valid']}`
+             - CM script: [get-dataset-openimages-annotations](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages-annotations)
            * get,dataset,openimages,original
-             * `if (CM_MLPERF_RUN_STYLE  != valid)`
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_RUN_STYLE': ['valid']}`
              * CM names: `--adr.['openimages-original']...`
-             - CM script: [get-dataset-openimages](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-openimages)
+             - CM script: [get-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages)
            * get,generic-python-lib,_package.kiwisolver
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_squad`
       - Environment variables:
         - *CM_DATASET*: `squad`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_boto3
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.transformers
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,dataset,squad,language-processing
-             * `if (CM_DATASET_SQUAD_VAL_PATH not in [])`
-             - CM script: [get-dataset-squad](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-squad)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_DATASET_SQUAD_VAL_PATH': []}`
+             - CM script: [get-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad)
            * get,dataset-aux,squad-vocab
-             * `if (CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH  != on)`
-             - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-squad-vocab)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH': ['on']}`
+             - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
            * get,generic-python-lib,_torch
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_tokenization
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_terabyte`
       - Environment variables:
         - *CM_DATASET*: `squad`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_ujson
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_scikit-learn
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_numpy
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
 
     </details>
 
@@ -312,21 +310,21 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy/_cm.json)***
      * get,python3
        * CM names: `--adr.['python3', 'python']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,mlcommons,inference,src
        * CM names: `--adr.['inference-src', 'accuracy-check-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy/_cm.json)
+       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy/_cm.json)
   1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy/run.bat)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/process-mlperf-accuracy/_cm.json)
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy/run.bat)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/process-mlperf-accuracy/_cm.json)
 
 ___
 ### Script output

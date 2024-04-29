@@ -7,7 +7,7 @@ def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
-
+    
     if env["CM_DOCKER_OS"] not in [ "ubuntu", "rhel", "arch" ]:
         return {'return': 1, 'error': "Currently only ubuntu, rhel and arch are supported in CM docker"}
 
@@ -194,8 +194,9 @@ def preprocess(i):
         for y in x.split(','):
             f.write('RUN '+ y + EOL)
 
-    f.write(EOL+'# Install all system dependencies' + EOL)
-    f.write('RUN cm run script --tags=get,sys-utils-cm --quiet' + EOL)
+    if str(env.get('CM_DOCKER_SKIP_CM_SYS_UPGRADE', False)).lower() not in ["true", "1", "yes"]:
+        f.write(EOL+'# Install all system dependencies' + EOL)
+        f.write('RUN cm run script --tags=get,sys-utils-cm --quiet' + EOL)
 
     if 'CM_DOCKER_PRE_RUN_COMMANDS' in env:
         for pre_run_cmd in env['CM_DOCKER_PRE_RUN_COMMANDS']:

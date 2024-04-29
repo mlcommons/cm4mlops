@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-python-lib).**
-
-
-
 Automatically generated README for this automation recipe: **get-generic-python-lib**
 
 Category: **Python automation**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *get,generic-python-lib*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="get,generic-python-lib"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=get,generic-python-lib) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "get generic-python-lib[variations]" [--input_flags]`
@@ -112,7 +106,7 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_typing_extensions
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_apex`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `apex`
@@ -155,7 +149,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_custom-python`
       - Environment variables:
         - *CM_TMP_USE_CUSTOM_PYTHON*: `on`
@@ -210,7 +204,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_librosa`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `librosa`
@@ -255,12 +249,12 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
            * get,generic-python-lib,_torch_cuda
              * CM names: `--adr.['torch']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,git,repo,_repo.https://github.com/NVIDIA/apex,_tag.23.05
-             - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
+             - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
     * `_nvidia-dali`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `nvidia-dali-cuda120`
@@ -270,7 +264,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_nvidia-pycocotools`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PIP_UNINSTALL_DEPS*: `pycocotools`
@@ -279,10 +273,10 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_package.cython
              * CM names: `--adr.['cython']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.numpy
              * CM names: `--adr.['numpy']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_nvidia-pyindex`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `nvidia-pyindex`
@@ -301,7 +295,7 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_package.nvidia-pyindex
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_onnxruntime`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `onnxruntime`
@@ -319,7 +313,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_opencv-python`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `opencv-python`
@@ -353,7 +347,7 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_colored
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_pre`
       - Environment variables:
         - *CM_GENERIC_PYTHON_DEV_VERSION*: `yes`
@@ -377,7 +371,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_ray`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `ray[default]`
@@ -391,15 +385,16 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,rocm
              * CM names: `--adr.['rocm']...`
-             - CM script: [get-rocm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-rocm)
+             - CM script: [get-rocm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-rocm)
     * `_safetensors`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `safetensors`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,rust-compiler
-             * `if (CM_HOST_PLATFORM_FLAVOR  != x86_64)`
-             - CM script: [get-compiler-rust](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-compiler-rust)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_HOST_PLATFORM_FLAVOR': ['x86_64']}`
+             - CM script: [get-compiler-rust](https://github.com/mlcommons/cm4mlops/tree/master/script/get-compiler-rust)
     * `_scikit-learn`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `scikit-learn`
@@ -497,9 +492,9 @@ ___
       - Workflow:
         1. ***Read "post_deps" on other CM scripts***
            * get,generic-python-lib,_torchvision,_rocm
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torchaudio,_rocm
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_torch_cuda`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `torch`
@@ -509,7 +504,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_torch_cuda,pre`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `torch`
@@ -520,9 +515,9 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
            * get,generic-python-lib,_numpy
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_torch_tensorrt`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `torch-tensorrt`
@@ -549,7 +544,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_torchvision`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `torchvision`
@@ -569,7 +564,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_tornado`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `tornado`
@@ -649,30 +644,33 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,python3
-       * `if (CM_TMP_USE_CUSTOM_PYTHON  != on)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_TMP_USE_CUSTOM_PYTHON': ['on']}`
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,generic-python-lib,_pip
-       * `if (CM_GENERIC_PYTHON_PACKAGE_NAME  != pip)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_GENERIC_PYTHON_PACKAGE_NAME': ['pip']}`
        * CM names: `--adr.['python-pip', 'pip']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib/_cm.json)***
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/customize.py)***
+  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)***
      * install,onnxruntime,from.src,_cuda
-       * `if (CM_INSTALL_ONNXRUNTIME_GPU_FROM_SRC  == yes)`
-       - CM script: [install-onnxruntime-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-onnxruntime-from-src)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_INSTALL_ONNXRUNTIME_GPU_FROM_SRC': ['yes']}`
+       - CM script: [install-onnxruntime-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-onnxruntime-from-src)
   1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib/run.bat)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-generic-python-lib/_cm.json)
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/run.bat)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)
 
 ___
 ### Script output

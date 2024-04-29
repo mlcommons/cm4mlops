@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/app-loadgen-generic-python).**
-
-
-
 Automatically generated README for this automation recipe: **app-loadgen-generic-python**
 
 Category: **Modular MLPerf inference benchmark pipeline**
@@ -16,8 +12,8 @@ Developers: [Gaz Iqbal](https://www.linkedin.com/in/gaziqbal), [Arjun Suresh](ht
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *python,app,generic,loadgen*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Developers: [Gaz Iqbal](https://www.linkedin.com/in/gaziqbal), [Arjun Suresh](ht
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -107,8 +103,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="python,app,generic,loadgen"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=python,app,generic,loadgen) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "python app generic loadgen[variations]" [--input_flags]`
@@ -137,7 +131,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,ml-model,huggingface
              * CM names: `--adr.['hf-downloader']...`
-             - CM script: [get-ml-model-huggingface-zoo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-huggingface-zoo)
+             - CM script: [get-ml-model-huggingface-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-huggingface-zoo)
     * `_huggingface`
       - Environment variables:
         - *CM_CUSTOM_MODEL_SOURCE*: `huggingface`
@@ -253,69 +247,80 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/_cm.yaml)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,python3
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,generic-python-lib,_psutil
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_package.numpy
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,cuda
-       * `if (CM_MLPERF_DEVICE  == gpu)`
-       - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_DEVICE': ['gpu']}`
+       - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
      * get,loadgen
        * CM names: `--adr.['loadgen']...`
-       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-loadgen)
+       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-loadgen)
      * get,generic-python-lib,_onnxruntime
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['cpu']}`
        * CM names: `--adr.['onnxruntime']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnxruntime_gpu
-       * `if (CM_MLPERF_BACKEND  == onnxruntime AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu']}`
        * CM names: `--adr.['onnxruntime']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_onnx
-       * `if (CM_MLPERF_BACKEND  == onnxruntime)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['onnxruntime']}`
        * CM names: `--adr.['onnx']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torch
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['cpu']}`
        * CM names: `--adr.['torch']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == cpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['cpu']}`
        * CM names: `--adr.['torchvision']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torch_cuda
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['gpu']}`
        * CM names: `--adr.['torch']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_torchvision_cuda
-       * `if (CM_MLPERF_BACKEND  == pytorch AND CM_MLPERF_DEVICE  == gpu)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_DEVICE': ['gpu']}`
        * CM names: `--adr.['torchvision']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,ml-model,resnet50,_onnx
-       * `if (CM_MODEL  == resnet50)`
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-resnet50)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
+       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,ml-model,retinanet,_onnx,_fp32
-       * `if (CM_MODEL  == retinanet)`
-       - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-retinanet)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
+       - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
      * get,ml-model,retinanet,_onnx,_fp32
-       * `if (CM_MODEL  == retinanet)`
-       - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-retinanet)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python/_cm.yaml)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
+       - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/_cm.yaml)
   1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python/run.bat)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-loadgen-generic-python/_cm.yaml)
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/run.bat)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-loadgen-generic-python/_cm.yaml)
 
 ___
 ### Script output

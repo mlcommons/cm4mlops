@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/install-qaic-compute-sdk-from-src).**
-
-
-
 Automatically generated README for this automation recipe: **install-qaic-compute-sdk-from-src**
 
 Category: **AI/ML frameworks**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-qaic-compute-sdk-from-src)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-qaic-compute-sdk-from-src)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *get,qaic,from.src,software,compute,compute-sdk,qaic-compute-sdk,sdk*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -84,8 +80,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="get,qaic,from.src,software,compute,compute-sdk,qaic-compute-sdk,sdk"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=get,qaic,from.src,software,compute,compute-sdk,qaic-compute-sdk,sdk) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -162,36 +156,36 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-qaic-compute-sdk-from-src/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-qaic-compute-sdk-from-src/_cm.json)***
      * get,git,repo,_repo.https://github.com/quic/software-kit-for-qualcomm-cloud-ai-100-cc
        * CM names: `--adr.['qaic-software-git-repo']...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
+       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
      * get,cmake
        * CM names: `--adr.['cmake']...`
-       - CM script: [get-cmake](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cmake)
+       - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
      * get,llvm,_from-src
        * CM names: `--adr.['llvm']...`
-       - CM script: [get-llvm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-llvm)
+       - CM script: [get-llvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-llvm)
      * get,generic,sys-util,_libudev-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * get,generic,sys-util,_libpci-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * get,google,test
-       - CM script: [get-google-test](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-google-test)
+       - CM script: [get-google-test](https://github.com/mlcommons/cm4mlops/tree/master/script/get-google-test)
      * get,generic-sys-util,_ninja-build
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * get,generic-sys-util,_rsync
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
      * download-and-extract,_extract,_url.https://codelinaro.jfrog.io/artifactory/codelinaro-toolchain-for-hexagon/v15.0.5/clang+llvm-15.0.5-cross-hexagon-unknown-linux-musl.tar.xz
        * CM names: `--adr.['dae']...`
-       - CM script: [download-and-extract](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-and-extract)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-qaic-compute-sdk-from-src/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-qaic-compute-sdk-from-src/_cm.json)
+       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-qaic-compute-sdk-from-src/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-qaic-compute-sdk-from-src/_cm.json)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-qaic-compute-sdk-from-src/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-qaic-compute-sdk-from-src/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-qaic-compute-sdk-from-src/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-qaic-compute-sdk-from-src/_cm.json)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-qaic-compute-sdk-from-src/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-qaic-compute-sdk-from-src/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-qaic-compute-sdk-from-src/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-qaic-compute-sdk-from-src/_cm.json)
 
 ___
 ### Script output

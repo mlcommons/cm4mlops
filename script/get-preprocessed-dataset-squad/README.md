@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/get-preprocessed-dataset-squad).**
-
-
-
 Automatically generated README for this automation recipe: **get-preprocessed-dataset-squad**
 
 Category: **AI/ML datasets**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *get,dataset,preprocessed,tokenized,squad*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -84,8 +80,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="get,dataset,preprocessed,tokenized,squad"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=get,dataset,preprocessed,tokenized,squad) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -143,7 +137,7 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,preprocessed,squad,_pickle
-             - CM script: [get-preprocessed-dataset-squad](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-squad)
+             - CM script: [get-preprocessed-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-squad)
 
     </details>
 
@@ -197,33 +191,33 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad/_cm.yaml)***
      * get,python3
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,mlperf,inference,src
        * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,squad,dataset,original
        * CM names: `--adr.['squad-dataset']...`
-       - CM script: [get-dataset-squad](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-squad)
+       - CM script: [get-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad)
      * get,squad,vocab
        * CM names: `--adr.['squad-vocab']...`
-       - CM script: [get-bert-squad-vocab](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-bert-squad-vocab)
+       - CM script: [get-bert-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-bert-squad-vocab)
      * get,generic-python-lib,_package.tokenization
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_package.transformers
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,generic-python-lib,_package.tensorflow
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad/_cm.yaml)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad/_cm.yaml)
   1. ***Run native script if exists***
-     * [run-packed.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad/run-packed.sh)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-preprocessed-dataset-squad/_cm.yaml)
+     * [run-packed.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad/run-packed.sh)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-preprocessed-dataset-squad/_cm.yaml)
 
 ___
 ### Script output

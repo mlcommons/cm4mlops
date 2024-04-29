@@ -15,13 +15,15 @@ def preprocess(i):
         i['run_script_input']['script_name'] = "run-rhel"
 
     # Test (not needed - will be removed)
-    if env.get('CM_SKIP_SYS_UTILS','').lower() in [True, 'yes', 'on']:
+    if str(env.get('CM_SKIP_SYS_UTILS','')).lower() in [True, 'yes', 'on']:
         return {'return':0, 'skip':True}
 
 
 # Windows has moved to get-sys-utils-min and will be always run with "detect,os"!
    
     if os_info['platform'] == 'windows':
+        print ('')
+        print ('This script is not used on Windows')
         print ('')
 
    # If windows, download here otherwise use run.sh

@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-nvidia).**
-
-
-
 Automatically generated README for this automation recipe: **app-mlperf-inference-nvidia**
 
 Category: **Reproduce MLPerf benchmarks**
@@ -157,8 +153,8 @@ Assuming all the downloaded files are to the user home directory please do the f
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-nvidia)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *reproduce,mlcommons,mlperf,inference,harness,nvidia-harness,nvidia*
 * Output cached? *False*
@@ -175,7 +171,7 @@ Assuming all the downloaded files are to the user home directory please do the f
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -226,8 +222,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="reproduce,mlcommons,mlperf,inference,harness,nvidia-harness,nvidia"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=reproduce,mlcommons,mlperf,inference,harness,nvidia-harness,nvidia) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "reproduce mlcommons mlperf inference harness nvidia-harness nvidia[variations]" [--input_flags]`
@@ -246,44 +240,44 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_transformers
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.nibabel
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_pandas
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_bert_`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_transformers
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_safetensors
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_onnx
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_dlrm_`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_torch
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.torchsnapshot
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.torchrec
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.fbgemm-gpu
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_onnx-graphsurgeon
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.scikit-learn
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_gptj_`
       - Environment variables:
         - *CM_ML_MODEL_STARTING_WEIGHTS_FILENAME*: `https://cloud.mlcommons.org/index.php/s/QAZ2oM94MkFtbQx/download`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_package.datasets
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.simplejson
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
 
     </details>
 
@@ -314,16 +308,16 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * install,pytorch,from.src,_for-nvidia-mlperf-inference-v3.1
-             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-pytorch-from-src)
+             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pytorch-from-src)
            * get,cmake
-             - CM script: [get-cmake](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cmake)
+             - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
     * `_gptj_,build_engine`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * install,pytorch,from.src,_for-nvidia-mlperf-inference-v3.1
-             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-pytorch-from-src)
+             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pytorch-from-src)
            * get,cmake
-             - CM script: [get-cmake](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cmake)
+             - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
     * `_gptj_,run_harness`
       - Environment variables:
         - *CM_MLPERF_NVIDIA_HARNESS_USE_FP8*: `True`
@@ -333,9 +327,9 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * install,pytorch,from.src,_for-nvidia-mlperf-inference-v3.1
-             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-pytorch-from-src)
+             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pytorch-from-src)
            * get,cmake
-             - CM script: [get-cmake](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cmake)
+             - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
     * `_gpu_memory.16,3d-unet_,offline,run_harness`
       - Workflow:
     * `_gpu_memory.16,bert_,offline,run_harness`
@@ -892,9 +886,9 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_onnx-graphsurgeon
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.onnx
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_retinanet`
       - Environment variables:
         - *CM_MODEL*: `retinanet`
@@ -905,21 +899,21 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_Pillow
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torch
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torchvision
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_opencv-python
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_numpy
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_pycocotools
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_onnx-graphsurgeon
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.onnx
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_rnnt`
       - Environment variables:
         - *CM_MODEL*: `rnnt`
@@ -930,25 +924,25 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_toml
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torchvision
              * CM names: `--adr.['torchvision']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_torch
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_nvidia-apex
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_unidecode
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_inflect
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_librosa
              * CM names: `--adr.['librosa']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_sox
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-sys-util,_sox
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
 
     </details>
 
@@ -996,30 +990,30 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,cmake
-             - CM script: [get-cmake](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cmake)
+             - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
            * get,generic,sys-util,_glog-dev
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,sys-util,_gflags-dev
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,sys-util,_libgmock-dev
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,sys-util,_libre2-dev
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,sys-util,_libnuma-dev
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,sys-util,_libboost-all-dev
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,sys-util,_rapidjson-dev
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,cuda,_cudnn
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
            * get,tensorrt
              * CM names: `--adr.['tensorrt']...`
-             - CM script: [get-tensorrt](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-tensorrt)
+             - CM script: [get-tensorrt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-tensorrt)
            * build,nvidia,inference,server
              * CM names: `--adr.['nvidia-inference-server']...`
-             - CM script: [build-mlperf-inference-server-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/build-mlperf-inference-server-nvidia)
+             - CM script: [build-mlperf-inference-server-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/build-mlperf-inference-server-nvidia)
     * `_build_engine`
       - Aliases: `_build-engine`
       - Environment variables:
@@ -1029,22 +1023,25 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda,_cudnn
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
            * get,tensorrt
              * CM names: `--adr.['tensorrt']...`
-             - CM script: [get-tensorrt](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-tensorrt)
+             - CM script: [get-tensorrt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-tensorrt)
            * build,nvidia,inference,server
              * CM names: `--adr.['nvidia-inference-server']...`
-             - CM script: [build-mlperf-inference-server-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/build-mlperf-inference-server-nvidia)
+             - CM script: [build-mlperf-inference-server-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/build-mlperf-inference-server-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_preprocess_data
-             * `if (CM_MODEL not in ['dlrm-v2-99', 'dlrm-v2-99.9'])`
-             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-nvidia)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-v2-99', 'dlrm-v2-99.9']}`
+             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_download_model
-             * `if (CM_MODEL not in ['retinanet_old', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9'])`
-             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-nvidia)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet_old', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9']}`
+             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_calibrate
-             * `if (CM_MODEL  == retinanet)`
-             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-nvidia)
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
+             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
     * `_calibrate`
       - Environment variables:
         - *MLPERF_NVIDIA_RUN_COMMAND*: `calibrate`
@@ -1052,8 +1049,9 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * reproduce,mlperf,inference,nvidia,harness,_download_model
-             * `if (CM_MODEL not in ['retinanet_old', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9'])`
-             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-nvidia)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet_old', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9']}`
+             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
     * `_download_model`
       - Environment variables:
         - *MLPERF_NVIDIA_RUN_COMMAND*: `download_model`
@@ -1061,8 +1059,9 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_torch_cuda
-             * `if (CM_MODEL  == retinanet)`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_prebuild`
       - Environment variables:
         - *MLPERF_NVIDIA_RUN_COMMAND*: `prebuild`
@@ -1082,22 +1081,24 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda,_cudnn
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
            * get,tensorrt
              * CM names: `--adr.['tensorrt']...`
-             - CM script: [get-tensorrt](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-tensorrt)
+             - CM script: [get-tensorrt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-tensorrt)
            * build,nvidia,inference,server
              * CM names: `--adr.['nvidia-inference-server']...`
-             - CM script: [build-mlperf-inference-server-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/build-mlperf-inference-server-nvidia)
+             - CM script: [build-mlperf-inference-server-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/build-mlperf-inference-server-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_build_engine
              * CM names: `--adr.['build-engine']...`
-             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-nvidia)
+             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_preprocess_data
-             * `if (CM_MODEL not in ['dlrm-v2-99', 'dlrm-v2-99.9'])`
-             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-nvidia)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-v2-99', 'dlrm-v2-99.9']}`
+             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
            * reproduce,mlperf,inference,nvidia,harness,_download_model
-             * `if (CM_MODEL not in ['retinanet', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9'])`
-             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-nvidia)
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet', 'resnet50', 'bert-99', 'bert-99.9', 'dlrm-v2-99', 'dlrm-v2-99.9']}`
+             - CM script: [app-mlperf-inference-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-nvidia)
 
     </details>
 
@@ -1205,101 +1206,124 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-nvidia/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/_cm.yaml)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-cm)
+       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
      * get,mlperf,inference,nvidia,scratch,space
        * CM names: `--adr.['nvidia-scratch-space']...`
-       - CM script: [get-mlperf-inference-nvidia-scratch-space](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-nvidia-scratch-space)
+       - CM script: [get-mlperf-inference-nvidia-scratch-space](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-nvidia-scratch-space)
      * get,generic-python-lib,_mlperf_logging
        * CM names: `--adr.['mlperf-logging']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,dataset,original,imagenet,_full
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['imagenet-original']...`
-       - CM script: [get-dataset-imagenet-val](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-imagenet-val)
+       - CM script: [get-dataset-imagenet-val](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-val)
      * get,ml-model,resnet50,_fp32,_onnx,_opset-8
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['resnet50-model', 'ml-model']...`
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-resnet50)
+       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * get,dataset,original,kits19
-       * `if (CM_MODEL in ['3d-unet-99-disabled', '3d-unet-99.9-disabled'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['3d-unet-99-disabled', '3d-unet-99.9-disabled']}`
        * CM names: `--adr.['kits19-original']...`
-       - CM script: [get-dataset-kits19](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-kits19)
+       - CM script: [get-dataset-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-kits19)
      * get,dataset,original,librispeech
-       * `if (CM_MODEL  == rnnt)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['rnnt']}`
        * CM names: `--adr.['librispeech-original']...`
-       - CM script: [get-dataset-librispeech](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-librispeech)
+       - CM script: [get-dataset-librispeech](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-librispeech)
      * get,dataset,preprocessed,criteo
-       * `if (CM_MODEL in ['dlrm-v2-99', 'dlrm-v2-99.9']) AND (DLRM_DATA_PATH  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-v2-99', 'dlrm-v2-99.9']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'DLRM_DATA_PATH': [True]}`
        * CM names: `--adr.['criteo-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-criteo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-criteo)
+       - CM script: [get-preprocessed-dataset-criteo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-criteo)
      * get,ml-model,dlrm,_pytorch
-       * `if (CM_MODEL in ['dlrm-v2-99', 'dlrm-v2-99.9']) AND (DLRM_DATA_PATH  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['dlrm-v2-99', 'dlrm-v2-99.9']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'DLRM_DATA_PATH': [True]}`
        * CM names: `--adr.['dlrm-model']...`
-       - CM script: [get-ml-model-dlrm-terabyte](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-dlrm-terabyte)
+       - CM script: [get-ml-model-dlrm-terabyte](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-dlrm-terabyte)
      * get,ml-model,bert,_onnx,_fp32
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
        * CM names: `--adr.['bert-model', 'bert-model-fp32']...`
-       - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-bert-large-squad)
+       - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
      * get,ml-model,bert,_onnx,_int8
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
        * CM names: `--adr.['bert-model', 'bert-model-int8']...`
-       - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-bert-large-squad)
+       - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
      * get,squad-vocab
-       * `if (CM_MODEL in ['bert-99', 'bert-99.9'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
        * CM names: `--adr.['bert-vocab']...`
-       - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-squad-vocab)
+       - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
      * get,dataset,original,openimages,_validation,_full,_custom-annotations
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['openimages-original']...`
-       - CM script: [get-dataset-openimages](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-openimages)
+       - CM script: [get-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages)
      * get,dataset,original,openimages,_calibration
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['openimages-calibration']...`
-       - CM script: [get-dataset-openimages](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-openimages)
+       - CM script: [get-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages)
      * get,dataset,original,openorca
-       * `if (CM_MODEL in ['gptj-99', 'gptj-99.9'] AND CM_MLPERF_NVIDIA_HARNESS_RUN_MODE  == preprocess_dataset)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['gptj-99', 'gptj-99.9'], 'CM_MLPERF_NVIDIA_HARNESS_RUN_MODE': ['preprocess_dataset']}`
        * CM names: `--adr.['openorca-original']...`
-       - CM script: [get-dataset-openorca](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-openorca)
+       - CM script: [get-dataset-openorca](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openorca)
      * get,mlcommons,inference,src
        * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,nvidia,mlperf,inference,common-code
        * CM names: `--adr.['nvidia-inference-common-code']...`
-       - CM script: [get-mlperf-inference-nvidia-common-code](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-nvidia-common-code)
+       - CM script: [get-mlperf-inference-nvidia-common-code](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-nvidia-common-code)
      * generate,user-conf,mlperf,inference
-       * `if (CM_MLPERF_NVIDIA_HARNESS_RUN_MODE  == run_harness)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_NVIDIA_HARNESS_RUN_MODE': ['run_harness']}`
        * CM names: `--adr.['user-conf-generator']...`
-       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/generate-mlperf-inference-user-conf)
+       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-user-conf)
      * get,generic-python-lib,_package.nvmitten,_path./opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl
-       * `if (CM_RUN_STATE_DOCKER in ['yes', True, 'True'])`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_RUN_STATE_DOCKER': ['yes', True, 'True']}`
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,nvidia,mitten
-       * `if (CM_RUN_STATE_DOCKER not in ['yes', True, 'True'])`
-       - CM script: [get-nvidia-mitten](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-nvidia-mitten)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-nvidia/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-nvidia/_cm.yaml)***
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_RUN_STATE_DOCKER': ['yes', True, 'True']}`
+       - CM script: [get-nvidia-mitten](https://github.com/mlcommons/cm4mlops/tree/master/script/get-nvidia-mitten)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/customize.py)***
+  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/_cm.yaml)***
      * get,ml-model,gptj,_pytorch,_rclone
-       * `if (CM_REQUIRE_GPTJ_MODEL_DOWNLOAD  == yes AND CM_MLPERF_NVIDIA_HARNESS_RUN_MODE in ['download_model', 'preprocess_data'])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_REQUIRE_GPTJ_MODEL_DOWNLOAD': ['yes'], 'CM_MLPERF_NVIDIA_HARNESS_RUN_MODE': ['download_model', 'preprocess_data']}`
        * CM names: `--adr.['gptj-model']...`
-       - CM script: [get-ml-model-gptj](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-gptj)
+       - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-nvidia/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-nvidia/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-nvidia/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-nvidia/_cm.yaml)***
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/customize.py)***
+  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-nvidia/_cm.yaml)***
      * benchmark-mlperf
-       * `if (CM_CALL_MLPERF_RUNNER  == True) AND (CM_MLPERF_SKIP_RUN not in ['yes', True])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_CALL_MLPERF_RUNNER': [True]}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes', True]}`
        * CM names: `--adr.['runner', 'mlperf-runner']...`
-       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/benchmark-program-mlperf)
+       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
      * save,mlperf,inference,state
        * CM names: `--adr.['save-mlperf-inference-state']...`
-       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/save-mlperf-inference-implementation-state)
+       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/cm4mlops/tree/master/script/save-mlperf-inference-implementation-state)
 
 ___
 ### Script output

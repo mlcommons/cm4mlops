@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-gptj).**
-
-
-
 Automatically generated README for this automation recipe: **get-ml-model-gptj**
 
 Category: **AI/ML models**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *get,raw,ml-model,gptj,gpt-j,large-language-model*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="get,raw,ml-model,gptj,gpt-j,large-language-model"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=get,raw,ml-model,gptj,gpt-j,large-language-model) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "get raw ml-model gptj gpt-j large-language-model[variations]" [--input_flags]`
@@ -126,61 +120,61 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,mlperf,inference,results
-             - CM script: [get-mlperf-inference-results](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-results)
-             - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-results-dir)
+             - CM script: [get-mlperf-inference-results](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results)
+             - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results-dir)
            * get,ml-model,gpt-j,_fp32,_pytorch
-             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-gptj)
+             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
            * get,conda,_name.gptj-pt
-             - CM script: [get-conda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-conda)
+             - CM script: [get-conda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-conda)
            * get,python,_conda.gptj-pt
-             - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
            * get,generic,conda-package,_package.intel-openmp,_source.intel
              * CM names: `--adr.['conda-package', 'intel-openmp']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.jemalloc,_source.conda-forge
              * CM names: `--adr.['conda-package', 'jemalloc']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * install,ipex,from.src,_for-intel-mlperf-inference-v3.1-gptj
-             - CM script: [install-ipex-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-ipex-from-src)
+             - CM script: [install-ipex-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-ipex-from-src)
            * get,dataset,cnndm,_calibration
-             - CM script: [get-dataset-cnndm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-cnndm)
+             - CM script: [get-dataset-cnndm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-cnndm)
     * `_saxml,fp32`
       - Environment variables:
         - *CM_TMP_MODEL_SAXML*: `fp32`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,ml-model,gptj,_pytorch,_fp32
-             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-gptj)
+             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
            * get,python3
              * CM names: `--adr.['python', 'python3']...`
-             - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
            * get,generic-python-lib,_package.jax[cpu]
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.paxml
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.praxis
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.transformers
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.accelerate
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_saxml,int8`
       - Environment variables:
         - *CM_TMP_MODEL_SAXML*: `int8`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,ml-model,gptj,_saxml,_fp32
-             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-gptj)
+             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
            * get,python3
              * CM names: `--adr.['python', 'python3']...`
-             - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
            * get,generic-python-lib,_package.praxis
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.apache-beam
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,git,repo,_repo.https://github.com/google/saxml
              * CM names: `--adr.['saxml']...`
-             - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
+             - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
 
     </details>
 
@@ -296,21 +290,22 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/_cm.json)***
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/_cm.json)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/customize.py)***
+  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/_cm.json)***
      * download-and-extract
-       * `if (CM_TMP_REQUIRE_DOWNLOAD  == yes)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TMP_REQUIRE_DOWNLOAD': ['yes']}`
        * CM names: `--adr.['dae']...`
-       - CM script: [download-and-extract](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-and-extract)
+       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
   1. ***Run native script if exists***
-     * [run-int4-calibration.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/run-int4-calibration.sh)
-     * [run-intel.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/run-intel.sh)
-     * [run-saxml-quantized.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/run-saxml-quantized.sh)
-     * [run-saxml.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/run-saxml.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-ml-model-gptj/_cm.json)
+     * [run-int4-calibration.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/run-int4-calibration.sh)
+     * [run-intel.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/run-intel.sh)
+     * [run-saxml-quantized.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/run-saxml-quantized.sh)
+     * [run-saxml.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/run-saxml.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/_cm.json)
 
 ___
 ### Script output

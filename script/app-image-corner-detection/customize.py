@@ -12,10 +12,17 @@ def preprocess(i):
 
     if 'CM_INPUT' not in env:
         env['CM_INPUT'] = os.path.join(script_path, 'data.pgm')
+
     if 'CM_OUTPUT' not in env:
         env['CM_OUTPUT'] = 'output_image_with_corners.pgm'
+
     if 'CM_RUN_DIR' not in env:
-        env['CM_RUN_DIR'] = os.path.join(script_path, "output")
+        output_path = os.path.join(script_path, "output")
+        if output_path!='' and not os.path.isdir(output_path):
+            os.makedirs(output_path)
+
+        env['CM_RUN_DIR'] = output_path
+
     env['CM_RUN_SUFFIX']= env['CM_INPUT'] + ' ' + env['CM_OUTPUT'] + ' -c'
 
     if os_info['platform'] == 'windows':

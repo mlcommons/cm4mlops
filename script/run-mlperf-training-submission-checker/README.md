@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/run-mlperf-training-submission-checker).**
-
-
-
 Automatically generated README for this automation recipe: **run-mlperf-training-submission-checker**
 
 Category: **MLPerf benchmark support**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-training-submission-checker)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *run,mlc,mlcommons,mlperf,training,train,mlperf-training,submission,checker,submission-checker,mlc-submission-checker*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -84,8 +80,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="run,mlc,mlcommons,mlperf,training,train,mlperf-training,submission,checker,submission-checker,mlc-submission-checker"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=run,mlc,mlcommons,mlperf,training,train,mlperf-training,submission,checker,submission-checker,mlc-submission-checker) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -153,29 +147,31 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-training-submission-checker/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/_cm.json)***
      * get,python3
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,mlcommons,inference,src
        * CM names: `--adr.['inference-src', 'submission-checker-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * install,mlperf,logging,from.src
-       - CM script: [install-mlperf-logging-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-mlperf-logging-from-src)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-training-submission-checker/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-training-submission-checker/_cm.json)
+       - CM script: [install-mlperf-logging-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-mlperf-logging-from-src)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/_cm.json)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-training-submission-checker/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-training-submission-checker/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-training-submission-checker/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-training-submission-checker/_cm.json)***
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/customize.py)***
+  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-training-submission-checker/_cm.json)***
      * publish-results,github
-       * `if (CM_MLPERF_RESULT_PUSH_TO_GITHUB  == on)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_RESULT_PUSH_TO_GITHUB': ['on']}`
        * CM names: `--adr.['push-to-github']...`
-       - CM script: [push-mlperf-inference-results-to-github](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/push-mlperf-inference-results-to-github)
+       - CM script: [push-mlperf-inference-results-to-github](https://github.com/mlcommons/cm4mlops/tree/master/script/push-mlperf-inference-results-to-github)
      * run,tar
-       * `if (CM_TAR_SUBMISSION_DIR  == yes)`
-       - CM script: [tar-my-folder](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/tar-my-folder)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TAR_SUBMISSION_DIR': ['yes']}`
+       - CM script: [tar-my-folder](https://github.com/mlcommons/cm4mlops/tree/master/script/tar-my-folder)
 
 ___
 ### Script output

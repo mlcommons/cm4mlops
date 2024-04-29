@@ -1,7 +1,7 @@
 name: Check .md README files for broken links
 
 on:
-  push: [master]
+  push: [main]
 
 jobs:
   markdown-link-check:

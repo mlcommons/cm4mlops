@@ -455,22 +455,22 @@ def gui(i):
         inp['precision']['force']='float32'
         inp['backend']['force'] = 'onnxruntime'
         inp['model']['choices'] = ['resnet50', 'retinanet']
-        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-mlcommons-cpp)]*')
+        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-mlcommons-cpp)]*')
     elif implementation == 'mlcommons-python':
         inp['precision']['force']='float32'
         if device == 'cuda':
             inp['backend']['choices']=['onnxruntime','pytorch','tf']
             inp['backend']['default'] = 'onnxruntime'
-        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-mlcommons-python)]*')
+        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-mlcommons-python)]*')
     elif implementation == 'ctuning-cpp-tflite':
         inp['precision']['force']='float32'
         inp['model']['force']='resnet50'
-        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-ctuning-cpp-tflite)]*')
+        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-ctuning-cpp-tflite)]*')
     elif implementation == 'nvidia':
         inp['backend']['force'] = 'tensorrt'
         extra['skip_script_docker_func'] = True
         can_have_docker_flag = True
-        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-nvidia)]*')
+        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-nvidia)]*')
     elif implementation == 'intel':
         inp['model']['choices'] = ['bert-99', 'gptj-99']
         inp['model']['default'] = 'bert-99'
@@ -482,13 +482,13 @@ def gui(i):
         can_have_docker_flag = True
         extra['skip_script_docker_func'] = True
 #        st.markdown('*:red[Note: Intel implementation require extra CM command to build and run Docker container - you will run CM commands to run MLPerf benchmarks there!]*')
-        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-intel)]*')
+        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-intel)]*')
     elif implementation == 'qualcomm':
         inp['model']['choices'] = ['resnet50', 'retinanet', 'bert-99']
         inp['model']['default'] = 'bert-99'
         inp['precision']['default'] = 'float16'
         extra['skip_script_docker_func'] = True
-        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-mlperf-inference-qualcomm)]*')
+        st.markdown('*:red[[CM automation recipe for this implementation](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-qualcomm)]*')
 
 
     #############################################################################

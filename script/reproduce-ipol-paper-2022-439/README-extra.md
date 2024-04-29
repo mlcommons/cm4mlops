@@ -27,8 +27,8 @@ the ground truth is available in the original dataset: https://ieee-dataport.org
 
 We implemented 2 CM scripts for this challenge:
 
-* [Download IPOL paper sources and cache them in CM](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ipol-src)
-* [Run IPOL 2022 439 paper demo using above script and PyTorch](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/reproduce-ipol-paper-2022-439)
+* [Download IPOL paper sources and cache them in CM]( https://github.com/mlcommons/cm4mlops/tree/main/script/get-ipol-src )
+* [Run IPOL 2022 439 paper demo using above script and PyTorch]( https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-ipol-paper-2022-439 )
 
 ## Reproducibility
 

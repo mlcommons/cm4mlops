@@ -46,12 +46,12 @@ and improve them by the community via [public benchmarking, optimization and rep
 
 ## Installing CM with ResearchOps/DevOps/MLOps automations
 
-This CM automation is available in the most commonly used `mlcommons@ck` repository. 
+This CM automation is available in the most commonly used `mlcommons@cm4mlops` repository. 
 
 First, install CM automation language as described [here](https://github.com/mlcommons/ck/blob/master/docs/installation.md).
 Then, install or update this repository as follows:
 ```bash
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops
 ```
 
 You can now test that CM experiment automation is available as follows:

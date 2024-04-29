@@ -41,7 +41,8 @@ deps:
     USE_CUDA:
     - yes
 
-- tags: get,dataset,imagenet,image-classification,original
+- tags: get,dataset,imagenet,image-classification,original,_run-during-docker-build
+
 - tags: get,dataset-aux,imagenet-aux,image-classification
 - tags: get,ml-model,resnet50,_onnx,image-classification
   names:
@@ -103,6 +104,10 @@ input_description:
 
 docker:
   skip_run_cmd: 'no'
+  skip_cm_sys_upgrade: 'yes'
+  cm_repo_flags: '--checkout=dev'
+  use_host_group_id: 'yes'
+  image_tag_extra: '-cm-dev'
   input_paths:
     - input
     - env.CM_IMAGE

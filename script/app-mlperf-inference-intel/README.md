@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-intel).**
-
-
-
 Automatically generated README for this automation recipe: **app-mlperf-inference-intel**
 
 Category: **Modular MLPerf benchmarks**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *reproduce,mlcommons,mlperf,inference,harness,intel-harness,intel,intel-harness,intel*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="reproduce,mlcommons,mlperf,inference,harness,intel-harness,intel,intel-harness,intel"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=reproduce,mlcommons,mlperf,inference,harness,intel-harness,intel,intel-harness,intel) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "reproduce mlcommons mlperf inference harness intel-harness intel intel-harness intel[variations]" [--input_flags]`
@@ -112,15 +106,15 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-sys-util,_rsync
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,dataset,original,squad
              * CM names: `--adr.['squad-original']...`
-             - CM script: [get-dataset-squad](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-squad)
+             - CM script: [get-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad)
            * get,ml-model,bert-large,_pytorch,_int8
              * CM names: `--adr.['bert-large', 'ml-model']...`
-             - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-bert-large-squad)
+             - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
            * get,generic-python-lib,_package.tokenization
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_calibration,gptj_`
       - Workflow:
     * `_gptj_`
@@ -155,28 +149,28 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,conda,_name.bert-pt
-             - CM script: [get-conda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-conda)
+             - CM script: [get-conda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-conda)
            * install,llvm,src,_tag.llvmorg-15.0.7,_runtimes.libcxx:libcxxabi:openmp,_clang,_release,_for-intel-mlperf-inference-v3.1-bert
-             - CM script: [install-llvm-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-llvm-src)
+             - CM script: [install-llvm-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-llvm-src)
            * get,generic-sys-util,_libffi7
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,conda-package,_package.python
              * CM names: `--adr.['conda-package', 'python']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.ncurses,_source.conda-forge
              * CM names: `--adr.['conda-package', 'ncurses']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic-sys-util,_numactl
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,conda-package,_package.jemalloc,_source.conda-forge
              * CM names: `--adr.['conda-package', 'jemalloc']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,pytorch,from.src,_for-intel-mlperf-inference-v3.1-bert
-             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-pytorch-from-src)
+             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pytorch-from-src)
            * install,onednn,from.src,_for-intel-mlperf-inference-v3.1-bert
-             - CM script: [install-onednn-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-onednn-from-src)
+             - CM script: [install-onednn-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-onednn-from-src)
            * install,transformers,from.src,_for-intel-mlperf-inference-v3.1-bert
-             - CM script: [install-transformers-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-transformers-from-src)
+             - CM script: [install-transformers-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-transformers-from-src)
     * `_bs.#`
       - Environment variables:
         - *ML_MLPERF_MODEL_BATCH_SIZE*: `#`
@@ -187,57 +181,59 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,conda,_name.gptj-pt
-             - CM script: [get-conda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-conda)
+             - CM script: [get-conda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-conda)
            * get,python,_conda.gptj-pt
-             - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
            * install,llvm,src,_tag.llvmorg-16.0.6,_clang,_release,_for-intel-mlperf-inference-v3.1-gptj
-             - CM script: [install-llvm-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-llvm-src)
+             - CM script: [install-llvm-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-llvm-src)
            * get,generic,conda-package,_package.ncurses,_source.conda-forge
              * CM names: `--adr.['conda-package', 'ncurses']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic-sys-util,_numactl
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,generic,conda-package,_package.jemalloc,_source.conda-forge
              * CM names: `--adr.['conda-package', 'jemalloc']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * install,ipex,from.src,_for-intel-mlperf-inference-v3.1-gptj
-             - CM script: [install-ipex-from-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-ipex-from-src)
+             - CM script: [install-ipex-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-ipex-from-src)
            * get,generic,conda-package,_package.ninja
-             * `if (INTEL_GPTJ_INT4  == yes)`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'INTEL_GPTJ_INT4': ['yes']}`
              * CM names: `--adr.['conda-package', 'ninja']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * install,tpp-pex,from.src,_for-intel-mlperf-inference-v3.1-gptj
-             * `if (INTEL_GPTJ_INT4  == yes)`
-             - CM script: [install-tpp-pytorch-extension](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-tpp-pytorch-extension)
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'INTEL_GPTJ_INT4': ['yes']}`
+             - CM script: [install-tpp-pytorch-extension](https://github.com/mlcommons/cm4mlops/tree/master/script/install-tpp-pytorch-extension)
            * get,generic-python-lib,_package.transformers
              * CM names: `--adr.['pip-package', 'transformers']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,mlcommons,inference,src
              * CM names: `--adr.['inference-src']...`
-             - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+             - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
            * get,mlcommons,inference,loadgen,_custom-python
              * CM names: `--adr.['inference-loadgen']...`
-             - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-loadgen)
+             - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-loadgen)
            * get,ml-model,large-language-model,gptj
              * CM names: `--adr.['ml-model', 'gptj-model', 'gpt-j-model']...`
-             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-gptj)
+             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
            * get,generic-python-lib,_package.datasets
              * CM names: `--adr.['pip-package', 'datasets']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_package.accelerate
              * CM names: `--adr.['pip-package', 'accelerate']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_custom-python,_package.torch,_url.git+https://github.com/pytorch/pytorch.git@927dc662386af052018212c7d01309a506fc94cd
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_int4,gptj_,build-harness`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * reproduce,mlperf,inference,intel,harness,_calibration
              * CM names: `--adr.['calibration']...`
-             - CM script: [app-mlperf-inference-intel](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-intel)
+             - CM script: [app-mlperf-inference-intel](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-intel)
            * get,generic-python-lib,_package.optimum
              * CM names: `--adr.['pip-package', 'optimum']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_resnet50,uint8`
       - Environment variables:
         - *CM_IMAGENET_ACCURACY_DTYPE*: `int8`
@@ -392,7 +388,7 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-python-lib,_numpy
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
 
     </details>
 
@@ -476,13 +472,13 @@ ___
         1. ***Read "deps" on other CM scripts***
            * reproduce,mlperf,inference,intel,harness,_build-harness
              * CM names: `--adr.['build-harness']...`
-             - CM script: [app-mlperf-inference-intel](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-mlperf-inference-intel)
+             - CM script: [app-mlperf-inference-intel](https://github.com/mlcommons/cm4mlops/tree/master/script/app-mlperf-inference-intel)
            * get,mlcommons,inference,src
              * CM names: `--adr.['inference-src']...`
-             - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+             - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
            * generate,user-conf,mlperf,inference
              * CM names: `--adr.['user-conf-generator']...`
-             - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/generate-mlperf-inference-user-conf)
+             - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-user-conf)
 
     </details>
 
@@ -560,54 +556,62 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/_cm.yaml)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-cm)
+       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
      * get,generic-python-lib,_mlperf_logging
        * CM names: `--adr.['mlperf-logging']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
      * get,ml-model,resnet50,_fp32,_onnx,_from-tf
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['resnet50-model', 'ml-model']...`
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-ml-model-resnet50)
+       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
      * compile,intel,model,_resnet50
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['resnet50-compiler']...`
        - *Warning: no scripts found*
      * get,dataset,imagenet,preprocessed,_for.resnet50,_NHWC,_full
-       * `if (CM_MODEL  == resnet50)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['resnet50']}`
        * CM names: `--adr.['imagenet-preprocessed', 'dataset-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-imagenet)
+       - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
      * compile,intel,model,_retinanet
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['retinanet-compiler']...`
        - *Warning: no scripts found*
      * get,dataset,preprocessed,openimages,_for.retinanet.onnx,_NCHW,_validation,_custom-annotations
-       * `if (CM_MODEL  == retinanet)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MODEL': ['retinanet']}`
        * CM names: `--adr.['openimages-preprocessed', 'dataset-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-preprocessed-dataset-openimages)
+       - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openimages)
      * get,mlperf,inference,results,_ctuning
        * CM names: `--adr.inference-results...`
-       - CM script: [get-mlperf-inference-results](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-results)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel/_cm.yaml)
+       - CM script: [get-mlperf-inference-results](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/_cm.yaml)
   1. ***Run native script if exists***
-     * [run_bert_harness.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel/run_bert_harness.sh)
-     * [run_gptj_harness.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel/run_gptj_harness.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/app-mlperf-inference-intel/_cm.yaml)***
+     * [run_bert_harness.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/run_bert_harness.sh)
+     * [run_gptj_harness.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/run_gptj_harness.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/customize.py)***
+  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-intel/_cm.yaml)***
      * benchmark-mlperf
-       * `if (CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE  == run_harness) AND (CM_MLPERF_SKIP_RUN not in ['yes', True])`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE': ['run_harness']}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_RUN': ['yes', True]}`
        * CM names: `--adr.['runner', 'mlperf-runner']...`
-       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/benchmark-program-mlperf)
+       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
      * save,mlperf,inference,state
        * CM names: `--adr.['save-mlperf-inference-state']...`
-       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/save-mlperf-inference-implementation-state)
+       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/cm4mlops/tree/master/script/save-mlperf-inference-implementation-state)
 
 ___
 ### Script output
