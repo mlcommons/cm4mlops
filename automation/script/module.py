@@ -43,7 +43,7 @@ class CAutomation(Automation):
         self.tmp_file_run_env = 'tmp-run-env.out'
         self.tmp_file_ver = 'tmp-ver.out'
 
-        self.__version__ = "1.3.1"
+        self.__version__ = "1.3.2"
 
         self.local_env_keys = ['CM_VERSION',
                                'CM_VERSION_MIN',
@@ -247,6 +247,18 @@ class CAutomation(Automation):
             if not can_write_to_current_directory():
                 return {'return':1, 'error':'Current directory "{}" is not writable - please change it'.format(os.getcwd())}
 
+            # Check if has default config
+            r = self.cmind.access({'action':'load', 'automation':'cfg,88dce9c160324c5d', 'artifact':'default'})
+            if r['return'] == 0:
+                config = r['config']
+
+                script_input = config.get('script',{})
+
+                if len(script_input)>0:
+                    utils.merge_dicts({'dict1':i, 'dict2':script_input})
+               
+
+
         recursion_int = int(i.get('recursion_int',0))+1
 
         start_time = time.time()
@@ -379,6 +391,7 @@ class CAutomation(Automation):
 
 
         print_deps = i.get('print_deps', False)
+        print_versions = i.get('print_versions', False)
         print_readme = i.get('print_readme', False)
         dump_version_info = i.get('dump_version_info', False)
 
@@ -1822,11 +1835,6 @@ class CAutomation(Automation):
                 print (recursion_spaces+'  - used disk space: {} MB'.format(used_disk_space_in_mb))
 
 
-        # Check if pause (useful if running a given script in a new terminal that may close automatically)
-        if i.get('pause', False):
-            print ('')
-            input ('Press Enter to continue ...')
-
         # Check if need to print some final info such as path to model, etc
         if not run_state.get('tmp_silent', False):
             print_env_at_the_end = meta.get('print_env_at_the_end',{})
@@ -1842,6 +1850,15 @@ class CAutomation(Automation):
                     print ('{}: {}'.format(t, str(v)))
 
                 print ('')
+
+        # Check if print nice versions
+        if print_versions:
+            self._print_versions(run_state)
+
+        # Check if pause (useful if running a given script in a new terminal that may close automatically)
+        if i.get('pause', False):
+            print ('')
+            input ('Press Enter to continue ...')
 
         return rr
 
@@ -3106,6 +3123,31 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             content += "```\n\n"
 
         return content
+
+    ##############################################################################
+    def _print_versions(self, run_state):
+        """
+        Print versions in the nice format
+        """
+
+        version_info = run_state.get('version_info', [])
+
+        print ('=========================')
+        print ('Versions of dependencies:')
+        print ('')
+
+        for v in version_info:
+            k = list(v.keys())[0]
+            version_info_dict=v[k]
+
+            version = version_info_dict.get('version','')
+
+            if version !='' :
+                print ('* {}: {}'.format(k, version))
+
+        print ('=========================')
+
+        return {}
 
     ##############################################################################
     def _markdown_cmd(self, cmd):

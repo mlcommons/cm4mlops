@@ -38,3 +38,14 @@ See the automatically generated catalog [online](https://access.cknowledge.org/p
 ## Copyright
 
 2022-2024 [MLCommons](https://mlcommons.org)
+
+## Acknowledgments
+
+This open-source technology is being developed by the [MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+as a community effort based on user feedback. 
+
+We would like to thank all [volunteers, collaborators and contributors](CONTRIBUTING.md) 
+for their support, fruitful discussions, and useful feedback! 
+
+We thank the [cTuning foundation](https://cTuning.org), [cKnowledge.org](https://cKnowledge.org)
+and [MLCommons](https://mlcommons.org) for sponsoring this project!

@@ -118,6 +118,16 @@ as well as CM debug info as follows:
 cmr "detect os" -j -v
 ```
 
+You can turn on silent mode using CM cfg automation:
+```bash
+cm set cfg --key.script.silent
+```
+or
+```bash
+cm set cfg default --key.script.silent
+```
+
+
 ## Understanding CM scripts
 
 CM scripts are treated as standard CM artifacts with the associated CM automation ["script"](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script),

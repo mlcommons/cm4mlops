@@ -1,3 +1,8 @@
+# Universal experiment automation to support universal benchmarking 
+# and optimization of apps and systems
+#
+# Written by Grigori Fursin
+
 import os
 import itertools
 import copy

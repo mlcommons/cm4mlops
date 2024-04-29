@@ -9,6 +9,7 @@
   "desc": "Making native scripts more portable, interoperable and deterministic",
   "developers": "Arjun Suresh and Grigori Fursin",
   "actions_with_help":["run", "docker"],
+  "prototype": true,
   "sort": 1000,
   "tags": [
     "automation"

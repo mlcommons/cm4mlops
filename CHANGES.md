@@ -1,3 +1,10 @@
+### 20240429
+ * Added `cm set cfg` automation. For example, we can set default CM script to silent
+   using `cm set cfg default --key.script.silent`
+
+### 20240427
+ * Added cm run script --print_versions to print resolved versions of dependencies at the end of the run
+
 ### 20240426
  * Improved cm run script --repro function to dump dependencies, versions and generate README
 
