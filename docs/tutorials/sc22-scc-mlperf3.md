@@ -1,1 +1,0 @@
-*Moved [here](sc22-scc-mlperf-part3.md)*.

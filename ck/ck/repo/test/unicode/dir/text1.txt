@@ -1,7 +1,0 @@
-english, 
-español,
-中国,
-中國,
-français, 
-日本の,
-русский
