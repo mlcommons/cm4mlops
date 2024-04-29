@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/get-sys-utils-cm).**
-
-
-
 Automatically generated README for this automation recipe: **get-sys-utils-cm**
 
 Category: **Detection or installation of tools and artifacts**
@@ -16,9 +12,9 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm)*
+* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *get,sys-utils-cm*
 * Output cached? *True*
 * See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -84,8 +80,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="get,sys-utils-cm"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=get,sys-utils-cm) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -137,21 +131,21 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.yaml)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/_cm.json)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.yaml)
   1. ***Run native script if exists***
-     * [run-arch.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/run-arch.sh)
-     * [run-debian.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/run-debian.sh)
-     * [run-macos.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/run-macos.sh)
-     * [run-rhel.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/run-rhel.sh)
-     * [run-sles.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/run-sles.sh)
-     * [run-ubuntu.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/run-ubuntu.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/_cm.json)
+     * [run-arch.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-arch.sh)
+     * [run-debian.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-debian.sh)
+     * [run-macos.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-macos.sh)
+     * [run-rhel.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-rhel.sh)
+     * [run-sles.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-sles.sh)
+     * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/run-ubuntu.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.yaml)
   1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/get-sys-utils-cm/_cm.json)
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-sys-utils-cm/_cm.yaml)
 
 ___
 ### Script output

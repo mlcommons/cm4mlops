@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/test-download-and-extract-artifacts).**
-
-
-
 Automatically generated README for this automation recipe: **test-download-and-extract-artifacts**
 
 Category: **Tests**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *test,download-and-extract-artifacts*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -83,8 +79,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="test,download-and-extract-artifacts"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=test,download-and-extract-artifacts) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "test download-and-extract-artifacts" `
@@ -106,19 +100,19 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts/_cm.yaml)***
      * download,file,_url.https://zenodo.org/record/4735647/files/resnet50_v1.onnx
-       - CM script: [download-file](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-file)
+       - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
      * download-and-extract,_extract,_url.https://zenodo.org/record/5597155/files/3dunet_kits19_128x128x128.tf.zip?download=1
-       - CM script: [download-and-extract](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-and-extract)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts/_cm.yaml)
+       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts/_cm.yaml)
   1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts/run.bat)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/test-download-and-extract-artifacts/_cm.yaml)
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts/run.bat)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/test-download-and-extract-artifacts/_cm.yaml)
 
 ___
 ### Script output

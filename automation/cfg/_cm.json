@@ -1,4 +1,7 @@
 {
+  "action_substitutions": {
+    "set":"xset"
+  },
   "alias": "cfg",
   "automation_alias": "automation",
   "automation_uid": "bbeb15d8f0a944a4",

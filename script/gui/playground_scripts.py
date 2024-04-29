@@ -37,7 +37,7 @@ def page(st, params):
         x = '''
              <i>
              <small>
-             <a href="https://github.com/mlcommons/ck/tree/master/cm-mlops/script">Collective Mind</a> is a collection of open-source, portable, extensible and ready-to-use 
+             <a href="https://github.com/mlcommons/cm4mlops/tree/main/script">Collective Mind</a> is a collection of open-source, portable, extensible and ready-to-use 
              automation scripts with a human-friendly interface and minimal dependencies to make it easier to compose, benchmark and optimize 
              complex AI, ML and other applications and systems across diverse and continuously changing models, data sets, software and hardware.
              Note that this is a <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">collaborative engineering effort</a> 
@@ -134,7 +134,7 @@ def page(st, params):
                 x3 = misc.make_url(meta['uid'], action='scripts', md=False)
                 end_html='<center><small><i>Self links: <a href="{}">tags</a> or <a href="{}">alias</a> or <a href="{}">UID</a></i></small></center>'.format(x1,x2,x3)
 
-                extra_repo = '' if repo_meta['alias']=='mlcommons@ck' else '\ncm pull repo '+repo_meta['alias']
+                extra_repo = '' if repo_meta['alias']=='mlcommons@cm4mlops' else '\ncm pull repo '+repo_meta['alias']
 
                 xtags = tags
                 if len(variations)>0:
@@ -145,7 +145,8 @@ def page(st, params):
                 x = '''
 ```bash
 pip install cmind -U
-cm pull repo mlcommons@ck{}
+cm test core
+cm pull repo mlcommons@cm4mlops --checkout=dev{}
 
 cm run script "{}"
 ```

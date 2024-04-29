@@ -84,7 +84,7 @@ RUN cm run script "get mlperf inference src ${cm_mlperf_inference_src_tags}" --v
 
 ################################################################################
 # Run CM automation workflow for MLPerf
-# https://github.com/mlcommons/ck/tree/master/cm-mlops/script/run-mlperf-inference-app
+# https://github.com/mlcommons/cm4mlops/tree/main/script/run-mlperf-inference-app
 
 ARG CM_MLPERF_CHOICE_SCRIPT=
 ARG CM_MLPERF_CHOICE_SUBMITTER="Container"

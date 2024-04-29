@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/activate-python-venv).**
-
-
-
 Automatically generated README for this automation recipe: **activate-python-venv**
 
 Category: **Python automation**
@@ -16,8 +12,8 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/activate-python-venv)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/activate-python-venv)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *activate,python-venv*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -83,8 +79,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="activate,python-venv"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=activate,python-venv) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "activate python-venv" `
@@ -106,18 +100,18 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/activate-python-venv/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/activate-python-venv/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/activate-python-venv/_cm.json)***
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/activate-python-venv/_cm.json)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/activate-python-venv/customize.py)***
+  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/activate-python-venv/_cm.json)***
      * install,python-venv
        * CM names: `--adr.['python-venv']...`
-       - CM script: [install-python-venv](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-python-venv)
+       - CM script: [install-python-venv](https://github.com/mlcommons/cm4mlops/tree/master/script/install-python-venv)
   1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/activate-python-venv/run.bat)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/activate-python-venv/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/activate-python-venv/_cm.json)
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/activate-python-venv/run.bat)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/activate-python-venv/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/activate-python-venv/_cm.json)
   1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/activate-python-venv/_cm.json)
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/activate-python-venv/_cm.json)
 
 ___
 ### Script output

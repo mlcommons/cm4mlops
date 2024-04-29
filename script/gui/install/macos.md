@@ -14,6 +14,8 @@ Then install python, pip, git and wget:
 brew install python3 git wget curl
 
 python3 -m pip install cmind
+
+cm test core
 ```
 
 *Sometimes python does not add `cm` and `cmr` binaries to the `PATH` environment variable.

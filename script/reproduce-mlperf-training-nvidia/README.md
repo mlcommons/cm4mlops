@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-training-nvidia).**
-
-
-
 Automatically generated README for this automation recipe: **reproduce-mlperf-training-nvidia**
 
 Category: **Reproduce MLPerf benchmarks**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *reproduce,mlcommons,mlperf,train,training,nvidia-training,nvidia*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="reproduce,mlcommons,mlperf,train,training,nvidia-training,nvidia"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=reproduce,mlcommons,mlperf,train,training,nvidia-training,nvidia) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "reproduce mlcommons mlperf train training nvidia-training nvidia[variations]" [--input_flags]`
@@ -108,10 +102,10 @@ ___
         1. ***Read "deps" on other CM scripts***
            * prepare,mlperf,training,resnet,_nvidia
              * CM names: `--adr.['prepare-training-data', 'nvidia-training-data']...`
-             - CM script: [prepare-training-data-resnet](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/prepare-training-data-resnet)
+             - CM script: [prepare-training-data-resnet](https://github.com/mlcommons/cm4mlops/tree/master/script/prepare-training-data-resnet)
            * get,nvidia,training,code
              * CM names: `--adr.['nvidia-training-code']...`
-             - CM script: [get-mlperf-training-nvidia-code](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-training-nvidia-code)
+             - CM script: [get-mlperf-training-nvidia-code](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-training-nvidia-code)
 
     </details>
 
@@ -148,24 +142,24 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia/_cm.yaml)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,nvidia-docker
-       - CM script: [get-nvidia-docker](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-nvidia-docker)
+       - CM script: [get-nvidia-docker](https://github.com/mlcommons/cm4mlops/tree/master/script/get-nvidia-docker)
      * get,cuda
        * CM names: `--adr.['cuda']...`
-       - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia/_cm.yaml)
+       - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia/_cm.yaml)
   1. ***Run native script if exists***
-     * [run-resnet.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia/run-resnet.sh)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/reproduce-mlperf-training-nvidia/_cm.yaml)
+     * [run-resnet.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia/run-resnet.sh)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/reproduce-mlperf-training-nvidia/_cm.yaml)
 
 ___
 ### Script output

@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/print-hello-world).**
-
-
-
 Automatically generated README for this automation recipe: **print-hello-world**
 
 Category: **Tests**
@@ -16,9 +12,9 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/print-hello-world)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/print-hello-world)*
+* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *print,hello-world,hello world,hello,world,native-script,native,script*
 * Output cached? *False*
 * See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -44,14 +40,16 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 `cm run script --tags=print,hello-world,hello world,hello,world,native-script,native,script`
 
-`cm run script --tags=print,hello-world,hello world,hello,world,native-script,native,script [--input_flags]`
+`cm run script --tags=print,hello-world,hello world,hello,world,native-script,native,script[,variations] [--input_flags]`
 
 *or*
 
 `cmr "print hello-world hello world hello world native-script native script"`
 
-`cmr "print hello-world hello world hello world native-script native script " [--input_flags]`
+`cmr "print hello-world hello world hello world native-script native script [variations]" [--input_flags]`
 
+
+* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
 #### Run this script from Python
 
@@ -83,14 +81,30 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="print,hello-world,hello world,hello,world,native-script,native,script"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=print,hello-world,hello world,hello,world,native-script,native,script) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
-`cm docker script "print hello-world hello world hello world native-script native script" [--input_flags]`
+`cm docker script "print hello-world hello world hello world native-script native script[variations]" [--input_flags]`
 
 ___
 ### Customization
+
+
+#### Variations
+
+  * *No group (any variation can be selected)*
+    <details>
+    <summary>Click here to expand this section.</summary>
+
+    * `_skip_print_env`
+      - Environment variables:
+        - *CM_PRINT_HELLO_WORLD_SKIP_PRINT_ENV*: `yes`
+      - Workflow:
+    * `_text.#`
+      - Environment variables:
+        - *CM_PRINT_HELLO_WORLD_TEXT*: `#`
+      - Workflow:
+
+    </details>
 
 
 #### Script flags mapped to environment
@@ -122,19 +136,19 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/print-hello-world/_cm.json)
+  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/print-hello-world/_cm.yaml)
   1. Run "preprocess" function from customize.py
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/print-hello-world/_cm.json)
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/print-hello-world/_cm.yaml)
   1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/print-hello-world/run.bat)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/print-hello-world/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/print-hello-world/_cm.json)
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/print-hello-world/run.bat)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/print-hello-world/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/print-hello-world/_cm.yaml)
   1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/print-hello-world/_cm.json)
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/print-hello-world/_cm.yaml)
 
 ___
 ### Script output
-`cmr "print hello-world hello world hello world native-script native script " [--input_flags] -j`
+`cmr "print hello-world hello world hello world native-script native script [,variations]" [--input_flags] -j`
 #### New environment keys (filter)
 
 * `CM_ENV_TEST*`

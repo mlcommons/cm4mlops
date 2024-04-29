@@ -1,7 +1,5 @@
 # Developer: Grigori Fursin
 
-#
-
 from cmind import utils
 import os
 import shutil

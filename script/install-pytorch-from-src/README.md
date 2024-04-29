@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/install-pytorch-from-src).**
-
-
-
 Automatically generated README for this automation recipe: **install-pytorch-from-src**
 
 Category: **Compiler automation**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-pytorch-from-src)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-pytorch-from-src)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *install,get,src,from.src,pytorch,src-pytorch*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="install,get,src,from.src,pytorch,src-pytorch"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=install,get,src,from.src,pytorch,src-pytorch) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "install get src from.src pytorch src-pytorch[variations]" `
@@ -119,7 +113,7 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,cuda,_cudnn
              * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cuda)
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
     * `_for-intel-mlperf-inference-v3.1-bert`
       - Environment variables:
         - *CM_CONDA_ENV*: `yes`
@@ -128,56 +122,56 @@ ___
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,generic-sys-util,_libffi7
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
            * get,conda,_name.bert-pt
              * CM names: `--adr.['conda']...`
-             - CM script: [get-conda](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-conda)
+             - CM script: [get-conda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-conda)
            * get,generic,conda-package,_package.ncurses,_source.conda-forge
              * CM names: `--adr.['conda-package', 'ncurses']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.python
              * CM names: `--adr.['conda-package', 'python3']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * install,llvm,src,_tag.llvmorg-15.0.7,_runtimes.libcxx:libcxxabi:openmp,_clang,_release,_for-intel-mlperf-inference-v3.1-bert
-             - CM script: [install-llvm-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-llvm-src)
+             - CM script: [install-llvm-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-llvm-src)
            * get,generic,conda-package,_package.ninja
              * CM names: `--adr.['conda-package', 'ninja']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.cmake
              * CM names: `--adr.['conda-package', 'cmake']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.mkl,_source.intel
              * CM names: `--adr.['conda-package', 'mkl']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.mkl-include,_source.intel
              * CM names: `--adr.['conda-package', 'mkl-include']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.intel-openmp,_source.intel
              * CM names: `--adr.['conda-package', 'intel-openmp']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.llvm-openmp,_source.conda-forge
              * CM names: `--adr.['conda-package', 'llvm-openmp']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.jemalloc,_source.conda-forge
              * CM names: `--adr.['conda-package', 'jemalloc']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.wheel,_source.conda-forge
              * CM names: `--adr.['conda-package', 'wheel']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.setuptools,_source.conda-forge
              * CM names: `--adr.['conda-package', 'setuptools']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.future,_source.conda-forge
              * CM names: `--adr.['conda-package', 'future']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
            * get,generic,conda-package,_package.libstdcxx-ng,_source.conda-forge
              * CM names: `--adr.['conda-package', 'libstdcxx-ng']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-generic-conda-package)
+             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
     * `_for-nvidia-mlperf-inference-v3.1`
       - Workflow:
         1. ***Read "deps" on other CM scripts***
            * get,cmake
-             - CM script: [get-cmake](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-cmake)
+             - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
     * `_sha.#`
       - Environment variables:
         - *CM_GIT_CHECKOUT_SHA*: `#`
@@ -223,26 +217,27 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-pytorch-from-src/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-pytorch-from-src/_cm.json)***
      * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,python3
-       * `if (CM_CONDA_ENV  != yes)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CONDA_ENV': ['yes']}`
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,git,repo
        * CM names: `--adr.['pytorch-src-repo']...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-pytorch-from-src/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-pytorch-from-src/_cm.json)
+       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-pytorch-from-src/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-pytorch-from-src/_cm.json)
   1. ***Run native script if exists***
-     * [run-intel-mlperf-inference-v3_1.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-pytorch-from-src/run-intel-mlperf-inference-v3_1.sh)
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-pytorch-from-src/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-pytorch-from-src/_cm.json)
+     * [run-intel-mlperf-inference-v3_1.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-pytorch-from-src/run-intel-mlperf-inference-v3_1.sh)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-pytorch-from-src/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-pytorch-from-src/_cm.json)
   1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/install-pytorch-from-src/_cm.json)
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-pytorch-from-src/_cm.json)
 
 ___
 ### Script output

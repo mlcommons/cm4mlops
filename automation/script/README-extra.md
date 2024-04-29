@@ -69,17 +69,18 @@ while automatically adapting to a given environment!
 In order to reuse some CM scripts embedded into shared projects, 
 you need to install these projects via the CM interface.
 
-For example, to use automation scripts developed by the [MLCommons task force on automation and reproducibility](https://github.com/mlcommons/ck/blob/master/docs/list_of_scripts.md)
+For example, to use automation scripts developed by the 
+[MLCommons task force on automation and reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 and shared via GitHub, you just need to pull this repository via CM:
 
 ```bash
-cm pull repo --url=https://github.com/mlcommons/ck
+cm pull repo --url=https://github.com/mlcommons/cm4mlops --checkout=dev
 ```
 
 or
 
 ```bash
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops --checkout=dev
 ```
 
 You can now see all available CM scripts in your system as follows:
@@ -117,6 +118,16 @@ as well as CM debug info as follows:
 cmr "detect os" -j -v
 ```
 
+You can turn on silent mode using CM cfg automation:
+```bash
+cm set cfg --key.script.silent
+```
+or
+```bash
+cm set cfg default --key.script.silent
+```
+
+
 ## Understanding CM scripts
 
 CM scripts are treated as standard CM artifacts with the associated CM automation ["script"](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script),
@@ -125,7 +136,7 @@ and JSON and/or YAML meta descriptions.
 
 CM scripts can be invoked by using their alias, unique ID and human-readable tags (preferred method).
 
-For example, the [CM "Print Hello World" script](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/print-hello-world) 
+For example, the [CM "Print Hello World" script](https://github.com/mlcommons/cm4mlops/tree/main/script/print-hello-world) 
 simply wraps 2 native `run.sh` and `run.bat` scripts to print "Hello World" on Linux, MacOs or Windows 
 together with a few environment variables:
 
@@ -493,8 +504,8 @@ using a dictionary `"post_deps"` with the same format `"deps"`.
 
 You can see an example of such dependencies in the [_cm.json](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/print-hello-world-py/_cm.json)
 of the ["print-hello-world-py" CM script](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/print-hello-world-py) 
-that detects and unifies OS parameters using the ["detect-os" CM script](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os),
-detects or builds Python using the ["get-python3" CM script](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3) 
+that detects and unifies OS parameters using the ["detect-os" CM script](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-os),
+detects or builds Python using the ["get-python3" CM script](https://github.com/mlcommons/cm4mlops/tree/main/script/get-python3) 
 and then runs `code.py` with "Hello World" from `run.sh` or `run.bat`:
 
 ```bash
@@ -532,7 +543,7 @@ If `postprocess` function exists in the *customize.py* file, the CM script will 
 to finalize the postprocessing of files, environment variables, and the state dictionary.
 
 You can see an [example of such `customize.py` module](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/get-python3/customize.py) in the CM script
-to [detect or install/build Python interpreter](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3) in a unified way on any machine.
+to [detect or install/build Python interpreter](https://github.com/mlcommons/cm4mlops/tree/main/script/get-python3) in a unified way on any machine.
 
 This script exposes a number of environment variables for a detected Python
 in the [`postprocess` function](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/get-python3/customize.py#L60):
@@ -572,7 +583,7 @@ If installed artifact doesn't exist, we either enhance above scripts to include 
 for a given artifact (if it's a tool) or we create extra CM scripts *install-{tool or artifact}* 
 that download and prepare tools and artifacts (install, build, preprocess, etc).
 
-For example, the CM script [*get-python3*](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+For example, the CM script [*get-python3*](https://github.com/mlcommons/cm4mlops/tree/main/script/get-python3)
 has *customize.py* with *preprocess* function that implements the search for python3 on Linux
 or python.exe on Windows, 2 native scripts *run.sh* and *run.bat* to obtain the version of the detected python installation,
 and *postprocess* function to prepare environment variables *CM_PYTHON_BIN* and *CM_PYTHON_BIN_WITH_PATH*
@@ -638,7 +649,7 @@ as shown in the next example.
 We can use automatically detected compiler from CM script to create simple and technology-neutral compilation and execution pipelines
 in CM scripts. 
 
-For example, we have implemented a simple [image corner detection CM script]( https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-image-corner-detection )
+For example, we have implemented a simple [image corner detection CM script]( https://github.com/mlcommons/cm4mlops/tree/main/script/app-image-corner-detection )
 with [this meta description](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-corner-detection/_cm.json).
 
 It uses two other reusable CM scripts to compile a given program using a detected/installed and cached compiler via CM (such as LLVM),
@@ -705,7 +716,7 @@ By default, CM scripts will install python dependencies into user space.
 This can influence other existing projects and may not be desirable.
 CM can be used inside virtual Python environments without any changes,
 but a user still need to do some manual steps to set up such environment.
-That's why we've developed a [CM script](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-python-venv) 
+That's why we've developed a [CM script](https://github.com/mlcommons/cm4mlops/tree/main/script/install-python-venv) 
 to automate creation of multiple Python virtual environments with different names:
 
 ```bash
@@ -723,7 +734,7 @@ cm run script "install python-venv" --version=3.10.8 --name=mlperf2
 
 In this case, CM will attempt to detect Python 3.10.8 on a system. 
 If CM can't detect it, CM will then automatically download and build it
-using [this script](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-python-src).
+using [this script](https://github.com/mlcommons/cm4mlops/tree/main/script/install-python-src).
 
 Now, when user runs pipelines that install Python dependencies, CM will detect
 virtual environment in the CM cache as well as native Python and will ask a user
@@ -752,7 +763,7 @@ and pre-/post-processing all necessary artifacts (models, data sets, frameworks,
 on any supported platform (Linux, MacOS, Windows).
 
 For example, we have implemented a simple image classification application automated by the following CM script:
-[*app-image-classification-onnx-py*]( https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-image-classification-onnx-py ).
+[*app-image-classification-onnx-py*]( https://github.com/mlcommons/cm4mlops/tree/main/script/app-image-classification-onnx-py ).
 
 It is described by the following [`_cm.yaml`](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/_cm.yaml) meta description:
 
@@ -864,8 +875,8 @@ In order to make experiments more portable and interoperable, we need to unify
 the information about host OS and CPU across different systems. 
 We are gradually improving the following two CM scripts:
 
-* [`detect-os`](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
-* [`detect-cpu`](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+* [`detect-os`](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-os)
+* [`detect-cpu`](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-cpu)
 
 These two CM script have *customize.py* with preprocess and postprocess functions
 and a native run script to detect OS info and update environment variables
@@ -894,8 +905,8 @@ is different across different systems.
 
 That's why we have developed two other CM script to unify and automate this process on any system.
 
-* [`get-sys-utils-cm`]( https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-cm )
-* [`get-sys-utils-min`]( https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-min )
+* [`get-sys-utils-cm`]( https://github.com/mlcommons/cm4mlops/tree/main/script/get-sys-utils-cm )
+* [`get-sys-utils-min`]( https://github.com/mlcommons/cm4mlops/tree/main/script/get-sys-utils-min )
 
 They will install (minimal) system dependencies based on the OS and CPU info detected by CM scripts mentioned above.
 
@@ -985,8 +996,8 @@ Note that we continue working on a CM functionality to automatically generate
 Docker containers and README files when executing CM scripts
 (a prototype was successfully validated in the MLPerf inference v3.0 submission):
 
-* https://github.com/mlcommons/ck/tree/master/cm-mlops/script/build-dockerfile
-* https://github.com/mlcommons/ck/tree/master/cm-mlops/script/build-docker-image
+* https://github.com/mlcommons/cm4mlops/tree/main/script/build-dockerfile
+* https://github.com/mlcommons/cm4mlops/tree/main/script/build-docker-image
 
 
 
@@ -1018,6 +1029,6 @@ You can find more info about CM script execution flow in this [document](README-
 ## Further reading
 
 * [CM "script" automation specification](README-specs.md)
-* [MLCommons CM script sources](https://github.com/mlcommons/ck/tree/master/cm-mlops/script)
-* [List of portable and reusable CM scripts from MLCommons](https://github.com/mlcommons/ck/blob/master/docs/list_of_scripts.md)
+* [MLCommons CM script sources](https://github.com/mlcommons/cm4mlops/tree/main/script)
+* [List of portable and reusable CM scripts from MLCommons](https://access.cknowledge.org/playground/?action=scripts)
 * [CM "cache" automation](../cache/README-extra.md)

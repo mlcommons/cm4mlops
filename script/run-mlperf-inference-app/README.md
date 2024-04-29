@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/run-mlperf-inference-app).**
-
-
-
 Automatically generated README for this automation recipe: **run-mlperf-inference-app**
 
 Category: **Modular MLPerf inference benchmark pipeline**
@@ -16,8 +12,8 @@ Developers: [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh), [Grigori Fu
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-app)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-app)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * All CM tags to find and reuse this script (see in above meta description): *run-mlperf,inference*
 * Output cached? *False*
@@ -34,7 +30,7 @@ Developers: [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh), [Grigori Fu
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -134,8 +130,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="run-mlperf,inference"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=run-mlperf,inference) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -247,9 +241,10 @@ ___
       - Workflow:
         1. ***Read "post_deps" on other CM scripts***
            * generate,mlperf,inference,submission
-             * `if (CM_MLPERF_SKIP_SUBMISSION_GENERATION in ['no', 'false', 'False', '0'])`
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_SKIP_SUBMISSION_GENERATION': ['no', 'false', 'False', '0']}`
              * CM names: `--adr.['submission-generator']...`
-             - CM script: [generate-mlperf-inference-submission](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/generate-mlperf-inference-submission)
+             - CM script: [generate-mlperf-inference-submission](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-submission)
 
     </details>
 
@@ -365,36 +360,42 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-app/_cm.yaml)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-app/_cm.yaml)***
      * detect,os
-       * `if (CM_MLPERF_USE_DOCKER  != True)`
-       - CM script: [detect-os](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os)
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_USE_DOCKER': [True]}`
+       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
      * detect,cpu
-       * `if (CM_MLPERF_USE_DOCKER  != True)`
-       - CM script: [detect-cpu](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-cpu)
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_USE_DOCKER': [True]}`
+       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
      * get,python3
-       * `if (CM_MLPERF_USE_DOCKER  != True)`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_MLPERF_USE_DOCKER': [True]}`
        * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
      * get,mlcommons,inference,src
        * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-src)
+       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
      * get,sut,description
-       - CM script: [get-mlperf-inference-sut-description](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-sut-description)
+       - CM script: [get-mlperf-inference-sut-description](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-sut-description)
      * get,mlperf,inference,results,dir
-       * `if (CM_MLPERF_USE_DOCKER  == False) AND (OUTPUT_BASE_DIR  != True)`
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_MLPERF_USE_DOCKER': [False]}`
+       * Skip this dependenecy only if all ENV vars are set:<br>
+`{'OUTPUT_BASE_DIR': [True]}`
        * CM names: `--adr.['get-mlperf-inference-results-dir']...`
-       - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-results-dir)
+       - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results-dir)
      * install,pip-package,for-cmind-python,_package.tabulate
-       - CM script: [install-pip-package-for-cmind-python](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/install-pip-package-for-cmind-python)
+       - CM script: [install-pip-package-for-cmind-python](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pip-package-for-cmind-python)
      * get,mlperf,inference,utils
-       - CM script: [get-mlperf-inference-utils](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-inference-utils)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-app/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-app/_cm.yaml)
+       - CM script: [get-mlperf-inference-utils](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-utils)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-app/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-app/_cm.yaml)
   1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-app/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-app/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-app/_cm.yaml)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-app/_cm.yaml)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-app/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-app/_cm.yaml)
 
 ___
 ### Script output

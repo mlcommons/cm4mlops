@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/prepare-training-data-resnet).**
-
-
-
 Automatically generated README for this automation recipe: **prepare-training-data-resnet**
 
 Category: **MLPerf benchmark support**
@@ -16,8 +12,8 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *prepare,mlperf,training,data,input,resnet*
 * Output cached? *True*
@@ -34,7 +30,7 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -85,8 +81,6 @@ if r['return']>0:
 
 ```cmr "cm gui" --script="prepare,mlperf,training,data,input,resnet"```
 
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=prepare,mlperf,training,data,input,resnet) to generate CM CMD.
-
 #### Run this script via Docker (beta)
 
 `cm docker script "prepare mlperf training data input resnet[variations]" [--input_flags]`
@@ -120,9 +114,9 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,mlperf,training,nvidia,code
              * CM names: `--adr.['nvidia-training-code']...`
-             - CM script: [get-mlperf-training-nvidia-code](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-training-nvidia-code)
+             - CM script: [get-mlperf-training-nvidia-code](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-training-nvidia-code)
            * get,git,repo,_repo.https://github.com/NVIDIA/DeepLearningExamples,_sha.81ee705868a11d6fe18c12d237abe4a08aab5fd6
-             - CM script: [get-git-repo](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-git-repo)
+             - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
     * `_reference`
       - Environment variables:
         - *CM_TMP_VARIATION*: `reference`
@@ -130,14 +124,14 @@ ___
         1. ***Read "deps" on other CM scripts***
            * get,mlperf,training,src
              * CM names: `--adr.['mlperf-training-src']...`
-             - CM script: [get-mlperf-training-src](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-mlperf-training-src)
+             - CM script: [get-mlperf-training-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-training-src)
            * get,python3
              * CM names: `--adr.['python3']...`
-             - CM script: [get-python3](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-python3)
+             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
            * get,generic-python-lib,_tensorflow
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
            * get,generic-python-lib,_protobuf
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-python-lib)
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
 
     </details>
 
@@ -174,28 +168,29 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/_cm.json)***
      * get,dataset,imagenet,train
        * CM names: `--adr.['imagenet-train']...`
-       - CM script: [get-dataset-imagenet-train](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-imagenet-train)
+       - CM script: [get-dataset-imagenet-train](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-train)
      * get,dataset,imagenet,val,original,_full
        * CM names: `--adr.['imagenet-val']...`
-       - CM script: [get-dataset-imagenet-val](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-dataset-imagenet-val)
+       - CM script: [get-dataset-imagenet-val](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-val)
      * get,generic-sys-util,_rsync
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-generic-sys-util)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet/_cm.json)***
+       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/customize.py)***
+  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/_cm.json)***
      * download,file,_wget,_url.https://raw.githubusercontent.com/tensorflow/models/master/research/slim/datasets/imagenet_2012_validation_synset_labels.txt
-       - CM script: [download-file](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-file)
+       - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
      * download,file,_wget,_url.https://raw.githubusercontent.com/tensorflow/tpu/master/tools/datasets/imagenet_to_gcs.py
-       * `if (CM_TMP_VARIATION  == reference)`
-       - CM script: [download-file](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/download-file)
+       * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_TMP_VARIATION': ['reference']}`
+       - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
   1. ***Run native script if exists***
-     * [run-nvidia.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet/run-nvidia.sh)
-     * [run-reference.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet/run-reference.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/prepare-training-data-resnet/_cm.json)
+     * [run-nvidia.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/run-nvidia.sh)
+     * [run-reference.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/run-reference.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/_cm.json)
 
 ___
 ### Script output

@@ -1,7 +1,3 @@
-**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/run-mlperf-inference-mobilenet-models).**
-
-
-
 Automatically generated README for this automation recipe: **run-mlperf-inference-mobilenet-models**
 
 Category: **MLPerf benchmark support**
@@ -127,8 +123,8 @@ cmr "run mobilenet-models _tflite _armnn _opencl _accuracy-only" \
 ---
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/dev/cm-mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-mobilenet-models)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
+* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-mobilenet-models)*
 * CM meta description for this script: *[_cm.json](_cm.json)*
 * All CM tags to find and reuse this script (see in above meta description): *run,mobilenet,models,image-classification,mobilenet-models,mlperf,inference*
 * Output cached? *False*
@@ -145,7 +141,7 @@ cmr "run mobilenet-models _tflite _armnn _opencl _accuracy-only" \
 
 #### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops```
 
 #### Print CM help from the command line
 
@@ -195,8 +191,6 @@ if r['return']>0:
 #### Run this script via GUI
 
 ```cmr "cm gui" --script="run,mobilenet,models,image-classification,mobilenet-models,mlperf,inference"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=run,mobilenet,models,image-classification,mobilenet-models,mlperf,inference) to generate CM CMD.
 
 #### Run this script via Docker (beta)
 
@@ -370,16 +364,16 @@ ___
 ### Dependencies on other CM scripts
 
 
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-mobilenet-models/_cm.json)***
+  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-mobilenet-models/_cm.json)***
      * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-cm)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-mobilenet-models/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-mobilenet-models/_cm.json)
+       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
+  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-mobilenet-models/customize.py)***
+  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-mobilenet-models/_cm.json)
   1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-mobilenet-models/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-mobilenet-models/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-mobilenet-models/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/ck/tree/dev/cm-mlops/script/run-mlperf-inference-mobilenet-models/_cm.json)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-mobilenet-models/run.sh)
+  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-mobilenet-models/_cm.json)
+  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-mobilenet-models/customize.py)***
+  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-mlperf-inference-mobilenet-models/_cm.json)
 
 ___
 ### Script output

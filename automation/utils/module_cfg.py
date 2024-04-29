@@ -223,3 +223,84 @@ def process_base(meta, full_path):
         meta = base
 
     return {'return':0, 'meta':meta}
+
+##################################################################################
+def select_cfg(i):
+
+    self_module = i['self_module']
+    tags = i['tags']
+    alias = i.get('alias', '')
+    title = i.get('title', '')
+
+    # Check if alias is not provided 
+    r = self_module.cmind.access({'action':'find', 'automation':'cfg', 'tags':'basic,docker,configurations'})
+    if r['return'] > 0: return r
+        
+    lst = r['list']
+
+    selector = []
+
+    for l in lst:
+        p = l.path
+
+        if alias != '':
+            for ext in ['.json', '.yaml']:
+                p1 = os.path.join(p, alias+ext)
+                if os.path.isfile(p1):
+                    selector.append({'path':p1, 'alias':alias})
+                    break
+
+        else:
+            files = os.listdir(p)
+
+            for f in files:
+                if not f.startswith('_cm') and (f.endswith('.json') or f.endswith('.yaml')):
+                    selector.append({'path':os.path.join(p, f), 'alias':f[:-5]})
+
+    if len(selector) == 0:
+        return {'return':16, 'error':'configuration was not found'}
+
+    select = 0
+    if len(selector) > 1:
+        xtitle = ' ' + title if title!='' else ''
+        print ('')
+        print ('Available{} configurations:'.format(xtitle))
+        
+        print ('')
+
+        for s in range(0, len(selector)):
+            ss = selector[s]
+
+            path = ss['path']
+
+            full_path_without_ext = path[:-5]
+
+            r = cmind.utils.load_yaml_and_json(full_path_without_ext)
+            if r['return']>0:
+                print ('Warning: problem loading configuration file {}'.format(path))
+
+            meta = r['meta']
+            ss['meta'] = meta
+
+            alias = ss['alias']
+            name = meta.get('name','')
+
+            x = name
+            if x!='': x+=' '
+            x += '('+alias+')'
+            
+            print ('{}) {}'.format(s, x))
+        
+        print ('')
+        select = input ('Enter configuration number of press Enter for 0: ')
+
+        if select.strip() == '': select = '0'
+
+    select = int(select)
+
+    if select<0 or select>=len(selector):
+        return {'return':1, 'error':'selection is out of range'}
+
+    ss = selector[select]
+
+    return {'return':0, 'selection':ss}

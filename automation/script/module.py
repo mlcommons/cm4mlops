@@ -1,19 +1,19 @@
-# CM "script" automation that wraps native scripts with a unified CLI, Python API 
-# and JSON/YAML meta descriptions.
 #
-# It is a stable prototype being developed by Grigori Fursin and Arjun Suresh.
-# 
-# We think to develop a simpler version of this automation at some point
-# while keeping full backwards compatibility.
+# CM "script" automation helps users to encode their MLOps, DevOps and other knowledge
+# as portable and reusable automation recipes with simple tags, native scripts 
+# and a unified CLI, Python API and JSON/YAML meta descriptions.
 #
-# Join the MLCommons taskforce on automation and reproducibility
-# to discuss further developments: 
-# https://github.com/mlcommons/ck/blob/master/docs/taskforce.md
+# This is a stable prototype of the CM script automation
+#
+# TBD: when we have bandwidth and resources, we should refactor it
+# and make it cleaner and simpler while keeping full backwards compatibility.
+#
 
 import os
 
 from cmind.automation import Automation
 from cmind import utils
+from cmind import __version__ as current_cm_version
 
 class CAutomation(Automation):
     """
@@ -43,7 +43,7 @@ class CAutomation(Automation):
         self.tmp_file_run_env = 'tmp-run-env.out'
         self.tmp_file_ver = 'tmp-ver.out'
 
-        self.__version__ = "1.2.1"
+        self.__version__ = "1.3.2"
 
         self.local_env_keys = ['CM_VERSION',
                                'CM_VERSION_MIN',
@@ -143,13 +143,14 @@ class CAutomation(Automation):
           (fake_run) (bool): if True, will run the dependent scripts but will skip the main run script
           (prepare) (bool): the same as fake_run
           (fake_deps) (bool): if True, will fake run the dependent scripts
-          (print_deps) (bool): if True, will print the CM run commands of the direct dependent scripts
           (run_state) (dict): Internal run state
 
           (debug_script_tags) (str): if !='', run cmd/bash before executing a native command 
                                       inside a script specified by these tags
 
           (debug_script) (bool): if True, debug current script (set debug_script_tags to the tags of a current script)
+          (debug_uid) (str): if True, set CM_TMP_DEBUG_UID to this number to enable
+                             remote python debugging of scripts and wrapped apps/tools
           (detected_versions) (dict): All the used scripts and their detected_versions
 
           (verbose) (bool): if True, prints all tech. info about script execution (False by default)
@@ -171,9 +172,24 @@ class CAutomation(Automation):
                           to improve the reproducibility of results
 
           (repro_prefix) (str): if !='', use it to record above files {repro-prefix)-input.json ...                
-          (repro_dir) (str): if !='', use this directory to dump info
+          (repro_dir) (str): if !='', use this directory to dump info (default = 'cm-repro')
+
+          (dump_version_info) (bool): dump info about resolved versions of tools in dependencies
+
+          (print_deps) (bool): if True, will print the CM run commands of the direct dependent scripts
+
+          (print_readme) (bool): if True, will print README with all CM steps (deps) to run a given script
 
           (script_call_prefix) (str): how to call script in logs and READMEs (cm run script)
+
+          (skip_sys_utils) (bool): if True, set env['CM_SKIP_SYS_UTILS']='yes' 
+                                   to skip CM sys installation
+          (skip_sudo) (bool): if True, set env['CM_TMP_SKIP_SUDO']='yes'
+                              to let scripts deal with that
+
+          (silent) (bool): if True, attempt to suppress all info if supported
+                           (sets CM_TMP_SILENT=yes)
+          (s) (bool): the same as 'silent'
           ...
 
         Returns:
@@ -214,20 +230,34 @@ class CAutomation(Automation):
             if repro_prefix == '': repro_prefix = 'cm-run-script'
 
             repro_dir = i.get('repro_dir', '')
-            if repro_dir == '': repro_dir = os.getcwd()
+            if repro_dir == '': 
+                repro_dir = os.path.join(os.getcwd(), 'cm-repro')
+                if not os.path.isdir(repro_dir):
+                    os.makedirs(repro_dir)
 
             repro_prefix = os.path.join (repro_dir, repro_prefix)
 
         if repro_prefix!='':
             dump_repro_start(repro_prefix, i)
             
-       
         recursion = i.get('recursion', False)
 
         # If first script run, check if can write to current directory
         if not recursion and not i.get('skip_write_test', False):
             if not can_write_to_current_directory():
                 return {'return':1, 'error':'Current directory "{}" is not writable - please change it'.format(os.getcwd())}
+
+            # Check if has default config
+            r = self.cmind.access({'action':'load', 'automation':'cfg,88dce9c160324c5d', 'artifact':'default'})
+            if r['return'] == 0:
+                config = r['config']
+
+                script_input = config.get('script',{})
+
+                if len(script_input)>0:
+                    utils.merge_dicts({'dict1':i, 'dict2':script_input})
+               
+
 
         recursion_int = int(i.get('recursion_int',0))+1
 
@@ -303,14 +333,6 @@ class CAutomation(Automation):
 
         print_env = i.get('print_env', False)
 
-        verbose = False
-
-        if 'verbose' in i: verbose=i['verbose']
-        elif 'v' in i: verbose=i['v']
-
-        if verbose:
-           env['CM_VERBOSE']='yes'
-
         show_time = i.get('time', False)
         show_space = i.get('space', False)
 
@@ -325,9 +347,18 @@ class CAutomation(Automation):
         fake_run = i.get('fake_run', False)
         fake_run = i.get('fake_run', False) if 'fake_run' in i else i.get('prepare', False)
         if fake_run: env['CM_TMP_FAKE_RUN']='yes'
+
+        debug_uid = i.get('debug_uid', '')
+        if debug_uid!='':
+            env['CM_TMP_DEBUG_UID'] = debug_uid
         
         fake_deps = i.get('fake_deps', False)
         if fake_deps: env['CM_TMP_FAKE_DEPS']='yes'
+
+        if str(i.get('skip_sys_utils', '')).lower() in ['true', 'yes']:
+            env['CM_SKIP_SYS_UTILS']='yes' 
+        if str(i.get('skip_sudo', '')).lower() in ['true', 'yes']:
+            env['CM_TMP_SKIP_SUDO']='yes' 
 
         run_state = i.get('run_state', self.run_state)
         if not run_state.get('version_info', []):
@@ -337,8 +368,32 @@ class CAutomation(Automation):
         if fake_deps:
             run_state['fake_deps'] = True
 
+        # Check verbose and silent
+        verbose = False
+
+        silent = True if str(i.get('silent', '')).lower() in ['true', 'yes', 'on'] else False
+
+        if not silent:
+            silent = True if str(i.get('s', '')).lower() in ['true', 'yes', 'on'] else False
+        
+        if silent:
+            if 'verbose' in i: del(i['verbose'])
+            if 'v' in i: del(i['v'])
+            env['CM_TMP_SILENT']='yes'
+            run_state['tmp_silent']=True
+        
+        if 'verbose' in i: verbose=i['verbose']
+        elif 'v' in i: verbose=i['v']
+        
+        if verbose:
+           env['CM_VERBOSE']='yes'
+           run_state['tmp_verbose']=True
+
+
         print_deps = i.get('print_deps', False)
+        print_versions = i.get('print_versions', False)
         print_readme = i.get('print_readme', False)
+        dump_version_info = i.get('dump_version_info', False)
 
         new_cache_entry = i.get('new', False)
         renew = i.get('renew', False)
@@ -506,8 +561,9 @@ class CAutomation(Automation):
 #        if verbose:
 #            print ('')
 
-        print ('')
-        print (recursion_spaces + '* ' + cm_script_info)
+        if not run_state.get('tmp_silent', False):
+            print ('')
+            print (recursion_spaces + '* ' + cm_script_info)
 
 
         #############################################################################
@@ -692,6 +748,15 @@ class CAutomation(Automation):
         meta = script_artifact.meta
         path = script_artifact.path
 
+        # Check min CM version requirement
+        min_cm_version = meta.get('min_cm_version','').strip()
+        if min_cm_version != '':
+            # Check compare version while avoiding craches for older version
+            if 'compare_versions' in dir(utils):
+                comparison = utils.compare_versions(current_cm_version, min_cm_version)
+                if comparison < 0:
+                    return {'return':1, 'error':'CM script requires CM version >= {} while current CM version is {} - please update using "pip install cmind -U"'.format(min_cm_version, current_cm_version)}
+
         # Check path to repo
         script_repo_path = script_artifact.repo_path
 
@@ -707,7 +772,15 @@ class CAutomation(Automation):
             return utils.call_internal_module(self, __file__, 'module_help', 'print_help', {'meta':meta, 'path':path})
 
         run_state['script_id'] = meta['alias'] + "," + meta['uid']
+        run_state['script_tags'] = script_tags
         run_state['script_variation_tags'] = variation_tags
+        run_state['script_repo_alias'] = script_artifact.repo_meta.get('alias', '')
+        run_state['script_repo_git'] = script_artifact.repo_meta.get('git', False)
+
+        if not recursion:
+            run_state['script_entry_repo_to_report_errors'] = meta.get('repo_to_report_errors', '')
+            run_state['script_entry_repo_alias'] = script_artifact.repo_meta.get('alias', '')
+            run_state['script_entry_repo_git'] = script_artifact.repo_meta.get('git', False)
 
         deps = meta.get('deps',[])
         post_deps = meta.get('post_deps',[])
@@ -1070,7 +1143,8 @@ class CAutomation(Automation):
                     if r['return']>0: return r
                     version = r['meta'].get('version')
 
-                    print (recursion_spaces + '     ! load {}'.format(path_to_cached_state_file))
+                    if not run_state.get('tmp_silent', False):
+                        print (recursion_spaces + '     ! load {}'.format(path_to_cached_state_file))
 
 
                     ################################################################################################
@@ -1678,25 +1752,40 @@ class CAutomation(Automation):
         if not version and detected_version:
           version = detected_version
 
-        if version:
-            script_uid = script_artifact.meta.get('uid')
-            script_alias = script_artifact.meta.get('alias')
-            script_tags = script_artifact.meta.get('tags')
-            version_info = {}
-            version_info_tags = ",".join(script_tags + variation_tags)
-            version_info[version_info_tags] = {}
-            version_info[version_info_tags]['script_uid'] = script_uid
-            version_info[version_info_tags]['script_alias'] = script_alias
-            version_info[version_info_tags]['version'] = version
-            version_info[version_info_tags]['parent'] = run_state['parent']
-            run_state['version_info'].append(version_info)
-            script_versions = detected_versions.get(meta['uid'], [])
-            if not script_versions:
-                detected_versions[meta['uid']] = [ version ]
-            else:
-                script_versions.append(version)
+        # Add detected or forced version to the CM script run time state
+        # to aggregate all resolved versions and dump them at the end
+        # if requested (for better reproducibility/replicability)
+
+        script_uid = script_artifact.meta.get('uid')
+        script_alias = script_artifact.meta.get('alias')
+
+        # we should use user-friendly tags here
+        # script_tags = script_artifact.meta.get('tags')
+
+        version_info_tags = ",".join(script_tags)
+
+        if len(variation_tags)>0:
+            for vt in variation_tags:
+                version_info_tags += ',_' + vt
+
+        version_info = {}
+        version_info[version_info_tags] = {
+          'script_uid': script_uid,
+          'script_alias': script_alias,
+          'script_tags': ','.join(found_script_tags),
+          'script_variations': ','.join(variation_tags),
+          'version': version,
+          'parent': run_state['parent']
+        }
+
+        run_state['version_info'].append(version_info)
+
+        script_versions = detected_versions.get(meta['uid'], [])
+
+        if not script_versions:
+            detected_versions[meta['uid']] = [ version ]
         else:
-            pass # these scripts don't have versions. Should we use cm mlops version here?
+            script_versions.append(version)
 
         ############################# RETURN
         elapsed_time = time.time() - start_time
@@ -1708,13 +1797,32 @@ class CAutomation(Automation):
             print_deps_data = self._print_deps(run_state['deps'])
             new_state['print_deps'] = print_deps_data
 
+        if print_readme or repro_prefix!='':
+            readme = self._get_readme(cmd, run_state)
+
+        # Copy Docker sample
+        if repro_prefix!='' and repro_dir!='':
+            docker_template_path = os.path.join(self.path, 'docker_repro_example')
+            if os.path.isdir(docker_template_path):
+                try:
+                   shutil.copytree(docker_template_path, repro_dir, dirs_exist_ok=True)
+                except Exception as e:
+                   pass
+
+            docker_container = self._get_docker_container(cmd, run_state)
+
+            try:
+               with open (os.path.join(repro_dir, 'ubuntu-23.04.Dockerfile'), 'a+') as f:
+                  f.write(docker_container)
+            except:
+               pass
+
         if print_readme:
-            readme = self._get_readme(i.get('cmd', ''), run_state['deps'])
-            with open('readme.md', 'w') as f:
+            with open('README-cm.md', 'w') as f:
                 f.write(readme)
 
-        if i.get('dump_version_info'):
-            r = self._dump_version_info_for_script()
+        if dump_version_info:
+            r = self._dump_version_info_for_script(quiet=quiet, silent=silent)
             if r['return'] > 0:
                 return r
 
@@ -1731,6 +1839,10 @@ class CAutomation(Automation):
         
         # Check if save json to file
         if repro_prefix !='':
+
+            with open(repro_prefix+'-README-cm.md', 'w', encoding='utf-8') as f:
+               f.write(readme)
+
             dump_repro(repro_prefix, rr, run_state)
 
         if verbose or show_time:
@@ -1746,33 +1858,45 @@ class CAutomation(Automation):
                 print (recursion_spaces+'  - used disk space: {} MB'.format(used_disk_space_in_mb))
 
 
+        # Check if need to print some final info such as path to model, etc
+        if not run_state.get('tmp_silent', False):
+            print_env_at_the_end = meta.get('print_env_at_the_end',{})
+            if len(print_env_at_the_end)>0:
+                print ('')
+
+                for p in sorted(print_env_at_the_end):
+                    t = print_env_at_the_end[p]
+                    if t == '': t = 'ENV[{}]'.format(p)
+
+                    v = new_env.get(p, None)
+
+                    print ('{}: {}'.format(t, str(v)))
+
+                print ('')
+
+        # Check if print nice versions
+        if print_versions:
+            self._print_versions(run_state)
+
         # Check if pause (useful if running a given script in a new terminal that may close automatically)
         if i.get('pause', False):
             print ('')
             input ('Press Enter to continue ...')
 
-        # Check if need to print some final info such as path to model, etc
-        print_env_at_the_end = meta.get('print_env_at_the_end',{})
-        if len(print_env_at_the_end)>0:
-            print ('')
-
-            for p in sorted(print_env_at_the_end):
-                t = print_env_at_the_end[p]
-                if t == '': t = 'ENV[{}]'.format(p)
-
-                v = new_env.get(p, None)
-
-                print ('{}: {}'.format(t, str(v)))
-
-            print ('')
-
         return rr
 
     ######################################################################################
-    def _dump_version_info_for_script(self, output_dir = os.getcwd()):
-        import json
-        with open(os.path.join(output_dir, 'version_info.json'), 'w') as f:
-            f.write(json.dumps(self.run_state['version_info'], indent=2))
+    def _dump_version_info_for_script(self, output_dir = os.getcwd(), quiet = False, silent = False):
+
+        if not quiet and not silent:
+            print ('')
+
+        for f in ['cm-run-script-versions.json', 'version_info.json']:
+            if not quiet and not silent:
+                print ('Dumping versions to {}'.format(f))           
+            r = utils.save_json(f, self.run_state.get('version_info', []))
+            if r['return']>0: return r
+
         return {'return': 0}
 
     ######################################################################################
@@ -2773,8 +2897,17 @@ class CAutomation(Automation):
                     if not enable_or_skip_script(d["enable_if_env"], env):
                         continue
 
+                if "enable_if_any_env" in d:
+                    if not any_enable_or_skip_script(d["enable_if_any_env"], env):
+                        continue
+
                 if "skip_if_env" in d:
                     if enable_or_skip_script(d["skip_if_env"], env):
+                        continue
+
+                if "skip_if_any_env" in d:
+                    x = any_enable_or_skip_script(d["skip_if_any_env"], env)
+                    if x:
                         continue
 
                 if from_cache and not d.get("dynamic", None):
@@ -2861,12 +2994,18 @@ class CAutomation(Automation):
                     tmp_run_state_deps = copy.deepcopy(run_state['deps'])
                     run_state['deps'] = []
                     tmp_parent = run_state['parent']
-                    run_state['parent'] = run_state['script_id']+":"+",".join(run_state['script_variation_tags'])
+
+                    run_state['parent'] = run_state['script_id']
+
+                    if len(run_state['script_variation_tags']) > 0:
+                        run_state['parent'] += " ( " + ',_'.join(run_state['script_variation_tags']) + " )"
+
                     tmp_script_id = run_state['script_id']
                     tmp_script_variation_tags = run_state['script_variation_tags']
 
                     # Run collective script via CM API:
                     # Not very efficient but allows logging - can be optimized later
+
                     ii = {
                             'action':'run',
                             'automation':utils.assemble_cm_object(self.meta['alias'], self.meta['uid']),
@@ -2880,6 +3019,7 @@ class CAutomation(Automation):
                             'add_deps_recursive':add_deps_recursive,
                             'debug_script_tags':debug_script_tags,
                             'verbose':verbose,
+                            'silent':run_state.get('tmp_silent', False),
                             'time':show_time,
                             'run_state':run_state
 
@@ -2933,37 +3073,163 @@ class CAutomation(Automation):
                 del(dict2[dep]['tags_list'])
 
     ##############################################################################
-    def _get_readme(self, cmd_parts, deps):
+    def _get_readme(self, cmd_parts, run_state):
         """
         Outputs a Markdown README file listing the CM run commands for the dependencies
         """
-        pre = ''
-        content = pre
-        heading2 = "## Command to Run\n"
-        content += heading2
+
+        deps = run_state['deps']
+
+        version_info = run_state.get('version_info', [])
+        version_info_dict = {}
+
+        for v in version_info:
+            k = list(v.keys())[0]
+            version_info_dict[k]=v[k]
+
+        content = ''
+
+        content += """
+*This README was automatically generated by the [CM framework](https://github.com/mlcommons/ck).*
+
+## Install CM
+
+```bash
+pip install cmind -U
+```
+
+Check [this readme](https://github.com/mlcommons/ck/blob/master/docs/installation.md) 
+with more details about installing CM and dependencies across different platforms
+(Ubuntu, MacOS, Windows, RHEL, ...).
+
+## Install CM automation repositories
+
+```bash
+cm pull repo mlcommons@cm4mlops --checkout=dev
+"""
+
+        current_cm_repo = run_state['script_repo_alias']
+        if current_cm_repo not in ['mlcommons@ck', 'mlcommons@cm4mlops']:
+            content += '\ncm pull repo ' + run_state['script_repo_alias'] + '\n'
+
+        content += """```
+
+## Run CM script
+
+```bash
+"""
+
         cmd="cm run script "
+
         for cmd_part in cmd_parts:
-            cmd = cmd+ " "+cmd_part
-        content += "\n"
-        cmd = self._markdown_cmd(cmd)
-        content = content + cmd + "\n\n"
-        deps_heading = "## Dependent CM scripts\n"
-        deps_ = ""
-        run_cmds = self._get_deps_run_cmds(deps)
-        i = 1
-        for cmd in run_cmds:
-            deps_ = deps_+ str(i) + ". " + self._markdown_cmd(cmd)+"\n"
-            i = i+1
-        if deps_:
-            content += deps_heading
-            content += deps_
+            x = '"' if ' ' in cmd_part and not cmd_part.startswith('-') else ''
+            cmd = cmd + " " + x + cmd_part + x
+
+        content += cmd + '\n'
+
+        content += """```
+
+## Run individual CM scripts to customize dependencies (optional)
+
+"""
+        deps_ = ''
+
+        for dep_tags in deps:
+
+            xversion = ''
+            version = version_info_dict.get(dep_tags, {}).get('version','')
+            if version !='' :
+                xversion = ' --version={}\n'.format(version)
+
+            content += "```bash\n"
+            content += "cm run script --tags=" + dep_tags + "{}\n".format(xversion)
+            content += "```\n\n"
+
         return content
+
+    ##############################################################################
+    def _get_docker_container(self, cmd_parts, run_state):
+        """
+        Outputs a Markdown README file listing the CM run commands for the dependencies
+        """
+
+        deps = run_state['deps']
+
+        version_info = run_state.get('version_info', [])
+        version_info_dict = {}
+
+        for v in version_info:
+            k = list(v.keys())[0]
+            version_info_dict[k]=v[k]
+
+        content = ''
+
+        content += """
+
+# The following CM commands were automatically generated (prototype)
+
+cm pull repo mlcommons@cm4mlops --checkout=dev
+
+"""
+        current_cm_repo = run_state['script_repo_alias']
+        if current_cm_repo not in ['mlcommons@ck', 'mlcommons@cm4mlops']:
+            content += '\ncm pull repo ' + run_state['script_repo_alias'] + '\n\n'
+
+
+        deps_ = ''
+
+        for dep_tags in deps:
+
+            xversion = ''
+            version = version_info_dict.get(dep_tags, {}).get('version','')
+            if version !='' :
+                xversion = ' --version={}\n'.format(version)
+
+            content += "# cm run script --tags=" + dep_tags + "{}\n\n".format(xversion)
+
+        cmd="cm run script "
+
+        for cmd_part in cmd_parts:
+            x = '"' if ' ' in cmd_part and not cmd_part.startswith('-') else ''
+            cmd = cmd + " " + x + cmd_part + x
+
+        content += cmd + '\n'
+
+
+        return content
+
+
+    ##############################################################################
+    def _print_versions(self, run_state):
+        """
+        Print versions in the nice format
+        """
+
+        version_info = run_state.get('version_info', [])
+
+        print ('=========================')
+        print ('Versions of dependencies:')
+        print ('')
+
+        for v in version_info:
+            k = list(v.keys())[0]
+            version_info_dict=v[k]
+
+            version = version_info_dict.get('version','')
+
+            if version !='' :
+                print ('* {}: {}'.format(k, version))
+
+        print ('=========================')
+
+        return {}
 
     ##############################################################################
     def _markdown_cmd(self, cmd):
         """
         Returns a CM command in markdown format
         """
+
         return '```bash\n '+cmd+' \n ```'
 
 
@@ -2972,11 +3238,15 @@ class CAutomation(Automation):
         """
         Prints the CM run commands for the list of CM script dependencies
         """
+
         print_deps_data = []
         run_cmds = self._get_deps_run_cmds(deps)
+
+        print ('')
         for cmd in run_cmds:
             print_deps_data.append(cmd)
             print(cmd)
+
         return print_deps_data
 
 
@@ -2985,9 +3255,12 @@ class CAutomation(Automation):
         """
         Returns the CM run commands for the list of CM script dependencies
         """
+
         run_cmds = []
+
         for dep_tags in deps:
             run_cmds.append("cm run script --tags="+dep_tags)
+
         return run_cmds
 
 
@@ -3686,7 +3959,7 @@ class CAutomation(Automation):
                                     [ (artifact alias, artifact UID) ] or
                                     [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-          (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+          (repos) (str): list of repositories to search for automations
 
           (output_dir) (str): output directory (../docs by default)
 
@@ -3751,7 +4024,7 @@ class CAutomation(Automation):
                                     [ (artifact alias, artifact UID) ] or
                                     [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-          (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+          (repos) (str): list of repositories to search for automations
 
           (output_dir) (str): output directory (./ by default)
 
@@ -3779,7 +4052,7 @@ class CAutomation(Automation):
                                     [ (artifact alias, artifact UID) ] or
                                     [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-          (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+          (repos) (str): list of repositories to search for automations
 
           (output_dir) (str): output directory (./ by default)
 
@@ -4038,6 +4311,7 @@ def find_cached_script(i):
 def enable_or_skip_script(meta, env):
     """
     Internal: enable a dependency based on enable_if_env and skip_if_env meta information
+    (AND function)
     """
     for key in meta:
         if key in env:
@@ -4054,7 +4328,36 @@ def enable_or_skip_script(meta, env):
             elif value in meta_key:
                 continue
         return False
+
     return True
+
+##############################################################################
+def any_enable_or_skip_script(meta, env):
+    """
+    Internal: enable a dependency based on enable_if_env and skip_if_env meta information
+    (OR function)
+    """
+    for key in meta:
+        found = False
+        if key in env:
+            value = str(env[key]).lower()
+
+            meta_key = [str(v).lower() for v in meta[key]]
+
+            if set(meta_key) & set(["yes", "on", "true", "1"]):
+                if value not in ["no", "off", "false", "0"]:
+                    found = True
+            elif set(meta_key) & set(["no", "off", "false", "0"]):
+                if value in ["no", "off", "false", "0"]:
+                    found = True
+            elif value in meta_key:
+                found = True
+        
+        # If found any match from the list (OR), return
+        if found:
+            return True
+
+    return False
 
 ############################################################################################################
 def update_env_with_values(env, fail_on_not_found=False):
@@ -4239,14 +4542,16 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
             os.remove(tmp_file_run_env)
 
         run_script = tmp_file_run + bat_ext
+        run_script_without_cm = tmp_file_run + '-without-cm' + bat_ext
 
         if verbose:
             print ('')
             print (recursion_spaces + '  - Running native script "{}" from temporal script "{}" in "{}" ...'.format(path_to_run_script, run_script, cur_dir))
             print ('')
 
-        print (recursion_spaces + '       ! cd {}'.format(cur_dir))
-        print (recursion_spaces + '       ! call {} from {}'.format(path_to_run_script, run_script))
+        if not run_state.get('tmp_silent', False):
+            print (recursion_spaces + '       ! cd {}'.format(cur_dir))
+            print (recursion_spaces + '       ! call {} from {}'.format(path_to_run_script, run_script))
 
 
         # Prepare env variables
@@ -4261,16 +4566,17 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
 
         script += convert_env_to_script(env, os_info)
 
-        # Check if run bash/cmd before running the command (for debugging)
-        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
-            x=['cmd', '.', '','.bat'] if os_info['platform'] == 'windows' else ['bash', ' ""', '"','.sh']
-
-            script.append('\n')
-            script.append('echo{}\n'.format(x[1]))
-            script.append('echo {}Running debug shell. Type exit to resume script execution ...{}\n'.format(x[2],x[3],x[2]))
-            script.append('echo{}\n'.format(x[1]))
-            script.append('\n')
-            script.append(x[0])
+#        # Check if run bash/cmd before running the command (for debugging)
+#        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
+#            # Copy original run script to be able to run it outside ...
+#            x=['cmd', '.', '','.bat'] if os_info['platform'] == 'windows' else ['bash', ' ""', '"','.sh']
+#
+#            script.append('\n')
+#            script.append('echo{}\n'.format(x[1]))
+#            script.append('echo {}Running debug shell. Type exit to resume script execution ...{}\n'.format(x[2],x[2]))
+#            script.append('echo{}\n'.format(x[1]))
+#            script.append('\n')
+#            script.append(x[0])
 
         # Append batch file to the tmp script
         script.append('\n')
@@ -4279,6 +4585,16 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
         # Prepare and run script
         r = record_script(run_script, script, os_info)
         if r['return']>0: return r
+
+        # Save file to run without CM
+        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
+
+            import shutil
+            shutil.copy(run_script, run_script_without_cm)
+
+            print ('================================================================================')
+            print ('Debug script to run without CM was recorded: {}'.format(run_script_without_cm))
+            print ('================================================================================')
 
         # Run final command
         cmd = os_info['run_local_bat_from_python'].replace('${bat_file}', run_script)
@@ -4299,14 +4615,32 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
                            print (r['string'])
                            print ("")
 
+
+            # Check where to report errors and failures
+            repo_to_report = run_state.get('script_entry_repo_to_report_errors', '')
+
+            if repo_to_report == '':
+                script_repo_alias = run_state.get('script_repo_alias', '')
+                script_repo_git = run_state.get('script_repo_git', False)
+
+                if script_repo_git and script_repo_alias!='':
+                    repo_to_report = 'https://github.com/'+script_repo_alias.replace('@','/')+'/issues'
+            
+            if repo_to_report == '':
+                repo_to_report = 'https://github.com/mlcommons/ck/issues'
+
             note = '''
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Note that it may be a portability issue of a third-party tool or a native script 
-wrapped and unified by this automation recipe (CM script). In such case, 
-please report this issue with a full log at "https://github.com/mlcommons/ck". 
+Note that it is often a portability issue of a third-party tool or a native script 
+wrapped and unified by this CM script (automation recipe). Please re-run
+this script with --repro flag and report this issue with the original
+command line, cm-repro directory and full log here:
+
+{}
+
 The CM concept is to collaboratively fix such issues inside portable CM scripts 
 to make existing tools and native scripts more portable, interoperable 
-and deterministic. Thank you'''
+and deterministic. Thank you'''.format(repo_to_report)
 
             rr = {'return':2, 'error':'Portable CM script failed (name = {}, return code = {})\n\n{}'.format(meta['alias'], rc, note)}
 
@@ -4337,8 +4671,9 @@ and deterministic. Thank you'''
             utils.merge_dicts({'dict1':env, 'dict2':updated_env, 'append_lists':True, 'append_unique':True})
  
 
-    if postprocess != '' and customize_code is not None:
-        print (recursion_spaces+'       ! call "{}" from {}'.format(postprocess, customize_code.__file__))
+    if postprocess != '' and customize_code is not None and postprocess in dir(customize_code):
+        if not run_state.get('tmp_silent', False):
+            print (recursion_spaces+'       ! call "{}" from {}'.format(postprocess, customize_code.__file__))
     
     if len(posthook_deps)>0 and (postprocess == "postprocess"):
         r = script_automation._call_run_deps(posthook_deps, local_env_keys, local_env_keys_from_meta, env, state, const, const_state,
@@ -5038,6 +5373,7 @@ def dump_repro(repro_prefix, rr, run_state):
         cm_output['version_info'] = version_info
 
     if rr['return'] == 0:
+        # See https://cTuning.org/ae
         cm_output['acm_ctuning_repro_badge_available'] = True
         cm_output['acm_ctuning_repro_badge_functional'] = True
 

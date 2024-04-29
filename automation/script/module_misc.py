@@ -13,42 +13,23 @@ def process_deps(self_module, meta, meta_url, md_script_readme, key, extra_space
             d_tags = d.get('tags', '')
 
             z = extra_space+'     * '+d_tags
-
-            names = d.get('names', [])
-            enable_if_env = d.get('enable_if_env', {})
-            skip_if_env = d.get('skip_if_env', {})
-
-            q = ''
-
-            q1 = ''
-            for e in enable_if_env:
-                if q1!='': q1 += ' AND '
-                q1 += e+' '
-                v = enable_if_env[e]
-                q1 += ' == '+str(v[0]) if len(v)==1 else 'in '+str(v)
-            if q1!='': q1 = '('+q1+')'
-
-            q2 = ''
-            for e in skip_if_env:
-                if q2!='': q2 += ' OR '
-                q2 += e+' '
-                v = skip_if_env[e]
-                q2 += ' != '+str(v[0]) if len(v)==1 else 'not in '+str(v)
-
-            if q2!='': q2 = '('+q2+')'
-
-            if q1!='' or q2!='':
-               q = 'if '
-
-               if q1!='': q+=q1
-               if q2!='':
-                  if q1!='': q+=' AND '
-                  q+=q2
-
             y.append(z)
 
-            if q!='': 
-               y.append(extra_space+'       * `'+q+'`')
+            names = d.get('names', [])
+
+            for kk in [
+                       ('enable_if_env', 'Enable this dependency only if all ENV vars are set'),
+                       ('enable_if_any_env', 'Enable this dependency only if any of ENV vars are set'),
+                       ('skip_if_env', 'Skip this dependenecy only if all ENV vars are set'),
+                       ('skip_if_any_env', 'Skip this dependenecy only if any of ENV vars are set')
+                      ]:
+
+                k1 = kk[0]
+                k2 = kk[1]
+
+                conditions = d.get(k1, {})
+                if len(conditions)>0:
+                    y.append(extra_space+'       * {}:<br>\n`{}`'.format(k2, str(conditions)))
 
             if len(names)>0:
                y.append(extra_space+'       * CM names: `--adr.'+str(names)+'...`')
@@ -106,7 +87,7 @@ def doc(i):
                                 [ (artifact alias, artifact UID) ] or
                                 [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-      (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+      (repos) (str): list of repositories to search for automations
 
       (output_dir) (str): output directory (../docs by default)
 
@@ -149,6 +130,7 @@ def doc(i):
 
     # Search for automations in repos
     lst = []
+    
     for repo in list_of_repos:
         parsed_artifact[1] = ('',repo) if utils.is_cm_uid(repo) else (repo,'')
         ii['parsed_artifact'] = parsed_artifact
@@ -261,10 +243,6 @@ def doc(i):
 #                            '{{CM_README_TOC}}',
 #                            '</details>',
 #                            '',
-                            '**Note that this script is archived and moved [here](https://github.com/mlcommons/cm4mlops/tree/main/script/{}).**'.format(meta['alias']),
-                            '',
-                            '',
-                            '',
                             'Automatically generated README for this automation recipe: **{}**'.format(meta['alias']), 
                             ]
 
@@ -615,8 +593,8 @@ def doc(i):
                              '',
                              '```cmr "cm gui" --script="'+','.join(tags)+'"```',
                              '',
-                             'Use this [online GUI](https://cKnowledge.org/cm-gui/?tags={}) to generate CM CMD.'.format(','.join(tags)),
-                             '',
+#                             'Use this [online GUI](https://cKnowledge.org/cm-gui/?tags={}) to generate CM CMD.'.format(','.join(tags)),
+#                             '',
                              '#### '+x4,
                              '',
                              '{}'.format(cli_all_tags_alternative_docker),
@@ -1343,7 +1321,7 @@ def dockerfile(i):
                                 [ (artifact alias, artifact UID) ] or
                                 [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
 
-      (repos) (str): list of repositories to search for automations (internal & mlcommons@ck by default)
+      (repos) (str): list of repositories to search for automations
 
       (output_dir) (str): output directory (./ by default)
 
@@ -1371,9 +1349,6 @@ def dockerfile(i):
     quiet = i.get('quiet', False)
 
     console = i.get('out') == 'con'
-
-    cm_repo = i.get('docker_cm_repo', 'mlcommons@ck')
-    cm_repo_flags = i.get('docker_cm_repo_flags', '')
 
     # Search for script(s)
     r = aux_search({'self_module': self_module, 'input': i})
@@ -1435,7 +1410,7 @@ def dockerfile(i):
 
         docker_settings = state['docker']
 
-        if not docker_settings.get('run', True):
+        if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
             print("docker.run set to False in _cm.json")
             continue
         '''run_config_path = os.path.join(script_path,'run_config.yml')
@@ -1473,11 +1448,16 @@ def dockerfile(i):
         run_cmd  = r['run_cmd_string']
 
 
+        cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
+        cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
+
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
         docker_os = i.get('docker_os', docker_settings.get('docker_os', 'ubuntu'))
         docker_os_version = i.get('docker_os_version', docker_settings.get('docker_os_version', '22.04'))
 
         docker_cm_repos = i.get('docker_cm_repos', docker_settings.get('cm_repos', ''))
+
+        docker_skip_cm_sys_upgrade = i.get('docker_skip_cm_sys_upgrade', docker_settings.get('skip_cm_sys_upgrade', ''))
 
         docker_extra_sys_deps = i.get('docker_extra_sys_deps', '')
 
@@ -1534,6 +1514,9 @@ def dockerfile(i):
         else:
             comments = []
 
+        if i.get('docker_push_image', '') in ['True', True, 'yes']:
+            env['CM_DOCKER_PUSH_IMAGE'] = 'yes'
+
         cm_docker_input = {'action': 'run',
                            'automation': 'script',
                            'tags': 'build,dockerfile',
@@ -1542,6 +1525,7 @@ def dockerfile(i):
                            'docker_base_image': docker_base_image,
                            'docker_os': docker_os,
                            'docker_os_version': docker_os_version,
+                           'skip_cm_sys_upgrade': docker_skip_cm_sys_upgrade,
                            'file_path': dockerfile_path,
                            'fake_run_option': fake_run_option,
                            'comments': comments,
@@ -1600,9 +1584,15 @@ def docker(i):
 
       (out) (str): if 'con', output to console
 
+      (docker_skip_build) (bool): do not generate Dockerfiles and do not recreate Docker image (must exist)
+        (docker_noregenerate) (bool): do not generate Dockerfiles
+        (docker_norecreate) (bool): do not recreate Docker image
+
       (docker_path) (str): where to create or find Dockerfile
       (docker_gh_token) (str): GitHub token for private repositories
       (docker_save_script) (str): if !='' name of script to save docker command
+      (docker_interactive) (bool): if True, run in interactive mode
+      (docker_cfg) (str): if True, show all available basic docker configurations, otherwise pre-select one
 
     Returns:
       (CM return dict):
@@ -1635,20 +1625,56 @@ def docker(i):
     self_module = i['self_module']
     self_module.cmind.access({'action':'detect_tags_in_artifact', 'automation':'utils', 'input':i})
 
+    # CAREFUL -> artifacts and parsed_artifacts are not supported in input (and should not be?)
+    if 'artifacts' in i: del(i['artifacts'])
+    if 'parsed_artifacts' in i: del(i['parsed_artifacts'])
+    
     # Prepare "clean" input to replicate command
     r = self_module.cmind.access({'action':'prune_input', 'automation':'utils', 'input':i, 'extra_keys_starts_with':['docker_']})
     i_run_cmd_arc = r['new_input']
 
-    noregenerate_docker_file = i.get('docker_noregenerate', False)
+    env=i.get('env', {})
 
+    noregenerate_docker_file = i.get('docker_noregenerate', False)
+    norecreate_docker_image = i.get('docker_norecreate', False)
+
+    if i.get('docker_skip_build', False):
+        noregenerate_docker_file = True
+        norecreate_docker_image = True
+        env['CM_DOCKER_SKIP_BUILD'] = 'yes'
+
+    # Check available configurations
+    docker_cfg = i.get('docker_cfg', '')
+    if docker_cfg != '':
+        # Check if docker_cfg is turned on but not selected
+        if type(docker_cfg) == bool or str(docker_cfg).lower() in ['true','yes']:
+            docker_cfg= ''
+        
+        r = self_module.cmind.access({'action':'select_cfg', 'automation':'utils,dc2743f8450541e3', 
+                                      'tags':'basic,docker,configurations', 'title':'docker', 'alias':docker_cfg})
+        if r['return'] > 0: 
+            if r['return'] == 16:
+                return {'return':1, 'error':'Docker configuration {} was not found'.format(docker_cfg)}
+            return r
+
+        selection = r['selection']
+
+        docker_input_update = selection['meta']['input']
+        
+        i.update(docker_input_update)
+
+    
+    ########################################################################################
+    # Run dockerfile
     if not noregenerate_docker_file:
         r = utils.call_internal_module(self_module, __file__, 'module_misc', 'dockerfile', i)
         if r['return']>0: return r
 
+    # Save current directory
     cur_dir = os.getcwd()
 
     console = i.get('out') == 'con'
-
+    
     # Search for script(s)
     r = aux_search({'self_module': self_module, 'input': i})
     if r['return']>0: return r
@@ -1658,7 +1684,6 @@ def docker(i):
     if len(lst)==0:
         return {'return':1, 'error':'no scripts were found'}
 
-    env=i.get('env', {})
     env['CM_RUN_STATE_DOCKER'] = False
     script_automation = i['self_module']
     state = i.get('state', {})
@@ -1712,7 +1737,7 @@ def docker(i):
 
         docker_settings = state['docker']
 
-        if not docker_settings.get('run', True):
+        if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
             print("docker.run set to False in _cm.json")
             continue
         '''
@@ -1829,12 +1854,13 @@ def docker(i):
                 env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format(key, value))
 
         docker_use_host_group_id = i.get('docker_use_host_group_id', docker_settings.get('use_host_group_id'))
-        if docker_use_host_group_id and os.name != 'nt':
+        if docker_use_host_group_id in [True, 'True', 'yes'] and os.name != 'nt':
             env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('CM_ADD_DOCKER_GROUP_ID', '\\"-g $(id -g $USER) -o\\"'))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
         docker_os = i.get('docker_os', docker_settings.get('docker_os', 'ubuntu'))
         docker_os_version = i.get('docker_os_version', docker_settings.get('docker_os_version', '22.04'))
+        image_tag_extra = i.get('docker_image_tag_extra', docker_settings.get('image_tag_extra', '-latest'))
 
         if not docker_base_image:
             dockerfilename_suffix = docker_os +'_'+docker_os_version
@@ -1846,7 +1872,7 @@ def docker(i):
                 dockerfilename_suffix = dockerfilename_suffix[len(dockerfilename_suffix) - 1]
 
 
-        cm_repo=i.get('docker_cm_repo', 'mlcommons@ck')
+        cm_repo=i.get('docker_cm_repo', 'mlcommons@cm4mlops')
 
         docker_path = i.get('docker_path', '').strip()
         if docker_path == '': 
@@ -1854,7 +1880,8 @@ def docker(i):
 
         dockerfile_path = os.path.join(docker_path, 'dockerfiles', dockerfilename_suffix +'.Dockerfile')
 
-        docker_skip_run_cmd = i.get('docker_skip_run_cmd', docker_settings.get('skip_run_cmd', False)) #skips docker run cmd and gives an interactive shell to the user
+        # Skips docker run cmd and gives an interactive shell to the user
+        docker_skip_run_cmd = i.get('docker_skip_run_cmd', docker_settings.get('skip_run_cmd', False)) 
 
         docker_pre_run_cmds = i.get('docker_pre_run_cmds', []) +  docker_settings.get('pre_run_cmds', [])
 
@@ -1878,8 +1905,11 @@ def docker(i):
         if detached == '':
             detached = docker_settings.get('detached', '')
 
-        if interactive == '':
+        if str(docker_skip_run_cmd).lower() in ['true','1','yes']:
+            interactive = 'yes'
+        elif interactive == '':
             interactive = docker_settings.get('interactive', '')
+
 
 #        # Regenerate run_cmd
 #        if i.get('cmd'):
@@ -1916,11 +1946,15 @@ def docker(i):
         print (final_run_cmd)
         print ('')
 
+        docker_recreate_image = 'yes' if not norecreate_docker_image else 'no'
 
+        if i.get('docker_push_image', '') in ['True', True, 'yes']:
+            env['CM_DOCKER_PUSH_IMAGE'] = 'yes'
+        
         cm_docker_input = {'action': 'run',
                            'automation': 'script',
                            'tags': 'run,docker,container',
-                           'recreate': 'yes',
+                           'recreate': docker_recreate_image,
                            'docker_base_image': docker_base_image,
                            'docker_os': docker_os,
                            'docker_os_version': docker_os_version,
@@ -1931,6 +1965,7 @@ def docker(i):
                            'mounts': mounts,
                            'image_name': 'cm-script-'+script_alias,
 #                            'image_tag': script_alias,
+                           'image_tag_extra': image_tag_extra,
                            'detached': detached,
                            'script_tags': f'{tag_string}',
                            'run_cmd': final_run_cmd,
