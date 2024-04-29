@@ -4473,6 +4473,7 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
             os.remove(tmp_file_run_env)
 
         run_script = tmp_file_run + bat_ext
+        run_script_without_cm = tmp_file_run + '-without-cm' + bat_ext
 
         if verbose:
             print ('')
@@ -4496,16 +4497,17 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
 
         script += convert_env_to_script(env, os_info)
 
-        # Check if run bash/cmd before running the command (for debugging)
-        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
-            x=['cmd', '.', '','.bat'] if os_info['platform'] == 'windows' else ['bash', ' ""', '"','.sh']
-
-            script.append('\n')
-            script.append('echo{}\n'.format(x[1]))
-            script.append('echo {}Running debug shell. Type exit to resume script execution ...{}\n'.format(x[2],x[3],x[2]))
-            script.append('echo{}\n'.format(x[1]))
-            script.append('\n')
-            script.append(x[0])
+#        # Check if run bash/cmd before running the command (for debugging)
+#        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
+#            # Copy original run script to be able to run it outside ...
+#            x=['cmd', '.', '','.bat'] if os_info['platform'] == 'windows' else ['bash', ' ""', '"','.sh']
+#
+#            script.append('\n')
+#            script.append('echo{}\n'.format(x[1]))
+#            script.append('echo {}Running debug shell. Type exit to resume script execution ...{}\n'.format(x[2],x[2]))
+#            script.append('echo{}\n'.format(x[1]))
+#            script.append('\n')
+#            script.append(x[0])
 
         # Append batch file to the tmp script
         script.append('\n')
@@ -4514,6 +4516,16 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
         # Prepare and run script
         r = record_script(run_script, script, os_info)
         if r['return']>0: return r
+
+        # Save file to run without CM
+        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
+
+            import shutil
+            shutil.copy(run_script, run_script_without_cm)
+
+            print ('================================================================================')
+            print ('Debug script to run without CM was recorded: {}'.format(run_script_without_cm))
+            print ('================================================================================')
 
         # Run final command
         cmd = os_info['run_local_bat_from_python'].replace('${bat_file}', run_script)

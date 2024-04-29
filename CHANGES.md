@@ -5,6 +5,9 @@
    to customize where to report errors instead of the default repo.
    For example, issues with the CM script `run-mlperf-inference-app` 
    should be reported at https://github.com/mlcommons/inference .
+ * Added saving running script from different deps without CM to tmp-run-without-cm.bat.
+   Example: `cmr "app image corner-detection" --debug-script-tags=benchmark,program`
+
 
 ### 20240427
  * Added cm run script --print_versions to print resolved versions of dependencies at the end of the run

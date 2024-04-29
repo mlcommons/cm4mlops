@@ -23,3 +23,10 @@ cm run script "app image corner-detection" -add_deps_recursive.compiler.tags=llv
 * Ubuntu 22.04; x64; LLVM 17.06
 * Windows 11; x64; LLVM 17.06
 
+## Debugging scripts without CM
+
+```bash
+cmr "app image corner-detection" --debug_script_tags=compile,cpp-program
+cmr "app image corner-detection" --debug-script-tags=benchmark,program
+```
+
