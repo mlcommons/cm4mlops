@@ -775,6 +775,12 @@ class CAutomation(Automation):
         run_state['script_tags'] = script_tags
         run_state['script_variation_tags'] = variation_tags
         run_state['script_repo_alias'] = script_artifact.repo_meta.get('alias', '')
+        run_state['script_repo_git'] = script_artifact.repo_meta.get('git', False)
+
+        if not recursion:
+            run_state['script_entry_repo_to_report_errors'] = meta.get('repo_to_report_errors', '')
+            run_state['script_entry_repo_alias'] = script_artifact.repo_meta.get('alias', '')
+            run_state['script_entry_repo_git'] = script_artifact.repo_meta.get('git', False)
 
         deps = meta.get('deps',[])
         post_deps = meta.get('post_deps',[])
@@ -1793,6 +1799,23 @@ class CAutomation(Automation):
 
         if print_readme or repro_prefix!='':
             readme = self._get_readme(cmd, run_state)
+
+        # Copy Docker sample
+        if repro_prefix!='' and repro_dir!='':
+            docker_template_path = os.path.join(self.path, 'docker_repro_example')
+            if os.path.isdir(docker_template_path):
+                try:
+                   shutil.copytree(docker_template_path, repro_dir, dirs_exist_ok=True)
+                except Exception as e:
+                   pass
+
+            docker_container = self._get_docker_container(cmd, run_state)
+
+            try:
+               with open (os.path.join(repro_dir, 'ubuntu-23.04.Dockerfile'), 'a+') as f:
+                  f.write(docker_container)
+            except:
+               pass
 
         if print_readme:
             with open('README-cm.md', 'w') as f:
@@ -3123,6 +3146,58 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             content += "```\n\n"
 
         return content
+
+    ##############################################################################
+    def _get_docker_container(self, cmd_parts, run_state):
+        """
+        Outputs a Markdown README file listing the CM run commands for the dependencies
+        """
+
+        deps = run_state['deps']
+
+        version_info = run_state.get('version_info', [])
+        version_info_dict = {}
+
+        for v in version_info:
+            k = list(v.keys())[0]
+            version_info_dict[k]=v[k]
+
+        content = ''
+
+        content += """
+
+# The following CM commands were automatically generated (prototype)
+
+cm pull repo mlcommons@cm4mlops --checkout=dev
+
+"""
+        current_cm_repo = run_state['script_repo_alias']
+        if current_cm_repo not in ['mlcommons@ck', 'mlcommons@cm4mlops']:
+            content += '\ncm pull repo ' + run_state['script_repo_alias'] + '\n\n'
+
+
+        deps_ = ''
+
+        for dep_tags in deps:
+
+            xversion = ''
+            version = version_info_dict.get(dep_tags, {}).get('version','')
+            if version !='' :
+                xversion = ' --version={}\n'.format(version)
+
+            content += "# cm run script --tags=" + dep_tags + "{}\n\n".format(xversion)
+
+        cmd="cm run script "
+
+        for cmd_part in cmd_parts:
+            x = '"' if ' ' in cmd_part and not cmd_part.startswith('-') else ''
+            cmd = cmd + " " + x + cmd_part + x
+
+        content += cmd + '\n'
+
+
+        return content
+
 
     ##############################################################################
     def _print_versions(self, run_state):
@@ -4467,6 +4542,7 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
             os.remove(tmp_file_run_env)
 
         run_script = tmp_file_run + bat_ext
+        run_script_without_cm = tmp_file_run + '-without-cm' + bat_ext
 
         if verbose:
             print ('')
@@ -4490,16 +4566,17 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
 
         script += convert_env_to_script(env, os_info)
 
-        # Check if run bash/cmd before running the command (for debugging)
-        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
-            x=['cmd', '.', '','.bat'] if os_info['platform'] == 'windows' else ['bash', ' ""', '"','.sh']
-
-            script.append('\n')
-            script.append('echo{}\n'.format(x[1]))
-            script.append('echo {}Running debug shell. Type exit to resume script execution ...{}\n'.format(x[2],x[3],x[2]))
-            script.append('echo{}\n'.format(x[1]))
-            script.append('\n')
-            script.append(x[0])
+#        # Check if run bash/cmd before running the command (for debugging)
+#        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
+#            # Copy original run script to be able to run it outside ...
+#            x=['cmd', '.', '','.bat'] if os_info['platform'] == 'windows' else ['bash', ' ""', '"','.sh']
+#
+#            script.append('\n')
+#            script.append('echo{}\n'.format(x[1]))
+#            script.append('echo {}Running debug shell. Type exit to resume script execution ...{}\n'.format(x[2],x[2]))
+#            script.append('echo{}\n'.format(x[1]))
+#            script.append('\n')
+#            script.append(x[0])
 
         # Append batch file to the tmp script
         script.append('\n')
@@ -4508,6 +4585,16 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
         # Prepare and run script
         r = record_script(run_script, script, os_info)
         if r['return']>0: return r
+
+        # Save file to run without CM
+        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
+
+            import shutil
+            shutil.copy(run_script, run_script_without_cm)
+
+            print ('================================================================================')
+            print ('Debug script to run without CM was recorded: {}'.format(run_script_without_cm))
+            print ('================================================================================')
 
         # Run final command
         cmd = os_info['run_local_bat_from_python'].replace('${bat_file}', run_script)
@@ -4528,14 +4615,32 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
                            print (r['string'])
                            print ("")
 
+
+            # Check where to report errors and failures
+            repo_to_report = run_state.get('script_entry_repo_to_report_errors', '')
+
+            if repo_to_report == '':
+                script_repo_alias = run_state.get('script_repo_alias', '')
+                script_repo_git = run_state.get('script_repo_git', False)
+
+                if script_repo_git and script_repo_alias!='':
+                    repo_to_report = 'https://github.com/'+script_repo_alias.replace('@','/')+'/issues'
+            
+            if repo_to_report == '':
+                repo_to_report = 'https://github.com/mlcommons/ck/issues'
+
             note = '''
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Note that it may be a portability issue of a third-party tool or a native script 
-wrapped and unified by this automation recipe (CM script). In such case, 
-please report this issue with a full log at "https://github.com/mlcommons/ck". 
+Note that it is often a portability issue of a third-party tool or a native script 
+wrapped and unified by this CM script (automation recipe). Please re-run
+this script with --repro flag and report this issue with the original
+command line, cm-repro directory and full log here:
+
+{}
+
 The CM concept is to collaboratively fix such issues inside portable CM scripts 
 to make existing tools and native scripts more portable, interoperable 
-and deterministic. Thank you'''
+and deterministic. Thank you'''.format(repo_to_report)
 
             rr = {'return':2, 'error':'Portable CM script failed (name = {}, return code = {})\n\n{}'.format(meta['alias'], rc, note)}
 
