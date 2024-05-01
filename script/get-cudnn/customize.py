@@ -136,7 +136,50 @@ def postprocess(i):
     os_info = i['os_info']
 
     env = i['env']
+
     version = env['CM_CUDNN_VERSION']
+
+    if version == 'vdetected':
+        path_to_cudnn = env.get('CM_CUDA_PATH_LIB_CUDNN','')
+        if os.path.isdir(path_to_cudnn):
+            path_to_include = path_to_cudnn
+            path_to_include_file = ''
+            for j in range(0,2):
+                path_to_include = os.path.dirname(path_to_include)
+                x = os.path.join(path_to_include, 'include', 'cudnn_version.h')
+                if os.path.isfile(x):
+                    path_to_include_file = x
+                    break
+
+            if path_to_include_file != '':
+                env['CM_CUDA_PATH_INCLUDE_CUDNN'] = os.path.dirname(path_to_include_file)
+
+                r = utils.load_txt(path_to_include_file, split=True)
+                if r['return'] == 0:
+                    lst = r['list']
+
+                    xversion = ''
+
+                    for l in lst:
+                        l=l.strip()
+
+                        print (l)
+                        x = '#define CUDNN_MAJOR '
+                        if l.startswith(x):
+                            xversion=l[len(x):]
+
+                        x = '#define CUDNN_MINOR '
+                        if l.startswith(x):
+                            xversion+='.'+l[len(x):]
+
+                        x = '#define CUDNN_PATCHLEVEL '
+                        if l.startswith(x):
+                            xversion+='.'+l[len(x):]
+
+                    if xversion != '':
+                        version = xversion
+                        env['CM_CUDNN_VERSION'] = xversion
+
     env['CM_CUDA_PATH_LIB_CUDNN_EXISTS']='yes'
 
     return {'return':0, 'version': version}
