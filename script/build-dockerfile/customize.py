@@ -41,7 +41,7 @@ def preprocess(i):
                 continue
             arg=env_
             if env_ in default_env: #other inputs to be done later
-                arg=arg+"="+default_env[env_]
+                arg=arg+"="+str(default_env[env_])
                 #build_args.append(arg)
                 #input_args.append("--"+input_+"="+"$"+env_)
  
