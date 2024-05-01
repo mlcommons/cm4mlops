@@ -91,6 +91,10 @@ def preprocess(i):
           else:
               return r
        else:
+          # On Linux we may detected file instead of path to cudnn 
+          if os.path.isfile(env['CM_CUDA_PATH_LIB_CUDNN']):
+              env['CM_CUDA_PATH_LIB_CUDNN'] = os.path.dirname(env['CM_CUDA_PATH_LIB_CUDNN'])
+
           return {'return':0}
 
     if env.get('CM_CUDNN_TAR_FILE_PATH','')=='':
@@ -150,6 +154,11 @@ def postprocess(i):
                 if os.path.isfile(x):
                     path_to_include_file = x
                     break
+
+            if path_to_include_file == '' and path_to_cudnn.startswith('/lib'):
+                x = os.path.join('usr','include','cudnn_version.h')
+                if os.path.isfile(x):
+                    path_to_include_file = x
 
             if path_to_include_file != '':
                 env['CM_CUDA_PATH_INCLUDE_CUDNN'] = os.path.dirname(path_to_include_file)
