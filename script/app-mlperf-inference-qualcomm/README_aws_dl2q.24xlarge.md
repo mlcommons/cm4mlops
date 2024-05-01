@@ -12,7 +12,7 @@ image from the Community AMIs is the recommended OS image as it comes with the Q
 ```
 sudo yum install -y python38-devel git
 python3.8 -m pip install cmind
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops
 cm run script --tags=get,python --version_min=3.8.1
 ```
 

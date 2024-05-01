@@ -19,7 +19,7 @@ Install [MLCommons CM automation language](https://github.com/mlcommons/ck/blob/
 
 Pull the MLCommons CK repository with automation recipes for interoperable MLOps:
 ```bash
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops --checkout=dev
 ```
 
 Install repositories with raw MLPerf training benchmark results:
