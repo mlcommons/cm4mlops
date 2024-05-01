@@ -156,7 +156,7 @@ def postprocess(i):
                     break
 
             if path_to_include_file == '' and path_to_cudnn.startswith('/lib'):
-                x = os.path.join('usr','include','cudnn_version.h')
+                x = os.path.join('/usr','include','cudnn_version.h')
                 if os.path.isfile(x):
                     path_to_include_file = x
 
