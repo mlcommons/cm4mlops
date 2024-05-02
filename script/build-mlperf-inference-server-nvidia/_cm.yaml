@@ -239,6 +239,10 @@ docker:
     - tags: get,mlperf,inference,results,dir
     - tags: get,mlperf,inference,submission,dir
     - tags: get,nvidia-docker
+      skip_if_env:
+        CM_SKIP_GET_NVIDIA_DOCKER:
+          - yes
+
   pre_run_cmds:
     - cm pull repo
   run_cmd_prefix: sudo apt remove -y cmake

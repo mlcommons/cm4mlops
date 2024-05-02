@@ -244,6 +244,10 @@ variations:
       deps:
         - tags: get,mlperf,inference,nvidia,scratch,space
         - tags: get,nvidia-docker
+          skip_if_env:
+            CM_SKIP_GET_NVIDIA_DOCKER:
+              - yes
+
       mounts:
         - "${{ CM_CUDNN_TAR_FILE_PATH }}:${{ CM_CUDNN_TAR_FILE_PATH }}"
         - "${{ CM_TENSORRT_TAR_FILE_PATH }}:${{ CM_TENSORRT_TAR_FILE_PATH }}"
