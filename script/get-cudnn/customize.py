@@ -172,7 +172,6 @@ def postprocess(i):
                     for l in lst:
                         l=l.strip()
 
-                        print (l)
                         x = '#define CUDNN_MAJOR '
                         if l.startswith(x):
                             xversion=l[len(x):]
