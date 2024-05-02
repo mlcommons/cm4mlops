@@ -282,8 +282,9 @@ def select_cfg(i):
             meta = r['meta']
             ss['meta'] = meta
 
+        for ss in sorted(selector, key = lambda x: x['meta'].get('name','')):
             alias = ss['alias']
-            name = meta.get('name','')
+            name = ss['meta'].get('name','')
 
             x = name
             if x!='': x+=' '
