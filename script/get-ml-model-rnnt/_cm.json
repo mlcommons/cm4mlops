@@ -52,7 +52,6 @@
     },
     "pytorch,fp32,amazon-s3": {
       "env": {
-        "CM_PACKAGE_URL": "https://mlperf-public.s3.us-west-2.amazonaws.com/DistributedDataParallel_1576581068.9962234-epoch-100.pt"
       }
     },
     "pytorch,fp32,zenodo": {
@@ -61,11 +60,11 @@
       }
     },
     "zenodo": {
-      "group": "download-src"
-    },
-    "amazon-s3": {
       "group": "download-src",
       "default": true
+    },
+    "amazon-s3": {
+      "group": "download-src"
     }
   },
   "print_env_at_the_end" : {
