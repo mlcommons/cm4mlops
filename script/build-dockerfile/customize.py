@@ -52,10 +52,15 @@ def preprocess(i):
     if not docker_image_base:
         return {'return': 1, 'error': f"Version \"{env['CM_DOCKER_OS_VERSION']}\" is not supported yet for \"{env['CM_DOCKER_OS']}\" "}
 
-    if "CM_MLOPS_REPO" in env:
+    if env.get("CM_MLOPS_REPO", "") != "":
         cm_mlops_repo = env["CM_MLOPS_REPO"]
     else:
         cm_mlops_repo = "mlcommons@ck"
+
+    if env.get("CM_MLOPS_REPO_BRANCH", '') != '':
+        cm_mlops_repo_branch_string = f" --branch {env['CM_MLOPS_REPO_BRANCH']}"
+    else:
+        cm_mlops_repo_branch_string = ""
 
     if 'CM_DOCKERFILE_WITH_PATH' not in env:
         env['CM_DOCKERFILE_WITH_PATH'] = os.path.join(os.getcwd(), "Dockerfile")

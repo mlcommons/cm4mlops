@@ -93,7 +93,7 @@
         "CM_GIT_CHECKOUT_TAG": "#"
       },
       "ad": {
-      "pytorch-src-repo": {
+          "pytorch-src-repo": {
           "tags": "_no-recurse-submodules,_full-history"
         }
       }
@@ -230,7 +230,12 @@
           "tags": "get,cmake",
           "version_min": "3.25.0"
 	      }
-      ]
+      ],
+      "ad": {
+        "pytorch-src-repo": {
+          "tags": "_recurse-submodules,_full-history"
+        }
+      }
     },
     "cuda": {
       "deps": [

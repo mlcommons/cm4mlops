@@ -219,6 +219,7 @@ docker:
   shm_size: '32gb'
   extra_run_args: ' --runtime=nvidia --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
   docker_os: ubuntu
+  cm_repo_flags: ' --branch=mlperf-inference'
   docker_real_run: False
   interactive: True
   docker_os_version: '20.04'
