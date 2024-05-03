@@ -78,7 +78,7 @@ deps:
 
   # Detect CMake
   - tags: get,cmake
-    version_min: "3.25"
+    version: "3.25.1"
 
   # Detect Google Logger
   - tags: get,generic,sys-util,_glog-dev
@@ -203,7 +203,6 @@ versions:
       nvidia-scratch-space:
         tags: _version.4_0
     deps:
-      - tags: install,nccl,libs,_cuda
       - tags: install,pytorch,from.src,_for-nvidia-mlperf-inference-v3.1
         names:
         - pytorch
@@ -212,6 +211,7 @@ versions:
         names:
         - pytorchvision
         - torchvision
+      - tags: install,nccl,libs,_cuda
 
 docker:
   skip_run_cmd: 'no'
