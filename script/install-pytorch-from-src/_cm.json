@@ -233,7 +233,7 @@
       ],
       "ad": {
         "pytorch-src-repo": {
-          "tags": "_full-history"
+          "tags": "_no-recurse-submodules,_full-history"
         }
       }
     },

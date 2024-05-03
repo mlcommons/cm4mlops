@@ -6,7 +6,7 @@ if [[ ! -e pytorch/dist/torch*.whl ]]; then
   cp -r ${CM_PYTORCH_SRC_REPO_PATH} pytorch
   cd pytorch
   git submodule sync
-  #git submodule update --init --recursive
+  git submodule update --init --recursive
   rm -rf build
 
   ${CM_PYTHON_BIN_WITH_PATH} -m pip install -r requirements.txt
