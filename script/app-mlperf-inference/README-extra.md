@@ -18,16 +18,16 @@ source .profile
 Next you need to install a CM repository with [cross-platform CM scripts](https://github.com/mlcommons/cm4mlops/tree/main/script) for ML Systems:
 
 ```bash
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops --checkout=dev
 ```
 
-Note that you can fork [this repository](https://github.com/mlcommons/ck) and use it instead of mlcommons@ck 
+Note that you can fork [this repository](https://github.com/mlcommons/cm4mlops) and use it instead of mlcommons@cm4mlops
 to add CM scripts for your own public and private ML models, data sets, software and hardware.
-In such case, just change mlcommons@ck to your own fork in the above command.
+In such case, just change mlcommons@cm4mlops to your own fork in the above command.
 
 You can find the location of this repository on your system as follows:
 ```bash
-cm find repo mlcommons@ck
+cm find repo mlcommons@cm4mlops
 ```
 
 Now we suggest you to set up a virtual python via CM to avoid mixing up your native Python installation:

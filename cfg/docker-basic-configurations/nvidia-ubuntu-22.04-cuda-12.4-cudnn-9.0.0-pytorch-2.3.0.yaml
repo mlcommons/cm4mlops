@@ -1,0 +1,9 @@
+﻿uid: 49fc51f2999b4545
+
+name: "Nvidia Ubuntu 22.04 CUDA 12.4 cuDNN 9.0.0 PyTorch 2.3.0"
+
+input:
+  docker_base_image: 'nvcr.io/nvidia/pytorch:24.03-py3'
+  docker_os: ubuntu
+  docker_os_version: '22.04'
+  

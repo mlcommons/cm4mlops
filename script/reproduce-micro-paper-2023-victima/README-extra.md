@@ -10,12 +10,12 @@ Install MLCommmons CM using [this guide](https://github.com/mlcommons/ck/blob/ma
 Install reusable MLCommons automations: 
 
 ```bash
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops --checkout=dev
 ```
 
 ### Run Victima via CM interface
 
-The core CM script for Victima will be available under ```/CM/repos/mlcommons@ck/script/reproduce-micro-2023-paper-victima```
+The core CM script for Victima will be available under ```/CM/repos/mlcommons@cm4mlops/script/reproduce-micro-2023-paper-victima```
 
 It is described by `_cm.yaml` and several native scripts.
 
