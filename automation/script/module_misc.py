@@ -1951,7 +1951,7 @@ def docker(i):
 
         if i.get('docker_push_image', '') in ['True', True, 'yes']:
             env['CM_DOCKER_PUSH_IMAGE'] = 'yes'
-        
+
         cm_docker_input = {'action': 'run',
                            'automation': 'script',
                            'tags': 'run,docker,container',
