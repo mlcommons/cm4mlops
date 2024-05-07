@@ -1447,7 +1447,6 @@ def dockerfile(i):
 
         run_cmd  = r['run_cmd_string']
 
-
         cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
         cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
 
@@ -1769,7 +1768,7 @@ def docker(i):
             run_state = {'deps':[], 'fake_deps':[], 'parent': None}
             run_state['script_id'] = script_alias + "," + script_uid
             run_state['script_variation_tags'] = variation_tags
-            r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', {}, '', False, '', verbose, show_time, ' ', run_state)
+            r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', [], '', False, '', verbose, show_time, ' ', run_state)
             if r['return'] > 0:
                 return r
 
