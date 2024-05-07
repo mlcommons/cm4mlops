@@ -215,6 +215,8 @@ def preprocess(i):
             r = cm.access(ii)
             if r['return'] > 0:
                 return r
+            if state.get('docker', {}):
+                del(state['docker'])
 
         if env.get("CM_MLPERF_LOADGEN_COMPLIANCE", "") == "yes":
             for test in test_list:
@@ -229,6 +231,8 @@ def preprocess(i):
                 r = cm.access(ii)
                 if r['return'] > 0:
                     return r
+                if state.get('docker', {}):
+                    del(state['docker'])
 
     if state.get("cm-mlperf-inference-results"):
         #print(state["cm-mlperf-inference-results"])
