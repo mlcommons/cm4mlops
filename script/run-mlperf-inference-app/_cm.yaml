@@ -263,6 +263,13 @@ variations:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: short
     group: submission-generation-style
 
+  performance-and-accuracy:
+    base:
+    - all-modes
+    default_variations:
+      submission-generation-style: full
+    group: submission-generation
+
   submission:
     base:
     - all-modes
