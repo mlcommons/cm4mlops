@@ -11,6 +11,39 @@
     },
     {
       "tags": "detect,cpu"
+    },
+    {
+      "tags": "get,generic-sys-util,_libffi-dev"
+    },
+    {
+      "tags": "get,generic-sys-util,_libbz2-dev"
+    },
+    {
+      "tags": "get,generic-sys-util,_libssl-dev"
+    },
+    {
+      "tags": "get,generic-sys-util,_liblzma-dev",
+      "enable_if_env": {
+        "CM_HOST_OS_FLAVOR":  [ "ubuntu" ]
+      }
+    },
+    {
+      "tags": "get,generic-sys-util,_libncurses-dev",
+      "enable_if_env": {
+        "CM_HOST_OS_FLAVOR":  [ "ubuntu" ]
+      }
+    },
+    {
+      "tags": "get,generic-sys-util,_libreadline-dev",
+      "enable_if_env": {
+        "CM_HOST_OS_FLAVOR":  [ "ubuntu" ]
+      }
+    },
+    {
+      "tags": "get,generic-sys-util,_libsqlite3-dev",
+      "enable_if_env": {
+        "CM_HOST_OS_FLAVOR":  [ "ubuntu" ]
+      }
     }
   ],
   "default_env": {
@@ -61,6 +94,7 @@
       }
     },
     "with-ssl": {
+      "group": "ssl",
       "env": {
         "CM_ENABLE_SSL": "yes",
         "CM_PYTHON_INSTALL_CACHE_TAGS": "with-ssl"
