@@ -734,6 +734,14 @@
         "CM_STREAMLIT_VERSION"
       ]
     },
+    "openai": {
+      "env": {
+        "CM_GENERIC_PYTHON_PACKAGE_NAME": "openai"
+      },
+      "new_env_keys": [
+        "CM_OPENAI_VERSION"
+      ]
+    },
     "streamlit_option_menu": {
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "streamlit_option_menu"
