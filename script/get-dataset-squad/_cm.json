@@ -10,7 +10,7 @@
       "tags": "get,sys-utils-cm"
     },
     {
-      "tags": "get,sys-utils,generic,generic-sys-util,_wget"
+      "tags": "get,sys-util,generic,generic-sys-util,_wget"
     }
   ],
   "env": {
