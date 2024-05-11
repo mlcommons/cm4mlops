@@ -1137,6 +1137,10 @@ variations:
 
   network-sut:
     group: network
+    deps:
+      - tags: get,generic-python-lib,_package.flask
+        names:
+          - flask
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX1: network_sut
       CM_NETWORK_LOADGEN: sut
