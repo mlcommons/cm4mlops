@@ -52,13 +52,13 @@ Assuming all the downloaded files are to the user home directory please do the f
     --cudnn_tar_file_path=$HOME/cudnn-linux-x86_64-8.9.2.26_cuda11-archive.tar.xz \
     --imagenet_path=$HOME/imagenet-2012-val \
     --scratch_path=$HOME/mlperf_scratch \
-    --docker_cm_repo=mlcommons@ck  \
+    --docker_cm_repo=mlcommons@cm4mlops  \
     --results_dir=$HOME/results_dir \
     --submission_dir=$HOME/submission_dir \
     --adr.compiler.tags=gcc
     ```
       * Use `--docker_cache=no` to turn off docker caching
-      * Use `--docker_run_cmd_prefix="cm pull repo mlcommons@ck"` to update the CK repository when docker caching is used
+      * Use `--docker_run_cmd_prefix="cm pull repo mlcommons@cm4mlops --checkout=dev"` to update the CK repository when docker caching is used
       * Use `--custom_system=no` if you are using a similar system to the [Nvidia submission systems for MLPerf inference 3.0](https://github.com/mlcommons/inference_results_v3.0/tree/main/closed/NVIDIA/systems).
 
 6. At the end of the build you'll get the following prompt unless you have chosen `--custom_system=no`. Please give a system name and say yes to generating the configuration files

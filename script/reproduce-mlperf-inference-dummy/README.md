@@ -29,7 +29,7 @@
 #### Summary
 
 * Category: *Modular MLPerf benchmarks.*
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/master/cm-mlops)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops)*
 * GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-inference-dummy)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * CM "database" tags to find this script: *reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy,dummy-harness,dummy*

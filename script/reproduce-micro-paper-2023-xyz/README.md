@@ -31,7 +31,7 @@ See extra [notes](README-extra.md) from the authors and contributors.
 
 #### Summary
 
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/master/cm-mlops)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops)*
 * GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-xyz)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * CM "database" tags to find this script: *reproduce,paper,micro,micro-2023,victima*
@@ -46,7 +46,7 @@ ___
 
 #### Pull CM repository with this automation
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops --checkout=dev```
 
 
 #### Run this script from command line
