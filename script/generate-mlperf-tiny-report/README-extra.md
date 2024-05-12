@@ -11,7 +11,7 @@ Install [MLCommons CM framework](https://github.com/mlcommons/ck/blob/master/doc
 
 Pull the MLCommons CK repository with automation recipes for interoperable MLOps:
 ```bash
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops --checkout=dev
 ```
 
 Install repositories with raw MLPerf inference benchmark results:

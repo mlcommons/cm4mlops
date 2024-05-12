@@ -117,5 +117,3 @@ docker:
     - env.CM_IMAGE
     - output
     - j
-  pre_run_cmds:
-    - echo \"CM pre run commands\"

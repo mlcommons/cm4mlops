@@ -12,7 +12,7 @@ CM commands are expected to run natively but if you prefer not to modify the hos
 ```
 cm docker script --tags=run,mobilenet-models,_tflite,_accuracy-only \
 --adr.compiler.tags=gcc  \
---docker_cm_repo=mlcommons@ck \
+--docker_cm_repo=mlcommons@cm4mlops \
 --imagenet_path=$HOME/imagenet-2012-val \
 --results_dir=$HOME/mobilenet_results \
 --submission_dir=$HOME/inference_submission_3.1 \

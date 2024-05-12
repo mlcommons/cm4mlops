@@ -1889,6 +1889,8 @@ def docker(i):
 
         all_gpus = i.get('docker_all_gpus', docker_settings.get('all_gpus'))
 
+        num_gpus = i.get('docker_num_gpus', docker_settings.get('num_gpus'))
+
         device = i.get('docker_device', docker_settings.get('device'))
 
         r = check_gh_token(i, docker_settings, quiet)
@@ -1982,6 +1984,9 @@ def docker(i):
 
         if all_gpus:
             cm_docker_input['all_gpus'] = True
+
+        if num_gpus:
+            cm_docker_input['num_gpus'] = str(num_gpus)
 
         if device:
             cm_docker_input['device'] = device
