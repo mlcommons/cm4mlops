@@ -1248,8 +1248,10 @@ docker:
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
   skip_run_cmd: 'no'
   shm_size: '32gb'
+  interactive: True
   extra_run_args: ' --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
   docker_os: ubuntu
+  docker_cm_repo: gateoverflow@cm4mlops
   docker_real_run: False
   docker_os_version: '22.04'
   docker_input_mapping:

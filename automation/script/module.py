@@ -4483,7 +4483,7 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
     posthook_deps = i.get('posthook_deps', [])
     add_deps_recursive = i.get('add_deps_recursive', {})
     recursion_spaces = i['recursion_spaces']
-    remembered_selections = i.get('remembered_selections', {})
+    remembered_selections = i.get('remembered_selections', [])
     variation_tags_string = i.get('variation_tags_string', '')
     found_cached = i.get('found_cached', False)
     script_automation = i['self']
@@ -5012,7 +5012,7 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
 
     add_deps_info = meta.get('ad', {})
     if not add_deps_info:
-        add_deps_info = meta.get('add_deps',{})
+        add_deps_info = meta.get('add_deps', {})
     else:
         utils.merge_dicts({'dict1':add_deps_info, 'dict2':meta.get('add_deps', {}), 'append_lists':True, 'append_unique':True})
     if add_deps_info:
@@ -5027,6 +5027,12 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
         update_env_from_input_mapping(env, i['input'], input_mapping)
 
     # Possibly restrict this to within docker environment
+    add_deps_info = meta.get('ad', i.get('ad', {})) #we need to see input here
+    if not add_deps_info:
+        add_deps_info = meta.get('add_deps', i.get('add_deps_recursive', {}))
+    else:
+        utils.merge_dicts({'dict1':add_deps_info, 'dict2':meta.get('add_deps', {}), 'append_lists':True, 'append_unique':True})
+
     new_docker_settings = meta.get('docker')
     if new_docker_settings:
         docker_settings = state.get('docker', {})
@@ -5036,6 +5042,8 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
         #    #    update_env_from_input_mapping(env, i['input'], docker_input_mapping)
         #    utils.merge_dicts({'dict1':docker_input_mapping, 'dict2':new_docker_input_mapping, 'append_lists':True, 'append_unique':True})
         utils.merge_dicts({'dict1':docker_settings, 'dict2':new_docker_settings, 'append_lists':True, 'append_unique':True})
+        if docker_settings.get('deps', []):
+            update_deps(docker_settings['deps'], add_deps_info, False)
         state['docker'] = docker_settings
 
     new_env_keys_from_meta = meta.get('new_env_keys', [])

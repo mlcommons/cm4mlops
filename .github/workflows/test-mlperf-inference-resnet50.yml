@@ -5,7 +5,7 @@ name: MLPerf inference resnet50
 
 on:
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-inference-resnet50.yml'
       - '**'

@@ -19,8 +19,8 @@ def preprocess(i):
     if not pm:
         return {'return': 1, 'error': 'Package manager not detected for the given OS'}
 
-    util = env.get('CM_SYS_UTIL_NAME')
-    if not util:
+    util = env.get('CM_SYS_UTIL_NAME', '')
+    if util == '':
         return {'return': 1, 'error': 'Please select a variation specifying the sys util name'}
 
     package = state.get(util)

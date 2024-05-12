@@ -1403,8 +1403,9 @@ def dockerfile(i):
         variations = meta.get('variations', {})
         docker_settings = meta.get('docker', {})
         state['docker'] = docker_settings
+        add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = {}, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1446,7 +1447,6 @@ def dockerfile(i):
         if r['return']>0: return r
 
         run_cmd  = r['run_cmd_string']
-
 
         cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
         cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
@@ -1730,8 +1730,9 @@ def docker(i):
         variations = meta.get('variations', {})
         docker_settings = meta.get('docker', {})
         state['docker'] = docker_settings
+        add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = {}, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1769,7 +1770,7 @@ def docker(i):
             run_state = {'deps':[], 'fake_deps':[], 'parent': None}
             run_state['script_id'] = script_alias + "," + script_uid
             run_state['script_variation_tags'] = variation_tags
-            r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', {}, '', False, '', verbose, show_time, ' ', run_state)
+            r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', [], '', False, '', verbose, show_time, ' ', run_state)
             if r['return'] > 0:
                 return r
 
@@ -1952,7 +1953,7 @@ def docker(i):
 
         if i.get('docker_push_image', '') in ['True', True, 'yes']:
             env['CM_DOCKER_PUSH_IMAGE'] = 'yes'
-        
+
         cm_docker_input = {'action': 'run',
                            'automation': 'script',
                            'tags': 'run,docker,container',
