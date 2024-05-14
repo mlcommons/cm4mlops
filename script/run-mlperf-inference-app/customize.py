@@ -216,6 +216,9 @@ def preprocess(i):
             r = cm.access(ii)
             if r['return'] > 0:
                 return r
+            if action == "docker":
+                return {'return': 0} # We run commands interactively inside the docker container
+
             if state.get('docker', {}):
                 del(state['docker'])
 
