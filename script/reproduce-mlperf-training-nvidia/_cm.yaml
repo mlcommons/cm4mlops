@@ -41,6 +41,9 @@ deps:
 
   # Install system dependencies on a given host
   - tags: get,nvidia-docker
+    skip_if_env:
+      CM_SKIP_GET_NVIDIA_DOCKER:
+        - yes
 
   # Detect CUDA
   - names:

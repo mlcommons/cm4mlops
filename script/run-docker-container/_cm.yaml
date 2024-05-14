@@ -18,6 +18,7 @@ default_env:
 
 input_mapping:
   all_gpus: CM_DOCKER_ADD_ALL_GPUS
+  num_gpus: CM_DOCKER_ADD_NUM_GPUS
   base: CM_DOCKER_IMAGE_BASE
   cache: CM_DOCKER_CACHE
   cm_repo: CM_MLOPS_REPO

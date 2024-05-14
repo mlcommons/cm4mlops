@@ -39,7 +39,7 @@ CM scripts are implemented for a demo on Ubuntu and must be tested across differ
 2. Install MLCommons repository with CM automation scripts:
 
 ```bash
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops --checkout=dev
 ```
 
 3. Install src from IPOL 2022 439 paper:

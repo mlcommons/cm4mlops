@@ -28,7 +28,7 @@
 #### Summary
 
 * Category: *DevOps automation.*
-* CM GitHub repository: *[mlcommons@ck](https://github.com/mlcommons/ck/tree/master/cm-mlops)*
+* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops)*
 * GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/main/script/import-experiment-to-sqlite)*
 * CM meta description for this script: *[_cm.yaml](_cm.yaml)*
 * CM "database" tags to find this script: *import,experiment2sqlite*
@@ -43,7 +43,7 @@ ___
 
 #### Pull CM repository with this automation
 
-```cm pull repo mlcommons@ck```
+```cm pull repo mlcommons@cm4mlops --checkout=dev```
 
 
 #### Run this script from command line

@@ -18,7 +18,7 @@ and pull CM repository with portable automation scripts to benchmark ML Systems:
 
 ```bash
 pip install cmind
-cm pull repo mlcommons@ck
+cm pull repo mlcommons@cm4mlops --checkout=dev
 ```
 
 ### Clean CM cache

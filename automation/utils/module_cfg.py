@@ -282,14 +282,19 @@ def select_cfg(i):
             meta = r['meta']
             ss['meta'] = meta
 
+        selector = sorted(selector, key = lambda x: x['meta'].get('name',''))
+        s = 0
+        for ss in selector:
             alias = ss['alias']
-            name = meta.get('name','')
+            name = ss['meta'].get('name','')
 
             x = name
             if x!='': x+=' '
             x += '('+alias+')'
             
             print ('{}) {}'.format(s, x))
+
+            s+=1
         
         print ('')
         select = input ('Enter configuration number of press Enter for 0: ')
