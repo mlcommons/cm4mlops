@@ -282,6 +282,20 @@
            }
         },
         {
+           "names": [
+             "conda-package",
+             "typing-extensions"
+           ],
+           "tags": "get,generic,conda-package,_package.typing-extensions,_source.conda-forge"
+        },
+        {
+           "names": [
+             "conda-package",
+             "sympy"
+           ],
+           "tags": "get,generic,conda-package,_package.sympy,_source.conda-forge"
+        },
+        {
            "tags": "get,generic-python-lib,_custom-python,_package.setuptools",
            "env": {
              "CM_PYTHON_BIN_WITH_PATH": "<<<CM_CONDA_BIN_PATH>>>/python3"
