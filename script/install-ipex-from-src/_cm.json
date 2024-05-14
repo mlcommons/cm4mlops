@@ -35,6 +35,9 @@
       "tags": "get,pytorch,from.src"
     },
     {
+      "tags": "get,generic,conda-package,_package.ninja"
+    },
+    {
       "env": {
         "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_IPEX_SRC_REPO_PATH"
       },
@@ -122,6 +125,20 @@
             "setuptools"
           ],
           "tags": "get,generic,conda-package,_package.setuptools,_source.conda-forge"
+        },
+        {
+          "names": [
+            "conda-package",
+            "typing-extensions"
+          ],
+          "tags": "get,generic,conda-package,_package.typing-extensions,_source.conda-forge"
+        },
+        {
+          "names": [
+            "conda-package",
+            "sympy"
+          ],
+          "tags": "get,generic,conda-package,_package.sympy,_source.conda-forge"
         },
         {
           "tags": "install,llvm,src,_for-intel-mlperf-inference-v3.1-gptj"
