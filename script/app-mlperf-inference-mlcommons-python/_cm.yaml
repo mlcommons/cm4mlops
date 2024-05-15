@@ -104,6 +104,8 @@ deps:
 
   # Detect CUDA if required
   - tags: get,cuda,_cudnn
+    names:
+      - cuda
     enable_if_env:
       CM_MLPERF_DEVICE:
       - gpu
