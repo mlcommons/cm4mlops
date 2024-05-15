@@ -338,6 +338,7 @@ variations:
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
     deps:
     - tags: get,generic-python-lib,_onnx-graphsurgeon
+      version: 0.3.27
     - tags: get,generic-python-lib,_package.onnx
       version: 1.13.1
 
