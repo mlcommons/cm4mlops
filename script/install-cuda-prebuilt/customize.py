@@ -9,8 +9,6 @@ def preprocess(i):
 
     automation = i['automation']
     version = env.get('CM_VERSION')
-    print(f"The got version is:{version}")
-    print(f"CM Cuda version string {env['CM_CUDA_VERSION_STRING']}")
     if version not in env.get('CM_CUDA_LINUX_FILENAME', ''):
         return {'return': 1, 'error': "Only CUDA versions 11.7.0, 11.8.0, 12.0.0, 12.1.1, 12.2.0, 12.3.2 and 12.4.1 are supported now!"}
 
