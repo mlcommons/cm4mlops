@@ -27,7 +27,7 @@ See the [automatically generated catalog](https://github.com/mlcommons/ck/blob/m
 When we run a CM script we can also pass inputs to it and any input added in `input_mapping` dictionary inside `_cm.json` gets converted to the corresponding `ENV` variable.
 
 ### Conditional execution of any `deps`, `post_deps`
-We can use `skip_if_env` dictionary inside any `deps`, `prehook_deps`, `posthook_deps` or `post_deps` to make its executional conditional
+We can use `skip_if_env` dictionary inside any `deps`, `prehook_deps`, `posthook_deps` or `post_deps` to make its execution conditional
 
 ### Versions
 We can specify any specific version of a script using `version`. `version_max` and `version_min` are also possible options. 
@@ -73,7 +73,7 @@ Sometimes it is difficult to add all variations needed for a script like say `ba
 
 ### Script workflow (env, deps, native scripts)
 
-![](assets/scripts-workflow.png | width=300)
+![](assets/scripts-workflow.png)
 
 
 
