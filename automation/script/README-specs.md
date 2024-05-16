@@ -73,7 +73,7 @@ Sometimes it is difficult to add all variations needed for a script like say `ba
 
 ### Script workflow (env, deps, native scripts)
 
-![](assets/scripts-workflow.png | width=100)
+![](assets/scripts-workflow.png | width=300)
 
 
 
