@@ -73,11 +73,7 @@ Sometimes it is difficult to add all variations needed for a script like say `ba
 
 ### Script workflow (env, deps, native scripts)
 
-<img src="https://github.com/mlcommons/cm4mlops/raw/mlperf-inference/automation/script/assets/scripts-workflow.png" width="48">
-
-![](assets/scripts-workflow.png)
+<img src="https://github.com/mlcommons/cm4mlops/raw/mlperf-inference/automation/script/assets/scripts-workflow.png" width="148">
 
 
-
-
-&copy; 2022-23 [MLCommons](https://mlcommons.org)<br>
+&copy; 2022-24 [MLCommons](https://mlcommons.org)<br>
