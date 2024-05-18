@@ -253,6 +253,28 @@ def postprocess(i):
 
         if env.get('CM_HOST_SYSTEM_NAME','')!='': host_info['system_name']=env['CM_HOST_SYSTEM_NAME']
 
+        # Check CM automation repository
+        repo_name = 'mlcommons@cm4mlops'
+        repo_hash = ''
+        r = cm.access({'action':'find', 'automation':'repo', 'artifact':'mlcommons@cm4mlops,9e97bb72b0474657'})
+        if r['return']==0 and len(r['list'])==1:
+            repo_path = r['list'][0].path
+            if os.path.isdir(repo_path):
+                repo_name = os.path.basename(repo_path)
+
+                # Check dev
+                if repo_name == 'cm4mlops': repo_name = 'gateoverflow@cm4mlops'
+
+                r = cm.access({'action':'system',
+                               'automation':'utils',
+                               'path':repo_path,
+                               'cmd':'git rev-parse HEAD'})
+                if r['return'] == 0 and r['ret'] == 0:
+                    repo_hash = r['stdout']
+
+                    host_info['cm_repo_name'] = repo_name
+                    host_info['cm_repo_git_hash'] = repo_hash
+
         with open ("cm-host-info.json", "w") as fp:
             fp.write(json.dumps(host_info, indent=2)+'\n')
         
@@ -268,8 +290,8 @@ def postprocess(i):
 
         readme_init+= "*Check [CM MLPerf docs](https://mlcommons.github.io/inference) for more details.*\n\n"
 
-        readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n{}\n\n".format(platform.platform(), 
-            platform.processor(), sys.version, cm.__version__, md_xhashes)
+        readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n\n".format(platform.platform(), 
+            platform.processor(), sys.version, cm.__version__)
 
         x = repo_name
         if repo_hash!='': x+=' --checkout='+str(repo_hash)
