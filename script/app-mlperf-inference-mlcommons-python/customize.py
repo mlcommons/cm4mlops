@@ -177,7 +177,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
 
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "gpt-j")
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] +  \
-            " main.py --model-path=" + env['CM_ML_MODEL_FILE_WITH_PATH'] + ' --dataset-path=' + env['CM_DATASET_EVAL_PATH'] + " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + " " + env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
+            " run.py --model-path=" + env['CM_ML_MODEL_FILE_WITH_PATH'] + ' --dataset-path=' + env['CM_DATASET_EVAL_PATH'] + " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + " " + env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
             ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
             scenario_extra_options + mode_extra_options + dataset_options
         cmd = cmd.replace("--count", "--max_examples")
@@ -188,7 +188,6 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
             gpu_options = ""
         cmd = cmd + gpu_options
         env['LOG_PATH'] = env['CM_MLPERF_OUTPUT_DIR']
-        return cmd, env['RUN_DIR']
 
     if env['CM_MODEL'] in [ "resnet50", "retinanet" ]:
 
