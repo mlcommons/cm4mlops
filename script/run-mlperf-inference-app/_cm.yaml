@@ -179,7 +179,6 @@ variations:
       CM_MLPERF_DASHBOARD: 'on'
 
   find-performance:
-    default: true
     env:
       CM_MLPERF_FIND_PERFORMANCE_MODE: 'yes'
       CM_MLPERF_LOADGEN_ALL_MODES: 'no'
@@ -264,6 +263,7 @@ variations:
     group: submission-generation-style
 
   performance-and-accuracy:
+    default: true
     base:
     - all-modes
     default_variations:

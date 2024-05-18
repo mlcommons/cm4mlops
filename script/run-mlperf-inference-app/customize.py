@@ -14,6 +14,7 @@ def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
+
     inp = i['input']
     state = i['state']
     script_path = i['run_script_input']['path']
