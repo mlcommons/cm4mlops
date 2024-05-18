@@ -268,8 +268,8 @@ def postprocess(i):
 
         readme_init+= "*Check [CM MLPerf docs](https://mlcommons.github.io/inference) for more details.*\n\n"
 
-        readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n{}\n\n".format(platform.platform(), 
-            platform.processor(), sys.version, cm.__version__, md_xhashes)
+        readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n\n".format(platform.platform(), 
+            platform.processor(), sys.version, cm.__version__)
 
         x = repo_name
         if repo_hash!='': x+=' --checkout='+str(repo_hash)
