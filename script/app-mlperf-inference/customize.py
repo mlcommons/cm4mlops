@@ -46,8 +46,8 @@ def postprocess(i):
     env['CMD'] = ''
     state = i['state']
 
-    if env.get('CM_MLPERF_USER_CONF', '') == '':
-        return {'return': 0}
+    #if env.get('CM_MLPERF_USER_CONF', '') == '':
+    #    return {'return': 0}
 
     output_dir = env['CM_MLPERF_OUTPUT_DIR']
     mode = env['CM_MLPERF_LOADGEN_MODE']
