@@ -177,6 +177,9 @@ def preprocess(i):
         del(env['OUTPUT_BASE_DIR'])
         state = {}
         docker_extra_input = {}
+
+        del(env['CM_HW_NAME'])
+
         for k in inp:
             if k.startswith("docker_"):
                 docker_extra_input[k] = inp[k]
