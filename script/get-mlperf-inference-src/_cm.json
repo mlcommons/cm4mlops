@@ -68,7 +68,7 @@
       }
     }
   ],
-  "print_env_at_the_end": {
+  "print_env_at_the_end_disabled": {
     "CM_MLPERF_INFERENCE_CONF_PATH": "Path to the MLPerf inference benchmark configuration file",
     "CM_MLPERF_INFERENCE_SOURCE": "Path to MLPerf inference benchmark sources"
   },

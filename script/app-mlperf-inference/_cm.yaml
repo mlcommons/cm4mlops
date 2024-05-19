@@ -430,7 +430,7 @@ variations:
       tags: run,accuracy,mlperf,_imagenet
     docker:
       deps:
-      - tags: get,dataset,imagenet,original
+      - tags: get,dataset,imagenet,validation,original
         names:
           - imagenet-original
           - dataset-original

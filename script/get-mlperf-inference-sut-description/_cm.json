@@ -2,7 +2,7 @@
   "alias": "get-mlperf-inference-sut-description",
   "automation_alias": "script",
   "automation_uid": "5b4e0237da074764",
-  "cache": true,
+  "cache": false,
   "category": "MLPerf benchmark support",
   "deps": [
     {
@@ -46,6 +46,13 @@
     },
     {
       "tags": "get,generic-python-lib,_package.dmiparser"
+    },
+    {
+      "tags": "get,cache,dir,_name.mlperf-inference-sut-descriptions",
+      "extra_cache_tags": "mlperf,inference,sut,descriptions",
+      "env": {
+        "CM_CACHE_DIR_ENV_NAME": "CM_MLPERF_INFERENCE_SUT_DESC_PATH"
+      }
     }
   ],
   "default_env": {
