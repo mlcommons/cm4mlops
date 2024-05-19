@@ -37,6 +37,7 @@ default_env:
 
 input_mapping:
   backend: CM_MLPERF_BACKEND
+  beam_size: GPTJ_BEAM_SIZE
   category: CM_MLPERF_SUBMISSION_SYSTEM_TYPE
   clean: CM_MLPERF_CLEAN_ALL
   compliance: CM_MLPERF_LOADGEN_COMPLIANCE

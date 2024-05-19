@@ -182,6 +182,8 @@ variations:
         tags: _float32
       librispeech-accuracy-script:
         tags: _int32
+      cnndm-accuracy-script:
+        tags: _int32
     env:
       CM_MLPERF_PYTHON: 'yes'
       CM_MLPERF_IMPLEMENTATION: mlcommons_python
@@ -189,6 +191,7 @@ variations:
       CM_IMAGENET_ACCURACY_DTYPE: float32
       CM_OPENIMAGES_ACCURACY_DTYPE: float32
       CM_LIBRISPEECH_ACCURACY_DTYPE: float32
+      CM_CNNDM_ACCURACY_DTYPE: int32
     prehook_deps:
       - names:
          - python-reference-mlperf-inference
