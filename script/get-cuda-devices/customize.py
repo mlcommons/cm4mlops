@@ -34,6 +34,6 @@ def postprocess(i):
     
 
     state['cm_cuda_device_prop'] = p
-    print(env)
+    
     return {'return':0}
     
