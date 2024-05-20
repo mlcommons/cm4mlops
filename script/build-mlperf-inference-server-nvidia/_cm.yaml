@@ -164,6 +164,11 @@ variations:
     add_deps_recursive:
       nvidia-inference-common-code:
         tags: _ctuning
+  go:
+    group: code
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        tags: _go
   nvidia-only:
     group: code
     add_deps_recursive:
@@ -180,6 +185,23 @@ variations:
       nvidia-inference-common-code:
         tags: _mlcommons
 
+  r4.0:
+    group: version
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r4.0
+      nvidia-scratch-space:
+        tags: _version.4_1
+    deps:
+      - tags: install,pytorch,from.src,_for-nvidia-mlperf-inference-v4.0
+        names:
+        - pytorch
+        - torch
+      - tags: install,torchvision,from.src,_for-nvidia-mlperf-inference-v4.0
+        names:
+        - pytorchvision
+        - torchvision
+      - tags: install,nccl,libs,_cuda
 
 versions:
   r2.1:
