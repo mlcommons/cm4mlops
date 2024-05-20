@@ -94,6 +94,9 @@
         "TORCH_CXX_FLAGS": "-D_GLIBCXX_USE_CXX11_ABI=1"
       }
     },
+    "for-nvidia-mlperf-inference-v4.0": {
+      "alias": "for-nvidia-mlperf-inference-v3.1"
+    },
     "for-nvidia-mlperf-inference-v3.1": {
       "base": [
         "sha.657027f3",
@@ -102,7 +105,7 @@
       "deps": [
         {
           "tags": "install,pytorch,from.src,_for-nvidia-mlperf-inference-v3.1"
-	}
+        }
       ],
       "env": {
       }

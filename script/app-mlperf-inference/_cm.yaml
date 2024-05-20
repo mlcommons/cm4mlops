@@ -238,6 +238,10 @@ variations:
     default_variations:
       backend: onnxruntime
 
+  nvidia-original,r4.1_default:
+    docker:
+      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+
   nvidia-original:
     docker:
       interactive: True
@@ -1145,6 +1149,21 @@ variations:
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'
+
+  r4.1_default:
+    group:
+      reproducibility
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r4.0
+        tags: _go
+      nvidia-inference-server:
+        version: r4.0
+        tags: _go
+    default_env:
+      CM_SKIP_SYS_UTILS: 'yes'
+      CM_REGENERATE_MEASURE_FILES: 'yes'
+
 
 invalid_variation_combinations:
   -
