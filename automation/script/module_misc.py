@@ -1873,7 +1873,7 @@ def docker(i):
                 dockerfilename_suffix = dockerfilename_suffix[len(dockerfilename_suffix) - 1]
 
 
-        cm_repo=i.get('docker_cm_repo', 'mlcommons@cm4mlops')
+        cm_repo=i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
 
         docker_path = i.get('docker_path', '').strip()
         if docker_path == '': 

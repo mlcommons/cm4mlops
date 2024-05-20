@@ -37,6 +37,7 @@ default_env:
 
 input_mapping:
   backend: CM_MLPERF_BACKEND
+  beam_size: GPTJ_BEAM_SIZE
   category: CM_MLPERF_SUBMISSION_SYSTEM_TYPE
   clean: CM_MLPERF_CLEAN_ALL
   compliance: CM_MLPERF_LOADGEN_COMPLIANCE
@@ -179,7 +180,6 @@ variations:
       CM_MLPERF_DASHBOARD: 'on'
 
   find-performance:
-    default: true
     env:
       CM_MLPERF_FIND_PERFORMANCE_MODE: 'yes'
       CM_MLPERF_LOADGEN_ALL_MODES: 'no'
@@ -254,6 +254,12 @@ variations:
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.0_default
     group: benchmark-version
 
+  r4.1:
+    env:
+      CM_MLPERF_INFERENCE_VERSION: '4.1'
+      CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.1_default
+    group: benchmark-version
+
   short:
     add_deps_recursive:
       submission-checker:
@@ -264,6 +270,7 @@ variations:
     group: submission-generation-style
 
   performance-and-accuracy:
+    default: true
     base:
     - all-modes
     default_variations:
