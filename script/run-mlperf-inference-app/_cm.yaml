@@ -254,6 +254,12 @@ variations:
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.0_default
     group: benchmark-version
 
+  r4.1:
+    env:
+      CM_MLPERF_INFERENCE_VERSION: '4.1'
+      CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.1_default
+    group: benchmark-version
+
   short:
     add_deps_recursive:
       submission-checker:

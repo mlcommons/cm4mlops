@@ -57,6 +57,12 @@
         "CM_MLPERF_INFERENCE_RESULTS_VERSION_NAME": "v3.1",
         "CM_GIT_URL": "https://github.com/<<<GITHUB_REPO_OWNER>>>/inference_results_v3.1.git"
       }
+    },
+    "v4.0": {
+      "env": {
+        "CM_MLPERF_INFERENCE_RESULTS_VERSION_NAME": "v4.0",
+        "CM_GIT_URL": "https://github.com/<<<GITHUB_REPO_OWNER>>>/inference_results_v4.0.git"
+      }
     }
   },
   "variations": {
@@ -84,6 +90,12 @@
       "env": {
         "GITHUB_REPO_OWNER": "GATEOverflow",
         "NVIDIA_ONLY": "yes"
+      }
+    },
+    "go": {
+      "group": "source-repo",
+      "env": {
+        "GITHUB_REPO_OWNER": "GATEOverflow"
       }
     }
   }

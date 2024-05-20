@@ -229,6 +229,8 @@ def postprocess(i):
         state['cm-mlperf-inference-results-last'][mode] = result
         state['cm-mlperf-inference-results-last'][mode+'_valid'] = valid.get(mode, False)
 
+        print(state['cm-mlperf-inference-results'])
+        return {'return': 1}
         if power:
             state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario]['power'] = power
             state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario]['power_valid'] = valid['power']
