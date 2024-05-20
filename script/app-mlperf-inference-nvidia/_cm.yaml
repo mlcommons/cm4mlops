@@ -263,7 +263,7 @@ deps:
 
   - tags: get,generic-python-lib,_package.nvmitten
     update_tags_from_env_with_prefix:
-      _path:
+      _path.:
         - CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH
     enable_if_env:
       CM_RUN_STATE_DOCKER:
