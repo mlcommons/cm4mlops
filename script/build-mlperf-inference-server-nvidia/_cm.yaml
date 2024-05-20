@@ -201,7 +201,6 @@ variations:
         names:
         - pytorchvision
         - torchvision
-      - tags: install,nccl,libs,_cuda
 
 versions:
   r2.1:
