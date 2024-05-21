@@ -1266,6 +1266,7 @@ docker:
     - tags: get,mlperf,inference,results,dir
     - tags: get,mlperf,inference,submission,dir
   pre_run_cmds:
+    #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
   mounts:
    - "${{ CM_DATASET_IMAGENET_PATH }}:${{ CM_DATASET_IMAGENET_PATH }}"
