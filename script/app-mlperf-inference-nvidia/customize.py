@@ -10,6 +10,9 @@ def preprocess(i):
         return {'return':1, 'error': 'Windows is not supported in this script yet'}
     env = i['env']
 
+    if str(env.get('CM_RUN_STATE_DOCKER', '')).lower() in ['1', 'true', 'yes']:
+        return {'return': 0}
+
     if env.get('CM_MODEL', '') == '':
         return {'return': 1, 'error': 'Please select a variation specifying the model to run'}
 

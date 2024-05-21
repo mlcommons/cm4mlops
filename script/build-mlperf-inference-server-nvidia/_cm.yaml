@@ -201,7 +201,6 @@ variations:
         names:
         - pytorchvision
         - torchvision
-      - tags: install,nccl,libs,_cuda
 
 versions:
   r2.1:
@@ -250,7 +249,6 @@ versions:
         names:
         - pytorchvision
         - torchvision
-      - tags: install,nccl,libs,_cuda
 
 docker:
   skip_run_cmd: 'no'
