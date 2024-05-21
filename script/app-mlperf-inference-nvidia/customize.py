@@ -156,7 +156,7 @@ def preprocess(i):
             cmds.append("make download_data BENCHMARKS='gptj'")
 
         fp32_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'GPTJ-6B', 'checkpoint-final')
-        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'GPTJ-6B', 'fp8-quantized-ammo', 'GPTJ-07142023.pth')
+        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'GPTJ-6B', 'fp8-quantized-ammo', env['CM_MLPERF_GPTJ_MODEL_FP8_PATH_SUFFIX'])
         vocab_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'bert', 'vocab.txt')
 
         if not os.path.exists(os.path.dirname(fp32_model_path)):
