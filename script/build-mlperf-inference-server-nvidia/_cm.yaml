@@ -240,6 +240,8 @@ versions:
         version: r4.0
       nvidia-scratch-space:
         tags: _version.4_1
+    env:
+      BUILD_TRTLLM: 1
     deps:
       - tags: install,pytorch,from.src,_for-nvidia-mlperf-inference-v4.0
         names:

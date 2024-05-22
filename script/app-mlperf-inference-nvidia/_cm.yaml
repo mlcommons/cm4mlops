@@ -386,6 +386,7 @@ variations:
     - tags: get,generic-python-lib,_transformers
     - tags: get,generic-python-lib,_safetensors
     - tags: get,generic-python-lib,_onnx
+    - tags: get,generic-python-lib,_onnx-graphsurgeon
 
   bert-99:
     group: model
@@ -496,6 +497,9 @@ variations:
     deps:
     - tags: get,generic-python-lib,_package.datasets
     - tags: get,generic-python-lib,_package.simplejson
+    - tags: get,generic-python-lib,_onnx
+    - tags: get,generic-python-lib,_transformers
+    - tags: get,generic-python-lib,_onnx-graphsurgeon
     env:
       CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://cloud.mlcommons.org/index.php/s/QAZ2oM94MkFtbQx/download"
   
