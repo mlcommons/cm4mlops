@@ -202,7 +202,9 @@
             "conda-package",
             "setuptools"
           ],
-          "tags": "get,generic,conda-package,_package.setuptools,_source.conda-forge"
+          "tags": "get,generic,conda-package,_package.setuptools,_source.conda-forge",
+          "version_max": "69.9.999",
+          "version_max_usable": "58.2.0"
         },
         {
           "names": [
