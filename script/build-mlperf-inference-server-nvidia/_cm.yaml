@@ -193,6 +193,7 @@ variations:
       nvidia-scratch-space:
         tags: _version.4_1
     deps:
+      - tags: get,generic,sys-util,_git-lfs
       - tags: install,pytorch,from.src,_for-nvidia-mlperf-inference-v4.0
         names:
         - pytorch
