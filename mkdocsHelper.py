@@ -52,7 +52,7 @@ def print_category_structure(category_dict):
             folder_name = folder.replace("/", "-")
             source_path_folder = os.path.join("script", folder_name)
             source_file_path = os.path.join(source_path_folder, "README.md")
-            target_path = os.path.join(category_path_formated, folder_name + ".md")
+            target_path = os.path.join(category_path_formated, os.path.join(folder_name, "index.md"))
             if not os.path.exists(source_file_path):
                 # print(f"Source file does not exist: {source_file_path}")
                 continue
@@ -78,7 +78,7 @@ def print_category_structure(category_dict):
         print(f"    - {category.replace("/", "-")}:")
         for folder in folders:
             folder_name = folder.replace("/", "-")
-            target_path = os.path.join(category_path_formated, folder_name + ".md")
+            target_path = os.path.join(category_path_formated,  os.path.join(folder_name, "index.md"))
             print(f"      - {folder_name}: {target_path}")
 
 if __name__ == "__main__":
