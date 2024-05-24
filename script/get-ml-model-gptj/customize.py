@@ -62,6 +62,8 @@ def postprocess(i):
             env['CM_ML_MODEL_FILE_WITH_PATH'] = env['GPTJ_SAXML_INT8_CHECKPOINT_PATH']
         else:
             return {'return': 1, 'error': 'pax_gptj_checkpoint generation failed'}
+    elif env.get('CM_TMP_ML_MODEL_PROVIDER', '') == 'nvidia':
+        env['CM_ML_MODEL_FILE_WITH_PATH'] = os.path.join(env['CM_NVIDIA_MLPERF_SCRATCH_PATH'], 'models', 'GPTJ-6B', 'fp8-quantized-ammo', 'GPTJ-FP8-quantized')
     else:
         env['CM_ML_MODEL_FILE_WITH_PATH'] = env['GPTJ_CHECKPOINT_PATH']
 

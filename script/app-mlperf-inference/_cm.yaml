@@ -242,6 +242,11 @@ variations:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
 
+  nvidia-original,r4.1_default,_gptj:
+    docker:
+      deps:
+        - tags: get,ml-model,gptj,_nvidia,_fp8
+
   nvidia-original:
     docker:
       interactive: True
@@ -309,8 +314,8 @@ variations:
       - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
       skip_run_cmd: 'no'
       shm_size: '32gb'
-      docker_os: ubuntu
-      docker_real_run: false
+      os: ubuntu
+      real_run: false
       run: true
       docker_input_mapping:
         imagenet_path: IMAGENET_PATH
@@ -332,11 +337,6 @@ variations:
             - yes
     env:
       CM_MLPERF_IMPLEMENTATION: intel
-
-  intel-original,gptj_:
-    docker:
-      deps:
-      - tags: get,ml-model,gptj
 
   intel-original,gptj_,build-harness:
     docker:
@@ -625,6 +625,9 @@ variations:
     alias: gptj_
 
   gptj_:
+    docker:
+      deps:
+      - tags: get,ml-model,gptj,raw
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
     posthook_deps:
@@ -1272,6 +1275,7 @@ docker:
    - "${{ CM_DATASET_IMAGENET_PATH }}:${{ CM_DATASET_IMAGENET_PATH }}"
    - "${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}"
    - "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}"
+   - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
   skip_run_cmd: 'no'
   shm_size: '32gb'
