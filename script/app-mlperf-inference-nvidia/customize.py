@@ -10,6 +10,9 @@ def preprocess(i):
         return {'return':1, 'error': 'Windows is not supported in this script yet'}
     env = i['env']
 
+    if str(env.get('CM_RUN_STATE_DOCKER', '')).lower() in ['1', 'true', 'yes']:
+        return {'return': 0}
+
     if env.get('CM_MODEL', '') == '':
         return {'return': 1, 'error': 'Please select a variation specifying the model to run'}
 
@@ -153,7 +156,7 @@ def preprocess(i):
             cmds.append("make download_data BENCHMARKS='gptj'")
 
         fp32_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'GPTJ-6B', 'checkpoint-final')
-        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'GPTJ-6B', 'fp8-quantized-ammo', 'GPTJ-07142023.pth')
+        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'GPTJ-6B', 'fp8-quantized-ammo', env['CM_MLPERF_GPTJ_MODEL_FP8_PATH_SUFFIX'])
         vocab_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'bert', 'vocab.txt')
 
         if not os.path.exists(os.path.dirname(fp32_model_path)):
@@ -163,7 +166,8 @@ def preprocess(i):
 
         if not os.path.exists(fp32_model_path):
             env['CM_REQUIRE_GPTJ_MODEL_DOWNLOAD'] = 'yes' # download via prehook_deps
-            cmds.append(f"cp -r $CM_ML_MODEL_FILE_WITH_PATH {fp32_model_path}")
+            if make_command == "build_engine":
+                cmds.append(f"cp -r $CM_ML_MODEL_FILE_WITH_PATH {fp32_model_path}")
 
         model_name = "gptj"
         model_path = fp8_model_path

@@ -1,0 +1,72 @@
+site_name: MLPerf Inference Documentation
+repo_url: https://github.com/mlcommons/cm4mlops
+theme:
+  name: material
+  logo: img/logo_v2.svg
+  favicon: img/logo_v2.svg
+  palette:
+    primary: deep purple
+    accent: green
+  features:
+    - content.tabs.link
+    - content.code.copy
+    - navigation.expand
+    - navigation.sections
+    - navigation.indexes
+    - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - toc.follow
+nav:
+  - CM Scripts: 
+    - index.md
+    - Python-automation: Python-automation/index.md
+    - MLPerf-benchmark-support: MLPerf-benchmark-support/index.md
+    - Modular-AI-ML-application-pipeline: Modular-AI-ML-application-pipeline/index.md
+    - Modular-application-pipeline: Modular-application-pipeline/index.md
+    - Modular-MLPerf-inference-benchmark-pipeline: Modular-MLPerf-inference-benchmark-pipeline/index.md
+    - Modular-MLPerf-benchmarks: Modular-MLPerf-benchmarks/index.md
+    - Reproduce-MLPerf-benchmarks: Reproduce-MLPerf-benchmarks/index.md
+    - Modular-MLPerf-training-benchmark-pipeline: Modular-MLPerf-training-benchmark-pipeline/index.md
+    - DevOps-automation: DevOps-automation/index.md
+    - Docker-automation: Docker-automation/index.md
+    - AI-ML-optimization: AI-ML-optimization/index.md
+    - AI-ML-models: AI-ML-models/index.md
+    - CM-automation: CM-automation/index.md
+    - TinyML-automation: TinyML-automation/index.md
+    - Cloud-automation: Cloud-automation/index.md
+    - Platform-information: Platform-information/index.md
+    - Detection-or-installation-of-tools-and-artifacts: Detection-or-installation-of-tools-and-artifacts/index.md
+    - Compiler-automation: Compiler-automation/index.md
+    - CM-Interface: CM-Interface/index.md
+    - Legacy-CK-support: Legacy-CK-support/index.md
+    - AI-ML-datasets: AI-ML-datasets/index.md
+    - CUDA-automation: CUDA-automation/index.md
+    - AI-ML-frameworks: AI-ML-frameworks/index.md
+    - Reproducibility-and-artifact-evaluation: Reproducibility-and-artifact-evaluation/index.md
+    - GUI: GUI/index.md
+    - Collective-benchmarking: Collective-benchmarking/index.md
+    - Tests: Tests/index.md
+    - Dashboard-automation: Dashboard-automation/index.md
+    - Remote-automation: Remote-automation/index.md
+    - CM-interface-prototyping: CM-interface-prototyping/index.md
+
+markdown_extensions:
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.details
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+plugins:
+  - search
+  - macros

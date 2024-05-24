@@ -6,6 +6,10 @@ def preprocess(i):
     if os_info['platform'] == 'windows':
         return {'return':1, 'error': 'Windows is not supported in this script yet'}
 
+    env = i['env']
+
+    env['CC'] = env['CM_C_COMPILER_WITH_PATH']
+
     return {'return':0}
 
 def postprocess(i):

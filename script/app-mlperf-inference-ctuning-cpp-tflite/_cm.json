@@ -118,6 +118,10 @@
       "tags": "get,ml-model,efficientnet,raw,_tflite"
     },
     {
+      "names": [
+        "tensorflow",
+	"tflite"
+      ],
       "tags": "get,tensorflow,lib,_tflite"
     },
     {
