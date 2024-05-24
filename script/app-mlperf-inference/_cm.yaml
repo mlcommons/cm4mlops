@@ -242,6 +242,11 @@ variations:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
 
+  nvidia-original,r4.1_default,_gptj:
+    docker:
+      deps:
+        - tags: get,ml-model,gptj,_nvidia,_fp8
+
   nvidia-original:
     docker:
       interactive: True
