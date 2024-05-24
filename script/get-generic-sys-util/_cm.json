@@ -448,6 +448,17 @@
           "dnf": "gcc-toolset-12-gcc-c++"
         }
       }
+    },
+    "nlohmann-json3-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "nlohmann_json3_dev"
+      },
+      "state": {
+        "nlohmann-json3-dev": {
+          "apt": "nlohmann-json3-dev",
+          "dnf": "nlohmann-json-dev"
+        }
+      }
     }
   }
 }
