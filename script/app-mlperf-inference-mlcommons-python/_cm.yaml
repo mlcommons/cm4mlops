@@ -347,8 +347,9 @@ deps:
       CM_MODEL:
       - gptj-99
       - gptj-99.9
+    skip_if_env:
       NETWORK:
-      - sut
+      - lon
 
 
 
