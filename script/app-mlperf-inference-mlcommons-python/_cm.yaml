@@ -347,6 +347,9 @@ deps:
       CM_MODEL:
       - gptj-99
       - gptj-99.9
+      NETWORK:
+      - sut
+
 
 
   ## RetinaNet (PyTorch weights, FP32)
