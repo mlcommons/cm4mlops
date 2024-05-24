@@ -25,7 +25,7 @@ def preprocess(i):
 
     results_dir_split = results_dir.split(xsep)
     dataset = env['CM_DATASET']
-    regenerate_accuracy_file = env.get('CM_MLPERF_REGENERATE_ACCURACY_FILE', False)
+    regenerate_accuracy_file = env.get('CM_MLPERF_REGENERATE_ACCURACY_FILE', env.get('CM_RERUN', False))
 
     for result_dir in results_dir_split:
 
@@ -105,9 +105,7 @@ def preprocess(i):
         else:
             return {'return': 1, 'error': 'Unsupported dataset'}
 
-        outfile = os.path.join(result_dir, "accuracy.txt")
-        if not os.path.exists(outfile) or (os.stat(outfile).st_size == 0) or env.get("CM_REGENERATE_MEASURE_FILES", False):
-            run_cmds.append(CMD)
+        run_cmds.append(CMD)
 
 
     if os_info['platform'] == 'windows':

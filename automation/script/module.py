@@ -975,7 +975,7 @@ class CAutomation(Automation):
                 if str(state['docker'].get('run', True)).lower() in ['false', '0', 'no']:
                     print (recursion_spaces+'  - Skipping script::{} run as we are inside docker'.format(found_script_artifact))
                     return {'return': 0}
-                elif str(state['docker'].get('docker_real_run', True)).lower() in ['false', '0', 'no']:
+                elif str(state['docker'].get('real_run', True)).lower() in ['false', '0', 'no']:
                     print (recursion_spaces+'  - Doing fake run for script::{} as we are inside docker'.format(found_script_artifact))
                     fake_run = True
                     env['CM_TMP_FAKE_RUN']='yes'

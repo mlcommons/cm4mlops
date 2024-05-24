@@ -21,6 +21,12 @@ def preprocess(i):
             env['INT8_MODEL_DIR'] = os.getcwd()
         else:
             env['INT4_MODEL_DIR'] = os.getcwd()
+    elif env.get('CM_TMP_ML_MODEL_PROVIDER', '') == 'nvidia':
+        i['run_script_input']['script_name'] = 'run-nvidia'
+        gpu_arch = int(float(env['CM_CUDA_DEVICE_PROP_GPU_COMPUTE_CAPABILITY']) * 10)
+        env['CM_GPU_ARCH'] = gpu_arch
+        env['CM_TMP_REQUIRE_DOWNLOAD'] = 'no'
+
     else:
         is_saxml = env.get('CM_TMP_MODEL_SAXML','')
         if is_saxml == "fp32":

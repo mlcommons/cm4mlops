@@ -202,7 +202,8 @@
             "conda-package",
             "setuptools"
           ],
-          "tags": "get,generic,conda-package,_package.setuptools,_source.conda-forge"
+          "tags": "get,generic,conda-package,_package.setuptools,_source.conda-forge",
+          "version": "69.5.1"
         },
         {
           "names": [
@@ -219,6 +220,23 @@
           "tags": "get,generic,conda-package,_package.libstdcxx-ng,_source.conda-forge"
         }
       ]
+    },
+    "for-nvidia-mlperf-inference-v4.0": {
+      "base": [
+        "sha.32f93b1",
+        "cuda"
+      ],
+      "deps": [
+        {
+          "tags": "get,cmake",
+          "version_min": "3.25.0"
+	      }
+      ],
+      "ad": {
+        "pytorch-src-repo": {
+          "tags": "_no-recurse-submodules,_full-history"
+        }
+      }
     },
     "for-nvidia-mlperf-inference-v3.1": {
       "base": [

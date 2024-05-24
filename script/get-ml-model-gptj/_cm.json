@@ -171,6 +171,13 @@
         }
       ]
     },
+    "fp8": {
+      "env": {
+        "CM_ML_MODEL_INPUT_DATA_TYPES": "fp8",
+        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "fp8"
+      },
+      "group": "precision"
+    },
     "int4": {
       "env": {
         "CM_ML_MODEL_INPUT_DATA_TYPES": "int4",
@@ -192,6 +199,62 @@
       },
       "group": "model-provider",
       "default": true
+    },
+    "nvidia": {
+      "default_variations": {
+        "framework": "pytorch"
+      },
+      "group": "model-provider",
+      "env": {
+        "CM_TMP_ML_MODEL_PROVIDER": "nvidia"
+      }
+    },
+    "pytorch,nvidia": {
+      "default_variations": {
+        "precision": "fp8"
+      },
+      "deps": [
+        {
+          "tags": "get,git,repo,_repo.https://github.com/NVIDIA/TensorRT-LLM.git,_sha.0ab9d17a59c284d2de36889832fe9fc7c8697604",
+          "extra_cache_tags": "tensorrt-llm",
+          "env": {
+            "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_TENSORRT_LLM_CHECKOUT_PATH"
+          }
+        },
+        {
+          "tags": "get,cuda",
+          "names": [
+            "cuda"
+          ]
+        },
+        {
+          "tags": "get,nvidia,scratch,space"
+        },
+        {
+          "tags": "get,cuda-devices"
+        },
+        {
+          "tags": "get,ml-model,gpt-j,_fp32,_pytorch",
+          "env": {
+          },
+          "force_new_env_keys": [
+            "GPTJ_CHECKPOINT_PATH"
+          ]
+        },
+        {
+          "tags": "get,nvidia,inference,common-code",
+          "names": [
+            "nvidia-inference-common-code"
+          ]
+        },
+        {
+          "tags": "get,python3",
+          "names": [
+            "python",
+            "python3"
+          ]
+        }
+      ]
     },
     "intel": {
       "default_variations": {

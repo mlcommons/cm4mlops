@@ -37,6 +37,7 @@ default_env:
 
 input_mapping:
   backend: CM_MLPERF_BACKEND
+  beam_size: GPTJ_BEAM_SIZE
   category: CM_MLPERF_SUBMISSION_SYSTEM_TYPE
   clean: CM_MLPERF_CLEAN_ALL
   compliance: CM_MLPERF_LOADGEN_COMPLIANCE
@@ -251,6 +252,12 @@ variations:
     env:
       CM_MLPERF_INFERENCE_VERSION: '4.0'
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.0_default
+    group: benchmark-version
+
+  r4.1:
+    env:
+      CM_MLPERF_INFERENCE_VERSION: '4.1'
+      CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.1_default
     group: benchmark-version
 
   short:
