@@ -72,9 +72,9 @@ def print_category_structure(category_dict):
                 print(f"Failed to create symlink: {e}")
     print("  - CM Scripts:")
     for category, folders in category_dict.items():
-        category_path = os.path.join("docs", category)
-        category_path_formated = category_path.replace("/", "-")
-        category_path_formated = category_path.replace(" ", "-")
+        # category_path = os.path.join("docs", category)
+        category_path_formated = category.replace("/", "-")
+        category_path_formated = category_path_formated.replace(" ", "-")
         print(f"    - {category.replace("/", "-")}:")
         for folder in folders:
             folder_name = folder.replace("/", "-")
