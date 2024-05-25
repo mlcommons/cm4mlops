@@ -430,12 +430,12 @@
       },
       "deps": [
         {
-	  "tags": "install,numactl,from.src",
-	  "enable_if_env": {
+	        "tags": "install,numactl,from.src",
+	        "enable_if_env": {
             "CM_HOST_OS_FLAVOR": [ "rhel" ],
-	    "CM_HOST_OS_VERSION": [ "9.1", "9.2", "9.3" ]
-	  }
-	}
+	          "CM_HOST_OS_VERSION": [ "9.1", "9.2", "9.3" ]
+	        }
+	      }
       ]
     },
     "g++-12": {
@@ -454,7 +454,7 @@
         "CM_SYS_UTIL_NAME": "nlohmann_json3_dev"
       },
       "state": {
-        "nlohmann-json3-dev": {
+        "nlohmann_json3_dev": {
           "apt": "nlohmann-json3-dev",
           "dnf": "nlohmann-json-dev"
         }
