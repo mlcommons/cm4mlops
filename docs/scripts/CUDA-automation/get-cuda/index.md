@@ -40,19 +40,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,cuda,cuda-compiler,cuda-lib,toolkit,lib,nvcc,get-nvcc,get-cuda,46d133d9ef92422d`
 
-    `cm run script --tags=get,cuda,cuda-compiler,cuda-lib,toolkit,lib,nvcc,get-nvcc,get-cuda,46d133d9ef92422d[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,cuda,cuda-compiler,cuda-lib,toolkit,lib,nvcc,get-nvcc,get-cuda,46d133d9ef92422d[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get cuda cuda-compiler cuda-lib toolkit lib nvcc get-nvcc get-cuda 46d133d9ef92422d"`
 
-    `cmr "get cuda cuda-compiler cuda-lib toolkit lib nvcc get-nvcc get-cuda 46d133d9ef92422d [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get cuda cuda-compiler cuda-lib toolkit lib nvcc get-nvcc get-cuda 46d133d9ef92422d [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -80,83 +78,74 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get cuda cuda-compiler cuda-lib toolkit lib nvcc get-nvcc get-cuda 46d133d9ef92422d[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get cuda cuda-compiler cuda-lib toolkit lib nvcc get-nvcc get-cuda 46d133d9ef92422d[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_cudnn`
-      - Environment variables:
-        - *CM_CUDA_NEEDS_CUDNN*: `yes`
-      - Workflow:
-        1. ***Read "post_deps" on other CM scripts***
-           * get,nvidia,cudnn
-             * CM names: `--adr.['cudnn']...`
-             - CM script: [get-cudnn](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cudnn)
-    * `_package-manager`
-      - Environment variables:
-        - *CM_CUDA_PACKAGE_MANAGER_INSTALL*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**installation-mode**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_lib-only`
-      - Environment variables:
-        - *CM_CUDA_FULL_TOOLKIT_INSTALL*: `no`
-        - *CM_TMP_FILE_TO_CHECK_UNIX*: `libcudart.so`
-        - *CM_TMP_FILE_TO_CHECK_WINDOWS*: `libcudart.dll`
-      - Workflow:
-    * **`_toolkit`** (default)
-      - Environment variables:
-        - *CM_CUDA_FULL_TOOLKIT_INSTALL*: `yes`
-        - *CM_TMP_FILE_TO_CHECK_UNIX*: `nvcc`
-        - *CM_TMP_FILE_TO_CHECK_WINDOWS*: `nvcc.exe`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_cudnn`
+               - ENV variables:
+                   - CM_CUDA_NEEDS_CUDNN: `yes`
+        * `_package-manager`
+               - ENV variables:
+                   - CM_CUDA_PACKAGE_MANAGER_INSTALL: `yes`
+
+        </details>
 
 
-#### Default variations
+      * Group "**installation-mode**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_toolkit`
+        * `_lib-only`
+               - ENV variables:
+                   - CM_CUDA_FULL_TOOLKIT_INSTALL: `no`
+                   - CM_TMP_FILE_TO_CHECK_UNIX: `libcudart.so`
+                   - CM_TMP_FILE_TO_CHECK_WINDOWS: `libcudart.dll`
+        * **`_toolkit`** (default)
+               - ENV variables:
+                   - CM_CUDA_FULL_TOOLKIT_INSTALL: `yes`
+                   - CM_TMP_FILE_TO_CHECK_UNIX: `nvcc`
+                   - CM_TMP_FILE_TO_CHECK_WINDOWS: `nvcc.exe`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--cudnn_tar_file=value`  &rarr;  `CM_CUDNN_TAR_FILE_PATH=value`
-* `--cudnn_tar_path=value`  &rarr;  `CM_CUDNN_TAR_FILE_PATH=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "cudnn_tar_file":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_CUDA_PATH_LIB_CUDNN_EXISTS: `no`
-* CM_REQUIRE_INSTALL: `no`
+    `_toolkit`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--cudnn_tar_file=value`  &rarr;  `CM_CUDNN_TAR_FILE_PATH=value`
+    * `--cudnn_tar_path=value`  &rarr;  `CM_CUDNN_TAR_FILE_PATH=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_CUDA_PATH_LIB_CUDNN_EXISTS: `no`
+    * CM_REQUIRE_INSTALL: `no`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cuda/run.sh)
 === "Windows"
@@ -164,4 +153,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cuda/run.bat)
 ___
 #### Script output
-`cmr "get cuda cuda-compiler cuda-lib toolkit lib nvcc get-nvcc get-cuda 46d133d9ef92422d [,variations]" [--input_flags] -j`
+```bash
+cmr "get cuda cuda-compiler cuda-lib toolkit lib nvcc get-nvcc get-cuda 46d133d9ef92422d [variations]" [--input_flags] -j
+```

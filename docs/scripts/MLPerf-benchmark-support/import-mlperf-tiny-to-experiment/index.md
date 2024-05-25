@@ -31,17 +31,17 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=import,mlperf,tiny,mlperf-tiny,experiment,2experiment,to-experiment`
 
-    `cm run script --tags=import,mlperf,tiny,mlperf-tiny,experiment,2experiment,to-experiment [--input_flags]`
-
+    ```bash
+    cm run script --tags=import,mlperf,tiny,mlperf-tiny,experiment,2experiment,to-experiment [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "import mlperf tiny mlperf-tiny experiment 2experiment to-experiment"`
 
-    `cmr "import mlperf tiny mlperf-tiny experiment 2experiment to-experiment " [--input_flags]`
-
+    ```bash
+    cmr "import mlperf tiny mlperf-tiny experiment 2experiment to-experiment " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,26 +69,23 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "import mlperf tiny mlperf-tiny experiment 2experiment to-experiment" [--input_flags]`
-
+    ```bash
+    cm docker script "import mlperf tiny mlperf-tiny experiment 2experiment to-experiment" [--input_flags]
+    ```
 ___
 
+=== "Input Flag Mapping"
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
 
-* `--target_repo=value`  &rarr;  `CM_IMPORT_TINYMLPERF_TARGET_REPO=value`
+    #### Script flags mapped to environment
 
-**Above CLI flags can be used in the Python CM API as follows:**
+    * `--target_repo=value`  &rarr;  `CM_IMPORT_TINYMLPERF_TARGET_REPO=value`
 
-```python
-r=cm.access({... , "target_repo":...}
-```
 
-</details>
 
 
 ___
 #### Script output
-`cmr "import mlperf tiny mlperf-tiny experiment 2experiment to-experiment " [--input_flags] -j`
+```bash
+cmr "import mlperf tiny mlperf-tiny experiment 2experiment to-experiment " [--input_flags] -j
+```

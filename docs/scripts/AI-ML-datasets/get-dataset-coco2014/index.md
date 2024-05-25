@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,coco2014,object-detection,original`
 
-    `cm run script --tags=get,dataset,coco2014,object-detection,original[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,coco2014,object-detection,original[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset coco2014 object-detection original"`
 
-    `cmr "get dataset coco2014 object-detection original [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset coco2014 object-detection original [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,82 +67,79 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset coco2014 object-detection original[variations]" `
-
+    ```bash
+    cm docker script "get dataset coco2014 object-detection original[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**annotations**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_custom-annotations`
-      - Environment variables:
-        - *CM_DATASET_COCO2014_CUSTOM_ANNOTATIONS*: `yes`
-      - Workflow:
-    * **`_default-annotations`** (default)
-      - Environment variables:
-        - *CM_DATASET_COCO2014_CUSTOM_ANNOTATIONS*: `no`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**dataset-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_calibration`
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `yes`
-      - Workflow:
-    * **`_validation`** (default)
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `no`
-      - Workflow:
+      * Group "**annotations**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_custom-annotations`
+               - ENV variables:
+                   - CM_DATASET_COCO2014_CUSTOM_ANNOTATIONS: `yes`
+        * **`_default-annotations`** (default)
+               - ENV variables:
+                   - CM_DATASET_COCO2014_CUSTOM_ANNOTATIONS: `no`
 
-
-  * Group "**size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_50`** (default)
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `50`
-      - Workflow:
-    * `_500`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `500`
-      - Workflow:
-    * `_full`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: ``
-      - Workflow:
-    * `_size.#`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `#`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**dataset-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_50,_default-annotations,_validation`
-#### Default environment
+        * `_calibration`
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `yes`
+        * **`_validation`** (default)
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `no`
+
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_DATASET_CALIBRATION: `no`
+        * **`_50`** (default)
+               - ENV variables:
+                   - CM_DATASET_SIZE: `50`
+        * `_500`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `500`
+        * `_full`
+               - ENV variables:
+                   - CM_DATASET_SIZE: ``
+        * `_size.#`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `#`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_50,_default-annotations,_validation`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_DATASET_CALIBRATION: `no`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-coco2014/run.sh)
 === "Windows"
@@ -152,4 +147,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-coco2014/run.bat)
 ___
 #### Script output
-`cmr "get dataset coco2014 object-detection original [,variations]"  -j`
+```bash
+cmr "get dataset coco2014 object-detection original [variations]"  -j
+```

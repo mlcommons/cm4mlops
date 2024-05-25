@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=create,custom,cache,entry`
 
-    `cm run script --tags=create,custom,cache,entry [--input_flags]`
-
+    ```bash
+    cm run script --tags=create,custom,cache,entry [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "create custom cache entry"`
 
-    `cmr "create custom cache entry " [--input_flags]`
-
+    ```bash
+    cmr "create custom cache entry " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,29 +67,26 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "create custom cache entry" [--input_flags]`
-
+    ```bash
+    cm docker script "create custom cache entry" [--input_flags]
+    ```
 ___
 
+=== "Input Flag Mapping"
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
 
-* `--env_key=value`  &rarr;  `CM_CUSTOM_CACHE_ENTRY_ENV_KEY=value`
-* `--env_key2=value`  &rarr;  `CM_CUSTOM_CACHE_ENTRY_ENV_KEY2=value`
-* `--path=value`  &rarr;  `CM_CUSTOM_CACHE_ENTRY_PATH=value`
-* `--to=value`  &rarr;  `CM_CUSTOM_CACHE_ENTRY_PATH=value`
+    #### Script flags mapped to environment
 
-**Above CLI flags can be used in the Python CM API as follows:**
+    * `--env_key=value`  &rarr;  `CM_CUSTOM_CACHE_ENTRY_ENV_KEY=value`
+    * `--env_key2=value`  &rarr;  `CM_CUSTOM_CACHE_ENTRY_ENV_KEY2=value`
+    * `--path=value`  &rarr;  `CM_CUSTOM_CACHE_ENTRY_PATH=value`
+    * `--to=value`  &rarr;  `CM_CUSTOM_CACHE_ENTRY_PATH=value`
 
-```python
-r=cm.access({... , "env_key":...}
-```
 
-</details>
 
 
 ___
 #### Script output
-`cmr "create custom cache entry " [--input_flags] -j`
+```bash
+cmr "create custom cache entry " [--input_flags] -j
+```

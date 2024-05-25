@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,ml-model,model-zoo,zoo,imagenet,image-classification`
 
-    `cm run script --tags=get,ml-model,model-zoo,zoo,imagenet,image-classification[,variations] `
-
+    ```bash
+    cm run script --tags=get,ml-model,model-zoo,zoo,imagenet,image-classification[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get ml-model model-zoo zoo imagenet image-classification"`
 
-    `cmr "get ml-model model-zoo zoo imagenet image-classification [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get ml-model model-zoo zoo imagenet image-classification [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,39 +67,29 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get ml-model model-zoo zoo imagenet image-classification[variations]" `
-
+    ```bash
+    cm docker script "get ml-model model-zoo zoo imagenet image-classification[variations]" 
+    ```
 ___
 
+=== "Variations"
 
-#### Variations
 
-  * Group "**model-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_model.#`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,ml-model,zoo,deepsparse,_model-stub.#
-             * CM names: `--adr.['neural-magic-zoo-downloader']...`
-             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
-    * `_model.resnet101-pytorch-base`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,ml-model,zoo,deepsparse,_model-stub.zoo:cv/classification/resnet_v1-101/pytorch/sparseml/imagenet/base-none
-             * CM names: `--adr.['neural-magic-zoo-downloader']...`
-             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
-    * `_model.resnet50-pruned95-uniform-quant`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,ml-model,zoo,deepsparse,_model-stub.zoo:cv/classification/resnet_v1-50/pytorch/sparseml/imagenet/pruned95_uniform_quant-none
-             * CM names: `--adr.['neural-magic-zoo-downloader']...`
-             - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
+      * Group "**model-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_model.#`
+        * `_model.resnet101-pytorch-base`
+        * `_model.resnet50-pruned95-uniform-quant`
+
+        </details>
 
 
 ___
 #### Script output
-`cmr "get ml-model model-zoo zoo imagenet image-classification [,variations]"  -j`
+```bash
+cmr "get ml-model model-zoo zoo imagenet image-classification [variations]"  -j
+```

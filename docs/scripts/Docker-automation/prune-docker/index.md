@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=prune,docker`
 
-    `cm run script --tags=prune,docker `
-
+    ```bash
+    cm run script --tags=prune,docker 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "prune docker"`
 
-    `cmr "prune docker " `
-
+    ```bash
+    cmr "prune docker " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "prune docker" `
-
+    ```bash
+    cm docker script "prune docker" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/prune-docker/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/prune-docker/run.bat)
 ___
 #### Script output
-`cmr "prune docker "  -j`
+```bash
+cmr "prune docker "  -j
+```

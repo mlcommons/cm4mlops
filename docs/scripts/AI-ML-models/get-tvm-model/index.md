@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,ml-model-tvm,tvm-model`
 
-    `cm run script --tags=get,ml-model-tvm,tvm-model[,variations] `
-
+    ```bash
+    cm run script --tags=get,ml-model-tvm,tvm-model[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get ml-model-tvm tvm-model"`
 
-    `cmr "get ml-model-tvm tvm-model [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get ml-model-tvm tvm-model [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,151 +68,121 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get ml-model-tvm tvm-model[variations]" `
-
+    ```bash
+    cm docker script "get ml-model-tvm tvm-model[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_tune-model`
-      - Environment variables:
-        - *CM_TUNE_TVM_MODEL*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_xgboost
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-           * get,generic-python-lib,_pandas
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-           * get,generic-python-lib,_tornado
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-
-    </details>
+=== "Variations"
 
 
-  * Group "**batchsize**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_batch_size.#`
-      - Environment variables:
-        - *CM_ML_MODEL_MAX_BATCH_SIZE*: `#`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_tune-model`
+               - ENV variables:
+                   - CM_TUNE_TVM_MODEL: `yes`
 
-
-  * Group "**frontend**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_onnx`** (default)
-      - Environment variables:
-        - *CM_TVM_FRONTEND_FRAMEWORK*: `onnx`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_onnx
-             * CM names: `--adr.['onnx']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-    * `_pytorch`
-      - Aliases: `_torch`
-      - Environment variables:
-        - *CM_TVM_FRONTEND_FRAMEWORK*: `pytorch`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_torch
-             * CM names: `--adr.['pytorch', 'torch']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-           * get,generic-python-lib,_torchvision
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-    * `_tensorflow`
-      - Aliases: `_tf`
-      - Environment variables:
-        - *CM_TVM_FRONTEND_FRAMEWORK*: `tensorflow`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_tensorflow
-             * CM names: `--adr.['tensorflow']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-    * `_tflite`
-      - Environment variables:
-        - *CM_TVM_FRONTEND_FRAMEWORK*: `tflite`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_tflite
-             * CM names: `--adr.['tflite']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-
-    </details>
+        </details>
 
 
-  * Group "**model**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**batchsize**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_model.#`
-      - Environment variables:
-        - *CM_ML_MODEL*: `#`
-      - Workflow:
+        * `_batch_size.#`
+               - ENV variables:
+                   - CM_ML_MODEL_MAX_BATCH_SIZE: `#`
 
-    </details>
-
-
-  * Group "**precision**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_fp32`** (default)
-      - Workflow:
-    * `_int8`
-      - Workflow:
-    * `_uint8`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**runtime**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**frontend**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_graph_executor`
-      - Environment variables:
-        - *CM_TVM_USE_VM*: `no`
-      - Workflow:
-    * **`_virtual_machine`** (default)
-      - Environment variables:
-        - *CM_TVM_USE_VM*: `yes`
-      - Workflow:
+        * **`_onnx`** (default)
+               - ENV variables:
+                   - CM_TVM_FRONTEND_FRAMEWORK: `onnx`
+        * `_pytorch`
+              - Aliases: `_torch`
+               - ENV variables:
+                   - CM_TVM_FRONTEND_FRAMEWORK: `pytorch`
+        * `_tensorflow`
+              - Aliases: `_tf`
+               - ENV variables:
+                   - CM_TVM_FRONTEND_FRAMEWORK: `tensorflow`
+        * `_tflite`
+               - ENV variables:
+                   - CM_TVM_FRONTEND_FRAMEWORK: `tflite`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**model**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_fp32,_onnx,_virtual_machine`
-#### Default environment
+        * `_model.#`
+               - ENV variables:
+                   - CM_ML_MODEL: `#`
+
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**precision**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_ML_MODEL_MAX_BATCH_SIZE: `1`
-* CM_TUNE_TVM_MODEL: `no`
-* CM_TVM_USE_VM: `yes`
-* CM_TVM_FRONTEND_FRAMEWORK: `onnx`
+        * **`_fp32`** (default)
+        * `_int8`
+        * `_uint8`
+
+        </details>
+
+
+      * Group "**runtime**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_graph_executor`
+               - ENV variables:
+                   - CM_TVM_USE_VM: `no`
+        * **`_virtual_machine`** (default)
+               - ENV variables:
+                   - CM_TVM_USE_VM: `yes`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_fp32,_onnx,_virtual_machine`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_ML_MODEL_MAX_BATCH_SIZE: `1`
+    * CM_TUNE_TVM_MODEL: `no`
+    * CM_TVM_USE_VM: `yes`
+    * CM_TVM_FRONTEND_FRAMEWORK: `onnx`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-tvm-model/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get ml-model-tvm tvm-model [,variations]"  -j`
+```bash
+cmr "get ml-model-tvm tvm-model [variations]"  -j
+```

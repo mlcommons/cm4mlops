@@ -1,12 +1,12 @@
-# Build onnxruntime from sources
-Automatically generated README for this automation recipe: **install-onnxruntime-from-src**
+# Build Intel Neural Speed from sources
+Automatically generated README for this automation recipe: **install-intel-neural-speed-from-src**
 
-Category: **[Compiler automation](..)**
+Category: **[Detection or installation of tools and artifacts](..)**
 
 License: **Apache 2.0**
 
 
-* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/install-onnxruntime-from-src/_cm.json)*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/install-intel-neural-speed-from-src/_cm.json)*
 * Output cached? *True*
 
 ---
@@ -23,7 +23,7 @@ License: **Apache 2.0**
 
 #### Print CM help from the command line
 
-````cmr "install get src from.src onnxruntime src-onnxruntime" --help````
+````cmr "install src from.src neural-speed intel-neural-speed" --help````
 
 #### Run this script
 
@@ -31,14 +31,14 @@ License: **Apache 2.0**
     ##### Run this script via CLI
 
     ```bash
-    cm run script --tags=install,get,src,from.src,onnxruntime,src-onnxruntime[,variations] 
+    cm run script --tags=install,src,from.src,neural-speed,intel-neural-speed[,variations] 
     ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
 
     ```bash
-    cmr "install get src from.src onnxruntime src-onnxruntime [variations]" 
+    cmr "install src from.src neural-speed intel-neural-speed [variations]" 
     ```
 
 === "Python"
@@ -51,7 +51,7 @@ License: **Apache 2.0**
 
     r = cmind.access({'action':'run'
                   'automation':'script',
-                  'tags':'install,get,src,from.src,onnxruntime,src-onnxruntime'
+                  'tags':'install,src,from.src,neural-speed,intel-neural-speed'
                   'out':'con',
                   ...
                   (other input keys for this script)
@@ -68,7 +68,7 @@ License: **Apache 2.0**
     ##### Run this script via Docker (beta)
 
     ```bash
-    cm docker script "install get src from.src onnxruntime src-onnxruntime[variations]" 
+    cm docker script "install src from.src neural-speed intel-neural-speed[variations]" 
     ```
 ___
 
@@ -84,9 +84,7 @@ ___
         * `_branch.#`
                - ENV variables:
                    - CM_GIT_CHECKOUT: `#`
-        * `_cuda`
-               - ENV variables:
-                   - CM_ONNXRUNTIME_GPU: `yes`
+        * `_for-intel-mlperf-inference-v4.0-gptj`
         * `_sha.#`
                - ENV variables:
                    - CM_GIT_CHECKOUT_SHA: `#`
@@ -101,25 +99,28 @@ ___
         <details>
         <summary>Click here to expand this section.</summary>
 
-        * **`_repo.https://github.com/Microsoft/onnxruntime`** (default)
+        * `_repo.#`
                - ENV variables:
-                   - CM_GIT_URL: `https://github.com/Microsoft/onnxruntime`
+                   - CM_GIT_URL: `#`
+        * **`_repo.https://github.com/intel/neural-speed`** (default)
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/intel/neural-speed`
 
         </details>
 
 
     ##### Default variations
 
-    `_repo.https://github.com/Microsoft/onnxruntime`
+    `_repo.https://github.com/intel/neural-speed`
 
 #### Native script being run
 === "Linux/macOS"
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-onnxruntime-from-src/run.sh)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-intel-neural-speed-from-src/run.sh)
 === "Windows"
 
     No run file exists for Windows
 ___
 #### Script output
 ```bash
-cmr "install get src from.src onnxruntime src-onnxruntime [variations]"  -j
+cmr "install src from.src neural-speed intel-neural-speed [variations]"  -j
 ```

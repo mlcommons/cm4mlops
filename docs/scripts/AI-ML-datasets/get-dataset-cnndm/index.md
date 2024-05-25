@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,gpt-j,cnndm,cnn-dailymail,original`
 
-    `cm run script --tags=get,dataset,gpt-j,cnndm,cnn-dailymail,original[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,gpt-j,cnndm,cnn-dailymail,original[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset gpt-j cnndm cnn-dailymail original"`
 
-    `cmr "get dataset gpt-j cnndm cnn-dailymail original [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset gpt-j cnndm cnn-dailymail original [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,62 +67,62 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset gpt-j cnndm cnn-dailymail original[variations]" `
-
+    ```bash
+    cm docker script "get dataset gpt-j cnndm cnn-dailymail original[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_intel`
-      - Workflow:
-    * `_intel,validation`
-      - Environment variables:
-        - *CM_CNNDM_INTEL_VARIATION*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**dataset-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_calibration`
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `yes`
-      - Workflow:
-    * **`_validation`** (default)
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `no`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_intel`
+
+        </details>
 
 
-#### Default variations
+      * Group "**dataset-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_validation`
-#### Default environment
+        * `_calibration`
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `yes`
+        * **`_validation`** (default)
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `no`
+
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_DATASET_CALIBRATION: `no`
+    `_validation`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_DATASET_CALIBRATION: `no`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run-intel.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-cnndm/run-intel.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-cnndm/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get dataset gpt-j cnndm cnn-dailymail original [,variations]"  -j`
+```bash
+cmr "get dataset gpt-j cnndm cnn-dailymail original [variations]"  -j
+```

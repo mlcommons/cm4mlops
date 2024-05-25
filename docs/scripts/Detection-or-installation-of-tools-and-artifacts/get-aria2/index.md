@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,aria2,get-aria2`
 
-    `cm run script --tags=get,aria2,get-aria2 [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,aria2,get-aria2 [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get aria2 get-aria2"`
 
-    `cmr "get aria2 get-aria2 " [--input_flags]`
-
+    ```bash
+    cmr "get aria2 get-aria2 " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,28 +68,23 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get aria2 get-aria2" [--input_flags]`
-
+    ```bash
+    cm docker script "get aria2 get-aria2" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--install=value`  &rarr;  `CM_FORCE_INSTALL=value`
-* `--src=value`  &rarr;  `CM_ARIA2_BUILD_FROM_SRC=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "install":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--install=value`  &rarr;  `CM_FORCE_INSTALL=value`
+    * `--src=value`  &rarr;  `CM_ARIA2_BUILD_FROM_SRC=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-aria2/run.sh)
 === "Windows"
@@ -97,4 +92,6 @@ r=cm.access({... , "install":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-aria2/run.bat)
 ___
 #### Script output
-`cmr "get aria2 get-aria2 " [--input_flags] -j`
+```bash
+cmr "get aria2 get-aria2 " [--input_flags] -j
+```

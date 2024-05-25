@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,install,generic,generic-conda-lib,conda-lib,conda-package,generic-conda-package`
 
-    `cm run script --tags=get,install,generic,generic-conda-lib,conda-lib,conda-package,generic-conda-package[,variations] `
-
+    ```bash
+    cm run script --tags=get,install,generic,generic-conda-lib,conda-lib,conda-package,generic-conda-package[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get install generic generic-conda-lib conda-lib conda-package generic-conda-package"`
 
-    `cmr "get install generic generic-conda-lib conda-lib conda-package generic-conda-package [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get install generic generic-conda-lib conda-lib conda-package generic-conda-package [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,45 +67,47 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get install generic generic-conda-lib conda-lib conda-package generic-conda-package[variations]" `
-
+    ```bash
+    cm docker script "get install generic generic-conda-lib conda-lib conda-package generic-conda-package[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_name.#`
-      - Workflow:
-    * `_package.#`
-      - Environment variables:
-        - *CM_CONDA_PKG_NAME*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**package-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_source.#`
-      - Environment variables:
-        - *CM_CONDA_PKG_SRC*: `#`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_name.#`
+        * `_package.#`
+               - ENV variables:
+                   - CM_CONDA_PKG_NAME: `#`
+
+        </details>
 
 
-##### Native script being run
+      * Group "**package-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_source.#`
+               - ENV variables:
+                   - CM_CONDA_PKG_SRC: `#`
+
+        </details>
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-generic-conda-package/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get install generic generic-conda-lib conda-lib conda-package generic-conda-package [,variations]"  -j`
+```bash
+cmr "get install generic generic-conda-lib conda-lib conda-package generic-conda-package [variations]"  -j
+```

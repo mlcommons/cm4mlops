@@ -30,29 +30,18 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,ipol,journal,src,ipol-src`
 
-    `cm run script --tags=get,ipol,journal,src,ipol-src [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,ipol,journal,src,ipol-src [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get ipol journal src ipol-src"`
 
-    `cmr "get ipol journal src ipol-src " [--input_flags]`
+    ```bash
+    cmr "get ipol journal src ipol-src " [--input_flags]
+    ```
 
-
-
-#### Input Flags
-
-* --**number**=IPOL publication number
-* --**year**=IPOL publication year
-
-=== "Python"
-
-    ```python
-r=cm.access({... , "number":...}
-```
 === "Python"
     ##### Run this script from Python
 
@@ -79,27 +68,31 @@ r=cm.access({... , "number":...}
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get ipol journal src ipol-src" [--input_flags]`
-
+    ```bash
+    cm docker script "get ipol journal src ipol-src" [--input_flags]
+    ```
 ___
 
+=== "Input Flags"
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
 
-* `--number=value`  &rarr;  `CM_IPOL_NUMBER=value`
-* `--year=value`  &rarr;  `CM_IPOL_YEAR=value`
+    #### Input Flags
 
-**Above CLI flags can be used in the Python CM API as follows:**
+    * --**number:** IPOL publication number
+    * --**year:** IPOL publication year
+=== "Input Flag Mapping"
 
-```python
-r=cm.access({... , "number":...}
-```
 
-</details>
+    #### Script flags mapped to environment
+
+    * `--number=value`  &rarr;  `CM_IPOL_NUMBER=value`
+    * `--year=value`  &rarr;  `CM_IPOL_YEAR=value`
+
+
 
 
 ___
 #### Script output
-`cmr "get ipol journal src ipol-src " [--input_flags] -j`
+```bash
+cmr "get ipol journal src ipol-src " [--input_flags] -j
+```

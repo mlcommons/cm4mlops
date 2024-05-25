@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=process,ae,users`
 
-    `cm run script --tags=process,ae,users [--input_flags]`
-
+    ```bash
+    cm run script --tags=process,ae,users [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "process ae users"`
 
-    `cmr "process ae users " [--input_flags]`
-
+    ```bash
+    cmr "process ae users " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,27 +67,22 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "process ae users" [--input_flags]`
-
+    ```bash
+    cm docker script "process ae users" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--file=value`  &rarr;  `CM_PROCESS_AE_USERS_INPUT_FILE=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "file":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--file=value`  &rarr;  `CM_PROCESS_AE_USERS_INPUT_FILE=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/process-ae-users/run.sh)
 === "Windows"
@@ -95,4 +90,6 @@ r=cm.access({... , "file":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/process-ae-users/run.bat)
 ___
 #### Script output
-`cmr "process ae users " [--input_flags] -j`
+```bash
+cmr "process ae users " [--input_flags] -j
+```

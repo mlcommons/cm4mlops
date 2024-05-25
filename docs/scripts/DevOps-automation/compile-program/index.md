@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=compile,program,c-program,cpp-program,compile-program,compile-c-program,compile-cpp-program`
 
-    `cm run script --tags=compile,program,c-program,cpp-program,compile-program,compile-c-program,compile-cpp-program `
-
+    ```bash
+    cm run script --tags=compile,program,c-program,cpp-program,compile-program,compile-c-program,compile-cpp-program 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "compile program c-program cpp-program compile-program compile-c-program compile-cpp-program"`
 
-    `cmr "compile program c-program cpp-program compile-program compile-c-program compile-cpp-program " `
-
+    ```bash
+    cmr "compile program c-program cpp-program compile-program compile-c-program compile-cpp-program " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,20 +68,23 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "compile program c-program cpp-program compile-program compile-c-program compile-cpp-program" `
-
+    ```bash
+    cm docker script "compile program c-program cpp-program compile-program compile-c-program compile-cpp-program" 
+    ```
 ___
 
-#### Default environment
+=== "Default environment"
+
+    #### Default environment
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
-* SKIP_RECOMPILE: `no`
+    * SKIP_RECOMPILE: `no`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/compile-program/run.sh)
 === "Windows"
@@ -89,4 +92,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/compile-program/run.bat)
 ___
 #### Script output
-`cmr "compile program c-program cpp-program compile-program compile-c-program compile-cpp-program "  -j`
+```bash
+cmr "compile program c-program cpp-program compile-program compile-c-program compile-cpp-program "  -j
+```

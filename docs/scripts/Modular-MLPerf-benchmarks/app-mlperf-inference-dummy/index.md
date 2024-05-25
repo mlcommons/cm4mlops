@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy`
 
-    `cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy"`
 
-    `cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,229 +67,169 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "reproduce mlcommons mlperf inference harness dummy-harness dummy[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "reproduce mlcommons mlperf inference harness dummy-harness dummy[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *Internal group (variations should not be selected manually)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_bert_`
-      - Workflow:
-    * `_gptj_`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,ml-model,gptj
-             * CM names: `--adr.['gptj-model']...`
-             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
-           * get,dataset,cnndm,_validation
-             - CM script: [get-dataset-cnndm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-cnndm)
-    * `_llama2-70b_`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_pytorch,cpu`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_torch
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-    * `_pytorch,cuda`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_torch_cuda
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-    * `_singlestream,resnet50`
-      - Workflow:
-    * `_singlestream,retinanet`
-      - Workflow:
+      * Group "**backend**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * **`_pytorch`** (default)
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `pytorch`
+
+        </details>
 
 
-  * Group "**backend**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**batch-size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_pytorch`** (default)
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `pytorch`
-      - Workflow:
+        * `_bs.#`
 
-    </details>
+        </details>
 
 
-  * Group "**batch-size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**device**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_bs.#`
-      - Workflow:
+        * **`_cpu`** (default)
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `cpu`
+        * `_cuda`
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `gpu`
+                   - CM_MLPERF_DEVICE_LIB_NAMESPEC: `cudart`
 
-    </details>
-
-
-  * Group "**device**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_cpu`** (default)
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `cpu`
-      - Workflow:
-    * `_cuda`
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `gpu`
-        - *CM_MLPERF_DEVICE_LIB_NAMESPEC*: `cudart`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**loadgen-scenario**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**loadgen-scenario**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_multistream`
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `MultiStream`
-      - Workflow:
-    * `_offline`
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `Offline`
-      - Workflow:
-    * `_server`
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `Server`
-      - Workflow:
-    * `_singlestream`
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `SingleStream`
-      - Workflow:
+        * `_multistream`
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `MultiStream`
+        * `_offline`
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `Offline`
+        * `_server`
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `Server`
+        * `_singlestream`
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `SingleStream`
 
-    </details>
+        </details>
 
 
-  * Group "**model**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**model**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_bert-99`
-      - Environment variables:
-        - *CM_MODEL*: `bert-99`
-        - *CM_SQUAD_ACCURACY_DTYPE*: `float32`
-      - Workflow:
-    * `_bert-99.9`
-      - Environment variables:
-        - *CM_MODEL*: `bert-99.9`
-      - Workflow:
-    * `_gptj-99`
-      - Environment variables:
-        - *CM_MODEL*: `gptj-99`
-        - *CM_SQUAD_ACCURACY_DTYPE*: `float32`
-      - Workflow:
-    * `_gptj-99.9`
-      - Environment variables:
-        - *CM_MODEL*: `gptj-99.9`
-      - Workflow:
-    * `_llama2-70b-99`
-      - Environment variables:
-        - *CM_MODEL*: `llama2-70b-99`
-      - Workflow:
-    * `_llama2-70b-99.9`
-      - Environment variables:
-        - *CM_MODEL*: `llama2-70b-99.9`
-      - Workflow:
-    * **`_resnet50`** (default)
-      - Environment variables:
-        - *CM_MODEL*: `resnet50`
-      - Workflow:
-    * `_retinanet`
-      - Environment variables:
-        - *CM_MODEL*: `retinanet`
-      - Workflow:
+        * `_bert-99`
+               - ENV variables:
+                   - CM_MODEL: `bert-99`
+                   - CM_SQUAD_ACCURACY_DTYPE: `float32`
+        * `_bert-99.9`
+               - ENV variables:
+                   - CM_MODEL: `bert-99.9`
+        * `_gptj-99`
+               - ENV variables:
+                   - CM_MODEL: `gptj-99`
+                   - CM_SQUAD_ACCURACY_DTYPE: `float32`
+        * `_gptj-99.9`
+               - ENV variables:
+                   - CM_MODEL: `gptj-99.9`
+        * `_llama2-70b-99`
+               - ENV variables:
+                   - CM_MODEL: `llama2-70b-99`
+        * `_llama2-70b-99.9`
+               - ENV variables:
+                   - CM_MODEL: `llama2-70b-99.9`
+        * **`_resnet50`** (default)
+               - ENV variables:
+                   - CM_MODEL: `resnet50`
+        * `_retinanet`
+               - ENV variables:
+                   - CM_MODEL: `retinanet`
 
-    </details>
+        </details>
 
 
-  * Group "**precision**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**precision**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_fp16`
-      - Workflow:
-    * `_fp32`
-      - Workflow:
-    * `_uint8`
-      - Workflow:
+        * `_fp16`
+        * `_fp32`
+        * `_uint8`
 
-    </details>
+        </details>
 
 
-#### Default variations
+    ##### Default variations
 
-`_cpu,_pytorch,_resnet50`
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--count=value`  &rarr;  `CM_MLPERF_LOADGEN_QUERY_COUNT=value`
-* `--max_batchsize=value`  &rarr;  `CM_MLPERF_LOADGEN_MAX_BATCHSIZE=value`
-* `--mlperf_conf=value`  &rarr;  `CM_MLPERF_CONF=value`
-* `--mode=value`  &rarr;  `CM_MLPERF_LOADGEN_MODE=value`
-* `--multistream_target_latency=value`  &rarr;  `CM_MLPERF_LOADGEN_MULTISTREAM_TARGET_LATENCY=value`
-* `--offline_target_qps=value`  &rarr;  `CM_MLPERF_LOADGEN_OFFLINE_TARGET_QPS=value`
-* `--output_dir=value`  &rarr;  `CM_MLPERF_OUTPUT_DIR=value`
-* `--performance_sample_count=value`  &rarr;  `CM_MLPERF_LOADGEN_PERFORMANCE_SAMPLE_COUNT=value`
-* `--rerun=value`  &rarr;  `CM_RERUN=value`
-* `--results_repo=value`  &rarr;  `CM_MLPERF_INFERENCE_RESULTS_REPO=value`
-* `--scenario=value`  &rarr;  `CM_MLPERF_LOADGEN_SCENARIO=value`
-* `--server_target_qps=value`  &rarr;  `CM_MLPERF_LOADGEN_SERVER_TARGET_QPS=value`
-* `--singlestream_target_latency=value`  &rarr;  `CM_MLPERF_LOADGEN_SINGLESTREAM_TARGET_LATENCY=value`
-* `--skip_preprocess=value`  &rarr;  `CM_SKIP_PREPROCESS_DATASET=value`
-* `--skip_preprocessing=value`  &rarr;  `CM_SKIP_PREPROCESS_DATASET=value`
-* `--target_latency=value`  &rarr;  `CM_MLPERF_LOADGEN_TARGET_LATENCY=value`
-* `--target_qps=value`  &rarr;  `CM_MLPERF_LOADGEN_TARGET_QPS=value`
-* `--user_conf=value`  &rarr;  `CM_MLPERF_USER_CONF=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "count":...}
-```
-
-</details>
-
-#### Default environment
+    `_cpu,_pytorch,_resnet50`
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_MLPERF_LOADGEN_SCENARIO: `Offline`
-* CM_MLPERF_LOADGEN_MODE: `performance`
-* CM_SKIP_PREPROCESS_DATASET: `no`
-* CM_SKIP_MODEL_DOWNLOAD: `no`
-* CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `dummy_harness`
-* CM_MLPERF_SKIP_RUN: `no`
+    * `--count=value`  &rarr;  `CM_MLPERF_LOADGEN_QUERY_COUNT=value`
+    * `--max_batchsize=value`  &rarr;  `CM_MLPERF_LOADGEN_MAX_BATCHSIZE=value`
+    * `--mlperf_conf=value`  &rarr;  `CM_MLPERF_CONF=value`
+    * `--mode=value`  &rarr;  `CM_MLPERF_LOADGEN_MODE=value`
+    * `--multistream_target_latency=value`  &rarr;  `CM_MLPERF_LOADGEN_MULTISTREAM_TARGET_LATENCY=value`
+    * `--offline_target_qps=value`  &rarr;  `CM_MLPERF_LOADGEN_OFFLINE_TARGET_QPS=value`
+    * `--output_dir=value`  &rarr;  `CM_MLPERF_OUTPUT_DIR=value`
+    * `--performance_sample_count=value`  &rarr;  `CM_MLPERF_LOADGEN_PERFORMANCE_SAMPLE_COUNT=value`
+    * `--rerun=value`  &rarr;  `CM_RERUN=value`
+    * `--results_repo=value`  &rarr;  `CM_MLPERF_INFERENCE_RESULTS_REPO=value`
+    * `--scenario=value`  &rarr;  `CM_MLPERF_LOADGEN_SCENARIO=value`
+    * `--server_target_qps=value`  &rarr;  `CM_MLPERF_LOADGEN_SERVER_TARGET_QPS=value`
+    * `--singlestream_target_latency=value`  &rarr;  `CM_MLPERF_LOADGEN_SINGLESTREAM_TARGET_LATENCY=value`
+    * `--skip_preprocess=value`  &rarr;  `CM_SKIP_PREPROCESS_DATASET=value`
+    * `--skip_preprocessing=value`  &rarr;  `CM_SKIP_PREPROCESS_DATASET=value`
+    * `--target_latency=value`  &rarr;  `CM_MLPERF_LOADGEN_TARGET_LATENCY=value`
+    * `--target_qps=value`  &rarr;  `CM_MLPERF_LOADGEN_TARGET_QPS=value`
+    * `--user_conf=value`  &rarr;  `CM_MLPERF_USER_CONF=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_MLPERF_LOADGEN_SCENARIO: `Offline`
+    * CM_MLPERF_LOADGEN_MODE: `performance`
+    * CM_SKIP_PREPROCESS_DATASET: `no`
+    * CM_SKIP_MODEL_DOWNLOAD: `no`
+    * CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `dummy_harness`
+    * CM_MLPERF_SKIP_RUN: `no`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-dummy/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy [,variations]" [--input_flags] -j`
+```bash
+cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy [variations]" [--input_flags] -j
+```

@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,tool,go,get-go`
 
-    `cm run script --tags=get,tool,go,get-go `
-
+    ```bash
+    cm run script --tags=get,tool,go,get-go 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get tool go get-go"`
 
-    `cmr "get tool go get-go " `
-
+    ```bash
+    cmr "get tool go get-go " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,17 +68,20 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get tool go get-go" `
-
+    ```bash
+    cm docker script "get tool go get-go" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-go/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get tool go get-go "  -j`
+```bash
+cmr "get tool go get-go "  -j
+```

@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,rust-compiler`
 
-    `cm run script --tags=get,rust-compiler `
-
+    ```bash
+    cm run script --tags=get,rust-compiler 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get rust-compiler"`
 
-    `cmr "get rust-compiler " `
-
+    ```bash
+    cmr "get rust-compiler " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,17 +67,20 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get rust-compiler" `
-
+    ```bash
+    cm docker script "get rust-compiler" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-compiler-rust/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get rust-compiler "  -j`
+```bash
+cmr "get rust-compiler "  -j
+```

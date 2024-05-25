@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,rocm,get-rocm`
 
-    `cm run script --tags=get,rocm,get-rocm `
-
+    ```bash
+    cm run script --tags=get,rocm,get-rocm 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get rocm get-rocm"`
 
-    `cmr "get rocm get-rocm " `
-
+    ```bash
+    cmr "get rocm get-rocm " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,17 +67,20 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get rocm get-rocm" `
-
+    ```bash
+    cm docker script "get rocm get-rocm" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-rocm/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get rocm get-rocm "  -j`
+```bash
+cmr "get rocm get-rocm "  -j
+```

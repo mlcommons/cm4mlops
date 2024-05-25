@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,install,tensorflow,lib,source,from-source,from-src,src,from.src`
 
-    `cm run script --tags=get,install,tensorflow,lib,source,from-source,from-src,src,from.src[,variations] `
-
+    ```bash
+    cm run script --tags=get,install,tensorflow,lib,source,from-source,from-src,src,from.src[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get install tensorflow lib source from-source from-src src from.src"`
 
-    `cmr "get install tensorflow lib source from-source from-src src from.src [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get install tensorflow lib source from-source from-src src from.src [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,32 +67,36 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get install tensorflow lib source from-source from-src src from.src[variations]" `
-
+    ```bash
+    cm docker script "get install tensorflow lib source from-source from-src src from.src[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_tflite`
-      - Environment variables:
-        - *CM_TFLITE*: `on`
-      - Workflow:
-
-    </details>
-
-#### Default environment
+=== "Variations"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Variations
 
-* CM_GIT_URL: `https://github.com/tensorflow/tensorflow`
-* CM_GIT_DEPTH: `1`
-* CM_TFLITE: `off`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_tflite`
+               - ENV variables:
+                   - CM_TFLITE: `on`
+
+        </details>
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_URL: `https://github.com/tensorflow/tensorflow`
+    * CM_GIT_DEPTH: `1`
+    * CM_TFLITE: `off`
 
 
 #### Versions
@@ -120,12 +122,14 @@ Default version: `master`
 * `v2.8.0`
 * `v2.9.0`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-tensorflow-from-src/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get install tensorflow lib source from-source from-src src from.src [,variations]"  -j`
+```bash
+cmr "get install tensorflow lib source from-source from-src src from.src [variations]"  -j
+```

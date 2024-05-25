@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,rclone`
 
-    `cm run script --tags=get,rclone[,variations] `
-
+    ```bash
+    cm run script --tags=get,rclone[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get rclone"`
 
-    `cmr "get rclone [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get rclone [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,33 +67,34 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get rclone[variations]" `
-
+    ```bash
+    cm docker script "get rclone[variations]" 
+    ```
 ___
 
+=== "Variations"
 
-#### Variations
 
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_gdrive`
-      - Environment variables:
-        - *CM_RCLONE_GDRIVE*: `yes`
-      - Workflow:
-    * `_system`
-      - Environment variables:
-        - *CM_RCLONE_SYSTEM*: `yes`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_gdrive`
+               - ENV variables:
+                   - CM_RCLONE_GDRIVE: `yes`
+        * `_system`
+               - ENV variables:
+                   - CM_RCLONE_SYSTEM: `yes`
+
+        </details>
 
 #### Versions
 Default version: `1.65.2`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-rclone/run.sh)
 === "Windows"
@@ -103,4 +102,6 @@ Default version: `1.65.2`
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-rclone/run.bat)
 ___
 #### Script output
-`cmr "get rclone [,variations]"  -j`
+```bash
+cmr "get rclone [variations]"  -j
+```

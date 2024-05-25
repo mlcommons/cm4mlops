@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=prepare,mlperf,training,data,input,bert`
 
-    `cm run script --tags=prepare,mlperf,training,data,input,bert[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=prepare,mlperf,training,data,input,bert[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "prepare mlperf training data input bert"`
 
-    `cmr "prepare mlperf training data input bert [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "prepare mlperf training data input bert [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,71 +67,54 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "prepare mlperf training data input bert[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "prepare mlperf training data input bert[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**implementation**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_nvidia`** (default)
-      - Environment variables:
-        - *CM_TMP_VARIATION*: `nvidia`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,git,repo,_repo.https://github.com/wchen61/training_results_v2.1,_branch.fix_bert_prepare_data
-             - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
-    * `_reference`
-      - Environment variables:
-        - *CM_TMP_VARIATION*: `reference`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,mlperf,training,src
-             * CM names: `--adr.['mlperf-training-src']...`
-             - CM script: [get-mlperf-training-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-training-src)
-           * get,python3
-             * CM names: `--adr.['python3']...`
-             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-           * get,generic-python-lib,_tensorflow
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-           * get,generic-python-lib,_protobuf
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_nvidia`
+      * Group "**implementation**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        * **`_nvidia`** (default)
+               - ENV variables:
+                   - CM_TMP_VARIATION: `nvidia`
+        * `_reference`
+               - ENV variables:
+                   - CM_TMP_VARIATION: `reference`
 
-* `--clean=value`  &rarr;  `CM_MLPERF_TRAINING_CLEAN_TFRECORDS=value`
-* `--data_dir=value`  &rarr;  `CM_DATA_DIR=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "clean":...}
-```
-
-</details>
+        </details>
 
 
-##### Native script being run
+    ##### Default variations
+
+    `_nvidia`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--clean=value`  &rarr;  `CM_MLPERF_TRAINING_CLEAN_TFRECORDS=value`
+    * `--data_dir=value`  &rarr;  `CM_DATA_DIR=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run-nvidia.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/prepare-training-data-bert/run-nvidia.sh)
      * [run-reference.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/prepare-training-data-bert/run-reference.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/prepare-training-data-bert/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "prepare mlperf training data input bert [,variations]" [--input_flags] -j`
+```bash
+cmr "prepare mlperf training data input bert [variations]" [--input_flags] -j
+```

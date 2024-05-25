@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,google,saxml`
 
-    `cm run script --tags=get,google,saxml `
-
+    ```bash
+    cm run script --tags=get,google,saxml 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get google saxml"`
 
-    `cmr "get google saxml " `
-
+    ```bash
+    cmr "get google saxml " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,15 +67,16 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get google saxml" `
-
+    ```bash
+    cm docker script "get google saxml" 
+    ```
 ___
 
 #### Versions
 Default version: `master`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-google-saxml/run.sh)
 === "Windows"
@@ -83,4 +84,6 @@ Default version: `master`
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-google-saxml/run.bat)
 ___
 #### Script output
-`cmr "get google saxml "  -j`
+```bash
+cmr "get google saxml "  -j
+```

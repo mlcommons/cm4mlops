@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission`
 
-    `cm run script --tags=generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission [--input_flags]`
-
+    ```bash
+    cm run script --tags=generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission"`
 
-    `cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission " [--input_flags]`
-
+    ```bash
+    cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,56 +68,55 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission" [--input_flags]`
-
+    ```bash
+    cm docker script "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--analyzer_settings_file=value`  &rarr;  `CM_MLPERF_POWER_ANALYZER_SETTINGS_FILE_PATH=value`
-* `--category=value`  &rarr;  `CM_MLPERF_SUBMISSION_CATEGORY=value`
-* `--clean=value`  &rarr;  `CM_MLPERF_CLEAN_SUBMISSION_DIR=value`
-* `--dashboard=value`  &rarr;  `CM_MLPERF_DASHBOARD=value`
-* `--dashboard_wb_project=value`  &rarr;  `CM_MLPERF_DASHBOARD_WANDB_PROJECT=value`
-* `--device=value`  &rarr;  `CM_MLPERF_DEVICE=value`
-* `--division=value`  &rarr;  `CM_MLPERF_SUBMISSION_DIVISION=value`
-* `--duplicate=value`  &rarr;  `CM_MLPERF_DUPLICATE_SCENARIO_RESULTS=value`
-* `--hw_name=value`  &rarr;  `CM_HW_NAME=value`
-* `--hw_notes_extra=value`  &rarr;  `CM_MLPERF_SUT_HW_NOTES_EXTRA=value`
-* `--infer_scenario_results=value`  &rarr;  `CM_MLPERF_DUPLICATE_SCENARIO_RESULTS=value`
-* `--power_settings_file=value`  &rarr;  `CM_MLPERF_POWER_SETTINGS_FILE_PATH=value`
-* `--preprocess=value`  &rarr;  `CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR=value`
-* `--preprocess_submission=value`  &rarr;  `CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR=value`
-* `--results_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_RESULTS_DIR_=value`
-* `--run_checker=value`  &rarr;  `CM_RUN_SUBMISSION_CHECKER=value`
-* `--run_style=value`  &rarr;  `CM_MLPERF_RUN_STYLE=value`
-* `--skip_truncation=value`  &rarr;  `CM_SKIP_TRUNCATE_ACCURACY=value`
-* `--submission_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_SUBMISSION_DIR=value`
-* `--submitter=value`  &rarr;  `CM_MLPERF_SUBMITTER=value`
-* `--sw_notes_extra=value`  &rarr;  `CM_MLPERF_SUT_SW_NOTES_EXTRA=value`
-* `--tar=value`  &rarr;  `CM_TAR_SUBMISSION_DIR=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "analyzer_settings_file":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_RUN_MLPERF_ACCURACY: `on`
-* CM_MLPERF_RUN_STYLE: `valid`
+    * `--analyzer_settings_file=value`  &rarr;  `CM_MLPERF_POWER_ANALYZER_SETTINGS_FILE_PATH=value`
+    * `--category=value`  &rarr;  `CM_MLPERF_SUBMISSION_CATEGORY=value`
+    * `--clean=value`  &rarr;  `CM_MLPERF_CLEAN_SUBMISSION_DIR=value`
+    * `--dashboard=value`  &rarr;  `CM_MLPERF_DASHBOARD=value`
+    * `--dashboard_wb_project=value`  &rarr;  `CM_MLPERF_DASHBOARD_WANDB_PROJECT=value`
+    * `--device=value`  &rarr;  `CM_MLPERF_DEVICE=value`
+    * `--division=value`  &rarr;  `CM_MLPERF_SUBMISSION_DIVISION=value`
+    * `--duplicate=value`  &rarr;  `CM_MLPERF_DUPLICATE_SCENARIO_RESULTS=value`
+    * `--hw_name=value`  &rarr;  `CM_HW_NAME=value`
+    * `--hw_notes_extra=value`  &rarr;  `CM_MLPERF_SUT_HW_NOTES_EXTRA=value`
+    * `--infer_scenario_results=value`  &rarr;  `CM_MLPERF_DUPLICATE_SCENARIO_RESULTS=value`
+    * `--power_settings_file=value`  &rarr;  `CM_MLPERF_POWER_SETTINGS_FILE_PATH=value`
+    * `--preprocess=value`  &rarr;  `CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR=value`
+    * `--preprocess_submission=value`  &rarr;  `CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR=value`
+    * `--results_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_RESULTS_DIR_=value`
+    * `--run_checker=value`  &rarr;  `CM_RUN_SUBMISSION_CHECKER=value`
+    * `--run_style=value`  &rarr;  `CM_MLPERF_RUN_STYLE=value`
+    * `--skip_truncation=value`  &rarr;  `CM_SKIP_TRUNCATE_ACCURACY=value`
+    * `--submission_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_SUBMISSION_DIR=value`
+    * `--submitter=value`  &rarr;  `CM_MLPERF_SUBMITTER=value`
+    * `--sw_notes_extra=value`  &rarr;  `CM_MLPERF_SUT_SW_NOTES_EXTRA=value`
+    * `--tar=value`  &rarr;  `CM_TAR_SUBMISSION_DIR=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_RUN_MLPERF_ACCURACY: `on`
+    * CM_MLPERF_RUN_STYLE: `valid`
 
 
 
 ___
 #### Script output
-`cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission " [--input_flags] -j`
+```bash
+cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission " [--input_flags] -j
+```

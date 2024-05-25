@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,lib-dnnl,lib,dnnl`
 
-    `cm run script --tags=get,lib-dnnl,lib,dnnl `
-
+    ```bash
+    cm run script --tags=get,lib-dnnl,lib,dnnl 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get lib-dnnl lib dnnl"`
 
-    `cmr "get lib-dnnl lib dnnl " `
-
+    ```bash
+    cmr "get lib-dnnl lib dnnl " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,8 +67,9 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get lib-dnnl lib dnnl" `
-
+    ```bash
+    cm docker script "get lib-dnnl lib dnnl" 
+    ```
 ___
 
 #### Versions
@@ -77,12 +78,14 @@ Default version: `dev`
 * `2.2.4`
 * `dev`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-lib-dnnl/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get lib-dnnl lib dnnl "  -j`
+```bash
+cmr "get lib-dnnl lib dnnl "  -j
+```

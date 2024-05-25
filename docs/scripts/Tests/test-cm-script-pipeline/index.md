@@ -31,17 +31,17 @@ Developers: Grigori Fursin
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=test,cm-script,pipeline`
 
-    `cm run script --tags=test,cm-script,pipeline `
-
+    ```bash
+    cm run script --tags=test,cm-script,pipeline 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "test cm-script pipeline"`
 
-    `cmr "test cm-script pipeline " `
-
+    ```bash
+    cmr "test cm-script pipeline " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,12 +69,13 @@ Developers: Grigori Fursin
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "test cm-script pipeline" `
-
+    ```bash
+    cm docker script "test cm-script pipeline" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/test-cm-script-pipeline/run.sh)
      * [run2.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/test-cm-script-pipeline/run2.sh)
@@ -84,4 +85,6 @@ ___
      * [run2.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/test-cm-script-pipeline/run2.bat)
 ___
 #### Script output
-`cmr "test cm-script pipeline "  -j`
+```bash
+cmr "test cm-script pipeline "  -j
+```

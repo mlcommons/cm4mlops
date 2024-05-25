@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,brew`
 
-    `cm run script --tags=get,brew `
-
+    ```bash
+    cm run script --tags=get,brew 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get brew"`
 
-    `cmr "get brew " `
-
+    ```bash
+    cmr "get brew " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,17 +67,20 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get brew" `
-
+    ```bash
+    cm docker script "get brew" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-brew/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get brew "  -j`
+```bash
+cmr "get brew "  -j
+```

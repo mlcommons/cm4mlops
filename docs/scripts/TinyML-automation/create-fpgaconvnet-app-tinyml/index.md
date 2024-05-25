@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=create,app,fpgaconvnet`
 
-    `cm run script --tags=create,app,fpgaconvnet[,variations] `
-
+    ```bash
+    cm run script --tags=create,app,fpgaconvnet[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "create app fpgaconvnet"`
 
-    `cmr "create app fpgaconvnet [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "create app fpgaconvnet [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,45 +67,48 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "create app fpgaconvnet[variations]" `
-
+    ```bash
+    cm docker script "create app fpgaconvnet[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**benchmark**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_ic`** (default)
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**board**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_zc706`** (default)
-      - Environment variables:
-        - *CM_TINY_BOARD*: `zc706`
-      - Workflow:
+      * Group "**benchmark**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * **`_ic`** (default)
+
+        </details>
 
 
-#### Default variations
+      * Group "**board**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_ic,_zc706`
+        * **`_zc706`** (default)
+               - ENV variables:
+                   - CM_TINY_BOARD: `zc706`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_ic,_zc706`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/create-fpgaconvnet-app-tinyml/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "create app fpgaconvnet [,variations]"  -j`
+```bash
+cmr "create app fpgaconvnet [variations]"  -j
+```

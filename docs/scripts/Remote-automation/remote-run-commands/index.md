@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=remote,run,cmds,remote-run,remote-run-cmds,ssh-run,ssh`
 
-    `cm run script --tags=remote,run,cmds,remote-run,remote-run-cmds,ssh-run,ssh [--input_flags]`
-
+    ```bash
+    cm run script --tags=remote,run,cmds,remote-run,remote-run-cmds,ssh-run,ssh [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "remote run cmds remote-run remote-run-cmds ssh-run ssh"`
 
-    `cmr "remote run cmds remote-run remote-run-cmds ssh-run ssh " [--input_flags]`
-
+    ```bash
+    cmr "remote run cmds remote-run remote-run-cmds ssh-run ssh " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,46 +68,43 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "remote run cmds remote-run remote-run-cmds ssh-run ssh" [--input_flags]`
-
+    ```bash
+    cm docker script "remote run cmds remote-run remote-run-cmds ssh-run ssh" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--client_refresh=value`  &rarr;  `CM_SSH_CLIENT_REFRESH=value`
-* `--host=value`  &rarr;  `CM_SSH_HOST=value`
-* `--password=value`  &rarr;  `CM_SSH_PASSWORD=value`
-* `--port=value`  &rarr;  `CM_SSH_PORT=value`
-* `--run_cmds=value`  &rarr;  `CM_SSH_RUN_COMMANDS=value`
-* `--skip_host_verify=value`  &rarr;  `CM_SSH_SKIP_HOST_VERIFY=value`
-* `--ssh_key_file=value`  &rarr;  `CM_SSH_KEY_FILE=value`
-* `--user=value`  &rarr;  `CM_SSH_USER=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "client_refresh":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_SSH_PORT: `22`
-* CM_SSH_HOST: `localhost`
-* CM_SSH_USER: `$USER`
-* CM_SSH_CLIENT_REFRESH: `10`
-* CM_SSH_KEY_FILE: `$HOME/.ssh/id_rsa`
+    * `--client_refresh=value`  &rarr;  `CM_SSH_CLIENT_REFRESH=value`
+    * `--host=value`  &rarr;  `CM_SSH_HOST=value`
+    * `--password=value`  &rarr;  `CM_SSH_PASSWORD=value`
+    * `--port=value`  &rarr;  `CM_SSH_PORT=value`
+    * `--run_cmds=value`  &rarr;  `CM_SSH_RUN_COMMANDS=value`
+    * `--skip_host_verify=value`  &rarr;  `CM_SSH_SKIP_HOST_VERIFY=value`
+    * `--ssh_key_file=value`  &rarr;  `CM_SSH_KEY_FILE=value`
+    * `--user=value`  &rarr;  `CM_SSH_USER=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_SSH_PORT: `22`
+    * CM_SSH_HOST: `localhost`
+    * CM_SSH_USER: `$USER`
+    * CM_SSH_CLIENT_REFRESH: `10`
+    * CM_SSH_KEY_FILE: `$HOME/.ssh/id_rsa`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/remote-run-commands/run.sh)
 === "Windows"
@@ -115,4 +112,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/remote-run-commands/run.bat)
 ___
 #### Script output
-`cmr "remote run cmds remote-run remote-run-cmds ssh-run ssh " [--input_flags] -j`
+```bash
+cmr "remote run cmds remote-run remote-run-cmds ssh-run ssh " [--input_flags] -j
+```

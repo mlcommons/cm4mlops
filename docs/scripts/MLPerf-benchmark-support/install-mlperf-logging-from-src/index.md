@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,mlperf,logging,from.src`
 
-    `cm run script --tags=install,mlperf,logging,from.src `
-
+    ```bash
+    cm run script --tags=install,mlperf,logging,from.src 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install mlperf logging from.src"`
 
-    `cmr "install mlperf logging from.src " `
-
+    ```bash
+    cmr "install mlperf logging from.src " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,20 +67,23 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install mlperf logging from.src" `
-
+    ```bash
+    cm docker script "install mlperf logging from.src" 
+    ```
 ___
 
 #### Versions
 * `master`
 * `v3.1`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-mlperf-logging-from-src/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install mlperf logging from.src "  -j`
+```bash
+cmr "install mlperf logging from.src "  -j
+```

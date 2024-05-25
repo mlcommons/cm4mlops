@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,cuda-devices`
 
-    `cm run script --tags=get,cuda-devices `
-
+    ```bash
+    cm run script --tags=get,cuda-devices 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get cuda-devices"`
 
-    `cmr "get cuda-devices " `
-
+    ```bash
+    cmr "get cuda-devices " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get cuda-devices" `
-
+    ```bash
+    cm docker script "get cuda-devices" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cuda-devices/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cuda-devices/run.bat)
 ___
 #### Script output
-`cmr "get cuda-devices "  -j`
+```bash
+cmr "get cuda-devices "  -j
+```

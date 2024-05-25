@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,aux,dataset-aux,language-processing,squad-aux,vocab,squad-vocab`
 
-    `cm run script --tags=get,aux,dataset-aux,language-processing,squad-aux,vocab,squad-vocab[,variations] `
-
+    ```bash
+    cm run script --tags=get,aux,dataset-aux,language-processing,squad-aux,vocab,squad-vocab[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get aux dataset-aux language-processing squad-aux vocab squad-vocab"`
 
-    `cmr "get aux dataset-aux language-processing squad-aux vocab squad-vocab [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get aux dataset-aux language-processing squad-aux vocab squad-vocab [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,35 +67,39 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get aux dataset-aux language-processing squad-aux vocab squad-vocab[variations]" `
-
+    ```bash
+    cm docker script "get aux dataset-aux language-processing squad-aux vocab squad-vocab[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**download-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_from.zenodo`** (default)
-      - Environment variables:
-        - *CM_WGET_URL*: `https://zenodo.org/record/3733868/files/vocab.txt`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_from.zenodo`
+      * Group "**download-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-##### Native script being run
+        * **`_from.zenodo`** (default)
+               - ENV variables:
+                   - CM_WGET_URL: `https://zenodo.org/record/3733868/files/vocab.txt`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_from.zenodo`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-squad-vocab/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get aux dataset-aux language-processing squad-aux vocab squad-vocab [,variations]"  -j`
+```bash
+cmr "get aux dataset-aux language-processing squad-aux vocab squad-vocab [variations]"  -j
+```

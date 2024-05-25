@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,sys-utils-cm`
 
-    `cm run script --tags=get,sys-utils-cm[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,sys-utils-cm[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get sys-utils-cm"`
 
-    `cmr "get sys-utils-cm [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get sys-utils-cm [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,41 +67,37 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get sys-utils-cm[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get sys-utils-cm[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_user`
-      - Environment variables:
-        - *CM_PYTHON_PIP_USER*: `--user`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--skip=value`  &rarr;  `CM_SKIP_SYS_UTILS=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_user`
+               - ENV variables:
+                   - CM_PYTHON_PIP_USER: `--user`
 
-```python
-r=cm.access({... , "skip":...}
-```
+        </details>
 
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--skip=value`  &rarr;  `CM_SKIP_SYS_UTILS=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run-arch.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-sys-utils-cm/run-arch.sh)
      * [run-debian.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-sys-utils-cm/run-debian.sh)
@@ -113,7 +107,9 @@ r=cm.access({... , "skip":...}
      * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-sys-utils-cm/run-ubuntu.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get sys-utils-cm [,variations]" [--input_flags] -j`
+```bash
+cmr "get sys-utils-cm [variations]" [--input_flags] -j
+```

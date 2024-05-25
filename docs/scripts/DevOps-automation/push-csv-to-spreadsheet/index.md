@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet`
 
-    `cm run script --tags=push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet [--input_flags]`
-
+    ```bash
+    cm run script --tags=push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet"`
 
-    `cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet " [--input_flags]`
-
+    ```bash
+    cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,42 +67,41 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "push google-spreadsheet spreadsheet push-to-google-spreadsheet" [--input_flags]`
-
+    ```bash
+    cm docker script "push google-spreadsheet spreadsheet push-to-google-spreadsheet" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--csv_file=value`  &rarr;  `CM_CSV_FILE_PATH=value`
-* `--sheet_name=value`  &rarr;  `CM_GOOGLE_SHEET_NAME=value`
-* `--spreadsheet_id=value`  &rarr;  `CM_GOOGLE_SPREADSHEET_ID=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "csv_file":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_GOOGLE_SPREADSHEET_ID: `1gMHjXmFmwZR4-waPPyxy5Pc3VARqX3kKUWxkP97Xa6Y`
+    * `--csv_file=value`  &rarr;  `CM_CSV_FILE_PATH=value`
+    * `--sheet_name=value`  &rarr;  `CM_GOOGLE_SHEET_NAME=value`
+    * `--spreadsheet_id=value`  &rarr;  `CM_GOOGLE_SPREADSHEET_ID=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GOOGLE_SPREADSHEET_ID: `1gMHjXmFmwZR4-waPPyxy5Pc3VARqX3kKUWxkP97Xa6Y`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/push-csv-to-spreadsheet/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet " [--input_flags] -j`
+```bash
+cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet " [--input_flags] -j
+```

@@ -30,19 +30,17 @@ Developers: Grigori Fursin
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=print,any-text`
 
-    `cm run script --tags=print,any-text[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=print,any-text[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "print any-text"`
 
-    `cmr "print any-text [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "print any-text [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,59 +68,55 @@ Developers: Grigori Fursin
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "print any-text[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "print any-text[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_cm_env.#`
-      - Environment variables:
-        - *CM_PRINT_ANY_CM_ENV_KEYS*: `#`
-      - Workflow:
-    * `_os_env.#`
-      - Environment variables:
-        - *CM_PRINT_ANY_OS_ENV_KEYS*: `#`
-      - Workflow:
-    * `_text.#`
-      - Environment variables:
-        - *CM_PRINT_ANY_TEXT*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--cm_env_keys=value`  &rarr;  `CM_PRINT_ANY_CM_ENV_KEYS=value`
-* `--os_env_keys=value`  &rarr;  `CM_PRINT_ANY_OS_ENV_KEYS=value`
-* `--text=value`  &rarr;  `CM_PRINT_ANY_TEXT=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_cm_env.#`
+               - ENV variables:
+                   - CM_PRINT_ANY_CM_ENV_KEYS: `#`
+        * `_os_env.#`
+               - ENV variables:
+                   - CM_PRINT_ANY_OS_ENV_KEYS: `#`
+        * `_text.#`
+               - ENV variables:
+                   - CM_PRINT_ANY_TEXT: `#`
 
-```python
-r=cm.access({... , "cm_env_keys":...}
-```
+        </details>
 
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_PRINT_ANY_TEXT: ``
+    * `--cm_env_keys=value`  &rarr;  `CM_PRINT_ANY_CM_ENV_KEYS=value`
+    * `--os_env_keys=value`  &rarr;  `CM_PRINT_ANY_OS_ENV_KEYS=value`
+    * `--text=value`  &rarr;  `CM_PRINT_ANY_TEXT=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_PRINT_ANY_TEXT: ``
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/print-any-text/run.sh)
 === "Windows"
@@ -130,4 +124,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/print-any-text/run.bat)
 ___
 #### Script output
-`cmr "print any-text [,variations]" [--input_flags] -j`
+```bash
+cmr "print any-text [variations]" [--input_flags] -j
+```

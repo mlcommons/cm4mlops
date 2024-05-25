@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,speech,speech-recognition,librispeech,validation,audio,training,original`
 
-    `cm run script --tags=get,dataset,speech,speech-recognition,librispeech,validation,audio,training,original `
-
+    ```bash
+    cm run script --tags=get,dataset,speech,speech-recognition,librispeech,validation,audio,training,original 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset speech speech-recognition librispeech validation audio training original"`
 
-    `cmr "get dataset speech speech-recognition librispeech validation audio training original " `
-
+    ```bash
+    cmr "get dataset speech speech-recognition librispeech validation audio training original " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,8 +68,9 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset speech speech-recognition librispeech validation audio training original" `
-
+    ```bash
+    cm docker script "get dataset speech speech-recognition librispeech validation audio training original" 
+    ```
 ___
 
 #### Versions
@@ -83,12 +84,14 @@ Default version: `dev-clean`
 * `train-clean-360`
 * `train-other-500`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-librispeech/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get dataset speech speech-recognition librispeech validation audio training original "  -j`
+```bash
+cmr "get dataset speech speech-recognition librispeech validation audio training original "  -j
+```

@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=destroy,terraform,cmd`
 
-    `cm run script --tags=destroy,terraform,cmd `
-
+    ```bash
+    cm run script --tags=destroy,terraform,cmd 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "destroy terraform cmd"`
 
-    `cmr "destroy terraform cmd " `
-
+    ```bash
+    cmr "destroy terraform cmd " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,12 +68,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "destroy terraform cmd" `
-
+    ```bash
+    cm docker script "destroy terraform cmd" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/destroy-terraform/run.sh)
 === "Windows"
@@ -81,4 +82,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/destroy-terraform/run.bat)
 ___
 #### Script output
-`cmr "destroy terraform cmd "  -j`
+```bash
+cmr "destroy terraform cmd "  -j
+```

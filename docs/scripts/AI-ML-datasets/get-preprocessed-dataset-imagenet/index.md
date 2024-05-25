@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,imagenet,ILSVRC,image-classification,preprocessed`
 
-    `cm run script --tags=get,dataset,imagenet,ILSVRC,image-classification,preprocessed[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,dataset,imagenet,ILSVRC,image-classification,preprocessed[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset imagenet ILSVRC image-classification preprocessed"`
 
-    `cmr "get dataset imagenet ILSVRC image-classification preprocessed [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset imagenet ILSVRC image-classification preprocessed [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,315 +68,227 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset imagenet ILSVRC image-classification preprocessed[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get dataset imagenet ILSVRC image-classification preprocessed[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *Internal group (variations should not be selected manually)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_mobilenet_`
-      - Environment variables:
-        - *CM_MODEL*: `mobilenet`
-      - Workflow:
-    * `_resnet50_`
-      - Environment variables:
-        - *CM_MODEL*: `resnet50`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_500,validation`
-      - Workflow:
-    * `_default`
-      - Workflow:
-    * `_for.mobilenet,float32`
-      - Environment variables:
-        - *CM_DATASET_QUANTIZE*: `0`
-        - *CM_DATASET_GIVEN_CHANNEL_MEANS*: ``
-        - *CM_DATASET_NORMALIZE_DATA*: `1`
-        - *CM_DATASET_SUBTRACT_MEANS*: `0`
-      - Workflow:
-    * `_for.mobilenet,rgb8`
-      - Environment variables:
-        - *CM_DATASET_GIVEN_CHANNEL_MEANS*: ``
-        - *CM_DATASET_SUBTRACT_MEANS*: `0`
-        - *CM_DATASET_QUANTIZE*: `0`
-        - *CM_DATASET_NORMALIZE_DATA*: `0`
-        - *CM_DATASET_DATA_TYPE*: `uint8`
-      - Workflow:
-    * `_for.resnet50,float32`
-      - Workflow:
-    * `_for.resnet50,rgb8`
-      - Environment variables:
-        - *CM_DATASET_GIVEN_CHANNEL_MEANS*: ``
-        - *CM_DATASET_SUBTRACT_MEANS*: `0`
-        - *CM_DATASET_NORMALIZE_DATA*: `0`
-        - *CM_DATASET_QUANTIZE*: `0`
-        - *CM_DATASET_DATA_TYPE*: `uint8`
-      - Workflow:
-    * `_for.resnet50,rgb8,uint8`
-      - Environment variables:
-        - *CM_DATASET_GIVEN_CHANNEL_MEANS*: `123.68 116.78 103.94`
-        - *CM_DATASET_SUBTRACT_MEANS*: `1`
-        - *CM_DATASET_QUANTIZE*: `1`
-      - Workflow:
-    * `_for.resnet50,uint8`
-      - Environment variables:
-        - *CM_DATASET_QUANT_SCALE*: `1.18944883`
-        - *CM_DATASET_QUANT_OFFSET*: `0`
-      - Workflow:
-    * `_pytorch`
-      - Environment variables:
-        - *CM_PREPROCESS_PYTORCH*: `yes`
-        - *CM_MODEL*: `resnet50`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_torchvision
-             * CM names: `--adr.['torchvision']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-    * `_tflite_tpu`
-      - Environment variables:
-        - *CM_MODEL*: `resnet50`
-        - *CM_PREPROCESS_TFLITE_TPU*: `yes`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_default`
+        * `_pytorch`
+               - ENV variables:
+                   - CM_PREPROCESS_PYTORCH: `yes`
+                   - CM_MODEL: `resnet50`
+        * `_tflite_tpu`
+               - ENV variables:
+                   - CM_MODEL: `resnet50`
+                   - CM_PREPROCESS_TFLITE_TPU: `yes`
+
+        </details>
 
 
-  * Group "**calibration-option**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**calibration-option**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_mlperf.option1`
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION_OPTION*: `one`
-      - Workflow:
-    * `_mlperf.option2`
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION_OPTION*: `two`
-      - Workflow:
+        * `_mlperf.option1`
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION_OPTION: `one`
+        * `_mlperf.option2`
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION_OPTION: `two`
 
-    </details>
+        </details>
 
 
-  * Group "**dataset-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**dataset-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_calibration`
-      - Environment variables:
-        - *CM_DATASET_TYPE*: `calibration`
-      - Workflow:
-    * **`_validation`** (default)
-      - Environment variables:
-        - *CM_DATASET_TYPE*: `validation`
-      - Workflow:
+        * `_calibration`
+               - ENV variables:
+                   - CM_DATASET_TYPE: `calibration`
+        * **`_validation`** (default)
+               - ENV variables:
+                   - CM_DATASET_TYPE: `validation`
 
-    </details>
+        </details>
 
 
-  * Group "**extension**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**extension**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_rgb32`
-      - Environment variables:
-        - *CM_DATASET_PREPROCESSED_EXTENSION*: `rgb32`
-      - Workflow:
-    * `_rgb8`
-      - Environment variables:
-        - *CM_DATASET_PREPROCESSED_EXTENSION*: `rgb8`
-      - Workflow:
+        * `_rgb32`
+               - ENV variables:
+                   - CM_DATASET_PREPROCESSED_EXTENSION: `rgb32`
+        * `_rgb8`
+               - ENV variables:
+                   - CM_DATASET_PREPROCESSED_EXTENSION: `rgb8`
 
-    </details>
+        </details>
 
 
-  * Group "**interpolation-method**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**interpolation-method**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_inter.area`
-      - Environment variables:
-        - *CM_DATASET_INTERPOLATION_METHOD*: `INTER_AREA`
-      - Workflow:
-    * `_inter.linear`
-      - Environment variables:
-        - *CM_DATASET_INTERPOLATION_METHOD*: `INTER_LINEAR`
-      - Workflow:
+        * `_inter.area`
+               - ENV variables:
+                   - CM_DATASET_INTERPOLATION_METHOD: `INTER_AREA`
+        * `_inter.linear`
+               - ENV variables:
+                   - CM_DATASET_INTERPOLATION_METHOD: `INTER_LINEAR`
 
-    </details>
+        </details>
 
 
-  * Group "**layout**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**layout**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_NCHW`** (default)
-      - Environment variables:
-        - *CM_DATASET_DATA_LAYOUT*: `NCHW`
-      - Workflow:
-    * `_NHWC`
-      - Environment variables:
-        - *CM_DATASET_DATA_LAYOUT*: `NHWC`
-      - Workflow:
+        * **`_NCHW`** (default)
+               - ENV variables:
+                   - CM_DATASET_DATA_LAYOUT: `NCHW`
+        * `_NHWC`
+               - ENV variables:
+                   - CM_DATASET_DATA_LAYOUT: `NHWC`
 
-    </details>
+        </details>
 
 
-  * Group "**model**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**model**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_for.mobilenet`
-      - Workflow:
-    * `_for.resnet50`
-      - Environment variables:
-        - *CM_DATASET_SUBTRACT_MEANS*: `1`
-        - *CM_DATASET_GIVEN_CHANNEL_MEANS*: `123.68 116.78 103.94`
-        - *CM_DATASET_NORMALIZE_DATA*: `0`
-        - *CM_DATASET_INTERPOLATION_METHOD*: `INTER_AREA`
-      - Workflow:
+        * `_for.mobilenet`
+        * `_for.resnet50`
+               - ENV variables:
+                   - CM_DATASET_SUBTRACT_MEANS: `1`
+                   - CM_DATASET_GIVEN_CHANNEL_MEANS: `123.68 116.78 103.94`
+                   - CM_DATASET_NORMALIZE_DATA: `0`
+                   - CM_DATASET_INTERPOLATION_METHOD: `INTER_AREA`
 
-    </details>
+        </details>
 
 
-  * Group "**precision**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**precision**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_float32`
-      - Environment variables:
-        - *CM_DATASET_DATA_TYPE*: `float32`
-        - *CM_DATASET_QUANTIZE*: `0`
-        - *CM_DATASET_CONVERT_TO_UNSIGNED*: `0`
-      - Workflow:
-    * `_int8`
-      - Environment variables:
-        - *CM_DATASET_DATA_TYPE*: `int8`
-        - *CM_DATASET_QUANTIZE*: `1`
-        - *CM_DATASET_CONVERT_TO_UNSIGNED*: `0`
-      - Workflow:
-    * `_uint8`
-      - Environment variables:
-        - *CM_DATASET_DATA_TYPE*: `uint8`
-        - *CM_DATASET_DATA_TYPE_INPUT*: `float32`
-        - *CM_DATASET_QUANTIZE*: `1`
-        - *CM_DATASET_CONVERT_TO_UNSIGNED*: `1`
-      - Workflow:
+        * `_float32`
+               - ENV variables:
+                   - CM_DATASET_DATA_TYPE: `float32`
+                   - CM_DATASET_QUANTIZE: `0`
+                   - CM_DATASET_CONVERT_TO_UNSIGNED: `0`
+        * `_int8`
+               - ENV variables:
+                   - CM_DATASET_DATA_TYPE: `int8`
+                   - CM_DATASET_QUANTIZE: `1`
+                   - CM_DATASET_CONVERT_TO_UNSIGNED: `0`
+        * `_uint8`
+               - ENV variables:
+                   - CM_DATASET_DATA_TYPE: `uint8`
+                   - CM_DATASET_DATA_TYPE_INPUT: `float32`
+                   - CM_DATASET_QUANTIZE: `1`
+                   - CM_DATASET_CONVERT_TO_UNSIGNED: `1`
 
-    </details>
+        </details>
 
 
-  * Group "**preprocessing-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**preprocessing-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_generic-preprocessor`
-      - Environment variables:
-        - *CM_DATASET_REFERENCE_PREPROCESSOR*: `0`
-      - Workflow:
-        1. ***Read "prehook_deps" on other CM scripts***
-           * get,generic,image-preprocessor
-             - CM script: [get-preprocesser-script-generic](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocesser-script-generic)
-    * **`_mlcommons-reference-preprocessor`** (default)
-      - Environment variables:
-        - *CM_DATASET_REFERENCE_PREPROCESSOR*: `1`
-      - Workflow:
+        * `_generic-preprocessor`
+               - ENV variables:
+                   - CM_DATASET_REFERENCE_PREPROCESSOR: `0`
+        * **`_mlcommons-reference-preprocessor`** (default)
+               - ENV variables:
+                   - CM_DATASET_REFERENCE_PREPROCESSOR: `1`
 
-    </details>
+        </details>
 
 
-  * Group "**resolution**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**resolution**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_resolution.#`
-      - Environment variables:
-        - *CM_DATASET_INPUT_SQUARE_SIDE*: `#`
-      - Workflow:
-    * **`_resolution.224`** (default)
-      - Environment variables:
-        - *CM_DATASET_INPUT_SQUARE_SIDE*: `224`
-      - Workflow:
+        * `_resolution.#`
+               - ENV variables:
+                   - CM_DATASET_INPUT_SQUARE_SIDE: `#`
+        * **`_resolution.224`** (default)
+               - ENV variables:
+                   - CM_DATASET_INPUT_SQUARE_SIDE: `224`
 
-    </details>
+        </details>
 
 
-  * Group "**size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_1`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `1`
-      - Workflow:
-    * `_500`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `500`
-      - Workflow:
-    * `_full`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `50000`
-      - Workflow:
-    * `_size.#`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `#`
-      - Workflow:
+        * `_1`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `1`
+        * `_500`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `500`
+        * `_full`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `50000`
+        * `_size.#`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `#`
 
-    </details>
+        </details>
 
 
-#### Default variations
+    ##### Default variations
 
-`_NCHW,_mlcommons-reference-preprocessor,_resolution.224,_validation`
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--dir=value`  &rarr;  `CM_DATASET_PREPROCESSED_PATH=value`
-* `--imagenet_path=value`  &rarr;  `CM_IMAGENET_PATH=value`
-* `--imagenet_preprocessed_path=value`  &rarr;  `CM_IMAGENET_PREPROCESSED_PATH=value`
-* `--threads=value`  &rarr;  `CM_NUM_PREPROCESS_THREADS=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "dir":...}
-```
-
-</details>
-
-#### Default environment
+    `_NCHW,_mlcommons-reference-preprocessor,_resolution.224,_validation`
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_DATASET_CROP_FACTOR: `87.5`
-* CM_DATASET_DATA_TYPE: `float32`
-* CM_DATASET_DATA_LAYOUT: `NCHW`
-* CM_DATASET_QUANT_SCALE: `1`
-* CM_DATASET_QUANTIZE: `0`
-* CM_DATASET_QUANT_OFFSET: `0`
-* CM_DATASET_PREPROCESSED_EXTENSION: `npy`
-* CM_DATASET_CONVERT_TO_UNSIGNED: `0`
-* CM_DATASET_REFERENCE_PREPROCESSOR: `1`
-* CM_PREPROCESS_VGG: `yes`
-* CM_MODEL: `resnet50`
+    * `--dir=value`  &rarr;  `CM_DATASET_PREPROCESSED_PATH=value`
+    * `--imagenet_path=value`  &rarr;  `CM_IMAGENET_PATH=value`
+    * `--imagenet_preprocessed_path=value`  &rarr;  `CM_IMAGENET_PREPROCESSED_PATH=value`
+    * `--threads=value`  &rarr;  `CM_NUM_PREPROCESS_THREADS=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_DATASET_CROP_FACTOR: `87.5`
+    * CM_DATASET_DATA_TYPE: `float32`
+    * CM_DATASET_DATA_LAYOUT: `NCHW`
+    * CM_DATASET_QUANT_SCALE: `1`
+    * CM_DATASET_QUANTIZE: `0`
+    * CM_DATASET_QUANT_OFFSET: `0`
+    * CM_DATASET_PREPROCESSED_EXTENSION: `npy`
+    * CM_DATASET_CONVERT_TO_UNSIGNED: `0`
+    * CM_DATASET_REFERENCE_PREPROCESSOR: `1`
+    * CM_PREPROCESS_VGG: `yes`
+    * CM_MODEL: `resnet50`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-preprocessed-dataset-imagenet/run.sh)
 === "Windows"
@@ -386,4 +296,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-preprocessed-dataset-imagenet/run.bat)
 ___
 #### Script output
-`cmr "get dataset imagenet ILSVRC image-classification preprocessed [,variations]" [--input_flags] -j`
+```bash
+cmr "get dataset imagenet ILSVRC image-classification preprocessed [variations]" [--input_flags] -j
+```

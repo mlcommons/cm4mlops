@@ -31,19 +31,17 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=import,mlperf,inference,mlperf-inference,experiment,2experiment,to-experiment`
 
-    `cm run script --tags=import,mlperf,inference,mlperf-inference,experiment,2experiment,to-experiment[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=import,mlperf,inference,mlperf-inference,experiment,2experiment,to-experiment[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "import mlperf inference mlperf-inference experiment 2experiment to-experiment"`
 
-    `cmr "import mlperf inference mlperf-inference experiment 2experiment to-experiment [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "import mlperf inference mlperf-inference experiment 2experiment to-experiment [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -71,41 +69,39 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "import mlperf inference mlperf-inference experiment 2experiment to-experiment[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "import mlperf inference mlperf-inference experiment 2experiment to-experiment[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_skip_checker`
-      - Environment variables:
-        - *CM_SKIP_SUBMISSION_CHECKER*: `True`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--submitter=value`  &rarr;  `CM_MLPERF_SUBMITTER=value`
-* `--target_repo=value`  &rarr;  `CM_IMPORT_MLPERF_INFERENCE_TARGET_REPO=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_skip_checker`
+               - ENV variables:
+                   - CM_SKIP_SUBMISSION_CHECKER: `True`
 
-```python
-r=cm.access({... , "submitter":...}
-```
+        </details>
 
-</details>
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--submitter=value`  &rarr;  `CM_MLPERF_SUBMITTER=value`
+    * `--target_repo=value`  &rarr;  `CM_IMPORT_MLPERF_INFERENCE_TARGET_REPO=value`
+
+
 
 
 ___
 #### Script output
-`cmr "import mlperf inference mlperf-inference experiment 2experiment to-experiment [,variations]" [--input_flags] -j`
+```bash
+cmr "import mlperf inference mlperf-inference experiment 2experiment to-experiment [variations]" [--input_flags] -j
+```

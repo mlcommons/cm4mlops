@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,mlperf,logging,mlperf-logging`
 
-    `cm run script --tags=get,mlperf,logging,mlperf-logging `
-
+    ```bash
+    cm run script --tags=get,mlperf,logging,mlperf-logging 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get mlperf logging mlperf-logging"`
 
-    `cmr "get mlperf logging mlperf-logging " `
-
+    ```bash
+    cmr "get mlperf logging mlperf-logging " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,11 +68,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get mlperf logging mlperf-logging" `
-
+    ```bash
+    cm docker script "get mlperf logging mlperf-logging" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "get mlperf logging mlperf-logging "  -j`
+```bash
+cmr "get mlperf logging mlperf-logging "  -j
+```

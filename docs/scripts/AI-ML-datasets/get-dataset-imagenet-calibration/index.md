@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,imagenet,calibration`
 
-    `cm run script --tags=get,dataset,imagenet,calibration[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,imagenet,calibration[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset imagenet calibration"`
 
-    `cmr "get dataset imagenet calibration [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset imagenet calibration [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,35 +67,38 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset imagenet calibration[variations]" `
-
+    ```bash
+    cm docker script "get dataset imagenet calibration[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**calibration-option**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_mlperf.option1`** (default)
-      - Environment variables:
-        - *CM_MLPERF_IMAGENET_CALIBRATION_OPTION*: `one`
-        - *CM_DOWNLOAD_CHECKSUM*: `f09719174af3553119e2c621157773a6`
-      - Workflow:
-    * `_mlperf.option2`
-      - Environment variables:
-        - *CM_MLPERF_IMAGENET_CALIBRATION_OPTION*: `two`
-        - *CM_DOWNLOAD_CHECKSUM*: `e44582af00e3b4fc3fac30efd6bdd05f`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_mlperf.option1`
+      * Group "**calibration-option**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * **`_mlperf.option1`** (default)
+               - ENV variables:
+                   - CM_MLPERF_IMAGENET_CALIBRATION_OPTION: `one`
+                   - CM_DOWNLOAD_CHECKSUM: `f09719174af3553119e2c621157773a6`
+        * `_mlperf.option2`
+               - ENV variables:
+                   - CM_MLPERF_IMAGENET_CALIBRATION_OPTION: `two`
+                   - CM_DOWNLOAD_CHECKSUM: `e44582af00e3b4fc3fac30efd6bdd05f`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_mlperf.option1`
 
 ___
 #### Script output
-`cmr "get dataset imagenet calibration [,variations]"  -j`
+```bash
+cmr "get dataset imagenet calibration [variations]"  -j
+```

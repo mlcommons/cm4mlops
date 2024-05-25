@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,cifar10,image-classification,validation,training`
 
-    `cm run script --tags=get,dataset,cifar10,image-classification,validation,training[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,cifar10,image-classification,validation,training[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset cifar10 image-classification validation training"`
 
-    `cmr "get dataset cifar10 image-classification validation training [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset cifar10 image-classification validation training [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,53 +67,46 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset cifar10 image-classification validation training[variations]" `
-
+    ```bash
+    cm docker script "get dataset cifar10 image-classification validation training[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_tiny`
-      - Environment variables:
-        - *CM_DATASET_CONVERT_TO_TINYMLPERF*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,python3
-             * CM names: `--adr.['python', 'python3']...`
-             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-           * get,tinymlperf,src
-             - CM script: [get-mlperf-tiny-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-tiny-src)
-           * get,src,eembc,energy-runner
-             - CM script: [get-mlperf-tiny-eembc-energy-runner-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-tiny-eembc-energy-runner-src)
-
-    </details>
+=== "Variations"
 
 
-  * Group "**data_format**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_python`** (default)
-      - Environment variables:
-        - *CM_DATASET*: `CIFAR10`
-        - *CM_DATASET_FILENAME*: `cifar-10-python.tar.gz`
-        - *CM_DATASET_FILENAME1*: `cifar-10-python.tar`
-        - *CM_DATASET_CIFAR10*: `https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_tiny`
+               - ENV variables:
+                   - CM_DATASET_CONVERT_TO_TINYMLPERF: `yes`
+
+        </details>
 
 
-#### Default variations
+      * Group "**data_format**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_python`
+        * **`_python`** (default)
+               - ENV variables:
+                   - CM_DATASET: `CIFAR10`
+                   - CM_DATASET_FILENAME: `cifar-10-python.tar.gz`
+                   - CM_DATASET_FILENAME1: `cifar-10-python.tar`
+                   - CM_DATASET_CIFAR10: `https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_python`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-cifar10/run.sh)
 === "Windows"
@@ -123,4 +114,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-cifar10/run.bat)
 ___
 #### Script output
-`cmr "get dataset cifar10 image-classification validation training [,variations]"  -j`
+```bash
+cmr "get dataset cifar10 image-classification validation training [variations]"  -j
+```

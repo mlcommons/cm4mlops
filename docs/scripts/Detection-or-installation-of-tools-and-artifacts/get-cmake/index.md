@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,cmake,get-cmake`
 
-    `cm run script --tags=get,cmake,get-cmake `
-
+    ```bash
+    cm run script --tags=get,cmake,get-cmake 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get cmake get-cmake"`
 
-    `cmr "get cmake get-cmake " `
-
+    ```bash
+    cmr "get cmake get-cmake " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get cmake get-cmake" `
-
+    ```bash
+    cm docker script "get cmake get-cmake" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cmake/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cmake/run.bat)
 ___
 #### Script output
-`cmr "get cmake get-cmake "  -j`
+```bash
+cmr "get cmake get-cmake "  -j
+```

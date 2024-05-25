@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,install,tflite-cmake,tensorflow-lite-cmake,from-src`
 
-    `cm run script --tags=get,install,tflite-cmake,tensorflow-lite-cmake,from-src `
-
+    ```bash
+    cm run script --tags=get,install,tflite-cmake,tensorflow-lite-cmake,from-src 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get install tflite-cmake tensorflow-lite-cmake from-src"`
 
-    `cmr "get install tflite-cmake tensorflow-lite-cmake from-src " `
-
+    ```bash
+    cmr "get install tflite-cmake tensorflow-lite-cmake from-src " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,16 +67,19 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get install tflite-cmake tensorflow-lite-cmake from-src" `
-
+    ```bash
+    cm docker script "get install tflite-cmake tensorflow-lite-cmake from-src" 
+    ```
 ___
 
-#### Default environment
+=== "Default environment"
+
+    #### Default environment
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
-* CM_GIT_DEPTH: `1`
+    * CM_GIT_DEPTH: `1`
 
 
 #### Versions
@@ -84,12 +87,14 @@ Default version: `master`
 
 * `master`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-tflite-from-src/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get install tflite-cmake tensorflow-lite-cmake from-src "  -j`
+```bash
+cmr "get install tflite-cmake tensorflow-lite-cmake from-src "  -j
+```

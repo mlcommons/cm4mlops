@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,aux,dataset-aux,object-detection,openimages,annotations`
 
-    `cm run script --tags=get,aux,dataset-aux,object-detection,openimages,annotations[,variations] `
-
+    ```bash
+    cm run script --tags=get,aux,dataset-aux,object-detection,openimages,annotations[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get aux dataset-aux object-detection openimages annotations"`
 
-    `cmr "get aux dataset-aux object-detection openimages annotations [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get aux dataset-aux object-detection openimages annotations [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,35 +67,39 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get aux dataset-aux object-detection openimages annotations[variations]" `
-
+    ```bash
+    cm docker script "get aux dataset-aux object-detection openimages annotations[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**download-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_from.github`** (default)
-      - Environment variables:
-        - *CM_WGET_URL*: `https://github.com/mlcommons/inference/releases/download/v2.1/openimages-mlperf_annotations_2.1.json.zip`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_from.github`
+      * Group "**download-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-##### Native script being run
+        * **`_from.github`** (default)
+               - ENV variables:
+                   - CM_WGET_URL: `https://github.com/mlcommons/inference/releases/download/v2.1/openimages-mlperf_annotations_2.1.json.zip`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_from.github`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-openimages-annotations/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get aux dataset-aux object-detection openimages annotations [,variations]"  -j`
+```bash
+cmr "get aux dataset-aux object-detection openimages annotations [variations]"  -j
+```

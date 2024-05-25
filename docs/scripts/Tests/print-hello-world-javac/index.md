@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=print,hello world,hello-world,hello,world,javac`
 
-    `cm run script --tags=print,hello world,hello-world,hello,world,javac `
-
+    ```bash
+    cm run script --tags=print,hello world,hello-world,hello,world,javac 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "print hello world hello-world hello world javac"`
 
-    `cmr "print hello world hello-world hello world javac " `
-
+    ```bash
+    cmr "print hello world hello-world hello world javac " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "print hello world hello-world hello world javac" `
-
+    ```bash
+    cm docker script "print hello world hello-world hello world javac" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/print-hello-world-javac/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/print-hello-world-javac/run.bat)
 ___
 #### Script output
-`cmr "print hello world hello-world hello world javac "  -j`
+```bash
+cmr "print hello world hello-world hello world javac "  -j
+```

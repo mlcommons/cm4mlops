@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,mlperf,inference,sut,configs,sut-configs`
 
-    `cm run script --tags=get,mlperf,inference,sut,configs,sut-configs [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,mlperf,inference,sut,configs,sut-configs [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get mlperf inference sut configs sut-configs"`
 
-    `cmr "get mlperf inference sut configs sut-configs " [--input_flags]`
-
+    ```bash
+    cmr "get mlperf inference sut configs sut-configs " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,37 +68,36 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get mlperf inference sut configs sut-configs" [--input_flags]`
-
+    ```bash
+    cm docker script "get mlperf inference sut configs sut-configs" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--configs_git_url=value`  &rarr;  `CM_GIT_URL=value`
-* `--repo_path=value`  &rarr;  `CM_SUT_CONFIGS_PATH=value`
-* `--run_config=value`  &rarr;  `CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "configs_git_url":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_SUT_CONFIGS_PATH: ``
-* CM_GIT_URL: ``
+    * `--configs_git_url=value`  &rarr;  `CM_GIT_URL=value`
+    * `--repo_path=value`  &rarr;  `CM_SUT_CONFIGS_PATH=value`
+    * `--run_config=value`  &rarr;  `CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_SUT_CONFIGS_PATH: ``
+    * CM_GIT_URL: ``
 
 
 
 ___
 #### Script output
-`cmr "get mlperf inference sut configs sut-configs " [--input_flags] -j`
+```bash
+cmr "get mlperf inference sut configs sut-configs " [--input_flags] -j
+```

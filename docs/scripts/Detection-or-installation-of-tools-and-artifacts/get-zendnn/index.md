@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,zendnn,amd,from.src`
 
-    `cm run script --tags=get,zendnn,amd,from.src `
-
+    ```bash
+    cm run script --tags=get,zendnn,amd,from.src 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get zendnn amd from.src"`
 
-    `cmr "get zendnn amd from.src " `
-
+    ```bash
+    cmr "get zendnn amd from.src " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get zendnn amd from.src" `
-
+    ```bash
+    cm docker script "get zendnn amd from.src" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-zendnn/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-zendnn/run.bat)
 ___
 #### Script output
-`cmr "get zendnn amd from.src "  -j`
+```bash
+cmr "get zendnn amd from.src "  -j
+```

@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,src,source,eembc,energyrunner,energy-runner,eembc-energy-runner,tinymlperf-energy-runner`
 
-    `cm run script --tags=get,src,source,eembc,energyrunner,energy-runner,eembc-energy-runner,tinymlperf-energy-runner `
-
+    ```bash
+    cm run script --tags=get,src,source,eembc,energyrunner,energy-runner,eembc-energy-runner,tinymlperf-energy-runner 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get src source eembc energyrunner energy-runner eembc-energy-runner tinymlperf-energy-runner"`
 
-    `cmr "get src source eembc energyrunner energy-runner eembc-energy-runner tinymlperf-energy-runner " `
-
+    ```bash
+    cmr "get src source eembc energyrunner energy-runner eembc-energy-runner tinymlperf-energy-runner " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,23 +67,26 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get src source eembc energyrunner energy-runner eembc-energy-runner tinymlperf-energy-runner" `
-
+    ```bash
+    cm docker script "get src source eembc energyrunner energy-runner eembc-energy-runner tinymlperf-energy-runner" 
+    ```
 ___
 
-#### Default environment
+=== "Default environment"
+
+    #### Default environment
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
-* CM_GIT_CHECKOUT: `main`
-* CM_GIT_PATCH: `no`
-* CM_GIT_RECURSE_SUBMODULES: ``
-* CM_GIT_URL: `https://github.com/eembc/energyrunner`
+    * CM_GIT_CHECKOUT: `main`
+    * CM_GIT_PATCH: `no`
+    * CM_GIT_RECURSE_SUBMODULES: ``
+    * CM_GIT_URL: `https://github.com/eembc/energyrunner`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-tiny-eembc-energy-runner-src/run.sh)
 === "Windows"
@@ -91,4 +94,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-tiny-eembc-energy-runner-src/run.bat)
 ___
 #### Script output
-`cmr "get src source eembc energyrunner energy-runner eembc-energy-runner tinymlperf-energy-runner "  -j`
+```bash
+cmr "get src source eembc energyrunner energy-runner eembc-energy-runner tinymlperf-energy-runner "  -j
+```

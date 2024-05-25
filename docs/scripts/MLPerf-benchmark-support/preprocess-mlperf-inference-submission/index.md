@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=run,mlc,mlcommons,mlperf,inference,submission,mlperf-inference,processor,preprocessor,preprocess`
 
-    `cm run script --tags=run,mlc,mlcommons,mlperf,inference,submission,mlperf-inference,processor,preprocessor,preprocess [--input_flags]`
-
+    ```bash
+    cm run script --tags=run,mlc,mlcommons,mlperf,inference,submission,mlperf-inference,processor,preprocessor,preprocess [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "run mlc mlcommons mlperf inference submission mlperf-inference processor preprocessor preprocess"`
 
-    `cmr "run mlc mlcommons mlperf inference submission mlperf-inference processor preprocessor preprocess " [--input_flags]`
-
+    ```bash
+    cmr "run mlc mlcommons mlperf inference submission mlperf-inference processor preprocessor preprocess " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,33 +67,30 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "run mlc mlcommons mlperf inference submission mlperf-inference processor preprocessor preprocess" [--input_flags]`
-
+    ```bash
+    cm docker script "run mlc mlcommons mlperf inference submission mlperf-inference processor preprocessor preprocess" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--submission_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_SUBMISSION_DIR=value`
-* `--submitter=value`  &rarr;  `CM_MLPERF_SUBMITTER=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "submission_dir":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--submission_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_SUBMISSION_DIR=value`
+    * `--submitter=value`  &rarr;  `CM_MLPERF_SUBMITTER=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/preprocess-mlperf-inference-submission/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "run mlc mlcommons mlperf inference submission mlperf-inference processor preprocessor preprocess " [--input_flags] -j`
+```bash
+cmr "run mlc mlcommons mlperf inference submission mlperf-inference processor preprocessor preprocess " [--input_flags] -j
+```

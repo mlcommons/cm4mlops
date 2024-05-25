@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,lib,blis`
 
-    `cm run script --tags=get,lib,blis[,variations] `
-
+    ```bash
+    cm run script --tags=get,lib,blis[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get lib blis"`
 
-    `cmr "get lib blis [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get lib blis [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,35 +68,36 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get lib blis[variations]" `
-
+    ```bash
+    cm docker script "get lib blis[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_amd`
-      - Workflow:
-    * **`_flame`** (default)
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_flame`
+      * Group "**source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_amd`
+        * **`_flame`** (default)
+
+        </details>
+
+
+    ##### Default variations
+
+    `_flame`
 #### Versions
 Default version: `master`
 
 * `0.9.0`
 * `master`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-blis/run.sh)
 === "Windows"
@@ -106,4 +105,6 @@ Default version: `master`
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-blis/run.bat)
 ___
 #### Script output
-`cmr "get lib blis [,variations]"  -j`
+```bash
+cmr "get lib blis [variations]"  -j
+```

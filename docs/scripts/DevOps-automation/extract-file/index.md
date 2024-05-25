@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=extract,file`
 
-    `cm run script --tags=extract,file[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=extract,file[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "extract file"`
 
-    `cmr "extract file [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "extract file [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,52 +68,46 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "extract file[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "extract file[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_keep`
-      - Environment variables:
-        - *CM_EXTRACT_REMOVE_EXTRACTED*: `no`
-      - Workflow:
-    * `_no-remove-extracted`
-      - Environment variables:
-        - *CM_EXTRACT_REMOVE_EXTRACTED*: `no`
-      - Workflow:
-    * `_path.#`
-      - Environment variables:
-        - *CM_EXTRACT_FILEPATH*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--extra_folder=value`  &rarr;  `CM_EXTRACT_TO_FOLDER=value`
-* `--extract_path=value`  &rarr;  `CM_EXTRACT_PATH=value`
-* `--input=value`  &rarr;  `CM_EXTRACT_FILEPATH=value`
-* `--to=value`  &rarr;  `CM_EXTRACT_PATH=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_keep`
+               - ENV variables:
+                   - CM_EXTRACT_REMOVE_EXTRACTED: `no`
+        * `_no-remove-extracted`
+               - ENV variables:
+                   - CM_EXTRACT_REMOVE_EXTRACTED: `no`
+        * `_path.#`
+               - ENV variables:
+                   - CM_EXTRACT_FILEPATH: `#`
 
-```python
-r=cm.access({... , "extra_folder":...}
-```
+        </details>
 
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--extra_folder=value`  &rarr;  `CM_EXTRACT_TO_FOLDER=value`
+    * `--extract_path=value`  &rarr;  `CM_EXTRACT_PATH=value`
+    * `--input=value`  &rarr;  `CM_EXTRACT_FILEPATH=value`
+    * `--to=value`  &rarr;  `CM_EXTRACT_PATH=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/extract-file/run.sh)
 === "Windows"
@@ -123,4 +115,6 @@ r=cm.access({... , "extra_folder":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/extract-file/run.bat)
 ___
 #### Script output
-`cmr "extract file [,variations]" [--input_flags] -j`
+```bash
+cmr "extract file [variations]" [--input_flags] -j
+```

@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,sys-utils-min`
 
-    `cm run script --tags=get,sys-utils-min `
-
+    ```bash
+    cm run script --tags=get,sys-utils-min 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get sys-utils-min"`
 
-    `cmr "get sys-utils-min " `
-
+    ```bash
+    cmr "get sys-utils-min " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,11 +67,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get sys-utils-min" `
-
+    ```bash
+    cm docker script "get sys-utils-min" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "get sys-utils-min "  -j`
+```bash
+cmr "get sys-utils-min "  -j
+```

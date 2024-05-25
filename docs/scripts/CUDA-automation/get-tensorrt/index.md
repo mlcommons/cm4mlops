@@ -30,31 +30,18 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,tensorrt,nvidia`
 
-    `cm run script --tags=get,tensorrt,nvidia[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,tensorrt,nvidia[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get tensorrt nvidia"`
 
-    `cmr "get tensorrt nvidia [variations]" [--input_flags]`
+    ```bash
+    cmr "get tensorrt nvidia [variations]" [--input_flags]
+    ```
 
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
-
-
-#### Input Flags
-
-* --**input**=Full path to the installed TensorRT library (nvinfer)
-* --**tar_file**=Full path to the TensorRT Tar file downloaded from the Nvidia website (https://developer.nvidia.com/tensorrt)
-
-=== "Python"
-
-    ```python
-r=cm.access({... , "input":...}
-```
 === "Python"
     ##### Run this script from Python
 
@@ -81,47 +68,52 @@ r=cm.access({... , "input":...}
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get tensorrt nvidia[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get tensorrt nvidia[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_dev`
-      - Environment variables:
-        - *CM_TENSORRT_REQUIRE_DEV*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--input=value`  &rarr;  `CM_INPUT=value`
-* `--tar_file=value`  &rarr;  `CM_TENSORRT_TAR_FILE_PATH=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_dev`
+               - ENV variables:
+                   - CM_TENSORRT_REQUIRE_DEV: `yes`
 
-```python
-r=cm.access({... , "input":...}
-```
+        </details>
 
-</details>
+=== "Input Flags"
 
 
-##### Native script being run
+    #### Input Flags
+
+    * --**input:** Full path to the installed TensorRT library (nvinfer)
+    * --**tar_file:** Full path to the TensorRT Tar file downloaded from the Nvidia website (https://developer.nvidia.com/tensorrt)
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--input=value`  &rarr;  `CM_INPUT=value`
+    * `--tar_file=value`  &rarr;  `CM_TENSORRT_TAR_FILE_PATH=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-tensorrt/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get tensorrt nvidia [,variations]" [--input_flags] -j`
+```bash
+cmr "get tensorrt nvidia [variations]" [--input_flags] -j
+```

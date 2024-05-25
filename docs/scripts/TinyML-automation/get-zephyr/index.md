@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,zephyr`
 
-    `cm run script --tags=get,zephyr `
-
+    ```bash
+    cm run script --tags=get,zephyr 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get zephyr"`
 
-    `cmr "get zephyr " `
-
+    ```bash
+    cmr "get zephyr " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,8 +68,9 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get zephyr" `
-
+    ```bash
+    cm docker script "get zephyr" 
+    ```
 ___
 
 #### Versions
@@ -77,13 +78,15 @@ Default version: `v2.7`
 
 * `v2.7`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-zephyr/run-ubuntu.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-zephyr/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get zephyr "  -j`
+```bash
+cmr "get zephyr "  -j
+```

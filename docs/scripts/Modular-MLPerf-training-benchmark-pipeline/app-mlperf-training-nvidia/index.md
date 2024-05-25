@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=app,vision,language,mlcommons,mlperf,training,nvidia`
 
-    `cm run script --tags=app,vision,language,mlcommons,mlperf,training,nvidia[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=app,vision,language,mlcommons,mlperf,training,nvidia[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "app vision language mlcommons mlperf training nvidia"`
 
-    `cmr "app vision language mlcommons mlperf training nvidia [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "app vision language mlcommons mlperf training nvidia [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,112 +67,99 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "app vision language mlcommons mlperf training nvidia[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "app vision language mlcommons mlperf training nvidia[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_bert`
-      - Environment variables:
-        - *CM_MLPERF_MODEL*: `bert`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_protobuf
-             * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['tf', 'tflite']}`
-             * CM names: `--adr.['protobuf']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-           * get,generic-python-lib,_torch
-             * CM names: `--adr.['ml-engine-pytorch']...`
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-
-    </details>
+=== "Variations"
 
 
-  * Group "**device**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_cuda`** (default)
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `cuda`
-        - *USE_CUDA*: `True`
-      - Workflow:
-    * `_tpu`
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `tpu`
-        - *CUDA_VISIBLE_DEVICES*: ``
-        - *USE_CUDA*: `False`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_bert`
+               - ENV variables:
+                   - CM_MLPERF_MODEL: `bert`
+
+        </details>
 
 
-  * Group "**framework**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**device**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_pytorch`
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `pytorch`
-        - *CM_MLPERF_BACKEND_VERSION*: `<<<CM_TORCH_VERSION>>>`
-      - Workflow:
-    * `_tf`
-      - Aliases: `_tensorflow`
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `tf`
-        - *CM_MLPERF_BACKEND_VERSION*: `<<<CM_TENSORFLOW_VERSION>>>`
-      - Workflow:
+        * **`_cuda`** (default)
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `cuda`
+                   - USE_CUDA: `True`
+        * `_tpu`
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `tpu`
+                   - CUDA_VISIBLE_DEVICES: ``
+                   - USE_CUDA: `False`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**framework**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_cuda`
+        * `_pytorch`
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `pytorch`
+                   - CM_MLPERF_BACKEND_VERSION: `<<<CM_TORCH_VERSION>>>`
+        * `_tf`
+              - Aliases: `_tensorflow`
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `tf`
+                   - CM_MLPERF_BACKEND_VERSION: `<<<CM_TENSORFLOW_VERSION>>>`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--clean=value`  &rarr;  `CM_MLPERF_CLEAN_SUBMISSION_DIR=value`
-* `--docker=value`  &rarr;  `CM_RUN_DOCKER_CONTAINER=value`
-* `--hw_name=value`  &rarr;  `CM_HW_NAME=value`
-* `--model=value`  &rarr;  `CM_MLPERF_CUSTOM_MODEL_PATH=value`
-* `--num_threads=value`  &rarr;  `CM_NUM_THREADS=value`
-* `--output_dir=value`  &rarr;  `OUTPUT_BASE_DIR=value`
-* `--rerun=value`  &rarr;  `CM_RERUN=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "clean":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `nvidia`
+    `_cuda`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--clean=value`  &rarr;  `CM_MLPERF_CLEAN_SUBMISSION_DIR=value`
+    * `--docker=value`  &rarr;  `CM_RUN_DOCKER_CONTAINER=value`
+    * `--hw_name=value`  &rarr;  `CM_HW_NAME=value`
+    * `--model=value`  &rarr;  `CM_MLPERF_CUSTOM_MODEL_PATH=value`
+    * `--num_threads=value`  &rarr;  `CM_NUM_THREADS=value`
+    * `--output_dir=value`  &rarr;  `OUTPUT_BASE_DIR=value`
+    * `--rerun=value`  &rarr;  `CM_RERUN=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `nvidia`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run-bert-training.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-training-nvidia/run-bert-training.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-training-nvidia/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "app vision language mlcommons mlperf training nvidia [,variations]" [--input_flags] -j`
+```bash
+cmr "app vision language mlcommons mlperf training nvidia [variations]" [--input_flags] -j
+```

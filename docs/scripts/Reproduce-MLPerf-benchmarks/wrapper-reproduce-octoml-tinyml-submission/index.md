@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=run,generate-tiny,generate,submission,tiny,generate-tiny-submission,results,mlcommons,mlperf,octoml`
 
-    `cm run script --tags=run,generate-tiny,generate,submission,tiny,generate-tiny-submission,results,mlcommons,mlperf,octoml [--input_flags]`
-
+    ```bash
+    cm run script --tags=run,generate-tiny,generate,submission,tiny,generate-tiny-submission,results,mlcommons,mlperf,octoml [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "run generate-tiny generate submission tiny generate-tiny-submission results mlcommons mlperf octoml"`
 
-    `cmr "run generate-tiny generate submission tiny generate-tiny-submission results mlcommons mlperf octoml " [--input_flags]`
-
+    ```bash
+    cmr "run generate-tiny generate submission tiny generate-tiny-submission results mlcommons mlperf octoml " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,37 +68,34 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "run generate-tiny generate submission tiny generate-tiny-submission results mlcommons mlperf octoml" [--input_flags]`
-
+    ```bash
+    cm docker script "run generate-tiny generate submission tiny generate-tiny-submission results mlcommons mlperf octoml" [--input_flags]
+    ```
 ___
 
+=== "Input Flag Mapping"
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
 
-* `--flash=value`  &rarr;  `CM_FLASH_BOARD=value`
-* `--recreate_binary=value`  &rarr;  `CM_RECREATE_BINARY=value`
+    #### Script flags mapped to environment
 
-**Above CLI flags can be used in the Python CM API as follows:**
+    * `--flash=value`  &rarr;  `CM_FLASH_BOARD=value`
+    * `--recreate_binary=value`  &rarr;  `CM_RECREATE_BINARY=value`
 
-```python
-r=cm.access({... , "flash":...}
-```
 
-</details>
 
 #### Versions
 Default version: `r1.0`
 
 * `r1.0`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/wrapper-reproduce-octoml-tinyml-submission/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "run generate-tiny generate submission tiny generate-tiny-submission results mlcommons mlperf octoml " [--input_flags] -j`
+```bash
+cmr "run generate-tiny generate submission tiny generate-tiny-submission results mlcommons mlperf octoml " [--input_flags] -j
+```

@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,android,sdk,android-sdk`
 
-    `cm run script --tags=get,android,sdk,android-sdk [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,android,sdk,android-sdk [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get android sdk android-sdk"`
 
-    `cmr "get android sdk android-sdk " [--input_flags]`
-
+    ```bash
+    cmr "get android sdk android-sdk " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,43 +68,42 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get android sdk android-sdk" [--input_flags]`
-
+    ```bash
+    cm docker script "get android sdk android-sdk" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--android_cmake_version=value`  &rarr;  `CM_ANDROID_CMAKE_VERSION=value`
-* `--android_ndk_version=value`  &rarr;  `CM_ANDROID_NDK_VERSION=value`
-* `--android_version=value`  &rarr;  `CM_ANDROID_VERSION=value`
-* `--build_tools_version=value`  &rarr;  `CM_ANDROID_BUILD_TOOLS_VERSION=value`
-* `--cmdline_tools_version=value`  &rarr;  `CM_ANDROID_CMDLINE_TOOLS_VERSION=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "android_cmake_version":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_ANDROID_BUILD_TOOLS_VERSION: `29.0.3`
-* CM_ANDROID_CMAKE_VERSION: `3.6.4111459`
-* CM_ANDROID_CMDLINE_TOOLS_URL: `https://dl.google.com/android/repository/commandlinetools-${CM_ANDROID_CMDLINE_TOOLS_OS}-${CM_ANDROID_CMDLINE_TOOLS_VERSION}_latest.zip`
-* CM_ANDROID_CMDLINE_TOOLS_VERSION: `9123335`
-* CM_ANDROID_NDK_VERSION: `21.3.6528147`
-* CM_ANDROID_VERSION: `30`
+    * `--android_cmake_version=value`  &rarr;  `CM_ANDROID_CMAKE_VERSION=value`
+    * `--android_ndk_version=value`  &rarr;  `CM_ANDROID_NDK_VERSION=value`
+    * `--android_version=value`  &rarr;  `CM_ANDROID_VERSION=value`
+    * `--build_tools_version=value`  &rarr;  `CM_ANDROID_BUILD_TOOLS_VERSION=value`
+    * `--cmdline_tools_version=value`  &rarr;  `CM_ANDROID_CMDLINE_TOOLS_VERSION=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_ANDROID_BUILD_TOOLS_VERSION: `29.0.3`
+    * CM_ANDROID_CMAKE_VERSION: `3.6.4111459`
+    * CM_ANDROID_CMDLINE_TOOLS_URL: `https://dl.google.com/android/repository/commandlinetools-${CM_ANDROID_CMDLINE_TOOLS_OS}-${CM_ANDROID_CMDLINE_TOOLS_VERSION}_latest.zip`
+    * CM_ANDROID_CMDLINE_TOOLS_VERSION: `9123335`
+    * CM_ANDROID_NDK_VERSION: `21.3.6528147`
+    * CM_ANDROID_VERSION: `30`
 
 
 
 ___
 #### Script output
-`cmr "get android sdk android-sdk " [--input_flags] -j`
+```bash
+cmr "get android sdk android-sdk " [--input_flags] -j
+```

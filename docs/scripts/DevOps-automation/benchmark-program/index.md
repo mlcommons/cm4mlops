@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=benchmark,program`
 
-    `cm run script --tags=benchmark,program[,variations] `
-
+    ```bash
+    cm run script --tags=benchmark,program[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "benchmark program"`
 
-    `cmr "benchmark program [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "benchmark program [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,40 +68,39 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "benchmark program[variations]" `
-
+    ```bash
+    cm docker script "benchmark program[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_numactl`
-      - Workflow:
-    * `_numactl-interleave`
-      - Workflow:
-    * `_profile`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,profiler
-             - *Warning: no scripts found*
-
-    </details>
-
-#### Default environment
+=== "Variations"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Variations
 
-* CM_ENABLE_NUMACTL: `0`
-* CM_ENABLE_PROFILING: `0`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_numactl`
+        * `_numactl-interleave`
+        * `_profile`
+
+        </details>
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_ENABLE_NUMACTL: `0`
+    * CM_ENABLE_PROFILING: `0`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/benchmark-program/run-ubuntu.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/benchmark-program/run.sh)
@@ -112,4 +109,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/benchmark-program/run.bat)
 ___
 #### Script output
-`cmr "benchmark program [,variations]"  -j`
+```bash
+cmr "benchmark program [variations]"  -j
+```

@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=set,sqlite,dir,sqlite-dir`
 
-    `cm run script --tags=set,sqlite,dir,sqlite-dir [--input_flags]`
-
+    ```bash
+    cm run script --tags=set,sqlite,dir,sqlite-dir [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "set sqlite dir sqlite-dir"`
 
-    `cmr "set sqlite dir sqlite-dir " [--input_flags]`
-
+    ```bash
+    cmr "set sqlite dir sqlite-dir " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,27 +67,22 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "set sqlite dir sqlite-dir" [--input_flags]`
-
+    ```bash
+    cm docker script "set sqlite dir sqlite-dir" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--path=value`  &rarr;  `CM_SQLITE_PATH=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "path":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--path=value`  &rarr;  `CM_SQLITE_PATH=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/set-sqlite-dir/run.sh)
 === "Windows"
@@ -95,4 +90,6 @@ r=cm.access({... , "path":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/set-sqlite-dir/run.bat)
 ___
 #### Script output
-`cmr "set sqlite dir sqlite-dir " [--input_flags] -j`
+```bash
+cmr "set sqlite dir sqlite-dir " [--input_flags] -j
+```

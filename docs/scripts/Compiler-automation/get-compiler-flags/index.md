@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,compiler-flags`
 
-    `cm run script --tags=get,compiler-flags `
-
+    ```bash
+    cm run script --tags=get,compiler-flags 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get compiler-flags"`
 
-    `cmr "get compiler-flags " `
-
+    ```bash
+    cmr "get compiler-flags " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,11 +67,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get compiler-flags" `
-
+    ```bash
+    cm docker script "get compiler-flags" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "get compiler-flags "  -j`
+```bash
+cmr "get compiler-flags "  -j
+```
