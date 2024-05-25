@@ -30,31 +30,18 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=modular,python,app,stable-diffusion,onnx`
 
-    `cm run script --tags=modular,python,app,stable-diffusion,onnx[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=modular,python,app,stable-diffusion,onnx[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "modular python app stable-diffusion onnx"`
 
-    `cmr "modular python app stable-diffusion onnx [variations]" [--input_flags]`
+    ```bash
+    cmr "modular python app stable-diffusion onnx [variations]" [--input_flags]
+    ```
 
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
-
-
-#### Input Flags
-
-* --**text**=Text to generate image
-* --**output**=Output directory
-
-=== "Python"
-
-    ```python
-r=cm.access({... , "text":...}
-```
 === "Python"
     ##### Run this script from Python
 
@@ -81,52 +68,54 @@ r=cm.access({... , "text":...}
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "modular python app stable-diffusion onnx[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "modular python app stable-diffusion onnx[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**target**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_cpu`** (default)
-      - Environment variables:
-        - *USE_CPU*: `True`
-        - *CM_DEVICE*: `cpu`
-      - Workflow:
-    * `_cuda`
-      - Environment variables:
-        - *USE_CUDA*: `True`
-        - *CM_DEVICE*: `cuda:0`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_cpu`
+      * Group "**target**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        * **`_cpu`** (default)
+               - ENV variables:
+                   - USE_CPU: `True`
+                   - CM_DEVICE: `cpu`
+        * `_cuda`
+               - ENV variables:
+                   - USE_CUDA: `True`
+                   - CM_DEVICE: `cuda:0`
 
-* `--output=value`  &rarr;  `CM_APP_STABLE_DIFFUSION_ONNX_PY_OUTPUT=value`
-* `--text=value`  &rarr;  `CM_APP_STABLE_DIFFUSION_ONNX_PY_TEXT=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "output":...}
-```
-
-</details>
+        </details>
 
 
-##### Native script being run
+    ##### Default variations
+
+    `_cpu`
+=== "Input Flags"
+
+
+    #### Input Flags
+
+    * --**text:** Text to generate image
+    * --**output:** Output directory
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--output=value`  &rarr;  `CM_APP_STABLE_DIFFUSION_ONNX_PY_OUTPUT=value`
+    * `--text=value`  &rarr;  `CM_APP_STABLE_DIFFUSION_ONNX_PY_TEXT=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-stable-diffusion-onnx-py/run.sh)
 === "Windows"
@@ -134,4 +123,6 @@ r=cm.access({... , "output":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/app-stable-diffusion-onnx-py/run.bat)
 ___
 #### Script output
-`cmr "modular python app stable-diffusion onnx [,variations]" [--input_flags] -j`
+```bash
+cmr "modular python app stable-diffusion onnx [variations]" [--input_flags] -j
+```

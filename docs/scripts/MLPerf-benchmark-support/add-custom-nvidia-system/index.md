@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=add,custom,system,nvidia`
 
-    `cm run script --tags=add,custom,system,nvidia[,variations] `
-
+    ```bash
+    cm run script --tags=add,custom,system,nvidia[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "add custom system nvidia"`
 
-    `cmr "add custom system nvidia [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "add custom system nvidia [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,29 +68,27 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "add custom system nvidia[variations]" `
-
+    ```bash
+    cm docker script "add custom system nvidia[variations]" 
+    ```
 ___
 
+=== "Variations"
 
-#### Variations
 
-  * Group "**code**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_ctuning`
-      - Workflow:
-    * `_custom`
-      - Workflow:
-    * `_go`
-      - Workflow:
-    * `_mlcommons`
-      - Workflow:
-    * `_nvidia-only`
-      - Workflow:
+      * Group "**code**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_ctuning`
+        * `_custom`
+        * `_go`
+        * `_mlcommons`
+        * `_nvidia-only`
+
+        </details>
 
 #### Versions
 * `r2.1`
@@ -100,12 +96,14 @@ ___
 * `r3.1`
 * `r4.0`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/add-custom-nvidia-system/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "add custom system nvidia [,variations]"  -j`
+```bash
+cmr "add custom system nvidia [variations]"  -j
+```

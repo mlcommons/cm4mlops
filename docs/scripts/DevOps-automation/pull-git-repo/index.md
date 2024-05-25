@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=pull,git,repo,repository`
 
-    `cm run script --tags=pull,git,repo,repository [--input_flags]`
-
+    ```bash
+    cm run script --tags=pull,git,repo,repository [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "pull git repo repository"`
 
-    `cmr "pull git repo repository " [--input_flags]`
-
+    ```bash
+    cmr "pull git repo repository " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,32 +67,29 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "pull git repo repository" [--input_flags]`
-
+    ```bash
+    cm docker script "pull git repo repository" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--path=value`  &rarr;  `CM_GIT_CHECKOUT_PATH=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "path":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--path=value`  &rarr;  `CM_GIT_CHECKOUT_PATH=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/pull-git-repo/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "pull git repo repository " [--input_flags] -j`
+```bash
+cmr "pull git repo repository " [--input_flags] -j
+```

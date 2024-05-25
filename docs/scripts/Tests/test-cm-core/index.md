@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=test,cm,core`
 
-    `cm run script --tags=test,cm,core `
-
+    ```bash
+    cm run script --tags=test,cm,core 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "test cm core"`
 
-    `cmr "test cm core " `
-
+    ```bash
+    cmr "test cm core " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,12 +68,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "test cm core" `
-
+    ```bash
+    cm docker script "test cm core" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/test-cm-core/run.sh)
 === "Windows"
@@ -81,4 +82,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/test-cm-core/run.bat)
 ___
 #### Script output
-`cmr "test cm core "  -j`
+```bash
+cmr "test cm core "  -j
+```

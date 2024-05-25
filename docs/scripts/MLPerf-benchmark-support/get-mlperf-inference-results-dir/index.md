@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,mlperf,inference,results,dir,directory`
 
-    `cm run script --tags=get,mlperf,inference,results,dir,directory[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,mlperf,inference,results,dir,directory[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get mlperf inference results dir directory"`
 
-    `cmr "get mlperf inference results dir directory [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get mlperf inference results dir directory [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,48 +67,45 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get mlperf inference results dir directory[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get mlperf inference results dir directory[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**version**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_version.#`
-      - Environment variables:
-        - *CM_MLPERF_INFERENCE_RESULTS_VERSION*: `#`
-      - Workflow:
-    * **`_version.4_0`** (default)
-      - Environment variables:
-        - *CM_MLPERF_INFERENCE_RESULTS_VERSION*: `4_0`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_version.4_0`
+      * Group "**version**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        * `_version.#`
+               - ENV variables:
+                   - CM_MLPERF_INFERENCE_RESULTS_VERSION: `#`
+        * **`_version.4_0`** (default)
+               - ENV variables:
+                   - CM_MLPERF_INFERENCE_RESULTS_VERSION: `4_0`
 
-* `--results_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_RESULTS_DIR=value`
+        </details>
 
-**Above CLI flags can be used in the Python CM API as follows:**
 
-```python
-r=cm.access({... , "results_dir":...}
-```
+    ##### Default variations
 
-</details>
+    `_version.4_0`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--results_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_RESULTS_DIR=value`
+
+
 
 
 ___
 #### Script output
-`cmr "get mlperf inference results dir directory [,variations]" [--input_flags] -j`
+```bash
+cmr "get mlperf inference results dir directory [variations]" [--input_flags] -j
+```

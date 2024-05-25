@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=ml-model,model,huggingface-to-onnx,onnx,huggingface,convert`
 
-    `cm run script --tags=ml-model,model,huggingface-to-onnx,onnx,huggingface,convert[,variations] `
-
+    ```bash
+    cm run script --tags=ml-model,model,huggingface-to-onnx,onnx,huggingface,convert[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "ml-model model huggingface-to-onnx onnx huggingface convert"`
 
-    `cmr "ml-model model huggingface-to-onnx onnx huggingface convert [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "ml-model model huggingface-to-onnx onnx huggingface convert [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,31 +67,35 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "ml-model model huggingface-to-onnx onnx huggingface convert[variations]" `
-
+    ```bash
+    cm docker script "ml-model model huggingface-to-onnx onnx huggingface convert[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_model-path.#`
-      - Environment variables:
-        - *CM_MODEL_HUGG_PATH*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-##### Native script being run
+    #### Variations
+
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_model-path.#`
+               - ENV variables:
+                   - CM_MODEL_HUGG_PATH: `#`
+
+        </details>
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/convert-ml-model-huggingface-to-onnx/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "ml-model model huggingface-to-onnx onnx huggingface convert [,variations]"  -j`
+```bash
+cmr "ml-model model huggingface-to-onnx onnx huggingface convert [variations]"  -j
+```

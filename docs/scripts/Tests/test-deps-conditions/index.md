@@ -31,17 +31,17 @@ Developers: Grigori Fursin
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=test,deps,conditions`
 
-    `cm run script --tags=test,deps,conditions [--input_flags]`
-
+    ```bash
+    cm run script --tags=test,deps,conditions [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "test deps conditions"`
 
-    `cmr "test deps conditions " [--input_flags]`
-
+    ```bash
+    cmr "test deps conditions " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,28 +69,25 @@ Developers: Grigori Fursin
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "test deps conditions" [--input_flags]`
-
+    ```bash
+    cm docker script "test deps conditions" [--input_flags]
+    ```
 ___
 
+=== "Input Flag Mapping"
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
 
-* `--test1=value`  &rarr;  `CM_ENV1=value`
-* `--test2=value`  &rarr;  `CM_ENV2=value`
-* `--test3=value`  &rarr;  `CM_ENV3=value`
+    #### Script flags mapped to environment
 
-**Above CLI flags can be used in the Python CM API as follows:**
+    * `--test1=value`  &rarr;  `CM_ENV1=value`
+    * `--test2=value`  &rarr;  `CM_ENV2=value`
+    * `--test3=value`  &rarr;  `CM_ENV3=value`
 
-```python
-r=cm.access({... , "test1":...}
-```
 
-</details>
 
 
 ___
 #### Script output
-`cmr "test deps conditions " [--input_flags] -j`
+```bash
+cmr "test deps conditions " [--input_flags] -j
+```

@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,tvm,get-tvm`
 
-    `cm run script --tags=get,tvm,get-tvm[,variations] `
-
+    ```bash
+    cm run script --tags=get,tvm,get-tvm[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get tvm get-tvm"`
 
-    `cmr "get tvm get-tvm [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get tvm get-tvm [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,66 +68,57 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get tvm get-tvm[variations]" `
-
+    ```bash
+    cm docker script "get tvm get-tvm[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_cuda`
-      - Environment variables:
-        - *CM_TVM_USE_CUDA*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,cuda
-             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
-    * `_openmp`
-      - Environment variables:
-        - *CM_TVM_USE_OPENMP*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**installation-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_llvm`** (default)
-      - Environment variables:
-        - *CM_TVM_USE_LLVM*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,llvm
-             * CM names: `--adr.['llvm']...`
-             - CM script: [get-llvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-llvm)
-    * `_pip-install`
-      - Environment variables:
-        - *CM_TVM_PIP_INSTALL*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_apache-tvm
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_cuda`
+               - ENV variables:
+                   - CM_TVM_USE_CUDA: `yes`
+        * `_openmp`
+               - ENV variables:
+                   - CM_TVM_USE_OPENMP: `yes`
+
+        </details>
 
 
-#### Default variations
+      * Group "**installation-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_llvm`
-#### Default environment
+        * **`_llvm`** (default)
+               - ENV variables:
+                   - CM_TVM_USE_LLVM: `yes`
+        * `_pip-install`
+               - ENV variables:
+                   - CM_TVM_PIP_INSTALL: `yes`
+
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_GIT_CHECKOUT: `main`
-* CM_GIT_URL: `https://github.com/apache/tvm`
-* CM_TVM_PIP_INSTALL: `no`
+    `_llvm`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_CHECKOUT: `main`
+    * CM_GIT_URL: `https://github.com/apache/tvm`
+    * CM_TVM_PIP_INSTALL: `no`
 
 
 #### Versions
@@ -139,12 +128,14 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * `v0.8.0`
 * `v0.9.0`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-tvm/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get tvm get-tvm [,variations]"  -j`
+```bash
+cmr "get tvm get-tvm [variations]"  -j
+```

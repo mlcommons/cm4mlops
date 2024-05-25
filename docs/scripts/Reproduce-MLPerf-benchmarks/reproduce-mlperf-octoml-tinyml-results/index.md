@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=reproduce,tiny,results,mlperf,octoml,mlcommons`
 
-    `cm run script --tags=reproduce,tiny,results,mlperf,octoml,mlcommons[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=reproduce,tiny,results,mlperf,octoml,mlcommons[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "reproduce tiny results mlperf octoml mlcommons"`
 
-    `cmr "reproduce tiny results mlperf octoml mlcommons [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "reproduce tiny results mlperf octoml mlcommons [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,79 +68,70 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "reproduce tiny results mlperf octoml mlcommons[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "reproduce tiny results mlperf octoml mlcommons[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_NRF`
-      - Environment variables:
-        - *CM_TINY_BOARD*: `NRF5340DK`
-      - Workflow:
-    * `_NUCLEO`
-      - Environment variables:
-        - *CM_TINY_BOARD*: `NUCLEO_L4R5ZI`
-      - Workflow:
-    * `_ad`
-      - Environment variables:
-        - *CM_TINY_MODEL*: `ad`
-      - Workflow:
-    * `_cmsis_nn`
-      - Environment variables:
-        - *CM_MICROTVM_VARIANT*: `microtvm_cmsis_nn`
-      - Workflow:
-    * `_ic`
-      - Environment variables:
-        - *CM_TINY_MODEL*: `ic`
-      - Workflow:
-    * `_kws`
-      - Environment variables:
-        - *CM_TINY_MODEL*: `kws`
-      - Workflow:
-    * `_native`
-      - Environment variables:
-        - *CM_MICROTVM_VARIANT*: `microtvm_native`
-      - Workflow:
-    * `_vww`
-      - Environment variables:
-        - *CM_TINY_MODEL*: `vww`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--flash=value`  &rarr;  `CM_FLASH_BOARD=value`
-* `--recreate_binary=value`  &rarr;  `CM_RECREATE_BINARY=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_NRF`
+               - ENV variables:
+                   - CM_TINY_BOARD: `NRF5340DK`
+        * `_NUCLEO`
+               - ENV variables:
+                   - CM_TINY_BOARD: `NUCLEO_L4R5ZI`
+        * `_ad`
+               - ENV variables:
+                   - CM_TINY_MODEL: `ad`
+        * `_cmsis_nn`
+               - ENV variables:
+                   - CM_MICROTVM_VARIANT: `microtvm_cmsis_nn`
+        * `_ic`
+               - ENV variables:
+                   - CM_TINY_MODEL: `ic`
+        * `_kws`
+               - ENV variables:
+                   - CM_TINY_MODEL: `kws`
+        * `_native`
+               - ENV variables:
+                   - CM_MICROTVM_VARIANT: `microtvm_native`
+        * `_vww`
+               - ENV variables:
+                   - CM_TINY_MODEL: `vww`
 
-```python
-r=cm.access({... , "flash":...}
-```
+        </details>
 
-</details>
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--flash=value`  &rarr;  `CM_FLASH_BOARD=value`
+    * `--recreate_binary=value`  &rarr;  `CM_RECREATE_BINARY=value`
+
+
 
 #### Versions
 Default version: `r1.0`
 
 * `r1.0`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-octoml-tinyml-results/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "reproduce tiny results mlperf octoml mlcommons [,variations]" [--input_flags] -j`
+```bash
+cmr "reproduce tiny results mlperf octoml mlcommons [variations]" [--input_flags] -j
+```

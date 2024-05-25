@@ -31,19 +31,17 @@ Developers: [Thomas Zhu](https://www.linkedin.com/in/hanwen-zhu-483614189), [Arj
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=app,mlcommons,mlperf,inference,cpp`
 
-    `cm run script --tags=app,mlcommons,mlperf,inference,cpp[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=app,mlcommons,mlperf,inference,cpp[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "app mlcommons mlperf inference cpp"`
 
-    `cmr "app mlcommons mlperf inference cpp [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "app mlcommons mlperf inference cpp [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -71,169 +69,136 @@ Developers: [Thomas Zhu](https://www.linkedin.com/in/hanwen-zhu-483614189), [Arj
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "app mlcommons mlperf inference cpp[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "app mlcommons mlperf inference cpp[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_multistream,resnet50`
-      - Workflow:
-    * `_multistream,retinanet`
-      - Workflow:
-    * `_offline,resnet50`
-      - Workflow:
-    * `_resnet50,multistream`
-      - Workflow:
-    * `_resnet50,offline`
-      - Workflow:
-    * `_resnet50,server`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**batch-size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_batch-size.#`
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_MAX_BATCHSIZE*: `#`
-      - Workflow:
+      * Group "**batch-size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_batch-size.#`
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_MAX_BATCHSIZE: `#`
 
-
-  * Group "**device**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_cpu`** (default)
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `cpu`
-      - Workflow:
-    * `_cuda`
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `gpu`
-        - *CM_MLPERF_DEVICE_LIB_NAMESPEC*: `cudart`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**framework**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**device**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_onnxruntime`** (default)
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `onnxruntime`
-        - *CM_MLPERF_BACKEND_LIB_NAMESPEC*: `onnxruntime`
-      - Workflow:
-    * `_pytorch`
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `pytorch`
-      - Workflow:
-    * `_tf`
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `tf`
-      - Workflow:
-    * `_tflite`
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `tflite`
-      - Workflow:
-    * `_tvm-onnx`
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `tvm-onnx`
-      - Workflow:
+        * **`_cpu`** (default)
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `cpu`
+        * `_cuda`
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `gpu`
+                   - CM_MLPERF_DEVICE_LIB_NAMESPEC: `cudart`
 
-    </details>
+        </details>
 
 
-  * Group "**loadgen-scenario**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**framework**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_multistream`
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `MultiStream`
-      - Workflow:
-    * **`_offline`** (default)
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `Offline`
-      - Workflow:
-    * `_server`
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `Server`
-      - Workflow:
-    * `_singlestream`
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `SingleStream`
-        - *CM_MLPERF_LOADGEN_MAX_BATCHSIZE*: `1`
-      - Workflow:
+        * **`_onnxruntime`** (default)
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `onnxruntime`
+                   - CM_MLPERF_BACKEND_LIB_NAMESPEC: `onnxruntime`
+        * `_pytorch`
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `pytorch`
+        * `_tf`
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `tf`
+        * `_tflite`
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `tflite`
+        * `_tvm-onnx`
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `tvm-onnx`
 
-    </details>
-
-
-  * Group "**model**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_resnet50`** (default)
-      - Environment variables:
-        - *CM_MODEL*: `resnet50`
-      - Workflow:
-    * `_retinanet`
-      - Environment variables:
-        - *CM_MODEL*: `retinanet`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**loadgen-scenario**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_cpu,_offline,_onnxruntime,_resnet50`
+        * `_multistream`
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `MultiStream`
+        * **`_offline`** (default)
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `Offline`
+        * `_server`
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `Server`
+        * `_singlestream`
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `SingleStream`
+                   - CM_MLPERF_LOADGEN_MAX_BATCHSIZE: `1`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--count=value`  &rarr;  `CM_MLPERF_LOADGEN_QUERY_COUNT=value`
-* `--max_batchsize=value`  &rarr;  `CM_MLPERF_LOADGEN_MAX_BATCHSIZE=value`
-* `--mlperf_conf=value`  &rarr;  `CM_MLPERF_CONF=value`
-* `--mode=value`  &rarr;  `CM_MLPERF_LOADGEN_MODE=value`
-* `--output_dir=value`  &rarr;  `CM_MLPERF_OUTPUT_DIR=value`
-* `--performance_sample_count=value`  &rarr;  `CM_MLPERF_LOADGEN_PERFORMANCE_SAMPLE_COUNT=value`
-* `--scenario=value`  &rarr;  `CM_MLPERF_LOADGEN_SCENARIO=value`
-* `--user_conf=value`  &rarr;  `CM_MLPERF_USER_CONF=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "count":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**model**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_BATCH_COUNT: `1`
-* CM_BATCH_SIZE: `1`
-* CM_FAST_COMPILATION: `yes`
-* CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `cpp`
+        * **`_resnet50`** (default)
+               - ENV variables:
+                   - CM_MODEL: `resnet50`
+        * `_retinanet`
+               - ENV variables:
+                   - CM_MODEL: `retinanet`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_cpu,_offline,_onnxruntime,_resnet50`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--count=value`  &rarr;  `CM_MLPERF_LOADGEN_QUERY_COUNT=value`
+    * `--max_batchsize=value`  &rarr;  `CM_MLPERF_LOADGEN_MAX_BATCHSIZE=value`
+    * `--mlperf_conf=value`  &rarr;  `CM_MLPERF_CONF=value`
+    * `--mode=value`  &rarr;  `CM_MLPERF_LOADGEN_MODE=value`
+    * `--output_dir=value`  &rarr;  `CM_MLPERF_OUTPUT_DIR=value`
+    * `--performance_sample_count=value`  &rarr;  `CM_MLPERF_LOADGEN_PERFORMANCE_SAMPLE_COUNT=value`
+    * `--scenario=value`  &rarr;  `CM_MLPERF_LOADGEN_SCENARIO=value`
+    * `--user_conf=value`  &rarr;  `CM_MLPERF_USER_CONF=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_BATCH_COUNT: `1`
+    * CM_BATCH_SIZE: `1`
+    * CM_FAST_COMPILATION: `yes`
+    * CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `cpp`
 
 
 
 ___
 #### Script output
-`cmr "app mlcommons mlperf inference cpp [,variations]" [--input_flags] -j`
+```bash
+cmr "app mlcommons mlperf inference cpp [variations]" [--input_flags] -j
+```

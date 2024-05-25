@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=app,mlperf,inference,tflite-cpp`
 
-    `cm run script --tags=app,mlperf,inference,tflite-cpp[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=app,mlperf,inference,tflite-cpp[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "app mlperf inference tflite-cpp"`
 
-    `cmr "app mlperf inference tflite-cpp [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "app mlperf inference tflite-cpp [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,191 +67,170 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "app mlperf inference tflite-cpp[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "app mlperf inference tflite-cpp[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_armnn`
-      - Environment variables:
-        - *CM_MLPERF_TFLITE_USE_ARMNN*: `yes`
-        - *CM_TMP_LINK_LIBS*: `tensorflowlite,armnn`
-      - Workflow:
-    * `_armnn,tflite`
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `armnn_tflite`
-        - *CM_MLPERF_BACKEND_VERSION*: `<<<CM_LIB_ARMNN_VERSION>>>`
-        - *CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX*: `tflite_armnn_cpp`
-        - *CM_TMP_LINK_LIBS*: `tensorflowlite,armnn,armnnTfLiteParser`
-        - *CM_TMP_SRC_FOLDER*: `armnn`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**backend**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_tf`
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `tf`
-      - Workflow:
-    * **`_tflite`** (default)
-      - Environment variables:
-        - *CM_MLPERF_BACKEND*: `tflite`
-        - *CM_MLPERF_BACKEND_VERSION*: `master`
-        - *CM_TMP_LINK_LIBS*: `tensorflowlite`
-        - *CM_TMP_SRC_FOLDER*: `src`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_armnn`
+               - ENV variables:
+                   - CM_MLPERF_TFLITE_USE_ARMNN: `yes`
+                   - CM_TMP_LINK_LIBS: `tensorflowlite,armnn`
+
+        </details>
 
 
-  * Group "**device**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**backend**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_cpu`** (default)
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `cpu`
-      - Workflow:
-    * `_gpu`
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `gpu`
-        - *CM_MLPERF_DEVICE_LIB_NAMESPEC*: `cudart`
-      - Workflow:
+        * `_tf`
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `tf`
+        * **`_tflite`** (default)
+               - ENV variables:
+                   - CM_MLPERF_BACKEND: `tflite`
+                   - CM_MLPERF_BACKEND_VERSION: `master`
+                   - CM_TMP_LINK_LIBS: `tensorflowlite`
+                   - CM_TMP_SRC_FOLDER: `src`
 
-    </details>
-
-
-  * Group "**loadgen-scenario**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_singlestream`** (default)
-      - Environment variables:
-        - *CM_MLPERF_LOADGEN_SCENARIO*: `SingleStream`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**model**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**device**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_efficientnet`
-      - Environment variables:
-        - *CM_MODEL*: `efficientnet`
-      - Workflow:
-    * `_mobilenet`
-      - Environment variables:
-        - *CM_MODEL*: `mobilenet`
-      - Workflow:
-    * **`_resnet50`** (default)
-      - Environment variables:
-        - *CM_MODEL*: `resnet50`
-      - Workflow:
+        * **`_cpu`** (default)
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `cpu`
+        * `_gpu`
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `gpu`
+                   - CM_MLPERF_DEVICE_LIB_NAMESPEC: `cudart`
 
-    </details>
+        </details>
 
 
-  * Group "**optimization-target**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**loadgen-scenario**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_use-neon`
-      - Environment variables:
-        - *CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX1*: `using_neon`
-        - *CM_MLPERF_TFLITE_USE_NEON*: `1`
-      - Workflow:
-    * `_use-opencl`
-      - Environment variables:
-        - *CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX1*: `using_opencl`
-        - *CM_MLPERF_TFLITE_USE_OPENCL*: `1`
-      - Workflow:
+        * **`_singlestream`** (default)
+               - ENV variables:
+                   - CM_MLPERF_LOADGEN_SCENARIO: `SingleStream`
 
-    </details>
+        </details>
 
 
-  * Group "**precision**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**model**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_fp32`** (default)
-      - Environment variables:
-        - *CM_MLPERF_MODEL_PRECISION*: `float32`
-      - Workflow:
-    * `_int8`
-      - Environment variables:
-        - *CM_DATASET_COMPRESSED*: `on`
-        - *CM_MLPERF_MODEL_PRECISION*: `int8`
-      - Workflow:
-    * `_uint8`
-      - Environment variables:
-        - *CM_DATASET_COMPRESSED*: `on`
-        - *CM_MLPERF_MODEL_PRECISION*: `uint8`
-      - Workflow:
+        * `_efficientnet`
+               - ENV variables:
+                   - CM_MODEL: `efficientnet`
+        * `_mobilenet`
+               - ENV variables:
+                   - CM_MODEL: `mobilenet`
+        * **`_resnet50`** (default)
+               - ENV variables:
+                   - CM_MODEL: `resnet50`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**optimization-target**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_cpu,_fp32,_resnet50,_singlestream,_tflite`
+        * `_use-neon`
+               - ENV variables:
+                   - CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX1: `using_neon`
+                   - CM_MLPERF_TFLITE_USE_NEON: `1`
+        * `_use-opencl`
+               - ENV variables:
+                   - CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX1: `using_opencl`
+                   - CM_MLPERF_TFLITE_USE_OPENCL: `1`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--compressed_dataset=value`  &rarr;  `CM_DATASET_COMPRESSED=value`
-* `--count=value`  &rarr;  `CM_MLPERF_LOADGEN_QUERY_COUNT=value`
-* `--mlperf_conf=value`  &rarr;  `CM_MLPERF_CONF=value`
-* `--mode=value`  &rarr;  `CM_MLPERF_LOADGEN_MODE=value`
-* `--output_dir=value`  &rarr;  `CM_MLPERF_OUTPUT_DIR=value`
-* `--performance_sample_count=value`  &rarr;  `CM_MLPERF_LOADGEN_PERFORMANCE_SAMPLE_COUNT=value`
-* `--scenario=value`  &rarr;  `CM_MLPERF_LOADGEN_SCENARIO=value`
-* `--user_conf=value`  &rarr;  `CM_MLPERF_USER_CONF=value`
-* `--verbose=value`  &rarr;  `CM_VERBOSE=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "compressed_dataset":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**precision**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_DATASET_COMPRESSED: `off`
-* CM_DATASET_INPUT_SQUARE_SIDE: `224`
-* CM_FAST_COMPILATION: `yes`
-* CM_LOADGEN_BUFFER_SIZE: `1024`
-* CM_MLPERF_LOADGEN_MODE: `accuracy`
-* CM_MLPERF_LOADGEN_SCENARIO: `SingleStream`
-* CM_MLPERF_LOADGEN_TRIGGER_COLD_RUN: `0`
-* CM_MLPERF_OUTPUT_DIR: `.`
-* CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `tflite_cpp`
-* CM_MLPERF_TFLITE_USE_NEON: `0`
-* CM_MLPERF_TFLITE_USE_OPENCL: `0`
-* CM_ML_MODEL_GIVEN_CHANNEL_MEANS: `123.68 116.78 103.94`
-* CM_ML_MODEL_NORMALIZE_DATA: `0`
-* CM_ML_MODEL_SUBTRACT_MEANS: `1`
-* CM_VERBOSE: `0`
+        * **`_fp32`** (default)
+               - ENV variables:
+                   - CM_MLPERF_MODEL_PRECISION: `float32`
+        * `_int8`
+               - ENV variables:
+                   - CM_DATASET_COMPRESSED: `on`
+                   - CM_MLPERF_MODEL_PRECISION: `int8`
+        * `_uint8`
+               - ENV variables:
+                   - CM_DATASET_COMPRESSED: `on`
+                   - CM_MLPERF_MODEL_PRECISION: `uint8`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_cpu,_fp32,_resnet50,_singlestream,_tflite`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--compressed_dataset=value`  &rarr;  `CM_DATASET_COMPRESSED=value`
+    * `--count=value`  &rarr;  `CM_MLPERF_LOADGEN_QUERY_COUNT=value`
+    * `--mlperf_conf=value`  &rarr;  `CM_MLPERF_CONF=value`
+    * `--mode=value`  &rarr;  `CM_MLPERF_LOADGEN_MODE=value`
+    * `--output_dir=value`  &rarr;  `CM_MLPERF_OUTPUT_DIR=value`
+    * `--performance_sample_count=value`  &rarr;  `CM_MLPERF_LOADGEN_PERFORMANCE_SAMPLE_COUNT=value`
+    * `--scenario=value`  &rarr;  `CM_MLPERF_LOADGEN_SCENARIO=value`
+    * `--user_conf=value`  &rarr;  `CM_MLPERF_USER_CONF=value`
+    * `--verbose=value`  &rarr;  `CM_VERBOSE=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_DATASET_COMPRESSED: `off`
+    * CM_DATASET_INPUT_SQUARE_SIDE: `224`
+    * CM_FAST_COMPILATION: `yes`
+    * CM_LOADGEN_BUFFER_SIZE: `1024`
+    * CM_MLPERF_LOADGEN_MODE: `accuracy`
+    * CM_MLPERF_LOADGEN_SCENARIO: `SingleStream`
+    * CM_MLPERF_LOADGEN_TRIGGER_COLD_RUN: `0`
+    * CM_MLPERF_OUTPUT_DIR: `.`
+    * CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `tflite_cpp`
+    * CM_MLPERF_TFLITE_USE_NEON: `0`
+    * CM_MLPERF_TFLITE_USE_OPENCL: `0`
+    * CM_ML_MODEL_GIVEN_CHANNEL_MEANS: `123.68 116.78 103.94`
+    * CM_ML_MODEL_NORMALIZE_DATA: `0`
+    * CM_ML_MODEL_SUBTRACT_MEANS: `1`
+    * CM_VERBOSE: `0`
 
 
 
 ___
 #### Script output
-`cmr "app mlperf inference tflite-cpp [,variations]" [--input_flags] -j`
+```bash
+cmr "app mlperf inference tflite-cpp [variations]" [--input_flags] -j
+```

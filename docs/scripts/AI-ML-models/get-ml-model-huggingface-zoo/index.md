@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,ml-model,huggingface,zoo`
 
-    `cm run script --tags=get,ml-model,huggingface,zoo[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,ml-model,huggingface,zoo[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get ml-model huggingface zoo"`
 
-    `cmr "get ml-model huggingface zoo [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get ml-model huggingface zoo [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,73 +68,62 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get ml-model huggingface zoo[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get ml-model huggingface zoo[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_model-stub.#`
-      - Environment variables:
-        - *CM_MODEL_ZOO_STUB*: `#`
-      - Workflow:
-    * `_onnx-subfolder`
-      - Environment variables:
-        - *CM_HF_SUBFOLDER*: `onnx`
-      - Workflow:
-    * `_pierreguillou_bert_base_cased_squad_v1.1_portuguese`
-      - Environment variables:
-        - *CM_MODEL_ZOO_STUB*: `pierreguillou/bert-base-cased-squad-v1.1-portuguese`
-      - Workflow:
-    * `_prune`
-      - Environment variables:
-        - *CM_MODEL_TASK*: `prune`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**download-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_clone-repo`
-      - Environment variables:
-        - *CM_GIT_CLONE_REPO*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,git,repo,_lfs
-             - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_model-stub.#`
+               - ENV variables:
+                   - CM_MODEL_ZOO_STUB: `#`
+        * `_onnx-subfolder`
+               - ENV variables:
+                   - CM_HF_SUBFOLDER: `onnx`
+        * `_pierreguillou_bert_base_cased_squad_v1.1_portuguese`
+               - ENV variables:
+                   - CM_MODEL_ZOO_STUB: `pierreguillou/bert-base-cased-squad-v1.1-portuguese`
+        * `_prune`
+               - ENV variables:
+                   - CM_MODEL_TASK: `prune`
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--download_path=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
-* `--env_key=value`  &rarr;  `CM_MODEL_ZOO_ENV_KEY=value`
-* `--full_subfolder=value`  &rarr;  `CM_HF_FULL_SUBFOLDER=value`
-* `--model_filename=value`  &rarr;  `CM_MODEL_ZOO_FILENAME=value`
-* `--revision=value`  &rarr;  `CM_HF_REVISION=value`
-* `--subfolder=value`  &rarr;  `CM_HF_SUBFOLDER=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "download_path":...}
-```
-
-</details>
+        </details>
 
 
-##### Native script being run
+      * Group "**download-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_clone-repo`
+               - ENV variables:
+                   - CM_GIT_CLONE_REPO: `yes`
+
+        </details>
+
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--download_path=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
+    * `--env_key=value`  &rarr;  `CM_MODEL_ZOO_ENV_KEY=value`
+    * `--full_subfolder=value`  &rarr;  `CM_HF_FULL_SUBFOLDER=value`
+    * `--model_filename=value`  &rarr;  `CM_MODEL_ZOO_FILENAME=value`
+    * `--revision=value`  &rarr;  `CM_HF_REVISION=value`
+    * `--subfolder=value`  &rarr;  `CM_HF_SUBFOLDER=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-huggingface-zoo/run.sh)
 === "Windows"
@@ -144,4 +131,6 @@ r=cm.access({... , "download_path":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-huggingface-zoo/run.bat)
 ___
 #### Script output
-`cmr "get ml-model huggingface zoo [,variations]" [--input_flags] -j`
+```bash
+cmr "get ml-model huggingface zoo [variations]" [--input_flags] -j
+```

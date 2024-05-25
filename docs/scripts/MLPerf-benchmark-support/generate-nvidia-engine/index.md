@@ -34,19 +34,17 @@ This CM script is in draft stage
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=generate,engine,mlperf,inference,nvidia`
 
-    `cm run script --tags=generate,engine,mlperf,inference,nvidia[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=generate,engine,mlperf,inference,nvidia[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "generate engine mlperf inference nvidia"`
 
-    `cmr "generate engine mlperf inference nvidia [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "generate engine mlperf inference nvidia [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -74,99 +72,94 @@ This CM script is in draft stage
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "generate engine mlperf inference nvidia[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "generate engine mlperf inference nvidia[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_batch_size.#`
-      - Environment variables:
-        - *CM_MODEL_BATCH_SIZE*: `None`
-      - Workflow:
-    * `_copy_streams.#`
-      - Environment variables:
-        - *CM_GPU_COPY_STREAMS*: `None`
-      - Workflow:
-    * `_cuda`
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `gpu`
-        - *CM_MLPERF_DEVICE_LIB_NAMESPEC*: `cudart`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**device**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_cpu`** (default)
-      - Environment variables:
-        - *CM_MLPERF_DEVICE*: `cpu`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_batch_size.#`
+               - ENV variables:
+                   - CM_MODEL_BATCH_SIZE: `None`
+        * `_copy_streams.#`
+               - ENV variables:
+                   - CM_GPU_COPY_STREAMS: `None`
+        * `_cuda`
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `gpu`
+                   - CM_MLPERF_DEVICE_LIB_NAMESPEC: `cudart`
 
-
-  * Group "**model**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_resnet50`** (default)
-      - Environment variables:
-        - *CM_MODEL*: `resnet50`
-      - Workflow:
-    * `_retinanet`
-      - Environment variables:
-        - *CM_MODEL*: `retinanet`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**device**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_cpu,_resnet50`
+        * **`_cpu`** (default)
+               - ENV variables:
+                   - CM_MLPERF_DEVICE: `cpu`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--output_dir=value`  &rarr;  `CM_MLPERF_OUTPUT_DIR=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "output_dir":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**model**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_BATCH_COUNT: `1`
-* CM_BATCH_SIZE: `1`
-* CM_LOADGEN_SCENARIO: `Offline`
-* CM_GPU_COPY_STREAMS: `1`
-* CM_TENSORRT_WORKSPACE_SIZE: `4194304`
+        * **`_resnet50`** (default)
+               - ENV variables:
+                   - CM_MODEL: `resnet50`
+        * `_retinanet`
+               - ENV variables:
+                   - CM_MODEL: `retinanet`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_cpu,_resnet50`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--output_dir=value`  &rarr;  `CM_MLPERF_OUTPUT_DIR=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_BATCH_COUNT: `1`
+    * CM_BATCH_SIZE: `1`
+    * CM_LOADGEN_SCENARIO: `Offline`
+    * CM_GPU_COPY_STREAMS: `1`
+    * CM_TENSORRT_WORKSPACE_SIZE: `4194304`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/generate-nvidia-engine/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "generate engine mlperf inference nvidia [,variations]" [--input_flags] -j`
+```bash
+cmr "generate engine mlperf inference nvidia [variations]" [--input_flags] -j
+```

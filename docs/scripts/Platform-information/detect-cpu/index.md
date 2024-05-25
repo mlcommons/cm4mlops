@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=detect,cpu,detect-cpu,info`
 
-    `cm run script --tags=detect,cpu,detect-cpu,info `
-
+    ```bash
+    cm run script --tags=detect,cpu,detect-cpu,info 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "detect cpu detect-cpu info"`
 
-    `cmr "detect cpu detect-cpu info " `
-
+    ```bash
+    cmr "detect cpu detect-cpu info " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,12 +68,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "detect cpu detect-cpu info" `
-
+    ```bash
+    cm docker script "detect cpu detect-cpu info" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-cpu/run.sh)
 === "Windows"
@@ -81,4 +82,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-cpu/run.bat)
 ___
 #### Script output
-`cmr "detect cpu detect-cpu info "  -j`
+```bash
+cmr "detect cpu detect-cpu info "  -j
+```

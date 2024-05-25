@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=test,download-and-extract-artifacts`
 
-    `cm run script --tags=test,download-and-extract-artifacts `
-
+    ```bash
+    cm run script --tags=test,download-and-extract-artifacts 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "test download-and-extract-artifacts"`
 
-    `cmr "test download-and-extract-artifacts " `
-
+    ```bash
+    cmr "test download-and-extract-artifacts " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,12 +68,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "test download-and-extract-artifacts" `
-
+    ```bash
+    cm docker script "test download-and-extract-artifacts" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/test-download-and-extract-artifacts/run.sh)
 === "Windows"
@@ -81,4 +82,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/test-download-and-extract-artifacts/run.bat)
 ___
 #### Script output
-`cmr "test download-and-extract-artifacts "  -j`
+```bash
+cmr "test download-and-extract-artifacts "  -j
+```

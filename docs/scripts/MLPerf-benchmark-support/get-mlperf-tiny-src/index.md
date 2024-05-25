@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,src,source,tiny,tiny-src,tiny-source,tinymlperf,tinymlperf-src,mlperf,mlcommons`
 
-    `cm run script --tags=get,src,source,tiny,tiny-src,tiny-source,tinymlperf,tinymlperf-src,mlperf,mlcommons `
-
+    ```bash
+    cm run script --tags=get,src,source,tiny,tiny-src,tiny-source,tinymlperf,tinymlperf-src,mlperf,mlcommons 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get src source tiny tiny-src tiny-source tinymlperf tinymlperf-src mlperf mlcommons"`
 
-    `cmr "get src source tiny tiny-src tiny-source tinymlperf tinymlperf-src mlperf mlcommons " `
-
+    ```bash
+    cmr "get src source tiny tiny-src tiny-source tinymlperf tinymlperf-src mlperf mlcommons " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,23 +67,26 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get src source tiny tiny-src tiny-source tinymlperf tinymlperf-src mlperf mlcommons" `
-
+    ```bash
+    cm docker script "get src source tiny tiny-src tiny-source tinymlperf tinymlperf-src mlperf mlcommons" 
+    ```
 ___
 
-#### Default environment
+=== "Default environment"
+
+    #### Default environment
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
-* CM_GIT_CHECKOUT: `master`
-* CM_GIT_PATCH: `no`
-* CM_GIT_RECURSE_SUBMODULES: ``
-* CM_GIT_URL: `https://github.com/mlcommons/tiny.git`
+    * CM_GIT_CHECKOUT: `master`
+    * CM_GIT_PATCH: `no`
+    * CM_GIT_RECURSE_SUBMODULES: ``
+    * CM_GIT_URL: `https://github.com/mlcommons/tiny.git`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-tiny-src/run.sh)
 === "Windows"
@@ -91,4 +94,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-tiny-src/run.bat)
 ___
 #### Script output
-`cmr "get src source tiny tiny-src tiny-source tinymlperf tinymlperf-src mlperf mlcommons "  -j`
+```bash
+cmr "get src source tiny tiny-src tiny-source tinymlperf tinymlperf-src mlperf mlcommons "  -j
+```

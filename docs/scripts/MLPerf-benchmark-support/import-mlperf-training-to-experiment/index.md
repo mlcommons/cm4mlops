@@ -31,17 +31,17 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment`
 
-    `cm run script --tags=import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment [--input_flags]`
-
+    ```bash
+    cm run script --tags=import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "import mlperf training mlperf-training experiment 2experiment to-experiment"`
 
-    `cmr "import mlperf training mlperf-training experiment 2experiment to-experiment " [--input_flags]`
-
+    ```bash
+    cmr "import mlperf training mlperf-training experiment 2experiment to-experiment " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,32 +69,29 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "import mlperf training mlperf-training experiment 2experiment to-experiment" [--input_flags]`
-
+    ```bash
+    cm docker script "import mlperf training mlperf-training experiment 2experiment to-experiment" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--target_repo=value`  &rarr;  `CM_IMPORT_MLPERF_TRAINING_TARGET_REPO=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "target_repo":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--target_repo=value`  &rarr;  `CM_IMPORT_MLPERF_TRAINING_TARGET_REPO=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run_mlperf_logger.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/import-mlperf-training-to-experiment/run_mlperf_logger.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "import mlperf training mlperf-training experiment 2experiment to-experiment " [--input_flags] -j`
+```bash
+cmr "import mlperf training mlperf-training experiment 2experiment to-experiment " [--input_flags] -j
+```

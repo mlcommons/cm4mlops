@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,qaic,from.src,software,compute,compute-sdk,qaic-compute-sdk,sdk`
 
-    `cm run script --tags=get,qaic,from.src,software,compute,compute-sdk,qaic-compute-sdk,sdk[,variations] `
-
+    ```bash
+    cm run script --tags=get,qaic,from.src,software,compute,compute-sdk,qaic-compute-sdk,sdk[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get qaic from.src software compute compute-sdk qaic-compute-sdk sdk"`
 
-    `cmr "get qaic from.src software compute compute-sdk qaic-compute-sdk sdk [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get qaic from.src software compute compute-sdk qaic-compute-sdk sdk [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,71 +67,70 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get qaic from.src software compute compute-sdk qaic-compute-sdk sdk[variations]" `
-
+    ```bash
+    cm docker script "get qaic from.src software compute compute-sdk qaic-compute-sdk sdk[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**installation-mode**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_debug`
-      - Environment variables:
-        - *CM_QAIC_COMPUTE_SDK_INSTALL_MODE*: `debug`
-      - Workflow:
-    * **`_release`** (default)
-      - Environment variables:
-        - *CM_QAIC_COMPUTE_SDK_INSTALL_MODE*: `release`
-      - Workflow:
-    * `_release-assert`
-      - Environment variables:
-        - *CM_QAIC_COMPUTE_SDK_INSTALL_MODE*: `release-assert`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `#`
+
+        </details>
 
 
-  * Group "**repo-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**installation-mode**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
-    * **`_repo.quic`** (default)
-      - Environment variables:
-        - *CM_GIT_URL*: `https://github.com/quic/software-kit-for-qualcomm-cloud-ai-100-cc`
-      - Workflow:
+        * `_debug`
+               - ENV variables:
+                   - CM_QAIC_COMPUTE_SDK_INSTALL_MODE: `debug`
+        * **`_release`** (default)
+               - ENV variables:
+                   - CM_QAIC_COMPUTE_SDK_INSTALL_MODE: `release`
+        * `_release-assert`
+               - ENV variables:
+                   - CM_QAIC_COMPUTE_SDK_INSTALL_MODE: `release-assert`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**repo-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_release,_repo.quic`
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+        * **`_repo.quic`** (default)
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/quic/software-kit-for-qualcomm-cloud-ai-100-cc`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_release,_repo.quic`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-qaic-compute-sdk-from-src/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get qaic from.src software compute compute-sdk qaic-compute-sdk sdk [,variations]"  -j`
+```bash
+cmr "get qaic from.src software compute compute-sdk qaic-compute-sdk sdk [variations]"  -j
+```

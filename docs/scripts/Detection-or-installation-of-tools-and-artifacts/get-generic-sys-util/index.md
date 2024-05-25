@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,sys-util,generic,generic-sys-util`
 
-    `cm run script --tags=get,sys-util,generic,generic-sys-util[,variations] `
-
+    ```bash
+    cm run script --tags=get,sys-util,generic,generic-sys-util[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get sys-util generic generic-sys-util"`
 
-    `cmr "get sys-util generic generic-sys-util [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get sys-util generic generic-sys-util [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,181 +67,148 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get sys-util generic generic-sys-util[variations]" `
-
+    ```bash
+    cm docker script "get sys-util generic generic-sys-util[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_g++-12`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `g++12`
-      - Workflow:
-    * `_gflags-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `gflags-dev`
-      - Workflow:
-    * `_git-lfs`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `git-lfs`
-      - Workflow:
-    * `_glog-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `glog-dev`
-      - Workflow:
-    * `_libboost-all-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libboost-all-dev`
-      - Workflow:
-    * `_libbz2-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libbz2_dev`
-      - Workflow:
-    * `_libev-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libev_dev`
-      - Workflow:
-    * `_libffi-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libffi_dev`
-      - Workflow:
-    * `_libffi7`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libffi7`
-      - Workflow:
-    * `_libgdbm-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libgdbm_dev`
-      - Workflow:
-    * `_libgmock-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libgmock-dev`
-      - Workflow:
-    * `_liblzma-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `liblzma_dev`
-      - Workflow:
-    * `_libmpfr-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libmpfr-dev`
-      - Workflow:
-    * `_libncurses-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libncurses_dev`
-      - Workflow:
-    * `_libnuma-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libnuma-dev`
-      - Workflow:
-    * `_libpci-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libpci-dev`
-      - Workflow:
-    * `_libre2-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libre2-dev`
-      - Workflow:
-    * `_libreadline-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libreadline_dev`
-      - Workflow:
-    * `_libsqlite3-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libsqlite3_dev`
-      - Workflow:
-    * `_libssl-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libssl_dev`
-      - Workflow:
-    * `_libudev-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `libudev-dev`
-      - Workflow:
-    * `_ninja-build`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `ninja-build`
-      - Workflow:
-    * `_nlohmann-json3-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `nlohmann_json3_dev`
-      - Workflow:
-    * `_ntpdate`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `ntpdate`
-      - Workflow:
-    * `_numactl`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `numactl`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * install,numactl,from.src
-             * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_HOST_OS_FLAVOR': ['rhel'], 'CM_HOST_OS_VERSION': ['9.1', '9.2', '9.3']}`
-             - CM script: [install-numactl-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-numactl-from-src)
-    * `_nvidia-cuda-toolkit`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `nvidia-cuda-toolkit`
-      - Workflow:
-    * `_rapidjson-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `rapidjson-dev`
-      - Workflow:
-    * `_rsync`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `rsync`
-      - Workflow:
-    * `_screen`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `screen`
-      - Workflow:
-    * `_sox`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `sox`
-      - Workflow:
-    * `_tk-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `tk_dev`
-      - Workflow:
-    * `_transmission`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `transmission`
-      - Workflow:
-    * `_wget`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `wget`
-      - Workflow:
-    * `_zlib`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `zlib`
-      - Workflow:
-    * `_zlib1g-dev`
-      - Environment variables:
-        - *CM_SYS_UTIL_NAME*: `zlib1g_dev`
-      - Workflow:
-
-    </details>
-
-#### Default environment
+=== "Variations"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Variations
 
-* CM_CLEAN_DIRS: `bin`
-* CM_SUDO: `sudo`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_g++-12`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `g++12`
+        * `_gflags-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `gflags-dev`
+        * `_git-lfs`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `git-lfs`
+        * `_glog-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `glog-dev`
+        * `_libboost-all-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libboost-all-dev`
+        * `_libbz2-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libbz2_dev`
+        * `_libev-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libev_dev`
+        * `_libffi-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libffi_dev`
+        * `_libffi7`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libffi7`
+        * `_libgdbm-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libgdbm_dev`
+        * `_libgmock-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libgmock-dev`
+        * `_liblzma-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `liblzma_dev`
+        * `_libmpfr-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libmpfr-dev`
+        * `_libncurses-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libncurses_dev`
+        * `_libnuma-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libnuma-dev`
+        * `_libpci-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libpci-dev`
+        * `_libre2-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libre2-dev`
+        * `_libreadline-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libreadline_dev`
+        * `_libsqlite3-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libsqlite3_dev`
+        * `_libssl-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libssl_dev`
+        * `_libudev-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `libudev-dev`
+        * `_ninja-build`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `ninja-build`
+        * `_nlohmann-json3-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `nlohmann_json3_dev`
+        * `_ntpdate`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `ntpdate`
+        * `_numactl`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `numactl`
+        * `_nvidia-cuda-toolkit`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `nvidia-cuda-toolkit`
+        * `_rapidjson-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `rapidjson-dev`
+        * `_rsync`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `rsync`
+        * `_screen`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `screen`
+        * `_sox`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `sox`
+        * `_tk-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `tk_dev`
+        * `_transmission`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `transmission`
+        * `_wget`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `wget`
+        * `_zlib`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `zlib`
+        * `_zlib1g-dev`
+               - ENV variables:
+                   - CM_SYS_UTIL_NAME: `zlib1g_dev`
+
+        </details>
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_CLEAN_DIRS: `bin`
+    * CM_SUDO: `sudo`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-sys-util/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get sys-util generic generic-sys-util [,variations]"  -j`
+```bash
+cmr "get sys-util generic generic-sys-util [variations]"  -j
+```

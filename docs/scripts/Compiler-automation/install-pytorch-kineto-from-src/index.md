@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,get,src,from.src,pytorch-kineto,kineto,src-pytorch-kineto`
 
-    `cm run script --tags=install,get,src,from.src,pytorch-kineto,kineto,src-pytorch-kineto[,variations] `
-
+    ```bash
+    cm run script --tags=install,get,src,from.src,pytorch-kineto,kineto,src-pytorch-kineto[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install get src from.src pytorch-kineto kineto src-pytorch-kineto"`
 
-    `cmr "install get src from.src pytorch-kineto kineto src-pytorch-kineto [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "install get src from.src pytorch-kineto kineto src-pytorch-kineto [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,74 +67,69 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install get src from.src pytorch-kineto kineto src-pytorch-kineto[variations]" `
-
+    ```bash
+    cm docker script "install get src from.src pytorch-kineto kineto src-pytorch-kineto[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `#`
-      - Workflow:
-    * `_cuda`
-      - Environment variables:
-        - *CUDA_HOME*: `<<<CM_CUDA_INSTALLED_PATH>>>`
-        - *CUDA_NVCC_EXECUTABLE*: `<<<CM_NVCC_BIN_WITH_PATH>>>`
-        - *CUDNN_INCLUDE_PATH*: `<<<CM_CUDA_PATH_INCLUDE_CUDNN>>>`
-        - *CUDNN_LIBRARY_PATH*: `<<<CM_CUDA_PATH_LIB_CUDNN>>>`
-        - *TORCH_CUDA_ARCH_LIST*: `Ampere Ada Hopper`
-        - *TORCH_CXX_FLAGS*: `-D_GLIBCXX_USE_CXX11_ABI=1`
-        - *USE_CUDA*: `1`
-        - *USE_CUDNN*: `1`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,cuda,_cudnn
-             * CM names: `--adr.['cuda']...`
-             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
-    * `_sha.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_SHA*: `#`
-      - Workflow:
-    * `_tag.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_TAG*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**repo**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
-    * **`_repo.https://github.com/pytorch/kineto`** (default)
-      - Environment variables:
-        - *CM_GIT_URL*: `https://github.com/pytorch/kineto`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `#`
+        * `_cuda`
+               - ENV variables:
+                   - CUDA_HOME: `<<<CM_CUDA_INSTALLED_PATH>>>`
+                   - CUDA_NVCC_EXECUTABLE: `<<<CM_NVCC_BIN_WITH_PATH>>>`
+                   - CUDNN_INCLUDE_PATH: `<<<CM_CUDA_PATH_INCLUDE_CUDNN>>>`
+                   - CUDNN_LIBRARY_PATH: `<<<CM_CUDA_PATH_LIB_CUDNN>>>`
+                   - TORCH_CUDA_ARCH_LIST: `Ampere Ada Hopper`
+                   - TORCH_CXX_FLAGS: `-D_GLIBCXX_USE_CXX11_ABI=1`
+                   - USE_CUDA: `1`
+                   - USE_CUDNN: `1`
+        * `_sha.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_SHA: `#`
+        * `_tag.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_TAG: `#`
+
+        </details>
 
 
-#### Default variations
+      * Group "**repo**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_repo.https://github.com/pytorch/kineto`
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+        * **`_repo.https://github.com/pytorch/kineto`** (default)
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/pytorch/kineto`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_repo.https://github.com/pytorch/kineto`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-pytorch-kineto-from-src/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install get src from.src pytorch-kineto kineto src-pytorch-kineto [,variations]"  -j`
+```bash
+cmr "install get src from.src pytorch-kineto kineto src-pytorch-kineto [variations]"  -j
+```

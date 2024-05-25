@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=flash,tiny,mlperf,mlcommons`
 
-    `cm run script --tags=flash,tiny,mlperf,mlcommons[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=flash,tiny,mlperf,mlcommons[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "flash tiny mlperf mlcommons"`
 
-    `cmr "flash tiny mlperf mlcommons [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "flash tiny mlperf mlcommons [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,61 +68,52 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "flash tiny mlperf mlcommons[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "flash tiny mlperf mlcommons[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_NRF`
-      - Workflow:
-    * `_NUCLEO`
-      - Workflow:
-    * `_ad`
-      - Workflow:
-    * `_cmsis_nn`
-      - Workflow:
-    * `_ic`
-      - Workflow:
-    * `_kws`
-      - Workflow:
-    * `_native`
-      - Workflow:
-    * `_vww`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--build_dir=value`  &rarr;  `CM_TINY_BUILD_DIR=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_NRF`
+        * `_NUCLEO`
+        * `_ad`
+        * `_cmsis_nn`
+        * `_ic`
+        * `_kws`
+        * `_native`
+        * `_vww`
 
-```python
-r=cm.access({... , "build_dir":...}
-```
+        </details>
 
-</details>
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--build_dir=value`  &rarr;  `CM_TINY_BUILD_DIR=value`
+
+
 
 #### Versions
 Default version: `r1.0`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/flash-tinyml-binary/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "flash tiny mlperf mlcommons [,variations]" [--input_flags] -j`
+```bash
+cmr "flash tiny mlperf mlcommons [variations]" [--input_flags] -j
+```

@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,javac`
 
-    `cm run script --tags=get,javac[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,javac[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get javac"`
 
-    `cmr "get javac [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get javac [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,52 +68,50 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get javac[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get javac[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_install`
-      - Environment variables:
-        - *CM_JAVAC_PREBUILT_INSTALL*: `on`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--install=value`  &rarr;  `CM_JAVAC_PREBUILT_INSTALL=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_install`
+               - ENV variables:
+                   - CM_JAVAC_PREBUILT_INSTALL: `on`
 
-```python
-r=cm.access({... , "install":...}
-```
+        </details>
 
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_JAVAC_PREBUILT_VERSION: `19`
-* CM_JAVAC_PREBUILT_BUILD: `36`
-* CM_JAVAC_PREBUILT_URL: `https://download.java.net/openjdk/jdk${CM_JAVAC_PREBUILT_VERSION}/ri/`
-* CM_JAVAC_PREBUILT_FILENAME: `openjdk-${CM_JAVAC_PREBUILT_VERSION}+${CM_JAVAC_PREBUILT_BUILD}_${CM_JAVAC_PREBUILT_HOST_OS}-x64_bin`
+    * `--install=value`  &rarr;  `CM_JAVAC_PREBUILT_INSTALL=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_JAVAC_PREBUILT_VERSION: `19`
+    * CM_JAVAC_PREBUILT_BUILD: `36`
+    * CM_JAVAC_PREBUILT_URL: `https://download.java.net/openjdk/jdk${CM_JAVAC_PREBUILT_VERSION}/ri/`
+    * CM_JAVAC_PREBUILT_FILENAME: `openjdk-${CM_JAVAC_PREBUILT_VERSION}+${CM_JAVAC_PREBUILT_BUILD}_${CM_JAVAC_PREBUILT_HOST_OS}-x64_bin`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-javac/run.sh)
 === "Windows"
@@ -123,4 +119,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-javac/run.bat)
 ___
 #### Script output
-`cmr "get javac [,variations]" [--input_flags] -j`
+```bash
+cmr "get javac [variations]" [--input_flags] -j
+```

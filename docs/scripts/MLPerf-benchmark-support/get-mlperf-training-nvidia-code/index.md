@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,nvidia,mlperf,training,code,training-code`
 
-    `cm run script --tags=get,nvidia,mlperf,training,code,training-code[,variations] `
-
+    ```bash
+    cm run script --tags=get,nvidia,mlperf,training,code,training-code[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get nvidia mlperf training code training-code"`
 
-    `cmr "get nvidia mlperf training code training-code [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get nvidia mlperf training code training-code [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,38 +67,37 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get nvidia mlperf training code training-code[variations]" `
-
+    ```bash
+    cm docker script "get nvidia mlperf training code training-code[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**repo-owner**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_ctuning`
-      - Environment variables:
-        - *CM_TMP_TRAINING_SRC*: `ctuning`
-      - Workflow:
-    * `_custom`
-      - Workflow:
-    * **`_mlcommons`** (default)
-      - Environment variables:
-        - *CM_TMP_TRAINING_SRC*: `mlcommons`
-      - Workflow:
-    * `_nvidia-only`
-      - Environment variables:
-        - *CM_TMP_TRAINING_SRC*: `GATEOverflow`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_mlcommons`
+      * Group "**repo-owner**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_ctuning`
+               - ENV variables:
+                   - CM_TMP_TRAINING_SRC: `ctuning`
+        * `_custom`
+        * **`_mlcommons`** (default)
+               - ENV variables:
+                   - CM_TMP_TRAINING_SRC: `mlcommons`
+        * `_nvidia-only`
+               - ENV variables:
+                   - CM_TMP_TRAINING_SRC: `GATEOverflow`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_mlcommons`
 #### Versions
 Default version: `r3.0`
 
@@ -110,4 +107,6 @@ Default version: `r3.0`
 
 ___
 #### Script output
-`cmr "get nvidia mlperf training code training-code [,variations]"  -j`
+```bash
+cmr "get nvidia mlperf training code training-code [variations]"  -j
+```

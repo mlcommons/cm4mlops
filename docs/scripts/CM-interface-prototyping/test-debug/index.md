@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=test,cm-debug`
 
-    `cm run script --tags=test,cm-debug `
-
+    ```bash
+    cm run script --tags=test,cm-debug 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "test cm-debug"`
 
-    `cmr "test cm-debug " `
-
+    ```bash
+    cmr "test cm-debug " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,12 +68,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "test cm-debug" `
-
+    ```bash
+    cm docker script "test cm-debug" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/test-debug/run.sh)
 === "Windows"
@@ -81,4 +82,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/test-debug/run.bat)
 ___
 #### Script output
-`cmr "test cm-debug "  -j`
+```bash
+cmr "test cm-debug "  -j
+```

@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,git,repo,repository,clone`
 
-    `cm run script --tags=get,git,repo,repository,clone[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,git,repo,repository,clone[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get git repo repository clone"`
 
-    `cmr "get git repo repository clone [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get git repo repository clone [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,127 +68,113 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get git repo repository clone[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get git repo repository clone[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_lfs`
-      - Environment variables:
-        - *CM_GIT_REPO_NEEDS_LFS*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic,sys-util,_git-lfs
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-    * `_no-recurse-submodules`
-      - Environment variables:
-        - *CM_GIT_RECURSE_SUBMODULES*: ``
-      - Workflow:
-    * `_patch`
-      - Environment variables:
-        - *CM_GIT_PATCH*: `yes`
-      - Workflow:
-    * `_submodules.#`
-      - Environment variables:
-        - *CM_GIT_SUBMODULES*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**checkout**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_BRANCH*: `#`
-      - Workflow:
-    * `_sha.#`
-      - Environment variables:
-        - *CM_GIT_SHA*: `#`
-      - Workflow:
-    * `_tag.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_TAG*: `#`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_lfs`
+               - ENV variables:
+                   - CM_GIT_REPO_NEEDS_LFS: `yes`
+        * `_no-recurse-submodules`
+               - ENV variables:
+                   - CM_GIT_RECURSE_SUBMODULES: ``
+        * `_patch`
+               - ENV variables:
+                   - CM_GIT_PATCH: `yes`
+        * `_submodules.#`
+               - ENV variables:
+                   - CM_GIT_SUBMODULES: `#`
 
-
-  * Group "**git-history**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_full-history`
-      - Environment variables:
-        - *CM_GIT_DEPTH*: ``
-      - Workflow:
-    * **`_short-history`** (default)
-      - Environment variables:
-        - *CM_GIT_DEPTH*: `--depth 5`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**repo**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**checkout**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_BRANCH: `#`
+        * `_sha.#`
+               - ENV variables:
+                   - CM_GIT_SHA: `#`
+        * `_tag.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_TAG: `#`
 
-    </details>
-
-
-#### Default variations
-
-`_short-history`
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--branch=value`  &rarr;  `CM_GIT_CHECKOUT=value`
-* `--depth=value`  &rarr;  `CM_GIT_DEPTH=value`
-* `--env_key=value`  &rarr;  `CM_GIT_ENV_KEY=value`
-* `--folder=value`  &rarr;  `CM_GIT_CHECKOUT_FOLDER=value`
-* `--patch=value`  &rarr;  `CM_GIT_PATCH=value`
-* `--pull=value`  &rarr;  `CM_GIT_REPO_PULL=value`
-* `--submodules=value`  &rarr;  `CM_GIT_RECURSE_SUBMODULES=value`
-* `--update=value`  &rarr;  `CM_GIT_REPO_PULL=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "branch":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**git-history**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_GIT_DEPTH: `--depth 4`
-* CM_GIT_CHECKOUT_FOLDER: `repo`
-* CM_GIT_PATCH: `no`
-* CM_GIT_RECURSE_SUBMODULES: ` --recurse-submodules`
-* CM_GIT_URL: `https://github.com/mlcommons/ck.git`
+        * `_full-history`
+               - ENV variables:
+                   - CM_GIT_DEPTH: ``
+        * **`_short-history`** (default)
+               - ENV variables:
+                   - CM_GIT_DEPTH: `--depth 5`
+
+        </details>
+
+
+      * Group "**repo**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_short-history`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--branch=value`  &rarr;  `CM_GIT_CHECKOUT=value`
+    * `--depth=value`  &rarr;  `CM_GIT_DEPTH=value`
+    * `--env_key=value`  &rarr;  `CM_GIT_ENV_KEY=value`
+    * `--folder=value`  &rarr;  `CM_GIT_CHECKOUT_FOLDER=value`
+    * `--patch=value`  &rarr;  `CM_GIT_PATCH=value`
+    * `--pull=value`  &rarr;  `CM_GIT_REPO_PULL=value`
+    * `--submodules=value`  &rarr;  `CM_GIT_RECURSE_SUBMODULES=value`
+    * `--update=value`  &rarr;  `CM_GIT_REPO_PULL=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_DEPTH: `--depth 4`
+    * CM_GIT_CHECKOUT_FOLDER: `repo`
+    * CM_GIT_PATCH: `no`
+    * CM_GIT_RECURSE_SUBMODULES: ` --recurse-submodules`
+    * CM_GIT_URL: `https://github.com/mlcommons/ck.git`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo/run.sh)
 === "Windows"
@@ -198,4 +182,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo/run.bat)
 ___
 #### Script output
-`cmr "get git repo repository clone [,variations]" [--input_flags] -j`
+```bash
+cmr "get git repo repository clone [variations]" [--input_flags] -j
+```

@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,cache,dir,directory`
 
-    `cm run script --tags=get,cache,dir,directory[,variations] `
-
+    ```bash
+    cm run script --tags=get,cache,dir,directory[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get cache dir directory"`
 
-    `cmr "get cache dir directory [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get cache dir directory [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,25 +67,29 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get cache dir directory[variations]" `
-
+    ```bash
+    cm docker script "get cache dir directory[variations]" 
+    ```
 ___
 
+=== "Variations"
 
-#### Variations
 
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_name.#`
-      - Environment variables:
-        - *CM_CACHE_DIR_NAME*: `#`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_name.#`
+               - ENV variables:
+                   - CM_CACHE_DIR_NAME: `#`
+
+        </details>
 
 
 ___
 #### Script output
-`cmr "get cache dir directory [,variations]"  -j`
+```bash
+cmr "get cache dir directory [variations]"  -j
+```

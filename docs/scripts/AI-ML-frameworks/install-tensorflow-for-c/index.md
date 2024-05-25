@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,tensorflow,lib,lang-c`
 
-    `cm run script --tags=install,tensorflow,lib,lang-c `
-
+    ```bash
+    cm run script --tags=install,tensorflow,lib,lang-c 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install tensorflow lib lang-c"`
 
-    `cmr "install tensorflow lib lang-c " `
-
+    ```bash
+    cmr "install tensorflow lib lang-c " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,20 +67,23 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install tensorflow lib lang-c" `
-
+    ```bash
+    cm docker script "install tensorflow lib lang-c" 
+    ```
 ___
 
 #### Versions
 Default version: `2.8.0`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-tensorflow-for-c/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install tensorflow lib lang-c "  -j`
+```bash
+cmr "install tensorflow lib lang-c "  -j
+```

@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,lib,aocl,amd-optimized,amd`
 
-    `cm run script --tags=get,lib,aocl,amd-optimized,amd `
-
+    ```bash
+    cm run script --tags=get,lib,aocl,amd-optimized,amd 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get lib aocl amd-optimized amd"`
 
-    `cmr "get lib aocl amd-optimized amd " `
-
+    ```bash
+    cmr "get lib aocl amd-optimized amd " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,8 +68,9 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get lib aocl amd-optimized amd" `
-
+    ```bash
+    cm docker script "get lib aocl amd-optimized amd" 
+    ```
 ___
 
 #### Versions
@@ -78,12 +79,14 @@ Default version: `4.0`
 * `4.0`
 * `master`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-aocl/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get lib aocl amd-optimized amd "  -j`
+```bash
+cmr "get lib aocl amd-optimized amd "  -j
+```

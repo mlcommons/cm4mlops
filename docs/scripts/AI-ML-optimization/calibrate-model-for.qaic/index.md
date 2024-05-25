@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=qaic,calibrate,profile,qaic-profile,qaic-calibrate`
 
-    `cm run script --tags=qaic,calibrate,profile,qaic-profile,qaic-calibrate[,variations] `
-
+    ```bash
+    cm run script --tags=qaic,calibrate,profile,qaic-profile,qaic-calibrate[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "qaic calibrate profile qaic-profile qaic-calibrate"`
 
-    `cmr "qaic calibrate profile qaic-profile qaic-calibrate [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "qaic calibrate profile qaic-profile qaic-calibrate [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,144 +67,120 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "qaic calibrate profile qaic-profile qaic-calibrate[variations]" `
-
+    ```bash
+    cm docker script "qaic calibrate profile qaic-profile qaic-calibrate[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *Internal group (variations should not be selected manually)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_bert_`
-      - Environment variables:
-        - *CM_QAIC_MODEL_NAME*: `bert-large`
-        - *CM_CREATE_INPUT_BATCH*: `no`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_first.#`
-      - Workflow:
-    * `_resnet50,tf`
-      - Environment variables:
-        - *CM_QAIC_MODEL_TO_CONVERT*: `calibrate_resnet50_tf`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_first.#`
+
+        </details>
 
 
-  * Group "**batch-size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**batch-size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_bs.#`
-      - Environment variables:
-        - *CM_QAIC_MODEL_BATCH_SIZE*: `#`
-        - *CM_CREATE_INPUT_BATCH*: `yes`
-      - Workflow:
-    * `_bs.1`
-      - Environment variables:
-        - *CM_QAIC_MODEL_BATCH_SIZE*: `1`
-        - *CM_CREATE_INPUT_BATCH*: `yes`
-      - Workflow:
+        * `_bs.#`
+               - ENV variables:
+                   - CM_QAIC_MODEL_BATCH_SIZE: `#`
+                   - CM_CREATE_INPUT_BATCH: `yes`
+        * `_bs.1`
+               - ENV variables:
+                   - CM_QAIC_MODEL_BATCH_SIZE: `1`
+                   - CM_CREATE_INPUT_BATCH: `yes`
 
-    </details>
+        </details>
 
 
-  * Group "**calib-dataset-filter-size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**calib-dataset-filter-size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_filter-size.#`
-      - Workflow:
+        * `_filter-size.#`
 
-    </details>
-
-
-  * Group "**calibration-option**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_mlperf.option1`
-      - Workflow:
-    * `_mlperf.option2`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**model**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**calibration-option**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_bert-99`
-      - Environment variables:
-        - *CM_CALIBRATE_SQUAD*: `yes`
-        - *CM_QAIC_COMPILER_ARGS*: ``
-        - *CM_QAIC_COMPILER_PARAMS*: `-onnx-define-symbol=batch_size,1 -onnx-define-symbol=seg_length,<<<CM_DATASET_SQUAD_TOKENIZED_MAX_SEQ_LENGTH>>> -input-list-file=<<<CM_DATASET_SQUAD_TOKENIZED_PACKED_FILENAMES_FILE>>> -num-histogram-bins=512 -profiling-threads=<<<CM_HOST_CPU_PHYSICAL_CORES_PER_SOCKET>>>`
-        - *CM_QAIC_MODEL_TO_CONVERT*: `calibrate_bert_mlperf`
-      - Workflow:
-    * `_resnet50`
-      - Environment variables:
-        - *CM_QAIC_MODEL_NAME*: `resnet50`
-        - *CM_CALIBRATE_IMAGENET*: `yes`
-        - *CM_QAIC_COMPILER_ARGS*: ``
-        - *CM_QAIC_COMPILER_PARAMS*: `-output-node-name=ArgMax -profiling-threads=<<<CM_HOST_CPU_PHYSICAL_CORES_PER_SOCKET>>>`
-        - *CM_QAIC_OUTPUT_NODE_NAME*: `-output-node-name=ArgMax`
-        - *CM_QAIC_MODEL_TO_CONVERT*: `calibrate_resnet50_tf`
-      - Workflow:
-    * `_retinanet`
-      - Environment variables:
-        - *CM_QAIC_MODEL_NAME*: `retinanet`
-        - *CM_CALIBRATE_OPENIMAGES*: `yes`
-        - *CM_QAIC_COMPILER_ARGS*: ``
-        - *CM_QAIC_COMPILER_PARAMS*: `-enable-channelwise -profiling-threads=<<<CM_HOST_CPU_PHYSICAL_CORES_PER_SOCKET>>> -onnx-define-symbol=batch_size,<<<CM_QAIC_MODEL_BATCH_SIZE>>> -node-precision-info=<<<CM_ML_MODEL_RETINANET_QAIC_NODE_PRECISION_INFO_FILE_PATH>>>`
-        - *CM_QAIC_MODEL_TO_CONVERT*: `calibrate_retinanet_no_nms_mlperf`
-      - Workflow:
+        * `_mlperf.option1`
+        * `_mlperf.option2`
 
-    </details>
+        </details>
 
 
-  * Group "**model-framework**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**model**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_tf`
-      - Workflow:
+        * `_bert-99`
+               - ENV variables:
+                   - CM_CALIBRATE_SQUAD: `yes`
+                   - CM_QAIC_COMPILER_ARGS: ``
+                   - CM_QAIC_COMPILER_PARAMS: `-onnx-define-symbol=batch_size,1 -onnx-define-symbol=seg_length,<<<CM_DATASET_SQUAD_TOKENIZED_MAX_SEQ_LENGTH>>> -input-list-file=<<<CM_DATASET_SQUAD_TOKENIZED_PACKED_FILENAMES_FILE>>> -num-histogram-bins=512 -profiling-threads=<<<CM_HOST_CPU_PHYSICAL_CORES_PER_SOCKET>>>`
+                   - CM_QAIC_MODEL_TO_CONVERT: `calibrate_bert_mlperf`
+        * `_resnet50`
+               - ENV variables:
+                   - CM_QAIC_MODEL_NAME: `resnet50`
+                   - CM_CALIBRATE_IMAGENET: `yes`
+                   - CM_QAIC_COMPILER_ARGS: ``
+                   - CM_QAIC_COMPILER_PARAMS: `-output-node-name=ArgMax -profiling-threads=<<<CM_HOST_CPU_PHYSICAL_CORES_PER_SOCKET>>>`
+                   - CM_QAIC_OUTPUT_NODE_NAME: `-output-node-name=ArgMax`
+                   - CM_QAIC_MODEL_TO_CONVERT: `calibrate_resnet50_tf`
+        * `_retinanet`
+               - ENV variables:
+                   - CM_QAIC_MODEL_NAME: `retinanet`
+                   - CM_CALIBRATE_OPENIMAGES: `yes`
+                   - CM_QAIC_COMPILER_ARGS: ``
+                   - CM_QAIC_COMPILER_PARAMS: `-enable-channelwise -profiling-threads=<<<CM_HOST_CPU_PHYSICAL_CORES_PER_SOCKET>>> -onnx-define-symbol=batch_size,<<<CM_QAIC_MODEL_BATCH_SIZE>>> -node-precision-info=<<<CM_ML_MODEL_RETINANET_QAIC_NODE_PRECISION_INFO_FILE_PATH>>>`
+                   - CM_QAIC_MODEL_TO_CONVERT: `calibrate_retinanet_no_nms_mlperf`
 
-    </details>
+        </details>
 
 
-  * Group "**seq-length**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**model-framework**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_seq.#`
-      - Environment variables:
-        - *CM_DATASET_SQUAD_TOKENIZED_MAX_SEQ_LENGTH*: `#`
-      - Workflow:
-    * `_seq.384`
-      - Environment variables:
-        - *CM_DATASET_SQUAD_TOKENIZED_MAX_SEQ_LENGTH*: `#`
-      - Workflow:
+        * `_tf`
 
-    </details>
+        </details>
 
 
-##### Native script being run
+      * Group "**seq-length**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_seq.#`
+               - ENV variables:
+                   - CM_DATASET_SQUAD_TOKENIZED_MAX_SEQ_LENGTH: `#`
+        * `_seq.384`
+               - ENV variables:
+                   - CM_DATASET_SQUAD_TOKENIZED_MAX_SEQ_LENGTH: `#`
+
+        </details>
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/calibrate-model-for.qaic/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "qaic calibrate profile qaic-profile qaic-calibrate [,variations]"  -j`
+```bash
+cmr "qaic calibrate profile qaic-profile qaic-calibrate [variations]"  -j
+```

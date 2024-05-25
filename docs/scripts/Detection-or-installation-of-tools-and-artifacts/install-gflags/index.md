@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,src,get,gflags`
 
-    `cm run script --tags=install,src,get,gflags `
-
+    ```bash
+    cm run script --tags=install,src,get,gflags 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install src get gflags"`
 
-    `cmr "install src get gflags " `
-
+    ```bash
+    cmr "install src get gflags " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,8 +67,9 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install src get gflags" `
-
+    ```bash
+    cm docker script "install src get gflags" 
+    ```
 ___
 
 #### Versions
@@ -76,12 +77,14 @@ Default version: `2.2.2`
 
 * `2.2.2`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-gflags/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install src get gflags "  -j`
+```bash
+cmr "install src get gflags "  -j
+```

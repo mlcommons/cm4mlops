@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,src,source,training,training-src,training-source,mlperf,mlcommons`
 
-    `cm run script --tags=get,src,source,training,training-src,training-source,mlperf,mlcommons[,variations] `
-
+    ```bash
+    cm run script --tags=get,src,source,training,training-src,training-source,mlperf,mlcommons[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get src source training training-src training-source mlperf mlcommons"`
 
-    `cmr "get src source training training-src training-source mlperf mlcommons [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get src source training training-src training-source mlperf mlcommons [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,110 +68,104 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get src source training training-src training-source mlperf mlcommons[variations]" `
-
+    ```bash
+    cm docker script "get src source training training-src training-source mlperf mlcommons[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_no-recurse-submodules`
-      - Environment variables:
-        - *CM_GIT_RECURSE_SUBMODULES*: ``
-      - Workflow:
-    * `_nvidia-retinanet`
-      - Environment variables:
-        - *CM_GIT_PATCH_FILENAMES*: `nvidia-retinanet.patch,cpu_load.patch`
-      - Workflow:
-    * `_patch`
-      - Environment variables:
-        - *CM_GIT_PATCH*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**checkout**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `#`
-      - Workflow:
-    * `_sha.#`
-      - Environment variables:
-        - *CM_GIT_SHA*: `#`
-      - Workflow:
-    * `_tag.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_TAG*: `#`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_no-recurse-submodules`
+               - ENV variables:
+                   - CM_GIT_RECURSE_SUBMODULES: ``
+        * `_nvidia-retinanet`
+               - ENV variables:
+                   - CM_GIT_PATCH_FILENAMES: `nvidia-retinanet.patch,cpu_load.patch`
+        * `_patch`
+               - ENV variables:
+                   - CM_GIT_PATCH: `yes`
 
-
-  * Group "**git-history**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_full-history`
-      - Environment variables:
-        - *CM_GIT_DEPTH*: ``
-      - Workflow:
-    * **`_short-history`** (default)
-      - Environment variables:
-        - *CM_GIT_DEPTH*: `--depth 5`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**repo**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**checkout**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `#`
+        * `_sha.#`
+               - ENV variables:
+                   - CM_GIT_SHA: `#`
+        * `_tag.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_TAG: `#`
 
-    </details>
-
-
-  * Group "**src**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_cknowledge`** (default)
-      - Environment variables:
-        - *CM_GIT_URL*: `https://github.com/cknowledge/training.git`
-      - Workflow:
-    * `_mlcommons`
-      - Environment variables:
-        - *CM_GIT_URL*: `https://github.com/mlcommons/training.git`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**git-history**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_cknowledge,_short-history`
-#### Default environment
+        * `_full-history`
+               - ENV variables:
+                   - CM_GIT_DEPTH: ``
+        * **`_short-history`** (default)
+               - ENV variables:
+                   - CM_GIT_DEPTH: `--depth 5`
+
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**repo**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_GIT_CHECKOUT: `master`
-* CM_GIT_DEPTH: `--depth 4`
-* CM_GIT_PATCH: `no`
-* CM_GIT_RECURSE_SUBMODULES: ` --recurse-submodules`
-* CM_GIT_CHECKOUT_FOLDER: `training`
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+
+        </details>
+
+
+      * Group "**src**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * **`_cknowledge`** (default)
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/cknowledge/training.git`
+        * `_mlcommons`
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/mlcommons/training.git`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_cknowledge,_short-history`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_CHECKOUT: `master`
+    * CM_GIT_DEPTH: `--depth 4`
+    * CM_GIT_PATCH: `no`
+    * CM_GIT_RECURSE_SUBMODULES: ` --recurse-submodules`
+    * CM_GIT_CHECKOUT_FOLDER: `training`
 
 
 #### Versions
@@ -184,4 +176,6 @@ Default version: `master`
 
 ___
 #### Script output
-`cmr "get src source training training-src training-source mlperf mlcommons [,variations]"  -j`
+```bash
+cmr "get src source training training-src training-source mlperf mlcommons [variations]"  -j
+```

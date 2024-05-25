@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,raw,ml-model,stable-diffusion,sdxl,text-to-image`
 
-    `cm run script --tags=get,raw,ml-model,stable-diffusion,sdxl,text-to-image[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,raw,ml-model,stable-diffusion,sdxl,text-to-image[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get raw ml-model stable-diffusion sdxl text-to-image"`
 
-    `cmr "get raw ml-model stable-diffusion sdxl text-to-image [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get raw ml-model stable-diffusion sdxl text-to-image [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,137 +67,111 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get raw ml-model stable-diffusion sdxl text-to-image[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get raw ml-model stable-diffusion sdxl text-to-image[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_batch_size.#`
-      - Environment variables:
-        - *CM_ML_MODEL_BATCH_SIZE*: `#`
-      - Workflow:
-    * `_pytorch,fp16`
-      - Workflow:
-    * `_pytorch,fp32`
-      - Environment variables:
-        - *CM_ML_MODEL_STARTING_WEIGHTS_FILENAME*: `https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0`
-      - Workflow:
-    * `_rclone,fp16`
-      - Environment variables:
-        - *CM_DOWNLOAD_URL*: `mlc-inference:mlcommons-inference-wg-public/stable_diffusion_fp16`
-      - Workflow:
-    * `_rclone,fp32`
-      - Environment variables:
-        - *CM_DOWNLOAD_URL*: `mlc-inference:mlcommons-inference-wg-public/stable_diffusion_fp32`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**download-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_huggingface`
-      - Workflow:
-    * **`_mlcommons`** (default)
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_batch_size.#`
+               - ENV variables:
+                   - CM_ML_MODEL_BATCH_SIZE: `#`
 
-
-  * Group "**download-tool**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_git`
-      - Environment variables:
-        - *CM_DOWNLOAD_TOOL*: `git`
-      - Workflow:
-    * `_rclone`
-      - Environment variables:
-        - *CM_RCLONE_CONFIG_CMD*: `rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com`
-        - *CM_DOWNLOAD_TOOL*: `rclone`
-      - Workflow:
-    * `_wget`
-      - Environment variables:
-        - *CM_DOWNLOAD_TOOL*: `wget`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**framework**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**download-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_pytorch`** (default)
-      - Environment variables:
-        - *CM_ML_MODEL_FRAMEWORK*: `pytorch`
-      - Workflow:
+        * `_huggingface`
+        * **`_mlcommons`** (default)
 
-    </details>
+        </details>
 
 
-  * Group "**precision**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**download-tool**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_fp16`
-      - Environment variables:
-        - *CM_ML_MODEL_INPUT_DATA_TYPES*: `fp16`
-        - *CM_ML_MODEL_PRECISION*: `fp16`
-        - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `fp16`
-      - Workflow:
-    * **`_fp32`** (default)
-      - Environment variables:
-        - *CM_ML_MODEL_INPUT_DATA_TYPES*: `fp32`
-        - *CM_ML_MODEL_PRECISION*: `fp32`
-        - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `fp32`
-      - Workflow:
-    * `_int8`
-      - Environment variables:
-        - *CM_ML_MODEL_INPUT_DATA_TYPES*: `int8`
-        - *CM_ML_MODEL_PRECISION*: `int8`
-        - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `int8`
-      - Workflow:
-    * `_uint8`
-      - Environment variables:
-        - *CM_ML_MODEL_INPUT_DATA_TYPES*: `uint8`
-        - *CM_ML_MODEL_PRECISION*: `uint8`
-        - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `uint8`
-      - Workflow:
+        * `_git`
+               - ENV variables:
+                   - CM_DOWNLOAD_TOOL: `git`
+        * `_rclone`
+               - ENV variables:
+                   - CM_RCLONE_CONFIG_CMD: `rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com`
+                   - CM_DOWNLOAD_TOOL: `rclone`
+        * `_wget`
+               - ENV variables:
+                   - CM_DOWNLOAD_TOOL: `wget`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**framework**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_fp32,_mlcommons,_pytorch`
+        * **`_pytorch`** (default)
+               - ENV variables:
+                   - CM_ML_MODEL_FRAMEWORK: `pytorch`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        </details>
 
-* `--checkpoint=value`  &rarr;  `SDXL_CHECKPOINT_PATH=value`
-* `--download_path=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
-* `--to=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
 
-**Above CLI flags can be used in the Python CM API as follows:**
+      * Group "**precision**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-```python
-r=cm.access({... , "checkpoint":...}
-```
+        * `_fp16`
+               - ENV variables:
+                   - CM_ML_MODEL_INPUT_DATA_TYPES: `fp16`
+                   - CM_ML_MODEL_PRECISION: `fp16`
+                   - CM_ML_MODEL_WEIGHT_DATA_TYPES: `fp16`
+        * **`_fp32`** (default)
+               - ENV variables:
+                   - CM_ML_MODEL_INPUT_DATA_TYPES: `fp32`
+                   - CM_ML_MODEL_PRECISION: `fp32`
+                   - CM_ML_MODEL_WEIGHT_DATA_TYPES: `fp32`
+        * `_int8`
+               - ENV variables:
+                   - CM_ML_MODEL_INPUT_DATA_TYPES: `int8`
+                   - CM_ML_MODEL_PRECISION: `int8`
+                   - CM_ML_MODEL_WEIGHT_DATA_TYPES: `int8`
+        * `_uint8`
+               - ENV variables:
+                   - CM_ML_MODEL_INPUT_DATA_TYPES: `uint8`
+                   - CM_ML_MODEL_PRECISION: `uint8`
+                   - CM_ML_MODEL_WEIGHT_DATA_TYPES: `uint8`
 
-</details>
+        </details>
+
+
+    ##### Default variations
+
+    `_fp32,_mlcommons,_pytorch`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--checkpoint=value`  &rarr;  `SDXL_CHECKPOINT_PATH=value`
+    * `--download_path=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
+    * `--to=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
+
+
 
 
 ___
 #### Script output
-`cmr "get raw ml-model stable-diffusion sdxl text-to-image [,variations]" [--input_flags] -j`
+```bash
+cmr "get raw ml-model stable-diffusion sdxl text-to-image [variations]" [--input_flags] -j
+```

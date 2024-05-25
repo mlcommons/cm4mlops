@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,prebuilt,cuda,prebuilt-cuda,install-prebuilt-cuda`
 
-    `cm run script --tags=install,prebuilt,cuda,prebuilt-cuda,install-prebuilt-cuda[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=install,prebuilt,cuda,prebuilt-cuda,install-prebuilt-cuda[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install prebuilt cuda prebuilt-cuda install-prebuilt-cuda"`
 
-    `cmr "install prebuilt cuda prebuilt-cuda install-prebuilt-cuda [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "install prebuilt cuda prebuilt-cuda install-prebuilt-cuda [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,53 +68,50 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install prebuilt cuda prebuilt-cuda install-prebuilt-cuda[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "install prebuilt cuda prebuilt-cuda install-prebuilt-cuda[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**install-driver**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_driver`
-      - Environment variables:
-        - *CM_CUDA_INSTALL_DRIVER*: `yes`
-      - Workflow:
-    * **`_no-driver`** (default)
-      - Environment variables:
-        - *CM_CUDA_INSTALL_DRIVER*: `no`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_no-driver`
+      * Group "**install-driver**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        * `_driver`
+               - ENV variables:
+                   - CM_CUDA_INSTALL_DRIVER: `yes`
+        * **`_no-driver`** (default)
+               - ENV variables:
+                   - CM_CUDA_INSTALL_DRIVER: `no`
 
-* `--local_run_file_path=value`  &rarr;  `CUDA_RUN_FILE_LOCAL_PATH=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "local_run_file_path":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_SUDO: `sudo`
+    `_no-driver`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--local_run_file_path=value`  &rarr;  `CUDA_RUN_FILE_LOCAL_PATH=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_SUDO: `sudo`
 
 
 #### Versions
@@ -130,12 +125,14 @@ Default version: `11.8.0`
 * `12.3.2`
 * `12.4.1`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-cuda-prebuilt/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install prebuilt cuda prebuilt-cuda install-prebuilt-cuda [,variations]" [--input_flags] -j`
+```bash
+cmr "install prebuilt cuda prebuilt-cuda install-prebuilt-cuda [variations]" [--input_flags] -j
+```

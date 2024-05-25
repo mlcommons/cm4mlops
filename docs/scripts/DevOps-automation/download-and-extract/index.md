@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=download-and-extract,file`
 
-    `cm run script --tags=download-and-extract,file[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=download-and-extract,file[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "download-and-extract file"`
 
-    `cmr "download-and-extract file [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "download-and-extract file [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,92 +68,78 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "download-and-extract file[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "download-and-extract file[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_extract`
-      - Environment variables:
-        - *CM_DAE_EXTRACT_DOWNLOADED*: `yes`
-      - Workflow:
-    * `_keep`
-      - Environment variables:
-        - *CM_EXTRACT_REMOVE_EXTRACTED*: `no`
-      - Workflow:
-    * `_no-remove-extracted`
-      - Environment variables:
-        - *CM_EXTRACT_REMOVE_EXTRACTED*: `no`
-      - Workflow:
-    * `_url.#`
-      - Environment variables:
-        - *CM_DAE_URL*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**download-tool**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_cmutil`** (default)
-      - Workflow:
-    * `_curl`
-      - Workflow:
-    * `_gdown`
-      - Workflow:
-    * `_rclone`
-      - Workflow:
-    * `_torrent`
-      - Environment variables:
-        - *CM_DAE_DOWNLOAD_USING_TORRENT*: `yes`
-        - *CM_TORRENT_DOWNLOADED_FILE_NAME*: `<<<CM_DAE_FILENAME>>>`
-        - *CM_TORRENT_DOWNLOADED_PATH_ENV_KEY*: `CM_DAE_FILEPATH`
-        - *CM_TORRENT_WAIT_UNTIL_COMPLETED*: `yes`
-      - Workflow:
-        1. ***Read "prehook_deps" on other CM scripts***
-           * download,torrent
-             - CM script: [download-torrent](https://github.com/mlcommons/cm4mlops/tree/master/script/download-torrent)
-    * `_wget`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_extract`
+               - ENV variables:
+                   - CM_DAE_EXTRACT_DOWNLOADED: `yes`
+        * `_keep`
+               - ENV variables:
+                   - CM_EXTRACT_REMOVE_EXTRACTED: `no`
+        * `_no-remove-extracted`
+               - ENV variables:
+                   - CM_EXTRACT_REMOVE_EXTRACTED: `no`
+        * `_url.#`
+               - ENV variables:
+                   - CM_DAE_URL: `#`
+
+        </details>
 
 
-#### Default variations
+      * Group "**download-tool**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_cmutil`
+        * **`_cmutil`** (default)
+        * `_curl`
+        * `_gdown`
+        * `_rclone`
+        * `_torrent`
+               - ENV variables:
+                   - CM_DAE_DOWNLOAD_USING_TORRENT: `yes`
+                   - CM_TORRENT_DOWNLOADED_FILE_NAME: `<<<CM_DAE_FILENAME>>>`
+                   - CM_TORRENT_DOWNLOADED_PATH_ENV_KEY: `CM_DAE_FILEPATH`
+                   - CM_TORRENT_WAIT_UNTIL_COMPLETED: `yes`
+        * `_wget`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        </details>
 
-* `--download_path=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
-* `--extra_folder=value`  &rarr;  `CM_EXTRACT_TO_FOLDER=value`
-* `--extract_path=value`  &rarr;  `CM_EXTRACT_PATH=value`
-* `--from=value`  &rarr;  `CM_DOWNLOAD_LOCAL_FILE_PATH=value`
-* `--local_path=value`  &rarr;  `CM_DOWNLOAD_LOCAL_FILE_PATH=value`
-* `--store=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
-* `--to=value`  &rarr;  `CM_EXTRACT_PATH=value`
-* `--url=value`  &rarr;  `CM_DAE_URL=value`
-* `--verify=value`  &rarr;  `CM_VERIFY_SSL=value`
 
-**Above CLI flags can be used in the Python CM API as follows:**
+    ##### Default variations
 
-```python
-r=cm.access({... , "download_path":...}
-```
+    `_cmutil`
+=== "Input Flag Mapping"
 
-</details>
+
+    #### Script flags mapped to environment
+
+    * `--download_path=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
+    * `--extra_folder=value`  &rarr;  `CM_EXTRACT_TO_FOLDER=value`
+    * `--extract_path=value`  &rarr;  `CM_EXTRACT_PATH=value`
+    * `--from=value`  &rarr;  `CM_DOWNLOAD_LOCAL_FILE_PATH=value`
+    * `--local_path=value`  &rarr;  `CM_DOWNLOAD_LOCAL_FILE_PATH=value`
+    * `--store=value`  &rarr;  `CM_DOWNLOAD_PATH=value`
+    * `--to=value`  &rarr;  `CM_EXTRACT_PATH=value`
+    * `--url=value`  &rarr;  `CM_DAE_URL=value`
+    * `--verify=value`  &rarr;  `CM_VERIFY_SSL=value`
+
+
 
 
 ___
 #### Script output
-`cmr "download-and-extract file [,variations]" [--input_flags] -j`
+```bash
+cmr "download-and-extract file [variations]" [--input_flags] -j
+```

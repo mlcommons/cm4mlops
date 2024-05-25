@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=detect-os,detect,os,info`
 
-    `cm run script --tags=detect-os,detect,os,info `
-
+    ```bash
+    cm run script --tags=detect-os,detect,os,info 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "detect-os detect os info"`
 
-    `cmr "detect-os detect os info " `
-
+    ```bash
+    cmr "detect-os detect os info " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "detect-os detect os info" `
-
+    ```bash
+    cm docker script "detect-os detect os info" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-os/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-os/run.bat)
 ___
 #### Script output
-`cmr "detect-os detect os info "  -j`
+```bash
+cmr "detect-os detect os info "  -j
+```

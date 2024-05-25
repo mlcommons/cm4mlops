@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,qaic,software,kit,qaic-software-kit`
 
-    `cm run script --tags=get,qaic,software,kit,qaic-software-kit[,variations] `
-
+    ```bash
+    cm run script --tags=get,qaic,software,kit,qaic-software-kit[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get qaic software kit qaic-software-kit"`
 
-    `cmr "get qaic software kit qaic-software-kit [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get qaic software kit qaic-software-kit [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,51 +67,53 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get qaic software kit qaic-software-kit[variations]" `
-
+    ```bash
+    cm docker script "get qaic software kit qaic-software-kit[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**repo-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
-    * **`_repo.quic`** (default)
-      - Environment variables:
-        - *CM_GIT_URL*: `https://github.com/quic/software-kit-for-qualcomm-cloud-ai-100`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `#`
+
+        </details>
 
 
-#### Default variations
+      * Group "**repo-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_repo.quic`
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+        * **`_repo.quic`** (default)
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/quic/software-kit-for-qualcomm-cloud-ai-100`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_repo.quic`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-qaic-software-kit/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get qaic software kit qaic-software-kit [,variations]"  -j`
+```bash
+cmr "get qaic software kit qaic-software-kit [variations]"  -j
+```

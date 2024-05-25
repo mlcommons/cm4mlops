@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=prune,bert-models,bert-prune,prune-bert-models`
 
-    `cm run script --tags=prune,bert-models,bert-prune,prune-bert-models[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=prune,bert-models,bert-prune,prune-bert-models[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "prune bert-models bert-prune prune-bert-models"`
 
-    `cmr "prune bert-models bert-prune prune-bert-models [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "prune bert-models bert-prune prune-bert-models [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,67 +68,65 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "prune bert-models bert-prune prune-bert-models[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "prune bert-models bert-prune prune-bert-models[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_model.#`
-      - Environment variables:
-        - *CM_BERT_PRUNE_MODEL_NAME*: `#`
-        - *CM_MODEL_ZOO_STUB*: `#`
-      - Workflow:
-    * `_path.#`
-      - Environment variables:
-        - *CM_BERT_PRUNE_CKPT_PATH*: `#`
-      - Workflow:
-    * `_task.#`
-      - Environment variables:
-        - *CM_BERT_PRUNE_TASK*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--constraint=value`  &rarr;  `CM_BERT_PRUNE_CONSTRAINT=value`
-* `--output_dir=value`  &rarr;  `CM_BERT_PRUNE_OUTPUT_DIR=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_model.#`
+               - ENV variables:
+                   - CM_BERT_PRUNE_MODEL_NAME: `#`
+                   - CM_MODEL_ZOO_STUB: `#`
+        * `_path.#`
+               - ENV variables:
+                   - CM_BERT_PRUNE_CKPT_PATH: `#`
+        * `_task.#`
+               - ENV variables:
+                   - CM_BERT_PRUNE_TASK: `#`
 
-```python
-r=cm.access({... , "constraint":...}
-```
+        </details>
 
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_BERT_PRUNE_TASK: `squad`
-* CM_BERT_PRUNE_MODEL_NAME: `bert-large-uncased`
-* CM_MODEL_ZOO_STUB: `bert-large-uncased`
-* CM_BERT_PRUNE_CONSTRAINT: `0.5`
+    * `--constraint=value`  &rarr;  `CM_BERT_PRUNE_CONSTRAINT=value`
+    * `--output_dir=value`  &rarr;  `CM_BERT_PRUNE_OUTPUT_DIR=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_BERT_PRUNE_TASK: `squad`
+    * CM_BERT_PRUNE_MODEL_NAME: `bert-large-uncased`
+    * CM_MODEL_ZOO_STUB: `bert-large-uncased`
+    * CM_BERT_PRUNE_CONSTRAINT: `0.5`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/prune-bert-models/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "prune bert-models bert-prune prune-bert-models [,variations]" [--input_flags] -j`
+```bash
+cmr "prune bert-models bert-prune prune-bert-models [variations]" [--input_flags] -j
+```

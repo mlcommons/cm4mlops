@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,imagenet,helper,imagenet-helper`
 
-    `cm run script --tags=get,imagenet,helper,imagenet-helper `
-
+    ```bash
+    cm run script --tags=get,imagenet,helper,imagenet-helper 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get imagenet helper imagenet-helper"`
 
-    `cmr "get imagenet helper imagenet-helper " `
-
+    ```bash
+    cmr "get imagenet helper imagenet-helper " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,11 +67,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get imagenet helper imagenet-helper" `
-
+    ```bash
+    cm docker script "get imagenet helper imagenet-helper" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "get imagenet helper imagenet-helper "  -j`
+```bash
+cmr "get imagenet helper imagenet-helper "  -j
+```

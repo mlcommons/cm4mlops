@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,nvidia,mitten,nvidia-mitten`
 
-    `cm run script --tags=get,nvidia,mitten,nvidia-mitten `
-
+    ```bash
+    cm run script --tags=get,nvidia,mitten,nvidia-mitten 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get nvidia mitten nvidia-mitten"`
 
-    `cmr "get nvidia mitten nvidia-mitten " `
-
+    ```bash
+    cmr "get nvidia mitten nvidia-mitten " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,15 +68,16 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get nvidia mitten nvidia-mitten" `
-
+    ```bash
+    cm docker script "get nvidia mitten nvidia-mitten" 
+    ```
 ___
 
 #### Versions
 Default version: `master`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-nvidia-mitten/run.sh)
 === "Windows"
@@ -84,4 +85,6 @@ Default version: `master`
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-nvidia-mitten/run.bat)
 ___
 #### Script output
-`cmr "get nvidia mitten nvidia-mitten "  -j`
+```bash
+cmr "get nvidia mitten nvidia-mitten "  -j
+```

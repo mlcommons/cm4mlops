@@ -25,5 +25,6 @@
 * [install-cmake-prebuilt](install-cmake-prebuilt/index.md)
 * [install-gflags](install-gflags/index.md)
 * [install-github-cli](install-github-cli/index.md)
+* [install-intel-neural-speed-from-src](install-intel-neural-speed-from-src/index.md)
 * [install-numactl-from-src](install-numactl-from-src/index.md)
 * [install-openssl](install-openssl/index.md)

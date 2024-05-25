@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,google-test,googletest,gtest,test,google`
 
-    `cm run script --tags=get,google-test,googletest,gtest,test,google `
-
+    ```bash
+    cm run script --tags=get,google-test,googletest,gtest,test,google 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get google-test googletest gtest test google"`
 
-    `cmr "get google-test googletest gtest test google " `
-
+    ```bash
+    cmr "get google-test googletest gtest test google " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,20 +67,23 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get google-test googletest gtest test google" `
-
+    ```bash
+    cm docker script "get google-test googletest gtest test google" 
+    ```
 ___
 
 #### Versions
 Default version: `1.14.0`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-google-test/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get google-test googletest gtest test google "  -j`
+```bash
+cmr "get google-test googletest gtest test google "  -j
+```

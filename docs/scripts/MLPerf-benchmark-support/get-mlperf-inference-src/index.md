@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,src,source,inference,inference-src,inference-source,mlperf,mlcommons`
 
-    `cm run script --tags=get,src,source,inference,inference-src,inference-source,mlperf,mlcommons[,variations] `
-
+    ```bash
+    cm run script --tags=get,src,source,inference,inference-src,inference-source,mlperf,mlcommons[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get src source inference inference-src inference-source mlperf mlcommons"`
 
-    `cmr "get src source inference inference-src inference-source mlperf mlcommons [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get src source inference inference-src inference-source mlperf mlcommons [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,120 +68,108 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get src source inference inference-src inference-source mlperf mlcommons[variations]" `
-
+    ```bash
+    cm docker script "get src source inference inference-src inference-source mlperf mlcommons[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_3d-unet`
-      - Environment variables:
-        - *CM_SUBMODULE_3D_UNET*: `yes`
-      - Workflow:
-    * `_deeplearningexamples`
-      - Environment variables:
-        - *CM_SUBMODULE_DEEPLEARNINGEXAMPLES*: `yes`
-      - Workflow:
-    * `_deepsparse`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `deepsparse`
-        - *CM_GIT_URL*: `https://github.com/neuralmagic/inference`
-        - *CM_MLPERF_LAST_RELEASE*: `v4.0`
-      - Workflow:
-    * `_gn`
-      - Environment variables:
-        - *CM_SUBMODULE_GN*: `yes`
-      - Workflow:
-    * `_no-recurse-submodules`
-      - Environment variables:
-        - *CM_GIT_RECURSE_SUBMODULES*: ``
-      - Workflow:
-    * `_nvidia-pycocotools`
-      - Environment variables:
-        - *CM_GIT_PATCH_FILENAME*: `coco.patch`
-      - Workflow:
-    * `_octoml`
-      - Environment variables:
-        - *CM_GIT_URL*: `https://github.com/octoml/inference`
-      - Workflow:
-    * `_openimages-nvidia-pycocotools`
-      - Environment variables:
-        - *CM_GIT_PATCH_FILENAME*: `openimages-pycocotools.patch`
-      - Workflow:
-    * `_patch`
-      - Environment variables:
-        - *CM_GIT_PATCH*: `yes`
-      - Workflow:
-    * `_pybind`
-      - Environment variables:
-        - *CM_SUBMODULE_PYBIND*: `yes`
-      - Workflow:
-    * `_recurse-submodules`
-      - Environment variables:
-        - *CM_GIT_RECURSE_SUBMODULES*: ` --recurse-submodules`
-      - Workflow:
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
-    * `_submodules.#`
-      - Environment variables:
-        - *CM_GIT_SUBMODULES*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**checkout**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `#`
-      - Workflow:
-    * `_sha.#`
-      - Environment variables:
-        - *CM_GIT_SHA*: `#`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_3d-unet`
+               - ENV variables:
+                   - CM_SUBMODULE_3D_UNET: `yes`
+        * `_deeplearningexamples`
+               - ENV variables:
+                   - CM_SUBMODULE_DEEPLEARNINGEXAMPLES: `yes`
+        * `_deepsparse`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `deepsparse`
+                   - CM_GIT_URL: `https://github.com/neuralmagic/inference`
+                   - CM_MLPERF_LAST_RELEASE: `v4.0`
+        * `_gn`
+               - ENV variables:
+                   - CM_SUBMODULE_GN: `yes`
+        * `_no-recurse-submodules`
+               - ENV variables:
+                   - CM_GIT_RECURSE_SUBMODULES: ``
+        * `_nvidia-pycocotools`
+               - ENV variables:
+                   - CM_GIT_PATCH_FILENAME: `coco.patch`
+        * `_octoml`
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/octoml/inference`
+        * `_openimages-nvidia-pycocotools`
+               - ENV variables:
+                   - CM_GIT_PATCH_FILENAME: `openimages-pycocotools.patch`
+        * `_patch`
+               - ENV variables:
+                   - CM_GIT_PATCH: `yes`
+        * `_pybind`
+               - ENV variables:
+                   - CM_SUBMODULE_PYBIND: `yes`
+        * `_recurse-submodules`
+               - ENV variables:
+                   - CM_GIT_RECURSE_SUBMODULES: ` --recurse-submodules`
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+        * `_submodules.#`
+               - ENV variables:
+                   - CM_GIT_SUBMODULES: `#`
+
+        </details>
 
 
-  * Group "**git-history**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**checkout**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_full-history`
-      - Environment variables:
-        - *CM_GIT_DEPTH*: ``
-      - Workflow:
-    * **`_short-history`** (default)
-      - Environment variables:
-        - *CM_GIT_DEPTH*: `--depth 10`
-      - Workflow:
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `#`
+        * `_sha.#`
+               - ENV variables:
+                   - CM_GIT_SHA: `#`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**git-history**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_short-history`
-#### Default environment
+        * `_full-history`
+               - ENV variables:
+                   - CM_GIT_DEPTH: ``
+        * **`_short-history`** (default)
+               - ENV variables:
+                   - CM_GIT_DEPTH: `--depth 10`
+
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_GIT_CHECKOUT_FOLDER: `inference`
-* CM_GIT_DEPTH: `--depth 4`
-* CM_GIT_PATCH: `no`
-* CM_GIT_RECURSE_SUBMODULES: ``
-* CM_GIT_URL: `https://github.com/mlcommons/inference.git`
+    `_short-history`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_CHECKOUT_FOLDER: `inference`
+    * CM_GIT_DEPTH: `--depth 4`
+    * CM_GIT_PATCH: `no`
+    * CM_GIT_RECURSE_SUBMODULES: ``
+    * CM_GIT_URL: `https://github.com/mlcommons/inference.git`
 
 
 #### Versions
@@ -201,4 +187,6 @@ Default version: `master`
 
 ___
 #### Script output
-`cmr "get src source inference inference-src inference-source mlperf mlcommons [,variations]"  -j`
+```bash
+cmr "get src source inference inference-src inference-source mlperf mlcommons [variations]"  -j
+```

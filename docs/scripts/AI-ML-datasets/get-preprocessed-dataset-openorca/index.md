@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,openorca,language-processing,preprocessed`
 
-    `cm run script --tags=get,dataset,openorca,language-processing,preprocessed[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,openorca,language-processing,preprocessed[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset openorca language-processing preprocessed"`
 
-    `cmr "get dataset openorca language-processing preprocessed [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset openorca language-processing preprocessed [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,61 +67,63 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset openorca language-processing preprocessed[variations]" `
-
+    ```bash
+    cm docker script "get dataset openorca language-processing preprocessed[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**dataset-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_calibration`
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `yes`
-      - Workflow:
-    * **`_validation`** (default)
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `no`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_60`** (default)
-      - Workflow:
-    * `_full`
-      - Workflow:
-    * `_size.#`
-      - Workflow:
+      * Group "**dataset-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_calibration`
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `yes`
+        * **`_validation`** (default)
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `no`
 
-
-#### Default variations
-
-`_60,_validation`
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_DATASET_CALIBRATION: `no`
+        * **`_60`** (default)
+        * `_full`
+        * `_size.#`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_60,_validation`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_DATASET_CALIBRATION: `no`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-preprocessed-dataset-openorca/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get dataset openorca language-processing preprocessed [,variations]"  -j`
+```bash
+cmr "get dataset openorca language-processing preprocessed [variations]"  -j
+```

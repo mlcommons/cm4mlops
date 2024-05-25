@@ -30,32 +30,18 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=modular,python,app,image-classification,onnx`
 
-    `cm run script --tags=modular,python,app,image-classification,onnx[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=modular,python,app,image-classification,onnx[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "modular python app image-classification onnx"`
 
-    `cmr "modular python app image-classification onnx [variations]" [--input_flags]`
+    ```bash
+    cmr "modular python app image-classification onnx [variations]" [--input_flags]
+    ```
 
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
-
-
-#### Input Flags
-
-* --**input**=Path to JPEG image to classify
-* --**output**=Output directory (optional)
-* --**j**=Print JSON output
-
-=== "Python"
-
-    ```python
-r=cm.access({... , "input":...}
-```
 === "Python"
     ##### Run this script from Python
 
@@ -82,59 +68,64 @@ r=cm.access({... , "input":...}
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "modular python app image-classification onnx[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "modular python app image-classification onnx[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**target**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_cpu`** (default)
-      - Environment variables:
-        - *USE_CPU*: `True`
-      - Workflow:
-    * `_cuda`
-      - Environment variables:
-        - *USE_CUDA*: `True`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_cpu`
+      * Group "**target**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        * **`_cpu`** (default)
+               - ENV variables:
+                   - USE_CPU: `True`
+        * `_cuda`
+               - ENV variables:
+                   - USE_CUDA: `True`
 
-* `--input=value`  &rarr;  `CM_IMAGE=value`
-* `--output=value`  &rarr;  `CM_APP_IMAGE_CLASSIFICATION_ONNX_PY_OUTPUT=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "input":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_BATCH_COUNT: `1`
-* CM_BATCH_SIZE: `1`
+    `_cpu`
+=== "Input Flags"
+
+
+    #### Input Flags
+
+    * --**input:** Path to JPEG image to classify
+    * --**output:** Output directory (optional)
+    * --**j:** Print JSON output
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--input=value`  &rarr;  `CM_IMAGE=value`
+    * `--output=value`  &rarr;  `CM_APP_IMAGE_CLASSIFICATION_ONNX_PY_OUTPUT=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_BATCH_COUNT: `1`
+    * CM_BATCH_SIZE: `1`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-image-classification-onnx-py/run.sh)
 === "Windows"
@@ -142,4 +133,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/app-image-classification-onnx-py/run.bat)
 ___
 #### Script output
-`cmr "modular python app image-classification onnx [,variations]" [--input_flags] -j`
+```bash
+cmr "modular python app image-classification onnx [variations]" [--input_flags] -j
+```

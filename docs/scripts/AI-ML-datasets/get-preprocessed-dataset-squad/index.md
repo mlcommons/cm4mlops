@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,preprocessed,tokenized,squad`
 
-    `cm run script --tags=get,dataset,preprocessed,tokenized,squad[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,preprocessed,tokenized,squad[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset preprocessed tokenized squad"`
 
-    `cmr "get dataset preprocessed tokenized squad [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset preprocessed tokenized squad [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,107 +67,99 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset preprocessed tokenized squad[variations]" `
-
+    ```bash
+    cm docker script "get dataset preprocessed tokenized squad[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**calibration-set**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_calib1`
-      - Environment variables:
-        - *CM_DATASET_SQUAD_CALIBRATION_SET*: `one`
-      - Workflow:
-    * `_calib2`
-      - Environment variables:
-        - *CM_DATASET_SQUAD_CALIBRATION_SET*: `two`
-      - Workflow:
-    * **`_no-calib`** (default)
-      - Environment variables:
-        - *CM_DATASET_SQUAD_CALIBRATION_SET*: ``
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**doc-stride**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_doc-stride.#`
-      - Environment variables:
-        - *CM_DATASET_DOC_STRIDE*: `#`
-      - Workflow:
-    * **`_doc-stride.128`** (default)
-      - Environment variables:
-        - *CM_DATASET_DOC_STRIDE*: `128`
-      - Workflow:
+      * Group "**calibration-set**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_calib1`
+               - ENV variables:
+                   - CM_DATASET_SQUAD_CALIBRATION_SET: `one`
+        * `_calib2`
+               - ENV variables:
+                   - CM_DATASET_SQUAD_CALIBRATION_SET: `two`
+        * **`_no-calib`** (default)
+               - ENV variables:
+                   - CM_DATASET_SQUAD_CALIBRATION_SET: ``
 
-
-  * Group "**packing**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_packed`
-      - Environment variables:
-        - *CM_DATASET_SQUAD_PACKED*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,preprocessed,squad,_pickle
-             - CM script: [get-preprocessed-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-squad)
-
-    </details>
+        </details>
 
 
-  * Group "**raw**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**doc-stride**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_pickle`
-      - Environment variables:
-        - *CM_DATASET_RAW*: `no`
-      - Workflow:
-    * **`_raw`** (default)
-      - Environment variables:
-        - *CM_DATASET_RAW*: `yes`
-      - Workflow:
+        * `_doc-stride.#`
+               - ENV variables:
+                   - CM_DATASET_DOC_STRIDE: `#`
+        * **`_doc-stride.128`** (default)
+               - ENV variables:
+                   - CM_DATASET_DOC_STRIDE: `128`
 
-    </details>
+        </details>
 
 
-  * Group "**seq-length**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**packing**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_seq-length.#`
-      - Environment variables:
-        - *CM_DATASET_MAX_SEQ_LENGTH*: `#`
-      - Workflow:
-    * **`_seq-length.384`** (default)
-      - Environment variables:
-        - *CM_DATASET_MAX_SEQ_LENGTH*: `384`
-      - Workflow:
+        * `_packed`
+               - ENV variables:
+                   - CM_DATASET_SQUAD_PACKED: `yes`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**raw**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_doc-stride.128,_no-calib,_raw,_seq-length.384`
+        * `_pickle`
+               - ENV variables:
+                   - CM_DATASET_RAW: `no`
+        * **`_raw`** (default)
+               - ENV variables:
+                   - CM_DATASET_RAW: `yes`
 
-##### Native script being run
+        </details>
+
+
+      * Group "**seq-length**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_seq-length.#`
+               - ENV variables:
+                   - CM_DATASET_MAX_SEQ_LENGTH: `#`
+        * **`_seq-length.384`** (default)
+               - ENV variables:
+                   - CM_DATASET_MAX_SEQ_LENGTH: `384`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_doc-stride.128,_no-calib,_raw,_seq-length.384`
+
+#### Native script being run
 === "Linux/macOS"
      * [run-packed.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-preprocessed-dataset-squad/run-packed.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-preprocessed-dataset-squad/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get dataset preprocessed tokenized squad [,variations]"  -j`
+```bash
+cmr "get dataset preprocessed tokenized squad [variations]"  -j
+```

@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=print,hello world,hello-world,hello,world,python`
 
-    `cm run script --tags=print,hello world,hello-world,hello,world,python `
-
+    ```bash
+    cm run script --tags=print,hello world,hello-world,hello,world,python 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "print hello world hello-world hello world python"`
 
-    `cmr "print hello world hello-world hello world python " `
-
+    ```bash
+    cmr "print hello world hello-world hello world python " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "print hello world hello-world hello world python" `
-
+    ```bash
+    cm docker script "print hello world hello-world hello world python" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/print-hello-world-py/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/print-hello-world-py/run.bat)
 ___
 #### Script output
-`cmr "print hello world hello-world hello world python "  -j`
+```bash
+cmr "print hello world hello-world hello world python "  -j
+```

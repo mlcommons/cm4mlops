@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=run,mlc,mlcommons,mlperf,power,server,power-server`
 
-    `cm run script --tags=run,mlc,mlcommons,mlperf,power,server,power-server [--input_flags]`
-
+    ```bash
+    cm run script --tags=run,mlc,mlcommons,mlperf,power,server,power-server [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "run mlc mlcommons mlperf power server power-server"`
 
-    `cmr "run mlc mlcommons mlperf power server power-server " [--input_flags]`
-
+    ```bash
+    cmr "run mlc mlcommons mlperf power server power-server " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,45 +68,42 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "run mlc mlcommons mlperf power server power-server" [--input_flags]`
-
+    ```bash
+    cm docker script "run mlc mlcommons mlperf power server power-server" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--device_port=value`  &rarr;  `CM_MLPERF_POWER_DEVICE_PORT=value`
-* `--device_type=value`  &rarr;  `CM_MLPERF_POWER_DEVICE_TYPE=value`
-* `--interface_flag=value`  &rarr;  `CM_MLPERF_POWER_INTERFACE_FLAG=value`
-* `--ntp_server=value`  &rarr;  `CM_MLPERF_POWER_NTP_SERVER=value`
-* `--screen=value`  &rarr;  `CM_MLPERF_POWER_SERVER_USE_SCREEN=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "device_port":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_MLPERF_POWER_NTP_SERVER: `time.google.com`
-* CM_MLPERF_POWER_INTERFACE_FLAG: ``
-* CM_MLPERF_POWER_DEVICE_TYPE: `49`
-* CM_MLPERF_POWER_SERVER_ADDRESS: `0.0.0.0`
-* CM_MLPERF_POWER_SERVER_PORT: `4950`
-* CM_MLPERF_POWER_DEVICE_PORT: `/dev/usbtmc0`
-* CM_MLPERF_POWER_SERVER_USE_SCREEN: `no`
+    * `--device_port=value`  &rarr;  `CM_MLPERF_POWER_DEVICE_PORT=value`
+    * `--device_type=value`  &rarr;  `CM_MLPERF_POWER_DEVICE_TYPE=value`
+    * `--interface_flag=value`  &rarr;  `CM_MLPERF_POWER_INTERFACE_FLAG=value`
+    * `--ntp_server=value`  &rarr;  `CM_MLPERF_POWER_NTP_SERVER=value`
+    * `--screen=value`  &rarr;  `CM_MLPERF_POWER_SERVER_USE_SCREEN=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_MLPERF_POWER_NTP_SERVER: `time.google.com`
+    * CM_MLPERF_POWER_INTERFACE_FLAG: ``
+    * CM_MLPERF_POWER_DEVICE_TYPE: `49`
+    * CM_MLPERF_POWER_SERVER_ADDRESS: `0.0.0.0`
+    * CM_MLPERF_POWER_SERVER_PORT: `4950`
+    * CM_MLPERF_POWER_DEVICE_PORT: `/dev/usbtmc0`
+    * CM_MLPERF_POWER_SERVER_USE_SCREEN: `no`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-mlperf-power-server/run.sh)
 === "Windows"
@@ -114,4 +111,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/run-mlperf-power-server/run.bat)
 ___
 #### Script output
-`cmr "run mlc mlcommons mlperf power server power-server " [--input_flags] -j`
+```bash
+cmr "run mlc mlcommons mlperf power server power-server " [--input_flags] -j
+```

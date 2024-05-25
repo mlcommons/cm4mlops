@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,src,llvm,from.src,src-llvm`
 
-    `cm run script --tags=install,src,llvm,from.src,src-llvm[,variations] `
-
+    ```bash
+    cm run script --tags=install,src,llvm,from.src,src-llvm[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install src llvm from.src src-llvm"`
 
-    `cmr "install src llvm from.src src-llvm [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "install src llvm from.src src-llvm [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,168 +67,94 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install src llvm from.src src-llvm[variations]" `
-
+    ```bash
+    cm docker script "install src llvm from.src src-llvm[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `#`
-      - Workflow:
-    * `_for-intel-mlperf-inference-v3.1-bert`
-      - Environment variables:
-        - *CM_LLVM_CONDA_ENV*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,gcc
-             - CM script: [get-gcc](https://github.com/mlcommons/cm4mlops/tree/master/script/get-gcc)
-           * get,conda,_name.bert-pt
-             * CM names: `--adr.['conda']...`
-             - CM script: [get-conda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-conda)
-           * get,conda-package,_package.ncurses,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'ncurses']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.ninja
-             * CM names: `--adr.['conda-package', 'ninja']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.cmake
-             * CM names: `--adr.['conda-package', 'cmake']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,conda-package,_package.llvm-openmp,_source.conda-forge
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,conda-package,_package.chardet
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.libstdcxx-ng,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'libstdcxx-ng']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-    * `_for-intel-mlperf-inference-v3.1-gptj`
-      - Environment variables:
-        - *CM_LLVM_CONDA_ENV*: `yes`
-        - *CM_LLVM_16_INTEL_MLPERF_INFERENCE*: `yes`
-        - *USE_CUDA*: `0`
-        - *CUDA_VISIBLE_DEVICES*: ``
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-sys-util,_g++-12
-             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-           * get,gcc
-             - CM script: [get-gcc](https://github.com/mlcommons/cm4mlops/tree/master/script/get-gcc)
-           * get,conda,_name.gptj-pt
-             * CM names: `--adr.['conda']...`
-             - CM script: [get-conda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-conda)
-           * get,generic,conda-package,_package.python
-             * CM names: `--adr.['conda-package', 'python']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,conda-package,_package.ncurses,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'ncurses']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,conda-package,_package.chardet
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.libstdcxx-ng,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'libstdcxx-ng']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.mkl,_source.intel
-             * CM names: `--adr.['conda-package', 'mkl']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.mkl-include,_source.intel
-             * CM names: `--adr.['conda-package', 'mkl-include']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.intel-openmp,_source.intel
-             * CM names: `--adr.['conda-package', 'intel-openmp']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.gperftools,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'gperftools']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.pybind11,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'pybind11']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic-python-lib,_custom-python,_package.torch,_url.git+https://github.com/pytorch/pytorch.git@927dc662386af052018212c7d01309a506fc94cd
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-           * get,generic,conda-package,_package.typing-extensions,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'typing-extensions']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.sympy,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'sympy']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic-python-lib,_custom-python,_package.setuptools
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-           * get,generic-python-lib,_custom-python,_package.neural-compressor,_url.git+https://github.com/intel/neural-compressor.git@a2931eaa4052eec195be3c79a13f7bfa23e54473
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-    * `_full-history`
-      - Workflow:
-    * `_runtimes.#`
-      - Environment variables:
-        - *CM_LLVM_ENABLE_RUNTIMES*: `#`
-      - Workflow:
-    * `_sha.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_SHA*: `#`
-      - Workflow:
-    * `_tag.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_TAG*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**build-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_debug`
-      - Environment variables:
-        - *CM_LLVM_BUILD_TYPE*: `debug`
-      - Workflow:
-    * **`_release`** (default)
-      - Environment variables:
-        - *CM_LLVM_BUILD_TYPE*: `release`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `#`
+        * `_for-intel-mlperf-inference-v3.1-bert`
+               - ENV variables:
+                   - CM_LLVM_CONDA_ENV: `yes`
+        * `_for-intel-mlperf-inference-v3.1-gptj`
+               - ENV variables:
+                   - CM_LLVM_CONDA_ENV: `yes`
+                   - CM_LLVM_16_INTEL_MLPERF_INFERENCE: `yes`
+                   - USE_CUDA: `0`
+                   - CUDA_VISIBLE_DEVICES: ``
+        * `_full-history`
+        * `_runtimes.#`
+               - ENV variables:
+                   - CM_LLVM_ENABLE_RUNTIMES: `#`
+        * `_sha.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_SHA: `#`
+        * `_tag.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_TAG: `#`
 
-
-  * Group "**clang**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_clang`** (default)
-      - Environment variables:
-        - *CM_LLVM_ENABLE_PROJECTS*: `clang`
-      - Workflow:
-
-    </details>
-
-
-  * Group "**repo**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**build-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_clang,_release`
+        * `_debug`
+               - ENV variables:
+                   - CM_LLVM_BUILD_TYPE: `debug`
+        * **`_release`** (default)
+               - ENV variables:
+                   - CM_LLVM_BUILD_TYPE: `release`
 
-##### Native script being run
+        </details>
+
+
+      * Group "**clang**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * **`_clang`** (default)
+               - ENV variables:
+                   - CM_LLVM_ENABLE_PROJECTS: `clang`
+
+        </details>
+
+
+      * Group "**repo**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_clang,_release`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-llvm-src/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install src llvm from.src src-llvm [,variations]"  -j`
+```bash
+cmr "install src llvm from.src src-llvm [variations]"  -j
+```

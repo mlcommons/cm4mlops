@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=print,croissant,desc`
 
-    `cm run script --tags=print,croissant,desc [--input_flags]`
-
+    ```bash
+    cm run script --tags=print,croissant,desc [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "print croissant desc"`
 
-    `cmr "print croissant desc " [--input_flags]`
-
+    ```bash
+    cmr "print croissant desc " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,35 +68,32 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "print croissant desc" [--input_flags]`
-
+    ```bash
+    cm docker script "print croissant desc" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--url=value`  &rarr;  `CM_PRINT_CROISSANT_URL=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "url":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_PRINT_CROISSANT_URL: `https://raw.githubusercontent.com/mlcommons/croissant/main/datasets/1.0/gpt-3/metadata.json`
+    * `--url=value`  &rarr;  `CM_PRINT_CROISSANT_URL=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_PRINT_CROISSANT_URL: `https://raw.githubusercontent.com/mlcommons/croissant/main/datasets/1.0/gpt-3/metadata.json`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/print-croissant-desc/run.sh)
 === "Windows"
@@ -104,4 +101,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/print-croissant-desc/run.bat)
 ___
 #### Script output
-`cmr "print croissant desc " [--input_flags] -j`
+```bash
+cmr "print croissant desc " [--input_flags] -j
+```

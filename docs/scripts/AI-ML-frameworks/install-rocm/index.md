@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,rocm,install-rocm`
 
-    `cm run script --tags=install,rocm,install-rocm `
-
+    ```bash
+    cm run script --tags=install,rocm,install-rocm 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install rocm install-rocm"`
 
-    `cmr "install rocm install-rocm " `
-
+    ```bash
+    cmr "install rocm install-rocm " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,22 +67,25 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install rocm install-rocm" `
-
+    ```bash
+    cm docker script "install rocm install-rocm" 
+    ```
 ___
 
 #### Versions
 Default version: `5.7.1`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run-rhel.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-rocm/run-rhel.sh)
      * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-rocm/run-ubuntu.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-rocm/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install rocm install-rocm "  -j`
+```bash
+cmr "install rocm install-rocm "  -j
+```

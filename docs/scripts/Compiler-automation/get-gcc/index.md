@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,gcc,compiler,c-compiler,cpp-compiler,get-gcc`
 
-    `cm run script --tags=get,gcc,compiler,c-compiler,cpp-compiler,get-gcc `
-
+    ```bash
+    cm run script --tags=get,gcc,compiler,c-compiler,cpp-compiler,get-gcc 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get gcc compiler c-compiler cpp-compiler get-gcc"`
 
-    `cmr "get gcc compiler c-compiler cpp-compiler get-gcc " `
-
+    ```bash
+    cmr "get gcc compiler c-compiler cpp-compiler get-gcc " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,12 +68,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get gcc compiler c-compiler cpp-compiler get-gcc" `
-
+    ```bash
+    cm docker script "get gcc compiler c-compiler cpp-compiler get-gcc" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-gcc/run.sh)
 === "Windows"
@@ -81,4 +82,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-gcc/run.bat)
 ___
 #### Script output
-`cmr "get gcc compiler c-compiler cpp-compiler get-gcc "  -j`
+```bash
+cmr "get gcc compiler c-compiler cpp-compiler get-gcc "  -j
+```

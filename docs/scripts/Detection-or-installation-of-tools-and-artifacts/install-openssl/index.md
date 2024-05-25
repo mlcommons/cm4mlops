@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,src,openssl,openssl-lib`
 
-    `cm run script --tags=install,src,openssl,openssl-lib `
-
+    ```bash
+    cm run script --tags=install,src,openssl,openssl-lib 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install src openssl openssl-lib"`
 
-    `cmr "install src openssl openssl-lib " `
-
+    ```bash
+    cmr "install src openssl openssl-lib " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,8 +67,9 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install src openssl openssl-lib" `
-
+    ```bash
+    cm docker script "install src openssl openssl-lib" 
+    ```
 ___
 
 #### Versions
@@ -76,12 +77,14 @@ Default version: `1.1.1`
 
 * `1.1.1`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-openssl/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install src openssl openssl-lib "  -j`
+```bash
+cmr "install src openssl openssl-lib "  -j
+```

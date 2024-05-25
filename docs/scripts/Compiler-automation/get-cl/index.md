@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,cl,compiler,c-compiler,cpp-compiler,get-cl`
 
-    `cm run script --tags=get,cl,compiler,c-compiler,cpp-compiler,get-cl `
-
+    ```bash
+    cm run script --tags=get,cl,compiler,c-compiler,cpp-compiler,get-cl 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get cl compiler c-compiler cpp-compiler get-cl"`
 
-    `cmr "get cl compiler c-compiler cpp-compiler get-cl " `
-
+    ```bash
+    cmr "get cl compiler c-compiler cpp-compiler get-cl " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,17 +68,20 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get cl compiler c-compiler cpp-compiler get-cl" `
-
+    ```bash
+    cm docker script "get cl compiler c-compiler cpp-compiler get-cl" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
-No run file exists for Linux/macOS
+    No run file exists for Linux/macOS
 === "Windows"
 
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cl/run.bat)
 ___
 #### Script output
-`cmr "get cl compiler c-compiler cpp-compiler get-cl "  -j`
+```bash
+cmr "get cl compiler c-compiler cpp-compiler get-cl "  -j
+```
