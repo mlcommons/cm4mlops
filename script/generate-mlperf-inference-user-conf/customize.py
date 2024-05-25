@@ -271,6 +271,7 @@ def preprocess(i):
             target_qps = conf['target_qps']
             query_count = str(int((660/fast_factor) * (float(target_qps))))
             user_conf += ml_model_name + "." + scenario + ".max_query_count = " + query_count + "\n"
+            env['CM_MLPERF_MAX_QUERY_COUNT'] = query_count
 
     else:
         max_duration_valid = env.get('CM_MLPERF_MAX_DURATION_VALID', 660000)

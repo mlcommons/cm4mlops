@@ -141,6 +141,8 @@ def preprocess(i):
 
                 if env['CM_MLPERF_RUN_STYLE'] == "test":
                     env['TOTAL_SAMPLE_COUNT'] = env['CM_TEST_QUERY_COUNT']
+                else:
+                    env['TOTAL_SAMPLE_COUNT'] = env.get('CM_MLPERF_MAX_QUERY_COUNT', env['CM_TEST_QUERY_COUNT'])
 
                 if env['CM_MLPERF_LOADGEN_SCENARIO'] == "Offline":
                     env['WORKERS_PER_PROC'] = 4
