@@ -27,7 +27,12 @@ def preprocess(i):
 
     backend = env['CM_MLPERF_BACKEND']
     device = env['CM_MLPERF_DEVICE']
-    harness_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'code', ml_model, backend+"-"+device)
+    code_base_folder = backend + '-' + device
+    if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == 'v4.0':
+        if 'gptj' in ml_model:
+            code_base_folder = "ITREX"
+
+    harness_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'code', ml_model, code_base_folder)
 
     env['CM_HARNESS_CODE_ROOT'] = harness_root
 
@@ -79,16 +84,25 @@ def preprocess(i):
             env['MLPERF_INFERENCE_ROOT'] = env['CM_MLPERF_INFERENCE_SOURCE']
             if env.get('INTEL_GPTJ_INT4', '') == 'yes':
                 model_precision = "int4"
-                env['RUN_QUANTIZATION_CMD'] = "bash run_quantization_int4.sh"
+                if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == 'v3.1':
+                    env['RUN_QUANTIZATION_CMD'] = "bash run_quantization_int4.sh"
+                else:
+                    env['FILE_TAG'] = "final"
+                    env['OUT_DIR'] = os.getcwd()
+                    env['RUN_QUANTIZATION_CMD'] = "bash run_quantization.sh"
             else:
                 model_precision = "int8"
                 env['RUN_QUANTIZATION_CMD'] = "bash run_quantization.sh"
-            final_model_path = os.path.join(harness_root, "data", f"gpt-j-{model_precision}-model", "best_model.pt")
+            if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == "v3.1":
+                final_model_path = os.path.join(harness_root, "data", f"gpt-j-{model_precision}-model", "best_model.pt")
+            else:
+                final_model_path = os.path.join(env['OUT_DIR'], "checkpoint-final-final-q4-j-int8-pc.bin")
             model_dir_name = f"{model_precision.upper()}_MODEL_DIR"
             env[model_dir_name] = os.path.dirname(final_model_path)
             if not os.path.exists(env[model_dir_name]):
                 os.makedirs(env[model_dir_name])
             env['CM_ML_MODEL_PATH'] = env[model_dir_name]
+            env['CM_ML_MODEL_FILE_WITH_PATH'] = final_model_path
             if env.get('CM_MLPERF_INFERENCE_INTEL_GPTJ_INT8_MODEL_PATH', '') != '' and env.get('INT8_MODEL_DIR', '') != '':
                 shutil.copy(env['CM_MLPERF_INFERENCE_INTEL_GPTJ_INT8_MODEL_PATH'], env[model_dir_name])
             if env.get('CM_MLPERF_INFERENCE_INTEL_GPTJ_INT4_MODEL_PATH', '') != '' and env.get('INT4_MODEL_DIR', '') != '':
@@ -120,7 +134,18 @@ def preprocess(i):
                 env['QUANTIZED_MODEL'] = os.path.join(env["INT8_MODEL_DIR"], "best_model.pt")
                 env['PRECISION'] = "int8"
             env['CM_RUN_DIR'] = i['run_script_input']['path']
-            env['CM_RUN_CMD'] = "bash run_gptj_harness.sh "
+            if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == "v3.1":
+                env['CM_RUN_CMD'] = "bash run_gptj_harness_v3_1.sh "
+            elif env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == "v4.0":
+                env['CM_RUN_CMD'] = "bash run_gptj_harness_v4_0.sh "
+
+                if env['CM_MLPERF_RUN_STYLE'] == "test":
+                    env['TOTAL_SAMPLE_COUNT'] = env['CM_TEST_QUERY_COUNT']
+
+                if env['CM_MLPERF_LOADGEN_SCENARIO'] == "Offline":
+                    env['WORKERS_PER_PROC'] = 4
+                else:
+                    env['WORKERS_PER_PROC'] = 1
 
     return {'return':0}
 

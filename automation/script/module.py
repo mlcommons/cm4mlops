@@ -4313,6 +4313,9 @@ def enable_or_skip_script(meta, env):
     Internal: enable a dependency based on enable_if_env and skip_if_env meta information
     (AND function)
     """
+    if type(meta) != dict:
+        print( "The meta entry is not a dictionary for skip/enable if_env {}".format(meta))
+
     for key in meta:
         meta_key = [str(v).lower() for v in meta[key]]
         if key in env:

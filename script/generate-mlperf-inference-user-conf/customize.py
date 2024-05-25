@@ -173,7 +173,7 @@ def preprocess(i):
 
     elif env['CM_MLPERF_RUN_STYLE'] == "test":
         if scenario == "Offline":
-            metric_value = 1
+            metric_value = float(env.get('CM_MLPERF_INFERENCE_TEST_QPS', 1))
         if scenario in [ "SingleStream" ]:
             metric_value = 1000
 
@@ -254,36 +254,36 @@ def preprocess(i):
         ranging_user_conf += ml_model_name + "." + scenario + ".min_duration = 300000" + "\n"
 
     if env['CM_MLPERF_RUN_STYLE'] == "test":
+        max_duration_test = env.get('CM_MLPERF_MAX_DURATION_TEST', 30000)
         query_count = env.get('CM_TEST_QUERY_COUNT', "5")
         user_conf += ml_model_name + "." + scenario + ".max_query_count = " + query_count + "\n"
         user_conf += ml_model_name + "." + scenario + ".min_query_count = " + query_count + "\n"
         user_conf += ml_model_name + "." + scenario + ".min_duration = 0" + "\n"
-        #else:
-        #    user_conf += ml_model_name + "." + scenario + ".min_duration = 20000" + "\n"
-        #    user_conf += ml_model_name + "." + scenario + ".max_duration = 20000 \n "
+        # max_duration is effective for all scenarios except the Offline
+        if env.get('CM_MLPERF_USE_MAX_DURATION', 'yes').lower() not in [ "no", "false", "0"]:
+            if scenario != "Offline":
+                user_conf += ml_model_name + "." + scenario + f".max_duration = {max_duration_test}" + "\n"
 
     elif env['CM_MLPERF_RUN_STYLE'] == "fast":
+        max_duration_fast = env.get('CM_MLPERF_MAX_DURATION_FAST', 120000)
         if scenario == "Server":
+            user_conf += ml_model_name + "." + scenario + f".max_duration = {max_duration_fast}" + "\n"
             target_qps = conf['target_qps']
             query_count = str(int((660/fast_factor) * (float(target_qps))))
             user_conf += ml_model_name + "." + scenario + ".max_query_count = " + query_count + "\n"
 
     else:
+        max_duration_valid = env.get('CM_MLPERF_MAX_DURATION_VALID', 660000)
+        max_duration_ranging = env.get('CM_MLPERF_MAX_DURATION_RANGING', 300000)
         if scenario == "MultiStream" or scenario == "SingleStream":
             if env.get('CM_MLPERF_USE_MAX_DURATION', 'yes').lower() not in [ "no", "false", "0" ] and env.get('CM_MLPERF_MODEL_EQUAL_ISSUE_MODE', 'no').lower() not in [ "yes", "1", "true" ]:
-                user_conf += ml_model_name + "." + scenario + ".max_duration = 660000 \n"
+                user_conf += ml_model_name + "." + scenario + f".max_duration = {max_duration_valid}" + "\n"
             elif env.get('CM_MLPERF_INFERENCE_MIN_DURATION','') != '':
                 user_conf += ml_model_name + "." + scenario + ".min_duration = " + env['CM_MLPERF_INFERENCE_MIN_DURATION'] +" \n"
             if scenario == "MultiStream":
                 user_conf += ml_model_name + "." + scenario + ".min_query_count = "+ env.get('CM_MLPERF_INFERENCE_MULTISTREAM_MIN_QUERY_COUNT', "662") + "\n"
             if short_ranging:
-                ranging_user_conf += ml_model_name + "." + scenario + ".max_duration = 300000 \n "
-        elif scenario == "SingleStream_old":
-            query_count = str(max(int((1000 / float(conf['target_latency'])) * 660), 64))
-            user_conf += ml_model_name + "." + scenario + ".max_query_count = " + str(int(query_count)+40) + "\n"
-            #user_conf += ml_model_name + "." + scenario + ".min_query_count = " + query_count + "\n"
-            if short_ranging:
-                ranging_user_conf += ml_model_name + "." + scenario + ".max_query_count = " + str(int(query_count)+40) + "\n"
+                ranging_user_conf += ml_model_name + "." + scenario + f".max_duration = {max_duration_ranging} \n "
         elif scenario == "Offline":
             query_count = int(float(conf['target_qps']) * 660)
             query_count = str(max(query_count, required_min_queries_offline))
