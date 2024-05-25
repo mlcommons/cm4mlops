@@ -1,6 +1,4 @@
-The Reproduce MLPerf benchmarks category contains the following scripts:
-
-- [app-mlperf-inference-nvidia](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/app-mlperf-inference-nvidia/README.md)
-- [reproduce-mlperf-octoml-tinyml-results](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/reproduce-mlperf-octoml-tinyml-results/README.md)
-- [reproduce-mlperf-training-nvidia](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/reproduce-mlperf-training-nvidia/README.md)
-- [wrapper-reproduce-octoml-tinyml-submission](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/wrapper-reproduce-octoml-tinyml-submission/README.md)
+* [app-mlperf-inference-nvidia](app-mlperf-inference-nvidia/index.md)
+* [reproduce-mlperf-octoml-tinyml-results](reproduce-mlperf-octoml-tinyml-results/index.md)
+* [reproduce-mlperf-training-nvidia](reproduce-mlperf-training-nvidia/index.md)
+* [wrapper-reproduce-octoml-tinyml-submission](wrapper-reproduce-octoml-tinyml-submission/index.md)

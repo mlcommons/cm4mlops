@@ -1,8 +1,6 @@
-The Python automation category contains the following scripts:
-
-- [activate-python-venv](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/activate-python-venv/README.md)
-- [get-generic-python-lib](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/get-generic-python-lib/README.md)
-- [get-python3](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/get-python3/README.md)
-- [install-generic-conda-package](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/install-generic-conda-package/README.md)
-- [install-python-src](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/install-python-src/README.md)
-- [install-python-venv](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/install-python-venv/README.md)
+* [activate-python-venv](activate-python-venv/index.md)
+* [get-generic-python-lib](get-generic-python-lib/index.md)
+* [get-python3](get-python3/index.md)
+* [install-generic-conda-package](install-generic-conda-package/index.md)
+* [install-python-src](install-python-src/index.md)
+* [install-python-venv](install-python-venv/index.md)

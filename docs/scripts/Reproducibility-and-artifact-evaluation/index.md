@@ -1,6 +1,4 @@
-The Reproducibility and artifact evaluation category contains the following scripts:
-
-- [get-ipol-src](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/get-ipol-src/README.md)
-- [process-ae-users](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/process-ae-users/README.md)
-- [reproduce-ipol-paper-2022-439](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/reproduce-ipol-paper-2022-439/README.md)
-- [reproduce-micro-paper-2023-victima](https://github.com/anandhu-eng/cm4mlops/tree/mlperf-inference/script/reproduce-micro-paper-2023-victima/README.md)
+* [get-ipol-src](get-ipol-src/index.md)
+* [process-ae-users](process-ae-users/index.md)
+* [reproduce-ipol-paper-2022-439](reproduce-ipol-paper-2022-439/index.md)
+* [reproduce-micro-paper-2023-victima](reproduce-micro-paper-2023-victima/index.md)
