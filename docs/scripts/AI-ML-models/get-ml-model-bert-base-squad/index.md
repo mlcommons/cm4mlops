@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,ml-model,raw,bert,bert-base,bert-squad,language,language-processing`
 
-    `cm run script --tags=get,ml-model,raw,bert,bert-base,bert-squad,language,language-processing[,variations] `
-
+    ```bash
+    cm run script --tags=get,ml-model,raw,bert,bert-base,bert-squad,language,language-processing[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get ml-model raw bert bert-base bert-squad language language-processing"`
 
-    `cmr "get ml-model raw bert bert-base bert-squad language language-processing [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get ml-model raw bert bert-base bert-squad language language-processing [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,69 +67,53 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get ml-model raw bert bert-base bert-squad language language-processing[variations]" `
-
+    ```bash
+    cm docker script "get ml-model raw bert bert-base bert-squad language language-processing[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_deepsparse,int8`
-      - Environment variables:
-        - *CM_ML_MODEL_F1*: `87.89`
-        - *CM_ML_MODEL_FILE*: `model.onnx`
-        - *CM_PRUNING_PERCENTAGE*: `95`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,ml-model,zoo,deepsparse,_pruned95_obs_quant-none
-             * CM names: `--adr.['neural-magic-zoo-downloader']...`
-             - *Warning: no scripts found*
-
-    </details>
+=== "Variations"
 
 
-  * Group "**framework**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_deepsparse`
-      - Environment variables:
-        - *CM_ML_MODEL_FRAMEWORK*: `deepsparse`
-        - *CM_ML_MODEL_INPUT_IDS_NAME*: `input_ids`
-        - *CM_ML_MODEL_INPUT_MASK_NAME*: `input_mask`
-        - *CM_ML_MODEL_INPUT_SEGMENTS_NAME*: `segment_ids`
-        - *CM_ML_MODEL_OUTPUT_END_LOGITS_NAME*: `output_end_logits`
-        - *CM_ML_MODEL_OUTPUT_START_LOGITS_NAME*: `output_start_logits`
-      - Workflow:
+      * Group "**framework**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_deepsparse`
+               - ENV variables:
+                   - CM_ML_MODEL_FRAMEWORK: `deepsparse`
+                   - CM_ML_MODEL_INPUT_IDS_NAME: `input_ids`
+                   - CM_ML_MODEL_INPUT_MASK_NAME: `input_mask`
+                   - CM_ML_MODEL_INPUT_SEGMENTS_NAME: `segment_ids`
+                   - CM_ML_MODEL_OUTPUT_END_LOGITS_NAME: `output_end_logits`
+                   - CM_ML_MODEL_OUTPUT_START_LOGITS_NAME: `output_start_logits`
 
-
-  * Group "**precision**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_fp32`** (default)
-      - Environment variables:
-        - *CM_ML_MODEL_PRECISION*: `fp32`
-      - Workflow:
-    * `_int8`
-      - Environment variables:
-        - *CM_ML_MODEL_PRECISION*: `int8`
-        - *CM_ML_MODEL_QUANTIZED*: `yes`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**precision**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_fp32`
+        * **`_fp32`** (default)
+               - ENV variables:
+                   - CM_ML_MODEL_PRECISION: `fp32`
+        * `_int8`
+               - ENV variables:
+                   - CM_ML_MODEL_PRECISION: `int8`
+                   - CM_ML_MODEL_QUANTIZED: `yes`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_fp32`
 
 ___
 #### Script output
-`cmr "get ml-model raw bert bert-base bert-squad language language-processing [,variations]"  -j`
+```bash
+cmr "get ml-model raw bert bert-base bert-squad language language-processing [variations]"  -j
+```

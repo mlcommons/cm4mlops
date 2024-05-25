@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,package-manager,cuda,package-manager-cuda,install-pm-cuda`
 
-    `cm run script --tags=install,package-manager,cuda,package-manager-cuda,install-pm-cuda `
-
+    ```bash
+    cm run script --tags=install,package-manager,cuda,package-manager-cuda,install-pm-cuda 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install package-manager cuda package-manager-cuda install-pm-cuda"`
 
-    `cmr "install package-manager cuda package-manager-cuda install-pm-cuda " `
-
+    ```bash
+    cmr "install package-manager cuda package-manager-cuda install-pm-cuda " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,18 +67,21 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install package-manager cuda package-manager-cuda install-pm-cuda" `
-
+    ```bash
+    cm docker script "install package-manager cuda package-manager-cuda install-pm-cuda" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-cuda-package-manager/run-ubuntu.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-cuda-package-manager/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install package-manager cuda package-manager-cuda install-pm-cuda "  -j`
+```bash
+cmr "install package-manager cuda package-manager-cuda install-pm-cuda "  -j
+```

@@ -140,19 +140,17 @@ cmr "run mobilenet-models _tflite _armnn _opencl _accuracy-only" \
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=run,mobilenet,models,image-classification,mobilenet-models,mlperf,inference`
 
-    `cm run script --tags=run,mobilenet,models,image-classification,mobilenet-models,mlperf,inference[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=run,mobilenet,models,image-classification,mobilenet-models,mlperf,inference[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "run mobilenet models image-classification mobilenet-models mlperf inference"`
 
-    `cmr "run mobilenet models image-classification mobilenet-models mlperf inference [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "run mobilenet models image-classification mobilenet-models mlperf inference [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -180,175 +178,149 @@ cmr "run mobilenet-models _tflite _armnn _opencl _accuracy-only" \
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "run mobilenet models image-classification mobilenet-models mlperf inference[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "run mobilenet models image-classification mobilenet-models mlperf inference[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_armnn`
-      - Environment variables:
-        - *CM_MLPERF_USE_ARMNN_LIBRARY*: `yes`
-      - Workflow:
-    * `_neon`
-      - Aliases: `_use-neon`
-      - Environment variables:
-        - *CM_MLPERF_USE_NEON*: `yes`
-      - Workflow:
-    * `_only-fp32`
-      - Environment variables:
-        - *CM_MLPERF_RUN_INT8*: `no`
-      - Workflow:
-    * `_only-int8`
-      - Environment variables:
-        - *CM_MLPERF_RUN_FP32*: `no`
-      - Workflow:
-    * `_opencl`
-      - Environment variables:
-        - *CM_MLPERF_USE_OPENCL*: `yes`
-      - Workflow:
-    * `_tflite,armnn`
-      - Environment variables:
-        - *CM_MLPERF_TFLITE_ARMNN*: `yes`
-      - Workflow:
-    * `_tflite,armnn,neon`
-      - Environment variables:
-        - *CM_MLPERF_TFLITE_ARMNN_NEON*: `yes`
-      - Workflow:
-    * `_tflite,armnn,opencl`
-      - Environment variables:
-        - *CM_MLPERF_TFLITE_ARMNN_OPENCL*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**base-framework**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_tflite`** (default)
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_armnn`
+               - ENV variables:
+                   - CM_MLPERF_USE_ARMNN_LIBRARY: `yes`
+        * `_neon`
+              - Aliases: `_use-neon`
+               - ENV variables:
+                   - CM_MLPERF_USE_NEON: `yes`
+        * `_only-fp32`
+               - ENV variables:
+                   - CM_MLPERF_RUN_INT8: `no`
+        * `_only-int8`
+               - ENV variables:
+                   - CM_MLPERF_RUN_FP32: `no`
+        * `_opencl`
+               - ENV variables:
+                   - CM_MLPERF_USE_OPENCL: `yes`
 
-
-  * Group "**model-selection**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_all-models`** (default)
-      - Environment variables:
-        - *CM_MLPERF_RUN_MOBILENETS*: `yes`
-        - *CM_MLPERF_RUN_EFFICIENTNETS*: `yes`
-      - Workflow:
-    * `_efficientnet`
-      - Environment variables:
-        - *CM_MLPERF_RUN_EFFICIENTNETS*: `yes`
-      - Workflow:
-    * `_mobilenet`
-      - Environment variables:
-        - *CM_MLPERF_RUN_MOBILENETS*: `yes`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**optimization**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**base-framework**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_tflite-default`** (default)
-      - Environment variables:
-        - *CM_MLPERF_TFLITE_DEFAULT_MODE*: `yes`
-      - Workflow:
+        * **`_tflite`** (default)
 
-    </details>
+        </details>
 
 
-  * Group "**run-mode**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**model-selection**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_accuracy-only`
-      - Environment variables:
-        - *CM_MLPERF_FIND_PERFORMANCE_MODE*: `no`
-        - *CM_MLPERF_ACCURACY_MODE*: `yes`
-        - *CM_MLPERF_SUBMISSION_MODE*: `no`
-      - Workflow:
-    * `_find-performance`
-      - Environment variables:
-        - *CM_MLPERF_FIND_PERFORMANCE_MODE*: `yes`
-        - *CM_MLPERF_SUBMISSION_MODE*: `no`
-      - Workflow:
-    * `_performance-only`
-      - Environment variables:
-        - *CM_MLPERF_FIND_PERFORMANCE_MODE*: `no`
-        - *CM_MLPERF_PERFORMANCE_MODE*: `yes`
-        - *CM_MLPERF_SUBMISSION_MODE*: `no`
-      - Workflow:
-    * `_populate-readme`
-      - Environment variables:
-        - *CM_MLPERF_FIND_PERFORMANCE_MODE*: `no`
-        - *CM_MLPERF_POPULATE_README*: `yes`
-      - Workflow:
-    * `_submission`
-      - Environment variables:
-        - *CM_MLPERF_FIND_PERFORMANCE_MODE*: `no`
-        - *CM_MLPERF_SUBMISSION_MODE*: `yes`
-      - Workflow:
+        * **`_all-models`** (default)
+               - ENV variables:
+                   - CM_MLPERF_RUN_MOBILENETS: `yes`
+                   - CM_MLPERF_RUN_EFFICIENTNETS: `yes`
+        * `_efficientnet`
+               - ENV variables:
+                   - CM_MLPERF_RUN_EFFICIENTNETS: `yes`
+        * `_mobilenet`
+               - ENV variables:
+                   - CM_MLPERF_RUN_MOBILENETS: `yes`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**optimization**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_all-models,_tflite,_tflite-default`
+        * **`_tflite-default`** (default)
+               - ENV variables:
+                   - CM_MLPERF_TFLITE_DEFAULT_MODE: `yes`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--find-performance=value`  &rarr;  `CM_MLPERF_FIND_PERFORMANCE_MODE=value`
-* `--imagenet_path=value`  &rarr;  `IMAGENET_PATH=value`
-* `--no-rerun=value`  &rarr;  `CM_MLPERF_NO_RERUN=value`
-* `--power=value`  &rarr;  `CM_MLPERF_POWER=value`
-* `--results_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_RESULTS_DIR=value`
-* `--submission=value`  &rarr;  `CM_MLPERF_SUBMISSION_MODE=value`
-* `--submission_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_SUBMISSION_DIR=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "find-performance":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**run-mode**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_MLPERF_RUN_MOBILENETS: `no`
-* CM_MLPERF_RUN_EFFICIENTNETS: `no`
-* CM_MLPERF_NO_RERUN: `no`
-* CM_MLPERF_RUN_FP32: `yes`
-* CM_MLPERF_RUN_INT8: `yes`
+        * `_accuracy-only`
+               - ENV variables:
+                   - CM_MLPERF_FIND_PERFORMANCE_MODE: `no`
+                   - CM_MLPERF_ACCURACY_MODE: `yes`
+                   - CM_MLPERF_SUBMISSION_MODE: `no`
+        * `_find-performance`
+               - ENV variables:
+                   - CM_MLPERF_FIND_PERFORMANCE_MODE: `yes`
+                   - CM_MLPERF_SUBMISSION_MODE: `no`
+        * `_performance-only`
+               - ENV variables:
+                   - CM_MLPERF_FIND_PERFORMANCE_MODE: `no`
+                   - CM_MLPERF_PERFORMANCE_MODE: `yes`
+                   - CM_MLPERF_SUBMISSION_MODE: `no`
+        * `_populate-readme`
+               - ENV variables:
+                   - CM_MLPERF_FIND_PERFORMANCE_MODE: `no`
+                   - CM_MLPERF_POPULATE_README: `yes`
+        * `_submission`
+               - ENV variables:
+                   - CM_MLPERF_FIND_PERFORMANCE_MODE: `no`
+                   - CM_MLPERF_SUBMISSION_MODE: `yes`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_all-models,_tflite,_tflite-default`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--find-performance=value`  &rarr;  `CM_MLPERF_FIND_PERFORMANCE_MODE=value`
+    * `--imagenet_path=value`  &rarr;  `IMAGENET_PATH=value`
+    * `--no-rerun=value`  &rarr;  `CM_MLPERF_NO_RERUN=value`
+    * `--power=value`  &rarr;  `CM_MLPERF_POWER=value`
+    * `--results_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_RESULTS_DIR=value`
+    * `--submission=value`  &rarr;  `CM_MLPERF_SUBMISSION_MODE=value`
+    * `--submission_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_SUBMISSION_DIR=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_MLPERF_RUN_MOBILENETS: `no`
+    * CM_MLPERF_RUN_EFFICIENTNETS: `no`
+    * CM_MLPERF_NO_RERUN: `no`
+    * CM_MLPERF_RUN_FP32: `yes`
+    * CM_MLPERF_RUN_INT8: `yes`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-mlperf-inference-mobilenet-models/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "run mobilenet models image-classification mobilenet-models mlperf inference [,variations]" [--input_flags] -j`
+```bash
+cmr "run mobilenet models image-classification mobilenet-models mlperf inference [variations]" [--input_flags] -j
+```

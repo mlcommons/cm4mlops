@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,raw,ml-model,language-processing,llama2,llama2-70b,text-summarization`
 
-    `cm run script --tags=get,raw,ml-model,language-processing,llama2,llama2-70b,text-summarization[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,raw,ml-model,language-processing,llama2,llama2-70b,text-summarization[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get raw ml-model language-processing llama2 llama2-70b text-summarization"`
 
-    `cmr "get raw ml-model language-processing llama2 llama2-70b text-summarization [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get raw ml-model language-processing llama2 llama2-70b text-summarization [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,106 +67,95 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get raw ml-model language-processing llama2 llama2-70b text-summarization[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get raw ml-model language-processing llama2 llama2-70b text-summarization[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_batch_size.#`
-      - Environment variables:
-        - *CM_ML_MODEL_BATCH_SIZE*: `#`
-      - Workflow:
-    * `_pytorch,fp32`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**framework**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_pytorch`** (default)
-      - Environment variables:
-        - *CM_ML_MODEL_FRAMEWORK*: `pytorch`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_batch_size.#`
+               - ENV variables:
+                   - CM_ML_MODEL_BATCH_SIZE: `#`
 
-
-  * Group "**huggingface-stub**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_meta-llama/Llama-2-70b-chat-hf`** (default)
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_FOLDER*: `Llama-2-70b-chat-hf`
-        - *CM_MODEL_ZOO_ENV_KEY*: `LLAMA2`
-      - Workflow:
-    * `_meta-llama/Llama-2-7b-chat-hf`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_FOLDER*: `Llama-2-7b-chat-hf`
-        - *CM_MODEL_ZOO_ENV_KEY*: `LLAMA2`
-      - Workflow:
-    * `_stub.#`
-      - Environment variables:
-        - *CM_MODEL_ZOO_ENV_KEY*: `LLAMA2`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**precision**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**framework**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_fp32`** (default)
-      - Environment variables:
-        - *CM_ML_MODEL_INPUT_DATA_TYPES*: `fp32`
-        - *CM_ML_MODEL_PRECISION*: `fp32`
-        - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `fp32`
-      - Workflow:
-    * `_int8`
-      - Environment variables:
-        - *CM_ML_MODEL_INPUT_DATA_TYPES*: `int8`
-        - *CM_ML_MODEL_PRECISION*: `int8`
-        - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `int8`
-      - Workflow:
-    * `_uint8`
-      - Environment variables:
-        - *CM_ML_MODEL_INPUT_DATA_TYPES*: `uint8`
-        - *CM_ML_MODEL_PRECISION*: `uint8`
-        - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `uint8`
-      - Workflow:
+        * **`_pytorch`** (default)
+               - ENV variables:
+                   - CM_ML_MODEL_FRAMEWORK: `pytorch`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**huggingface-stub**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_fp32,_meta-llama/Llama-2-70b-chat-hf,_pytorch`
+        * **`_meta-llama/Llama-2-70b-chat-hf`** (default)
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_FOLDER: `Llama-2-70b-chat-hf`
+                   - CM_MODEL_ZOO_ENV_KEY: `LLAMA2`
+        * `_meta-llama/Llama-2-7b-chat-hf`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_FOLDER: `Llama-2-7b-chat-hf`
+                   - CM_MODEL_ZOO_ENV_KEY: `LLAMA2`
+        * `_stub.#`
+               - ENV variables:
+                   - CM_MODEL_ZOO_ENV_KEY: `LLAMA2`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        </details>
 
-* `--checkpoint=value`  &rarr;  `LLAMA2_CHECKPOINT_PATH=value`
 
-**Above CLI flags can be used in the Python CM API as follows:**
+      * Group "**precision**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-```python
-r=cm.access({... , "checkpoint":...}
-```
+        * **`_fp32`** (default)
+               - ENV variables:
+                   - CM_ML_MODEL_INPUT_DATA_TYPES: `fp32`
+                   - CM_ML_MODEL_PRECISION: `fp32`
+                   - CM_ML_MODEL_WEIGHT_DATA_TYPES: `fp32`
+        * `_int8`
+               - ENV variables:
+                   - CM_ML_MODEL_INPUT_DATA_TYPES: `int8`
+                   - CM_ML_MODEL_PRECISION: `int8`
+                   - CM_ML_MODEL_WEIGHT_DATA_TYPES: `int8`
+        * `_uint8`
+               - ENV variables:
+                   - CM_ML_MODEL_INPUT_DATA_TYPES: `uint8`
+                   - CM_ML_MODEL_PRECISION: `uint8`
+                   - CM_ML_MODEL_WEIGHT_DATA_TYPES: `uint8`
 
-</details>
+        </details>
+
+
+    ##### Default variations
+
+    `_fp32,_meta-llama/Llama-2-70b-chat-hf,_pytorch`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--checkpoint=value`  &rarr;  `LLAMA2_CHECKPOINT_PATH=value`
+
+
 
 
 ___
 #### Script output
-`cmr "get raw ml-model language-processing llama2 llama2-70b text-summarization [,variations]" [--input_flags] -j`
+```bash
+cmr "get raw ml-model language-processing llama2 llama2-70b text-summarization [variations]" [--input_flags] -j
+```

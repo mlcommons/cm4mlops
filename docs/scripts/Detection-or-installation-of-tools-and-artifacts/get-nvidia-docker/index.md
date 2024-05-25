@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,install,nvidia,nvidia-container-toolkit,nvidia-docker,engine`
 
-    `cm run script --tags=get,install,nvidia,nvidia-container-toolkit,nvidia-docker,engine `
-
+    ```bash
+    cm run script --tags=get,install,nvidia,nvidia-container-toolkit,nvidia-docker,engine 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get install nvidia nvidia-container-toolkit nvidia-docker engine"`
 
-    `cmr "get install nvidia nvidia-container-toolkit nvidia-docker engine " `
-
+    ```bash
+    cmr "get install nvidia nvidia-container-toolkit nvidia-docker engine " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,17 +67,20 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get install nvidia nvidia-container-toolkit nvidia-docker engine" `
-
+    ```bash
+    cm docker script "get install nvidia nvidia-container-toolkit nvidia-docker engine" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-nvidia-docker/run-ubuntu.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get install nvidia nvidia-container-toolkit nvidia-docker engine "  -j`
+```bash
+cmr "get install nvidia nvidia-container-toolkit nvidia-docker engine "  -j
+```

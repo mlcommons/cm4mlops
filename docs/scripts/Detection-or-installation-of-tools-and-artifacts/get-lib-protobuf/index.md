@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,google-protobuf,protobuf,lib,lib-protobuf,google`
 
-    `cm run script --tags=get,google-protobuf,protobuf,lib,lib-protobuf,google[,variations] `
-
+    ```bash
+    cm run script --tags=get,google-protobuf,protobuf,lib,lib-protobuf,google[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get google-protobuf protobuf lib lib-protobuf google"`
 
-    `cmr "get google-protobuf protobuf lib lib-protobuf google [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get google-protobuf protobuf lib lib-protobuf google [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,38 +67,41 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get google-protobuf protobuf lib lib-protobuf google[variations]" `
-
+    ```bash
+    cm docker script "get google-protobuf protobuf lib lib-protobuf google[variations]" 
+    ```
 ___
 
+=== "Variations"
 
-#### Variations
 
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_branch.#`
-      - Environment variables:
-        - *CM_TMP_GIT_CHECKOUT*: `#`
-      - Workflow:
-    * `_tag.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_TAG*: `#`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_branch.#`
+               - ENV variables:
+                   - CM_TMP_GIT_CHECKOUT: `#`
+        * `_tag.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_TAG: `#`
+
+        </details>
 
 #### Versions
 Default version: `1.13.0`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-lib-protobuf/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get google-protobuf protobuf lib lib-protobuf google [,variations]"  -j`
+```bash
+cmr "get google-protobuf protobuf lib lib-protobuf google [variations]"  -j
+```

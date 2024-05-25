@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,imagenet,train,dataset,original`
 
-    `cm run script --tags=get,imagenet,train,dataset,original [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,imagenet,train,dataset,original [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get imagenet train dataset original"`
 
-    `cmr "get imagenet train dataset original " [--input_flags]`
-
+    ```bash
+    cmr "get imagenet train dataset original " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,33 +67,30 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get imagenet train dataset original" [--input_flags]`
-
+    ```bash
+    cm docker script "get imagenet train dataset original" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--input=value`  &rarr;  `IMAGENET_TRAIN_PATH=value`
-* `--torrent=value`  &rarr;  `CM_DATASET_IMAGENET_TRAIN_TORRENT_PATH=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "input":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--input=value`  &rarr;  `IMAGENET_TRAIN_PATH=value`
+    * `--torrent=value`  &rarr;  `CM_DATASET_IMAGENET_TRAIN_TORRENT_PATH=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-imagenet-train/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get imagenet train dataset original " [--input_flags] -j`
+```bash
+cmr "get imagenet train dataset original " [--input_flags] -j
+```

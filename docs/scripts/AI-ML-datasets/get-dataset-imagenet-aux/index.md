@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,aux,dataset-aux,image-classification,imagenet-aux`
 
-    `cm run script --tags=get,aux,dataset-aux,image-classification,imagenet-aux[,variations] `
-
+    ```bash
+    cm run script --tags=get,aux,dataset-aux,image-classification,imagenet-aux[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get aux dataset-aux image-classification imagenet-aux"`
 
-    `cmr "get aux dataset-aux image-classification imagenet-aux [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get aux dataset-aux image-classification imagenet-aux [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,46 +67,46 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get aux dataset-aux image-classification imagenet-aux[variations]" `
-
+    ```bash
+    cm docker script "get aux dataset-aux image-classification imagenet-aux[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_2012`
-      - Environment variables:
-        - *CM_DATASET_AUX_VER*: `2012`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**download-source**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_from.berkeleyvision`
-      - Environment variables:
-        - *CM_WGET_URL*: `http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz`
-      - Workflow:
-    * **`_from.dropbox`** (default)
-      - Environment variables:
-        - *CM_WGET_URL*: `https://www.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_2012`
+               - ENV variables:
+                   - CM_DATASET_AUX_VER: `2012`
+
+        </details>
 
 
-#### Default variations
+      * Group "**download-source**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_from.dropbox`
+        * `_from.berkeleyvision`
+               - ENV variables:
+                   - CM_WGET_URL: `http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz`
+        * **`_from.dropbox`** (default)
+               - ENV variables:
+                   - CM_WGET_URL: `https://www.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_from.dropbox`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-imagenet-aux/run.sh)
 === "Windows"
@@ -116,4 +114,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-imagenet-aux/run.bat)
 ___
 #### Script output
-`cmr "get aux dataset-aux image-classification imagenet-aux [,variations]"  -j`
+```bash
+cmr "get aux dataset-aux image-classification imagenet-aux [variations]"  -j
+```

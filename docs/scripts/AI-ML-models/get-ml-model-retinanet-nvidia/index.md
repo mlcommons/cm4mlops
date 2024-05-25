@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,ml-model,nvidia-retinanet,nvidia`
 
-    `cm run script --tags=get,ml-model,nvidia-retinanet,nvidia[,variations] `
-
+    ```bash
+    cm run script --tags=get,ml-model,nvidia-retinanet,nvidia[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get ml-model nvidia-retinanet nvidia"`
 
-    `cmr "get ml-model nvidia-retinanet nvidia [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get ml-model nvidia-retinanet nvidia [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,42 +67,45 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get ml-model nvidia-retinanet nvidia[variations]" `
-
+    ```bash
+    cm docker script "get ml-model nvidia-retinanet nvidia[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_efficient-nms`
-      - Environment variables:
-        - *CM_NVIDIA_EFFICIENT_NMS*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic-python-lib,_polygraphy
-             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-
-    </details>
-
-#### Default environment
+=== "Variations"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Variations
 
-* CM_TORCH_DEVICE: `cpu`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_efficient-nms`
+               - ENV variables:
+                   - CM_NVIDIA_EFFICIENT_NMS: `yes`
+
+        </details>
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_TORCH_DEVICE: `cpu`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-retinanet-nvidia/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get ml-model nvidia-retinanet nvidia [,variations]"  -j`
+```bash
+cmr "get ml-model nvidia-retinanet nvidia [variations]"  -j
+```

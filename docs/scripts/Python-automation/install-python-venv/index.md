@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,python,get-python-venv,python-venv`
 
-    `cm run script --tags=install,python,get-python-venv,python-venv[,variations] `
-
+    ```bash
+    cm run script --tags=install,python,get-python-venv,python-venv[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install python get-python-venv python-venv"`
 
-    `cmr "install python get-python-venv python-venv [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "install python get-python-venv python-venv [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,32 +67,30 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install python get-python-venv python-venv[variations]" `
-
+    ```bash
+    cm docker script "install python get-python-venv python-venv[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_lto`
-      - Workflow:
-    * `_optimized`
-      - Workflow:
-    * `_shared`
-      - Workflow:
-    * `_with-custom-ssl`
-      - Workflow:
-    * `_with-ssl`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-##### Native script being run
+    #### Variations
+
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_lto`
+        * `_optimized`
+        * `_shared`
+        * `_with-custom-ssl`
+        * `_with-ssl`
+
+        </details>
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-python-venv/run.sh)
 === "Windows"
@@ -102,4 +98,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/install-python-venv/run.bat)
 ___
 #### Script output
-`cmr "install python get-python-venv python-venv [,variations]"  -j`
+```bash
+cmr "install python get-python-venv python-venv [variations]"  -j
+```

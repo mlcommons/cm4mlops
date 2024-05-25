@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,gh,gh-cli,github,cli,github-cli`
 
-    `cm run script --tags=get,gh,gh-cli,github,cli,github-cli `
-
+    ```bash
+    cm run script --tags=get,gh,gh-cli,github,cli,github-cli 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get gh gh-cli github cli github-cli"`
 
-    `cmr "get gh gh-cli github cli github-cli " `
-
+    ```bash
+    cmr "get gh gh-cli github cli github-cli " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get gh gh-cli github cli github-cli" `
-
+    ```bash
+    cm docker script "get gh gh-cli github cli github-cli" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-github-cli/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-github-cli/run.bat)
 ___
 #### Script output
-`cmr "get gh gh-cli github cli github-cli "  -j`
+```bash
+cmr "get gh gh-cli github cli github-cli "  -j
+```

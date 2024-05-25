@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=create,patch`
 
-    `cm run script --tags=create,patch [--input_flags]`
-
+    ```bash
+    cm run script --tags=create,patch [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "create patch"`
 
-    `cmr "create patch " [--input_flags]`
-
+    ```bash
+    cmr "create patch " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,28 +68,25 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "create patch" [--input_flags]`
-
+    ```bash
+    cm docker script "create patch" [--input_flags]
+    ```
 ___
 
+=== "Input Flag Mapping"
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
 
-* `--exclude=value`  &rarr;  `CM_CREATE_PATCH_EXCLUDE=value`
-* `--new=value`  &rarr;  `CM_CREATE_PATCH_NEW=value`
-* `--old=value`  &rarr;  `CM_CREATE_PATCH_OLD=value`
+    #### Script flags mapped to environment
 
-**Above CLI flags can be used in the Python CM API as follows:**
+    * `--exclude=value`  &rarr;  `CM_CREATE_PATCH_EXCLUDE=value`
+    * `--new=value`  &rarr;  `CM_CREATE_PATCH_NEW=value`
+    * `--old=value`  &rarr;  `CM_CREATE_PATCH_OLD=value`
 
-```python
-r=cm.access({... , "exclude":...}
-```
 
-</details>
 
 
 ___
 #### Script output
-`cmr "create patch " [--input_flags] -j`
+```bash
+cmr "create patch " [--input_flags] -j
+```

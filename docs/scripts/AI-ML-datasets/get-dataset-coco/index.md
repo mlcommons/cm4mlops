@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,object-detection,coco`
 
-    `cm run script --tags=get,dataset,object-detection,coco[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,dataset,object-detection,coco[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset object-detection coco"`
 
-    `cmr "get dataset object-detection coco [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset object-detection coco [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,79 +68,73 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset object-detection coco[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get dataset object-detection coco[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_complete`** (default)
-      - Environment variables:
-        - *CM_DATASET_COCO_SIZE*: `complete`
-      - Workflow:
-    * `_small`
-      - Environment variables:
-        - *CM_DATASET_COCO_SIZE*: `small`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_train`
-      - Environment variables:
-        - *CM_DATASET_COCO_TYPE*: `train`
-      - Workflow:
-    * **`_val`** (default)
-      - Environment variables:
-        - *CM_DATASET_COCO_TYPE*: `val`
-      - Workflow:
+      * Group "**size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * **`_complete`** (default)
+               - ENV variables:
+                   - CM_DATASET_COCO_SIZE: `complete`
+        * `_small`
+               - ENV variables:
+                   - CM_DATASET_COCO_SIZE: `small`
 
-
-  * Group "**version**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_2017`** (default)
-      - Environment variables:
-        - *CM_DATASET_COCO_VERSION*: `2017`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_2017,_complete,_val`
+        * `_train`
+               - ENV variables:
+                   - CM_DATASET_COCO_TYPE: `train`
+        * **`_val`** (default)
+               - ENV variables:
+                   - CM_DATASET_COCO_TYPE: `val`
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+        </details>
 
-* `--from=value`  &rarr;  `CM_FROM=value`
-* `--home=value`  &rarr;  `CM_HOME_DIR=value`
-* `--store=value`  &rarr;  `CM_STORE=value`
-* `--to=value`  &rarr;  `CM_TO=value`
 
-**Above CLI flags can be used in the Python CM API as follows:**
+      * Group "**version**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-```python
-r=cm.access({... , "from":...}
-```
+        * **`_2017`** (default)
+               - ENV variables:
+                   - CM_DATASET_COCO_VERSION: `2017`
 
-</details>
+        </details>
+
+
+    ##### Default variations
+
+    `_2017,_complete,_val`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--from=value`  &rarr;  `CM_FROM=value`
+    * `--home=value`  &rarr;  `CM_HOME_DIR=value`
+    * `--store=value`  &rarr;  `CM_STORE=value`
+    * `--to=value`  &rarr;  `CM_TO=value`
+
+
 
 
 ___
 #### Script output
-`cmr "get dataset object-detection coco [,variations]" [--input_flags] -j`
+```bash
+cmr "get dataset object-detection coco [variations]" [--input_flags] -j
+```

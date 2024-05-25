@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,src,from.src,transformers,src-transformers`
 
-    `cm run script --tags=install,src,from.src,transformers,src-transformers[,variations] `
-
+    ```bash
+    cm run script --tags=install,src,from.src,transformers,src-transformers[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install src from.src transformers src-transformers"`
 
-    `cmr "install src from.src transformers src-transformers [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "install src from.src transformers src-transformers [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,76 +67,62 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install src from.src transformers src-transformers[variations]" `
-
+    ```bash
+    cm docker script "install src from.src transformers src-transformers[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `#`
-      - Workflow:
-    * `_for-intel-mlperf-inference-v3.1-bert`
-      - Environment variables:
-        - *CM_CONDA_ENV*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,conda,_name.bert-pt
-             * CM names: `--adr.['conda']...`
-             - CM script: [get-conda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-conda)
-           * get,generic,conda-package,_package.python
-             * CM names: `--adr.['conda-package', 'python3']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.wheel,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'wheel']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-           * get,generic,conda-package,_package.setuptools,_source.conda-forge
-             * CM names: `--adr.['conda-package', 'setuptools']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-    * `_sha.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_SHA*: `#`
-      - Workflow:
-    * `_tag.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_TAG*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**repo**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
-    * **`_repo.https://github.com/pytorch/pytorch`** (default)
-      - Environment variables:
-        - *CM_GIT_URL*: `https://github.com/huggingface/transformers`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `#`
+        * `_for-intel-mlperf-inference-v3.1-bert`
+               - ENV variables:
+                   - CM_CONDA_ENV: `yes`
+        * `_sha.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_SHA: `#`
+        * `_tag.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_TAG: `#`
+
+        </details>
 
 
-#### Default variations
+      * Group "**repo**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_repo.https://github.com/pytorch/pytorch`
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+        * **`_repo.https://github.com/pytorch/pytorch`** (default)
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/huggingface/transformers`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_repo.https://github.com/pytorch/pytorch`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-transformers-from-src/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install src from.src transformers src-transformers [,variations]"  -j`
+```bash
+cmr "install src from.src transformers src-transformers [variations]"  -j
+```

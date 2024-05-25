@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,results,inference,inference-results,mlcommons,mlperf`
 
-    `cm run script --tags=get,results,inference,inference-results,mlcommons,mlperf[,variations] `
-
+    ```bash
+    cm run script --tags=get,results,inference,inference-results,mlcommons,mlperf[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get results inference inference-results mlcommons mlperf"`
 
-    `cmr "get results inference inference-results mlcommons mlperf [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get results inference inference-results mlcommons mlperf [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,53 +68,53 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get results inference inference-results mlcommons mlperf[variations]" `
-
+    ```bash
+    cm docker script "get results inference inference-results mlcommons mlperf[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**source-repo**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_ctuning`
-      - Environment variables:
-        - *GITHUB_REPO_OWNER*: `ctuning`
-      - Workflow:
-    * `_custom`
-      - Environment variables:
-        - *GITHUB_REPO_OWNER*: `arjunsuresh`
-      - Workflow:
-    * `_go`
-      - Environment variables:
-        - *GITHUB_REPO_OWNER*: `GATEOverflow`
-      - Workflow:
-    * **`_mlcommons`** (default)
-      - Environment variables:
-        - *GITHUB_REPO_OWNER*: `mlcommons`
-      - Workflow:
-    * `_nvidia-only`
-      - Environment variables:
-        - *GITHUB_REPO_OWNER*: `GATEOverflow`
-        - *NVIDIA_ONLY*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_mlcommons`
-#### Default environment
+      * Group "**source-repo**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_ctuning`
+               - ENV variables:
+                   - GITHUB_REPO_OWNER: `ctuning`
+        * `_custom`
+               - ENV variables:
+                   - GITHUB_REPO_OWNER: `arjunsuresh`
+        * `_go`
+               - ENV variables:
+                   - GITHUB_REPO_OWNER: `GATEOverflow`
+        * **`_mlcommons`** (default)
+               - ENV variables:
+                   - GITHUB_REPO_OWNER: `mlcommons`
+        * `_nvidia-only`
+               - ENV variables:
+                   - GITHUB_REPO_OWNER: `GATEOverflow`
+                   - NVIDIA_ONLY: `yes`
+
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_GIT_CHECKOUT: `master`
-* CM_GIT_DEPTH: `--depth 1`
-* CM_GIT_PATCH: `no`
+    `_mlcommons`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_CHECKOUT: `master`
+    * CM_GIT_DEPTH: `--depth 1`
+    * CM_GIT_PATCH: `no`
 
 
 #### Versions
@@ -129,4 +127,6 @@ Default version: `v3.1`
 
 ___
 #### Script output
-`cmr "get results inference inference-results mlcommons mlperf [,variations]"  -j`
+```bash
+cmr "get results inference inference-results mlcommons mlperf [variations]"  -j
+```

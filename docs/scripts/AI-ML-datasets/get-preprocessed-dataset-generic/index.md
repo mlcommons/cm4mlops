@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,preprocessor,generic,image-preprocessor,script`
 
-    `cm run script --tags=get,preprocessor,generic,image-preprocessor,script `
-
+    ```bash
+    cm run script --tags=get,preprocessor,generic,image-preprocessor,script 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get preprocessor generic image-preprocessor script"`
 
-    `cmr "get preprocessor generic image-preprocessor script " `
-
+    ```bash
+    cmr "get preprocessor generic image-preprocessor script " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,11 +67,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get preprocessor generic image-preprocessor script" `
-
+    ```bash
+    cm docker script "get preprocessor generic image-preprocessor script" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "get preprocessor generic image-preprocessor script "  -j`
+```bash
+cmr "get preprocessor generic image-preprocessor script "  -j
+```

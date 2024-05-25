@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=copy,to,clipboard,copy-to-clipboard`
 
-    `cm run script --tags=copy,to,clipboard,copy-to-clipboard [--input_flags]`
-
+    ```bash
+    cm run script --tags=copy,to,clipboard,copy-to-clipboard [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "copy to clipboard copy-to-clipboard"`
 
-    `cmr "copy to clipboard copy-to-clipboard " [--input_flags]`
-
+    ```bash
+    cmr "copy to clipboard copy-to-clipboard " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,30 +67,25 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "copy to clipboard copy-to-clipboard" [--input_flags]`
-
+    ```bash
+    cm docker script "copy to clipboard copy-to-clipboard" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--add_quotes=value`  &rarr;  `CM_COPY_TO_CLIPBOARD_TEXT_ADD_QUOTES=value`
-* `--q=value`  &rarr;  `CM_COPY_TO_CLIPBOARD_TEXT_ADD_QUOTES=value`
-* `--t=value`  &rarr;  `CM_COPY_TO_CLIPBOARD_TEXT=value`
-* `--text=value`  &rarr;  `CM_COPY_TO_CLIPBOARD_TEXT=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "add_quotes":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--add_quotes=value`  &rarr;  `CM_COPY_TO_CLIPBOARD_TEXT_ADD_QUOTES=value`
+    * `--q=value`  &rarr;  `CM_COPY_TO_CLIPBOARD_TEXT_ADD_QUOTES=value`
+    * `--t=value`  &rarr;  `CM_COPY_TO_CLIPBOARD_TEXT=value`
+    * `--text=value`  &rarr;  `CM_COPY_TO_CLIPBOARD_TEXT=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/copy-to-clipboard/run.sh)
 === "Windows"
@@ -98,4 +93,6 @@ r=cm.access({... , "add_quotes":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/copy-to-clipboard/run.bat)
 ___
 #### Script output
-`cmr "copy to clipboard copy-to-clipboard " [--input_flags] -j`
+```bash
+cmr "copy to clipboard copy-to-clipboard " [--input_flags] -j
+```

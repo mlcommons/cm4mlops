@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=set,echo,off,win,echo-off-win,echo-off`
 
-    `cm run script --tags=set,echo,off,win,echo-off-win,echo-off `
-
+    ```bash
+    cm run script --tags=set,echo,off,win,echo-off-win,echo-off 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "set echo off win echo-off-win echo-off"`
 
-    `cmr "set echo off win echo-off-win echo-off " `
-
+    ```bash
+    cmr "set echo off win echo-off-win echo-off " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,11 +67,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "set echo off win echo-off-win echo-off" `
-
+    ```bash
+    cm docker script "set echo off win echo-off-win echo-off" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "set echo off win echo-off-win echo-off "  -j`
+```bash
+cmr "set echo off win echo-off-win echo-off "  -j
+```

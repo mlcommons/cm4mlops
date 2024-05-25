@@ -30,28 +30,18 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,spec,ptd,ptdaemon,power,daemon,power-daemon,mlperf,mlcommons`
 
-    `cm run script --tags=get,spec,ptd,ptdaemon,power,daemon,power-daemon,mlperf,mlcommons [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,spec,ptd,ptdaemon,power,daemon,power-daemon,mlperf,mlcommons [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get spec ptd ptdaemon power daemon power-daemon mlperf mlcommons"`
 
-    `cmr "get spec ptd ptdaemon power daemon power-daemon mlperf mlcommons " [--input_flags]`
+    ```bash
+    cmr "get spec ptd ptdaemon power daemon power-daemon mlperf mlcommons " [--input_flags]
+    ```
 
-
-
-#### Input Flags
-
-* --**input**=Path to SPEC PTDaemon (Optional)
-
-=== "Python"
-
-    ```python
-r=cm.access({... , "input":...}
-```
 === "Python"
     ##### Run this script from Python
 
@@ -78,35 +68,38 @@ r=cm.access({... , "input":...}
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get spec ptd ptdaemon power daemon power-daemon mlperf mlcommons" [--input_flags]`
-
+    ```bash
+    cm docker script "get spec ptd ptdaemon power daemon power-daemon mlperf mlcommons" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--input=value`  &rarr;  `CM_INPUT=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "input":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flags"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Input Flags
 
-* CM_GIT_CHECKOUT: `main`
-* CM_GIT_DEPTH: `--depth 1`
-* CM_GIT_PATCH: `no`
-* CM_GIT_RECURSE_SUBMODULES: ` `
-* CM_GIT_URL: `https://github.com/mlcommons/power.git`
+    * --**input:** Path to SPEC PTDaemon (Optional)
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--input=value`  &rarr;  `CM_INPUT=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_CHECKOUT: `main`
+    * CM_GIT_DEPTH: `--depth 1`
+    * CM_GIT_PATCH: `no`
+    * CM_GIT_RECURSE_SUBMODULES: ` `
+    * CM_GIT_URL: `https://github.com/mlcommons/power.git`
 
 
 #### Versions
@@ -115,12 +108,14 @@ Default version: `main`
 * `custom`
 * `main`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-spec-ptd/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get spec ptd ptdaemon power daemon power-daemon mlperf mlcommons " [--input_flags] -j`
+```bash
+cmr "get spec ptd ptdaemon power daemon power-daemon mlperf mlcommons " [--input_flags] -j
+```

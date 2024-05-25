@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=fail,filter`
 
-    `cm run script --tags=fail,filter[,variations] `
-
+    ```bash
+    cm run script --tags=fail,filter[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "fail filter"`
 
-    `cmr "fail filter [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "fail filter [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,25 +68,29 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "fail filter[variations]" `
-
+    ```bash
+    cm docker script "fail filter[variations]" 
+    ```
 ___
 
+=== "Variations"
 
-#### Variations
 
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_windows`
-      - Environment variables:
-        - *CM_FAIL_WINDOWS*: `True`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_windows`
+               - ENV variables:
+                   - CM_FAIL_WINDOWS: `True`
+
+        </details>
 
 
 ___
 #### Script output
-`cmr "fail filter [,variations]"  -j`
+```bash
+cmr "fail filter [variations]"  -j
+```

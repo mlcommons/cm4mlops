@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=run,python`
 
-    `cm run script --tags=run,python [--input_flags]`
-
+    ```bash
+    cm run script --tags=run,python [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "run python"`
 
-    `cmr "run python " [--input_flags]`
-
+    ```bash
+    cmr "run python " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,27 +67,22 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "run python" [--input_flags]`
-
+    ```bash
+    cm docker script "run python" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--command=value`  &rarr;  `CM_RUN_PYTHON_CMD=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "command":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--command=value`  &rarr;  `CM_RUN_PYTHON_CMD=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-python/run.sh)
 === "Windows"
@@ -95,4 +90,6 @@ r=cm.access({... , "command":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/run-python/run.bat)
 ___
 #### Script output
-`cmr "run python " [--input_flags] -j`
+```bash
+cmr "run python " [--input_flags] -j
+```

@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,openimages,calibration`
 
-    `cm run script --tags=get,dataset,openimages,calibration[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,openimages,calibration[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset openimages calibration"`
 
-    `cmr "get dataset openimages calibration [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset openimages calibration [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,70 +67,65 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset openimages calibration[variations]" `
-
+    ```bash
+    cm docker script "get dataset openimages calibration[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_filter`
-      - Environment variables:
-        - *CM_CALIBRATE_FILTER*: `yes`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,python3
-             * CM names: `--adr.['python', 'python3']...`
-             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-           * get,openimages,dataset,original,_calibration
-             - CM script: [get-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-openimages)
-
-    </details>
+=== "Variations"
 
 
-  * Group "**calibration-option**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_mlperf.option1`** (default)
-      - Environment variables:
-        - *CM_MLPERF_OPENIMAGES_CALIBRATION_OPTION*: `one`
-        - *CM_DOWNLOAD_CHECKSUM1*: `f09719174af3553119e2c621157773a6`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_filter`
+               - ENV variables:
+                   - CM_CALIBRATE_FILTER: `yes`
 
-
-  * Group "**filter-size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_filter-size.#`
-      - Environment variables:
-        - *CM_CALIBRATION_FILTER_SIZE*: `#`
-      - Workflow:
-    * `_filter-size.400`
-      - Environment variables:
-        - *CM_CALIBRATION_FILTER_SIZE*: `400`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**calibration-option**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_mlperf.option1`
+        * **`_mlperf.option1`** (default)
+               - ENV variables:
+                   - CM_MLPERF_OPENIMAGES_CALIBRATION_OPTION: `one`
+                   - CM_DOWNLOAD_CHECKSUM1: `f09719174af3553119e2c621157773a6`
 
-##### Native script being run
+        </details>
+
+
+      * Group "**filter-size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_filter-size.#`
+               - ENV variables:
+                   - CM_CALIBRATION_FILTER_SIZE: `#`
+        * `_filter-size.400`
+               - ENV variables:
+                   - CM_CALIBRATION_FILTER_SIZE: `400`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_mlperf.option1`
+
+#### Native script being run
 === "Linux/macOS"
      * [run-filter.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-openimages-calibration/run-filter.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get dataset openimages calibration [,variations]"  -j`
+```bash
+cmr "get dataset openimages calibration [variations]"  -j
+```

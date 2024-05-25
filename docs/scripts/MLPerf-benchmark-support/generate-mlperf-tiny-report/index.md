@@ -31,17 +31,17 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=generate,mlperf,tiny,mlperf-tiny,report`
 
-    `cm run script --tags=generate,mlperf,tiny,mlperf-tiny,report [--input_flags]`
-
+    ```bash
+    cm run script --tags=generate,mlperf,tiny,mlperf-tiny,report [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "generate mlperf tiny mlperf-tiny report"`
 
-    `cmr "generate mlperf tiny mlperf-tiny report " [--input_flags]`
-
+    ```bash
+    cmr "generate mlperf tiny mlperf-tiny report " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,35 +69,32 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "generate mlperf tiny mlperf-tiny report" [--input_flags]`
-
+    ```bash
+    cm docker script "generate mlperf tiny mlperf-tiny report" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--repo_tags=value`  &rarr;  `CM_IMPORT_TINYMLPERF_REPO_TAGS=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "repo_tags":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_IMPORT_TINYMLPERF_REPO_TAGS: `1.1-private`
+    * `--repo_tags=value`  &rarr;  `CM_IMPORT_TINYMLPERF_REPO_TAGS=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_IMPORT_TINYMLPERF_REPO_TAGS: `1.1-private`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run_submission_checker.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/generate-mlperf-tiny-report/run_submission_checker.sh)
 === "Windows"
@@ -105,4 +102,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
      * [run_submission_checker.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/generate-mlperf-tiny-report/run_submission_checker.bat)
 ___
 #### Script output
-`cmr "generate mlperf tiny mlperf-tiny report " [--input_flags] -j`
+```bash
+cmr "generate mlperf tiny mlperf-tiny report " [--input_flags] -j
+```

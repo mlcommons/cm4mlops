@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=mlperf,benchmark-mlperf`
 
-    `cm run script --tags=mlperf,benchmark-mlperf[,variations] `
-
+    ```bash
+    cm run script --tags=mlperf,benchmark-mlperf[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "mlperf benchmark-mlperf"`
 
-    `cmr "mlperf benchmark-mlperf [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "mlperf benchmark-mlperf [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,45 +67,34 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "mlperf benchmark-mlperf[variations]" `
-
+    ```bash
+    cm docker script "mlperf benchmark-mlperf[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**power-mode**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_no-power`** (default)
-      - Workflow:
-        1. ***Read "post_deps" on other CM scripts***
-           * benchmark-program,program
-             * CM names: `--adr.['benchmark-program']...`
-             - CM script: [benchmark-program](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program)
-    * `_power`
-      - Environment variables:
-        - *CM_MLPERF_POWER*: `yes`
-      - Workflow:
-        1. ***Read "prehook_deps" on other CM scripts***
-           * benchmark-program,program
-             * CM names: `--adr.['benchmark-program']...`
-             - CM script: [benchmark-program](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program)
-        1. ***Read "post_deps" on other CM scripts***
-           * run,mlperf,power,client
-             * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_LOADGEN_MODE': ['performance']}`
-             * CM names: `--adr.['mlperf-power-client']...`
-             - CM script: [run-mlperf-power-client](https://github.com/mlcommons/cm4mlops/tree/master/script/run-mlperf-power-client)
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_no-power`
+      * Group "**power-mode**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * **`_no-power`** (default)
+        * `_power`
+               - ENV variables:
+                   - CM_MLPERF_POWER: `yes`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_no-power`
 
 ___
 #### Script output
-`cmr "mlperf benchmark-mlperf [,variations]"  -j`
+```bash
+cmr "mlperf benchmark-mlperf [variations]"  -j
+```

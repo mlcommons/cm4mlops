@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,cmsis,cmsis_5,arm-software`
 
-    `cm run script --tags=get,cmsis,cmsis_5,arm-software[,variations] `
-
+    ```bash
+    cm run script --tags=get,cmsis,cmsis_5,arm-software[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get cmsis cmsis_5 arm-software"`
 
-    `cmr "get cmsis cmsis_5 arm-software [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get cmsis cmsis_5 arm-software [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,36 +68,39 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get cmsis cmsis_5 arm-software[variations]" `
-
+    ```bash
+    cm docker script "get cmsis cmsis_5 arm-software[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_recurse-submodules`
-      - Environment variables:
-        - *CM_GIT_RECURSE_SUBMODULES*: `--recurse-submodules`
-      - Workflow:
-    * `_short-history`
-      - Environment variables:
-        - *CM_GIT_DEPTH*: `--depth 10`
-      - Workflow:
-
-    </details>
-
-#### Default environment
+=== "Variations"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Variations
 
-* CM_GIT_DEPTH: ``
-* CM_GIT_PATCH: `no`
-* CM_GIT_URL: `https://github.com/ARM-software/CMSIS_5.git`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_recurse-submodules`
+               - ENV variables:
+                   - CM_GIT_RECURSE_SUBMODULES: `--recurse-submodules`
+        * `_short-history`
+               - ENV variables:
+                   - CM_GIT_DEPTH: `--depth 10`
+
+        </details>
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_DEPTH: ``
+    * CM_GIT_PATCH: `no`
+    * CM_GIT_URL: `https://github.com/ARM-software/CMSIS_5.git`
 
 
 #### Versions
@@ -109,12 +110,14 @@ Default version: `custom`
 * `develop`
 * `master`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cmsis_5/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get cmsis cmsis_5 arm-software [,variations]"  -j`
+```bash
+cmr "get cmsis cmsis_5 arm-software [variations]"  -j
+```

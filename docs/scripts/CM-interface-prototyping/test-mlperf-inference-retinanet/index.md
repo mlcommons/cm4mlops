@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=test,mlperf-inference-win,retinanet,windows`
 
-    `cm run script --tags=test,mlperf-inference-win,retinanet,windows `
-
+    ```bash
+    cm run script --tags=test,mlperf-inference-win,retinanet,windows 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "test mlperf-inference-win retinanet windows"`
 
-    `cmr "test mlperf-inference-win retinanet windows " `
-
+    ```bash
+    cmr "test mlperf-inference-win retinanet windows " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "test mlperf-inference-win retinanet windows" `
-
+    ```bash
+    cm docker script "test mlperf-inference-win retinanet windows" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/test-mlperf-inference-retinanet/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/test-mlperf-inference-retinanet/run.bat)
 ___
 #### Script output
-`cmr "test mlperf-inference-win retinanet windows "  -j`
+```bash
+cmr "test mlperf-inference-win retinanet windows "  -j
+```

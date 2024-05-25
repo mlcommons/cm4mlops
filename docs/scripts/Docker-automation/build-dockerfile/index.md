@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=build,dockerfile`
 
-    `cm run script --tags=build,dockerfile[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=build,dockerfile[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "build dockerfile"`
 
-    `cmr "build dockerfile [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "build dockerfile [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,78 +68,78 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "build dockerfile[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "build dockerfile[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_slim`
-      - Environment variables:
-        - *CM_DOCKER_BUILD_SLIM*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--build=value`  &rarr;  `CM_BUILD_DOCKER_IMAGE=value`
-* `--cache=value`  &rarr;  `CM_DOCKER_CACHE=value`
-* `--cm_repo=value`  &rarr;  `CM_MLOPS_REPO=value`
-* `--cm_repo_flags=value`  &rarr;  `CM_DOCKER_ADD_FLAG_TO_CM_MLOPS_REPO=value`
-* `--cm_repos=value`  &rarr;  `CM_DOCKER_EXTRA_CM_REPOS=value`
-* `--comments=value`  &rarr;  `CM_DOCKER_RUN_COMMENTS=value`
-* `--copy_files=value`  &rarr;  `CM_DOCKER_COPY_FILES=value`
-* `--docker_base_image=value`  &rarr;  `CM_DOCKER_IMAGE_BASE=value`
-* `--docker_os=value`  &rarr;  `CM_DOCKER_OS=value`
-* `--docker_os_version=value`  &rarr;  `CM_DOCKER_OS_VERSION=value`
-* `--extra_sys_deps=value`  &rarr;  `CM_DOCKER_EXTRA_SYS_DEPS=value`
-* `--fake_docker_deps=value`  &rarr;  `CM_DOCKER_FAKE_DEPS=value`
-* `--fake_run_option=value`  &rarr;  `CM_DOCKER_FAKE_RUN_OPTION=value`
-* `--file_path=value`  &rarr;  `CM_DOCKERFILE_WITH_PATH=value`
-* `--gh_token=value`  &rarr;  `CM_GH_TOKEN=value`
-* `--image_repo=value`  &rarr;  `CM_DOCKER_IMAGE_REPO=value`
-* `--image_tag=value`  &rarr;  `CM_DOCKER_IMAGE_TAG=value`
-* `--package_manager_update_cmd=value`  &rarr;  `CM_PACKAGE_MANAGER_UPDATE_CMD=value`
-* `--pip_extra_flags=value`  &rarr;  `CM_DOCKER_PIP_INSTALL_EXTRA_FLAGS=value`
-* `--post_file=value`  &rarr;  `DOCKER_IMAGE_POST_FILE=value`
-* `--post_run_cmds=value`  &rarr;  `CM_DOCKER_POST_RUN_COMMANDS=value`
-* `--pre_run_cmds=value`  &rarr;  `CM_DOCKER_PRE_RUN_COMMANDS=value`
-* `--push_image=value`  &rarr;  `CM_DOCKER_PUSH_IMAGE=value`
-* `--real_run=value`  &rarr;  `CM_REAL_RUN=value`
-* `--run_cmd=value`  &rarr;  `CM_DOCKER_RUN_CMD=value`
-* `--run_cmd_extra=value`  &rarr;  `CM_DOCKER_RUN_CMD_EXTRA=value`
-* `--script_tags=value`  &rarr;  `CM_DOCKER_RUN_SCRIPT_TAGS=value`
-* `--skip_cm_sys_upgrade=value`  &rarr;  `CM_DOCKER_SKIP_CM_SYS_UPGRADE=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_slim`
+               - ENV variables:
+                   - CM_DOCKER_BUILD_SLIM: `yes`
 
-```python
-r=cm.access({... , "build":...}
-```
+        </details>
 
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_DOCKER_BUILD_SLIM: `no`
-* CM_DOCKER_IMAGE_EOL: `
+    * `--build=value`  &rarr;  `CM_BUILD_DOCKER_IMAGE=value`
+    * `--cache=value`  &rarr;  `CM_DOCKER_CACHE=value`
+    * `--cm_repo=value`  &rarr;  `CM_MLOPS_REPO=value`
+    * `--cm_repo_flags=value`  &rarr;  `CM_DOCKER_ADD_FLAG_TO_CM_MLOPS_REPO=value`
+    * `--cm_repos=value`  &rarr;  `CM_DOCKER_EXTRA_CM_REPOS=value`
+    * `--comments=value`  &rarr;  `CM_DOCKER_RUN_COMMENTS=value`
+    * `--copy_files=value`  &rarr;  `CM_DOCKER_COPY_FILES=value`
+    * `--docker_base_image=value`  &rarr;  `CM_DOCKER_IMAGE_BASE=value`
+    * `--docker_os=value`  &rarr;  `CM_DOCKER_OS=value`
+    * `--docker_os_version=value`  &rarr;  `CM_DOCKER_OS_VERSION=value`
+    * `--extra_sys_deps=value`  &rarr;  `CM_DOCKER_EXTRA_SYS_DEPS=value`
+    * `--fake_docker_deps=value`  &rarr;  `CM_DOCKER_FAKE_DEPS=value`
+    * `--fake_run_option=value`  &rarr;  `CM_DOCKER_FAKE_RUN_OPTION=value`
+    * `--file_path=value`  &rarr;  `CM_DOCKERFILE_WITH_PATH=value`
+    * `--gh_token=value`  &rarr;  `CM_GH_TOKEN=value`
+    * `--image_repo=value`  &rarr;  `CM_DOCKER_IMAGE_REPO=value`
+    * `--image_tag=value`  &rarr;  `CM_DOCKER_IMAGE_TAG=value`
+    * `--package_manager_update_cmd=value`  &rarr;  `CM_PACKAGE_MANAGER_UPDATE_CMD=value`
+    * `--pip_extra_flags=value`  &rarr;  `CM_DOCKER_PIP_INSTALL_EXTRA_FLAGS=value`
+    * `--post_file=value`  &rarr;  `DOCKER_IMAGE_POST_FILE=value`
+    * `--post_run_cmds=value`  &rarr;  `CM_DOCKER_POST_RUN_COMMANDS=value`
+    * `--pre_run_cmds=value`  &rarr;  `CM_DOCKER_PRE_RUN_COMMANDS=value`
+    * `--push_image=value`  &rarr;  `CM_DOCKER_PUSH_IMAGE=value`
+    * `--real_run=value`  &rarr;  `CM_REAL_RUN=value`
+    * `--run_cmd=value`  &rarr;  `CM_DOCKER_RUN_CMD=value`
+    * `--run_cmd_extra=value`  &rarr;  `CM_DOCKER_RUN_CMD_EXTRA=value`
+    * `--script_tags=value`  &rarr;  `CM_DOCKER_RUN_SCRIPT_TAGS=value`
+    * `--skip_cm_sys_upgrade=value`  &rarr;  `CM_DOCKER_SKIP_CM_SYS_UPGRADE=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_DOCKER_BUILD_SLIM: `no`
+    * CM_DOCKER_IMAGE_EOL: `
 `
-* CM_DOCKER_OS: `ubuntu`
+    * CM_DOCKER_OS: `ubuntu`
 
 
 
 ___
 #### Script output
-`cmr "build dockerfile [,variations]" [--input_flags] -j`
+```bash
+cmr "build dockerfile [variations]" [--input_flags] -j
+```

@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,script,aws-cli,aws,cli`
 
-    `cm run script --tags=install,script,aws-cli,aws,cli `
-
+    ```bash
+    cm run script --tags=install,script,aws-cli,aws,cli 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install script aws-cli aws cli"`
 
-    `cmr "install script aws-cli aws cli " `
-
+    ```bash
+    cmr "install script aws-cli aws cli " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,17 +67,20 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install script aws-cli aws cli" `
-
+    ```bash
+    cm docker script "install script aws-cli aws cli" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-aws-cli/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install script aws-cli aws cli "  -j`
+```bash
+cmr "install script aws-cli aws cli "  -j
+```

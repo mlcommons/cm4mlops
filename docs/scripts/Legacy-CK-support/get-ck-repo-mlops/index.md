@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,ck-repo,mlops,ck-repo-mlops`
 
-    `cm run script --tags=get,ck-repo,mlops,ck-repo-mlops `
-
+    ```bash
+    cm run script --tags=get,ck-repo,mlops,ck-repo-mlops 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get ck-repo mlops ck-repo-mlops"`
 
-    `cmr "get ck-repo mlops ck-repo-mlops " `
-
+    ```bash
+    cmr "get ck-repo mlops ck-repo-mlops " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get ck-repo mlops ck-repo-mlops" `
-
+    ```bash
+    cm docker script "get ck-repo mlops ck-repo-mlops" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ck-repo-mlops/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ck-repo-mlops/run.bat)
 ___
 #### Script output
-`cmr "get ck-repo mlops ck-repo-mlops "  -j`
+```bash
+cmr "get ck-repo mlops ck-repo-mlops "  -j
+```

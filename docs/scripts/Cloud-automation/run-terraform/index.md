@@ -46,19 +46,17 @@ Here, `mlperf-inference-tests` is the name of the google project as created in [
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=run,terraform`
 
-    `cm run script --tags=run,terraform[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=run,terraform[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "run terraform"`
 
-    `cmr "run terraform [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "run terraform [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -86,358 +84,305 @@ Here, `mlperf-inference-tests` is the name of the google project as created in [
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "run terraform[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "run terraform[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_amazon-linux-2-kernel.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE_OS*: `amazon-linux-2-kernel.#`
-      - Workflow:
-    * `_graviton`
-      - Environment variables:
-        - *CM_TERRAFORM_AWS_GRAVITON_INSTANCE*: `yes`
-      - Workflow:
-    * `_inferentia`
-      - Environment variables:
-        - *CM_TERRAFORM_AWS_INFERENTIA_INSTANCE*: `yes`
-      - Workflow:
-    * `_inferentia,amazon-linux-2-kernel.510`
-      - Workflow:
-    * `_rhel.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE_OS*: `rhel.#`
-      - Workflow:
-    * `_ubuntu.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE_OS*: `ubuntu.#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**aws-instance-image**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_amazon-linux-2-kernel.510,arm64,us-west-2`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `ami-0f1a5f5ada0e7da53`
-      - Workflow:
-    * `_aws_instance_image.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `#`
-      - Workflow:
-    * `_aws_instance_image.ami-0735c191cf914754d`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `ami-0735c191cf914754d`
-      - Workflow:
-    * `_aws_instance_image.ami-0a0d8589b597d65b3`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `ami-0a0d8589b597d65b3`
-      - Workflow:
-    * `_rhel.9,x86,us-west-2`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `ami-0dda7e535b65b6469`
-      - Workflow:
-    * `_ubuntu.2204,arm64,us-west-2`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `ami-079f51a7bcca65b92`
-      - Workflow:
-    * `_ubuntu.2204,x86,us-west-2`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `ami-0735c191cf914754d`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_amazon-linux-2-kernel.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE_OS: `amazon-linux-2-kernel.#`
+        * `_graviton`
+               - ENV variables:
+                   - CM_TERRAFORM_AWS_GRAVITON_INSTANCE: `yes`
+        * `_inferentia`
+               - ENV variables:
+                   - CM_TERRAFORM_AWS_INFERENTIA_INSTANCE: `yes`
+        * `_rhel.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE_OS: `rhel.#`
+        * `_ubuntu.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE_OS: `ubuntu.#`
+
+        </details>
 
 
-  * Group "**aws-instance-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**aws-instance-image**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_a1.2xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `a1.2xlarge`
-      - Workflow:
-    * `_a1.metal`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `a1.metal`
-      - Workflow:
-    * `_a1.xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `a1.xlarge`
-      - Workflow:
-    * `_aws_instance_type.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `#`
-      - Workflow:
-    * `_c5.12xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `c5.12xlarge`
-      - Workflow:
-    * `_c5.4xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `c5.4xlarge`
-      - Workflow:
-    * `_c5d.9xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `c5d.9xlarge`
-      - Workflow:
-    * `_g4dn.xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `g4dn.xlarge`
-      - Workflow:
-    * `_inf1.2xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `inf1.2xlarge`
-      - Workflow:
-    * `_inf1.xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `inf1.xlarge`
-      - Workflow:
-    * `_inf2.8xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `inf2.8xlarge`
-      - Workflow:
-    * `_inf2.xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `inf2.xlarge`
-      - Workflow:
-    * `_m7g.2xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `m7g.2xlarge`
-      - Workflow:
-    * `_m7g.xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `m7g.xlarge`
-      - Workflow:
-    * `_t2.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `t2.#`
-      - Workflow:
-    * `_t2.2xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `t2.2xlarge`
-      - Workflow:
-    * `_t2.large`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `t2.large`
-      - Workflow:
-    * `_t2.medium`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `t2.medium`
-      - Workflow:
-    * `_t2.micro`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `t2.micro`
-      - Workflow:
-    * `_t2.nano`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `t2.nano`
-      - Workflow:
-    * `_t2.small`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `t2.small`
-      - Workflow:
-    * `_t2.xlarge`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `t2.xlarge`
-      - Workflow:
+        * `_amazon-linux-2-kernel.510,arm64,us-west-2`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `ami-0f1a5f5ada0e7da53`
+        * `_aws_instance_image.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `#`
+        * `_aws_instance_image.ami-0735c191cf914754d`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `ami-0735c191cf914754d`
+        * `_aws_instance_image.ami-0a0d8589b597d65b3`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `ami-0a0d8589b597d65b3`
+        * `_rhel.9,x86,us-west-2`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `ami-0dda7e535b65b6469`
+        * `_ubuntu.2204,arm64,us-west-2`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `ami-079f51a7bcca65b92`
+        * `_ubuntu.2204,x86,us-west-2`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `ami-0735c191cf914754d`
 
-    </details>
+        </details>
 
 
-  * Group "**cloud-provider**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**aws-instance-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_aws`** (default)
-      - Environment variables:
-        - *CM_TERRAFORM_CONFIG_DIR_NAME*: `aws`
-      - Workflow:
-    * `_gcp`
-      - Environment variables:
-        - *CM_TERRAFORM_CONFIG_DIR_NAME*: `gcp`
-      - Workflow:
+        * `_a1.2xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `a1.2xlarge`
+        * `_a1.metal`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `a1.metal`
+        * `_a1.xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `a1.xlarge`
+        * `_aws_instance_type.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `#`
+        * `_c5.12xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `c5.12xlarge`
+        * `_c5.4xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `c5.4xlarge`
+        * `_c5d.9xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `c5d.9xlarge`
+        * `_g4dn.xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `g4dn.xlarge`
+        * `_inf1.2xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `inf1.2xlarge`
+        * `_inf1.xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `inf1.xlarge`
+        * `_inf2.8xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `inf2.8xlarge`
+        * `_inf2.xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `inf2.xlarge`
+        * `_m7g.2xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `m7g.2xlarge`
+        * `_m7g.xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `m7g.xlarge`
+        * `_t2.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `t2.#`
+        * `_t2.2xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `t2.2xlarge`
+        * `_t2.large`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `t2.large`
+        * `_t2.medium`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `t2.medium`
+        * `_t2.micro`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `t2.micro`
+        * `_t2.nano`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `t2.nano`
+        * `_t2.small`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `t2.small`
+        * `_t2.xlarge`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `t2.xlarge`
 
-    </details>
-
-
-  * Group "**gcp-instance-image**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_debian-cloud/debian-11`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `debian-cloud/debian-11`
-      - Workflow:
-    * `_gcp_instance_image.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `#`
-      - Workflow:
-    * `_ubuntu-2204-jammy-v20230114`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_IMAGE*: `ubuntu-2204-jammy-v20230114`
-      - Workflow:
-
-    </details>
-
-
-  * Group "**gcp-instance-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_f1-micro`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `f1-micro`
-      - Workflow:
-    * `_gcp_instance_type.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `#`
-      - Workflow:
-    * `_n1-highmem.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `n1-highmem-#`
-      - Workflow:
-    * `_n1-standard.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_TYPE*: `n1-highmem-#`
-      - Workflow:
-
-    </details>
-
-
-  * Group "**gcp-project**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_gcp_project.#`
-      - Environment variables:
-        - *TF_VAR_GCP_PROJECT*: `#`
-      - Workflow:
-
-    </details>
-
-
-  * Group "**instance-name**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_instance_name.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_NAME*: `#`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**platform**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**cloud-provider**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_arm64`
-      - Environment variables:
-        - *CM_INSTANCE_PLATFORM*: `arm64`
-      - Workflow:
-    * **`_x86`** (default)
-      - Environment variables:
-        - *CM_INSTANCE_PLATFORM*: `x86`
-      - Workflow:
+        * **`_aws`** (default)
+               - ENV variables:
+                   - CM_TERRAFORM_CONFIG_DIR_NAME: `aws`
+        * `_gcp`
+               - ENV variables:
+                   - CM_TERRAFORM_CONFIG_DIR_NAME: `gcp`
 
-    </details>
+        </details>
 
 
-  * Group "**region**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**gcp-instance-image**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_region.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_REGION*: `#`
-      - Workflow:
-    * `_us-west-2`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_REGION*: `us-west-2`
-      - Workflow:
+        * `_debian-cloud/debian-11`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `debian-cloud/debian-11`
+        * `_gcp_instance_image.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `#`
+        * `_ubuntu-2204-jammy-v20230114`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_IMAGE: `ubuntu-2204-jammy-v20230114`
 
-    </details>
-
-
-  * Group "**storage-size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_storage_size.#`
-      - Environment variables:
-        - *TF_VAR_DISK_GBS*: `#`
-      - Workflow:
-    * `_storage_size.8`
-      - Environment variables:
-        - *TF_VAR_DISK_GBS*: `8`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**zone**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**gcp-instance-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_zone.#`
-      - Environment variables:
-        - *TF_VAR_INSTANCE_ZONE*: `#`
-      - Workflow:
+        * `_f1-micro`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `f1-micro`
+        * `_gcp_instance_type.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `#`
+        * `_n1-highmem.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `n1-highmem-#`
+        * `_n1-standard.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_TYPE: `n1-highmem-#`
 
-    </details>
-
-
-#### Default variations
-
-`_aws,_x86`
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--cminit=value`  &rarr;  `CM_TERRAFORM_CM_INIT=value`
-* `--destroy=value`  &rarr;  `CM_DESTROY_TERRAFORM=value`
-* `--gcp_credentials_json_file=value`  &rarr;  `CM_GCP_CREDENTIALS_JSON_PATH=value`
-* `--key_file=value`  &rarr;  `CM_SSH_KEY_FILE=value`
-* `--run_cmds=value`  &rarr;  `CM_TERRAFORM_RUN_COMMANDS=value`
-* `--ssh_key_file=value`  &rarr;  `CM_SSH_KEY_FILE=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "cminit":...}
-```
-
-</details>
-
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**gcp-project**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* TF_VAR_SECURITY_GROUP_ID: `sg-0783752c97d2e011d`
-* TF_VAR_CPU_COUNT: `1`
+        * `_gcp_project.#`
+               - ENV variables:
+                   - TF_VAR_GCP_PROJECT: `#`
+
+        </details>
+
+
+      * Group "**instance-name**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_instance_name.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_NAME: `#`
+
+        </details>
+
+
+      * Group "**platform**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_arm64`
+               - ENV variables:
+                   - CM_INSTANCE_PLATFORM: `arm64`
+        * **`_x86`** (default)
+               - ENV variables:
+                   - CM_INSTANCE_PLATFORM: `x86`
+
+        </details>
+
+
+      * Group "**region**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_region.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_REGION: `#`
+        * `_us-west-2`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_REGION: `us-west-2`
+
+        </details>
+
+
+      * Group "**storage-size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_storage_size.#`
+               - ENV variables:
+                   - TF_VAR_DISK_GBS: `#`
+        * `_storage_size.8`
+               - ENV variables:
+                   - TF_VAR_DISK_GBS: `8`
+
+        </details>
+
+
+      * Group "**zone**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_zone.#`
+               - ENV variables:
+                   - TF_VAR_INSTANCE_ZONE: `#`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_aws,_x86`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--cminit=value`  &rarr;  `CM_TERRAFORM_CM_INIT=value`
+    * `--destroy=value`  &rarr;  `CM_DESTROY_TERRAFORM=value`
+    * `--gcp_credentials_json_file=value`  &rarr;  `CM_GCP_CREDENTIALS_JSON_PATH=value`
+    * `--key_file=value`  &rarr;  `CM_SSH_KEY_FILE=value`
+    * `--run_cmds=value`  &rarr;  `CM_TERRAFORM_RUN_COMMANDS=value`
+    * `--ssh_key_file=value`  &rarr;  `CM_SSH_KEY_FILE=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * TF_VAR_SECURITY_GROUP_ID: `sg-0783752c97d2e011d`
+    * TF_VAR_CPU_COUNT: `1`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-terraform/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "run terraform [,variations]" [--input_flags] -j`
+```bash
+cmr "run terraform [variations]" [--input_flags] -j
+```

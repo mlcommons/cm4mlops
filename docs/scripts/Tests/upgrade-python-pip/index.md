@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=upgrade,python,pip,python-pip`
 
-    `cm run script --tags=upgrade,python,pip,python-pip `
-
+    ```bash
+    cm run script --tags=upgrade,python,pip,python-pip 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "upgrade python pip python-pip"`
 
-    `cmr "upgrade python pip python-pip " `
-
+    ```bash
+    cmr "upgrade python pip python-pip " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "upgrade python pip python-pip" `
-
+    ```bash
+    cm docker script "upgrade python pip python-pip" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/upgrade-python-pip/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/upgrade-python-pip/run.bat)
 ___
 #### Script output
-`cmr "upgrade python pip python-pip "  -j`
+```bash
+cmr "upgrade python pip python-pip "  -j
+```

@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,mlperf,sut,description,system-under-test,system-description`
 
-    `cm run script --tags=get,mlperf,sut,description,system-under-test,system-description [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,mlperf,sut,description,system-under-test,system-description [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get mlperf sut description system-under-test system-description"`
 
-    `cmr "get mlperf sut description system-under-test system-description " [--input_flags]`
-
+    ```bash
+    cmr "get mlperf sut description system-under-test system-description " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,35 +67,34 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get mlperf sut description system-under-test system-description" [--input_flags]`
-
+    ```bash
+    cm docker script "get mlperf sut description system-under-test system-description" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--name=value`  &rarr;  `CM_HW_NAME=value`
-* `--submitter=value`  &rarr;  `CM_MLPERF_SUBMITTER=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "name":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_SUT_DESC_CACHE: `no`
+    * `--name=value`  &rarr;  `CM_HW_NAME=value`
+    * `--submitter=value`  &rarr;  `CM_MLPERF_SUBMITTER=value`
+
+
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_SUT_DESC_CACHE: `no`
 
 
 
 ___
 #### Script output
-`cmr "get mlperf sut description system-under-test system-description " [--input_flags] -j`
+```bash
+cmr "get mlperf sut description system-under-test system-description " [--input_flags] -j
+```

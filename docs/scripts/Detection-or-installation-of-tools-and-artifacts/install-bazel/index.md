@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,script,bazel`
 
-    `cm run script --tags=install,script,bazel `
-
+    ```bash
+    cm run script --tags=install,script,bazel 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install script bazel"`
 
-    `cmr "install script bazel " `
-
+    ```bash
+    cmr "install script bazel " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,15 +67,16 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install script bazel" `
-
+    ```bash
+    cm docker script "install script bazel" 
+    ```
 ___
 
 #### Versions
 Default version: `7.0.2`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run-aarch64.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-bazel/run-aarch64.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-bazel/run.sh)
@@ -84,4 +85,6 @@ Default version: `7.0.2`
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/install-bazel/run.bat)
 ___
 #### Script output
-`cmr "install script bazel "  -j`
+```bash
+cmr "install script bazel "  -j
+```

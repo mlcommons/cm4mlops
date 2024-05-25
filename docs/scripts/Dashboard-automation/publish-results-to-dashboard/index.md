@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=publish-results,dashboard`
 
-    `cm run script --tags=publish-results,dashboard `
-
+    ```bash
+    cm run script --tags=publish-results,dashboard 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "publish-results dashboard"`
 
-    `cmr "publish-results dashboard " `
-
+    ```bash
+    cmr "publish-results dashboard " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "publish-results dashboard" `
-
+    ```bash
+    cm docker script "publish-results dashboard" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/publish-results-to-dashboard/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/publish-results-to-dashboard/run.bat)
 ___
 #### Script output
-`cmr "publish-results dashboard "  -j`
+```bash
+cmr "publish-results dashboard "  -j
+```

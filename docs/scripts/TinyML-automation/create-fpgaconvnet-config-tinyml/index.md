@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=create,config,fpgaconvnet`
 
-    `cm run script --tags=create,config,fpgaconvnet[,variations] `
-
+    ```bash
+    cm run script --tags=create,config,fpgaconvnet[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "create config fpgaconvnet"`
 
-    `cmr "create config fpgaconvnet [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "create config fpgaconvnet [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,57 +67,48 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "create config fpgaconvnet[variations]" `
-
+    ```bash
+    cm docker script "create config fpgaconvnet[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_zc706,ic`
-      - Environment variables:
-        - *CM_TINY_NETWORK_NAME*: `zc706-resnet`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**benchmark**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_ic`** (default)
-      - Workflow:
+      * Group "**benchmark**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * **`_ic`** (default)
 
-
-  * Group "**board**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_zc706`** (default)
-      - Environment variables:
-        - *CM_TINY_BOARD*: `zc706`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**board**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_ic,_zc706`
+        * **`_zc706`** (default)
+               - ENV variables:
+                   - CM_TINY_BOARD: `zc706`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_ic,_zc706`
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/create-fpgaconvnet-config-tinyml/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "create config fpgaconvnet [,variations]"  -j`
+```bash
+cmr "create config fpgaconvnet [variations]"  -j
+```

@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=run,mlc,mlcommons,mlperf,power,client,power-client`
 
-    `cm run script --tags=run,mlc,mlcommons,mlperf,power,client,power-client [--input_flags]`
-
+    ```bash
+    cm run script --tags=run,mlc,mlcommons,mlperf,power,client,power-client [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "run mlc mlcommons mlperf power client power-client"`
 
-    `cmr "run mlc mlcommons mlperf power client power-client " [--input_flags]`
-
+    ```bash
+    cmr "run mlc mlcommons mlperf power client power-client " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,53 +68,52 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "run mlc mlcommons mlperf power client power-client" [--input_flags]`
-
+    ```bash
+    cm docker script "run mlc mlcommons mlperf power client power-client" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--loadgen_logs_dir=value`  &rarr;  `CM_MLPERF_LOADGEN_LOGS_DIR=value`
-* `--log_dir=value`  &rarr;  `CM_MLPERF_POWER_LOG_DIR=value`
-* `--max_amps=value`  &rarr;  `CM_MLPERF_POWER_MAX_AMPS=value`
-* `--max_volts=value`  &rarr;  `CM_MLPERF_POWER_MAX_VOLTS=value`
-* `--ntp_server=value`  &rarr;  `CM_MLPERF_POWER_NTP_SERVER=value`
-* `--port=value`  &rarr;  `CM_MLPERF_POWER_SERVER_PORT=value`
-* `--power_server=value`  &rarr;  `CM_MLPERF_POWER_SERVER_ADDRESS=value`
-* `--run_cmd=value`  &rarr;  `CM_MLPERF_RUN_CMD=value`
-* `--server=value`  &rarr;  `CM_MLPERF_POWER_SERVER_ADDRESS=value`
-* `--server_port=value`  &rarr;  `CM_MLPERF_POWER_SERVER_PORT=value`
-* `--timestamp=value`  &rarr;  `CM_MLPERF_POWER_TIMESTAMP=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "loadgen_logs_dir":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_MLPERF_POWER_LOG_DIR: `logs`
-* CM_MLPERF_RUN_CMD: ``
-* CM_MLPERF_POWER_SERVER_ADDRESS: `localhost`
-* CM_MLPERF_POWER_NTP_SERVER: `time.google.com`
+    * `--loadgen_logs_dir=value`  &rarr;  `CM_MLPERF_LOADGEN_LOGS_DIR=value`
+    * `--log_dir=value`  &rarr;  `CM_MLPERF_POWER_LOG_DIR=value`
+    * `--max_amps=value`  &rarr;  `CM_MLPERF_POWER_MAX_AMPS=value`
+    * `--max_volts=value`  &rarr;  `CM_MLPERF_POWER_MAX_VOLTS=value`
+    * `--ntp_server=value`  &rarr;  `CM_MLPERF_POWER_NTP_SERVER=value`
+    * `--port=value`  &rarr;  `CM_MLPERF_POWER_SERVER_PORT=value`
+    * `--power_server=value`  &rarr;  `CM_MLPERF_POWER_SERVER_ADDRESS=value`
+    * `--run_cmd=value`  &rarr;  `CM_MLPERF_RUN_CMD=value`
+    * `--server=value`  &rarr;  `CM_MLPERF_POWER_SERVER_ADDRESS=value`
+    * `--server_port=value`  &rarr;  `CM_MLPERF_POWER_SERVER_PORT=value`
+    * `--timestamp=value`  &rarr;  `CM_MLPERF_POWER_TIMESTAMP=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_MLPERF_POWER_LOG_DIR: `logs`
+    * CM_MLPERF_RUN_CMD: ``
+    * CM_MLPERF_POWER_SERVER_ADDRESS: `localhost`
+    * CM_MLPERF_POWER_NTP_SERVER: `time.google.com`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/run-mlperf-power-client/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "run mlc mlcommons mlperf power client power-client " [--input_flags] -j`
+```bash
+cmr "run mlc mlcommons mlperf power client power-client " [--input_flags] -j
+```

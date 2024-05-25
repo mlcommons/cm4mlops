@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,bazel,get-bazel`
 
-    `cm run script --tags=get,bazel,get-bazel `
-
+    ```bash
+    cm run script --tags=get,bazel,get-bazel 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get bazel get-bazel"`
 
-    `cmr "get bazel get-bazel " `
-
+    ```bash
+    cmr "get bazel get-bazel " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,12 +68,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get bazel get-bazel" `
-
+    ```bash
+    cm docker script "get bazel get-bazel" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-bazel/run.sh)
 === "Windows"
@@ -81,4 +82,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-bazel/run.bat)
 ___
 #### Script output
-`cmr "get bazel get-bazel "  -j`
+```bash
+cmr "get bazel get-bazel "  -j
+```

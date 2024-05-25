@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,get,src,from.src,onednn,src-onednn`
 
-    `cm run script --tags=install,get,src,from.src,onednn,src-onednn[,variations] `
-
+    ```bash
+    cm run script --tags=install,get,src,from.src,onednn,src-onednn[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install get src from.src onednn src-onednn"`
 
-    `cmr "install get src from.src onednn src-onednn [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "install get src from.src onednn src-onednn [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,64 +67,63 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install get src from.src onednn src-onednn[variations]" `
-
+    ```bash
+    cm docker script "install get src from.src onednn src-onednn[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_branch.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT*: `#`
-      - Workflow:
-    * `_for-intel-mlperf-inference-v3.1-bert`
-      - Environment variables:
-        - *CM_CONDA_ENV*: `yes`
-        - *CM_FOR_INTEL_MLPERF_INFERENCE*: `yes`
-      - Workflow:
-    * `_sha.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_SHA*: `#`
-      - Workflow:
-    * `_tag.#`
-      - Environment variables:
-        - *CM_GIT_CHECKOUT_TAG*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**repo**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_repo.#`
-      - Environment variables:
-        - *CM_GIT_URL*: `#`
-      - Workflow:
-    * **`_repo.https://github.com/oneapi-src/oneDNN`** (default)
-      - Environment variables:
-        - *CM_GIT_URL*: `https://github.com/oneapi-src/oneDNN`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_branch.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT: `#`
+        * `_for-intel-mlperf-inference-v3.1-bert`
+               - ENV variables:
+                   - CM_CONDA_ENV: `yes`
+                   - CM_FOR_INTEL_MLPERF_INFERENCE: `yes`
+        * `_sha.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_SHA: `#`
+        * `_tag.#`
+               - ENV variables:
+                   - CM_GIT_CHECKOUT_TAG: `#`
+
+        </details>
 
 
-#### Default variations
+      * Group "**repo**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_repo.https://github.com/oneapi-src/oneDNN`
+        * `_repo.#`
+               - ENV variables:
+                   - CM_GIT_URL: `#`
+        * **`_repo.https://github.com/oneapi-src/oneDNN`** (default)
+               - ENV variables:
+                   - CM_GIT_URL: `https://github.com/oneapi-src/oneDNN`
 
-##### Native script being run
+        </details>
+
+
+    ##### Default variations
+
+    `_repo.https://github.com/oneapi-src/oneDNN`
+
+#### Native script being run
 === "Linux/macOS"
      * [run-intel-mlperf-inference.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-onednn-from-src/run-intel-mlperf-inference.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install get src from.src onednn src-onednn [,variations]"  -j`
+```bash
+cmr "install get src from.src onednn src-onednn [variations]"  -j
+```

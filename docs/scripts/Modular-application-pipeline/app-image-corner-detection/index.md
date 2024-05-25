@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=app,image,corner-detection`
 
-    `cm run script --tags=app,image,corner-detection `
-
+    ```bash
+    cm run script --tags=app,image,corner-detection 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "app image corner-detection"`
 
-    `cmr "app image corner-detection " `
-
+    ```bash
+    cmr "app image corner-detection " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,17 +68,20 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "app image corner-detection" `
-
+    ```bash
+    cm docker script "app image corner-detection" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-image-corner-detection/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "app image corner-detection "  -j`
+```bash
+cmr "app image corner-detection "  -j
+```

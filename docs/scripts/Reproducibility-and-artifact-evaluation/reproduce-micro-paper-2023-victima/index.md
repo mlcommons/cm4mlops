@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=reproduce,project,paper,micro,micro-2023,victima`
 
-    `cm run script --tags=reproduce,project,paper,micro,micro-2023,victima[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=reproduce,project,paper,micro,micro-2023,victima[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "reproduce project paper micro micro-2023 victima"`
 
-    `cmr "reproduce project paper micro micro-2023 victima [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "reproduce project paper micro micro-2023 victima [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,58 +68,56 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "reproduce project paper micro micro-2023 victima[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "reproduce project paper micro micro-2023 victima[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_install_deps`
-      - Workflow:
-    * `_plot`
-      - Workflow:
-    * `_run`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--container=value`  &rarr;  `CM_VICTIMA_CONTAINER=value`
-* `--job_manager=value`  &rarr;  `CM_VICTIMA_JOB_MANAGER=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_install_deps`
+        * `_plot`
+        * `_run`
 
-```python
-r=cm.access({... , "container":...}
-```
+        </details>
 
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_VICTIMA_JOB_MANAGER: `native`
-* CM_VICTIMA_CONTAINER: `docker`
+    * `--container=value`  &rarr;  `CM_VICTIMA_CONTAINER=value`
+    * `--job_manager=value`  &rarr;  `CM_VICTIMA_JOB_MANAGER=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_VICTIMA_JOB_MANAGER: `native`
+    * CM_VICTIMA_CONTAINER: `docker`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "reproduce project paper micro micro-2023 victima [,variations]" [--input_flags] -j`
+```bash
+cmr "reproduce project paper micro micro-2023 victima [variations]" [--input_flags] -j
+```

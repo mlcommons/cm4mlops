@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,medical-imaging,kits,original,kits19`
 
-    `cm run script --tags=get,dataset,medical-imaging,kits,original,kits19[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,medical-imaging,kits,original,kits19[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset medical-imaging kits original kits19"`
 
-    `cmr "get dataset medical-imaging kits original kits19 [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset medical-imaging kits original kits19 [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,58 +67,56 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset medical-imaging kits original kits19[variations]" `
-
+    ```bash
+    cm docker script "get dataset medical-imaging kits original kits19[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_calibration`
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `yes`
-      - Workflow:
-    * `_default`
-      - Environment variables:
-        - *CM_GIT_PATCH*: `no`
-      - Workflow:
-    * `_full-history`
-      - Environment variables:
-        - *CM_GIT_DEPTH*: ``
-      - Workflow:
-    * `_no-recurse-submodules`
-      - Environment variables:
-        - *CM_GIT_RECURSE_SUBMODULES*: ``
-      - Workflow:
-    * `_patch`
-      - Environment variables:
-        - *CM_GIT_PATCH*: `yes`
-      - Workflow:
-    * `_short-history`
-      - Environment variables:
-        - *CM_GIT_DEPTH*: `--depth 5`
-      - Workflow:
-    * `_validation`
-      - Environment variables:
-        - *CM_DATASET_VALIDATION*: `yes`
-      - Workflow:
-
-    </details>
-
-#### Default environment
+=== "Variations"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Variations
 
-* CM_GIT_CHECKOUT: `master`
-* CM_GIT_DEPTH: `--depth 2`
-* CM_GIT_PATCH: `no`
-* CM_GIT_RECURSE_SUBMODULES: ``
-* CM_GIT_URL: `https://github.com/neheller/kits19`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_calibration`
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `yes`
+        * `_default`
+               - ENV variables:
+                   - CM_GIT_PATCH: `no`
+        * `_full-history`
+               - ENV variables:
+                   - CM_GIT_DEPTH: ``
+        * `_no-recurse-submodules`
+               - ENV variables:
+                   - CM_GIT_RECURSE_SUBMODULES: ``
+        * `_patch`
+               - ENV variables:
+                   - CM_GIT_PATCH: `yes`
+        * `_short-history`
+               - ENV variables:
+                   - CM_GIT_DEPTH: `--depth 5`
+        * `_validation`
+               - ENV variables:
+                   - CM_DATASET_VALIDATION: `yes`
+
+        </details>
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_GIT_CHECKOUT: `master`
+    * CM_GIT_DEPTH: `--depth 2`
+    * CM_GIT_PATCH: `no`
+    * CM_GIT_RECURSE_SUBMODULES: ``
+    * CM_GIT_URL: `https://github.com/neheller/kits19`
 
 
 #### Versions
@@ -129,12 +125,14 @@ Default version: `master`
 * `custom`
 * `master`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-kits19/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get dataset medical-imaging kits original kits19 [,variations]"  -j`
+```bash
+cmr "get dataset medical-imaging kits original kits19 [variations]"  -j
+```

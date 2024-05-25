@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,val,validation,dataset,imagenet,ILSVRC,image-classification,original`
 
-    `cm run script --tags=get,val,validation,dataset,imagenet,ILSVRC,image-classification,original[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,val,validation,dataset,imagenet,ILSVRC,image-classification,original[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get val validation dataset imagenet ILSVRC image-classification original"`
 
-    `cmr "get val validation dataset imagenet ILSVRC image-classification original [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get val validation dataset imagenet ILSVRC image-classification original [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,90 +68,82 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get val validation dataset imagenet ILSVRC image-classification original[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get val validation dataset imagenet ILSVRC image-classification original[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_2012-500`
-      - Workflow:
-    * `_2012-full`
-      - Workflow:
-    * `_run-during-docker-build`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**count**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_full`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `50000`
-        - *CM_IMAGENET_FULL*: `yes`
-        - *CM_DAE_FILENAME*: `ILSVRC2012_img_val.tar`
-        - *CM_DAE_DOWNLOADED_CHECKSUM*: `29b22e2961454d5413ddabcf34fc5622`
-      - Workflow:
-    * `_size.#`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `#`
-      - Workflow:
-    * **`_size.500`** (default)
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `500`
-        - *CM_DAE_FILENAME*: `ILSVRC2012_img_val_500.tar`
-        - *CM_DAE_URL*: `http://cKnowledge.org/ai/data/ILSVRC2012_img_val_500.tar`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_2012-500`
+        * `_2012-full`
+        * `_run-during-docker-build`
+
+        </details>
 
 
-  * Group "**dataset-version**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**count**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_2012`** (default)
-      - Environment variables:
-        - *CM_DATASET_VER*: `2012`
-      - Workflow:
+        * `_full`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `50000`
+                   - CM_IMAGENET_FULL: `yes`
+                   - CM_DAE_FILENAME: `ILSVRC2012_img_val.tar`
+                   - CM_DAE_DOWNLOADED_CHECKSUM: `29b22e2961454d5413ddabcf34fc5622`
+        * `_size.#`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `#`
+        * **`_size.500`** (default)
+               - ENV variables:
+                   - CM_DATASET_SIZE: `500`
+                   - CM_DAE_FILENAME: `ILSVRC2012_img_val_500.tar`
+                   - CM_DAE_URL: `http://cKnowledge.org/ai/data/ILSVRC2012_img_val_500.tar`
 
-    </details>
-
-
-#### Default variations
-
-`_2012,_size.500`
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--imagenet_path=value`  &rarr;  `IMAGENET_PATH=value`
-* `--torrent=value`  &rarr;  `CM_DATASET_IMAGENET_VAL_TORRENT_PATH=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "imagenet_path":...}
-```
-
-</details>
+        </details>
 
 
-##### Native script being run
+      * Group "**dataset-version**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * **`_2012`** (default)
+               - ENV variables:
+                   - CM_DATASET_VER: `2012`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_2012,_size.500`
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--imagenet_path=value`  &rarr;  `IMAGENET_PATH=value`
+    * `--torrent=value`  &rarr;  `CM_DATASET_IMAGENET_VAL_TORRENT_PATH=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
-No run file exists for Linux/macOS
+    No run file exists for Linux/macOS
 === "Windows"
 
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-imagenet-val/run.bat)
 ___
 #### Script output
-`cmr "get val validation dataset imagenet ILSVRC image-classification original [,variations]" [--input_flags] -j`
+```bash
+cmr "get val validation dataset imagenet ILSVRC image-classification original [variations]" [--input_flags] -j
+```

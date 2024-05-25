@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,dataset,openorca,language-processing,original`
 
-    `cm run script --tags=get,dataset,openorca,language-processing,original[,variations] `
-
+    ```bash
+    cm run script --tags=get,dataset,openorca,language-processing,original[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get dataset openorca language-processing original"`
 
-    `cmr "get dataset openorca language-processing original [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get dataset openorca language-processing original [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,65 +67,66 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get dataset openorca language-processing original[variations]" `
-
+    ```bash
+    cm docker script "get dataset openorca language-processing original[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**dataset-type**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_calibration`
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `yes`
-      - Workflow:
-    * **`_validation`** (default)
-      - Environment variables:
-        - *CM_DATASET_CALIBRATION*: `no`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**size**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_500`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `500`
-      - Workflow:
-    * **`_60`** (default)
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `60`
-      - Workflow:
-    * `_full`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `24576`
-      - Workflow:
-    * `_size.#`
-      - Environment variables:
-        - *CM_DATASET_SIZE*: `#`
-      - Workflow:
+      * Group "**dataset-type**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_calibration`
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `yes`
+        * **`_validation`** (default)
+               - ENV variables:
+                   - CM_DATASET_CALIBRATION: `no`
+
+        </details>
 
 
-#### Default variations
+      * Group "**size**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_60,_validation`
-#### Default environment
+        * `_500`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `500`
+        * **`_60`** (default)
+               - ENV variables:
+                   - CM_DATASET_SIZE: `60`
+        * `_full`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `24576`
+        * `_size.#`
+               - ENV variables:
+                   - CM_DATASET_SIZE: `#`
+
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    ##### Default variations
 
-* CM_DATASET_CALIBRATION: `no`
+    `_60,_validation`
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_DATASET_CALIBRATION: `no`
 
 
 
 ___
 #### Script output
-`cmr "get dataset openorca language-processing original [,variations]"  -j`
+```bash
+cmr "get dataset openorca language-processing original [variations]"  -j
+```

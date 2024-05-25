@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,python,python3,get-python,get-python3`
 
-    `cm run script --tags=get,python,python3,get-python,get-python3[,variations] `
-
+    ```bash
+    cm run script --tags=get,python,python3,get-python,get-python3[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get python python3 get-python get-python3"`
 
-    `cmr "get python python3 get-python get-python3 [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get python python3 get-python get-python3 [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,45 +68,37 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get python python3 get-python get-python3[variations]" `
-
+    ```bash
+    cm docker script "get python python3 get-python get-python3[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_conda.#`
-      - Environment variables:
-        - *CM_PYTHON_CONDA*: `yes`
-        - *CM_PYTHON_INSTALL_CACHE_TAGS*: `_conda.#`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,generic,conda-package,_name.#,_package.python
-             * CM names: `--adr.['conda-package', 'conda-python']...`
-             - CM script: [install-generic-conda-package](https://github.com/mlcommons/cm4mlops/tree/master/script/install-generic-conda-package)
-    * `_custom-path.#`
-      - Environment variables:
-        - *CM_PYTHON_BIN_WITH_PATH*: `#`
-      - Workflow:
-    * `_lto`
-      - Workflow:
-    * `_optimized`
-      - Workflow:
-    * `_shared`
-      - Workflow:
-    * `_with-custom-ssl`
-      - Workflow:
-    * `_with-ssl`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-##### Native script being run
+    #### Variations
+
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_conda.#`
+               - ENV variables:
+                   - CM_PYTHON_CONDA: `yes`
+                   - CM_PYTHON_INSTALL_CACHE_TAGS: `_conda.#`
+        * `_custom-path.#`
+               - ENV variables:
+                   - CM_PYTHON_BIN_WITH_PATH: `#`
+        * `_lto`
+        * `_optimized`
+        * `_shared`
+        * `_with-custom-ssl`
+        * `_with-ssl`
+
+        </details>
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-python3/run.sh)
 === "Windows"
@@ -116,4 +106,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-python3/run.bat)
 ___
 #### Script output
-`cmr "get python python3 get-python get-python3 [,variations]"  -j`
+```bash
+cmr "get python python3 get-python get-python3 [variations]"  -j
+```

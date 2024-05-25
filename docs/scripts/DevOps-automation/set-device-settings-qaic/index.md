@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=set,device,qaic,ai100,cloud,performance,power,setting,mode,vc,ecc`
 
-    `cm run script --tags=set,device,qaic,ai100,cloud,performance,power,setting,mode,vc,ecc[,variations] `
-
+    ```bash
+    cm run script --tags=set,device,qaic,ai100,cloud,performance,power,setting,mode,vc,ecc[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "set device qaic ai100 cloud performance power setting mode vc ecc"`
 
-    `cmr "set device qaic ai100 cloud performance power setting mode vc ecc [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "set device qaic ai100 cloud performance power setting mode vc ecc [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,43 +67,48 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "set device qaic ai100 cloud performance power setting mode vc ecc[variations]" `
-
+    ```bash
+    cm docker script "set device qaic ai100 cloud performance power setting mode vc ecc[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_ecc`
-      - Environment variables:
-        - *CM_QAIC_ECC*: `yes`
-      - Workflow:
-    * `_vc.#`
-      - Environment variables:
-        - *CM_QAIC_VC*: `#`
-      - Workflow:
-
-    </details>
-
-#### Default environment
+=== "Variations"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Variations
 
-* CM_QAIC_DEVICES: `0`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_ecc`
+               - ENV variables:
+                   - CM_QAIC_ECC: `yes`
+        * `_vc.#`
+               - ENV variables:
+                   - CM_QAIC_VC: `#`
+
+        </details>
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_QAIC_DEVICES: `0`
 
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/set-device-settings-qaic/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "set device qaic ai100 cloud performance power setting mode vc ecc [,variations]"  -j`
+```bash
+cmr "set device qaic ai100 cloud performance power setting mode vc ecc [variations]"  -j
+```

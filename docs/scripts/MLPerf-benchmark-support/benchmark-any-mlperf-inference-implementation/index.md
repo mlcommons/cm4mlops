@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models`
 
-    `cm run script --tags=benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models"`
 
-    `cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,171 +67,126 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_aws-dl2q.24xlarge,qualcomm`
-      - Workflow:
-    * `_mini,power`
-      - Workflow:
-    * `_orin,power`
-      - Workflow:
-    * `_phoenix,nvidia`
-      - Workflow:
-    * `_phoenix,power`
-      - Workflow:
-    * `_phoenix,reference`
-      - Workflow:
-    * `_rb6,power`
-      - Workflow:
-    * `_rb6,qualcomm`
-      - Workflow:
-    * `_rpi4,power`
-      - Workflow:
-    * `_sapphire-rapids.24c,nvidia`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**implementation**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_deepsparse`
-      - Environment variables:
-        - *DIVISION*: `open`
-        - *IMPLEMENTATION*: `deepsparse`
-      - Workflow:
-    * `_intel`
-      - Environment variables:
-        - *IMPLEMENTATION*: `intel`
-      - Workflow:
-    * `_mil`
-      - Environment variables:
-        - *IMPLEMENTATION*: `mil`
-      - Workflow:
-    * `_nvidia`
-      - Environment variables:
-        - *IMPLEMENTATION*: `nvidia-original`
-      - Workflow:
-    * `_qualcomm`
-      - Environment variables:
-        - *IMPLEMENTATION*: `qualcomm`
-      - Workflow:
-    * `_reference`
-      - Environment variables:
-        - *IMPLEMENTATION*: `reference`
-      - Workflow:
-    * `_tflite-cpp`
-      - Environment variables:
-        - *IMPLEMENTATION*: `tflite_cpp`
-      - Workflow:
+      * Group "**implementation**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_deepsparse`
+               - ENV variables:
+                   - DIVISION: `open`
+                   - IMPLEMENTATION: `deepsparse`
+        * `_intel`
+               - ENV variables:
+                   - IMPLEMENTATION: `intel`
+        * `_mil`
+               - ENV variables:
+                   - IMPLEMENTATION: `mil`
+        * `_nvidia`
+               - ENV variables:
+                   - IMPLEMENTATION: `nvidia-original`
+        * `_qualcomm`
+               - ENV variables:
+                   - IMPLEMENTATION: `qualcomm`
+        * `_reference`
+               - ENV variables:
+                   - IMPLEMENTATION: `reference`
+        * `_tflite-cpp`
+               - ENV variables:
+                   - IMPLEMENTATION: `tflite_cpp`
+
+        </details>
 
 
-  * Group "**power**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**power**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * **`_performance-only`** (default)
-      - Workflow:
-    * `_power`
-      - Environment variables:
-        - *POWER*: `True`
-      - Workflow:
+        * **`_performance-only`** (default)
+        * `_power`
+               - ENV variables:
+                   - POWER: `True`
 
-    </details>
+        </details>
 
 
-  * Group "**sut**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**sut**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_aws-dl2q.24xlarge`
-      - Workflow:
-    * `_macbookpro-m1`
-      - Environment variables:
-        - *CATEGORY*: `edge`
-        - *DIVISION*: `closed`
-      - Workflow:
-    * `_mini`
-      - Workflow:
-    * `_orin`
-      - Workflow:
-    * `_orin.32g`
-      - Environment variables:
-        - *CATEGORY*: `edge`
-        - *DIVISION*: `closed`
-      - Workflow:
-    * `_phoenix`
-      - Environment variables:
-        - *CATEGORY*: `edge`
-        - *DIVISION*: `closed`
-      - Workflow:
-    * `_rb6`
-      - Workflow:
-    * `_rpi4`
-      - Workflow:
-    * `_sapphire-rapids.24c`
-      - Environment variables:
-        - *CATEGORY*: `edge`
-        - *DIVISION*: `closed`
-      - Workflow:
+        * `_aws-dl2q.24xlarge`
+        * `_macbookpro-m1`
+               - ENV variables:
+                   - CATEGORY: `edge`
+                   - DIVISION: `closed`
+        * `_mini`
+        * `_orin`
+        * `_orin.32g`
+               - ENV variables:
+                   - CATEGORY: `edge`
+                   - DIVISION: `closed`
+        * `_phoenix`
+               - ENV variables:
+                   - CATEGORY: `edge`
+                   - DIVISION: `closed`
+        * `_rb6`
+        * `_rpi4`
+        * `_sapphire-rapids.24c`
+               - ENV variables:
+                   - CATEGORY: `edge`
+                   - DIVISION: `closed`
 
-    </details>
+        </details>
 
 
-#### Default variations
+    ##### Default variations
 
-`_performance-only`
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--backends=value`  &rarr;  `BACKENDS=value`
-* `--category=value`  &rarr;  `CATEGORY=value`
-* `--devices=value`  &rarr;  `DEVICES=value`
-* `--division=value`  &rarr;  `DIVISION=value`
-* `--extra_args=value`  &rarr;  `EXTRA_ARGS=value`
-* `--models=value`  &rarr;  `MODELS=value`
-* `--power_server=value`  &rarr;  `POWER_SERVER=value`
-* `--power_server_port=value`  &rarr;  `POWER_SERVER_PORT=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "backends":...}
-```
-
-</details>
-
-#### Default environment
+    `_performance-only`
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* DIVISION: `open`
-* CATEGORY: `edge`
+    * `--backends=value`  &rarr;  `BACKENDS=value`
+    * `--category=value`  &rarr;  `CATEGORY=value`
+    * `--devices=value`  &rarr;  `DEVICES=value`
+    * `--division=value`  &rarr;  `DIVISION=value`
+    * `--extra_args=value`  &rarr;  `EXTRA_ARGS=value`
+    * `--models=value`  &rarr;  `MODELS=value`
+    * `--power_server=value`  &rarr;  `POWER_SERVER=value`
+    * `--power_server_port=value`  &rarr;  `POWER_SERVER_PORT=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * DIVISION: `open`
+    * CATEGORY: `edge`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run-template.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/benchmark-any-mlperf-inference-implementation/run-template.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models [,variations]" [--input_flags] -j`
+```bash
+cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models [variations]" [--input_flags] -j
+```

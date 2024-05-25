@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=run,tar`
 
-    `cm run script --tags=run,tar [--input_flags]`
-
+    ```bash
+    cm run script --tags=run,tar [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "run tar"`
 
-    `cmr "run tar " [--input_flags]`
-
+    ```bash
+    cmr "run tar " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,28 +68,25 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "run tar" [--input_flags]`
-
+    ```bash
+    cm docker script "run tar" [--input_flags]
+    ```
 ___
 
+=== "Input Flag Mapping"
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
 
-* `--input_dir=value`  &rarr;  `CM_TAR_INPUT_DIR=value`
-* `--outfile=value`  &rarr;  `CM_TAR_OUTFILE=value`
-* `--output_dir=value`  &rarr;  `CM_TAR_OUTPUT_DIR=value`
+    #### Script flags mapped to environment
 
-**Above CLI flags can be used in the Python CM API as follows:**
+    * `--input_dir=value`  &rarr;  `CM_TAR_INPUT_DIR=value`
+    * `--outfile=value`  &rarr;  `CM_TAR_OUTFILE=value`
+    * `--output_dir=value`  &rarr;  `CM_TAR_OUTPUT_DIR=value`
 
-```python
-r=cm.access({... , "input_dir":...}
-```
 
-</details>
 
 
 ___
 #### Script output
-`cmr "run tar " [--input_flags] -j`
+```bash
+cmr "run tar " [--input_flags] -j
+```

@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=create,get,env,conda-env,conda-environment,create-conda-environment`
 
-    `cm run script --tags=create,get,env,conda-env,conda-environment,create-conda-environment[,variations] `
-
+    ```bash
+    cm run script --tags=create,get,env,conda-env,conda-environment,create-conda-environment[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "create get env conda-env conda-environment create-conda-environment"`
 
-    `cmr "create get env conda-env conda-environment create-conda-environment [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "create get env conda-env conda-environment create-conda-environment [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,31 +67,35 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "create get env conda-env conda-environment create-conda-environment[variations]" `
-
+    ```bash
+    cm docker script "create get env conda-env conda-environment create-conda-environment[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_name.#`
-      - Environment variables:
-        - *CM_CONDA_ENV_NAME*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-##### Native script being run
+    #### Variations
+
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_name.#`
+               - ENV variables:
+                   - CM_CONDA_ENV_NAME: `#`
+
+        </details>
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/create-conda-env/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "create get env conda-env conda-environment create-conda-environment [,variations]"  -j`
+```bash
+cmr "create get env conda-env conda-environment create-conda-environment [variations]"  -j
+```

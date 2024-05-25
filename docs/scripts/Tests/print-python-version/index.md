@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=print,python,version,python-version`
 
-    `cm run script --tags=print,python,version,python-version `
-
+    ```bash
+    cm run script --tags=print,python,version,python-version 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "print python version python-version"`
 
-    `cmr "print python version python-version " `
-
+    ```bash
+    cmr "print python version python-version " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,12 +67,13 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "print python version python-version" `
-
+    ```bash
+    cm docker script "print python version python-version" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/print-python-version/run.sh)
 === "Windows"
@@ -80,4 +81,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/print-python-version/run.bat)
 ___
 #### Script output
-`cmr "print python version python-version "  -j`
+```bash
+cmr "print python version python-version "  -j
+```

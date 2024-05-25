@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=push,mlperf,mlperf-inference-results,publish-results,inference,submission,github`
 
-    `cm run script --tags=push,mlperf,mlperf-inference-results,publish-results,inference,submission,github [--input_flags]`
-
+    ```bash
+    cm run script --tags=push,mlperf,mlperf-inference-results,publish-results,inference,submission,github [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "push mlperf mlperf-inference-results publish-results inference submission github"`
 
-    `cmr "push mlperf mlperf-inference-results publish-results inference submission github " [--input_flags]`
-
+    ```bash
+    cmr "push mlperf mlperf-inference-results publish-results inference submission github " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,44 +67,43 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "push mlperf mlperf-inference-results publish-results inference submission github" [--input_flags]`
-
+    ```bash
+    cm docker script "push mlperf mlperf-inference-results publish-results inference submission github" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--branch=value`  &rarr;  `CM_GIT_BRANCH=value`
-* `--commit_message=value`  &rarr;  `CM_MLPERF_RESULTS_REPO_COMMIT_MESSAGE=value`
-* `--repo_branch=value`  &rarr;  `CM_GIT_BRANCH=value`
-* `--repo_url=value`  &rarr;  `CM_MLPERF_RESULTS_GIT_REPO_URL=value`
-* `--submission_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_SUBMISSION_DIR=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "branch":...}
-```
-
-</details>
-
-#### Default environment
+=== "Input Flag Mapping"
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+    #### Script flags mapped to environment
 
-* CM_MLPERF_RESULTS_GIT_REPO_URL: `https://github.com/ctuning/mlperf_inference_submissions_v4.0`
+    * `--branch=value`  &rarr;  `CM_GIT_BRANCH=value`
+    * `--commit_message=value`  &rarr;  `CM_MLPERF_RESULTS_REPO_COMMIT_MESSAGE=value`
+    * `--repo_branch=value`  &rarr;  `CM_GIT_BRANCH=value`
+    * `--repo_url=value`  &rarr;  `CM_MLPERF_RESULTS_GIT_REPO_URL=value`
+    * `--submission_dir=value`  &rarr;  `CM_MLPERF_INFERENCE_SUBMISSION_DIR=value`
 
 
 
-##### Native script being run
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_MLPERF_RESULTS_GIT_REPO_URL: `https://github.com/ctuning/mlperf_inference_submissions_v4.0`
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/push-mlperf-inference-results-to-github/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "push mlperf mlperf-inference-results publish-results inference submission github " [--input_flags] -j`
+```bash
+cmr "push mlperf mlperf-inference-results publish-results inference submission github " [--input_flags] -j
+```

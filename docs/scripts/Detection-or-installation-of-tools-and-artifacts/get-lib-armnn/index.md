@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,lib-armnn,lib,armnn`
 
-    `cm run script --tags=get,lib-armnn,lib,armnn `
-
+    ```bash
+    cm run script --tags=get,lib-armnn,lib,armnn 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get lib-armnn lib armnn"`
 
-    `cmr "get lib-armnn lib armnn " `
-
+    ```bash
+    cmr "get lib-armnn lib armnn " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,8 +67,9 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get lib-armnn lib armnn" `
-
+    ```bash
+    cm docker script "get lib-armnn lib armnn" 
+    ```
 ___
 
 #### Versions
@@ -78,12 +79,14 @@ Default version: `23.11`
 * `23.05`
 * `23.11`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-lib-armnn/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get lib-armnn lib armnn "  -j`
+```bash
+cmr "get lib-armnn lib armnn "  -j
+```

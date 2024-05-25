@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,nvidia,mlperf,inference,common-code`
 
-    `cm run script --tags=get,nvidia,mlperf,inference,common-code[,variations] `
-
+    ```bash
+    cm run script --tags=get,nvidia,mlperf,inference,common-code[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get nvidia mlperf inference common-code"`
 
-    `cmr "get nvidia mlperf inference common-code [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get nvidia mlperf inference common-code [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,29 +68,27 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get nvidia mlperf inference common-code[variations]" `
-
+    ```bash
+    cm docker script "get nvidia mlperf inference common-code[variations]" 
+    ```
 ___
 
+=== "Variations"
 
-#### Variations
 
-  * Group "**repo-owner**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_ctuning`
-      - Workflow:
-    * `_custom`
-      - Workflow:
-    * `_go`
-      - Workflow:
-    * `_mlcommons`
-      - Workflow:
-    * `_nvidia-only`
-      - Workflow:
+      * Group "**repo-owner**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_ctuning`
+        * `_custom`
+        * `_go`
+        * `_mlcommons`
+        * `_nvidia-only`
+
+        </details>
 
 #### Versions
 Default version: `r3.1`
@@ -104,4 +100,6 @@ Default version: `r3.1`
 
 ___
 #### Script output
-`cmr "get nvidia mlperf inference common-code [,variations]"  -j`
+```bash
+cmr "get nvidia mlperf inference common-code [variations]"  -j
+```

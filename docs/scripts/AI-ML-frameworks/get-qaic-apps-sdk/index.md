@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,detect,qaic,apps,sdk,apps-sdk,qaic-apps-sdk`
 
-    `cm run script --tags=get,detect,qaic,apps,sdk,apps-sdk,qaic-apps-sdk `
-
+    ```bash
+    cm run script --tags=get,detect,qaic,apps,sdk,apps-sdk,qaic-apps-sdk 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get detect qaic apps sdk apps-sdk qaic-apps-sdk"`
 
-    `cmr "get detect qaic apps sdk apps-sdk qaic-apps-sdk " `
-
+    ```bash
+    cmr "get detect qaic apps sdk apps-sdk qaic-apps-sdk " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,11 +67,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get detect qaic apps sdk apps-sdk qaic-apps-sdk" `
-
+    ```bash
+    cm docker script "get detect qaic apps sdk apps-sdk qaic-apps-sdk" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "get detect qaic apps sdk apps-sdk qaic-apps-sdk "  -j`
+```bash
+cmr "get detect qaic apps sdk apps-sdk qaic-apps-sdk "  -j
+```

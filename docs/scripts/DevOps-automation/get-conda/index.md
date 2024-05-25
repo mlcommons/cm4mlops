@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,conda,get-conda`
 
-    `cm run script --tags=get,conda,get-conda[,variations] `
-
+    ```bash
+    cm run script --tags=get,conda,get-conda[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get conda get-conda"`
 
-    `cmr "get conda get-conda [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get conda get-conda [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,42 +67,42 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get conda get-conda[variations]" `
-
+    ```bash
+    cm docker script "get conda get-conda[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_name.#`
-      - Environment variables:
-        - *CM_CONDA_PREFIX_NAME*: `#`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**conda-python**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_python-3.#`
-      - Environment variables:
-        - *CM_CONDA_PYTHON_VERSION*: `3.#`
-      - Workflow:
-    * `_python-3.8`
-      - Environment variables:
-        - *CM_CONDA_PYTHON_VERSION*: `3.8`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_name.#`
+               - ENV variables:
+                   - CM_CONDA_PREFIX_NAME: `#`
+
+        </details>
 
 
-##### Native script being run
+      * Group "**conda-python**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_python-3.#`
+               - ENV variables:
+                   - CM_CONDA_PYTHON_VERSION: `3.#`
+        * `_python-3.8`
+               - ENV variables:
+                   - CM_CONDA_PYTHON_VERSION: `3.8`
+
+        </details>
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-conda/run.sh)
 === "Windows"
@@ -112,4 +110,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-conda/run.bat)
 ___
 #### Script output
-`cmr "get conda get-conda [,variations]"  -j`
+```bash
+cmr "get conda get-conda [variations]"  -j
+```

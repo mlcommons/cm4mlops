@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=app,python,reproduce,project,paper,ipol,journal,repro,reproducibility,pytorch,2022-439`
 
-    `cm run script --tags=app,python,reproduce,project,paper,ipol,journal,repro,reproducibility,pytorch,2022-439 [--input_flags]`
-
+    ```bash
+    cm run script --tags=app,python,reproduce,project,paper,ipol,journal,repro,reproducibility,pytorch,2022-439 [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "app python reproduce project paper ipol journal repro reproducibility pytorch 2022-439"`
 
-    `cmr "app python reproduce project paper ipol journal repro reproducibility pytorch 2022-439 " [--input_flags]`
-
+    ```bash
+    cmr "app python reproduce project paper ipol journal repro reproducibility pytorch 2022-439 " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,28 +68,23 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "app python reproduce project paper ipol journal repro reproducibility pytorch 2022-439" [--input_flags]`
-
+    ```bash
+    cm docker script "app python reproduce project paper ipol journal repro reproducibility pytorch 2022-439" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--image1=value`  &rarr;  `CM_IMAGE_1=value`
-* `--image2=value`  &rarr;  `CM_IMAGE_2=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "image1":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--image1=value`  &rarr;  `CM_IMAGE_1=value`
+    * `--image2=value`  &rarr;  `CM_IMAGE_2=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-ipol-paper-2022-439/run.sh)
 === "Windows"
@@ -97,4 +92,6 @@ r=cm.access({... , "image1":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-ipol-paper-2022-439/run.bat)
 ___
 #### Script output
-`cmr "app python reproduce project paper ipol journal repro reproducibility pytorch 2022-439 " [--input_flags] -j`
+```bash
+cmr "app python reproduce project paper ipol journal repro reproducibility pytorch 2022-439 " [--input_flags] -j
+```

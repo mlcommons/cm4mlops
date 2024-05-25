@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=reproduce,mlcommons,mlperf,train,training,nvidia-training,nvidia`
 
-    `cm run script --tags=reproduce,mlcommons,mlperf,train,training,nvidia-training,nvidia[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=reproduce,mlcommons,mlperf,train,training,nvidia-training,nvidia[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "reproduce mlcommons mlperf train training nvidia-training nvidia"`
 
-    `cmr "reproduce mlcommons mlperf train training nvidia-training nvidia [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "reproduce mlcommons mlperf train training nvidia-training nvidia [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,58 +67,49 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "reproduce mlcommons mlperf train training nvidia-training nvidia[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "reproduce mlcommons mlperf train training nvidia-training nvidia[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**benchmark**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_resnet`
-      - Environment variables:
-        - *CM_MLPERF_TRAINING_BENCHMARK*: `resnet`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * prepare,mlperf,training,resnet,_nvidia
-             * CM names: `--adr.['prepare-training-data', 'nvidia-training-data']...`
-             - CM script: [prepare-training-data-resnet](https://github.com/mlcommons/cm4mlops/tree/master/script/prepare-training-data-resnet)
-           * get,nvidia,training,code
-             * CM names: `--adr.['nvidia-training-code']...`
-             - CM script: [get-mlperf-training-nvidia-code](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-training-nvidia-code)
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--results_dir=value`  &rarr;  `CM_MLPERF_RESULTS_DIR=value`
-* `--system_conf_name=value`  &rarr;  `CM_MLPERF_NVIDIA_TRAINING_SYSTEM_CONF_NAME=value`
+      * Group "**benchmark**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_resnet`
+               - ENV variables:
+                   - CM_MLPERF_TRAINING_BENCHMARK: `resnet`
 
-```python
-r=cm.access({... , "results_dir":...}
-```
+        </details>
 
-</details>
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--results_dir=value`  &rarr;  `CM_MLPERF_RESULTS_DIR=value`
+    * `--system_conf_name=value`  &rarr;  `CM_MLPERF_NVIDIA_TRAINING_SYSTEM_CONF_NAME=value`
+
+
 
 #### Versions
 * `r2.1`
 * `r3.0`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run-resnet.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-training-nvidia/run-resnet.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-mlperf-training-nvidia/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "reproduce mlcommons mlperf train training nvidia-training nvidia [,variations]" [--input_flags] -j`
+```bash
+cmr "reproduce mlcommons mlperf train training nvidia-training nvidia [variations]" [--input_flags] -j
+```

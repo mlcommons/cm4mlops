@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,src,python,python3,src-python3,src-python`
 
-    `cm run script --tags=install,src,python,python3,src-python3,src-python[,variations] `
-
+    ```bash
+    cm run script --tags=install,src,python,python3,src-python3,src-python[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install src python python3 src-python3 src-python"`
 
-    `cmr "install src python python3 src-python3 src-python [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "install src python python3 src-python3 src-python [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,79 +67,78 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install src python python3 src-python3 src-python[variations]" `
-
+    ```bash
+    cm docker script "install src python python3 src-python3 src-python[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_lto`
-      - Environment variables:
-        - *CM_PYTHON_LTO_FLAG*: ` --lto`
-        - *CM_PYTHON_INSTALL_CACHE_TAGS*: `with-lto`
-      - Workflow:
-    * `_optimized`
-      - Environment variables:
-        - *CM_PYTHON_OPTIMIZATION_FLAG*: ` --enable-optimizations`
-        - *CM_PYTHON_INSTALL_CACHE_TAGS*: `optimized`
-      - Workflow:
-    * `_shared`
-      - Environment variables:
-        - *CM_PYTHON_INSTALL_CACHE_TAGS*: `shared`
-        - *CM_SHARED_BUILD*: `yes`
-      - Workflow:
-    * `_with-custom-ssl`
-      - Environment variables:
-        - *CM_CUSTOM_SSL*: `yes`
-        - *CM_PYTHON_INSTALL_CACHE_TAGS*: `with-custom-ssl`
-      - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,openssl
-             - CM script: [get-openssl](https://github.com/mlcommons/cm4mlops/tree/master/script/get-openssl)
-
-    </details>
+=== "Variations"
 
 
-  * Group "**ssl**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * `_with-ssl`
-      - Environment variables:
-        - *CM_ENABLE_SSL*: `yes`
-        - *CM_PYTHON_INSTALL_CACHE_TAGS*: `with-ssl`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_lto`
+               - ENV variables:
+                   - CM_PYTHON_LTO_FLAG: ` --lto`
+                   - CM_PYTHON_INSTALL_CACHE_TAGS: `with-lto`
+        * `_optimized`
+               - ENV variables:
+                   - CM_PYTHON_OPTIMIZATION_FLAG: ` --enable-optimizations`
+                   - CM_PYTHON_INSTALL_CACHE_TAGS: `optimized`
+        * `_shared`
+               - ENV variables:
+                   - CM_PYTHON_INSTALL_CACHE_TAGS: `shared`
+                   - CM_SHARED_BUILD: `yes`
+        * `_with-custom-ssl`
+               - ENV variables:
+                   - CM_CUSTOM_SSL: `yes`
+                   - CM_PYTHON_INSTALL_CACHE_TAGS: `with-custom-ssl`
 
-#### Default environment
+        </details>
 
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+      * Group "**ssl**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-* CM_ENABLE_SSL: `no`
-* CM_CUSTOM_SSL: `no`
-* CM_SHARED_BUILD: `no`
-* CM_PYTHON_OPTIMIZATION_FLAG: ``
-* CM_PYTHON_LTO_FLAG: ``
-* CM_WGET_URL: `https://www.python.org/ftp/python/[PYTHON_VERSION]/Python-[PYTHON_VERSION].tgz`
+        * `_with-ssl`
+               - ENV variables:
+                   - CM_ENABLE_SSL: `yes`
+                   - CM_PYTHON_INSTALL_CACHE_TAGS: `with-ssl`
+
+        </details>
+
+=== "Default environment"
+
+    #### Default environment
+
+
+    These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
+
+    * CM_ENABLE_SSL: `no`
+    * CM_CUSTOM_SSL: `no`
+    * CM_SHARED_BUILD: `no`
+    * CM_PYTHON_OPTIMIZATION_FLAG: ``
+    * CM_PYTHON_LTO_FLAG: ``
+    * CM_WGET_URL: `https://www.python.org/ftp/python/[PYTHON_VERSION]/Python-[PYTHON_VERSION].tgz`
 
 
 #### Versions
 Default version: `3.10.13`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-python-src/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "install src python python3 src-python3 src-python [,variations]"  -j`
+```bash
+cmr "install src python python3 src-python3 src-python [variations]"  -j
+```

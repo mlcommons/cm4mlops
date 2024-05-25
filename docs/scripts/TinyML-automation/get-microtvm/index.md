@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,src,source,microtvm,tiny`
 
-    `cm run script --tags=get,src,source,microtvm,tiny[,variations] [--input_flags]`
-
+    ```bash
+    cm run script --tags=get,src,source,microtvm,tiny[,variations] [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get src source microtvm tiny"`
 
-    `cmr "get src source microtvm tiny [variations]" [--input_flags]`
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get src source microtvm tiny [variations]" [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,42 +68,37 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get src source microtvm tiny[variations]" [--input_flags]`
-
+    ```bash
+    cm docker script "get src source microtvm tiny[variations]" [--input_flags]
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_full-history`
-      - Environment variables:
-        - *CM_GIT_DEPTH*: `--depth 10`
-      - Workflow:
-    * `_short-history`
-      - Environment variables:
-        - *CM_GIT_DEPTH*: `--depth 10`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
+    #### Variations
 
-* `--ssh=value`  &rarr;  `CM_GIT_SSH=value`
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-**Above CLI flags can be used in the Python CM API as follows:**
+        * `_full-history`
+               - ENV variables:
+                   - CM_GIT_DEPTH: `--depth 10`
+        * `_short-history`
+               - ENV variables:
+                   - CM_GIT_DEPTH: `--depth 10`
 
-```python
-r=cm.access({... , "ssh":...}
-```
+        </details>
 
-</details>
+=== "Input Flag Mapping"
+
+
+    #### Script flags mapped to environment
+
+    * `--ssh=value`  &rarr;  `CM_GIT_SSH=value`
+
+
 
 #### Versions
 Default version: `main`
@@ -113,12 +106,14 @@ Default version: `main`
 * `custom`
 * `main`
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-microtvm/run.sh)
 === "Windows"
 
-No run file exists for Windows
+    No run file exists for Windows
 ___
 #### Script output
-`cmr "get src source microtvm tiny [,variations]" [--input_flags] -j`
+```bash
+cmr "get src source microtvm tiny [variations]" [--input_flags] -j
+```

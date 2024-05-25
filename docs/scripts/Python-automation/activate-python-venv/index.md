@@ -31,17 +31,17 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=activate,python-venv`
 
-    `cm run script --tags=activate,python-venv `
-
+    ```bash
+    cm run script --tags=activate,python-venv 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "activate python-venv"`
 
-    `cmr "activate python-venv " `
-
+    ```bash
+    cmr "activate python-venv " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,12 +69,13 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "activate python-venv" `
-
+    ```bash
+    cm docker script "activate python-venv" 
+    ```
 ___
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/activate-python-venv/run.sh)
 === "Windows"
@@ -82,4 +83,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/activate-python-venv/run.bat)
 ___
 #### Script output
-`cmr "activate python-venv "  -j`
+```bash
+cmr "activate python-venv "  -j
+```

@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,bert,squad,bert-large,bert-squad,vocab`
 
-    `cm run script --tags=get,bert,squad,bert-large,bert-squad,vocab `
-
+    ```bash
+    cm run script --tags=get,bert,squad,bert-large,bert-squad,vocab 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get bert squad bert-large bert-squad vocab"`
 
-    `cmr "get bert squad bert-large bert-squad vocab " `
-
+    ```bash
+    cmr "get bert squad bert-large bert-squad vocab " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,11 +67,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get bert squad bert-large bert-squad vocab" `
-
+    ```bash
+    cm docker script "get bert squad bert-large bert-squad vocab" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "get bert squad bert-large bert-squad vocab "  -j`
+```bash
+cmr "get bert squad bert-large bert-squad vocab "  -j
+```

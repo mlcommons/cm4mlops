@@ -30,17 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=launch,benchmark`
 
-    `cm run script --tags=launch,benchmark `
-
+    ```bash
+    cm run script --tags=launch,benchmark 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "launch benchmark"`
 
-    `cmr "launch benchmark " `
-
+    ```bash
+    cmr "launch benchmark " 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -68,11 +68,14 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "launch benchmark" `
-
+    ```bash
+    cm docker script "launch benchmark" 
+    ```
 ___
 
 
 ___
 #### Script output
-`cmr "launch benchmark "  -j`
+```bash
+cmr "launch benchmark "  -j
+```

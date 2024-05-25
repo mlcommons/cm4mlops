@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=install,onnxruntime,get,prebuilt,lib,lang-c,lang-cpp`
 
-    `cm run script --tags=install,onnxruntime,get,prebuilt,lib,lang-c,lang-cpp[,variations] `
-
+    ```bash
+    cm run script --tags=install,onnxruntime,get,prebuilt,lib,lang-c,lang-cpp[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "install onnxruntime get prebuilt lib lang-c lang-cpp"`
 
-    `cmr "install onnxruntime get prebuilt lib lang-c lang-cpp [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "install onnxruntime get prebuilt lib lang-c lang-cpp [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,37 +67,38 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "install onnxruntime get prebuilt lib lang-c lang-cpp[variations]" `
-
+    ```bash
+    cm docker script "install onnxruntime get prebuilt lib lang-c lang-cpp[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * Group "**device**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_cpu`** (default)
-      - Environment variables:
-        - *CM_ONNXRUNTIME_DEVICE*: ``
-      - Workflow:
-    * `_cuda`
-      - Environment variables:
-        - *CM_ONNXRUNTIME_DEVICE*: `gpu`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-#### Default variations
+    #### Variations
 
-`_cpu`
+      * Group "**device**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * **`_cpu`** (default)
+               - ENV variables:
+                   - CM_ONNXRUNTIME_DEVICE: ``
+        * `_cuda`
+               - ENV variables:
+                   - CM_ONNXRUNTIME_DEVICE: `gpu`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_cpu`
 #### Versions
 Default version: `1.16.3`
 
 
-##### Native script being run
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-onnxruntime-prebuilt/run.sh)
 === "Windows"
@@ -107,4 +106,6 @@ Default version: `1.16.3`
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-onnxruntime-prebuilt/run.bat)
 ___
 #### Script output
-`cmr "install onnxruntime get prebuilt lib lang-c lang-cpp [,variations]"  -j`
+```bash
+cmr "install onnxruntime get prebuilt lib lang-c lang-cpp [variations]"  -j
+```

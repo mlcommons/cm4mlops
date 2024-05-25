@@ -29,17 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=csv-to-md,convert,to-md,from-csv`
 
-    `cm run script --tags=csv-to-md,convert,to-md,from-csv [--input_flags]`
-
+    ```bash
+    cm run script --tags=csv-to-md,convert,to-md,from-csv [--input_flags]
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "csv-to-md convert to-md from-csv"`
 
-    `cmr "csv-to-md convert to-md from-csv " [--input_flags]`
-
+    ```bash
+    cmr "csv-to-md convert to-md from-csv " [--input_flags]
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -67,28 +67,23 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "csv-to-md convert to-md from-csv" [--input_flags]`
-
+    ```bash
+    cm docker script "csv-to-md convert to-md from-csv" [--input_flags]
+    ```
 ___
 
-
-#### Script flags mapped to environment
-<details>
-<summary>Click here to expand this section.</summary>
-
-* `--csv_file=value`  &rarr;  `CM_CSV_FILE=value`
-* `--md_file=value`  &rarr;  `CM_MD_FILE=value`
-
-**Above CLI flags can be used in the Python CM API as follows:**
-
-```python
-r=cm.access({... , "csv_file":...}
-```
-
-</details>
+=== "Input Flag Mapping"
 
 
-##### Native script being run
+    #### Script flags mapped to environment
+
+    * `--csv_file=value`  &rarr;  `CM_CSV_FILE=value`
+    * `--md_file=value`  &rarr;  `CM_MD_FILE=value`
+
+
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/convert-csv-to-md/run.sh)
 === "Windows"
@@ -96,4 +91,6 @@ r=cm.access({... , "csv_file":...}
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/convert-csv-to-md/run.bat)
 ___
 #### Script output
-`cmr "csv-to-md convert to-md from-csv " [--input_flags] -j`
+```bash
+cmr "csv-to-md convert to-md from-csv " [--input_flags] -j
+```

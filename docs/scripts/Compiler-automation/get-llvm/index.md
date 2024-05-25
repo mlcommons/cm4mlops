@@ -30,19 +30,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=get,llvm,compiler,c-compiler,cpp-compiler,get-llvm`
 
-    `cm run script --tags=get,llvm,compiler,c-compiler,cpp-compiler,get-llvm[,variations] `
-
+    ```bash
+    cm run script --tags=get,llvm,compiler,c-compiler,cpp-compiler,get-llvm[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "get llvm compiler c-compiler cpp-compiler get-llvm"`
 
-    `cmr "get llvm compiler c-compiler cpp-compiler get-llvm [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "get llvm compiler c-compiler cpp-compiler get-llvm [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -70,26 +68,27 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "get llvm compiler c-compiler cpp-compiler get-llvm[variations]" `
-
+    ```bash
+    cm docker script "get llvm compiler c-compiler cpp-compiler get-llvm[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_from-prebuilt`
-      - Workflow:
-    * `_from-src`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-##### Native script being run
+    #### Variations
+
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_from-prebuilt`
+        * `_from-src`
+
+        </details>
+
+
+#### Native script being run
 === "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-llvm/run.sh)
 === "Windows"
@@ -97,4 +96,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-llvm/run.bat)
 ___
 #### Script output
-`cmr "get llvm compiler c-compiler cpp-compiler get-llvm [,variations]"  -j`
+```bash
+cmr "get llvm compiler c-compiler cpp-compiler get-llvm [variations]"  -j
+```

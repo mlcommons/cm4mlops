@@ -29,19 +29,17 @@ License: **Apache 2.0**
 
 === "CLI"
     ##### Run this script via CLI
-    `cm run script --tags=set,system,performance,power,mode`
 
-    `cm run script --tags=set,system,performance,power,mode[,variations] `
-
+    ```bash
+    cm run script --tags=set,system,performance,power,mode[,variations] 
+    ```
 === "CLI Alt"
     ##### Run this script via CLI (alternative)
 
-    `cmr "set system performance power mode"`
 
-    `cmr "set system performance power mode [variations]" `
-
-
-* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
+    ```bash
+    cmr "set system performance power mode [variations]" 
+    ```
 
 === "Python"
     ##### Run this script from Python
@@ -69,66 +67,65 @@ License: **Apache 2.0**
 === "Docker"
     ##### Run this script via Docker (beta)
 
-    `cm docker script "set system performance power mode[variations]" `
-
+    ```bash
+    cm docker script "set system performance power mode[variations]" 
+    ```
 ___
 
-
-#### Variations
-
-  * *No group (any variation can be selected)*
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * `_reproducibility`
-      - Environment variables:
-        - *CM_SET_OS_PERFORMANCE_REPRODUCIBILITY_MODE*: `yes`
-      - Workflow:
-
-    </details>
+=== "Variations"
 
 
-  * Group "**device**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+    #### Variations
 
-    * **`_cpu`** (default)
-      - Environment variables:
-        - *CM_SET_PERFORMANCE_MODE_OF*: `cpu`
-      - Workflow:
+      * *No group (any combination of variations can be selected)*
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    </details>
+        * `_reproducibility`
+               - ENV variables:
+                   - CM_SET_OS_PERFORMANCE_REPRODUCIBILITY_MODE: `yes`
 
-
-  * Group "**performance-mode**"
-    <details>
-    <summary>Click here to expand this section.</summary>
-
-    * **`_performance`** (default)
-      - Environment variables:
-        - *CM_SET_PERFORMANCE_MODE*: `performance`
-      - Workflow:
-
-    </details>
+        </details>
 
 
-  * Group "**power**"
-    <details>
-    <summary>Click here to expand this section.</summary>
+      * Group "**device**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-    * `_power`
-      - Environment variables:
-        - *CM_SET_PERFORMANCE_MODE*: `power`
-      - Workflow:
+        * **`_cpu`** (default)
+               - ENV variables:
+                   - CM_SET_PERFORMANCE_MODE_OF: `cpu`
 
-    </details>
+        </details>
 
 
-#### Default variations
+      * Group "**performance-mode**"
+        <details>
+        <summary>Click here to expand this section.</summary>
 
-`_cpu,_performance`
+        * **`_performance`** (default)
+               - ENV variables:
+                   - CM_SET_PERFORMANCE_MODE: `performance`
 
-##### Native script being run
+        </details>
+
+
+      * Group "**power**"
+        <details>
+        <summary>Click here to expand this section.</summary>
+
+        * `_power`
+               - ENV variables:
+                   - CM_SET_PERFORMANCE_MODE: `power`
+
+        </details>
+
+
+    ##### Default variations
+
+    `_cpu,_performance`
+
+#### Native script being run
 === "Linux/macOS"
      * [run-ubuntu.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/set-performance-mode/run-ubuntu.sh)
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/set-performance-mode/run.sh)
@@ -137,4 +134,6 @@ ___
      * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/set-performance-mode/run.bat)
 ___
 #### Script output
-`cmr "set system performance power mode [,variations]"  -j`
+```bash
+cmr "set system performance power mode [variations]"  -j
+```
