@@ -4,8 +4,8 @@
 
 #### run
 
-  * CM CLI: ```cm run script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L77))
-  * CM CLI with UID: ```cm run script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L77))
+  * CM CLI: ```cm run script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L77))
+  * CM CLI with UID: ```cm run script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L77))
   * CM Python API:
     ```python
     import cmind
@@ -15,7 +15,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L77)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L77)
     ```python
                 })
     if r['return']>0:
@@ -24,8 +24,8 @@
 
 #### version
 
-  * CM CLI: ```cm version script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2041))
-  * CM CLI with UID: ```cm version script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2041))
+  * CM CLI: ```cm version script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2199))
+  * CM CLI with UID: ```cm version script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2199))
   * CM Python API:
     ```python
     import cmind
@@ -35,7 +35,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2041)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2199)
     ```python
                 })
     if r['return']>0:
@@ -44,8 +44,8 @@
 
 #### search
 
-  * CM CLI: ```cm search script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2069))
-  * CM CLI with UID: ```cm search script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2069))
+  * CM CLI: ```cm search script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2227))
+  * CM CLI with UID: ```cm search script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2227))
   * CM Python API:
     ```python
     import cmind
@@ -55,7 +55,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2069)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2227)
     ```python
                 })
     if r['return']>0:
@@ -64,8 +64,8 @@
 
 #### test
 
-  * CM CLI: ```cm test script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2188))
-  * CM CLI with UID: ```cm test script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2188))
+  * CM CLI: ```cm test script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2346))
+  * CM CLI with UID: ```cm test script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2346))
   * CM Python API:
     ```python
     import cmind
@@ -75,7 +75,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2188)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2346)
     ```python
                 })
     if r['return']>0:
@@ -84,8 +84,8 @@
 
 #### native_run
 
-  * CM CLI: ```cm native_run script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2254))
-  * CM CLI with UID: ```cm native_run script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2254))
+  * CM CLI: ```cm native_run script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2412))
+  * CM CLI with UID: ```cm native_run script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2412))
   * CM Python API:
     ```python
     import cmind
@@ -95,7 +95,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2254)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2412)
     ```python
                 })
     if r['return']>0:
@@ -104,8 +104,8 @@
 
 #### add
 
-  * CM CLI: ```cm add script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2327))
-  * CM CLI with UID: ```cm add script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2327))
+  * CM CLI: ```cm add script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2485))
+  * CM CLI with UID: ```cm add script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2485))
   * CM Python API:
     ```python
     import cmind
@@ -115,7 +115,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2327)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L2485)
     ```python
                 })
     if r['return']>0:
@@ -124,8 +124,8 @@
 
 #### run_native_script
 
-  * CM CLI: ```cm run_native_script script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2955))
-  * CM CLI with UID: ```cm run_native_script script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2955))
+  * CM CLI: ```cm run_native_script script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3270))
+  * CM CLI with UID: ```cm run_native_script script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3270))
   * CM Python API:
     ```python
     import cmind
@@ -135,7 +135,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2955)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3270)
     ```python
                 })
     if r['return']>0:
@@ -144,8 +144,8 @@
 
 #### find_file_in_paths
 
-  * CM CLI: ```cm find_file_in_paths script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2996))
-  * CM CLI with UID: ```cm find_file_in_paths script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2996))
+  * CM CLI: ```cm find_file_in_paths script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3314))
+  * CM CLI with UID: ```cm find_file_in_paths script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3314))
   * CM Python API:
     ```python
     import cmind
@@ -155,7 +155,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L2996)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3314)
     ```python
                 })
     if r['return']>0:
@@ -164,8 +164,8 @@
 
 #### detect_version_using_script
 
-  * CM CLI: ```cm detect_version_using_script script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3215))
-  * CM CLI with UID: ```cm detect_version_using_script script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3215))
+  * CM CLI: ```cm detect_version_using_script script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3533))
+  * CM CLI with UID: ```cm detect_version_using_script script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3533))
   * CM Python API:
     ```python
     import cmind
@@ -175,7 +175,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3215)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3533)
     ```python
                 })
     if r['return']>0:
@@ -184,8 +184,8 @@
 
 #### find_artifact
 
-  * CM CLI: ```cm find_artifact script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3288))
-  * CM CLI with UID: ```cm find_artifact script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3288))
+  * CM CLI: ```cm find_artifact script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3606))
+  * CM CLI with UID: ```cm find_artifact script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3606))
   * CM Python API:
     ```python
     import cmind
@@ -195,7 +195,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3288)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3606)
     ```python
                 })
     if r['return']>0:
@@ -204,8 +204,8 @@
 
 #### find_file_deep
 
-  * CM CLI: ```cm find_file_deep script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3446))
-  * CM CLI with UID: ```cm find_file_deep script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3446))
+  * CM CLI: ```cm find_file_deep script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3764))
+  * CM CLI with UID: ```cm find_file_deep script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3764))
   * CM Python API:
     ```python
     import cmind
@@ -215,7 +215,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3446)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3764)
     ```python
                 })
     if r['return']>0:
@@ -224,8 +224,8 @@
 
 #### find_file_back
 
-  * CM CLI: ```cm find_file_back script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3504))
-  * CM CLI with UID: ```cm find_file_back script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3504))
+  * CM CLI: ```cm find_file_back script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3822))
+  * CM CLI with UID: ```cm find_file_back script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3822))
   * CM Python API:
     ```python
     import cmind
@@ -235,7 +235,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3504)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3822)
     ```python
                 })
     if r['return']>0:
@@ -244,8 +244,8 @@
 
 #### parse_version
 
-  * CM CLI: ```cm parse_version script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3545))
-  * CM CLI with UID: ```cm parse_version script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3545))
+  * CM CLI: ```cm parse_version script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3863))
+  * CM CLI with UID: ```cm parse_version script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3863))
   * CM Python API:
     ```python
     import cmind
@@ -255,7 +255,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3545)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3863)
     ```python
                 })
     if r['return']>0:
@@ -264,8 +264,8 @@
 
 #### update_deps
 
-  * CM CLI: ```cm update_deps script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3599))
-  * CM CLI with UID: ```cm update_deps script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3599))
+  * CM CLI: ```cm update_deps script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3917))
+  * CM CLI with UID: ```cm update_deps script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3917))
   * CM Python API:
     ```python
     import cmind
@@ -275,7 +275,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3599)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3917)
     ```python
                 })
     if r['return']>0:
@@ -284,8 +284,8 @@
 
 #### get_default_path_list
 
-  * CM CLI: ```cm get_default_path_list script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3619))
-  * CM CLI with UID: ```cm get_default_path_list script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3619))
+  * CM CLI: ```cm get_default_path_list script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3937))
+  * CM CLI with UID: ```cm get_default_path_list script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3937))
   * CM Python API:
     ```python
     import cmind
@@ -295,7 +295,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3619)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3937)
     ```python
                 })
     if r['return']>0:
@@ -304,8 +304,8 @@
 
 #### doc
 
-  * CM CLI: ```cm doc script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3630))
-  * CM CLI with UID: ```cm doc script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3630))
+  * CM CLI: ```cm doc script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3948))
+  * CM CLI with UID: ```cm doc script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3948))
   * CM Python API:
     ```python
     import cmind
@@ -315,7 +315,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3630)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3948)
     ```python
                 })
     if r['return']>0:
@@ -324,8 +324,8 @@
 
 #### gui
 
-  * CM CLI: ```cm gui script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3658))
-  * CM CLI with UID: ```cm gui script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3658))
+  * CM CLI: ```cm gui script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3976))
+  * CM CLI with UID: ```cm gui script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3976))
   * CM Python API:
     ```python
     import cmind
@@ -335,7 +335,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3658)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L3976)
     ```python
                 })
     if r['return']>0:
@@ -344,8 +344,8 @@
 
 #### dockerfile
 
-  * CM CLI: ```cm dockerfile script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3695))
-  * CM CLI with UID: ```cm dockerfile script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3695))
+  * CM CLI: ```cm dockerfile script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4013))
+  * CM CLI with UID: ```cm dockerfile script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4013))
   * CM Python API:
     ```python
     import cmind
@@ -355,7 +355,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3695)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4013)
     ```python
                 })
     if r['return']>0:
@@ -364,8 +364,8 @@
 
 #### docker
 
-  * CM CLI: ```cm docker script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3723))
-  * CM CLI with UID: ```cm docker script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3723))
+  * CM CLI: ```cm docker script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4041))
+  * CM CLI with UID: ```cm docker script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4041))
   * CM Python API:
     ```python
     import cmind
@@ -375,7 +375,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3723)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4041)
     ```python
                 })
     if r['return']>0:
@@ -384,8 +384,8 @@
 
 #### prepare
 
-  * CM CLI: ```cm prepare script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3777))
-  * CM CLI with UID: ```cm prepare script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3777))
+  * CM CLI: ```cm prepare script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4095))
+  * CM CLI with UID: ```cm prepare script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4095))
   * CM Python API:
     ```python
     import cmind
@@ -395,7 +395,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3777)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4095)
     ```python
                 })
     if r['return']>0:
@@ -404,8 +404,8 @@
 
 #### clean_some_tmp_files
 
-  * CM CLI: ```cm clean_some_tmp_files script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3788))
-  * CM CLI with UID: ```cm clean_some_tmp_files script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3788))
+  * CM CLI: ```cm clean_some_tmp_files script``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4106))
+  * CM CLI with UID: ```cm clean_some_tmp_files script,5b4e0237da074764``` ([add flags (dict keys) from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4106))
   * CM Python API:
     ```python
     import cmind
@@ -415,7 +415,7 @@
                  'automation':'script,5b4e0237da074764'
                  'out':'con'
     ```
-    [add keys from this API](https://github.com/mlcommons/ck/tree/master/cm-mlops/automation/script/module.py#L3788)
+    [add keys from this API](https://github.com/mlcommons/cm4mlops/tree/master/automation/script/module.py#L4106)
     ```python
                 })
     if r['return']>0:

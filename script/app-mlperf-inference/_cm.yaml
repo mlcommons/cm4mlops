@@ -338,6 +338,11 @@ variations:
     env:
       CM_MLPERF_IMPLEMENTATION: intel
 
+  intel-original,gptj_:
+    adr:
+      cnndm-accuracy-script:
+        tags: _int32
+
   intel-original,gptj_,build-harness:
     docker:
       run: false
@@ -637,9 +642,6 @@ variations:
         - all
         CM_MLPERF_ACCURACY_RESULTS_DIR:
         - 'on'
-      skip_if_env:
-        CM_MLPERF_IMPLEMENTATION:
-        - intel
       names:
       - cnndm-accuracy-script
       - mlperf-accuracy-script
@@ -1165,6 +1167,8 @@ variations:
       nvidia-inference-server:
         version: r4.0
         tags: _go
+      intel-harness:
+        tags: _v4.0
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'

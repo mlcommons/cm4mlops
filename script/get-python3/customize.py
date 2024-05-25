@@ -7,7 +7,7 @@ def preprocess(i):
 
     env = i['env']
 
-    if env.get('CM_PYTHON_CONDA', '') == 'yes':
+    if env.get('CM_PYTHON_CONDA', '') == 'yes' and env.get('CM_CONDA_BIN_PATH', '') != '':
         env['CM_PYTHON_BIN_WITH_PATH'] = os.path.join(env['CM_CONDA_BIN_PATH'], "python")
 
     recursion_spaces = i['recursion_spaces']

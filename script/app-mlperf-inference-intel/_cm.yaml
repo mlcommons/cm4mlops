@@ -136,14 +136,6 @@ deps:
 
 
 
-  ########################################################################
-  # Install MLPerf inference dependencies
-
-  - tags: get,mlperf,inference,results,_ctuning
-    names:
-      inference-results
-    version: v3.1
-
 
 # Post dependencies to run this app including for power measurement
 post_deps:
@@ -166,6 +158,32 @@ post_deps:
 
 # Variations to customize dependencies
 variations:
+  # version
+  v4.0:
+    group: version
+    default: true
+    env:
+      CM_MLPERF_INFERENCE_CODE_VERSION: "v4.0"
+    adr:
+      pytorch:
+        tags: _for-intel-mlperf-inference-v4.0
+    deps:
+    - tags: get,mlperf,inference,results,_go
+      names:
+        inference-results
+      version: v4.0
+  v3.1:
+    env:
+      CM_MLPERF_INFERENCE_CODE_VERSION: "v3.1"
+    adr:
+      pytorch:
+        tags: _for-intel-mlperf-inference-v3.1
+    deps:
+    - tags: get,mlperf,inference,results,_ctuning
+      names:
+        inference-results
+      version: v3.1
+
   # Target devices
   cpu:
     group: device
@@ -238,6 +256,8 @@ variations:
     deps:
       - tags: get,conda,_name.bert-pt
       - tags: install,llvm,src,_tag.llvmorg-15.0.7,_runtimes.libcxx:libcxxabi:openmp,_clang,_release,_for-intel-mlperf-inference-v3.1-bert
+        names:
+          - llvm-from-src
       - tags: get,generic-sys-util,_libffi7
       - tags: get,generic,conda-package,_package.python
         names:
@@ -255,8 +275,14 @@ variations:
         - conda-package
         - jemalloc
       - tags: get,pytorch,from.src,_for-intel-mlperf-inference-v3.1-bert
+        names:
+          - pytorch-from-src
       - tags: install,onednn,from.src,_for-intel-mlperf-inference-v3.1-bert
+        names:
+          - onednn-from-src
       - tags: install,transformers,from.src,_for-intel-mlperf-inference-v3.1-bert
+        names:
+          - transformers-from-src
 
   gptj_:
     env:
@@ -277,6 +303,9 @@ variations:
           - device-info
           - sut
           - loadgen-batchsize
+        enable_if_env:
+          CM_MLPERF_INFERENCE_CODE_VERSION:
+          - v3.1
         force_cache: true
       - tags: get,generic-python-lib,_package.optimum
         names:
@@ -294,6 +323,8 @@ variations:
           conda-python:
             version: "3.9"
       - tags: install,llvm,src,_for-intel-mlperf-inference-v3.1-gptj
+        names:
+          - llvm-from-src
       - names:
         - conda-package
         - ncurses
@@ -304,6 +335,8 @@ variations:
         - conda-package
         - jemalloc
       - tags: install,ipex,from.src,_for-intel-mlperf-inference-v3.1-gptj
+        names:
+          - ipex-from-src
       - tags: get,generic,conda-package,_package.ninja
         names:
         - conda-package
@@ -312,6 +345,8 @@ variations:
           INTEL_GPTJ_INT4:
             - 'yes'
       - tags: install,tpp-pex,from.src,_for-intel-mlperf-inference-v3.1-gptj
+        names:
+          - tpp-pex-from-src
         enable_if_env:
           INTEL_GPTJ_INT4:
             - 'yes'
@@ -342,6 +377,9 @@ variations:
           - pip-package
           - accelerate
       - tags: get,generic-python-lib,_custom-python,_package.torch,_url.git+https://github.com/pytorch/pytorch.git@927dc662386af052018212c7d01309a506fc94cd
+        enable_if_env:
+          CM_MLPERF_INFERENCE_CODE_VERSION:
+          -  v3.1
         env:
           CM_PYTHON_BIN_WITH_PATH: "<<<CM_CONDA_BIN_PATH>>>/python3"
           "+ CXXFLAGS":
@@ -349,6 +387,17 @@ variations:
             - "-Wno-maybe-uninitialized"
             - "-Wno-uninitialized"
             - "-Wno-free-nonheap-object"
+      - tags: get,generic-python-lib,_custom-python,_package.torch
+        env:
+          CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL: https://download.pytorch.org/whl/cpu
+        enable_if_env:
+          CM_MLPERF_INFERENCE_CODE_VERSION:
+            - 'v4.0'
+      - tags: install,intel-neural-speed,_for-intel-mlperf-inference-v4.0-gptj,_branch.mlperf-v4-0
+        enable_if_env:
+          CM_MLPERF_INFERENCE_CODE_VERSION:
+            - 'v4.0'
+
 
   gptj-99:
     group: model
@@ -461,6 +510,7 @@ variations:
           - device-info
           - sut
           - loadgen-batchsize
+          - loadgen-scenario
         force_cache: true
   
       # Download MLPerf inference source
