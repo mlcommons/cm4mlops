@@ -1,32 +1,21 @@
+# compile-model-for.qaic
 Automatically generated README for this automation recipe: **compile-model-for.qaic**
 
-Category: **AI/ML optimization**
+Category: **[AI/ML optimization](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=compile-model-for.qaic,3f0f43b5d0304d1c) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/compile-model-for.qaic)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *qaic,compile,model,model-compile,qaic-compile*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/compile-model-for.qaic/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "qaic compile model model-compile qaic-compile" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=qaic,compile,model,model-compile,qaic-compile`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=qaic,compile,model,model-compile,qaic-compile`
 
-`cm run script --tags=qaic,compile,model,model-compile,qaic-compile[,variations] [--input_flags]`
+    `cm run script --tags=qaic,compile,model,model-compile,qaic-compile[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "qaic compile model model-compile qaic-compile"`
+    `cmr "qaic compile model model-compile qaic-compile"`
 
-`cmr "qaic compile model model-compile qaic-compile [variations]" [--input_flags]`
+    `cmr "qaic compile model model-compile qaic-compile [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'qaic,compile,model,model-compile,qaic-compile'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="qaic,compile,model,model-compile,qaic-compile"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "qaic compile model model-compile qaic-compile[variations]" [--input_flags]`
+    `cm docker script "qaic compile model model-compile qaic-compile[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -362,77 +347,13 @@ r=cm.access({... , "register":...}
 
 </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/compile-model-for.qaic/run.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/compile-model-for.qaic/_cm.json)***
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,qaic,apps,sdk
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_REGISTER_CACHE': ['on']}`
-       * CM names: `--adr.['qaic-apps-sdk']...`
-       - CM script: [get-qaic-apps-sdk](https://github.com/mlcommons/cm4mlops/tree/master/script/get-qaic-apps-sdk)
-     * qaic,calibrate,_retinanet
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_COMPILE_RETINANET': ['yes']}`
-       * CM names: `--adr.['retinanet-profile', 'qaic-profile']...`
-       - CM script: [calibrate-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/calibrate-model-for.qaic)
-     * qaic,calibrate,_resnet50
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_COMPILE_RESNET': ['on']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_REGISTER_CACHE': ['on']}`
-       * CM names: `--adr.['resnet-profile', 'qaic-profile']...`
-       - CM script: [calibrate-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/calibrate-model-for.qaic)
-     * get,ml-model
-       * CM names: `--adr.['model-src']...`
-       - CM script: [get-ml-model-abtf-ssd-pytorch](https://github.com/mlcommons/cm4abtf/tree/master/script/get-ml-model-abtf-ssd-pytorch)
-       - CM script: [get-ml-model-3d-unet-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-3d-unet-kits19)
-       - CM script: [get-ml-model-bert-base-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-base-squad)
-       - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
-       - CM script: [get-ml-model-dlrm-terabyte](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-dlrm-terabyte)
-       - CM script: [get-ml-model-efficientnet-lite](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-efficientnet-lite)
-       - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
-       - CM script: [get-ml-model-huggingface-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-huggingface-zoo)
-       - CM script: [get-ml-model-llama2](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-llama2)
-       - CM script: [get-ml-model-mobilenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-mobilenet)
-       - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
-       - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
-       - CM script: [get-ml-model-retinanet-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet-nvidia)
-       - CM script: [get-ml-model-rnnt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-rnnt)
-       - CM script: [get-ml-model-stable-diffusion](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-stable-diffusion)
-       - CM script: [get-ml-model-tiny-resnet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-tiny-resnet)
-       - CM script: [get-ml-model-using-imagenet-from-model-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-using-imagenet-from-model-zoo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/compile-model-for.qaic/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/compile-model-for.qaic/_cm.json)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/compile-model-for.qaic/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/compile-model-for.qaic/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/compile-model-for.qaic/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/compile-model-for.qaic/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "qaic compile model model-compile qaic-compile [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_ML_MODEL_FILE_WITH_PATH`
-* `CM_QAIC_MODEL*`
-#### New environment keys auto-detected from customize
-
-* `CM_ML_MODEL_FILE_WITH_PATH`
-* `CM_QAIC_MODEL_COMPILED_BINARY_WITH_PATH`
-* `CM_QAIC_MODEL_FINAL_COMPILATION_CMD`

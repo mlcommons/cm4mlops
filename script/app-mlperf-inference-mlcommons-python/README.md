@@ -1,13 +1,13 @@
+# app-mlperf-inference-mlcommons-python
 Automatically generated README for this automation recipe: **app-mlperf-inference-mlcommons-python**
 
-Category: **Modular MLPerf inference benchmark pipeline**
+Category: **[Modular MLPerf inference benchmark pipeline](..)**
 
 License: **Apache 2.0**
 
 Developers: [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh), [Thomas Zhu](https://www.linkedin.com/in/hanwen-zhu-483614189), [Grigori Fursin](https://cKnowledge.org/gfursin)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-mlcommons-python/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=app-mlperf-inference-mlcommons-python,ff149e9781fc4b65) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
 
 ---
 
@@ -19,25 +19,16 @@ across diverse platforms with continuously changing software and hardware.
 
 See the current coverage of different models, devices and backends [here](README-extra.md#current-coverage).
 
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *app,vision,language,mlcommons,mlperf,inference,reference,ref*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-mlcommons-python/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -47,31 +38,33 @@ See the current coverage of different models, devices and backends [here](README
 
 ````cmr "app vision language mlcommons mlperf inference reference ref" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=app,vision,language,mlcommons,mlperf,inference,reference,ref`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=app,vision,language,mlcommons,mlperf,inference,reference,ref`
 
-`cm run script --tags=app,vision,language,mlcommons,mlperf,inference,reference,ref[,variations] [--input_flags]`
+    `cm run script --tags=app,vision,language,mlcommons,mlperf,inference,reference,ref[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "app vision language mlcommons mlperf inference reference ref"`
+    `cmr "app vision language mlcommons mlperf inference reference ref"`
 
-`cmr "app vision language mlcommons mlperf inference reference ref [variations]" [--input_flags]`
+    `cmr "app vision language mlcommons mlperf inference reference ref [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'app,vision,language,mlcommons,mlperf,inference,reference,ref'
                   'out':'con',
@@ -80,24 +73,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="app,vision,language,mlcommons,mlperf,inference,reference,ref"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "app vision language mlcommons mlperf inference reference ref[variations]" [--input_flags]`
+    `cm docker script "app vision language mlcommons mlperf inference reference ref[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -568,6 +555,10 @@ ___
         - *CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX1*: `network_sut`
         - *CM_NETWORK_LOADGEN*: `sut`
       - Workflow:
+        1. ***Read "deps" on other CM scripts***
+           * get,generic-python-lib,_package.flask
+             * CM names: `--adr.['flask']...`
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
 
     </details>
 
@@ -650,8 +641,6 @@ r=cm.access({... , "clean":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -664,281 +653,8 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `reference`
 * CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX: ``
 
-</details>
+
 
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
-     * get,python
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,cuda,_cudnn
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_DEVICE': ['gpu'], 'CM_MLPERF_BACKEND': ['onnxruntime', 'tf', 'tflite', 'pytorch']}`
-       - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
-     * get,nvidia,tensorrt
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['tensorrt']}`
-       - CM script: [get-tensorrt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-tensorrt)
-     * get,generic-python-lib,_onnxruntime
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['onnxruntime', 'tvm-onnx'], 'CM_MLPERF_DEVICE': ['cpu', 'rocm']}`
-       * CM names: `--adr.['ml-engine-onnxruntime', 'onnxruntime']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_onnxruntime_gpu
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['onnxruntime', 'tvm-onnx'], 'CM_MLPERF_DEVICE': ['gpu']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MODEL': ['3d-unet-99', '3d-unet-99.9']}`
-       * CM names: `--adr.['ml-engine-onnxruntime-cuda']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_onnxruntime
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu'], 'CM_MODEL': ['3d-unet-99', '3d-unet-99.9', 'resnet50']}`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_onnxruntime_gpu
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu'], 'CM_MODEL': ['3d-unet-99', '3d-unet-99.9', 'resnet50']}`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_torch
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['pytorch', 'tvm-pytorch'], 'CM_MLPERF_DEVICE': ['cpu', 'rocm']}`
-       * CM names: `--adr.['ml-engine-pytorch', 'pytorch']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_torch_cuda
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['pytorch', 'tvm-pytorch', 'ray'], 'CM_MLPERF_DEVICE': ['gpu']}`
-       * CM names: `--adr.['ml-engine-pytorch', 'pytorch']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_torchvision
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['pytorch', 'tvm-pytorch'], 'CM_MLPERF_DEVICE': ['cpu']}`
-       * CM names: `--adr.['ml-engine-torchvision']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_torchvision_cuda
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['pytorch', 'tvm-pytorch', 'ray'], 'CM_MLPERF_DEVICE': ['gpu']}`
-       * CM names: `--adr.['ml-engine-torchvision']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_tensorrt
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['ray']}`
-       * CM names: `--adr.['ml-engine-tensorrt']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_torch_tensorrt
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['ray']}`
-       * CM names: `--adr.['ml-engine-torch_tensorrt']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_ray
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['ray']}`
-       * CM names: `--adr.['ray']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_async_timeout
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['ray']}`
-       * CM names: `--adr.['async_timeout']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_transformers
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['bert-99', 'bert-99.9', 'gptj-99', 'gptj-99.9']}`
-       * CM names: `--adr.['ml-engine-transformers']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_tensorflow
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['tf', 'tflite']}`
-       * CM names: `--adr.['ml-engine-tensorflow', 'tensorflow']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_package.ncnn
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['ncnn']}`
-       * CM names: `--adr.['ml-engine-ncnn']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,ml-model,neural-magic,zoo
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_NEURALMAGIC_MODEL_ZOO_STUB': ['on']}`
-       * CM names: `--adr.['custom-ml-model']...`
-       - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
-     * get,ml-model,image-classification,resnet50
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['resnet50']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_CUSTOM_MODEL_PATH': ['on']}`
-       * CM names: `--adr.['ml-model', 'resnet50-model']...`
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
-     * get,ml-model,object-detection,retinanet
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['retinanet']}`
-       * CM names: `--adr.['ml-model', 'retinanet-model']...`
-       - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
-     * get,ml-model,large-language-model,gptj
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['gptj-99', 'gptj-99.9']}`
-       * CM names: `--adr.['ml-model', 'gptj-model', 'gpt-j-model']...`
-       - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
-     * get,ml-model,object-detection,resnext50,fp32,_pytorch-weights
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['pytorch'], 'CM_MLPERF_IMPLEMENTATION': ['nvidia'], 'CM_MODEL': ['retinanet']}`
-       * CM names: `--adr.['ml-model', 'retinanet-model']...`
-       - *Warning: no scripts found*
-     * get,ml-model,language-processing,bert-large
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_CUSTOM_MODEL_PATH': ['on']}`
-       * CM names: `--adr.['ml-model', 'bert-model']...`
-       - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
-     * get,ml-model,stable-diffusion,text-to-image,sdxl
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['stable-diffusion-xl']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_CUSTOM_MODEL_PATH': ['on']}`
-       * CM names: `--adr.['ml-model', 'sdxl-model']...`
-       - CM script: [get-ml-model-stable-diffusion](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-stable-diffusion)
-     * get,ml-model,llama2
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['llama2-70b-99', 'llama2-70b-99.9']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_CUSTOM_MODEL_PATH': ['on']}`
-       * CM names: `--adr.['ml-model', 'llama2-model']...`
-       - CM script: [get-ml-model-llama2](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-llama2)
-     * get,ml-model,medical-imaging,3d-unet
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['3d-unet-99', '3d-unet-99.9']}`
-       * CM names: `--adr.['ml-model', '3d-unet-model']...`
-       - CM script: [get-ml-model-3d-unet-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-3d-unet-kits19)
-     * get,ml-model,speech-recognition,rnnt
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['rnnt']}`
-       * CM names: `--adr.['ml-model', 'rnnt-model']...`
-       - CM script: [get-ml-model-rnnt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-rnnt)
-     * get,ml-model,recommendation,dlrm
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['dlrm-99', 'dlrm-99.9']}`
-       * CM names: `--adr.['ml-model', 'dlrm-model']...`
-       - CM script: [get-ml-model-dlrm-terabyte](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-dlrm-terabyte)
-     * get,dataset,image-classification,imagenet,preprocessed
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['resnet50']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_VISION_DATASET_OPTION': [True]}`
-       * CM names: `--adr.['imagenet-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
-     * get,dataset,image-classification,imagenet,preprocessed,_pytorch
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['resnet50'], 'CM_MLPERF_VISION_DATASET_OPTION': ['imagenet_pytorch']}`
-       * CM names: `--adr.['imagenet-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
-     * get,dataset-aux,image-classification,imagenet-aux
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['resnet50']}`
-       - CM script: [get-dataset-imagenet-aux](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-aux)
-     * get,dataset,object-detection,open-images,openimages,preprocessed,_validation
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['retinanet']}`
-       * CM names: `--adr.['openimages-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openimages)
-     * get,dataset,cnndm,_validation
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['gptj-99', 'gptj-99.9']}`
-       * CM names: `--adr.['cnndm-preprocessed']...`
-       - CM script: [get-dataset-cnndm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-cnndm)
-     * get,dataset,squad,original
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
-       * CM names: `--adr.['cnndm-preprocessed']...`
-       - CM script: [get-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad)
-     * get,dataset-aux,squad-vocab
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
-       - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
-     * get,dataset,coco2014,_validation
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['stable-diffusion-xl']}`
-       * CM names: `--adr.['coco2014-preprocessed']...`
-       - CM script: [get-dataset-coco2014](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-coco2014)
-     * get,preprocessed,dataset,openorca,_validation
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['llama2-70b-99', 'llama2-70b-99.9']}`
-       * CM names: `--adr.['openorca-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-openorca](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openorca)
-     * get,dataset,kits19,preprocessed
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['3d-unet-99', '3d-unet-99.9']}`
-       * CM names: `--adr.['kits19-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-kits19)
-     * get,dataset,librispeech,preprocessed
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['rnnt']}`
-       * CM names: `--adr.['librispeech-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-librispeech](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-librispeech)
-     * get,dataset,criteo,preprocessed
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['dlrm-99', 'dlrm-99.9']}`
-       * CM names: `--adr.['criteo-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-criteo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-criteo)
-     * generate,user-conf,mlperf,inference
-       * CM names: `--adr.['user-conf-generator']...`
-       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-user-conf)
-     * get,loadgen
-       * CM names: `--adr.['loadgen', 'mlperf-inference-loadgen']...`
-       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-loadgen)
-     * get,mlcommons,inference,src
-       * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-     * get,mlcommons,inference,src
-       * CM names: `--adr.['mlperf-implementation']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-     * get,generic-python-lib,_package.psutil
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/_cm.yaml)***
-     * remote,run,cmds
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_ASSH_RUN_COMMANDS': ['on']}`
-       * CM names: `--adr.['remote-run-cmds']...`
-       - CM script: [remote-run-commands](https://github.com/mlcommons/cm4mlops/tree/master/script/remote-run-commands)
-  1. ***Run native script if exists***
-  1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/_cm.yaml)***
-     * benchmark-mlperf
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': ['on']}`
-       * CM names: `--adr.['mlperf-runner']...`
-       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-mlcommons-python/_cm.yaml)***
-     * save,mlperf,inference,state
-       * CM names: `--adr.['save-mlperf-inference-state']...`
-       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/cm4mlops/tree/master/script/save-mlperf-inference-implementation-state)
-
-___
-### Script output
+#### Script output
 `cmr "app vision language mlcommons mlperf inference reference ref [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_DATASET_*`
-* `CM_HW_NAME`
-* `CM_MAX_EXAMPLES`
-* `CM_MLPERF_*`
-* `CM_ML_MODEL_*`
-#### New environment keys auto-detected from customize
-
-* `CM_MLPERF_BACKEND`
-* `CM_MLPERF_CONF`
-* `CM_MLPERF_DEVICE`
-* `CM_MLPERF_LOADGEN_EXTRA_OPTIONS`
-* `CM_MLPERF_LOADGEN_MODE`
-* `CM_MLPERF_LOADGEN_QPS_OPT`
-* `CM_MLPERF_LOADGEN_SCENARIO`
-* `CM_MLPERF_OUTPUT_DIR`
-* `CM_MLPERF_RUN_CMD`
-* `CM_ML_MODEL_FILE_WITH_PATH`

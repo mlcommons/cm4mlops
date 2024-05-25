@@ -1,32 +1,22 @@
+# get-cmsis_5
 Automatically generated README for this automation recipe: **get-cmsis_5**
 
-Category: **Detection or installation of tools and artifacts**
+Category: **[Detection or installation of tools and artifacts](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cmsis_5/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-cmsis_5,2258c212b11443f5) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cmsis_5)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,cmsis,cmsis_5,arm-software*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cmsis_5/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +26,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get cmsis cmsis_5 arm-software" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,cmsis,cmsis_5,arm-software`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,cmsis,cmsis_5,arm-software`
 
-`cm run script --tags=get,cmsis,cmsis_5,arm-software[,variations] `
+    `cm run script --tags=get,cmsis,cmsis_5,arm-software[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get cmsis cmsis_5 arm-software"`
+    `cmr "get cmsis cmsis_5 arm-software"`
 
-`cmr "get cmsis cmsis_5 arm-software [variations]" `
+    `cmr "get cmsis cmsis_5 arm-software [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,cmsis,cmsis_5,arm-software'
                   'out':'con',
@@ -69,24 +61,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,cmsis,cmsis_5,arm-software"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get cmsis cmsis_5 arm-software[variations]" `
+    `cm docker script "get cmsis cmsis_5 arm-software[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -108,8 +94,6 @@ ___
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -117,7 +101,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_GIT_PATCH: `no`
 * CM_GIT_URL: `https://github.com/ARM-software/CMSIS_5.git`
 
-</details>
 
 #### Versions
 Default version: `custom`
@@ -125,25 +108,13 @@ Default version: `custom`
 * `custom`
 * `develop`
 * `master`
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-cmsis_5/run.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cmsis_5/_cm.json)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cmsis_5/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cmsis_5/_cm.json)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cmsis_5/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cmsis_5/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cmsis_5/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-cmsis_5/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get cmsis cmsis_5 arm-software [,variations]"  -j`
-#### New environment keys (filter)
-
-* `CMSIS*`
-#### New environment keys auto-detected from customize

@@ -1,32 +1,22 @@
+# get-generic-python-lib
 Automatically generated README for this automation recipe: **get-generic-python-lib**
 
-Category: **Python automation**
+Category: **[Python automation](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-python-lib/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-generic-python-lib,94b62a682bc44791) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,generic-python-lib*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-python-lib/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +26,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get generic-python-lib" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,generic-python-lib`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,generic-python-lib`
 
-`cm run script --tags=get,generic-python-lib[,variations] [--input_flags]`
+    `cm run script --tags=get,generic-python-lib[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get generic-python-lib"`
+    `cmr "get generic-python-lib"`
 
-`cmr "get generic-python-lib [variations]" [--input_flags]`
+    `cmr "get generic-python-lib [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,generic-python-lib'
                   'out':'con',
@@ -69,24 +61,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,generic-python-lib"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get generic-python-lib[variations]" [--input_flags]`
+    `cm docker script "get generic-python-lib[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -98,6 +84,10 @@ ___
     * `_Pillow`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `Pillow`
+      - Workflow:
+    * `_anthropic`
+      - Environment variables:
+        - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `anthropic`
       - Workflow:
     * `_apache-tvm`
       - Environment variables:
@@ -314,6 +304,10 @@ ___
            * get,cuda
              * CM names: `--adr.['cuda']...`
              - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
+    * `_openai`
+      - Environment variables:
+        - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `openai`
+      - Workflow:
     * `_opencv-python`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `opencv-python`
@@ -478,6 +472,11 @@ ___
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `torch`
         - *CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL*: `https://download.pytorch.org/whl/cpu`
       - Workflow:
+        1. ***Read "deps" on other CM scripts***
+           * get,generic-python-lib,_package.networkx
+             * Enable this dependency only if all ENV vars are set:<br>
+`{'CM_PYTHON_MINOR_VERSION': ['7', '8']}`
+             - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
     * `_torch,pre`
       - Environment variables:
         - *CM_GENERIC_PYTHON_PACKAGE_NAME*: `torch`
@@ -630,52 +629,13 @@ r=cm.access({... , "extra_index_url":...}
 
 </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-python-lib/run.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-python-lib/run.bat)
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,python3
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_TMP_USE_CUSTOM_PYTHON': ['on']}`
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,generic-python-lib,_pip
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_GENERIC_PYTHON_PACKAGE_NAME': ['pip']}`
-       * CM names: `--adr.['python-pip', 'pip']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)***
-     * install,onnxruntime,from.src,_cuda
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_INSTALL_ONNXRUNTIME_GPU_FROM_SRC': ['yes']}`
-       - CM script: [install-onnxruntime-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-onnxruntime-from-src)
-  1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/run.bat)
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-python-lib/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get generic-python-lib [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_PYTHONLIB_*`
-#### New environment keys auto-detected from customize

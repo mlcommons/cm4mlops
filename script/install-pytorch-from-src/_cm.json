@@ -202,7 +202,8 @@
             "conda-package",
             "setuptools"
           ],
-          "tags": "get,generic,conda-package,_package.setuptools,_source.conda-forge"
+          "tags": "get,generic,conda-package,_package.setuptools,_source.conda-forge",
+          "version": "69.5.1"
         },
         {
           "names": [

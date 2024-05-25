@@ -95,7 +95,17 @@
       }
     },
     "for-nvidia-mlperf-inference-v4.0": {
-      "alias": "for-nvidia-mlperf-inference-v3.1"
+      "base": [
+        "sha.657027f3",
+        "cuda"
+      ],
+      "deps": [
+        {
+          "tags": "install,pytorch,from.src,_for-nvidia-mlperf-inference-v4.0"
+        }
+      ],
+      "env": {
+      }
     },
     "for-nvidia-mlperf-inference-v3.1": {
       "base": [

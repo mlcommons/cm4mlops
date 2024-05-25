@@ -1,32 +1,21 @@
+# get-ml-model-efficientnet-lite
 Automatically generated README for this automation recipe: **get-ml-model-efficientnet-lite**
 
-Category: **AI/ML models**
+Category: **[AI/ML models](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-ml-model-efficientnet-lite,1041f681977d4b7c) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-efficientnet-lite)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,ml-model,efficientnet,raw,ml-model-efficientnet,ml-model-efficientnet-lite,lite,tflite,image-classification*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-efficientnet-lite/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get ml-model efficientnet raw ml-model-efficientnet ml-model-efficientnet-lite lite tflite image-classification" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,ml-model,efficientnet,raw,ml-model-efficientnet,ml-model-efficientnet-lite,lite,tflite,image-classification`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,ml-model,efficientnet,raw,ml-model-efficientnet,ml-model-efficientnet-lite,lite,tflite,image-classification`
 
-`cm run script --tags=get,ml-model,efficientnet,raw,ml-model-efficientnet,ml-model-efficientnet-lite,lite,tflite,image-classification[,variations] `
+    `cm run script --tags=get,ml-model,efficientnet,raw,ml-model-efficientnet,ml-model-efficientnet-lite,lite,tflite,image-classification[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get ml-model efficientnet raw ml-model-efficientnet ml-model-efficientnet-lite lite tflite image-classification"`
+    `cmr "get ml-model efficientnet raw ml-model-efficientnet ml-model-efficientnet-lite lite tflite image-classification"`
 
-`cmr "get ml-model efficientnet raw ml-model-efficientnet ml-model-efficientnet-lite lite tflite image-classification [variations]" `
+    `cmr "get ml-model efficientnet raw ml-model-efficientnet ml-model-efficientnet-lite lite tflite image-classification [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,ml-model,efficientnet,raw,ml-model-efficientnet,ml-model-efficientnet-lite,lite,tflite,image-classification'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,ml-model,efficientnet,raw,ml-model-efficientnet,ml-model-efficientnet-lite,lite,tflite,image-classification"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get ml-model efficientnet raw ml-model-efficientnet ml-model-efficientnet-lite lite tflite image-classification[variations]" `
+    `cm docker script "get ml-model efficientnet raw ml-model-efficientnet ml-model-efficientnet-lite lite tflite image-classification[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -210,8 +195,6 @@ ___
 * `_lite4,_resolution-300`
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -219,30 +202,8 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_ML_MODEL_PRECISION: `fp32`
 * CM_ML_MODEL_WEIGHTS_DATA_TYPE: `fp32`
 
-</details>
+
 
 ___
-### Dependencies on other CM scripts
-
-
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-efficientnet-lite/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-efficientnet-lite/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-efficientnet-lite/_cm.json)
-  1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-efficientnet-lite/_cm.json)
-  1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-efficientnet-lite/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get ml-model efficientnet raw ml-model-efficientnet ml-model-efficientnet-lite lite tflite image-classification [,variations]"  -j`
-#### New environment keys (filter)
-
-* `CM_DATASET_PREPROCESSED_IMAGENET_DEP_TAGS`
-* `CM_ML_MODEL_*`
-#### New environment keys auto-detected from customize
-
-* `CM_ML_MODEL_FILE`
-* `CM_ML_MODEL_FILE_WITH_PATH`
-* `CM_ML_MODEL_PATH`
-* `CM_ML_MODEL_STARTING_WEIGHTS_FILENAME`

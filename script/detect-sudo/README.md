@@ -1,32 +1,21 @@
+# detect-sudo
 Automatically generated README for this automation recipe: **detect-sudo**
 
-Category: **DevOps automation**
+Category: **[DevOps automation](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=detect-sudo,1d47ffc556e248dc) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-sudo)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *detect,sudo,access*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-sudo/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +25,31 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "detect sudo access" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=detect,sudo,access`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=detect,sudo,access`
 
-`cm run script --tags=detect,sudo,access `
+    `cm run script --tags=detect,sudo,access `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "detect sudo access"`
+    `cmr "detect sudo access"`
 
-`cmr "detect sudo access " `
+    `cmr "detect sudo access " `
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'detect,sudo,access'
                   'out':'con',
@@ -67,54 +58,26 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="detect,sudo,access"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "detect sudo access" `
+    `cm docker script "detect sudo access" `
 
 ___
-### Customization
-
-#### Default environment
-
-<details>
-<summary>Click here to expand this section.</summary>
-
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 
-</details>
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-sudo/run.sh)
+=== "Windows"
 
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-sudo/_cm.yaml)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-sudo/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-sudo/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-sudo/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-sudo/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-sudo/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/detect-sudo/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "detect sudo access "  -j`
-#### New environment keys (filter)
-
-* `CM_SUDO_*`
-#### New environment keys auto-detected from customize
-
-* `CM_SUDO_USER`

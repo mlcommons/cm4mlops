@@ -1,32 +1,21 @@
+# get-generic-sys-util
 Automatically generated README for this automation recipe: **get-generic-sys-util**
 
-Category: **Detection or installation of tools and artifacts**
+Category: **[Detection or installation of tools and artifacts](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-generic-sys-util,bb0393afa8404a11) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-sys-util)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,sys-util,generic,generic-sys-util*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-sys-util/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get sys-util generic generic-sys-util" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,sys-util,generic,generic-sys-util`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,sys-util,generic,generic-sys-util`
 
-`cm run script --tags=get,sys-util,generic,generic-sys-util[,variations] `
+    `cm run script --tags=get,sys-util,generic,generic-sys-util[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get sys-util generic generic-sys-util"`
+    `cmr "get sys-util generic generic-sys-util"`
 
-`cmr "get sys-util generic generic-sys-util [variations]" `
+    `cmr "get sys-util generic generic-sys-util [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,sys-util,generic,generic-sys-util'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,sys-util,generic,generic-sys-util"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get sys-util generic generic-sys-util[variations]" `
+    `cm docker script "get sys-util generic generic-sys-util[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -115,17 +100,41 @@ ___
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `libboost-all-dev`
       - Workflow:
+    * `_libbz2-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `libbz2_dev`
+      - Workflow:
+    * `_libev-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `libev_dev`
+      - Workflow:
+    * `_libffi-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `libffi_dev`
+      - Workflow:
     * `_libffi7`
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `libffi7`
+      - Workflow:
+    * `_libgdbm-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `libgdbm_dev`
       - Workflow:
     * `_libgmock-dev`
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `libgmock-dev`
       - Workflow:
+    * `_liblzma-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `liblzma_dev`
+      - Workflow:
     * `_libmpfr-dev`
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `libmpfr-dev`
+      - Workflow:
+    * `_libncurses-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `libncurses_dev`
       - Workflow:
     * `_libnuma-dev`
       - Environment variables:
@@ -139,6 +148,18 @@ ___
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `libre2-dev`
       - Workflow:
+    * `_libreadline-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `libreadline_dev`
+      - Workflow:
+    * `_libsqlite3-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `libsqlite3_dev`
+      - Workflow:
+    * `_libssl-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `libssl_dev`
+      - Workflow:
     * `_libudev-dev`
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `libudev-dev`
@@ -146,6 +167,10 @@ ___
     * `_ninja-build`
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `ninja-build`
+      - Workflow:
+    * `_nlohmann-json3-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `nlohmann_json3_dev`
       - Workflow:
     * `_ntpdate`
       - Environment variables:
@@ -180,48 +205,45 @@ ___
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `sox`
       - Workflow:
+    * `_tk-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `tk_dev`
+      - Workflow:
     * `_transmission`
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `transmission`
       - Workflow:
+    * `_wget`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `wget`
+      - Workflow:
     * `_zlib`
       - Environment variables:
         - *CM_SYS_UTIL_NAME*: `zlib`
+      - Workflow:
+    * `_zlib1g-dev`
+      - Environment variables:
+        - *CM_SYS_UTIL_NAME*: `zlib1g_dev`
       - Workflow:
 
     </details>
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * CM_CLEAN_DIRS: `bin`
 * CM_SUDO: `sudo`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-generic-sys-util/run.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-sys-util/_cm.json)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-sys-util/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-sys-util/_cm.json)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-sys-util/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-sys-util/_cm.json)
-  1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-generic-sys-util/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get sys-util generic generic-sys-util [,variations]"  -j`
-#### New environment keys (filter)
-
-* `+PATH`
-#### New environment keys auto-detected from customize

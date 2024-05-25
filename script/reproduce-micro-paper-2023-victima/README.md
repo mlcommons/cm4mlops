@@ -1,75 +1,58 @@
-<details>
-<summary>Click here to see the table of contents.</summary>
+# reproduce-micro-paper-2023-victima
+Automatically generated README for this automation recipe: **reproduce-micro-paper-2023-victima**
 
-* [About](#about)
-* [Summary](#summary)
-* [Reuse this script in your project](#reuse-this-script-in-your-project)
-  * [ Install CM automation language](#install-cm-automation-language)
-  * [ Check CM script flags](#check-cm-script-flags)
-  * [ Run this script from command line](#run-this-script-from-command-line)
-  * [ Run this script from Python](#run-this-script-from-python)
-  * [ Run this script via GUI](#run-this-script-via-gui)
-  * [ Run this script via Docker (beta)](#run-this-script-via-docker-(beta))
-* [Customization](#customization)
-  * [ Variations](#variations)
-  * [ Script flags mapped to environment](#script-flags-mapped-to-environment)
-  * [ Default environment](#default-environment)
-* [Script workflow, dependencies and native scripts](#script-workflow-dependencies-and-native-scripts)
-* [Script output](#script-output)
-* [New environment keys (filter)](#new-environment-keys-(filter))
-* [New environment keys auto-detected from customize](#new-environment-keys-auto-detected-from-customize)
-* [Maintainers](#maintainers)
+Category: **[Reproducibility and artifact evaluation](..)**
 
-</details>
+License: **Apache 2.0**
 
-*Note that this README is automatically generated - don't edit!*
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/README-extra.md)
 
-### About
-
-
-See extra [notes](README-extra.md) from the authors and contributors.
-
-#### Summary
-
-* Category: *Reproducibility and artifact evaluation.*
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* CM "database" tags to find this script: *reproduce,project,paper,micro,micro-2023,victima*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)*
 * Output cached? *False*
-___
+
+---
 ### Reuse this script in your project
 
-#### Install CM automation language
+#### Install MLCommons CM automation meta-framework
 
-* [Installation guide](https://github.com/mlcommons/ck/blob/master/docs/installation.md)
-* [CM intro](https://doi.org/10.5281/zenodo.8105339)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
-#### Pull CM repository with this automation
+#### Pull CM repository with this automation recipe (CM script)
 
-```cm pull repo mlcommons@cm4mlops --checkout=dev```
+```cm pull repo mlcommons@cm4mlops```
+
+#### Print CM help from the command line
+
+````cmr "reproduce project paper micro micro-2023 victima" --help````
+
+#### Run this script
+
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=reproduce,project,paper,micro,micro-2023,victima`
+
+    `cm run script --tags=reproduce,project,paper,micro,micro-2023,victima[,variations] [--input_flags]`
+
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
+
+    `cmr "reproduce project paper micro micro-2023 victima"`
+
+    `cmr "reproduce project paper micro micro-2023 victima [variations]" [--input_flags]`
 
 
-#### Run this script from command line
+* *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-1. `cm run script --tags=reproduce,project,paper,micro,micro-2023,victima[,variations] [--input_flags]`
+=== "Python"
+    ##### Run this script from Python
 
-2. `cmr "reproduce project paper micro micro-2023 victima[ variations]" [--input_flags]`
 
-* `variations` can be seen [here](#variations)
+    ```python
 
-* `input_flags` can be seen [here](#script-flags-mapped-to-environment)
+    import cmind
 
-#### Run this script from Python
-
-<details>
-<summary>Click here to expand this section.</summary>
-
-```python
-
-import cmind
-
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'reproduce,project,paper,micro,micro-2023,victima'
                   'out':'con',
@@ -78,26 +61,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="reproduce,project,paper,micro,micro-2023,victima"```
-
-Use this [online GUI](https://cKnowledge.org/cm-gui/?tags=reproduce,project,paper,micro,micro-2023,victima) to generate CM CMD.
-
-#### Run this script via Docker (beta)
-
-`cm docker script "reproduce project paper micro micro-2023 victima[ variations]" [--input_flags]`
+    `cm docker script "reproduce project paper micro micro-2023 victima[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -133,47 +108,20 @@ r=cm.access({... , "container":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * CM_VICTIMA_JOB_MANAGER: `native`
 * CM_VICTIMA_CONTAINER: `docker`
 
-</details>
 
-___
-### Script workflow, dependencies and native scripts
 
-<details>
-<summary>Click here to expand this section.</summary>
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/main/script/detect-os)
-     * get,python
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/main/script/get-python3)
-     * get,git,repo,_repo.https://github.com/CMU-SAFARI/Victima
-       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)
-  1. ***Run native script if exists***
+##### Native script being run
+=== "Linux/macOS"
      * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/main/script/reproduce-micro-paper-2023-victima/_cm.yaml)
-</details>
+=== "Windows"
 
+No run file exists for Windows
 ___
-### Script output
-`cmr "reproduce project paper micro micro-2023 victima[,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-#### New environment keys auto-detected from customize
-
-___
-### Maintainers
-
-* [Open MLCommons taskforce on automation and reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+#### Script output
+`cmr "reproduce project paper micro micro-2023 victima [,variations]" [--input_flags] -j`

@@ -1,32 +1,22 @@
+# get-git-repo
 Automatically generated README for this automation recipe: **get-git-repo**
 
-Category: **DevOps automation**
+Category: **[DevOps automation](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-git-repo,ed603e7292974f10) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,git,repo,repository,clone*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +26,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get git repo repository clone" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,git,repo,repository,clone`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,git,repo,repository,clone`
 
-`cm run script --tags=get,git,repo,repository,clone[,variations] [--input_flags]`
+    `cm run script --tags=get,git,repo,repository,clone[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get git repo repository clone"`
+    `cmr "get git repo repository clone"`
 
-`cmr "get git repo repository clone [variations]" [--input_flags]`
+    `cmr "get git repo repository clone [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,git,repo,repository,clone'
                   'out':'con',
@@ -69,24 +61,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,git,repo,repository,clone"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get git repo repository clone[variations]" [--input_flags]`
+    `cm docker script "get git repo repository clone[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -179,6 +165,7 @@ ___
 * `--env_key=value`  &rarr;  `CM_GIT_ENV_KEY=value`
 * `--folder=value`  &rarr;  `CM_GIT_CHECKOUT_FOLDER=value`
 * `--patch=value`  &rarr;  `CM_GIT_PATCH=value`
+* `--pull=value`  &rarr;  `CM_GIT_REPO_PULL=value`
 * `--submodules=value`  &rarr;  `CM_GIT_RECURSE_SUBMODULES=value`
 * `--update=value`  &rarr;  `CM_GIT_REPO_PULL=value`
 
@@ -192,8 +179,6 @@ r=cm.access({... , "branch":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -203,38 +188,14 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_GIT_RECURSE_SUBMODULES: ` --recurse-submodules`
 * CM_GIT_URL: `https://github.com/mlcommons/ck.git`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo/run.sh)
+=== "Windows"
+
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-git-repo/run.bat)
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo/_cm.json)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo/_cm.json)
-  1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo/run.bat)
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-git-repo/_cm.json)***
-     * pull,git,repo
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_GIT_REPO_PULL': ['yes', 'True']}`
-       * CM names: `--adr.['pull-git-repo']...`
-       - CM script: [pull-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/pull-git-repo)
-
-___
-### Script output
+#### Script output
 `cmr "get git repo repository clone [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `<<<CM_GIT_CHECKOUT_PATH_ENV_NAME>>>`
-* `CM_GIT_CHECKOUT_PATH`
-* `CM_GIT_REPO_*`
-#### New environment keys auto-detected from customize
-
-* `CM_GIT_CHECKOUT_PATH`
-* `CM_GIT_REPO_CURRENT_HASH`

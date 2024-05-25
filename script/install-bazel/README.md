@@ -1,32 +1,21 @@
+# install-bazel
 Automatically generated README for this automation recipe: **install-bazel**
 
-Category: **Detection or installation of tools and artifacts**
+Category: **[Detection or installation of tools and artifacts](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=install-bazel,dfd3d2bf5b764175) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *install,script,bazel*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/install-bazel/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +25,31 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "install script bazel" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=install,script,bazel`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=install,script,bazel`
 
-`cm run script --tags=install,script,bazel `
+    `cm run script --tags=install,script,bazel `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "install script bazel"`
+    `cmr "install script bazel"`
 
-`cmr "install script bazel " `
+    `cmr "install script bazel " `
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'install,script,bazel'
                   'out':'con',
@@ -67,68 +58,30 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="install,script,bazel"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "install script bazel" `
+    `cm docker script "install script bazel" `
 
 ___
-### Customization
-
-#### Default environment
-
-<details>
-<summary>Click here to expand this section.</summary>
-
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
 
 #### Versions
 Default version: `7.0.2`
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run-aarch64.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-bazel/run-aarch64.sh)
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-bazel/run.sh)
+=== "Windows"
+
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/install-bazel/run.bat)
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel/_cm.json)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel/_cm.json)
-  1. ***Run native script if exists***
-     * [run-aarch64.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel/run-aarch64.sh)
-     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel/run.bat)
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel/_cm.json)
-  1. Run "postrocess" function from customize.py
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-bazel/_cm.json)***
-     * get,bazel
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_REQUIRE_INSTALL': ['yes']}`
-       - CM script: [get-bazel](https://github.com/mlcommons/cm4mlops/tree/master/script/get-bazel)
-
-___
-### Script output
+#### Script output
 `cmr "install script bazel "  -j`
-#### New environment keys (filter)
-
-* `CM_BAZEL_*`
-#### New environment keys auto-detected from customize
-
-* `CM_BAZEL_BIN_WITH_PATH`
-* `CM_BAZEL_DOWNLOAD_FILE`
-* `CM_BAZEL_DOWNLOAD_URL`
-* `CM_BAZEL_INSTALLED_PATH`

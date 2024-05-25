@@ -193,6 +193,7 @@ variations:
       nvidia-scratch-space:
         tags: _version.4_1
     deps:
+      - tags: get,generic,sys-util,_git-lfs
       - tags: install,pytorch,from.src,_for-nvidia-mlperf-inference-v4.0
         names:
         - pytorch
@@ -201,7 +202,6 @@ variations:
         names:
         - pytorchvision
         - torchvision
-      - tags: install,nccl,libs,_cuda
 
 versions:
   r2.1:
@@ -241,7 +241,11 @@ versions:
         version: r4.0
       nvidia-scratch-space:
         tags: _version.4_1
+    env:
+      BUILD_TRTLLM: 1
     deps:
+      - tags: get,generic,sys-util,_nlohmann-json3-dev
+      - tags: get,generic,sys-util,_git-lfs
       - tags: install,pytorch,from.src,_for-nvidia-mlperf-inference-v4.0
         names:
         - pytorch
@@ -250,7 +254,6 @@ versions:
         names:
         - pytorchvision
         - torchvision
-      - tags: install,nccl,libs,_cuda
 
 docker:
   skip_run_cmd: 'no'

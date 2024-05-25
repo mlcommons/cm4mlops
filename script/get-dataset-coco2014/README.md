@@ -1,32 +1,21 @@
+# get-dataset-coco2014
 Automatically generated README for this automation recipe: **get-dataset-coco2014**
 
-Category: **AI/ML datasets**
+Category: **[AI/ML datasets](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-dataset-coco2014,3f7ad9d42f4040f8) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *get,dataset,coco2014,object-detection,original*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-coco2014/_cm.yaml)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get dataset coco2014 object-detection original" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,dataset,coco2014,object-detection,original`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,dataset,coco2014,object-detection,original`
 
-`cm run script --tags=get,dataset,coco2014,object-detection,original[,variations] `
+    `cm run script --tags=get,dataset,coco2014,object-detection,original[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get dataset coco2014 object-detection original"`
+    `cmr "get dataset coco2014 object-detection original"`
 
-`cmr "get dataset coco2014 object-detection original [variations]" `
+    `cmr "get dataset coco2014 object-detection original [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,dataset,coco2014,object-detection,original'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,dataset,coco2014,object-detection,original"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get dataset coco2014 object-detection original[variations]" `
+    `cm docker script "get dataset coco2014 object-detection original[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -152,53 +137,19 @@ ___
 `_50,_default-annotations,_validation`
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * CM_DATASET_CALIBRATION: `no`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-coco2014/run.sh)
+=== "Windows"
+
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-coco2014/run.bat)
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/_cm.yaml)***
-     * get,python3
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,generic-python-lib,_package.tqdm
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * mlperf,inference,source
-       * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/run.bat)
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/run.sh)
-  1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/_cm.yaml)***
-     * get,coco2014,annotations
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_DATASET_COCO2014_CUSTOM_ANNOTATIONS': ['yes']}`
-       - *Warning: no scripts found*
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-coco2014/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "get dataset coco2014 object-detection original [,variations]"  -j`
-#### New environment keys (filter)
-
-* `CM_CALIBRATION_DATASET_PATH`
-* `CM_DATASET_ANNOTATIONS_DIR_PATH`
-* `CM_DATASET_ANNOTATIONS_FILE_PATH`
-* `CM_DATASET_PATH`
-* `CM_DATASET_PATH_ROOT`
-#### New environment keys auto-detected from customize
-
-* `CM_CALIBRATION_DATASET_PATH`
-* `CM_DATASET_PATH`
-* `CM_DATASET_PATH_ROOT`

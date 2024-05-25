@@ -1,32 +1,21 @@
+# benchmark-any-mlperf-inference-implementation
 Automatically generated README for this automation recipe: **benchmark-any-mlperf-inference-implementation**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=benchmark-any-mlperf-inference-implementation,8d3cd46f54464810) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-any-mlperf-inference-implementation)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/benchmark-any-mlperf-inference-implementation/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models`
 
-`cm run script --tags=benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models[,variations] [--input_flags]`
+    `cm run script --tags=benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models"`
+    `cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models"`
 
-`cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models [variations]" [--input_flags]`
+    `cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="benchmark,run,natively,all,inference,any,mlperf,mlperf-implementation,implementation,mlperf-models"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models[variations]" [--input_flags]`
+    `cm docker script "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -235,34 +220,20 @@ r=cm.access({... , "backends":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * DIVISION: `open`
 * CATEGORY: `edge`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run-template.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/benchmark-any-mlperf-inference-implementation/run-template.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-any-mlperf-inference-implementation/_cm.yaml)***
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-any-mlperf-inference-implementation/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-any-mlperf-inference-implementation/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run-template.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-any-mlperf-inference-implementation/run-template.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-any-mlperf-inference-implementation/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-any-mlperf-inference-implementation/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/benchmark-any-mlperf-inference-implementation/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "benchmark run natively all inference any mlperf mlperf-implementation implementation mlperf-models [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-#### New environment keys auto-detected from customize

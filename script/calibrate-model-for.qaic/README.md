@@ -1,32 +1,21 @@
+# calibrate-model-for.qaic
 Automatically generated README for this automation recipe: **calibrate-model-for.qaic**
 
-Category: **AI/ML optimization**
+Category: **[AI/ML optimization](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=calibrate-model-for.qaic,817bad70df2f4e45) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/calibrate-model-for.qaic)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *qaic,calibrate,profile,qaic-profile,qaic-calibrate*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/calibrate-model-for.qaic/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "qaic calibrate profile qaic-profile qaic-calibrate" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=qaic,calibrate,profile,qaic-profile,qaic-calibrate`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=qaic,calibrate,profile,qaic-profile,qaic-calibrate`
 
-`cm run script --tags=qaic,calibrate,profile,qaic-profile,qaic-calibrate[,variations] `
+    `cm run script --tags=qaic,calibrate,profile,qaic-profile,qaic-calibrate[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "qaic calibrate profile qaic-profile qaic-calibrate"`
+    `cmr "qaic calibrate profile qaic-profile qaic-calibrate"`
 
-`cmr "qaic calibrate profile qaic-profile qaic-calibrate [variations]" `
+    `cmr "qaic calibrate profile qaic-profile qaic-calibrate [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'qaic,calibrate,profile,qaic-profile,qaic-calibrate'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="qaic,calibrate,profile,qaic-profile,qaic-calibrate"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "qaic calibrate profile qaic-profile qaic-calibrate[variations]" `
+    `cm docker script "qaic calibrate profile qaic-profile qaic-calibrate[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -215,75 +200,13 @@ ___
 
     </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/calibrate-model-for.qaic/run.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/calibrate-model-for.qaic/_cm.json)***
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,qaic,apps,sdk
-       * CM names: `--adr.['qaic-apps-sdk']...`
-       - CM script: [get-qaic-apps-sdk](https://github.com/mlcommons/cm4mlops/tree/master/script/get-qaic-apps-sdk)
-     * get,preprocessed,dataset,_calibration,openimages,_for.retinanet.onnx,_NCHW,_fp32,_custom-annotations
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_CALIBRATE_OPENIMAGES': ['yes']}`
-       * CM names: `--adr.['openimages-cal', 'preprocessed-dataset']...`
-       - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openimages)
-     * get,dataset,imagenet,preprocessed,_calibration,_for.resnet50,_float32,_rgb32
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_CALIBRATE_IMAGENET': ['yes']}`
-       * CM names: `--adr.['imagenet-cal', 'preprocessed-calibration-dataset']...`
-       - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
-     * get,dataset,preprocessed,_calib1,squad,_pickle,_seq-length.384,_packed
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_CALIBRATE_SQUAD': ['on']}`
-       * CM names: `--adr.['squad-cal', 'preprocessed-dataset']...`
-       - CM script: [get-preprocessed-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-squad)
-     * get,ml-model
-       * CM names: `--adr.['model-src']...`
-       - CM script: [get-ml-model-abtf-ssd-pytorch](https://github.com/mlcommons/cm4abtf/tree/master/script/get-ml-model-abtf-ssd-pytorch)
-       - CM script: [get-ml-model-3d-unet-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-3d-unet-kits19)
-       - CM script: [get-ml-model-bert-base-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-base-squad)
-       - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
-       - CM script: [get-ml-model-dlrm-terabyte](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-dlrm-terabyte)
-       - CM script: [get-ml-model-efficientnet-lite](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-efficientnet-lite)
-       - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
-       - CM script: [get-ml-model-huggingface-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-huggingface-zoo)
-       - CM script: [get-ml-model-llama2](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-llama2)
-       - CM script: [get-ml-model-mobilenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-mobilenet)
-       - CM script: [get-ml-model-neuralmagic-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-neuralmagic-zoo)
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
-       - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
-       - CM script: [get-ml-model-retinanet-nvidia](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet-nvidia)
-       - CM script: [get-ml-model-rnnt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-rnnt)
-       - CM script: [get-ml-model-stable-diffusion](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-stable-diffusion)
-       - CM script: [get-ml-model-tiny-resnet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-tiny-resnet)
-       - CM script: [get-ml-model-using-imagenet-from-model-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-using-imagenet-from-model-zoo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/calibrate-model-for.qaic/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/calibrate-model-for.qaic/_cm.json)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/calibrate-model-for.qaic/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/calibrate-model-for.qaic/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/calibrate-model-for.qaic/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/calibrate-model-for.qaic/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "qaic calibrate profile qaic-profile qaic-calibrate [,variations]"  -j`
-#### New environment keys (filter)
-
-* `CM_QAIC_MODEL_PROFILE_*`
-#### New environment keys auto-detected from customize
-
-* `CM_QAIC_MODEL_PROFILE_WITH_PATH`

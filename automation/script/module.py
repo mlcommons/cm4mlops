@@ -975,7 +975,7 @@ class CAutomation(Automation):
                 if str(state['docker'].get('run', True)).lower() in ['false', '0', 'no']:
                     print (recursion_spaces+'  - Skipping script::{} run as we are inside docker'.format(found_script_artifact))
                     return {'return': 0}
-                elif str(state['docker'].get('docker_real_run', True)).lower() in ['false', '0', 'no']:
+                elif str(state['docker'].get('real_run', True)).lower() in ['false', '0', 'no']:
                     print (recursion_spaces+'  - Doing fake run for script::{} as we are inside docker'.format(found_script_artifact))
                     fake_run = True
                     env['CM_TMP_FAKE_RUN']='yes'
@@ -4313,6 +4313,9 @@ def enable_or_skip_script(meta, env):
     Internal: enable a dependency based on enable_if_env and skip_if_env meta information
     (AND function)
     """
+    if type(meta) != dict:
+        print( "The meta entry is not a dictionary for skip/enable if_env {}".format(meta))
+
     for key in meta:
         meta_key = [str(v).lower() for v in meta[key]]
         if key in env:

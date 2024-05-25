@@ -1,32 +1,22 @@
+# build-mlperf-inference-server-nvidia
 Automatically generated README for this automation recipe: **build-mlperf-inference-server-nvidia**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/build-mlperf-inference-server-nvidia/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=build-mlperf-inference-server-nvidia,f37403af5e9f4541) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *build,mlcommons,mlperf,inference,inference-server,server,nvidia-harness,nvidia*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/build-mlperf-inference-server-nvidia/_cm.yaml)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +26,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "build mlcommons mlperf inference inference-server server nvidia-harness nvidia" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=build,mlcommons,mlperf,inference,inference-server,server,nvidia-harness,nvidia`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=build,mlcommons,mlperf,inference,inference-server,server,nvidia-harness,nvidia`
 
-`cm run script --tags=build,mlcommons,mlperf,inference,inference-server,server,nvidia-harness,nvidia[,variations] [--input_flags]`
+    `cm run script --tags=build,mlcommons,mlperf,inference,inference-server,server,nvidia-harness,nvidia[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "build mlcommons mlperf inference inference-server server nvidia-harness nvidia"`
+    `cmr "build mlcommons mlperf inference inference-server server nvidia-harness nvidia"`
 
-`cmr "build mlcommons mlperf inference inference-server server nvidia-harness nvidia [variations]" [--input_flags]`
+    `cmr "build mlcommons mlperf inference inference-server server nvidia-harness nvidia [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'build,mlcommons,mlperf,inference,inference-server,server,nvidia-harness,nvidia'
                   'out':'con',
@@ -69,24 +61,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="build,mlcommons,mlperf,inference,inference-server,server,nvidia-harness,nvidia"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "build mlcommons mlperf inference inference-server server nvidia-harness nvidia[variations]" [--input_flags]`
+    `cm docker script "build mlcommons mlperf inference inference-server server nvidia-harness nvidia[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -98,6 +84,8 @@ ___
     * **`_ctuning`** (default)
       - Workflow:
     * `_custom`
+      - Workflow:
+    * `_go`
       - Workflow:
     * `_mlcommons`
       - Workflow:
@@ -128,6 +116,25 @@ ___
     </details>
 
 
+  * Group "**version**"
+    <details>
+    <summary>Click here to expand this section.</summary>
+
+    * `_r4.0`
+      - Workflow:
+        1. ***Read "deps" on other CM scripts***
+           * get,generic,sys-util,_git-lfs
+             - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
+           * install,pytorch,from.src,_for-nvidia-mlperf-inference-v4.0
+             * CM names: `--adr.['pytorch', 'torch']...`
+             - CM script: [install-pytorch-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pytorch-from-src)
+           * install,torchvision,from.src,_for-nvidia-mlperf-inference-v4.0
+             * CM names: `--adr.['pytorchvision', 'torchvision']...`
+             - CM script: [install-torchvision-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-torchvision-from-src)
+
+    </details>
+
+
 #### Default variations
 
 `_ctuning,_cuda`
@@ -149,8 +156,6 @@ r=cm.access({... , "clean":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -158,7 +163,6 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_MAKE_CLEAN: `no`
 * CM_CUSTOM_SYSTEM_NVIDIA: `yes`
 
-</details>
 
 #### Versions
 Default version: `r3.1`
@@ -166,83 +170,14 @@ Default version: `r3.1`
 * `r2.1`
 * `r3.0`
 * `r3.1`
+* `r4.0`
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/build-mlperf-inference-server-nvidia/run.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
-     * get,python3
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,cuda,_cudnn
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_DEVICE': ['cuda', 'inferentia']}`
-       * CM names: `--adr.['cuda']...`
-       - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
-     * get,tensorrt,_dev
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_DEVICE': ['cuda', 'inferentia']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_TENSORRT_SYSTEM_DETECT': [True]}`
-       * CM names: `--adr.['tensorrt']...`
-       - CM script: [get-tensorrt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-tensorrt)
-     * get,gcc
-       - CM script: [get-gcc](https://github.com/mlcommons/cm4mlops/tree/master/script/get-gcc)
-     * get,cmake
-       - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
-     * get,generic,sys-util,_glog-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-     * get,generic,sys-util,_gflags-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-     * get,generic,sys-util,_libgmock-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-     * get,generic,sys-util,_libre2-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-     * get,generic,sys-util,_libnuma-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-     * get,generic,sys-util,_libboost-all-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-     * get,generic,sys-util,_rapidjson-dev
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-     * get,nvidia,mlperf,inference,common-code
-       * CM names: `--adr.['nvidia-inference-common-code']...`
-       - CM script: [get-mlperf-inference-nvidia-common-code](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-nvidia-common-code)
-     * get,generic-python-lib,_package.pybind11
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_pycuda
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_RUN_STATE_DOCKER': ['yes', True, 'True']}`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_opencv-python
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_nvidia-dali
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,mlperf,inference,nvidia,scratch,space
-       * CM names: `--adr.['nvidia-scratch-space']...`
-       - CM script: [get-mlperf-inference-nvidia-scratch-space](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-nvidia-scratch-space)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/build-mlperf-inference-server-nvidia/_cm.yaml)***
-     * add,custom,system,nvidia
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_CUSTOM_SYSTEM_NVIDIA': ['no', False, 'False']}`
-       * CM names: `--adr.['custom-system-nvidia', 'nvidia-inference-common-code']...`
-       - CM script: [add-custom-nvidia-system](https://github.com/mlcommons/cm4mlops/tree/master/script/add-custom-nvidia-system)
-
-___
-### Script output
+#### Script output
 `cmr "build mlcommons mlperf inference inference-server server nvidia-harness nvidia [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_MLPERF_INFERENCE_NVIDIA_CODE_PATH`
-#### New environment keys auto-detected from customize

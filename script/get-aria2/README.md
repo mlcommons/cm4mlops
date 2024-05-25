@@ -1,32 +1,22 @@
+# get-aria2
 Automatically generated README for this automation recipe: **get-aria2**
 
-Category: **Detection or installation of tools and artifacts**
+Category: **[Detection or installation of tools and artifacts](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/get-aria2/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-aria2,d83419a90a0c40d0) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *get,aria2,get-aria2*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/get-aria2/_cm.yaml)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +26,31 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get aria2 get-aria2" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,aria2,get-aria2`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,aria2,get-aria2`
 
-`cm run script --tags=get,aria2,get-aria2 [--input_flags]`
+    `cm run script --tags=get,aria2,get-aria2 [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get aria2 get-aria2"`
+    `cmr "get aria2 get-aria2"`
 
-`cmr "get aria2 get-aria2 " [--input_flags]`
+    `cmr "get aria2 get-aria2 " [--input_flags]`
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,aria2,get-aria2'
                   'out':'con',
@@ -67,24 +59,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,aria2,get-aria2"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get aria2 get-aria2" [--input_flags]`
+    `cm docker script "get aria2 get-aria2" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Script flags mapped to environment
@@ -102,47 +88,13 @@ r=cm.access({... , "install":...}
 
 </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-aria2/run.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-aria2/run.bat)
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2/_cm.yaml)***
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2/run.bat)
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-aria2/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "get aria2 get-aria2 " [--input_flags] -j`
-#### New environment keys (filter)
-
-* `+PATH`
-* `CM_ARIA2_*`
-#### New environment keys auto-detected from customize
-
-* `CM_ARIA2_BIN_WITH_PATH`
-* `CM_ARIA2_DOWNLOAD_DIR`
-* `CM_ARIA2_DOWNLOAD_FILE`
-* `CM_ARIA2_DOWNLOAD_FILE2`
-* `CM_ARIA2_DOWNLOAD_URL`
-* `CM_ARIA2_INSTALLED_PATH`
-* `CM_ARIA2_INSTALLED_TO_CACHE`

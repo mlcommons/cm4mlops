@@ -1,13 +1,13 @@
+# app-mlperf-inference
 Automatically generated README for this automation recipe: **app-mlperf-inference**
 
-Category: **Modular MLPerf inference benchmark pipeline**
+Category: **[Modular MLPerf inference benchmark pipeline](..)**
 
 License: **Apache 2.0**
 
 Developers: [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh), [Thomas Zhu](https://www.linkedin.com/in/hanwen-zhu-483614189), [Grigori Fursin](https://cKnowledge.org/gfursin)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=app-mlperf-inference,d775cac873ee4231) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
 
 ---
 
@@ -34,25 +34,16 @@ Get in touch with the [open taskforce on automation and reproducibility at MLCom
 if you need help with your submission or if you would like to participate in further modularization of MLPerf 
 and collaborative design space exploration and optimization of ML Systems.
 
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *app,vision,language,mlcommons,mlperf,inference,generic*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -62,17 +53,20 @@ and collaborative design space exploration and optimization of ML Systems.
 
 ````cmr "app vision language mlcommons mlperf inference generic" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=app,vision,language,mlcommons,mlperf,inference,generic`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=app,vision,language,mlcommons,mlperf,inference,generic`
 
-`cm run script --tags=app,vision,language,mlcommons,mlperf,inference,generic[,variations] [--input_flags]`
+    `cm run script --tags=app,vision,language,mlcommons,mlperf,inference,generic[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "app vision language mlcommons mlperf inference generic"`
+    `cmr "app vision language mlcommons mlperf inference generic"`
 
-`cmr "app vision language mlcommons mlperf inference generic [variations]" [--input_flags]`
+    `cmr "app vision language mlcommons mlperf inference generic [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
@@ -101,21 +95,20 @@ and collaborative design space exploration and optimization of ML Systems.
 * --**readme**=Generate README with the reproducibility report
 * --**debug**=Debug MLPerf script
 
-**Above CLI flags can be used in the Python CM API as follows:**
+=== "Python"
 
-```python
+    ```python
 r=cm.access({... , "scenario":...}
 ```
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'app,vision,language,mlcommons,mlperf,inference,generic'
                   'out':'con',
@@ -124,24 +117,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="app,vision,language,mlcommons,mlperf,inference,generic"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "app vision language mlcommons mlperf inference generic[variations]" [--input_flags]`
+    `cm docker script "app vision language mlcommons mlperf inference generic[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -195,11 +182,6 @@ ___
         - *CM_CNNDM_ACCURACY_DTYPE*: `int32`
         - *CM_LIBRISPEECH_ACCURACY_DTYPE*: `int8`
       - Workflow:
-        1. ***Read "deps" on other CM scripts***
-           * get,cuda-devices
-             * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_CUDA_DEVICE_PROP_GLOBAL_MEMORY': ['yes', 'on']}`
-             - CM script: [get-cuda-devices](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda-devices)
         1. ***Read "prehook_deps" on other CM scripts***
            * reproduce,mlperf,nvidia,inference,_run_harness
              * Skip this dependenecy only if all ENV vars are set:<br>
@@ -215,6 +197,7 @@ ___
         - *CM_IMAGENET_ACCURACY_DTYPE*: `float32`
         - *CM_OPENIMAGES_ACCURACY_DTYPE*: `float32`
         - *CM_LIBRISPEECH_ACCURACY_DTYPE*: `float32`
+        - *CM_CNNDM_ACCURACY_DTYPE*: `int32`
       - Workflow:
         1. ***Read "prehook_deps" on other CM scripts***
            * app,mlperf,reference,inference
@@ -308,6 +291,11 @@ ___
       - Environment variables:
         - *CM_MLPERF_DEVICE*: `gpu`
       - Workflow:
+        1. ***Read "deps" on other CM scripts***
+           * get,cuda-devices
+             * Skip this dependenecy only if all ENV vars are set:<br>
+`{'CM_CUDA_DEVICE_PROP_GLOBAL_MEMORY': ['yes', 'on']}`
+             - CM script: [get-cuda-devices](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda-devices)
     * `_qaic`
       - Environment variables:
         - *CM_MLPERF_DEVICE*: `qaic`
@@ -525,6 +513,12 @@ ___
     * `_r3.1_default`
       - Workflow:
     * `_r4.0_default`
+      - Environment variables:
+        - *CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH*: `/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl`
+      - Workflow:
+    * `_r4.1_default`
+      - Environment variables:
+        - *CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH*: `/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl`
       - Workflow:
 
     </details>
@@ -584,8 +578,6 @@ ___
 `{'CM_MLPERF_IMPLEMENTATION': ['intel']}`
              * CM names: `--adr.['cnndm-accuracy-script', 'mlperf-accuracy-script']...`
              - CM script: [process-mlperf-accuracy](https://github.com/mlcommons/cm4mlops/tree/master/script/process-mlperf-accuracy)
-    * `_intel-original,gptj_`
-      - Workflow:
     * `_llama2-70b_`
       - Environment variables:
         - *CM_MLPERF_MODEL_EQUAL_ISSUE_MODE*: `yes`
@@ -637,6 +629,10 @@ ___
     * `_kilt,qaic,resnet50`
       - Workflow:
     * `_kilt,qaic,retinanet`
+      - Workflow:
+    * `_nvidia-original,r4.1_default`
+      - Workflow:
+    * `_nvidia-original,r4.1_default,_gptj`
       - Workflow:
     * `_power`
       - Environment variables:
@@ -753,8 +749,6 @@ r=cm.access({... , "clean":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -765,41 +759,14 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_TEST_QUERY_COUNT: `10`
 * CM_MLPERF_QUANTIZATION: `False`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference/run.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
-     * get,python
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,mlcommons,inference,src
-       * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-     * get,mlperf,inference,utils
-       - CM script: [get-mlperf-inference-utils](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-utils)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference/run.sh)
-  1. ***Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference/_cm.yaml)***
-     * get,mlperf,sut,description
-       - CM script: [get-mlperf-inference-sut-description](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-sut-description)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "app vision language mlcommons mlperf inference generic [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_MLPERF_*`
-#### New environment keys auto-detected from customize
-
-* `CM_MLPERF_LOADGEN_COMPLIANCE_TEST`

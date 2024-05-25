@@ -1,32 +1,21 @@
+# app-mlperf-inference-dummy
 Automatically generated README for this automation recipe: **app-mlperf-inference-dummy**
 
-Category: **Modular MLPerf benchmarks**
+Category: **[Modular MLPerf benchmarks](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=app-mlperf-inference-dummy,5b71627383a94576) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-dummy/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy`
 
-`cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy[,variations] [--input_flags]`
+    `cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy"`
+    `cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy"`
 
-`cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy [variations]" [--input_flags]`
+    `cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="reproduce,mlcommons,mlperf,inference,harness,dummy-harness,dummy"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "reproduce mlcommons mlperf inference harness dummy-harness dummy[variations]" [--input_flags]`
+    `cm docker script "reproduce mlcommons mlperf inference harness dummy-harness dummy[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -289,8 +274,6 @@ r=cm.access({... , "count":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -301,60 +284,14 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: `dummy_harness`
 * CM_MLPERF_SKIP_RUN: `no`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-dummy/run.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
-     * get,mlcommons,inference,src
-       * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-     * get,mlcommons,inference,loadgen
-       * CM names: `--adr.['inference-loadgen']...`
-       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-loadgen)
-     * generate,user-conf,mlperf,inference
-       * CM names: `--adr.['user-conf-generator']...`
-       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-user-conf)
-     * get,generic-python-lib,_mlperf_logging
-       * CM names: `--adr.['mlperf-logging']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,git,repo
-       * CM names: `--adr.inference-results inference-code...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-dummy/_cm.yaml)***
-     * benchmark-mlperf
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': ['yes', True]}`
-       * CM names: `--adr.['runner', 'mlperf-runner']...`
-       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
-     * save,mlperf,inference,state
-       * CM names: `--adr.['save-mlperf-inference-state']...`
-       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/cm4mlops/tree/master/script/save-mlperf-inference-implementation-state)
-
-___
-### Script output
+#### Script output
 `cmr "reproduce mlcommons mlperf inference harness dummy-harness dummy [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_DATASET_*`
-* `CM_HW_NAME`
-* `CM_IMAGENET_ACCURACY_DTYPE`
-* `CM_MAX_EXAMPLES`
-* `CM_MLPERF_*`
-* `CM_ML_MODEL_*`
-* `CM_SQUAD_ACCURACY_DTYPE`
-#### New environment keys auto-detected from customize

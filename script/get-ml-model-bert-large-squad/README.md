@@ -1,32 +1,21 @@
+# get-ml-model-bert-large-squad
 Automatically generated README for this automation recipe: **get-ml-model-bert-large-squad**
 
-Category: **AI/ML models**
+Category: **[AI/ML models](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-ml-model-bert-large-squad,5e865dbdc65949d2) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,ml-model,raw,bert,bert-large,bert-squad,language,language-processing*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-bert-large-squad/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get ml-model raw bert bert-large bert-squad language language-processing" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,ml-model,raw,bert,bert-large,bert-squad,language,language-processing`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,ml-model,raw,bert,bert-large,bert-squad,language,language-processing`
 
-`cm run script --tags=get,ml-model,raw,bert,bert-large,bert-squad,language,language-processing[,variations] `
+    `cm run script --tags=get,ml-model,raw,bert,bert-large,bert-squad,language,language-processing[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get ml-model raw bert bert-large bert-squad language language-processing"`
+    `cmr "get ml-model raw bert bert-large bert-squad language language-processing"`
 
-`cmr "get ml-model raw bert bert-large bert-squad language language-processing [variations]" `
+    `cmr "get ml-model raw bert bert-large bert-squad language language-processing [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,ml-model,raw,bert,bert-large,bert-squad,language,language-processing'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,ml-model,raw,bert,bert-large,bert-squad,language,language-processing"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get ml-model raw bert bert-large bert-squad language language-processing[variations]" `
+    `cm docker script "get ml-model raw bert bert-large bert-squad language language-processing[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -313,45 +298,13 @@ ___
 #### Default variations
 
 `_fp32,_onnx,_unpacked`
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run-packed.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-bert-large-squad/run-packed.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/_cm.json)***
-     * download-and-extract
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_ML_MODEL_BERT_PACKED': ['yes']}`
-       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
-  1. ***Run native script if exists***
-     * [run-packed.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/run-packed.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-bert-large-squad/_cm.json)***
-     * get,dataset-aux,squad-vocab
-       - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
-
-___
-### Script output
+#### Script output
 `cmr "get ml-model raw bert bert-large bert-squad language language-processing [,variations]"  -j`
-#### New environment keys (filter)
-
-* `CM_ML_MODEL*`
-#### New environment keys auto-detected from customize
-
-* `CM_ML_MODEL_BERT_LARGE_FP32_PATH`
-* `CM_ML_MODEL_BERT_LARGE_INT8_PATH`
-* `CM_ML_MODEL_BERT_PACKED_PATH`
-* `CM_ML_MODEL_FILE`
-* `CM_ML_MODEL_FILE_WITH_PATH`

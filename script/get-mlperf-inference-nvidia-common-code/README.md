@@ -1,32 +1,22 @@
+# get-mlperf-inference-nvidia-common-code
 Automatically generated README for this automation recipe: **get-mlperf-inference-nvidia-common-code**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-inference-nvidia-common-code/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-mlperf-inference-nvidia-common-code,26b78bf3ffdc4926) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-nvidia-common-code)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,nvidia,mlperf,inference,common-code*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-inference-nvidia-common-code/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +26,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get nvidia mlperf inference common-code" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,nvidia,mlperf,inference,common-code`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,nvidia,mlperf,inference,common-code`
 
-`cm run script --tags=get,nvidia,mlperf,inference,common-code[,variations] `
+    `cm run script --tags=get,nvidia,mlperf,inference,common-code[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get nvidia mlperf inference common-code"`
+    `cmr "get nvidia mlperf inference common-code"`
 
-`cmr "get nvidia mlperf inference common-code [variations]" `
+    `cmr "get nvidia mlperf inference common-code [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,nvidia,mlperf,inference,common-code'
                   'out':'con',
@@ -69,24 +61,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,nvidia,mlperf,inference,common-code"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get nvidia mlperf inference common-code[variations]" `
+    `cm docker script "get nvidia mlperf inference common-code[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -99,6 +85,8 @@ ___
       - Workflow:
     * `_custom`
       - Workflow:
+    * `_go`
+      - Workflow:
     * `_mlcommons`
       - Workflow:
     * `_nvidia-only`
@@ -106,45 +94,14 @@ ___
 
     </details>
 
-#### Default environment
-
-<details>
-<summary>Click here to expand this section.</summary>
-
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
 #### Versions
 Default version: `r3.1`
 
 * `r2.1`
 * `r3.0`
 * `r3.1`
-___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-nvidia-common-code/_cm.json)***
-     * get,mlperf,inference,results
-       * CM names: `--adr.['mlperf-inference-results']...`
-       - CM script: [get-mlperf-inference-results](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results)
-       - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results-dir)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-nvidia-common-code/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-nvidia-common-code/_cm.json)
-  1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-nvidia-common-code/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-nvidia-common-code/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-nvidia-common-code/_cm.json)
+* `r4.0`
 
 ___
-### Script output
+#### Script output
 `cmr "get nvidia mlperf inference common-code [,variations]"  -j`
-#### New environment keys (filter)
-
-* `+PYTHONPATH`
-* `CM_MLPERF_INFERENCE_NVIDIA_CODE_PATH`
-#### New environment keys auto-detected from customize
-
-* `CM_MLPERF_INFERENCE_NVIDIA_CODE_PATH`

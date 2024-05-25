@@ -1,32 +1,22 @@
+# generate-mlperf-inference-user-conf
 Automatically generated README for this automation recipe: **generate-mlperf-inference-user-conf**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
 Developers: [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh), [Thomas Zhu](https://www.linkedin.com/in/hanwen-zhu-483614189), [Grigori Fursin](https://cKnowledge.org/gfursin)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=generate-mlperf-inference-user-conf,3af4475745964b93) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-user-conf)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *generate,mlperf,inference,user-conf,inference-user-conf*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/generate-mlperf-inference-user-conf/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +26,31 @@ Developers: [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh), [Thomas Zhu
 
 ````cmr "generate mlperf inference user-conf inference-user-conf" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=generate,mlperf,inference,user-conf,inference-user-conf`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=generate,mlperf,inference,user-conf,inference-user-conf`
 
-`cm run script --tags=generate,mlperf,inference,user-conf,inference-user-conf [--input_flags]`
+    `cm run script --tags=generate,mlperf,inference,user-conf,inference-user-conf [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "generate mlperf inference user-conf inference-user-conf"`
+    `cmr "generate mlperf inference user-conf inference-user-conf"`
 
-`cmr "generate mlperf inference user-conf inference-user-conf " [--input_flags]`
+    `cmr "generate mlperf inference user-conf inference-user-conf " [--input_flags]`
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'generate,mlperf,inference,user-conf,inference-user-conf'
                   'out':'con',
@@ -67,24 +59,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="generate,mlperf,inference,user-conf,inference-user-conf"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "generate mlperf inference user-conf inference-user-conf" [--input_flags]`
+    `cm docker script "generate mlperf inference user-conf inference-user-conf" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Script flags mapped to environment
@@ -119,8 +105,6 @@ r=cm.access({... , "count":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -132,68 +116,8 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_FAST_FACTOR: `5`
 * CM_MLPERF_QUANTIZATION: `False`
 
-</details>
+
 
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-user-conf/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,python
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,mlperf,results,dir
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'OUTPUT_BASE_DIR': ['on']}`
-       * CM names: `--adr.['get-mlperf-results-dir']...`
-       - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results-dir)
-     * get,mlcommons,inference,src
-       * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-     * get,sut,configs
-       - CM script: [get-mlperf-inference-sut-configs](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-sut-configs)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-user-conf/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-user-conf/_cm.yaml)
-  1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-user-conf/_cm.yaml)
-  1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-user-conf/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "generate mlperf inference user-conf inference-user-conf " [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_HW_*`
-* `CM_LOGS_DIR`
-* `CM_MAX_EXAMPLES`
-* `CM_MLPERF_*`
-* `CM_SUT_*`
-#### New environment keys auto-detected from customize
-
-* `CM_LOGS_DIR`
-* `CM_MAX_EXAMPLES`
-* `CM_MLPERF_ACCURACY_RESULTS_DIR`
-* `CM_MLPERF_COMPLIANCE_RUN_POSTPONED`
-* `CM_MLPERF_CONF`
-* `CM_MLPERF_INFERENCE_AUDIT_PATH`
-* `CM_MLPERF_INFERENCE_FINAL_RESULTS_DIR`
-* `CM_MLPERF_INFERENCE_MIN_DURATION`
-* `CM_MLPERF_LOADGEN_LOGS_DIR`
-* `CM_MLPERF_LOADGEN_MODE`
-* `CM_MLPERF_LOADGEN_QUERY_COUNT`
-* `CM_MLPERF_LOADGEN_SCENARIO`
-* `CM_MLPERF_LOADGEN_TARGET_LATENCY`
-* `CM_MLPERF_LOADGEN_TARGET_QPS`
-* `CM_MLPERF_OUTPUT_DIR`
-* `CM_MLPERF_POWER_LOG_DIR`
-* `CM_MLPERF_RANGING_USER_CONF`
-* `CM_MLPERF_RUN_STYLE`
-* `CM_MLPERF_SKIP_RUN`
-* `CM_MLPERF_TESTING_USER_CONF`
-* `CM_MLPERF_USER_CONF`
-* `CM_MLPERF_USE_MAX_DURATION`

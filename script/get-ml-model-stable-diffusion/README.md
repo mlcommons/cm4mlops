@@ -1,32 +1,21 @@
+# get-ml-model-stable-diffusion
 Automatically generated README for this automation recipe: **get-ml-model-stable-diffusion**
 
-Category: **AI/ML models**
+Category: **[AI/ML models](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-ml-model-stable-diffusion,22c6516b2d4d4c23) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,raw,ml-model,stable-diffusion,sdxl,text-to-image*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-stable-diffusion/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get raw ml-model stable-diffusion sdxl text-to-image" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,raw,ml-model,stable-diffusion,sdxl,text-to-image`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,raw,ml-model,stable-diffusion,sdxl,text-to-image`
 
-`cm run script --tags=get,raw,ml-model,stable-diffusion,sdxl,text-to-image[,variations] [--input_flags]`
+    `cm run script --tags=get,raw,ml-model,stable-diffusion,sdxl,text-to-image[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get raw ml-model stable-diffusion sdxl text-to-image"`
+    `cmr "get raw ml-model stable-diffusion sdxl text-to-image"`
 
-`cmr "get raw ml-model stable-diffusion sdxl text-to-image [variations]" [--input_flags]`
+    `cmr "get raw ml-model stable-diffusion sdxl text-to-image [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,raw,ml-model,stable-diffusion,sdxl,text-to-image'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,raw,ml-model,stable-diffusion,sdxl,text-to-image"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get raw ml-model stable-diffusion sdxl text-to-image[variations]" [--input_flags]`
+    `cm docker script "get raw ml-model stable-diffusion sdxl text-to-image[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -214,43 +199,7 @@ r=cm.access({... , "checkpoint":...}
 
 </details>
 
-#### Default environment
-
-<details>
-<summary>Click here to expand this section.</summary>
-
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
 
 ___
-### Dependencies on other CM scripts
-
-
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion/_cm.json)***
-     * get,ml-model,huggingface,zoo,_clone-repo,_model-stub.stabilityai/stable-diffusion-xl-base-1.0
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_TMP_REQUIRE_DOWNLOAD': ['yes'], 'CM_DOWNLOAD_TOOL': ['git']}`
-       * CM names: `--adr.['hf-zoo']...`
-       - CM script: [get-ml-model-huggingface-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-huggingface-zoo)
-     * download-and-extract
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_TMP_REQUIRE_DOWNLOAD': ['yes'], 'CM_DOWNLOAD_TOOL': ['rclone']}`
-       * CM names: `--adr.['dae']...`
-       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
-  1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-stable-diffusion/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get raw ml-model stable-diffusion sdxl text-to-image [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_ML_MODEL_*`
-* `SDXL_CHECKPOINT_PATH`
-#### New environment keys auto-detected from customize

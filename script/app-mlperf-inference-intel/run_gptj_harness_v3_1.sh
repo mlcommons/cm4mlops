@@ -35,7 +35,6 @@ cmd="python runner.py --workload-name gptj \
 	--num-proc ${NUM_PROC} \
 	--cpus-per-proc ${CPUS_PER_PROC} \
 	--model-checkpoint-path ${CHECKPOINT_DIR} \
-	${WARMUP} \
 	--dataset-path ${VALIDATION_DATA_JSON} \
 	--batch-size ${BATCH_SIZE} \
 	--mlperf-conf ${CM_MLPERF_CONF} \

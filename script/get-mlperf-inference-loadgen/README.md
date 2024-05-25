@@ -1,32 +1,22 @@
+# get-mlperf-inference-loadgen
 Automatically generated README for this automation recipe: **get-mlperf-inference-loadgen**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-inference-loadgen/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-mlperf-inference-loadgen,64c3d98d0ba04950) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *get,loadgen,inference,inference-loadgen,mlperf,mlcommons*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-inference-loadgen/_cm.yaml)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +26,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get loadgen inference inference-loadgen mlperf mlcommons" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,loadgen,inference,inference-loadgen,mlperf,mlcommons`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,loadgen,inference,inference-loadgen,mlperf,mlcommons`
 
-`cm run script --tags=get,loadgen,inference,inference-loadgen,mlperf,mlcommons[,variations] `
+    `cm run script --tags=get,loadgen,inference,inference-loadgen,mlperf,mlcommons[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get loadgen inference inference-loadgen mlperf mlcommons"`
+    `cmr "get loadgen inference inference-loadgen mlperf mlcommons"`
 
-`cmr "get loadgen inference inference-loadgen mlperf mlcommons [variations]" `
+    `cmr "get loadgen inference inference-loadgen mlperf mlcommons [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,loadgen,inference,inference-loadgen,mlperf,mlcommons'
                   'out':'con',
@@ -69,24 +61,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,loadgen,inference,inference-loadgen,mlperf,mlcommons"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get loadgen inference inference-loadgen mlperf mlcommons[variations]" `
+    `cm docker script "get loadgen inference inference-loadgen mlperf mlcommons[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -130,14 +116,11 @@ ___
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * CM_SHARED_BUILD: `no`
 
-</details>
 
 #### Versions
 Default version: `master`
@@ -149,76 +132,13 @@ Default version: `master`
 * `r2.1`
 * `r3.0`
 * `r3.1`
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-inference-loadgen/run.sh)
+=== "Windows"
+
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-inference-loadgen/run.bat)
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * get,python3
-       * CM names: `--adr.['python3', 'python']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,mlcommons,inference,src
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD': ['YES']}`
-       * CM names: `--adr.['inference-src-loadgen']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-     * download-and-extract,file,_wget,_extract
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD': ['YES']}`
-       * CM names: `--adr.['inference-src-loadgen-download']...`
-       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
-     * get,compiler
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_HOST_OS_TYPE': ['windows']}`
-       * CM names: `--adr.['compiler']...`
-       - CM script: [get-cl](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cl)
-       - CM script: [get-gcc](https://github.com/mlcommons/cm4mlops/tree/master/script/get-gcc)
-       - CM script: [get-llvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-llvm)
-     * get,cl
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_HOST_OS_TYPE': ['windows']}`
-       * CM names: `--adr.['compiler']...`
-       - CM script: [get-cl](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cl)
-     * get,cmake
-       * CM names: `--adr.['cmake']...`
-       - CM script: [get-cmake](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cmake)
-     * get,generic-python-lib,_package.wheel
-       * CM names: `--adr.['pip-package', 'wheel']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_pip
-       * CM names: `--adr.['pip-package', 'pip']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_package.pybind11
-       * CM names: `--adr.['pip-package', 'pybind11']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_package.setuptools
-       * CM names: `--adr.['pip-package', 'setuputils']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen/run.bat)
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-inference-loadgen/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "get loadgen inference inference-loadgen mlperf mlcommons [,variations]"  -j`
-#### New environment keys (filter)
-
-* `+CPLUS_INCLUDE_PATH`
-* `+C_INCLUDE_PATH`
-* `+DYLD_FALLBACK_LIBRARY_PATH`
-* `+LD_LIBRARY_PATH`
-* `+PYTHONPATH`
-* `CM_MLPERF_INFERENCE_LOADGEN_*`
-#### New environment keys auto-detected from customize
-
-* `CM_MLPERF_INFERENCE_LOADGEN_INCLUDE_PATH`
-* `CM_MLPERF_INFERENCE_LOADGEN_INSTALL_PATH`
-* `CM_MLPERF_INFERENCE_LOADGEN_LIBRARY_PATH`
-* `CM_MLPERF_INFERENCE_LOADGEN_PYTHON_PATH`

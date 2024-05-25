@@ -1,32 +1,22 @@
+# get-tvm-model
 Automatically generated README for this automation recipe: **get-tvm-model**
 
-Category: **AI/ML models**
+Category: **[AI/ML models](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/get-tvm-model/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-tvm-model,c1b7b656b6224307) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-tvm-model)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,ml-model-tvm,tvm-model*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-tvm-model/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +26,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get ml-model-tvm tvm-model" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,ml-model-tvm,tvm-model`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,ml-model-tvm,tvm-model`
 
-`cm run script --tags=get,ml-model-tvm,tvm-model[,variations] `
+    `cm run script --tags=get,ml-model-tvm,tvm-model[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get ml-model-tvm tvm-model"`
+    `cmr "get ml-model-tvm tvm-model"`
 
-`cmr "get ml-model-tvm tvm-model [variations]" `
+    `cmr "get ml-model-tvm tvm-model [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,ml-model-tvm,tvm-model'
                   'out':'con',
@@ -69,24 +61,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,ml-model-tvm,tvm-model"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get ml-model-tvm tvm-model[variations]" `
+    `cm docker script "get ml-model-tvm tvm-model[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -213,8 +199,6 @@ ___
 `_fp32,_onnx,_virtual_machine`
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -223,66 +207,14 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_TVM_USE_VM: `yes`
 * CM_TVM_FRONTEND_FRAMEWORK: `onnx`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-tvm-model/run.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-tvm-model/_cm.json)***
-     * get,python3
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,tvm
-       * CM names: `--adr.['tvm']...`
-       - CM script: [get-tvm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-tvm)
-     * get,generic-python-lib,_decorator
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_psutil
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_scipy
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_attrs
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-tvm-model/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-tvm-model/_cm.json)***
-     * get,ml-model,raw
-       * CM names: `--adr.['original-model']...`
-       - CM script: [get-ml-model-3d-unet-kits19](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-3d-unet-kits19)
-       - CM script: [get-ml-model-bert-base-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-base-squad)
-       - CM script: [get-ml-model-bert-large-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-bert-large-squad)
-       - CM script: [get-ml-model-dlrm-terabyte](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-dlrm-terabyte)
-       - CM script: [get-ml-model-efficientnet-lite](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-efficientnet-lite)
-       - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
-       - CM script: [get-ml-model-huggingface-zoo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-huggingface-zoo)
-       - CM script: [get-ml-model-llama2](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-llama2)
-       - CM script: [get-ml-model-mobilenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-mobilenet)
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
-       - CM script: [get-ml-model-retinanet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-retinanet)
-       - CM script: [get-ml-model-rnnt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-rnnt)
-       - CM script: [get-ml-model-stable-diffusion](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-stable-diffusion)
-       - CM script: [get-ml-model-tiny-resnet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-tiny-resnet)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-tvm-model/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-tvm-model/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-tvm-model/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-tvm-model/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get ml-model-tvm tvm-model [,variations]"  -j`
-#### New environment keys (filter)
-
-* `CM_ML_MODEL_*`
-* `CM_TUNE_TVM_*`
-* `CM_TVM_*`
-#### New environment keys auto-detected from customize
-
-* `CM_ML_MODEL_FILE`
-* `CM_ML_MODEL_FILE_WITH_PATH`
-* `CM_ML_MODEL_FRAMEWORK`
-* `CM_ML_MODEL_INPUT_SHAPES`
-* `CM_ML_MODEL_ORIGINAL_FILE_WITH_PATH`
-* `CM_ML_MODEL_PATH`
-* `CM_TUNE_TVM_MODEL`
-* `CM_TVM_FRONTEND_FRAMEWORK`

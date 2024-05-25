@@ -1,32 +1,23 @@
+# import-mlperf-training-to-experiment
 Automatically generated README for this automation recipe: **import-mlperf-training-to-experiment**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
 Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/import-mlperf-training-to-experiment/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=import-mlperf-training-to-experiment,b13d9b7337414f17) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/import-mlperf-training-to-experiment)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/import-mlperf-training-to-experiment/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +27,31 @@ Developers: [Grigori Fursin](https://cKnowledge.org/gfursin)
 
 ````cmr "import mlperf training mlperf-training experiment 2experiment to-experiment" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment`
 
-`cm run script --tags=import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment [--input_flags]`
+    `cm run script --tags=import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "import mlperf training mlperf-training experiment 2experiment to-experiment"`
+    `cmr "import mlperf training mlperf-training experiment 2experiment to-experiment"`
 
-`cmr "import mlperf training mlperf-training experiment 2experiment to-experiment " [--input_flags]`
+    `cmr "import mlperf training mlperf-training experiment 2experiment to-experiment " [--input_flags]`
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment'
                   'out':'con',
@@ -67,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="import,mlperf,training,mlperf-training,experiment,2experiment,to-experiment"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "import mlperf training mlperf-training experiment 2experiment to-experiment" [--input_flags]`
+    `cm docker script "import mlperf training mlperf-training experiment 2experiment to-experiment" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Script flags mapped to environment
@@ -101,41 +88,13 @@ r=cm.access({... , "target_repo":...}
 
 </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run_mlperf_logger.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/import-mlperf-training-to-experiment/run_mlperf_logger.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/import-mlperf-training-to-experiment/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
-     * get,python3
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,mlperf,logging
-       - CM script: [get-mlperf-logging](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-logging)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/import-mlperf-training-to-experiment/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/import-mlperf-training-to-experiment/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run_mlperf_logger.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/import-mlperf-training-to-experiment/run_mlperf_logger.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/import-mlperf-training-to-experiment/_cm.yaml)
-  1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/import-mlperf-training-to-experiment/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "import mlperf training mlperf-training experiment 2experiment to-experiment " [--input_flags] -j`
-#### New environment keys (filter)
-
-#### New environment keys auto-detected from customize

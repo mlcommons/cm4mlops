@@ -1,32 +1,22 @@
+# generate-mlperf-inference-submission
 Automatically generated README for this automation recipe: **generate-mlperf-inference-submission**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/generate-mlperf-inference-submission/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=generate-mlperf-inference-submission,5f8ab2d0b5874d53) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-submission)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/generate-mlperf-inference-submission/_cm.json)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +26,31 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission`
 
-`cm run script --tags=generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission [--input_flags]`
+    `cm run script --tags=generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission"`
+    `cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission"`
 
-`cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission " [--input_flags]`
+    `cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission " [--input_flags]`
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission'
                   'out':'con',
@@ -67,24 +59,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="generate,submission,mlperf,mlperf-inference,inference,mlcommons,inference-submission,mlperf-inference-submission,mlcommons-inference-submission"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission" [--input_flags]`
+    `cm docker script "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Script flags mapped to environment
@@ -124,68 +110,14 @@ r=cm.access({... , "analyzer_settings_file":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * CM_RUN_MLPERF_ACCURACY: `on`
 * CM_MLPERF_RUN_STYLE: `valid`
 
-</details>
+
 
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-submission/_cm.json)***
-     * get,python3
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * mlcommons,inference,src
-       * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-     * get,sut,system-description
-       - CM script: [get-mlperf-inference-sut-description](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-sut-description)
-     * install,pip-package,for-cmind-python,_package.tabulate
-       - CM script: [install-pip-package-for-cmind-python](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pip-package-for-cmind-python)
-     * get,mlperf,inference,utils
-       - CM script: [get-mlperf-inference-utils](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-utils)
-     * get,mlperf,results,dir
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_INFERENCE_RESULTS_DIR_': ['on']}`
-       * CM names: `--adr.['get-mlperf-results-dir']...`
-       - CM script: [get-mlperf-inference-results-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-results-dir)
-     * get,mlperf,submission,dir
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_INFERENCE_SUBMISSION_DIR': ['on']}`
-       * CM names: `--adr.['get-mlperf-submission-dir']...`
-       - CM script: [get-mlperf-inference-submission-dir](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-submission-dir)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-submission/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-submission/_cm.json)
-  1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-submission/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-submission/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/generate-mlperf-inference-submission/_cm.json)***
-     * accuracy,truncate,mlc
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_RUN_MLPERF_ACCURACY': ['on']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_SKIP_TRUNCATE_ACCURACY': ['yes']}`
-       - CM script: [truncate-mlperf-inference-accuracy-log](https://github.com/mlcommons/cm4mlops/tree/master/script/truncate-mlperf-inference-accuracy-log)
-     * preprocess,mlperf,submission
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR': ['on', 'True', 'yes', True]}`
-       - CM script: [preprocess-mlperf-inference-submission](https://github.com/mlcommons/cm4mlops/tree/master/script/preprocess-mlperf-inference-submission)
-     * submission,inference,checker,mlc
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_RUN_SUBMISSION_CHECKER': ['yes']}`
-       * CM names: `--adr.['mlperf-inference-submission-checker', 'submission-checker']...`
-       - CM script: [run-mlperf-inference-submission-checker](https://github.com/mlcommons/cm4mlops/tree/master/script/run-mlperf-inference-submission-checker)
-
-___
-### Script output
+#### Script output
 `cmr "generate submission mlperf mlperf-inference inference mlcommons inference-submission mlperf-inference-submission mlcommons-inference-submission " [--input_flags] -j`
-#### New environment keys (filter)
-
-#### New environment keys auto-detected from customize

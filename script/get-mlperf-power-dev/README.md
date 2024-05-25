@@ -1,32 +1,21 @@
+# get-mlperf-power-dev
 Automatically generated README for this automation recipe: **get-mlperf-power-dev**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-mlperf-power-dev,72aa56768c994bcf) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-power-dev)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,src,source,power,power-dev,mlperf,mlcommons*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-mlperf-power-dev/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get src source power power-dev mlperf mlcommons" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,src,source,power,power-dev,mlperf,mlcommons`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,src,source,power,power-dev,mlperf,mlcommons`
 
-`cm run script --tags=get,src,source,power,power-dev,mlperf,mlcommons[,variations] `
+    `cm run script --tags=get,src,source,power,power-dev,mlperf,mlcommons[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get src source power power-dev mlperf mlcommons"`
+    `cmr "get src source power power-dev mlperf mlcommons"`
 
-`cmr "get src source power power-dev mlperf mlcommons [variations]" `
+    `cmr "get src source power power-dev mlperf mlcommons [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,src,source,power,power-dev,mlperf,mlcommons'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,src,source,power,power-dev,mlperf,mlcommons"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get src source power power-dev mlperf mlcommons[variations]" `
+    `cm docker script "get src source power power-dev mlperf mlcommons[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -136,8 +121,6 @@ ___
 `_mlcommons`
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -145,27 +128,8 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * CM_GIT_PATCH: `no`
 * CM_GIT_CHECKOUT_FOLDER: `power-dev`
 
-</details>
+
 
 ___
-### Dependencies on other CM scripts
-
-
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-power-dev/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-power-dev/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-power-dev/_cm.json)***
-     * get,git,repo
-       * CM names: `--adr.['mlperf-power-dev-git-repo']...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
-  1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-power-dev/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-power-dev/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-mlperf-power-dev/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get src source power power-dev mlperf mlcommons [,variations]"  -j`
-#### New environment keys (filter)
-
-* `CM_MLPERF_POWER_SOURCE`
-#### New environment keys auto-detected from customize

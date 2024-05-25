@@ -1,32 +1,21 @@
+# app-mlperf-inference-qualcomm
 Automatically generated README for this automation recipe: **app-mlperf-inference-qualcomm**
 
-Category: **Modular MLPerf benchmarks**
+Category: **[Modular MLPerf benchmarks](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=app-mlperf-inference-qualcomm,eef1aca5d7c0470e) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-qualcomm/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt`
 
-`cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt[,variations] [--input_flags]`
+    `cm run script --tags=reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt"`
+    `cmr "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt"`
 
-`cmr "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt [variations]" [--input_flags]`
+    `cmr "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="reproduce,mlcommons,mlperf,inference,harness,qualcomm-harness,qualcomm,kilt-harness,kilt"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt[variations]" [--input_flags]`
+    `cm docker script "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -629,8 +614,6 @@ r=cm.access({... , "count":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
@@ -649,127 +632,14 @@ These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.j
 * verbosity: `0`
 * loadgen_trigger_cold_run: `0`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-qualcomm/run.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/_cm.yaml)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,sys-utils-cm
-       - CM script: [get-sys-utils-cm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-sys-utils-cm)
-     * get,git,repo
-       * CM names: `--adr.['kilt-repo']...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
-     * get,mlcommons,inference,src
-       * CM names: `--adr.['inference-src']...`
-       - CM script: [get-mlperf-inference-src](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-src)
-     * get,mlcommons,inference,loadgen
-       * CM names: `--adr.['inference-loadgen']...`
-       - CM script: [get-mlperf-inference-loadgen](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-loadgen)
-     * generate,user-conf,mlperf,inference
-       * CM names: `--adr.['user-conf-generator']...`
-       - CM script: [generate-mlperf-inference-user-conf](https://github.com/mlcommons/cm4mlops/tree/master/script/generate-mlperf-inference-user-conf)
-     * get,generic-python-lib,_mlperf_logging
-       * CM names: `--adr.['mlperf-logging']...`
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,ml-model,resnet50,_fp32,_onnx,_from-tf
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['resnet50']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_DEVICE': ['qaic']}`
-       * CM names: `--adr.['resnet50-model', 'ml-model']...`
-       - CM script: [get-ml-model-resnet50](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-resnet50)
-     * compile,qaic,model,_resnet50
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['resnet50'], 'CM_MLPERF_DEVICE': ['qaic']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': [True]}`
-       * CM names: `--adr.['qaic-model-compiler', 'resnet50-compiler']...`
-       - CM script: [compile-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-model-for.qaic)
-     * get,dataset,imagenet,preprocessed,_for.resnet50,_NHWC,_full
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['resnet50']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': [True]}`
-       * CM names: `--adr.['imagenet-preprocessed', 'dataset-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-imagenet](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-imagenet)
-     * get,squad-vocab
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': [True]}`
-       * CM names: `--adr.['bert-vocab']...`
-       - CM script: [get-dataset-squad-vocab](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-squad-vocab)
-     * get,dataset,tokenized,squad,_raw
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['bert-99', 'bert-99.9']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': [True]}`
-       * CM names: `--adr.['squad-tokenized']...`
-       - CM script: [get-preprocessed-dataset-squad](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-squad)
-     * compile,qaic,model,_retinanet
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['retinanet'], 'CM_MLPERF_DEVICE': ['qaic']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': [True]}`
-       * CM names: `--adr.['qaic-model-compiler', 'retinanet-compiler']...`
-       - CM script: [compile-model-for.qaic](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-model-for.qaic)
-     * get,dataset,preprocessed,openimages,_for.retinanet.onnx,_NCHW,_validation,_custom-annotations
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MODEL': ['retinanet']}`
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': [True]}`
-       * CM names: `--adr.['openimages-preprocessed', 'dataset-preprocessed']...`
-       - CM script: [get-preprocessed-dataset-openimages](https://github.com/mlcommons/cm4mlops/tree/master/script/get-preprocessed-dataset-openimages)
-     * get,lib,onnxruntime,lang-cpp,_cpu
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['cpu']}`
-       - CM script: [get-onnxruntime-prebuilt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-onnxruntime-prebuilt)
-     * get,lib,onnxruntime,lang-cpp,_cuda
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_MLPERF_BACKEND': ['onnxruntime'], 'CM_MLPERF_DEVICE': ['gpu']}`
-       - CM script: [get-onnxruntime-prebuilt](https://github.com/mlcommons/cm4mlops/tree/master/script/get-onnxruntime-prebuilt)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/_cm.yaml)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/customize.py)***
-  1. ***Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/app-mlperf-inference-qualcomm/_cm.yaml)***
-     * compile,cpp-program
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': [True]}`
-       * CM names: `--adr.['compile-program']...`
-       - CM script: [compile-program](https://github.com/mlcommons/cm4mlops/tree/master/script/compile-program)
-     * benchmark-mlperf
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_MLPERF_SKIP_RUN': ['yes', True]}`
-       * CM names: `--adr.['runner', 'mlperf-runner']...`
-       - CM script: [benchmark-program-mlperf](https://github.com/mlcommons/cm4mlops/tree/master/script/benchmark-program-mlperf)
-     * save,mlperf,inference,state
-       * CM names: `--adr.['save-mlperf-inference-state']...`
-       - CM script: [save-mlperf-inference-implementation-state](https://github.com/mlcommons/cm4mlops/tree/master/script/save-mlperf-inference-implementation-state)
-
-___
-### Script output
+#### Script output
 `cmr "reproduce mlcommons mlperf inference harness qualcomm-harness qualcomm kilt-harness kilt [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_DATASET_*`
-* `CM_HW_NAME`
-* `CM_IMAGENET_ACCURACY_DTYPE`
-* `CM_MAX_EXAMPLES`
-* `CM_MLPERF_*`
-* `CM_ML_MODEL_*`
-* `CM_SQUAD_ACCURACY_DTYPE`
-#### New environment keys auto-detected from customize
-
-* `CM_DATASET_LIST`
-* `CM_MLPERF_CONF`
-* `CM_MLPERF_DEVICE`
-* `CM_MLPERF_USER_CONF`

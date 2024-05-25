@@ -1,32 +1,21 @@
+# push-csv-to-spreadsheet
 Automatically generated README for this automation recipe: **push-csv-to-spreadsheet**
 
-Category: **DevOps automation**
+Category: **[DevOps automation](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=push-csv-to-spreadsheet,5ec9e5fa7feb4fff) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-csv-to-spreadsheet)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/push-csv-to-spreadsheet/_cm.json)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +25,31 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet`
 
-`cm run script --tags=push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet [--input_flags]`
+    `cm run script --tags=push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet"`
+    `cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet"`
 
-`cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet " [--input_flags]`
+    `cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet " [--input_flags]`
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet'
                   'out':'con',
@@ -67,24 +58,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="push,google-spreadsheet,spreadsheet,push-to-google-spreadsheet"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "push google-spreadsheet spreadsheet push-to-google-spreadsheet" [--input_flags]`
+    `cm docker script "push google-spreadsheet spreadsheet push-to-google-spreadsheet" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Script flags mapped to environment
@@ -105,38 +90,19 @@ r=cm.access({... , "csv_file":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * CM_GOOGLE_SPREADSHEET_ID: `1gMHjXmFmwZR4-waPPyxy5Pc3VARqX3kKUWxkP97Xa6Y`
 
-</details>
 
+
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/push-csv-to-spreadsheet/run.sh)
+=== "Windows"
+
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-csv-to-spreadsheet/_cm.json)***
-     * get,python3
-       * CM names: `--adr.['python3', 'python']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,generic-python-lib,_google-api-python-client
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-     * get,generic-python-lib,_google-auth-oauthlib
-       - CM script: [get-generic-python-lib](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-python-lib)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-csv-to-spreadsheet/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-csv-to-spreadsheet/_cm.json)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-csv-to-spreadsheet/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-csv-to-spreadsheet/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-csv-to-spreadsheet/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/push-csv-to-spreadsheet/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "push google-spreadsheet spreadsheet push-to-google-spreadsheet " [--input_flags] -j`
-#### New environment keys (filter)
-
-#### New environment keys auto-detected from customize

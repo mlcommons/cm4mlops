@@ -1,32 +1,22 @@
+# run-docker-container
 Automatically generated README for this automation recipe: **run-docker-container**
 
-Category: **Docker automation**
+Category: **[Docker automation](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
+* Notes from the authors, contributors and users: [*README-extra*](https://github.com/mlcommons/cm4mlops/tree/main/script/run-docker-container/README-extra.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=run-docker-container,1e0c884107514b46) ] [ [Notes from the authors, contributors and users](README-extra.md) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container)*
-* CM meta description for this script: *[_cm.yaml](_cm.yaml)*
-* All CM tags to find and reuse this script (see in above meta description): *run,docker,container*
+* CM meta description for this script: *[_cm.yaml](https://github.com/mlcommons/cm4mlops/tree/main/script/run-docker-container/_cm.yaml)*
 * Output cached? *False*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +26,31 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "run docker container" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=run,docker,container`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=run,docker,container`
 
-`cm run script --tags=run,docker,container [--input_flags]`
+    `cm run script --tags=run,docker,container [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "run docker container"`
+    `cmr "run docker container"`
 
-`cmr "run docker container " [--input_flags]`
+    `cmr "run docker container " [--input_flags]`
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'run,docker,container'
                   'out':'con',
@@ -67,24 +59,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="run,docker,container"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "run docker container" [--input_flags]`
+    `cm docker script "run docker container" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Script flags mapped to environment
@@ -110,6 +96,7 @@ ___
 * `--interactive=value`  &rarr;  `CM_DOCKER_INTERACTIVE_MODE=value`
 * `--it=value`  &rarr;  `CM_DOCKER_INTERACTIVE=value`
 * `--mounts=value`  &rarr;  `CM_DOCKER_VOLUME_MOUNTS=value`
+* `--num_gpus=value`  &rarr;  `CM_DOCKER_ADD_NUM_GPUS=value`
 * `--pass_user_group=value`  &rarr;  `CM_DOCKER_PASS_USER_GROUP=value`
 * `--port_maps=value`  &rarr;  `CM_DOCKER_PORT_MAPS=value`
 * `--post_run_cmds=value`  &rarr;  `CM_DOCKER_POST_RUN_COMMANDS=value`
@@ -132,35 +119,13 @@ r=cm.access({... , "all_gpus":...}
 
 #### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
 
 These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
 
 * CM_DOCKER_DETACHED_MODE: `yes`
 
-</details>
+
 
 ___
-### Dependencies on other CM scripts
-
-
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.yaml)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.yaml)***
-     * build,docker,image
-       * Skip this dependenecy only if any of ENV vars are set:<br>
-`{'CM_DOCKER_IMAGE_EXISTS': ['yes'], 'CM_DOCKER_SKIP_BUILD': ['yes']}`
-       * CM names: `--adr.['build-docker-image']...`
-       - CM script: [build-docker-image](https://github.com/mlcommons/cm4mlops/tree/master/script/build-docker-image)
-  1. ***Run native script if exists***
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.yaml)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/run-docker-container/_cm.yaml)
-
-___
-### Script output
+#### Script output
 `cmr "run docker container " [--input_flags] -j`
-#### New environment keys (filter)
-
-#### New environment keys auto-detected from customize

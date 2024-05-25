@@ -1,32 +1,21 @@
+# get-dataset-imagenet-train
 Automatically generated README for this automation recipe: **get-dataset-imagenet-train**
 
-Category: **AI/ML datasets**
+Category: **[AI/ML datasets](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-dataset-imagenet-train,2bec165da5cc4ebf) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-train)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,imagenet,train,dataset,original*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-imagenet-train/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +25,31 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get imagenet train dataset original" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,imagenet,train,dataset,original`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,imagenet,train,dataset,original`
 
-`cm run script --tags=get,imagenet,train,dataset,original [--input_flags]`
+    `cm run script --tags=get,imagenet,train,dataset,original [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get imagenet train dataset original"`
+    `cmr "get imagenet train dataset original"`
 
-`cmr "get imagenet train dataset original " [--input_flags]`
+    `cmr "get imagenet train dataset original " [--input_flags]`
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,imagenet,train,dataset,original'
                   'out':'con',
@@ -67,24 +58,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,imagenet,train,dataset,original"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get imagenet train dataset original" [--input_flags]`
+    `cm docker script "get imagenet train dataset original" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Script flags mapped to environment
@@ -102,48 +87,13 @@ r=cm.access({... , "input":...}
 
 </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-dataset-imagenet-train/run.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-train/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-train/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-train/_cm.json)***
-     * download-and-extract,file,_extract
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_DATASET_IMAGENET_VAL_REQUIRE_DAE': ['yes', 'True']}`
-       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
-     * file,extract
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_DAE_ONLY_EXTRACT': ['yes', 'True']}`
-       - CM script: [extract-file](https://github.com/mlcommons/cm4mlops/tree/master/script/extract-file)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-train/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-train/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-train/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-dataset-imagenet-train/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get imagenet train dataset original " [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_DATASET_IMAGENET_*`
-* `CM_DATASET_PATH`
-#### New environment keys auto-detected from customize
-
-* `CM_DATASET_IMAGENET_PATH`
-* `CM_DATASET_IMAGENET_TRAIN_PATH`
-* `CM_DATASET_IMAGENET_TRAIN_REQUIRE_DAE`
-* `CM_DATASET_IMAGENET_VAL_REQUIRE_DAE`
-* `CM_DATASET_PATH`

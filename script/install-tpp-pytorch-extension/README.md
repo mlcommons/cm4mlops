@@ -1,32 +1,21 @@
+# Build TPP-PEX from sources
 Automatically generated README for this automation recipe: **install-tpp-pytorch-extension**
 
-Category: **Compiler automation**
+Category: **[Compiler automation](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=install-tpp-pytorch-extension,1701d2f5f4e84d42) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tpp-pytorch-extension)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *install,get,src,from.src,tpp-pex,src-tpp-pex*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/install-tpp-pytorch-extension/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "install get src from.src tpp-pex src-tpp-pex" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=install,get,src,from.src,tpp-pex,src-tpp-pex`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=install,get,src,from.src,tpp-pex,src-tpp-pex`
 
-`cm run script --tags=install,get,src,from.src,tpp-pex,src-tpp-pex[,variations] `
+    `cm run script --tags=install,get,src,from.src,tpp-pex,src-tpp-pex[,variations] `
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "install get src from.src tpp-pex src-tpp-pex"`
+    `cmr "install get src from.src tpp-pex src-tpp-pex"`
 
-`cmr "install get src from.src tpp-pex src-tpp-pex [variations]" `
+    `cmr "install get src from.src tpp-pex src-tpp-pex [variations]" `
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'install,get,src,from.src,tpp-pex,src-tpp-pex'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="install,get,src,from.src,tpp-pex,src-tpp-pex"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "install get src from.src tpp-pex src-tpp-pex[variations]" `
+    `cm docker script "install get src from.src tpp-pex src-tpp-pex[variations]" `
 
 ___
-### Customization
 
 
 #### Variations
@@ -149,50 +134,13 @@ ___
 #### Default variations
 
 `_repo.https://github.com/libxsmm/tpp-pytorch-extension`
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/install-tpp-pytorch-extension/run.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tpp-pytorch-extension/_cm.json)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * detect,cpu
-       - CM script: [detect-cpu](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-cpu)
-     * get,python3
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_CONDA_ENV': ['yes']}`
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-     * get,pytorch,from.src
-       * Skip this dependenecy only if all ENV vars are set:<br>
-`{'CM_CONDA_ENV': ['yes']}`
-       * CM names: `--adr.['pytorch']...`
-       - CM script: [install-pytorch-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-pytorch-from-src)
-     * get,git,repo
-       * CM names: `--adr.['tpp-pex-src-repo']...`
-       - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tpp-pytorch-extension/customize.py)***
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tpp-pytorch-extension/_cm.json)
-  1. ***Run native script if exists***
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tpp-pytorch-extension/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tpp-pytorch-extension/_cm.json)
-  1. Run "postrocess" function from customize.py
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/install-tpp-pytorch-extension/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "install get src from.src tpp-pex src-tpp-pex [,variations]"  -j`
-#### New environment keys (filter)
-
-* `CM_TPP_PEX_*`
-#### New environment keys auto-detected from customize

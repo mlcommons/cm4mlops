@@ -1,32 +1,21 @@
+# get-ml-model-gptj
 Automatically generated README for this automation recipe: **get-ml-model-gptj**
 
-Category: **AI/ML models**
+Category: **[AI/ML models](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=get-ml-model-gptj,a41166210f294fbf) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *get,raw,ml-model,gptj,gpt-j,large-language-model*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-gptj/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "get raw ml-model gptj gpt-j large-language-model" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=get,raw,ml-model,gptj,gpt-j,large-language-model`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=get,raw,ml-model,gptj,gpt-j,large-language-model`
 
-`cm run script --tags=get,raw,ml-model,gptj,gpt-j,large-language-model[,variations] [--input_flags]`
+    `cm run script --tags=get,raw,ml-model,gptj,gpt-j,large-language-model[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "get raw ml-model gptj gpt-j large-language-model"`
+    `cmr "get raw ml-model gptj gpt-j large-language-model"`
 
-`cmr "get raw ml-model gptj gpt-j large-language-model [variations]" [--input_flags]`
+    `cmr "get raw ml-model gptj gpt-j large-language-model [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'get,raw,ml-model,gptj,gpt-j,large-language-model'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="get,raw,ml-model,gptj,gpt-j,large-language-model"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "get raw ml-model gptj gpt-j large-language-model[variations]" [--input_flags]`
+    `cm docker script "get raw ml-model gptj gpt-j large-language-model[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -138,6 +123,26 @@ ___
              - CM script: [install-ipex-from-src](https://github.com/mlcommons/cm4mlops/tree/master/script/install-ipex-from-src)
            * get,dataset,cnndm,_calibration
              - CM script: [get-dataset-cnndm](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-cnndm)
+    * `_pytorch,nvidia`
+      - Workflow:
+        1. ***Read "deps" on other CM scripts***
+           * get,git,repo,_repo.https://github.com/NVIDIA/TensorRT-LLM.git,_sha.0ab9d17a59c284d2de36889832fe9fc7c8697604
+             - CM script: [get-git-repo](https://github.com/mlcommons/cm4mlops/tree/master/script/get-git-repo)
+           * get,cuda
+             * CM names: `--adr.['cuda']...`
+             - CM script: [get-cuda](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda)
+           * get,nvidia,scratch,space
+             - CM script: [get-mlperf-inference-nvidia-scratch-space](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-nvidia-scratch-space)
+           * get,cuda-devices
+             - CM script: [get-cuda-devices](https://github.com/mlcommons/cm4mlops/tree/master/script/get-cuda-devices)
+           * get,ml-model,gpt-j,_fp32,_pytorch
+             - CM script: [get-ml-model-gptj](https://github.com/mlcommons/cm4mlops/tree/master/script/get-ml-model-gptj)
+           * get,nvidia,inference,common-code
+             * CM names: `--adr.['nvidia-inference-common-code']...`
+             - CM script: [get-mlperf-inference-nvidia-common-code](https://github.com/mlcommons/cm4mlops/tree/master/script/get-mlperf-inference-nvidia-common-code)
+           * get,python3
+             * CM names: `--adr.['python', 'python3']...`
+             - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
     * `_saxml,fp32`
       - Environment variables:
         - *CM_TMP_MODEL_SAXML*: `fp32`
@@ -221,6 +226,10 @@ ___
       - Workflow:
     * **`_mlcommons`** (default)
       - Workflow:
+    * `_nvidia`
+      - Environment variables:
+        - *CM_TMP_ML_MODEL_PROVIDER*: `nvidia`
+      - Workflow:
 
     </details>
 
@@ -234,6 +243,11 @@ ___
         - *CM_ML_MODEL_INPUT_DATA_TYPES*: `fp32`
         - *CM_ML_MODEL_PRECISION*: `fp32`
         - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `fp32`
+      - Workflow:
+    * `_fp8`
+      - Environment variables:
+        - *CM_ML_MODEL_INPUT_DATA_TYPES*: `fp8`
+        - *CM_ML_MODEL_WEIGHT_DATA_TYPES*: `fp8`
       - Workflow:
     * `_int4`
       - Environment variables:
@@ -276,46 +290,17 @@ r=cm.access({... , "checkpoint":...}
 
 </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run-int4-calibration.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-gptj/run-int4-calibration.sh)
+     * [run-intel.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-gptj/run-intel.sh)
+     * [run-nvidia.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-gptj/run-nvidia.sh)
+     * [run-saxml-quantized.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-gptj/run-saxml-quantized.sh)
+     * [run-saxml.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/get-ml-model-gptj/run-saxml.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/_cm.json)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/_cm.json)***
-     * download-and-extract
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_TMP_REQUIRE_DOWNLOAD': ['yes']}`
-       * CM names: `--adr.['dae']...`
-       - CM script: [download-and-extract](https://github.com/mlcommons/cm4mlops/tree/master/script/download-and-extract)
-  1. ***Run native script if exists***
-     * [run-int4-calibration.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/run-int4-calibration.sh)
-     * [run-intel.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/run-intel.sh)
-     * [run-saxml-quantized.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/run-saxml-quantized.sh)
-     * [run-saxml.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/run-saxml.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/get-ml-model-gptj/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "get raw ml-model gptj gpt-j large-language-model [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_ML_MODEL_*`
-* `GPTJ_CHECKPOINT_PATH`
-#### New environment keys auto-detected from customize
-
-* `CM_ML_MODEL_FILE`
-* `CM_ML_MODEL_FILE_WITH_PATH`
-* `CM_ML_MODEL_WEIGHT_DATA_TYPES`

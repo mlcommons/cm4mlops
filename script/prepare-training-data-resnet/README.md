@@ -1,32 +1,21 @@
+# prepare-training-data-resnet
 Automatically generated README for this automation recipe: **prepare-training-data-resnet**
 
-Category: **MLPerf benchmark support**
+Category: **[MLPerf benchmark support](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=prepare-training-data-resnet,d42a8a8ca2704f9f) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *prepare,mlperf,training,data,input,resnet*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/prepare-training-data-resnet/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,31 +25,33 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "prepare mlperf training data input resnet" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=prepare,mlperf,training,data,input,resnet`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=prepare,mlperf,training,data,input,resnet`
 
-`cm run script --tags=prepare,mlperf,training,data,input,resnet[,variations] [--input_flags]`
+    `cm run script --tags=prepare,mlperf,training,data,input,resnet[,variations] [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "prepare mlperf training data input resnet"`
+    `cmr "prepare mlperf training data input resnet"`
 
-`cmr "prepare mlperf training data input resnet [variations]" [--input_flags]`
+    `cmr "prepare mlperf training data input resnet [variations]" [--input_flags]`
 
 
 * *See the list of `variations` [here](#variations) and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.*
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'prepare,mlperf,training,data,input,resnet'
                   'out':'con',
@@ -69,24 +60,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="prepare,mlperf,training,data,input,resnet"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "prepare mlperf training data input resnet[variations]" [--input_flags]`
+    `cm docker script "prepare mlperf training data input resnet[variations]" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Variations
@@ -154,53 +139,14 @@ r=cm.access({... , "data_dir":...}
 
 </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run-nvidia.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/prepare-training-data-resnet/run-nvidia.sh)
+     * [run-reference.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/prepare-training-data-resnet/run-reference.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+No run file exists for Windows
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/_cm.json)***
-     * get,dataset,imagenet,train
-       * CM names: `--adr.['imagenet-train']...`
-       - CM script: [get-dataset-imagenet-train](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-train)
-     * get,dataset,imagenet,val,original,_full
-       * CM names: `--adr.['imagenet-val']...`
-       - CM script: [get-dataset-imagenet-val](https://github.com/mlcommons/cm4mlops/tree/master/script/get-dataset-imagenet-val)
-     * get,generic-sys-util,_rsync
-       - CM script: [get-generic-sys-util](https://github.com/mlcommons/cm4mlops/tree/master/script/get-generic-sys-util)
-  1. ***Run "preprocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/customize.py)***
-  1. ***Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/_cm.json)***
-     * download,file,_wget,_url.https://raw.githubusercontent.com/tensorflow/models/master/research/slim/datasets/imagenet_2012_validation_synset_labels.txt
-       - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
-     * download,file,_wget,_url.https://raw.githubusercontent.com/tensorflow/tpu/master/tools/datasets/imagenet_to_gcs.py
-       * Enable this dependency only if all ENV vars are set:<br>
-`{'CM_TMP_VARIATION': ['reference']}`
-       - CM script: [download-file](https://github.com/mlcommons/cm4mlops/tree/master/script/download-file)
-  1. ***Run native script if exists***
-     * [run-nvidia.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/run-nvidia.sh)
-     * [run-reference.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/run-reference.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/prepare-training-data-resnet/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "prepare mlperf training data input resnet [,variations]" [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_MLPERF_TRAINING_NVIDIA_RESNET_PREPROCESSED_PATH`
-* `CM_MLPERF_TRAINING_RESNET_*`
-#### New environment keys auto-detected from customize
-
-* `CM_MLPERF_TRAINING_NVIDIA_RESNET_PREPROCESSED_PATH`
-* `CM_MLPERF_TRAINING_RESNET_DATA_PATH`
-* `CM_MLPERF_TRAINING_RESNET_TFRECORDS_PATH`

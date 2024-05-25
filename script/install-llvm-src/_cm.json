@@ -299,7 +299,9 @@
            "tags": "get,generic-python-lib,_custom-python,_package.setuptools",
            "env": {
              "CM_PYTHON_BIN_WITH_PATH": "<<<CM_CONDA_BIN_PATH>>>/python3"
-           }
+           },
+           "version_max": "69.9.999",
+           "version_max_usable": "58.2.0"
         },
         {
            "tags": "get,generic-python-lib,_custom-python,_package.neural-compressor,_url.git+https://github.com/intel/neural-compressor.git@a2931eaa4052eec195be3c79a13f7bfa23e54473",

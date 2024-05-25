@@ -1,32 +1,21 @@
+# set-sqlite-dir
 Automatically generated README for this automation recipe: **set-sqlite-dir**
 
-Category: **DevOps automation**
+Category: **[DevOps automation](..)**
 
 License: **Apache 2.0**
 
-Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 
----
-*[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name=set-sqlite-dir,05904966355a43ac) ]*
-
----
-#### Summary
-
-* CM GitHub repository: *[mlcommons@cm4mlops](https://github.com/mlcommons/cm4mlops/tree/dev)*
-* GitHub directory for this script: *[GitHub](https://github.com/mlcommons/cm4mlops/tree/dev/script/set-sqlite-dir)*
-* CM meta description for this script: *[_cm.json](_cm.json)*
-* All CM tags to find and reuse this script (see in above meta description): *set,sqlite,dir,sqlite-dir*
+* CM meta description for this script: *[_cm.json](https://github.com/mlcommons/cm4mlops/tree/main/script/set-sqlite-dir/_cm.json)*
 * Output cached? *True*
-* See [pipeline of dependencies](#dependencies-on-other-cm-scripts) on other CM scripts
-
 
 ---
 ### Reuse this script in your project
 
 #### Install MLCommons CM automation meta-framework
 
-* [Install CM](https://access.cknowledge.org/playground/?action=install)
-* [CM Getting Started Guide](https://github.com/mlcommons/ck/blob/master/docs/getting-started.md)
+* [Install CM](https://docs.mlcommons.org/ck/install)
+* [CM Getting Started Guide](https://docs.mlcommons.org/ck/getting-started/)
 
 #### Pull CM repository with this automation recipe (CM script)
 
@@ -36,29 +25,31 @@ Maintainers: [Public MLCommons Task Force on Automation and Reproducibility](htt
 
 ````cmr "set sqlite dir sqlite-dir" --help````
 
-#### Customize and run this script from the command line with different variations and flags
+#### Run this script
 
-`cm run script --tags=set,sqlite,dir,sqlite-dir`
+=== "CLI"
+    ##### Run this script via CLI
+    `cm run script --tags=set,sqlite,dir,sqlite-dir`
 
-`cm run script --tags=set,sqlite,dir,sqlite-dir [--input_flags]`
+    `cm run script --tags=set,sqlite,dir,sqlite-dir [--input_flags]`
 
-*or*
+=== "CLI Alt"
+    ##### Run this script via CLI (alternative)
 
-`cmr "set sqlite dir sqlite-dir"`
+    `cmr "set sqlite dir sqlite-dir"`
 
-`cmr "set sqlite dir sqlite-dir " [--input_flags]`
+    `cmr "set sqlite dir sqlite-dir " [--input_flags]`
 
 
-#### Run this script from Python
+=== "Python"
+    ##### Run this script from Python
 
-<details>
-<summary>Click here to expand this section.</summary>
 
-```python
+    ```python
 
-import cmind
+    import cmind
 
-r = cmind.access({'action':'run'
+    r = cmind.access({'action':'run'
                   'automation':'script',
                   'tags':'set,sqlite,dir,sqlite-dir'
                   'out':'con',
@@ -67,24 +58,18 @@ r = cmind.access({'action':'run'
                   ...
                  })
 
-if r['return']>0:
-    print (r['error'])
+    if r['return']>0:
+        print (r['error'])
 
-```
-
-</details>
+    ```
 
 
-#### Run this script via GUI
+=== "Docker"
+    ##### Run this script via Docker (beta)
 
-```cmr "cm gui" --script="set,sqlite,dir,sqlite-dir"```
-
-#### Run this script via Docker (beta)
-
-`cm docker script "set sqlite dir sqlite-dir" [--input_flags]`
+    `cm docker script "set sqlite dir sqlite-dir" [--input_flags]`
 
 ___
-### Customization
 
 
 #### Script flags mapped to environment
@@ -101,41 +86,13 @@ r=cm.access({... , "path":...}
 
 </details>
 
-#### Default environment
 
-<details>
-<summary>Click here to expand this section.</summary>
+##### Native script being run
+=== "Linux/macOS"
+     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/main/script/set-sqlite-dir/run.sh)
+=== "Windows"
 
-These keys can be updated via `--env.KEY=VALUE` or `env` dictionary in `@input.json` or using script flags.
-
-
-</details>
-
+     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/main/script/set-sqlite-dir/run.bat)
 ___
-### Dependencies on other CM scripts
-
-
-  1. ***Read "deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/set-sqlite-dir/_cm.json)***
-     * detect,os
-       - CM script: [detect-os](https://github.com/mlcommons/cm4mlops/tree/master/script/detect-os)
-     * get,python3
-       * CM names: `--adr.['python', 'python3']...`
-       - CM script: [get-python3](https://github.com/mlcommons/cm4mlops/tree/master/script/get-python3)
-  1. Run "preprocess" function from customize.py
-  1. Read "prehook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/set-sqlite-dir/_cm.json)
-  1. ***Run native script if exists***
-     * [run.bat](https://github.com/mlcommons/cm4mlops/tree/dev/script/set-sqlite-dir/run.bat)
-     * [run.sh](https://github.com/mlcommons/cm4mlops/tree/dev/script/set-sqlite-dir/run.sh)
-  1. Read "posthook_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/set-sqlite-dir/_cm.json)
-  1. ***Run "postrocess" function from [customize.py](https://github.com/mlcommons/cm4mlops/tree/dev/script/set-sqlite-dir/customize.py)***
-  1. Read "post_deps" on other CM scripts from [meta](https://github.com/mlcommons/cm4mlops/tree/dev/script/set-sqlite-dir/_cm.json)
-
-___
-### Script output
+#### Script output
 `cmr "set sqlite dir sqlite-dir " [--input_flags] -j`
-#### New environment keys (filter)
-
-* `CM_SQLITE_PATH`
-#### New environment keys auto-detected from customize
-
-* `CM_SQLITE_PATH`
