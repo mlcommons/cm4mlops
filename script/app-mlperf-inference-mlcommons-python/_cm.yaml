@@ -348,7 +348,7 @@ deps:
       - gptj-99
       - gptj-99.9
     skip_if_env:
-      NETWORK:
+      CM_NETWORK_LOADGEN:
       - lon
 
 
