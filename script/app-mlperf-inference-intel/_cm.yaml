@@ -321,6 +321,9 @@ variations:
       - tags: install,llvm,src,_for-intel-mlperf-inference-v3.1-gptj
         names:
           - llvm-from-src
+        enable_if_env:
+          CM_MLPERF_INFERENCE_CODE_VERSION:
+          -  v3.1
       - names:
         - conda-package
         - ncurses
