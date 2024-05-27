@@ -288,10 +288,6 @@ variations:
     env:
       CM_BENCHMARK: STANDALONE_GPTJ
 
-  gptj_,build-harness:
-    docker:
-      run: false
-
   int4,gptj_,build-harness:
     deps:
       - tags: reproduce,mlperf,inference,intel,harness,_calibration
@@ -337,6 +333,9 @@ variations:
       - tags: install,ipex,from.src,_for-intel-mlperf-inference-v3.1-gptj
         names:
           - ipex-from-src
+        enable_if_env:
+          CM_MLPERF_INFERENCE_CODE_VERSION:
+          -  v3.1
       - tags: get,generic,conda-package,_package.ninja
         names:
         - conda-package
@@ -350,6 +349,8 @@ variations:
         enable_if_env:
           INTEL_GPTJ_INT4:
             - 'yes'
+          CM_MLPERF_INFERENCE_CODE_VERSION:
+          -  v3.1
       - tags: get,generic-python-lib,_package.transformers
         names:
           - pip-package
@@ -465,6 +466,8 @@ variations:
 
 
   build-harness:
+    docker:
+      real_run: false
     group: run-mode
     env:
       CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE: build_harness
@@ -498,6 +501,8 @@ variations:
 
 
   run-harness:
+    docker:
+      real_run: false
     group: run-mode
     default: true
     deps:
