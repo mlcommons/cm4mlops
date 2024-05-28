@@ -4319,19 +4319,18 @@ def enable_or_skip_script(meta, env):
     for key in meta:
         meta_key = [str(v).lower() for v in meta[key]]
         if key in env:
-            value = str(env[key]).lower()
-
+            value = str(env[key]).lower().strip()
             if set(meta_key) & set(["yes", "on", "true", "1"]):
                 # Any set value other than false is taken as set
-                if value not in ["no", "off", "false", "0"]:
+                if value not in ["no", "off", "false", "0", ""]:
                     continue
             elif set(meta_key) & set(["no", "off", "false", "0"]):
-                if value in ["no", "off", "false", "0"]:
+                if value in ["no", "off", "false", "0", ""]:
                     continue
             elif value in meta_key:
                 continue
         else:
-            if set(meta_key) & set(["no", "off", "false", "0"]):
+            if set(meta_key) & set(["no", "off", "false", "0", ""]):
                 # If key is missing in env, and if the expected value is False, consider it a match
                 continue
 
@@ -4348,15 +4347,15 @@ def any_enable_or_skip_script(meta, env):
     for key in meta:
         found = False
         if key in env:
-            value = str(env[key]).lower()
+            value = str(env[key]).lower().strip()
 
             meta_key = [str(v).lower() for v in meta[key]]
 
             if set(meta_key) & set(["yes", "on", "true", "1"]):
-                if value not in ["no", "off", "false", "0"]:
+                if value not in ["no", "off", "false", "0", ""]:
                     found = True
-            elif set(meta_key) & set(["no", "off", "false", "0"]):
-                if value in ["no", "off", "false", "0"]:
+            elif set(meta_key) & set(["no", "off", "false", "0", ""]):
+                if value in ["no", "off", "false", "0", ""]:
                     found = True
             elif value in meta_key:
                 found = True
