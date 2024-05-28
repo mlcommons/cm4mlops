@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/modular-mlperf-benchmarks/app-mlperf-inference-intel](https://docs.mlcommons.org/cm4mlops/scripts/modular-mlperf-benchmarks/app-mlperf-inference-intel) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Modular-MLPerf-benchmarks/app-mlperf-inference-intel](https://docs.mlcommons.org/cm4mlops/scripts/Modular-MLPerf-benchmarks/app-mlperf-inference-intel) for the documentation of this CM script.

@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-datasets/get-dataset-squad-vocab](https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-datasets/get-dataset-squad-vocab) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-datasets/get-dataset-squad-vocab](https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-datasets/get-dataset-squad-vocab) for the documentation of this CM script.

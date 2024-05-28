@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/mlperf-benchmark-support/preprocess-mlperf-inference-submission](https://docs.mlcommons.org/cm4mlops/scripts/mlperf-benchmark-support/preprocess-mlperf-inference-submission) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/MLPerf-benchmark-support/preprocess-mlperf-inference-submission](https://docs.mlcommons.org/cm4mlops/scripts/MLPerf-benchmark-support/preprocess-mlperf-inference-submission) for the documentation of this CM script.

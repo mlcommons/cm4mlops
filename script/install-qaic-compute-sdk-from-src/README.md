@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-frameworks/install-qaic-compute-sdk-from-src](https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-frameworks/install-qaic-compute-sdk-from-src) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-frameworks/install-qaic-compute-sdk-from-src](https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-frameworks/install-qaic-compute-sdk-from-src) for the documentation of this CM script.

@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-frameworks/install-tflite-from-src](https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-frameworks/install-tflite-from-src) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-frameworks/install-tflite-from-src](https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-frameworks/install-tflite-from-src) for the documentation of this CM script.

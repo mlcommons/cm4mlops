@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/compiler-automation/install-tpp-pytorch-extension](https://docs.mlcommons.org/cm4mlops/scripts/compiler-automation/install-tpp-pytorch-extension) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Compiler-automation/install-tpp-pytorch-extension](https://docs.mlcommons.org/cm4mlops/scripts/Compiler-automation/install-tpp-pytorch-extension) for the documentation of this CM script.

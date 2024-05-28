@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/compiler-automation/install-llvm-prebuilt](https://docs.mlcommons.org/cm4mlops/scripts/compiler-automation/install-llvm-prebuilt) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Compiler-automation/install-llvm-prebuilt](https://docs.mlcommons.org/cm4mlops/scripts/Compiler-automation/install-llvm-prebuilt) for the documentation of this CM script.

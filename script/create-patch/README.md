@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/create-patch](https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/create-patch) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/create-patch](https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/create-patch) for the documentation of this CM script.
