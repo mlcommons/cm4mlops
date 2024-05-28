@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/set-echo-off-win](https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/set-echo-off-win) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/set-echo-off-win](https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/set-echo-off-win) for the documentation of this CM script.

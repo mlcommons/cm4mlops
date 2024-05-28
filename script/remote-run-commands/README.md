@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/remote-automation/remote-run-commands](https://docs.mlcommons.org/cm4mlops/scripts/remote-automation/remote-run-commands) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Remote-automation/remote-run-commands](https://docs.mlcommons.org/cm4mlops/scripts/Remote-automation/remote-run-commands) for the documentation of this CM script.

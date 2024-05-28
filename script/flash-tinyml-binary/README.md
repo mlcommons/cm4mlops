@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/tinyml-automation/flash-tinyml-binary](https://docs.mlcommons.org/cm4mlops/scripts/tinyml-automation/flash-tinyml-binary) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/TinyML-automation/flash-tinyml-binary](https://docs.mlcommons.org/cm4mlops/scripts/TinyML-automation/flash-tinyml-binary) for the documentation of this CM script.

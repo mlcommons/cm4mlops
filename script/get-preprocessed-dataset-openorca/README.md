@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-datasets/get-preprocessed-dataset-openorca](https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-datasets/get-preprocessed-dataset-openorca) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-datasets/get-preprocessed-dataset-openorca](https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-datasets/get-preprocessed-dataset-openorca) for the documentation of this CM script.

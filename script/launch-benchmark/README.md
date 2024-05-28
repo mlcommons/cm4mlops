@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/collective-benchmarking/launch-benchmark](https://docs.mlcommons.org/cm4mlops/scripts/collective-benchmarking/launch-benchmark) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Collective-benchmarking/launch-benchmark](https://docs.mlcommons.org/cm4mlops/scripts/Collective-benchmarking/launch-benchmark) for the documentation of this CM script.

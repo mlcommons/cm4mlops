@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/modular-mlperf-training-benchmark-pipeline/app-mlperf-training-reference](https://docs.mlcommons.org/cm4mlops/scripts/modular-mlperf-training-benchmark-pipeline/app-mlperf-training-reference) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Modular-MLPerf-training-benchmark-pipeline/app-mlperf-training-reference](https://docs.mlcommons.org/cm4mlops/scripts/Modular-MLPerf-training-benchmark-pipeline/app-mlperf-training-reference) for the documentation of this CM script.

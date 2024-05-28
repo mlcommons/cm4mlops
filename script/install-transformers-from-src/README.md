@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/compiler-automation/install-transformers-from-src](https://docs.mlcommons.org/cm4mlops/scripts/compiler-automation/install-transformers-from-src) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Compiler-automation/install-transformers-from-src](https://docs.mlcommons.org/cm4mlops/scripts/Compiler-automation/install-transformers-from-src) for the documentation of this CM script.

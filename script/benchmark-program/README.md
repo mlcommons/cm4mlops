@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/benchmark-program](https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/benchmark-program) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/benchmark-program](https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/benchmark-program) for the documentation of this CM script.

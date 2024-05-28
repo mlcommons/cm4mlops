@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/reproduce-mlperf-benchmarks/reproduce-mlperf-octoml-tinyml-results](https://docs.mlcommons.org/cm4mlops/scripts/reproduce-mlperf-benchmarks/reproduce-mlperf-octoml-tinyml-results) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Reproduce-MLPerf-benchmarks/reproduce-mlperf-octoml-tinyml-results](https://docs.mlcommons.org/cm4mlops/scripts/Reproduce-MLPerf-benchmarks/reproduce-mlperf-octoml-tinyml-results) for the documentation of this CM script.

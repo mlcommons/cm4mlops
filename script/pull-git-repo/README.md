@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/pull-git-repo](https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/pull-git-repo) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/pull-git-repo](https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/pull-git-repo) for the documentation of this CM script.

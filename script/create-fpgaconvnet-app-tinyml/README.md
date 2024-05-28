@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/tinyml-automation/create-fpgaconvnet-app-tinyml](https://docs.mlcommons.org/cm4mlops/scripts/tinyml-automation/create-fpgaconvnet-app-tinyml) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/TinyML-automation/create-fpgaconvnet-app-tinyml](https://docs.mlcommons.org/cm4mlops/scripts/TinyML-automation/create-fpgaconvnet-app-tinyml) for the documentation of this CM script.
