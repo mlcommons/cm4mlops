@@ -1559,6 +1559,20 @@ def dockerfile(i):
 
     return {'return':0}
 
+# we mount the main folder of the CM cache entry in case any file/folder in that cache entry is needed inside the container
+def get_host_path(value):
+    path_split = value.split(os.sep)
+    if len(path_split) == 1:
+        return value
+
+    new_value = ''
+    if "cache" in path_split and "local":
+        repo_entry_index = path_split.index("local")
+        if len(path_split) >= repo_entry_index + 3:
+            return os.sep.join(path_split[0:repo_entry_index+3])
+
+    return value
+
 def get_container_path(value):
     path_split = value.split(os.sep)
     if len(path_split) == 1:
@@ -1568,10 +1582,12 @@ def get_container_path(value):
     if "cache" in path_split and "local" in path_split:
         new_path_split = [ "", "home", "cmuser" ]
         repo_entry_index = path_split.index("local")
-        new_path_split += path_split[repo_entry_index:]
-        return "/".join(new_path_split)
+        if len(path_split) >= repo_entry_index + 3:
+            new_path_split1 = new_path_split + path_split[repo_entry_index:repo_entry_index+3]
+            new_path_split2 = new_path_split + path_split[repo_entry_index:]
+            return "/".join(new_path_split1), "/".join(new_path_split2)
 
-    return value
+    return value, value
 
 
 ############################################################
@@ -1761,8 +1777,8 @@ def docker(i):
             update_path_for_docker('.', mounts, force_path_target=current_path_target)
 
 
-        _os = i.get('docker_os', docker_settings.get('docker_os', 'ubuntu'))
-        version = i.get('docker_os_version', docker_settings.get('docker_os_version', '22.04'))
+        _os = i.get('docker_os', docker_settings.get('os', 'ubuntu'))
+        version = i.get('docker_os_version', docker_settings.get('os_version', '22.04'))
 
         deps = docker_settings.get('deps', [])
         if deps:
@@ -1817,7 +1833,7 @@ def docker(i):
             if tmp_values:
                 for tmp_value in tmp_values:
                     if tmp_value in env:
-                        new_host_mount = env[tmp_value]
+                        new_host_mount = get_host_path(env[tmp_value])
                     else:# we skip those mounts
                         mounts[index] = None
                         skip = True
@@ -1827,8 +1843,8 @@ def docker(i):
             if tmp_values:
                 for tmp_value in tmp_values:
                     if tmp_value in env:
-                        new_container_mount = get_container_path(env[tmp_value])
-                        container_env_string += " --env.{}={} ".format(tmp_value, new_container_mount)
+                        new_container_mount, new_container_mount_env = get_container_path(env[tmp_value])
+                        container_env_string += " --env.{}={} ".format(tmp_value, new_container_mount_env)
                     else:# we skip those mounts
                         mounts[index] = None
                         skip = True
@@ -1859,8 +1875,8 @@ def docker(i):
             env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('CM_ADD_DOCKER_GROUP_ID', '\\"-g $(id -g $USER) -o\\"'))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
-        docker_os = i.get('docker_os', docker_settings.get('docker_os', 'ubuntu'))
-        docker_os_version = i.get('docker_os_version', docker_settings.get('docker_os_version', '22.04'))
+        docker_os = i.get('docker_os', docker_settings.get('os', 'ubuntu'))
+        docker_os_version = i.get('docker_os_version', docker_settings.get('os_version', '22.04'))
         image_tag_extra = i.get('docker_image_tag_extra', docker_settings.get('image_tag_extra', '-latest'))
 
         if not docker_base_image:
