@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/detect-sudo](https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/detect-sudo) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/detect-sudo](https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/detect-sudo) for the documentation of this CM script.

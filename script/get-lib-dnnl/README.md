@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/detection-or-installation-of-tools-and-artifacts/get-lib-dnnl](https://docs.mlcommons.org/cm4mlops/scripts/detection-or-installation-of-tools-and-artifacts/get-lib-dnnl) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Detection-or-installation-of-tools-and-artifacts/get-lib-dnnl](https://docs.mlcommons.org/cm4mlops/scripts/Detection-or-installation-of-tools-and-artifacts/get-lib-dnnl) for the documentation of this CM script.

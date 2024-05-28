@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-datasets/get-dataset-imagenet-helper](https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-datasets/get-dataset-imagenet-helper) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-datasets/get-dataset-imagenet-helper](https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-datasets/get-dataset-imagenet-helper) for the documentation of this CM script.

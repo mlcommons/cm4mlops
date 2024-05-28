@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/mlperf-benchmark-support/import-mlperf-tiny-to-experiment](https://docs.mlcommons.org/cm4mlops/scripts/mlperf-benchmark-support/import-mlperf-tiny-to-experiment) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/MLPerf-benchmark-support/import-mlperf-tiny-to-experiment](https://docs.mlcommons.org/cm4mlops/scripts/MLPerf-benchmark-support/import-mlperf-tiny-to-experiment) for the documentation of this CM script.

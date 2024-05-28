@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/reproduce-mlperf-benchmarks/wrapper-reproduce-octoml-tinyml-submission](https://docs.mlcommons.org/cm4mlops/scripts/reproduce-mlperf-benchmarks/wrapper-reproduce-octoml-tinyml-submission) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Reproduce-MLPerf-benchmarks/wrapper-reproduce-octoml-tinyml-submission](https://docs.mlcommons.org/cm4mlops/scripts/Reproduce-MLPerf-benchmarks/wrapper-reproduce-octoml-tinyml-submission) for the documentation of this CM script.

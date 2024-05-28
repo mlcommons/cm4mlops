@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/compile-program](https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/compile-program) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/compile-program](https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/compile-program) for the documentation of this CM script.

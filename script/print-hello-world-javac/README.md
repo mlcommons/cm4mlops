@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/tests/print-hello-world-javac](https://docs.mlcommons.org/cm4mlops/scripts/tests/print-hello-world-javac) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Tests/print-hello-world-javac](https://docs.mlcommons.org/cm4mlops/scripts/Tests/print-hello-world-javac) for the documentation of this CM script.

@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/mlperf-benchmark-support/get-mlperf-logging](https://docs.mlcommons.org/cm4mlops/scripts/mlperf-benchmark-support/get-mlperf-logging) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/MLPerf-benchmark-support/get-mlperf-logging](https://docs.mlcommons.org/cm4mlops/scripts/MLPerf-benchmark-support/get-mlperf-logging) for the documentation of this CM script.

@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-frameworks/get-qaic-software-kit](https://docs.mlcommons.org/cm4mlops/scripts/ai-ml-frameworks/get-qaic-software-kit) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-frameworks/get-qaic-software-kit](https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-frameworks/get-qaic-software-kit) for the documentation of this CM script.

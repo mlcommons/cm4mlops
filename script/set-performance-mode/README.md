@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/set-performance-mode](https://docs.mlcommons.org/cm4mlops/scripts/devops-automation/set-performance-mode) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/set-performance-mode](https://docs.mlcommons.org/cm4mlops/scripts/DevOps-automation/set-performance-mode) for the documentation of this CM script.

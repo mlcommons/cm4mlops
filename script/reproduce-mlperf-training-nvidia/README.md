@@ -1,1 +1,1 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/reproduce-mlperf-benchmarks/reproduce-mlperf-training-nvidia](https://docs.mlcommons.org/cm4mlops/scripts/reproduce-mlperf-benchmarks/reproduce-mlperf-training-nvidia) for the documentation of this CM script
+Please see [https://docs.mlcommons.org/cm4mlops/scripts/Reproduce-MLPerf-benchmarks/reproduce-mlperf-training-nvidia](https://docs.mlcommons.org/cm4mlops/scripts/Reproduce-MLPerf-benchmarks/reproduce-mlperf-training-nvidia) for the documentation of this CM script.
