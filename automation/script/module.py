@@ -1019,8 +1019,8 @@ class CAutomation(Automation):
         ############################################################################################################
         # Check if the output of a selected script should be cached
         cache = False if i.get('skip_cache', False) else meta.get('cache', False)
-        cache = False if fake_run else cache
         cache = cache or (i.get('force_cache', False) and meta.get('can_force_cache', False))
+        cache = False if fake_run else cache #fake run skips run script - should not pollute cache
 
         cached_uid = ''
         cached_tags = []
