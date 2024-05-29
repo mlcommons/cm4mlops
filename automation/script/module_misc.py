@@ -1427,6 +1427,11 @@ def dockerfile(i):
             continue
         '''
 
+        d_env = i_run_cmd_arc.get('env', {})
+        for key in list(d_env.keys()):
+            if key.startswith("CM_TMP_"):
+                del(d_env[key])
+
         # Check if need to update/map/mount inputs and env
         r = process_inputs({'run_cmd_arc': i_run_cmd_arc,
                             'docker_settings': docker_settings,
@@ -1949,7 +1954,6 @@ def docker(i):
                                    'docker_settings':docker_settings,
                                    'docker_run_cmd_prefix':i.get('docker_run_cmd_prefix','')})
         if r['return']>0: return r
-
         run_cmd  = r['run_cmd_string'] + ' ' + container_env_string + ' --docker_run_deps '
 
         env['CM_RUN_STATE_DOCKER'] = True
