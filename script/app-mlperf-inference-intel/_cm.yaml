@@ -615,6 +615,9 @@ variations:
       dataset-preprocessed:
         tags: _uint8,_rgb8
 
+  int8:
+    alias: uint8
+
   int4,gptj_:
     env:
       INTEL_GPTJ_INT4: 'yes'
