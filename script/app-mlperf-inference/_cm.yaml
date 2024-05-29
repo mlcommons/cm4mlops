@@ -1152,6 +1152,8 @@ variations:
       nvidia-inference-server:
         version: r3.1
         tags: _ctuning
+      intel-harness:
+        tags: _v3.1
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'

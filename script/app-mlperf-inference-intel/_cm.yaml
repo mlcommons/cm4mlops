@@ -173,6 +173,7 @@ variations:
         inference-results
       version: v4.0
   v3.1:
+    group: version
     env:
       CM_MLPERF_INFERENCE_CODE_VERSION: "v3.1"
     adr:
