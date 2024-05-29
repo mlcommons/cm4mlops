@@ -252,7 +252,8 @@ variations:
       interactive: True
       extra_run_args: ' --runtime=nvidia --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v3.1-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-l4-public
-      docker:os_version: "20.04"
+      os: "ubuntu"
+      os_version: "20.04"
       deps:
         - tags: get,mlperf,inference,nvidia,scratch,space
         - tags: get,nvidia-docker
