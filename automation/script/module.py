@@ -1165,26 +1165,27 @@ class CAutomation(Automation):
 
 
 
-                    # Check chain of posthook dependencies on other CM scripts. We consider them same as postdeps when
-                    # script is in cache
-                    if verbose:
-                        print (recursion_spaces + '    - Checking posthook dependencies on other CM scripts:')
+                    if not fake_run:
+                        # Check chain of posthook dependencies on other CM scripts. We consider them same as postdeps when
+                        # script is in cache
+                        if verbose:
+                            print (recursion_spaces + '    - Checking posthook dependencies on other CM scripts:')
 
-                    clean_env_keys_post_deps = meta.get('clean_env_keys_post_deps',[])
+                        clean_env_keys_post_deps = meta.get('clean_env_keys_post_deps',[])
 
-                    r = self._call_run_deps(posthook_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
+                        r = self._call_run_deps(posthook_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
                             recursion_spaces + extra_recursion_spaces,
                             remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                    if r['return']>0: return r
+                        if r['return']>0: return r
 
-                    if verbose:
-                        print (recursion_spaces + '    - Checking post dependencies on other CM scripts:')
+                        if verbose:
+                            print (recursion_spaces + '    - Checking post dependencies on other CM scripts:')
 
-                    # Check chain of post dependencies on other CM scripts
-                    r = self._call_run_deps(post_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
+                        # Check chain of post dependencies on other CM scripts
+                        r = self._call_run_deps(post_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
                             recursion_spaces + extra_recursion_spaces,
                             remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                    if r['return']>0: return r
+                        if r['return']>0: return r
 
 
 
