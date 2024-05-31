@@ -900,6 +900,10 @@ variations:
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _cpu
+
+  cuda,reference:
+    docker:
+      base_image: nvcr.io/nvidia/pytorch:24.03-py3
   cuda:
     docker:
       all_gpus: 'yes'
