@@ -262,6 +262,10 @@ def get_result_table(results):
                     row.append(val)
                     row.append("-")
 
+            val1 = results[model][scenario].get('TEST01')
+            val2 = results[model][scenario].get('TEST05')
+            val3 = results[model][scenario].get('TEST04')
+
             #if results[model][scenario].get('power','') != '':
             #    row.append(results[model][scenario]['power'])
             if results[model][scenario].get('power_efficiency','') != '':
@@ -269,12 +273,9 @@ def get_result_table(results):
                 if not results[model][scenario].get('power_valid', True):
                     val = "X "+val
                 row.append(val)
-            else:
+            elif val1 or val2 or val3: #Don't output unless there are any further column data
                 row.append(None)
 
-            val1 = results[model][scenario].get('TEST01')
-            val2 = results[model][scenario].get('TEST05')
-            val3 = results[model][scenario].get('TEST04')
             if val1:
                 row.append(val1)
                 if val2:

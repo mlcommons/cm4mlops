@@ -173,6 +173,7 @@ variations:
         inference-results
       version: v4.0
   v3.1:
+    group: version
     env:
       CM_MLPERF_INFERENCE_CODE_VERSION: "v3.1"
     adr:
@@ -183,6 +184,7 @@ variations:
       names:
         inference-results
       version: v3.1
+
 
   # Target devices
   cpu:
@@ -615,6 +617,9 @@ variations:
       dataset-preprocessed:
         tags: _uint8,_rgb8
 
+  int8:
+    alias: uint8
+
   int4,gptj_:
     env:
       INTEL_GPTJ_INT4: 'yes'
@@ -682,9 +687,16 @@ variations:
     default_env:
       CM_MLPERF_LOADGEN_BATCH_SIZE: 1
 
-  sapphire-rapids.24c,bert-99:
+  sapphire-rapids.24c,bert_:
     env:
       WORKERS_PER_PROC: 1
+  sapphire-rapids.112c,bert_,offline:
+    env:
+      WORKERS_PER_PROC: 4
+  sapphire-rapids.112c,bert_,server:
+    env:
+      WORKERS_PER_PROC: 8
+
 
 docker:
-  docker_real_run: False
+  real_run: False
