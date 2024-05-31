@@ -902,9 +902,12 @@ variations:
   cuda,reference:
     docker:
       base_image: nvcr.io/nvidia/pytorch:24.03-py3
+
   cuda:
     docker:
       all_gpus: 'yes'
+      deps:
+        - tags: get,nvidia-docker 
     group:
       device
     env:
