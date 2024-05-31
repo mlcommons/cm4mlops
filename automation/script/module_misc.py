@@ -1721,6 +1721,13 @@ def docker(i):
     if image_repo == '':
         image_repo = 'cknowledge'
 
+    # Host system needs to have docker
+    r = self_module.cmind.access({'action':'run',
+                                'automation':'script',
+                                'tags': "get,docker"})
+    if r['return'] > 0:
+        return r
+
     for artifact in sorted(lst, key = lambda x: x.meta.get('alias','')):
 
         meta = artifact.meta
