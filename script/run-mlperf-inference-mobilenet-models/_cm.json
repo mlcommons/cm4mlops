@@ -65,11 +65,14 @@
         "CM_MLPERF_SUBMISSION_MODE": "yes"
       }
     },
-    "populate-readme": {
+    "performance-and-accuracy": {
       "group": "run-mode",
+      "default": "true",
       "env": {
         "CM_MLPERF_FIND_PERFORMANCE_MODE": "no",
-        "CM_MLPERF_POPULATE_README": "yes"
+        "CM_MLPERF_PERFORMANCE_MODE": "yes",
+        "CM_MLPERF_ACCURACY_MODE": "yes",
+        "CM_MLPERF_SUBMISSION_MODE": "no"
       }
     },
     "all-models": {
@@ -84,6 +87,24 @@
       "group": "model-selection",
       "env": {
         "CM_MLPERF_RUN_MOBILENETS": "yes"
+      }
+    },
+    "mobilenet-v1": {
+      "group": "model-selection",
+      "env": {
+        "CM_MLPERF_RUN_MOBILENET_V1": "yes"
+      }
+    },
+    "mobilenet-v2": {
+      "group": "model-selection",
+      "env": {
+        "CM_MLPERF_RUN_MOBILENET_V2": "yes"
+      }
+    },
+    "mobilenet-v3": {
+      "group": "model-selection",
+      "env": {
+        "CM_MLPERF_RUN_MOBILENET_V3": "yes"
       }
     },
     "efficientnet": {
