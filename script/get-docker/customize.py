@@ -25,12 +25,9 @@ def preprocess(i):
                                        'recursion_spaces':recursion_spaces})
         if r['return'] >0 : 
             if r['return'] == 16:
-                if env['CM_HOST_OS_FLAVOR'] == "ubuntu":
-                    run_file_name = "install-ubuntu.sh"
-                    r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':run_file_name})
-                    if r['return'] >0: return r
-                else:
-                    return {'return': 1, 'error': 'Please install docker to continue. Once installed you might need to relogin to get permission to run docker'}
+                run_file_name = "install"
+                r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':run_file_name})
+                if r['return'] >0: return r
             else:
                 return r
 
