@@ -8,8 +8,7 @@
     "CM_GIT_CHECKOUT_FOLDER": "inference",
     "CM_GIT_DEPTH": "--depth 4",
     "CM_GIT_PATCH": "no",
-    "CM_GIT_RECURSE_SUBMODULES": "",
-    "CM_GIT_URL": "https://github.com/mlcommons/inference.git"
+    "CM_GIT_RECURSE_SUBMODULES": ""
   },
   "deps": [
     {
@@ -100,9 +99,11 @@
       }
     },
     "deepsparse": {
+      "base":[
+        "_branch.deepsparse",
+        "_repo.https://github.com/neuralmagic/inference"
+      ],
       "env": {
-        "CM_GIT_CHECKOUT": "deepsparse",
-        "CM_GIT_URL": "https://github.com/neuralmagic/inference",
         "CM_MLPERF_LAST_RELEASE": "v4.0"
       }
     },
@@ -132,7 +133,8 @@
     },
     "octoml": {
       "base": [
-        "short-history"
+        "short-history",
+        "_repo.https://github.com/octoml/inference"
       ],
       "env": {
         "CM_GIT_URL": "https://github.com/octoml/inference"
