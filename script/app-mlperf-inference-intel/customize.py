@@ -119,23 +119,24 @@ def preprocess(i):
             env['DATASET_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
             env['CM_RUN_DIR'] = i['run_script_input']['path']
             env['CM_RUN_CMD'] = "bash run_bert_harness.sh " + ("--accuracy" if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy" else "")
+
         elif "gptj" in env['CM_MODEL']:
             if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy":
                 env['LOADGEN_MODE'] = 'Accuracy'
             else:
                 env['LOADGEN_MODE'] = 'Performance'
-            if env.get('INTEL_GPTJ_INT4', '') == 'yes':
-                model_precision = "int4"
-                env['INT4_MODEL_DIR'] = env['CM_ML_MODEL_PATH']
-                env['QUANTIZED_MODEL'] = os.path.join(env['INT4_MODEL_DIR'], "best_int4_model.pt")
-                env['PRECISION'] = "int4_bf16_mixed"
-            else:
-                env['INT8_MODEL_DIR'] = env['CM_ML_MODEL_PATH']
-                env['QUANTIZED_MODEL'] = os.path.join(env["INT8_MODEL_DIR"], "best_model.pt")
-                env['PRECISION'] = "int8"
             env['CM_RUN_DIR'] = i['run_script_input']['path']
             if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == "v3.1":
                 env['CM_RUN_CMD'] = "bash run_gptj_harness_v3_1.sh "
+                if env.get('INTEL_GPTJ_INT4', '') == 'yes':
+                    model_precision = "int4"
+                    env['INT4_MODEL_DIR'] = env['CM_ML_MODEL_PATH']
+                    env['QUANTIZED_MODEL'] = os.path.join(env['INT4_MODEL_DIR'], "best_int4_model.pt")
+                    env['PRECISION'] = "int4_bf16_mixed"
+                else:
+                    env['INT8_MODEL_DIR'] = env['CM_ML_MODEL_PATH']
+                    env['QUANTIZED_MODEL'] = os.path.join(env["INT8_MODEL_DIR"], "best_model.pt")
+                    env['PRECISION'] = "int8"
             elif env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == "v4.0":
                 env['CM_RUN_CMD'] = "bash run_gptj_harness_v4_0.sh "
 

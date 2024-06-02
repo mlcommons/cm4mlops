@@ -1019,8 +1019,8 @@ class CAutomation(Automation):
         ############################################################################################################
         # Check if the output of a selected script should be cached
         cache = False if i.get('skip_cache', False) else meta.get('cache', False)
-        cache = False if fake_run else cache
         cache = cache or (i.get('force_cache', False) and meta.get('can_force_cache', False))
+        cache = False if fake_run else cache #fake run skips run script - should not pollute cache
 
         cached_uid = ''
         cached_tags = []
@@ -1165,26 +1165,27 @@ class CAutomation(Automation):
 
 
 
-                    # Check chain of posthook dependencies on other CM scripts. We consider them same as postdeps when
-                    # script is in cache
-                    if verbose:
-                        print (recursion_spaces + '    - Checking posthook dependencies on other CM scripts:')
+                    if not fake_run:
+                        # Check chain of posthook dependencies on other CM scripts. We consider them same as postdeps when
+                        # script is in cache
+                        if verbose:
+                            print (recursion_spaces + '    - Checking posthook dependencies on other CM scripts:')
 
-                    clean_env_keys_post_deps = meta.get('clean_env_keys_post_deps',[])
+                        clean_env_keys_post_deps = meta.get('clean_env_keys_post_deps',[])
 
-                    r = self._call_run_deps(posthook_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
+                        r = self._call_run_deps(posthook_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
                             recursion_spaces + extra_recursion_spaces,
                             remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                    if r['return']>0: return r
+                        if r['return']>0: return r
 
-                    if verbose:
-                        print (recursion_spaces + '    - Checking post dependencies on other CM scripts:')
+                        if verbose:
+                            print (recursion_spaces + '    - Checking post dependencies on other CM scripts:')
 
-                    # Check chain of post dependencies on other CM scripts
-                    r = self._call_run_deps(post_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
+                        # Check chain of post dependencies on other CM scripts
+                        r = self._call_run_deps(post_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
                             recursion_spaces + extra_recursion_spaces,
                             remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                    if r['return']>0: return r
+                        if r['return']>0: return r
 
 
 
@@ -4319,19 +4320,18 @@ def enable_or_skip_script(meta, env):
     for key in meta:
         meta_key = [str(v).lower() for v in meta[key]]
         if key in env:
-            value = str(env[key]).lower()
-
+            value = str(env[key]).lower().strip()
             if set(meta_key) & set(["yes", "on", "true", "1"]):
                 # Any set value other than false is taken as set
-                if value not in ["no", "off", "false", "0"]:
+                if value not in ["no", "off", "false", "0", ""]:
                     continue
             elif set(meta_key) & set(["no", "off", "false", "0"]):
-                if value in ["no", "off", "false", "0"]:
+                if value in ["no", "off", "false", "0", ""]:
                     continue
             elif value in meta_key:
                 continue
         else:
-            if set(meta_key) & set(["no", "off", "false", "0"]):
+            if set(meta_key) & set(["no", "off", "false", "0", ""]):
                 # If key is missing in env, and if the expected value is False, consider it a match
                 continue
 
@@ -4348,15 +4348,15 @@ def any_enable_or_skip_script(meta, env):
     for key in meta:
         found = False
         if key in env:
-            value = str(env[key]).lower()
+            value = str(env[key]).lower().strip()
 
             meta_key = [str(v).lower() for v in meta[key]]
 
             if set(meta_key) & set(["yes", "on", "true", "1"]):
-                if value not in ["no", "off", "false", "0"]:
+                if value not in ["no", "off", "false", "0", ""]:
                     found = True
-            elif set(meta_key) & set(["no", "off", "false", "0"]):
-                if value in ["no", "off", "false", "0"]:
+            elif set(meta_key) & set(["no", "off", "false", "0", ""]):
+                if value in ["no", "off", "false", "0", ""]:
                     found = True
             elif value in meta_key:
                 found = True

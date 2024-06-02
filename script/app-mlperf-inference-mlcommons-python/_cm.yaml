@@ -31,6 +31,9 @@ default_env:
   CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: reference
   CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX: ''
 
+docker:
+  real_run: False
+
 # Map script inputs to environment variables
 input_mapping:
   count: CM_MLPERF_LOADGEN_QUERY_COUNT

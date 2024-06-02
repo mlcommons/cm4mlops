@@ -35,6 +35,9 @@ cmd="sudo usermod -aG docker $USER"
 echo "$cmd"
 eval "$cmd"
 test $? -eq 0 || exit $?
+
+echo "Please relogin to the shell so that the new group is  effective"
+exit 1
 #exec newgrp docker
 #sudo su - $USER
 
