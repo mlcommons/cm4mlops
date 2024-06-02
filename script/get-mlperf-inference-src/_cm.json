@@ -11,7 +11,6 @@
     "CM_GIT_RECURSE_SUBMODULES": "",
     "CM_GIT_URL": "https://github.com/mlcommons/inference.git"
   },
-  "default_version": "master",
   "deps": [
     {
       "tags": "detect,os"
@@ -199,33 +198,26 @@
     },
     "deepsparse": {
       "env": {
-        "CM_GIT_CHECKOUT": "deepsparse",
-        "CM_GIT_URL": "https://github.com/neuralmagic/inference",
+        "CM_TEMP_GIT_CHECKOUT": "deepsparse",
+        "CM_TEMP_GIT_URL": "https://github.com/neuralmagic/inference",
         "CM_MLPERF_LAST_RELEASE": "v4.0"
       }
     },
     "main": {
       "env": {
-        "CM_GIT_CHECKOUT": "main",
+        "CM_TEMP_GIT_CHECKOUT": "main",
         "CM_MLPERF_LAST_RELEASE": "v4.0"
       }
     },
     "master": {
       "env": {
-        "CM_GIT_CHECKOUT": "master",
+        "CM_TEMP_GIT_CHECKOUT": "master",
         "CM_MLPERF_LAST_RELEASE": "v4.0"
-      }
-    },
-    "pybind_fix": {
-      "env": {
-        "CM_GIT_CHECKOUT": "pybind_update",
-        "CM_GIT_URL": "https://github.com/GATEOVerflow/inference",
-        "CM_MLPERF_LAST_RELEASE": "v3.1"
       }
     },
     "r2.1": {
       "env": {
-        "CM_GIT_CHECKOUT": "v2.1",
+        "CM_TEMP_GIT_CHECKOUT": "v2.1",
         "CM_MLPERF_LAST_RELEASE": "v2.1"
       }
     },
@@ -236,7 +228,7 @@
         }
       },
       "env": {
-        "CM_GIT_CHECKOUT": "",
+        "CM_TEMP_GIT_CHECKOUT": "",
         "CM_MLPERF_LAST_RELEASE": "v3.0"
       }
     },
@@ -247,14 +239,14 @@
         }
       },
       "env": {
-        "CM_GIT_CHECKOUT": "",
+        "CM_TEMP_GIT_CHECKOUT": "",
         "CM_MLPERF_LAST_RELEASE": "v3.1"
       }
     },
     "tvm": {
       "env": {
-        "CM_GIT_CHECKOUT": "tvm",
-        "CM_GIT_URL": "https://github.com/mlcommons/inference",
+        "CM_TEMP_GIT_CHECKOUT": "tvm",
+        "CM_TEMP_GIT_URL": "https://github.com/mlcommons/inference",
         "CM_MLPERF_LAST_RELEASE": "v3.1"
       }
     }
