@@ -198,26 +198,26 @@
     },
     "deepsparse": {
       "env": {
-        "CM_TEMP_GIT_CHECKOUT": "deepsparse",
-        "CM_TEMP_GIT_URL": "https://github.com/neuralmagic/inference",
+        "CM_TMP_GIT_CHECKOUT": "deepsparse",
+        "CM_TMP_GIT_URL": "https://github.com/neuralmagic/inference",
         "CM_MLPERF_LAST_RELEASE": "v4.0"
       }
     },
     "main": {
       "env": {
-        "CM_TEMP_GIT_CHECKOUT": "main",
+        "CM_TMP_GIT_CHECKOUT": "main",
         "CM_MLPERF_LAST_RELEASE": "v4.0"
       }
     },
     "master": {
       "env": {
-        "CM_TEMP_GIT_CHECKOUT": "master",
+        "CM_TMP_GIT_CHECKOUT": "master",
         "CM_MLPERF_LAST_RELEASE": "v4.0"
       }
     },
     "r2.1": {
       "env": {
-        "CM_TEMP_GIT_CHECKOUT": "v2.1",
+        "CM_TMP_GIT_CHECKOUT": "v2.1",
         "CM_MLPERF_LAST_RELEASE": "v2.1"
       }
     },
@@ -228,7 +228,7 @@
         }
       },
       "env": {
-        "CM_TEMP_GIT_CHECKOUT": "",
+        "CM_TMP_GIT_CHECKOUT": "",
         "CM_MLPERF_LAST_RELEASE": "v3.0"
       }
     },
@@ -239,14 +239,14 @@
         }
       },
       "env": {
-        "CM_TEMP_GIT_CHECKOUT": "",
+        "CM_TMP_GIT_CHECKOUT": "",
         "CM_MLPERF_LAST_RELEASE": "v3.1"
       }
     },
     "tvm": {
       "env": {
-        "CM_TEMP_GIT_CHECKOUT": "tvm",
-        "CM_TEMP_GIT_URL": "https://github.com/mlcommons/inference",
+        "CM_TMP_GIT_CHECKOUT": "tvm",
+        "CM_TMP_GIT_URL": "https://github.com/mlcommons/inference",
         "CM_MLPERF_LAST_RELEASE": "v3.1"
       }
     }
