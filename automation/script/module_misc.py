@@ -1585,7 +1585,7 @@ def get_container_path(value):
 
     new_value = ''
     if "cache" in path_split and "local" in path_split:
-        new_path_split = [ "", "home", "cmuser" ]
+        new_path_split = [ "", "home", "cmuser", "CM", "repos" ]
         repo_entry_index = path_split.index("local")
         if len(path_split) >= repo_entry_index + 3:
             new_path_split1 = new_path_split + path_split[repo_entry_index:repo_entry_index+3]
