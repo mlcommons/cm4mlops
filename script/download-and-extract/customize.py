@@ -38,7 +38,11 @@ def preprocess(i):
             return {'return':1, 'error':'Local file {} doesn\'t exist'.format(filepath)}
 
         env['CM_EXTRACT_REMOVE_EXTRACTED']='no'
-    
+
+    if str(env.get('CM_DAE_EXTRACT_DOWNLOADED')).lower() in [ "yes", "1", "true" ]:
+        if (env.get('CM_EXTRACT_FINAL_ENV_NAME', '') == '') and (env.get('CM_DAE_FINAL_ENV_NAME', '') != ''):
+            env['CM_EXTRACT_FINAL_ENV_NAME'] = env['CM_DAE_FINAL_ENV_NAME']
+
     return {'return':0}
 
 def postprocess(i):

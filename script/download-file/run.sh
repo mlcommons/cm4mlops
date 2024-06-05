@@ -18,7 +18,7 @@ if [[ ${CM_DOWNLOAD_TOOL} == "cmutil" ]]; then
   require_download=0
 fi
 
-if [ -e ${CM_DOWNLOAD_DOWNLOADED_PATH} ]; then
+if [ -e "${CM_DOWNLOAD_DOWNLOADED_PATH}" ]; then
   if [[ "${CM_DOWNLOAD_CHECKSUM_CMD}" != "" ]]; then
     echo ""
     echo "${CM_DOWNLOAD_CHECKSUM_CMD}"
