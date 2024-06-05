@@ -114,11 +114,14 @@
       "group": "download-tool"
     },
     "keep": {
+      "group": "keep",
+      "default": "true",
       "env": {
         "CM_EXTRACT_REMOVE_EXTRACTED": "no"
       }
     },
     "no-remove-extracted": {
+      "group": "keep",
       "env": {
         "CM_EXTRACT_REMOVE_EXTRACTED": "no"
       }
