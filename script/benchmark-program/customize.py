@@ -5,6 +5,8 @@ def preprocess(i):
     os_info = i['os_info']
     env = i['env']
 
+    q = '"' if os_info['platform'] == 'windows' else "'"
+
     if env.get('CM_RUN_CMD','') == '':
         if env.get('CM_BIN_NAME','') == '':
             x = 'run.exe' if os_info['platform'] == 'windows' else 'run.out'
@@ -43,7 +45,7 @@ def preprocess(i):
 
     if os_info['platform'] != 'windows' and str(env.get('CM_SAVE_CONSOLE_LOG', True)).lower() not in  [ "no", "false", "0"]:
         logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
-        env['CM_RUN_CMD'] += " 2>&1 | tee " + os.path.join(logs_dir, "console.out")
+        env['CM_RUN_CMD'] += " 2>&1 | tee " + q+ os.path.join(logs_dir, "console.out") + q
 
     # Print info
     print ('***************************************************************************')
