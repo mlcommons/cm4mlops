@@ -259,12 +259,16 @@ def preprocess(i):
         user_conf += ml_model_name + "." + scenario + ".max_query_count = " + query_count + "\n"
         user_conf += ml_model_name + "." + scenario + ".min_query_count = " + query_count + "\n"
         user_conf += ml_model_name + "." + scenario + ".min_duration = 0" + "\n"
+        user_conf += ml_model_name + "." + scenario + ".sample_concatenate_permutation = 0" + "\n"
+        env['CM_MLPERF_MAX_QUERY_COUNT'] = query_count
+
         # max_duration is effective for all scenarios except the Offline
         if env.get('CM_MLPERF_USE_MAX_DURATION', 'yes').lower() not in [ "no", "false", "0"]:
             if scenario != "Offline":
                 user_conf += ml_model_name + "." + scenario + f".max_duration = {max_duration_test}" + "\n"
 
     elif env['CM_MLPERF_RUN_STYLE'] == "fast":
+        user_conf += ml_model_name + "." + scenario + ".sample_concatenate_permutation = 0" + "\n"
         max_duration_fast = env.get('CM_MLPERF_MAX_DURATION_FAST', 120000)
         if scenario == "Server":
             user_conf += ml_model_name + "." + scenario + f".max_duration = {max_duration_fast}" + "\n"
