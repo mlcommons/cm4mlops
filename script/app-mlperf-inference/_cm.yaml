@@ -175,6 +175,8 @@ variations:
       implementation
     default:
       true
+    default_variations:
+      reproducibility: r4.1_default
     add_deps_recursive:
       imagenet-accuracy-script:
         tags: _float32
@@ -269,6 +271,7 @@ variations:
     default_variations:
       backend: tensorrt
       device: cuda
+      reproducibility: r4.1_default
     group:
       implementation
     add_deps_recursive:
@@ -325,6 +328,7 @@ variations:
     default_variations:
       device: cpu
       backend: pytorch
+      reproducibility: r4.0_default
     prehook_deps:
       - names:
          - intel
@@ -355,6 +359,7 @@ variations:
     default_variations:
       device: qaic
       backend: glow
+      reproducibility: r4.0_default
     prehook_deps:
       - names:
          - kilt
