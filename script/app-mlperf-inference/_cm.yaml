@@ -248,6 +248,8 @@ variations:
     docker:
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
+    env:
+      BUILD_TRTLLM: 1
 
   nvidia-original:
     docker:
@@ -284,6 +286,7 @@ variations:
       cnndm-accuracy-script:
         tags: _int32
     env:
+      BUILD_TRTLLM: 0
       CM_MLPERF_IMPLEMENTATION: nvidia
       CM_SQUAD_ACCURACY_DTYPE: float16
       CM_IMAGENET_ACCURACY_DTYPE: int32
