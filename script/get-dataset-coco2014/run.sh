@@ -3,14 +3,13 @@ python3() {
   ${CM_PYTHON_BIN_WITH_PATH} "$@"
 }
 export -f python3
-echo ${CM_PYTHON_BIN_WITH_PATH}
+
 CUR=${PWD}
 mkdir -p install
 INSTALL_DIR=${CUR}/install
 
-export -f python3
 cd ${CM_RUN_DIR}
-echo ${CM_RUN_DIR}
+
 if [[ ${CM_DATASET_CALIBRATION} == "no" ]]; then
   if [ ! -z ${CM_DATASET_SIZE} ]; then
     max_images=" -m ${CM_DATASET_SIZE}"
