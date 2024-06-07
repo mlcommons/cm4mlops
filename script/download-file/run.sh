@@ -47,6 +47,7 @@ if [[ ${require_download} == "1" ]]; then
      echo ""
      echo "${CM_DOWNLOAD_CHECKSUM_CMD}"
      eval "${CM_DOWNLOAD_CHECKSUM_CMD}"
+     test $? -eq 0 || exit $?
   fi
 fi
 
