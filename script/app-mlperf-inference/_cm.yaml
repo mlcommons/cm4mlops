@@ -331,7 +331,7 @@ variations:
     default_variations:
       device: cpu
       backend: pytorch
-      reproducibility: r4.0_default
+      reproducibility: r4.1_default
     prehook_deps:
       - names:
          - intel
