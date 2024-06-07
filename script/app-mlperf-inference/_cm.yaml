@@ -353,6 +353,27 @@ variations:
     docker:
       run: false
 
+  redhat:
+    group:
+      implementation
+    default_variations:
+      device: cuda
+      backend: openshift
+      reproducibility: r4.0_default
+    prehook_deps:
+      - names:
+         - redhat
+         - redhat-harness
+         - mlperf-inference-implementation
+        tags: reproduce,mlperf,inference,redhat
+        skip_if_env:
+          CM_SKIP_RUN:
+            - yes
+    env:
+      CM_MLPERF_IMPLEMENTATION: redhat
+    docker:
+      interactive: True
+
   qualcomm:
     alias: kilt
 
@@ -819,6 +840,15 @@ variations:
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _pytorch
+
+  openshift:
+    group: backend
+    env:
+      CM_MLPERF_BACKEND:
+        openshift
+    add_deps_recursive:
+      mlperf-inference-implementation:
+        tags: _openshift
 
   ncnn:
     group: backend
