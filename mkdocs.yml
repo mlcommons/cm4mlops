@@ -1,4 +1,4 @@
-site_name: MLPerf Inference Documentation
+site_name: CM Script Automation Documentation
 repo_url: https://github.com/mlcommons/cm4mlops
 theme:
   name: material
