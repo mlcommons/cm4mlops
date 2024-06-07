@@ -27,6 +27,7 @@ deps:
   tags: get,python3
 
 - tags: get,generic-python-lib,_package.tqdm
+- tags: get,generic-python-lib,_package.pandas
 
 - force_env_keys:
   - CM_GIT_*
