@@ -1,4 +1,8 @@
 #!/bin/bash
+python3() {
+  ${CM_PYTHON_BIN_WITH_PATH} "$@"
+}
+export -f python3
 
 CUR=${PWD}
 mkdir -p install
