@@ -41,8 +41,10 @@ fi
 # Check CM_RUN_CMD0
 if [[ "${CM_RUN_CMD0}" != "" ]]; then
   eval ${CM_RUN_CMD0}
+  test $? -eq 0 || exit $? 
 else
   eval ${CM_RUN_CMD}
+  test $? -eq 0 || exit $? 
 fi
 
-test $? -eq 0 || exit 1
+test $? -eq 0 || exit $? 
