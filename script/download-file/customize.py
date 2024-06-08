@@ -127,7 +127,7 @@ def preprocess(i):
     #verify checksum if file already present
     if env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
         x='*' if os_info['platform'] == 'windows' else ''
-        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum -c".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q)
+        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum -cs ".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q)
     else:
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = ""
 
