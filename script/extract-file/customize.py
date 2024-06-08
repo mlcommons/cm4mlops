@@ -12,7 +12,8 @@ def preprocess(i):
 
 #    xsep = '^&^&' if windows else '&&'
     xsep = '&&'
-   
+    q = '"' if os_info['platform'] == 'windows' else "'"
+
     env = i['env']
 
     meta = i['meta']
@@ -71,7 +72,7 @@ def preprocess(i):
             env['CM_EXTRACT_EXTRACTED_FILENAME'] = extracted_filename
 
         x = '-c' if windows else '-k'
-        env['CM_EXTRACT_TOOL_OPTIONS'] = ' -d '+ (x + ' ' if not remove_extracted else '') + ' > ' + extracted_filename + ' < '
+        env['CM_EXTRACT_TOOL_OPTIONS'] = ' -d '+ (x + ' ' if not remove_extracted else '') + ' > ' + q + extracted_filename + q + ' < '
 
         env['CM_EXTRACT_TOOL'] = 'gzip '
     elif env.get('CM_EXTRACT_UNZIP','') == 'yes':
@@ -97,19 +98,19 @@ def preprocess(i):
             x = '' if windows else '-p'
 
             #env['CM_EXTRACT_TOOL_OPTIONS'] = ' --one-top-level='+ env['CM_EXTRACT_TO_FOLDER'] + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
-            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -C '+ extract_to_folder + ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
-            env['CM_EXTRACT_PRE_CMD'] = 'mkdir '+x+' '+ extract_to_folder +  ' ' + xsep + ' '
+            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -C '+ q + extract_to_folder + q + ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
+            env['CM_EXTRACT_PRE_CMD'] = 'mkdir '+ x +' '+ q + extract_to_folder +  q + ' ' + xsep + ' '
             env['CM_EXTRACT_EXTRACTED_FILENAME'] = extract_to_folder
 
         elif 'unzip' in env['CM_EXTRACT_TOOL']:
-            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -d '+ extract_to_folder
+            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -d '+ q + extract_to_folder + q
             env['CM_EXTRACT_EXTRACTED_FILENAME'] = extract_to_folder
 
 
-    x = '"' if ' ' in filename else ''
+    #x = '"' if ' ' in filename else ''
     env['CM_EXTRACT_CMD'] = env['CM_EXTRACT_PRE_CMD'] + env['CM_EXTRACT_TOOL'] + ' ' + \
                             env.get('CM_EXTRACT_TOOL_EXTRA_OPTIONS', '') + \
-                            ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')+ ' '+ x + filename + x
+                            ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')+ ' '+ q + filename + q
 
     print ('')
     print ('Current directory: {}'.format(os.getcwd()))
@@ -120,10 +121,10 @@ def preprocess(i):
 
     if final_file!='':
         if env.get('CM_EXTRACT_EXTRACTED_CHECKSUM_FILE', '') != '':
-            env['CM_EXTRACT_EXTRACTED_CHECKSUM_CMD'] = ("cd {}  " + xsep + "  md5sum -c {}").format(final_file, env.get('CM_EXTRACT_EXTRACTED_CHECKSUM_FILE'))
+            env['CM_EXTRACT_EXTRACTED_CHECKSUM_CMD'] = f"cd {q}{final_file}{q} {xsep}  md5sum -c {q}{env['CM_EXTRACT_EXTRACTED_CHECKSUM_FILE']}{q}"
         elif env.get('CM_EXTRACT_EXTRACTED_CHECKSUM', '') != '':
             x='*' if os_info['platform'] == 'windows' else ''
-            env['CM_EXTRACT_EXTRACTED_CHECKSUM_CMD'] = "echo {} {}{} | md5sum -c".format(env.get('CM_EXTRACT_EXTRACTED_CHECKSUM'), x, env['CM_EXTRACT_EXTRACTED_FILENAME'])
+            env['CM_EXTRACT_EXTRACTED_CHECKSUM_CMD'] = "echo {} {}{q}{}{q} | md5sum -c".format(env.get('CM_EXTRACT_EXTRACTED_CHECKSUM'), x, env['CM_EXTRACT_EXTRACTED_FILENAME'])
         else:
             env['CM_EXTRACT_EXTRACTED_CHECKSUM_CMD'] = ""
     else:

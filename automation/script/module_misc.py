@@ -1189,6 +1189,22 @@ def regenerate_script_cmd(i):
 
     i_run_cmd = i['run_cmd']
 
+    #Cleanup from env everything that has a host path value
+    if i_run_cmd.get('env'):
+        for key in list(i_run_cmd.get('env')):
+            if type(i_run_cmd['env'][key]) == str and ((os.path.join("local", "cache", "") in i_run_cmd['env'][key]) or (os.path.join("CM", "repos", "") in i_run_cmd['env'][key])) :
+                del(i_run_cmd['env'][key])
+            elif type(i_run_cmd['env'][key]) == list:
+                values_to_remove = []
+                for val in i_run_cmd['env'][key]:
+                    if type(val) == str and ((os.path.join("local", "cache", "") in val) or (os.path.join("CM", "repos", "") in val)):
+                        values_to_remove.append(val)
+                if values_to_remove == i_run_cmd['env'][key]:
+                    del(i_run_cmd['env'][key])
+                else:
+                    for val in values_to_remove:
+                        i_run_cmd['env'][key].remove(val)
+
     docker_run_cmd_prefix = i['docker_run_cmd_prefix']
 
     # Regenerate command from dictionary input
@@ -1585,7 +1601,7 @@ def get_container_path(value):
 
     new_value = ''
     if "cache" in path_split and "local" in path_split:
-        new_path_split = [ "", "home", "cmuser" ]
+        new_path_split = [ "", "home", "cmuser", "CM", "repos" ]
         repo_entry_index = path_split.index("local")
         if len(path_split) >= repo_entry_index + 3:
             new_path_split1 = new_path_split + path_split[repo_entry_index:repo_entry_index+3]

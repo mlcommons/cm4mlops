@@ -1151,7 +1151,11 @@ class CAutomation(Automation):
                     # IF REUSE FROM CACHE - update env and state from cache!
                     cached_state = r['meta']
 
-                    new_env = cached_state['new_env']
+                    r = self._fix_cache_paths(cached_state['new_env'])
+                    if r['return'] > 0:
+                        return r
+                    new_env = r['new_env']
+
                     utils.merge_dicts({'dict1':env, 'dict2':new_env, 'append_lists':True, 'append_unique':True})
 
                     new_state = cached_state['new_state']
@@ -1885,6 +1889,43 @@ class CAutomation(Automation):
             input ('Press Enter to continue ...')
 
         return rr
+
+    ######################################################################################
+    def _fix_cache_paths(self, env):
+        cm_repos_path = os.environ.get('CM_REPOS', os.path.join(os.path.expanduser("~"), "CM", "repos"))
+        current_cache_path = os.path.realpath(os.path.join(cm_repos_path, "local", "cache"))
+
+        new_env = env #just a reference
+
+        for key,val in new_env.items():
+            #may need a cleaner way
+            if type(val) == str and ("/local/cache/" in val or "\\local\\cache\\" in val):
+                if "/local/cache/" in val:
+                    sep = "/"
+                else:
+                    sep = "\\"
+
+                path_split = val.split(sep)
+                repo_entry_index = path_split.index("local")
+                loaded_cache_path = sep.join(path_split[0:repo_entry_index+2])
+                if loaded_cache_path != current_cache_path and os.path.exists(current_cache_path):
+                    new_env[key] = val.replace(loaded_cache_path, current_cache_path)
+
+            elif type(val) == list:
+                for val2,i in enumerate(val):
+                    if type(val2) == str and ("/local/cache/" in val2 or "\\local\\cache\\" in val2):
+                        if "/local/cache/" in val:
+                            sep = "/"
+                        else:
+                            sep = "\\"
+
+                        path_split = val2.split(sep)
+                        repo_entry_index = path_split.index("local")
+                        loaded_cache_path = sep.join(path_split[0:repo_entry_index+2])
+                        if loaded_cache_path != current_cache_path and os.path.exists(current_cache_path):
+                            new_env[key][i] = val2.replace(loaded_cache_path, current_cache_path)
+
+        return {'return': 0, 'new_env': new_env}
 
     ######################################################################################
     def _dump_version_info_for_script(self, output_dir = os.getcwd(), quiet = False, silent = False):

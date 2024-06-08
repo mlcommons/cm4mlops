@@ -157,7 +157,6 @@ class CAutomation(Automation):
 
         TBD: add input/output description
         """
-
         # Check simplified CMD: cm show cache "get python"
         # If artifact has spaces, treat them as tags!
         artifact = i.get('artifact','')

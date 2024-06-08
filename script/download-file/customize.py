@@ -14,6 +14,7 @@ def preprocess(i):
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
     tool = env.get('CM_DOWNLOAD_TOOL', '')
+    q = '"' if os_info['platform'] == 'windows' else "'"
 
     if env.get('CM_DOWNLOAD_LOCAL_FILE_PATH'):
         filepath = env['CM_DOWNLOAD_LOCAL_FILE_PATH']
@@ -96,12 +97,12 @@ def preprocess(i):
 
         elif tool == "wget":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
-                extra_download_options +=' -O '+env['CM_DOWNLOAD_FILENAME']+' '
+                extra_download_options +=f" -O {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
             env['CM_DOWNLOAD_CMD'] = f"wget -nc {extra_download_options} {url}"
 
         elif tool == "curl":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
-                extra_download_options +=' --output '+env['CM_DOWNLOAD_FILENAME']+' '
+                extra_download_options +=f" --output {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
 
             env['CM_DOWNLOAD_CMD'] = f"curl {extra_download_options} {url}"
 
@@ -113,7 +114,7 @@ def preprocess(i):
             if env.get('CM_RCLONE_CONFIG_CMD', '') != '':
                 env['CM_DOWNLOAD_CONFIG_CMD'] = env['CM_RCLONE_CONFIG_CMD']
             rclone_copy_using = env.get('CM_RCLONE_COPY_USING', 'sync')
-            env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {url} {os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])} -P"
+            env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
 
         filename = env['CM_DOWNLOAD_FILENAME']
         env['CM_DOWNLOAD_DOWNLOADED_FILENAME'] = filename
@@ -126,7 +127,7 @@ def preprocess(i):
     #verify checksum if file already present
     if env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
         x='*' if os_info['platform'] == 'windows' else ''
-        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{} | md5sum -c".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, env['CM_DOWNLOAD_FILENAME'])
+        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum -cs ".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q)
     else:
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = ""
 

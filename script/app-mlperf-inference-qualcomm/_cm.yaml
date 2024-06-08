@@ -772,4 +772,4 @@ variations:
       qaic_activation_count: "8"
 
 docker:
-  docker_real_run: False
+  real_run: False

@@ -316,14 +316,14 @@ variations:
     group: version
     default: true
     env:
-      CM_MLPERF_INFERENCE_VERSION: "v4.0"
+      CM_MLPERF_INFERENCE_CODE_VERSION: "v4.0"
       CM_MLPERF_GPTJ_MODEL_FP8_PATH_SUFFIX: GPTJ-FP8-quantized
     adr:
       pytorch:
         tags: _for-nvidia-mlperf-inference-v4.0
   v3.1:
     env:
-      CM_MLPERF_INFERENCE_VERSION: "v3.1"
+      CM_MLPERF_INFERENCE_CODE_VERSION: "v3.1"
       CM_MLPERF_GPTJ_MODEL_FP8_PATH_SUFFIX: GPTJ-07142023.pth
     adr:
       pytorch:
@@ -1505,4 +1505,4 @@ variations:
       batch-size: batch_size.1400
 
 docker:
-  docker_real_run: False
+  real_run: False

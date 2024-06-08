@@ -459,6 +459,17 @@
           "dnf": "nlohmann-json-dev"
         }
       }
+    },
+    "md5sha1sum": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "md5sha1sum"
+      },
+      "state": {
+        "md5sha1sum": {
+          "apt": "",
+          "brew": "md5sha1sum"
+        }
+      }
     }
   }
 }

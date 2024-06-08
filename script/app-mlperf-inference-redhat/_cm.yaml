@@ -1,6 +1,6 @@
 # Identification of this CM script
-alias: app-mlperf-inference-dummy
-uid: 5b71627383a94576
+alias: app-mlperf-inference-redhat
+uid: 82c9bb3c222447ca
 cache: false
 
 automation_alias: script
@@ -16,8 +16,8 @@ tags:
   - mlperf
   - inference
   - harness
-  - dummy-harness
-  - dummy
+  - redhat-harness
+  - redhat
 
 # Default environment
 default_env:
@@ -25,7 +25,7 @@ default_env:
   CM_MLPERF_LOADGEN_MODE: performance
   CM_SKIP_PREPROCESS_DATASET: 'no'
   CM_SKIP_MODEL_DOWNLOAD: 'no'
-  CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: dummy_harness
+  CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: redhat_harness
   CM_MLPERF_SKIP_RUN: 'no'
 
 env:
@@ -145,9 +145,14 @@ variations:
       CM_MLPERF_DEVICE: gpu
       CM_MLPERF_DEVICE_LIB_NAMESPEC: cudart
 
-  pytorch:
+  openshift:
     group: backend
     default: true
+    env:
+      CM_MLPERF_BACKEND: openshift
+
+  pytorch:
+    group: backend
     env:
       CM_MLPERF_BACKEND: pytorch
 
@@ -287,5 +292,10 @@ variations:
   fp32:
     group: precision
 
+  r4.0_default:
+    group: version
+    default: true
+    env:
+      CM_MLPERF_INFERENCE_RESULTS_REPO: https://github.com/mlcommons/inference_results_v4.0
 docker:
   real_run: False

@@ -175,6 +175,8 @@ variations:
       implementation
     default:
       true
+    default_variations:
+      reproducibility: r4.1_default
     add_deps_recursive:
       imagenet-accuracy-script:
         tags: _float32
@@ -242,10 +244,12 @@ variations:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
 
-  nvidia-original,r4.1_default,_gptj:
+  nvidia-original,r4.1_default,gptj_:
     docker:
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
+    env:
+      BUILD_TRTLLM: 1
 
   nvidia-original:
     docker:
@@ -269,6 +273,7 @@ variations:
     default_variations:
       backend: tensorrt
       device: cuda
+      reproducibility: r4.1_default
     group:
       implementation
     add_deps_recursive:
@@ -281,6 +286,7 @@ variations:
       cnndm-accuracy-script:
         tags: _int32
     env:
+      BUILD_TRTLLM: 0
       CM_MLPERF_IMPLEMENTATION: nvidia
       CM_SQUAD_ACCURACY_DTYPE: float16
       CM_IMAGENET_ACCURACY_DTYPE: int32
@@ -325,6 +331,7 @@ variations:
     default_variations:
       device: cpu
       backend: pytorch
+      reproducibility: r4.1_default
     prehook_deps:
       - names:
          - intel
@@ -346,6 +353,27 @@ variations:
     docker:
       run: false
 
+  redhat:
+    group:
+      implementation
+    default_variations:
+      device: cuda
+      backend: openshift
+      reproducibility: r4.0_default
+    prehook_deps:
+      - names:
+         - redhat
+         - redhat-harness
+         - mlperf-inference-implementation
+        tags: reproduce,mlperf,inference,redhat
+        skip_if_env:
+          CM_SKIP_RUN:
+            - yes
+    env:
+      CM_MLPERF_IMPLEMENTATION: redhat
+    docker:
+      interactive: True
+
   qualcomm:
     alias: kilt
 
@@ -355,6 +383,7 @@ variations:
     default_variations:
       device: qaic
       backend: glow
+      reproducibility: r4.0_default
     prehook_deps:
       - names:
          - kilt
@@ -812,6 +841,15 @@ variations:
       mlperf-inference-implementation:
         tags: _pytorch
 
+  openshift:
+    group: backend
+    env:
+      CM_MLPERF_BACKEND:
+        openshift
+    add_deps_recursive:
+      mlperf-inference-implementation:
+        tags: _openshift
+
   ncnn:
     group: backend
     env:
@@ -1146,6 +1184,8 @@ variations:
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
 
   r4.0_default:
     group:
