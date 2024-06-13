@@ -107,10 +107,10 @@ def preprocess(i):
             env['CM_EXTRACT_EXTRACTED_FILENAME'] = extract_to_folder
 
 
-    #x = '"' if ' ' in filename else ''
+    x = '"' if ' ' in filename else ''
     env['CM_EXTRACT_CMD'] = env['CM_EXTRACT_PRE_CMD'] + env['CM_EXTRACT_TOOL'] + ' ' + \
                             env.get('CM_EXTRACT_TOOL_EXTRA_OPTIONS', '') + \
-                            ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')+ ' '+ q + filename + q
+                            ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')+ ' '+ x + filename + x
 
     print ('')
     print ('Current directory: {}'.format(os.getcwd()))
