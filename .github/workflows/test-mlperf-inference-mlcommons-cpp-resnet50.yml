@@ -20,7 +20,7 @@ jobs:
       matrix:
         python-version: [ "3.12" ]
         llvm-version: [ "15.0.6", "16.0.4", "17.0.6" ]
-      exclude:
+        exclude:
         - llvm-version: "15.0.6"
         - llvm-version: "16.0.4"
 
