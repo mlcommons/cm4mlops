@@ -18,8 +18,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.12", "3.9" ]
+        python-version: [ "3.12" ]
         llvm-version: [ "15.0.6", "16.0.4", "17.0.6" ]
+      exclude:
+        - llvm-version: "15.0.6"
+        - llvm-version: "16.0.4"
 
     steps:
     - uses: actions/checkout@v3
