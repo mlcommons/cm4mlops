@@ -25,7 +25,7 @@
       "package-manager-update-cmd": "apt-get update -y",
       "package-manager-get-cmd": "apt-get install -y", 
       "packages": [
-        "python3", "python3-pip", "git", "sudo", "wget"
+        "python3", "python3-pip", "git", "sudo", "wget", "python3-venv"
       ],
       "versions": {
         "18.04": {
@@ -39,6 +39,9 @@
         },
         "23.04": {
           "FROM": "ubuntu:23.04"
+        },
+        "24.04": {
+          "FROM": "ubuntu:24.04"
         }
       }
     },
