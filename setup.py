@@ -12,10 +12,7 @@ class CustomInstallCommand(install):
     def run(self):
         self.get_sys_platform()
         self.install_system_packages()
-        packages = [ "cmind @ git+https://git@github.com/mlcommons/ck.git@a4c6a7b477af5f1e7099c55f5468a47854adaa6c#egg=cmind-2.3.1.1&subdirectory=cm", "giturlparse", "requests", "pyyaml", "setuptools" ] 
-        subprocess.check_call(
-        [sys.executable, '-m', 'pip', 'install'] +  packages
-        )
+
         # Call the standard run method
         install.run(self)
 
@@ -36,7 +33,7 @@ class CustomInstallCommand(install):
         if not curl_status:
             packages.append("curl")
 
-        name='virtualenv'
+        name='venv'
 
         if name in sys.modules:
             pass #nothing needed
@@ -113,7 +110,14 @@ setup(
     name='cm4mlops',
     version='0.1',
     packages=[],
-    install_requires=["wheel"],
+    install_requires=[
+        "setuptools>=60",
+        "wheel",
+        "cmind",
+        "giturlparse",
+        "requests",
+        "pyyaml"
+        ],
     cmdclass={
         'install': CustomInstallCommand,
     },
