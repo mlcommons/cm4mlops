@@ -14,7 +14,7 @@ class CustomInstallCommand(install):
         self.install_system_packages()
         packages = [ "cmind @ git+https://git@github.com/mlcommons/ck.git@a4c6a7b477af5f1e7099c55f5468a47854adaa6c#egg=cmind-2.3.1.1&subdirectory=cm", "giturlparse", "requests", "pyyaml", "setuptools" ] 
         subprocess.check_call(
-        [sys.executable, '-m', 'pip', 'install'] +  packages
+        [sys.executable, '-m', 'pip3', 'install'] +  packages
         )
         # Call the standard run method
         install.run(self)
