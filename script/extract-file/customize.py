@@ -96,10 +96,11 @@ def preprocess(i):
     if extract_to_folder != '':
         if 'tar ' in env['CM_EXTRACT_TOOL']:
             x = '' if windows else '-p'
+            y = '"' if ' ' in extract_to_folder else ''
 
             #env['CM_EXTRACT_TOOL_OPTIONS'] = ' --one-top-level='+ env['CM_EXTRACT_TO_FOLDER'] + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
-            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -C '+ q + extract_to_folder + q + ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
-            env['CM_EXTRACT_PRE_CMD'] = 'mkdir '+ x +' '+ q + extract_to_folder +  q + ' ' + xsep + ' '
+            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -C ' + y + extract_to_folder  + y + ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
+            env['CM_EXTRACT_PRE_CMD'] = 'mkdir '+ x +' '+ y + extract_to_folder +  y + ' ' + xsep + ' '
             env['CM_EXTRACT_EXTRACTED_FILENAME'] = extract_to_folder
 
         elif 'unzip' in env['CM_EXTRACT_TOOL']:
@@ -107,10 +108,10 @@ def preprocess(i):
             env['CM_EXTRACT_EXTRACTED_FILENAME'] = extract_to_folder
 
 
-    #x = '"' if ' ' in filename else ''
+    x = '"' if ' ' in filename else ''
     env['CM_EXTRACT_CMD'] = env['CM_EXTRACT_PRE_CMD'] + env['CM_EXTRACT_TOOL'] + ' ' + \
                             env.get('CM_EXTRACT_TOOL_EXTRA_OPTIONS', '') + \
-                            ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')+ ' '+ q + filename + q
+                            ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')+ ' '+ x + filename + x
 
     print ('')
     print ('Current directory: {}'.format(os.getcwd()))
