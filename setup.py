@@ -121,7 +121,7 @@ setup(
         "giturlparse",
         "requests",
         "pyyaml",
-        "setuptools"
+        "setuptools>=60"
         ],
     cmdclass={
         'install': CustomInstallCommand,
