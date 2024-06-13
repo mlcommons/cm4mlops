@@ -12,10 +12,11 @@ class CustomInstallCommand(install):
     def run(self):
         self.get_sys_platform()
         self.install_system_packages()
-        packages = [ "cmind @ git+https://git@github.com/mlcommons/ck.git@a4c6a7b477af5f1e7099c55f5468a47854adaa6c#egg=cmind-2.3.1.1&subdirectory=cm", "giturlparse", "requests", "pyyaml", "setuptools" ] 
+        '''packages = [ "cmind @ git+https://git@github.com/mlcommons/ck.git@a4c6a7b477af5f1e7099c55f5468a47854adaa6c#egg=cmind-2.3.1.1&subdirectory=cm", "giturlparse", "requests", "pyyaml", "setuptools" ] 
         subprocess.check_call(
         [sys.executable, '-m', 'pip', 'install'] +  packages
         )
+        '''
         # Call the standard run method
         install.run(self)
 
@@ -113,7 +114,14 @@ setup(
     name='cm4mlops',
     version='0.1',
     packages=[],
-    install_requires=["wheel"],
+    install_requires=[
+        "wheel",
+        "cmind @ git+https://git@github.com/mlcommons/ck.git@a4c6a7b477af5f1e7099c55f5468a47854adaa6c#egg=cmind-2.3.1.1&subdirectory=cm",
+        "giturlparse",
+        "requests",
+        "pyyaml",
+        "setuptools"
+        ],
     cmdclass={
         'install': CustomInstallCommand,
     },
