@@ -13,13 +13,13 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     env:
       CM_INDEX: "on"
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest]
         python-version: [ "3.12", "3.9" ]
         backend: [ "onnxruntime", "tf" ]
         implementation: [ "python", "cpp" ]
