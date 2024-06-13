@@ -96,10 +96,11 @@ def preprocess(i):
     if extract_to_folder != '':
         if 'tar ' in env['CM_EXTRACT_TOOL']:
             x = '' if windows else '-p'
+            y = '"' if ' ' in extract_to_folder else ''
 
             #env['CM_EXTRACT_TOOL_OPTIONS'] = ' --one-top-level='+ env['CM_EXTRACT_TO_FOLDER'] + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
-            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -C ' + q + extract_to_folder  + q + ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
-            env['CM_EXTRACT_PRE_CMD'] = 'mkdir '+ x +' '+ q + extract_to_folder +  q + ' ' + xsep + ' '
+            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -C ' + y + extract_to_folder  + y + ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')
+            env['CM_EXTRACT_PRE_CMD'] = 'mkdir '+ x +' '+ y + extract_to_folder +  y + ' ' + xsep + ' '
             env['CM_EXTRACT_EXTRACTED_FILENAME'] = extract_to_folder
 
         elif 'unzip' in env['CM_EXTRACT_TOOL']:
