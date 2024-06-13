@@ -36,7 +36,7 @@ class CustomInstallCommand(install):
         if not curl_status:
             packages.append("curl")
 
-        name='virtualenv'
+        name='venv'
 
         if name in sys.modules:
             pass #nothing needed
