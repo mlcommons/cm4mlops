@@ -116,12 +116,12 @@ setup(
         "cmind @ git+https://git@github.com/mlcommons/ck.git@a4c6a7b477af5f1e7099c55f5468a47854adaa6c#egg=cmind&subdirectory=cm"
         ],
     install_requires=[
+        "setuptools>=60",
         "wheel",
         "cmind @ git+https://git@github.com/mlcommons/ck.git@a4c6a7b477af5f1e7099c55f5468a47854adaa6c#egg=cmind&subdirectory=cm",
         "giturlparse",
         "requests",
-        "pyyaml",
-        "setuptools>=60"
+        "pyyaml"
         ],
     cmdclass={
         'install': CustomInstallCommand,
