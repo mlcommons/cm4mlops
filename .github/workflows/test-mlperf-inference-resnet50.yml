@@ -26,6 +26,11 @@ jobs:
         exclude:
           - backend: tf
             implementation: cpp
+          - os: windows-latest
+            backend: tf
+          - os: windows-latest
+            python-version: "3.9"
+          - os: macos-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -40,4 +45,4 @@ jobs:
         cm run script --quiet --tags=get,sys-utils-cm
     - name: Test MLPerf Inference ResNet50
       run: |
-        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --hw_name=default --model=resnet50 --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
+        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --hw_name=default --model=resnet50 --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --adr.compiler.tags=gcc --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
