@@ -92,8 +92,7 @@ class CustomInstallCommand(install):
         if self.system == "Linux" or self.system == 'Darwin':
             return subprocess.call(['which', command], stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
         elif self.system == "Windows":
-            return False    # Windows not supported condition handled in install_system_packages
-
+            return subprocess.call([command, '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) == 0
 
     def custom_function(self):
         import cmind
