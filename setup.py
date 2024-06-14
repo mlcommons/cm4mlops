@@ -109,6 +109,8 @@ class CustomInstallCommand(install):
 setup(
     name='cm4mlops',
     version='0.1',
+    long_description='CM automations and scripts for MLOps',
+    long_description_content_type='text/x-rst',
     packages=[],
     install_requires=[
         "setuptools>=60",
