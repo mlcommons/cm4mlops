@@ -35,5 +35,5 @@ jobs:
     - name: Build the Python wheel
       run: |
         python3 -m venv cm
-        source cm/bin/activate
+        . cm/bin/activate
         python3 -m pip install . -v
