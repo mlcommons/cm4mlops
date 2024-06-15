@@ -36,4 +36,5 @@ jobs:
       run: |
         python3 -m venv cm
         cm\Scripts\activate.bat
+        git config --system core.longpaths true
         python3 -m pip install . -v
