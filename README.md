@@ -18,6 +18,18 @@ These automation recipes are being developed and maintained
 by the [MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
 with [great contributions](CONTRIBUTING.md) from the community.
 
+## License
+
+[Apache 2.0](LICENSE.md)
+
+### Citing this project
+
+Please use this [BibTeX file](https://github.com/mlcommons/ck/blob/master/citation.bib).
+
+## Catalog
+
+See the automatically generated catalog [online](https://docs.mlcommons.org/cm4mlops/scripts/)).
+
 ## Tests
 
 [![CM script automation test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-scripts.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-scripts.yml)
@@ -27,18 +39,6 @@ with [great contributions](CONTRIBUTING.md) from the community.
 [![image classification with ONNX](https://github.com/mlcommons/cm4mlops/actions/workflows/test-image-classification-onnx.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-image-classification-onnx.yml)
 
 
-## Catalog
-
-See the automatically generated catalog [online](https://docs.mlcommons.org/cm4mlops/scripts/)).
-
-## License
-
-[Apache 2.0](LICENSE.md)
-
-## Copyright
-
-2022-2024 [MLCommons](https://mlcommons.org)
-
 ## Acknowledgments
 
 This open-source technology is being developed by the [MLCommons Task Force on Automation and Reproducibility](https://github.com/mlcommons/ck/blob/master/docs/taskforce.md)
@@ -47,5 +47,5 @@ as a community effort based on user feedback.
 We would like to thank all [volunteers, collaborators and contributors](CONTRIBUTING.md) 
 for their support, fruitful discussions, and useful feedback! 
 
-We thank the [cTuning foundation](https://cTuning.org), [cKnowledge.org](https://cKnowledge.org), [OctoML](https://octoml.ai)
+We thank [cKnowledge.org](https://cKnowledge.org), [cTuning foundation](https://cTuning.org)
 and [MLCommons](https://mlcommons.org) for sponsoring this project!
