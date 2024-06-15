@@ -132,7 +132,7 @@ def postprocess(i):
     run_cmd = run_cmd.replace("--docker_run_deps", "")
 
     if mount_cmds:
-        for mount_cmd in mount_cmds:
+        for i,mount_cmd in enumerate(mount_cmds):
 
             # Since windows may have 2 :, we search from the right
             j = mount_cmd.rfind(':')
@@ -148,6 +148,8 @@ def postprocess(i):
             host_mount = mount_parts[0]
             if not os.path.exists(host_mount):
                 os.makedirs(host_mount)
+            if " " in host_mount and not host_mount.startswith('"'):
+                mount_cmds[i] = f"\"{host_mount}\":{mount_parts[1]}"
 
         mount_cmd_string = " -v " + " -v ".join(mount_cmds)
     else:
