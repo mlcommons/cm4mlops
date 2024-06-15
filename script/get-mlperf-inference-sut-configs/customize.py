@@ -36,7 +36,7 @@ def postprocess(i):
     if env.get('CM_SUT_NAME', '') == '':
         env['CM_SUT_NAME'] = env['CM_HW_NAME'] + "-" + implementation_string + "-" + device + "-" + backend + "-" + backend_version + "-" + run_config_string
 
-    if env.get('CM_SUT_CONFIGS_PATH',''):
+    if env.get('CM_SUT_CONFIGS_PATH','') != '':
         path = env['CM_SUT_CONFIGS_PATH']
     elif env.get('CM_SUT_USE_EXTERNAL_CONFIG_REPO', '') == "yes":
         path = env.get('CM_GIT_CHECKOUT_PATH')

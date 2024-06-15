@@ -975,7 +975,7 @@ class CAutomation(Automation):
                 if str(state['docker'].get('run', True)).lower() in ['false', '0', 'no']:
                     print (recursion_spaces+'  - Skipping script::{} run as we are inside docker'.format(found_script_artifact))
                     return {'return': 0}
-                elif str(state['docker'].get('docker_real_run', True)).lower() in ['false', '0', 'no']:
+                elif str(state['docker'].get('real_run', True)).lower() in ['false', '0', 'no']:
                     print (recursion_spaces+'  - Doing fake run for script::{} as we are inside docker'.format(found_script_artifact))
                     fake_run = True
                     env['CM_TMP_FAKE_RUN']='yes'
@@ -1019,8 +1019,8 @@ class CAutomation(Automation):
         ############################################################################################################
         # Check if the output of a selected script should be cached
         cache = False if i.get('skip_cache', False) else meta.get('cache', False)
-        cache = False if fake_run else cache
         cache = cache or (i.get('force_cache', False) and meta.get('can_force_cache', False))
+        cache = False if fake_run else cache #fake run skips run script - should not pollute cache
 
         cached_uid = ''
         cached_tags = []
@@ -1151,7 +1151,11 @@ class CAutomation(Automation):
                     # IF REUSE FROM CACHE - update env and state from cache!
                     cached_state = r['meta']
 
-                    new_env = cached_state['new_env']
+                    r = self._fix_cache_paths(cached_state['new_env'])
+                    if r['return'] > 0:
+                        return r
+                    new_env = r['new_env']
+
                     utils.merge_dicts({'dict1':env, 'dict2':new_env, 'append_lists':True, 'append_unique':True})
 
                     new_state = cached_state['new_state']
@@ -1165,26 +1169,27 @@ class CAutomation(Automation):
 
 
 
-                    # Check chain of posthook dependencies on other CM scripts. We consider them same as postdeps when
-                    # script is in cache
-                    if verbose:
-                        print (recursion_spaces + '    - Checking posthook dependencies on other CM scripts:')
+                    if not fake_run:
+                        # Check chain of posthook dependencies on other CM scripts. We consider them same as postdeps when
+                        # script is in cache
+                        if verbose:
+                            print (recursion_spaces + '    - Checking posthook dependencies on other CM scripts:')
 
-                    clean_env_keys_post_deps = meta.get('clean_env_keys_post_deps',[])
+                        clean_env_keys_post_deps = meta.get('clean_env_keys_post_deps',[])
 
-                    r = self._call_run_deps(posthook_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
+                        r = self._call_run_deps(posthook_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
                             recursion_spaces + extra_recursion_spaces,
                             remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                    if r['return']>0: return r
+                        if r['return']>0: return r
 
-                    if verbose:
-                        print (recursion_spaces + '    - Checking post dependencies on other CM scripts:')
+                        if verbose:
+                            print (recursion_spaces + '    - Checking post dependencies on other CM scripts:')
 
-                    # Check chain of post dependencies on other CM scripts
-                    r = self._call_run_deps(post_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
+                        # Check chain of post dependencies on other CM scripts
+                        r = self._call_run_deps(post_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, 
                             recursion_spaces + extra_recursion_spaces,
                             remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                    if r['return']>0: return r
+                        if r['return']>0: return r
 
 
 
@@ -1884,6 +1889,43 @@ class CAutomation(Automation):
             input ('Press Enter to continue ...')
 
         return rr
+
+    ######################################################################################
+    def _fix_cache_paths(self, env):
+        cm_repos_path = os.environ.get('CM_REPOS', os.path.join(os.path.expanduser("~"), "CM", "repos"))
+        current_cache_path = os.path.realpath(os.path.join(cm_repos_path, "local", "cache"))
+
+        new_env = env #just a reference
+
+        for key,val in new_env.items():
+            #may need a cleaner way
+            if type(val) == str and ("/local/cache/" in val or "\\local\\cache\\" in val):
+                if "/local/cache/" in val:
+                    sep = "/"
+                else:
+                    sep = "\\"
+
+                path_split = val.split(sep)
+                repo_entry_index = path_split.index("local")
+                loaded_cache_path = sep.join(path_split[0:repo_entry_index+2])
+                if loaded_cache_path != current_cache_path and os.path.exists(current_cache_path):
+                    new_env[key] = val.replace(loaded_cache_path, current_cache_path)
+
+            elif type(val) == list:
+                for val2,i in enumerate(val):
+                    if type(val2) == str and ("/local/cache/" in val2 or "\\local\\cache\\" in val2):
+                        if "/local/cache/" in val:
+                            sep = "/"
+                        else:
+                            sep = "\\"
+
+                        path_split = val2.split(sep)
+                        repo_entry_index = path_split.index("local")
+                        loaded_cache_path = sep.join(path_split[0:repo_entry_index+2])
+                        if loaded_cache_path != current_cache_path and os.path.exists(current_cache_path):
+                            new_env[key][i] = val2.replace(loaded_cache_path, current_cache_path)
+
+        return {'return': 0, 'new_env': new_env}
 
     ######################################################################################
     def _dump_version_info_for_script(self, output_dir = os.getcwd(), quiet = False, silent = False):
@@ -4313,20 +4355,27 @@ def enable_or_skip_script(meta, env):
     Internal: enable a dependency based on enable_if_env and skip_if_env meta information
     (AND function)
     """
+    if type(meta) != dict:
+        print( "The meta entry is not a dictionary for skip/enable if_env {}".format(meta))
+
     for key in meta:
+        meta_key = [str(v).lower() for v in meta[key]]
         if key in env:
-            value = str(env[key]).lower()
-
-            meta_key = [str(v).lower() for v in meta[key]]
-
+            value = str(env[key]).lower().strip()
             if set(meta_key) & set(["yes", "on", "true", "1"]):
-                if value not in ["no", "off", "false", "0"]:
+                # Any set value other than false is taken as set
+                if value not in ["no", "off", "false", "0", ""]:
                     continue
             elif set(meta_key) & set(["no", "off", "false", "0"]):
-                if value in ["no", "off", "false", "0"]:
+                if value in ["no", "off", "false", "0", ""]:
                     continue
             elif value in meta_key:
                 continue
+        else:
+            if set(meta_key) & set(["no", "off", "false", "0", ""]):
+                # If key is missing in env, and if the expected value is False, consider it a match
+                continue
+
         return False
 
     return True
@@ -4340,15 +4389,15 @@ def any_enable_or_skip_script(meta, env):
     for key in meta:
         found = False
         if key in env:
-            value = str(env[key]).lower()
+            value = str(env[key]).lower().strip()
 
             meta_key = [str(v).lower() for v in meta[key]]
 
             if set(meta_key) & set(["yes", "on", "true", "1"]):
-                if value not in ["no", "off", "false", "0"]:
+                if value not in ["no", "off", "false", "0", ""]:
                     found = True
-            elif set(meta_key) & set(["no", "off", "false", "0"]):
-                if value in ["no", "off", "false", "0"]:
+            elif set(meta_key) & set(["no", "off", "false", "0", ""]):
+                if value in ["no", "off", "false", "0", ""]:
                     found = True
             elif value in meta_key:
                 found = True
@@ -4483,7 +4532,7 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
     posthook_deps = i.get('posthook_deps', [])
     add_deps_recursive = i.get('add_deps_recursive', {})
     recursion_spaces = i['recursion_spaces']
-    remembered_selections = i.get('remembered_selections', {})
+    remembered_selections = i.get('remembered_selections', [])
     variation_tags_string = i.get('variation_tags_string', '')
     found_cached = i.get('found_cached', False)
     script_automation = i['self']
@@ -5012,7 +5061,7 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
 
     add_deps_info = meta.get('ad', {})
     if not add_deps_info:
-        add_deps_info = meta.get('add_deps',{})
+        add_deps_info = meta.get('add_deps', {})
     else:
         utils.merge_dicts({'dict1':add_deps_info, 'dict2':meta.get('add_deps', {}), 'append_lists':True, 'append_unique':True})
     if add_deps_info:
@@ -5027,6 +5076,12 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
         update_env_from_input_mapping(env, i['input'], input_mapping)
 
     # Possibly restrict this to within docker environment
+    add_deps_info = meta.get('ad', i.get('ad', {})) #we need to see input here
+    if not add_deps_info:
+        add_deps_info = meta.get('add_deps', i.get('add_deps_recursive', {}))
+    else:
+        utils.merge_dicts({'dict1':add_deps_info, 'dict2':meta.get('add_deps', {}), 'append_lists':True, 'append_unique':True})
+
     new_docker_settings = meta.get('docker')
     if new_docker_settings:
         docker_settings = state.get('docker', {})
@@ -5036,6 +5091,8 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
         #    #    update_env_from_input_mapping(env, i['input'], docker_input_mapping)
         #    utils.merge_dicts({'dict1':docker_input_mapping, 'dict2':new_docker_input_mapping, 'append_lists':True, 'append_unique':True})
         utils.merge_dicts({'dict1':docker_settings, 'dict2':new_docker_settings, 'append_lists':True, 'append_unique':True})
+        if docker_settings.get('deps', []):
+            update_deps(docker_settings['deps'], add_deps_info, False)
         state['docker'] = docker_settings
 
     new_env_keys_from_meta = meta.get('new_env_keys', [])

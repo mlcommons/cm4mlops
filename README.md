@@ -7,10 +7,10 @@
 
 This repository contains reusable and cross-platform automation recipes to run DevOps, MLOps, AIOps and MLPerf 
 via a simple and human-readable [Collective Mind interface (CM)](https://github.com/mlcommons/ck) 
-while adapting to different opearting systems, software and hardware.
+while adapting to different operating systems, software and hardware.
 
 All СM scripts have a simple Python API, extensible JSON/YAML meta description
-and unifed input/output to make them reusable in different projects either individually 
+and unified input/output to make them reusable in different projects either individually 
 or by chaining them together into portable automation workflows, applications 
 and web services adaptable to continuously changing models, data sets, software and hardware.
 
@@ -28,7 +28,7 @@ Please use this [BibTeX file](https://github.com/mlcommons/ck/blob/master/citati
 
 ## Catalog
 
-See the automatically generated catalog [online](https://access.cknowledge.org/playground/?action=scripts).
+See the automatically generated catalog [online](https://docs.mlcommons.org/cm4mlops/scripts/)).
 
 ## Tests
 

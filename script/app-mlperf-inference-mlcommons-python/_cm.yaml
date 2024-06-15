@@ -31,6 +31,9 @@ default_env:
   CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX: reference
   CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX: ''
 
+docker:
+  real_run: False
+
 # Map script inputs to environment variables
 input_mapping:
   count: CM_MLPERF_LOADGEN_QUERY_COUNT
@@ -104,6 +107,8 @@ deps:
 
   # Detect CUDA if required
   - tags: get,cuda,_cudnn
+    names:
+      - cuda
     enable_if_env:
       CM_MLPERF_DEVICE:
       - gpu
@@ -345,6 +350,10 @@ deps:
       CM_MODEL:
       - gptj-99
       - gptj-99.9
+    skip_if_env:
+      CM_NETWORK_LOADGEN:
+      - lon
+
 
 
   ## RetinaNet (PyTorch weights, FP32)
@@ -657,8 +666,6 @@ variations:
     add_deps_recursive:
       onnxruntime:
         tags: _rocm
-      inference-src:
-        tags: _repo.https://github.com/ctuning/inference
     env:
       ONNXRUNTIME_PREFERRED_EXECUTION_PROVIDER: "ROCMExecutionProvider"
       CM_MLPERF_BACKEND_VERSION: <<<CM_ONNXRUNTIME_TRAINING_VERSION>>>
@@ -1137,6 +1144,10 @@ variations:
 
   network-sut:
     group: network
+    deps:
+      - tags: get,generic-python-lib,_package.flask
+        names:
+          - flask
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX1: network_sut
       CM_NETWORK_LOADGEN: sut

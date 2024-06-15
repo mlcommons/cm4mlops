@@ -5,7 +5,7 @@ name: MLPerf loadgen with HuggingFace bert onnx fp32 squad model
 
 on:
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-loadgen-onnx-huggingface-bert-fp32-squad.yml'
       - '**'
@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.12", "3.9" ]
+        python-version: [ "3.12" ]
 
     steps:
     - uses: actions/checkout@v3

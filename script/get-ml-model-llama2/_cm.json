@@ -30,7 +30,8 @@
       "names": [
         "hf-zoo"
       ],
-      "tags": "get,ml-model,huggingface,zoo,_clone-repo"
+      "tags": "get,ml-model,huggingface,zoo,_clone-repo",
+      "extra_cache_tags": "llama2,llama-2"
     }
   ],
   "tags": [

@@ -5,7 +5,7 @@ name: CM script automation features test
 
 on:
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-cm-script-features.yml'
       - '**'

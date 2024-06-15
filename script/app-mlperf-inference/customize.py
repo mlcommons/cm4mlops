@@ -46,8 +46,8 @@ def postprocess(i):
     env['CMD'] = ''
     state = i['state']
 
-    if env.get('CM_MLPERF_USER_CONF', '') == '':
-        return {'return': 0}
+    #if env.get('CM_MLPERF_USER_CONF', '') == '':
+    #    return {'return': 0}
 
     output_dir = env['CM_MLPERF_OUTPUT_DIR']
     mode = env['CM_MLPERF_LOADGEN_MODE']
@@ -254,16 +254,16 @@ def postprocess(i):
         if env.get('CM_HOST_SYSTEM_NAME','')!='': host_info['system_name']=env['CM_HOST_SYSTEM_NAME']
 
         # Check CM automation repository
-        repo_name = 'mlcommons@ck'
+        repo_name = 'mlcommons@cm4mlops'
         repo_hash = ''
-        r = cm.access({'action':'find', 'automation':'repo', 'artifact':'mlcommons@ck,a4705959af8e447a'})
+        r = cm.access({'action':'find', 'automation':'repo', 'artifact':'mlcommons@cm4mlops,9e97bb72b0474657'})
         if r['return']==0 and len(r['list'])==1:
             repo_path = r['list'][0].path
             if os.path.isdir(repo_path):
                 repo_name = os.path.basename(repo_path)
 
-                # Check Grigori's dev
-                if repo_name == 'ck': repo_name = 'ctuning@mlcommons-ck'
+                # Check dev
+                if repo_name == 'cm4mlops': repo_name = 'gateoverflow@cm4mlops'
 
                 r = cm.access({'action':'system',
                                'automation':'utils',
@@ -274,54 +274,6 @@ def postprocess(i):
 
                     host_info['cm_repo_name'] = repo_name
                     host_info['cm_repo_git_hash'] = repo_hash
-
-        # Check a few important MLCommons repos
-        xhashes = []
-        md_xhashes = ''
-
-        for x in [('get,git,inference', ['inference']),
-                  ('get,git,mlperf,power', ['power-dev'])]:
-            xtags = x[0]
-            xdirs = x[1]
-
-            rx = cm.access({'action':'find', 'automation':'cache', 'tags':xtags})
-            if rx['return']>0: return rx
-            for cache in rx['list']:
-                xurl = ''
-                xhash = ''
-
-                for xd in xdirs:
-                    xpath = os.path.join(cache.path, xd)
-                    if os.path.isdir(xpath):
-                        r = cm.access({'action':'system', 'automation':'utils', 'path':xpath, 'cmd':'git rev-parse HEAD'})
-                        if r['return'] == 0 and r['ret'] == 0:
-                            xhash = r['stdout']
-                        
-                        r = cm.access({'action':'system', 'automation':'utils', 'path':xpath, 'cmd':'git config --get remote.origin.url'})
-                        if r['return'] == 0 and r['ret'] == 0:
-                            xurl = r['stdout']
-            
-                    if xurl!='' and xhash!='':
-                        break
-
-                if xurl!='' and xhash!='':
-                    # Check if doesn't exist
-                    found = False
-
-                    for xh in xhashes:
-                        if xh['mlcommons_git_url'] == xurl and xh['mlcommons_git_hash'] == xhash:
-                            found = True
-                            break
-
-                    if not found:
-                        xhashes.append({'mlcommons_git_url': xurl,
-                                        'mlcommons_git_hash': xhash,
-                                        'cm_cache_tags':cache.meta['tags']})
-
-                        md_xhashes +='* MLCommons Git {} ({})\n'.format(xurl, xhash)
-
-        if len(xhashes)>0:
-            host_info['mlcommons_repos'] = xhashes
 
         with open ("cm-host-info.json", "w") as fp:
             fp.write(json.dumps(host_info, indent=2)+'\n')
@@ -336,10 +288,10 @@ def postprocess(i):
 
         readme_init = "This experiment is generated using the [MLCommons Collective Mind automation framework (CM)](https://github.com/mlcommons/ck).\n\n"
 
-        readme_init+= "*Check [CM MLPerf docs](https://github.com/mlcommons/ck/tree/master/docs/mlperf) for more details.*\n\n"
+        readme_init+= "*Check [CM MLPerf docs](https://mlcommons.github.io/inference) for more details.*\n\n"
 
-        readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n{}\n\n".format(platform.platform(), 
-            platform.processor(), sys.version, cm.__version__, md_xhashes)
+        readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n\n".format(platform.platform(), 
+            platform.processor(), sys.version, cm.__version__)
 
         x = repo_name
         if repo_hash!='': x+=' --checkout='+str(repo_hash)

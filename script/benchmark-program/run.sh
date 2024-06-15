@@ -41,8 +41,19 @@ fi
 # Check CM_RUN_CMD0
 if [[ "${CM_RUN_CMD0}" != "" ]]; then
   eval ${CM_RUN_CMD0}
+  exitstatus=$?
+  if [ -e exitstatus ]; then
+    exitstatus=$( cat exitstatus )
+  fi
+  test $exitstatus -eq 0 || $exitstatus
 else
+  echo "${CM_RUN_CMD}"
   eval ${CM_RUN_CMD}
+  exitstatus=$?
+  if [ -e exitstatus ]; then
+    exitstatus=$( cat exitstatus )
+  fi
+  test $exitstatus -eq 0 || $exitstatus
 fi
 
-test $? -eq 0 || exit 1
+test $? -eq 0 || exit $? 

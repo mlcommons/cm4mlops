@@ -1,6 +1,7 @@
 #!/bin/bash
 
-THREADS_PER_INSTANCE=$(((4 * ${CM_HOST_CPU_THREADS_PER_CORE}) / ${CM_HOST_CPU_SOCKETS}))
+WORKERS_PER_PROC=${WORKERS_PER_PROC:-4}
+THREADS_PER_INSTANCE=$((( ${WORKERS_PER_PROC} * ${CM_HOST_CPU_THREADS_PER_CORE}) / ${CM_HOST_CPU_SOCKETS}))
 
 export LD_PRELOAD=${CONDA_PREFIX}/lib/libjemalloc.so
 export MALLOC_CONF="oversize_threshold:1,background_thread:true,percpu_arena:percpu,metadata_thp:always,dirty_decay_ms:9000000000,muzzy_decay_ms:9000000000";

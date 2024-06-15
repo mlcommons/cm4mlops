@@ -1,7 +1,7 @@
 name: Check .md README files for broken links
 
 on:
-  push: [main]
+  push: [main, mlperf-inference]
 
 jobs:
   markdown-link-check:
