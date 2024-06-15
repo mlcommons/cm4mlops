@@ -1317,6 +1317,8 @@ gui:
   title: "CM GUI for the MLPerf inference benchmark"
 
 docker:
+  use_host_group_id: True
+  use_host_user_id: True
   deps:
     - tags: get,mlperf,inference,results,dir
     - tags: get,mlperf,inference,submission,dir

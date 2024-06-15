@@ -5,6 +5,10 @@
   "ARGS": [
     "CM_GH_TOKEN"
   ],
+  "ARGS_DEFAULT": {
+    "UID" : "1000",
+    "GID" : "1000"
+  },
   "ENTRYPOINT": "[\"/bin/bash\", \"-c\"]",
   "ENV": {
     "TZ": "US/Pacific",
@@ -14,9 +18,9 @@
     "ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ >/etc/timezone"
   ],
   "PYTHON": "python3",
-  "USERID": "",
+  "UID": "",
   "USER": "cmuser",
-  "GROUPID": "",
+  "GID": "",
   "GROUP": "cm",
   "SHELL": "[\"/bin/bash\", \"-c\"]",
   "WORKDIR": "/home/cmuser",

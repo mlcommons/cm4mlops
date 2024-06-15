@@ -17,7 +17,7 @@ def preprocess(i):
         config = json.load(f)
 
     build_args = []
-    build_args_default = {'CM_ADD_DOCKER_GROUP_ID':''}
+    build_args_default = {}
     input_args = []
     copy_files = []
 
@@ -99,8 +99,13 @@ def preprocess(i):
         f.write('SHELL ' + shell + EOL)
         f.write(EOL)
 
-    for arg in config['ARGS']:
-        f.write('ARG '+ arg + EOL)
+    for arg in config['ARGS_DEFAULT']:
+        if arg == "UID":
+            f.write('ARG '+ f"{arg}={config['ARGS_DEFAULT']['UID']}" + EOL)
+        elif arg == "GID":
+            f.write('ARG '+ f"{arg}={config['ARGS_DEFAULT']['GID']}" + EOL)
+        else:
+            f.write('ARG '+ arg + EOL)
 
     for build_arg in build_args:
         f.write('ARG '+ build_arg + EOL)
@@ -150,22 +155,15 @@ def preprocess(i):
 
     f.write(EOL+'# Setup docker user' + EOL)
     docker_user = get_value(env, config, 'USER', 'CM_DOCKER_USER')
-    docker_userid = get_value(env, config, 'USERID', 'CM_DOCKER_USER_ID')
     docker_group = get_value(env, config, 'GROUP', 'CM_DOCKER_GROUP')
-    docker_groupid = get_value(env, config, 'GROUPID', 'CM_DOCKER_GROUP_ID')
+
     if docker_user:
-        if not docker_group:
-            docker_group = docker_user
-        DOCKER_GROUP = ' -g ' + docker_group
-        if docker_groupid:
-            DOCKER_GROUP_ID = "-g " + docker_groupid
-        else:
-            DOCKER_GROUP_ID = ""
-        f.write('RUN groupadd ${CM_ADD_DOCKER_GROUP_ID} ' + DOCKER_GROUP_ID + docker_group + EOL)
-        if docker_userid:
-            DOCKER_USER_ID = "-u " + docker_userid
-        else:
-            DOCKER_USER_ID = ""
+
+        f.write('RUN groupadd -g $GID -o ' + docker_group + EOL)
+
+        DOCKER_USER_ID = "-m -u $UID "
+        DOCKER_GROUP = "-g $GID -o"
+
         user_shell = json.loads(shell)
         f.write('RUN useradd ' + DOCKER_USER_ID  + DOCKER_GROUP + ' --create-home --shell '+ user_shell[0] + ' '
                 + docker_user + EOL)

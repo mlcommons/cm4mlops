@@ -1900,11 +1900,14 @@ def docker(i):
 
         docker_use_host_group_id = i.get('docker_use_host_group_id', docker_settings.get('use_host_group_id'))
         if docker_use_host_group_id in [True, 'True', 'yes'] and os.name != 'nt':
-            env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('CM_ADD_DOCKER_GROUP_ID', '\\"-g $(id -g $USER) -o\\"'))
+            env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('GID', '\\" $(id -g $USER) \\"'))
+        docker_use_host_user_id = i.get('docker_use_host_user_id', docker_settings.get('use_host_user_id'))
+        if docker_use_host_user_id in [True, 'True', 'yes'] and os.name != 'nt':
+            env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('UID', '\\" $(id -u $USER) \\"'))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
         docker_os = i.get('docker_os', docker_settings.get('os', 'ubuntu'))
-        docker_os_version = i.get('docker_os_version', docker_settings.get('os_version', '22.04'))
+        docker_os_version = i.get('docker_os_version', docker_settings.get('os_version', '24.04'))
         image_tag_extra = i.get('docker_image_tag_extra', docker_settings.get('image_tag_extra', '-latest'))
 
         if not docker_base_image:
