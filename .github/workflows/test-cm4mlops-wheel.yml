@@ -33,8 +33,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        test "${{ matrix.os }}" -eq "macos-latest" || test "${{ matrix.os }}" -eq "windows-latest" || eval sudo apt-get update
-        && sudo apt-get install -y python3 python3-pip python3-venv
+        test "${{ matrix.os }}" = "macos-latest" || test "${{ matrix.os }}" = "windows-latest" || eval sudo apt-get update && sudo apt-get install -y python3 python3-pip python3-venv
 
     - name: Build the Python wheel
       run: |
