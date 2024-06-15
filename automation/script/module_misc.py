@@ -1907,7 +1907,7 @@ def docker(i):
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
         docker_os = i.get('docker_os', docker_settings.get('os', 'ubuntu'))
-        docker_os_version = i.get('docker_os_version', docker_settings.get('os_version', '24.04'))
+        docker_os_version = i.get('docker_os_version', docker_settings.get('os_version', '22.04'))
         image_tag_extra = i.get('docker_image_tag_extra', docker_settings.get('image_tag_extra', '-latest'))
 
         if not docker_base_image:
