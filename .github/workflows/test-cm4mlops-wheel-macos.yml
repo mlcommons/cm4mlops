@@ -28,9 +28,6 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
-      run: |
-        NONINTERACTIVE=1 brew install python3 python3-pip python3-venv
 
     - name: Build the Python wheel
       run: |
