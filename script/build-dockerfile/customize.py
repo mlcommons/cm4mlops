@@ -100,12 +100,11 @@ def preprocess(i):
         f.write(EOL)
 
     for arg in config['ARGS_DEFAULT']:
-        if arg == "UID":
-            f.write('ARG '+ f"{arg}={config['ARGS_DEFAULT']['UID']}" + EOL)
-        elif arg == "GID":
-            f.write('ARG '+ f"{arg}={config['ARGS_DEFAULT']['GID']}" + EOL)
-        else:
-            f.write('ARG '+ arg + EOL)
+        arg_value = config['ARGS_DEFAULT'][arg]
+        f.write('ARG '+ f"{arg}={arg_value}" + EOL)
+
+    for arg in config['ARGS']:
+        f.write('ARG '+ arg + EOL)
 
     for build_arg in build_args:
         f.write('ARG '+ build_arg + EOL)
