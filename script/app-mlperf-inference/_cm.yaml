@@ -1226,9 +1226,6 @@ variations:
 
 invalid_variation_combinations:
   -
-    - resnet50
-    - pytorch
-  -
     - retinanet
     - tf
   -
