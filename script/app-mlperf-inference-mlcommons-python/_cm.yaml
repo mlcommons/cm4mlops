@@ -612,6 +612,9 @@ variations:
         tags: _NCHW
       ml-model:
         tags: raw,_onnx
+      numpy:
+        version_max: "1.26.4"
+        version_max_usable: "1.26.4"
     env:
       CM_MLPERF_BACKEND: onnxruntime
 
@@ -633,6 +636,9 @@ variations:
         tags: _NCHW
       ml-model:
         tags: raw,_pytorch
+      numpy:
+        version_max: "1.26.4"
+        version_max_usable: "1.26.4"
     env:
       CM_MLPERF_BACKEND: pytorch
       CM_MLPERF_BACKEND_VERSION: <<<CM_TORCH_VERSION>>>
@@ -980,6 +986,8 @@ variations:
     - tags: get,generic-python-lib,_tqdm
     - tags: get,generic-python-lib,_onnx
     - tags: get,generic-python-lib,_numpy
+      names:
+        - numpy
     - tags: get,generic-python-lib,_package.torchrec
     - tags: get,generic-python-lib,_package.pyre-extensions
     - tags: get,generic-python-lib,_package.torchsnapshot
@@ -1008,6 +1016,8 @@ variations:
     deps:
     - tags: get,generic-python-lib,_opencv-python
     - tags: get,generic-python-lib,_numpy
+      names:
+        - numpy
     - tags: get,generic-python-lib,_pycocotools
 
     env:
@@ -1024,6 +1034,8 @@ variations:
     deps:
     - tags: get,generic-python-lib,_opencv-python
     - tags: get,generic-python-lib,_numpy
+      names:
+        - numpy
     - tags: get,generic-python-lib,_pycocotools
     prehook_deps:
     - tags: get,generic-python-lib,_protobuf
