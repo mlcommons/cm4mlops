@@ -154,6 +154,14 @@
             "cmake"
           ],
           "tags": "get,generic,conda-package,_package.cmake"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.numpy",
+          "names": [
+            "pip-package",
+            "numpy"
+          ],
+          "version_max": "1.26.4"
         }
       ]
     },
