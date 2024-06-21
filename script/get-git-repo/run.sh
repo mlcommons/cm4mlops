@@ -49,6 +49,11 @@ else
   cd ${folder}
 fi
 
+if [ ! -z ${CM_GIT_PR_TO_APPLY} ]; then
+  git fetch origin ${CM_GIT_PR_TO_APPLY}:tmp-apply
+  git config user.email "temp@example.com"
+  git merge tmp-apply --no-edit
+fi
 
 IFS=',' read -r -a submodules <<< "${CM_GIT_SUBMODULES}"
 
