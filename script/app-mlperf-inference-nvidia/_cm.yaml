@@ -416,9 +416,10 @@ variations:
     - tags: get,generic-python-lib,_package.nibabel
     - tags: get,generic-python-lib,_pandas
       version_max: "1.5.3"
+    - tags: get,generic-python-lib,_onnx-graphsurgeon
+      version: 0.3.27
     - tags: get,generic-python-lib,_package.onnx
       version: 1.13.1
-    - tags: get,generic-python-lib,_onnx-graphsurgeon
 
   3d-unet-99:
     group: model
