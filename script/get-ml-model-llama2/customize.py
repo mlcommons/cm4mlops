@@ -19,6 +19,7 @@ def postprocess(i):
 
     env['LLAMA2_CHECKPOINT_PATH'] = env['CM_ML_MODEL_PATH']
     env['CM_ML_MODEL_PATH'] = env['LLAMA2_CHECKPOINT_PATH']
+    env['CM_ML_MODEL_LLAMA2_FILE_WITH_PATH'] = env['LLAMA2_CHECKPOINT_PATH']
     env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_ML_MODEL_PATH']
 
     return {'return':0}
