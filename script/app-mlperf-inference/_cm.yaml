@@ -624,17 +624,17 @@ variations:
       - openorca-gsm8k-mbxp-combined-accuracy-script
       tags: run,accuracy,mlperf,_openorca-gsm8k-mbxp,_float32
 
-  mixtral-8x7b-99:
+  mixtral-8x7b:
     group:
       model
     base:
     - mixtral-8x7b
     env:
       CM_MODEL:
-        mixtral-8x7b-99
+        mixtral-8x7b
     add_deps_recursive:
       mlperf-inference-implementation:
-        tags: _mixtral-8x7b-99
+        tags: _mixtral-8x7b
 
   rnnt:
     group:

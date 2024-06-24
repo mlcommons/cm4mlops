@@ -414,7 +414,7 @@ deps:
     - mixtral-model
     enable_if_env:
       CM_MODEL:
-      - mixtral-8x7b-99
+      - mixtral-8x7b
     skip_if_env:
       CM_MLPERF_CUSTOM_MODEL_PATH:
       - "on"
@@ -531,7 +531,7 @@ deps:
     - openorca-mbxp-gsm8k-combined-preprocessed
     enable_if_env:
       CM_MODEL:
-      - mixtral-8x7b-99
+      - mixtral-8x7b
 
   ## Kits19 for 3d-unet
   - tags: get,dataset,kits19,preprocessed
@@ -957,6 +957,9 @@ variations:
       - llama2-70b_
 
   mixtral-8x7b:
+    group: models
+    env:
+      CM_MODEL: mixtral-8x7b
     deps:
       - tags: get,rust-compiler
         names:
@@ -994,13 +997,6 @@ variations:
       - tags: get,generic-python-lib,_mxeval
         names:
           - rouge-score
-  
-  mixtral-8x7b-99:
-    group: models
-    env:
-      CM_MODEL: mixtral-8x7b-99
-    base:
-      - mixtral-8x7b
   
   mixtral-8x7b,cuda:
     default_env:

@@ -346,7 +346,7 @@ input_description:
     - sdxl
     - llama2-70b-99
     - llama2-70b-99.9
-    - mixtral-8x7b-99
+    - mixtral-8x7b
     - mobilenet
     - efficientnet
     default: resnet50
