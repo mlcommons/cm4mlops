@@ -28,6 +28,10 @@ def postprocess(i):
 
     env['CM_MLPERF_INFERENCE_LOADGEN_INSTALL_PATH'] = install_path
 
+    build_path = os.path.join(cur_path, 'build')
+    if os.path.exists(build_path):
+        env['CM_MLPERF_INFERENCE_LOADGEN_BUILD_PATH'] = build_path
+
     include_path = os.path.join(install_path, 'include')
     lib_path = os.path.join(install_path, 'lib')
     python_path = os.path.join(install_path, 'python')
