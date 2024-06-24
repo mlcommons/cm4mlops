@@ -110,6 +110,15 @@ variations:
           - 'on'
     env:
       CM_TMP_USE_CUSTOM_PYTHON: 'on'
+  keep-build:
+    group: clean-build
+    env:
+      CM_MLPERF_INFERENCE_LOADGEN_BUILD_CLEAN: 'no'
+  clean-build:
+    group: clean-build
+    default: true
+    env:
+      CM_MLPERF_INFERENCE_LOADGEN_BUILD_CLEAN: 'yes'
   download:
     env:
       CM_DOWNLOAD_CHECKSUM: af3f9525965b2c1acc348fb882a5bfd1

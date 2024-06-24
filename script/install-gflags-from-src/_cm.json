@@ -1,5 +1,5 @@
 {
-  "alias": "install-onednn-from-src",
+  "alias": "install-gflags-from-src",
   "automation_alias": "script",
   "automation_uid": "5b4e0237da074764",
   "cache": true,
@@ -12,24 +12,13 @@
       "tags": "detect,cpu"
     },
     {
-      "names": [
-        "python",
-        "python3"
-      ],
-      "skip_if_env": {
-        "CM_CONDA_ENV": [
-          "yes"
-        ]
-      },
-      "tags": "get,python3"
-    },
-    {
       "env": {
-        "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_ONEDNN_SRC_REPO_PATH"
+        "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_GFLAGS_SRC_REPO_PATH"
       },
-      "extra_cache_tags": "onednn,src,onednn-src,onednn-src-repo",
+      "extra_cache_tags": "gflags,src,gflags-src,gflags-src-repo",
       "names": [
-        "onednn-src-repo"
+        "gflags-src-repo",
+        "gflags-src"
       ],
       "tags": "get,git,repo",
       "update_tags_from_env_with_prefix": {
@@ -48,12 +37,10 @@
       }
     }
   ],
-  "env": {
-    "CM_GIT_URL": "https://github.com/oneapi-src/oneDNN"
-  },
-  "name": "Build oneDNN from sources",
+  "env": {},
+  "name": "Build gflags from sources",
   "new_env_keys": [
-    "CM_ONEDNN_*"
+    "CM_GFLAGS_*"
   ],
   "prehook_deps": [],
   "sort": 1000,
@@ -62,31 +49,14 @@
     "get",
     "src",
     "from.src",
-    "onednn",
-    "src-onednn"
+    "gflags",
+    "src-gflags"
   ],
-  "uid": "fe3a652e315f4c8f",
+  "uid": "f311366ff15e4cdf",
   "variations": {
     "branch.#": {
       "env": {
         "CM_GIT_CHECKOUT": "#"
-      }
-    },
-    "for-intel-mlperf-inference-v3.1-bert": {
-      "adr": {
-        "conda-package": {
-          "tags": "_name.bert-pt"
-        },
-        "oneddn-src-repo": {
-          "tags": "_norecurse-submodule"
-        }
-      },
-      "base": [
-        "tag.v2.6"
-      ],
-      "env": {
-        "CM_CONDA_ENV": "yes",
-        "CM_FOR_INTEL_MLPERF_INFERENCE_BERT": "yes"
       }
     },
     "repo.#": {
@@ -95,10 +65,10 @@
       },
       "group": "repo"
     },
-    "repo.https://github.com/oneapi-src/oneDNN": {
+    "repo.https://github.com/gflags/gflags": {
       "default": true,
       "env": {
-        "CM_GIT_URL": "https://github.com/oneapi-src/oneDNN"
+        "CM_GIT_URL": "https://github.com/gflags/gflags"
       },
       "group": "repo"
     },
@@ -109,7 +79,7 @@
     },
     "tag.#": {
       "ad": {
-        "onednn-src-repo": {
+        "gflags-src-repo": {
           "tags": "_no-recurse-submodules,_full-history"
         }
       },

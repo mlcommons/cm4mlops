@@ -114,7 +114,7 @@
       ],
       "adr": {
         "conda-package": {
-          "tags": "_name.resnet50"
+          "tags": "_name.resnet50-pt"
         }
       },
       "env": {
@@ -153,6 +153,7 @@
             "conda-package",
             "cmake"
           ],
+	      "version_min": "3.26",
           "tags": "get,generic,conda-package,_package.cmake"
         },
         {
@@ -162,6 +163,13 @@
             "numpy"
           ],
           "version_max": "1.26.4"
+        },
+        {
+          "names": [
+            "conda-package",
+            "libstdcxx-ng"
+          ],
+          "tags": "get,generic,conda-package,_package.libstdcxx-ng,_source.conda-forge"
         }
       ]
     },

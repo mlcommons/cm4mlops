@@ -10,14 +10,6 @@ def preprocess(i):
 
     env = i['env']
 
-    run_cmd=""
-
-    env['CM_RUN_CMD'] = run_cmd
-    env['CM_ONEDNN_INSTALLED_PATH'] = os.path.join(os.getcwd(), "onednn")
-
-    if env.get('CM_FOR_INTEL_MLPERF_INFERENCE_BERT', '') == "yes":
-        i['run_script_input']['script_name'] = "run-intel-mlperf-inference-bert"
-
     automation = i['automation']
 
     recursion_spaces = i['recursion_spaces']
@@ -25,7 +17,4 @@ def preprocess(i):
     return {'return':0}
 
 def postprocess(i):
-
-    env = i['env']
-
     return {'return':0}
