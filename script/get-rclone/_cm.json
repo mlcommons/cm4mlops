@@ -8,6 +8,11 @@
       "tags": "detect,os"
     },
     {
+      "enable_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "windows"
+        ]
+      },
       "tags": "get,sys-utils-min"
     }
   ],
