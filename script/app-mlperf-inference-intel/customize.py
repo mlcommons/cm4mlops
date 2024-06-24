@@ -62,14 +62,20 @@ def preprocess(i):
     env['CONDA_PREFIX'] = env['CM_CONDA_PREFIX']
 
     if env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "calibration":
-        calibration_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'calibration', master_model, backend+"-"+device)
+        if master_model == "resnet50":
+            i['run_script_input']['script_name'] = "prepare_imagenet_calibration"
+        else:
+            calibration_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'calibration', master_model, backend+"-"+device)
 
-        if "gpt" in env['CM_MODEL']:
-            i['run_script_input']['script_name'] = "calibrate_gptj_int4_model"
-            calibration_path = os.path.join(calibration_root, "INT4")
-            env['CM_MLPERF_INFERENCE_INTEL_CALIBRATION_PATH'] = calibration_path
-            env['INT4_CALIBRATION_DIR'] = os.path.join(calibration_path, "data", "quantized-int4-model")
+            if "gpt" in env['CM_MODEL']:
+                i['run_script_input']['script_name'] = "calibrate_gptj_int4_model"
+                calibration_path = os.path.join(calibration_root, "INT4")
+                env['CM_MLPERF_INFERENCE_INTEL_CALIBRATION_PATH'] = calibration_path
+                env['INT4_CALIBRATION_DIR'] = os.path.join(calibration_path, "data", "quantized-int4-model")
 
+    elif env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "compilation":
+        if master_model == "resnet50":
+            i['run_script_input']['script_name'] = "compile_resnet50"
 
     elif env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "build_harness":
         print(f"Harness Root: {harness_root}")

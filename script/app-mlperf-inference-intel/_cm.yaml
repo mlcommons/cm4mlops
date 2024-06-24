@@ -102,13 +102,6 @@ deps:
   - enable_if_env:
       CM_MODEL:
       - resnet50
-    tags: compile,intel,model,_resnet50
-    names:
-      - resnet50-compiler
-
-  - enable_if_env:
-      CM_MODEL:
-      - resnet50
     names:
       - imagenet-preprocessed
       - dataset-preprocessed
@@ -164,27 +157,37 @@ variations:
     default: true
     env:
       CM_MLPERF_INFERENCE_CODE_VERSION: "v4.0"
-    adr:
-      pytorch:
-        tags: _for-intel-mlperf-inference-v4.0
     deps:
     - tags: get,mlperf,inference,results,_go
       names:
         inference-results
       version: v4.0
+  v4.0,gptj_:
+    adr:
+      pytorch:
+        tags: _for-intel-mlperf-inference-v4.0
+  v4.0,bert_:
+    adr:
+      pytorch:
+        tags: _for-intel-mlperf-inference-v4.0
   v3.1:
     group: version
     env:
       CM_MLPERF_INFERENCE_CODE_VERSION: "v3.1"
-    adr:
-      pytorch:
-        tags: _for-intel-mlperf-inference-v3.1
     deps:
     - tags: get,mlperf,inference,results,_ctuning
       names:
         inference-results
       version: v3.1
 
+  v3.1,gptj_:
+    adr:
+      pytorch:
+        tags: _for-intel-mlperf-inference-v3.1
+  v3.1,bert_:
+    adr:
+      pytorch:
+        tags: _for-intel-mlperf-inference-v3.1
 
   # Target devices
   cpu:
@@ -384,6 +387,26 @@ variations:
         enable_if_env:
           CM_MLPERF_INFERENCE_CODE_VERSION:
             - 'v4.0'
+ 
+  resnet50,_build-harness:
+    deps: 
+      tags: app,mlperf,inference,intel,_compile-model
+      inherit_variation_tags: true
+      force_cache: true
+      skip_inherit_variation_groups:
+        - run-mode
+        - loadgen-scenario
+
+  resnet50,_compile-model:
+    deps: 
+      tags: app,mlperf,inference,intel,_calibration
+      inherit_variation_tags: true
+      force_cache: true
+      skip_inherit_variation_groups:
+        - run-mode
+        - loadgen-scenario
+
+
   gptj_,pytorch:
     adr:
       conda-package:
@@ -586,6 +609,11 @@ variations:
       - CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH
       - CM_ML_MODEL_*
       - DATA_PATH
+
+  compile-model:
+    group: run-mode
+    env:
+      CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE: compilation
 
   calibration:
     group: run-mode
