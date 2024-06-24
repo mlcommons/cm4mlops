@@ -17,7 +17,7 @@
           "windows"
         ]
       },
-      "tags": "get,sys-util,_wget"
+      "tags": "get,rclone"
     },
     {
       "enable_if_env": {
@@ -25,7 +25,7 @@
           "windows"
         ]
       },
-      "tags": "get,winget-package,_package.Rclone.Rclone"
+      "tags": "get,sys-util,_wget"
     }
   ],
   "tags": [
