@@ -6,6 +6,9 @@
   "deps": [
     {
       "tags": "detect,os"
+    },
+    {
+      "tags": "get,sys-utils-min"
     }
   ],
   "category": "Detection or installation of tools and artifacts",
