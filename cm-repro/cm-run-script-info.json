@@ -1,0 +1,14 @@
+{
+  "host_os_name": "posix",
+  "host_system": "Linux",
+  "host_os_release": "6.8.0-35-generic",
+  "host_machine": "x86_64",
+  "host_architecture": [
+    "64bit",
+    "ELF"
+  ],
+  "host_python_version": "3.12.3",
+  "host_sys_version": "3.12.3 (main, Apr 10 2024, 05:33:47) [GCC 13.2.0]",
+  "run_uid": "46ebb821c62d4dfe",
+  "run_iso_datetime": "2024-06-25T00:26:28.986382"
+}

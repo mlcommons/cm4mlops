@@ -958,34 +958,37 @@ variations:
 
   mixtral-8x7b:
     deps:
-      - tags: get,generic-python-lib,_package.transformers==4.31.0
+      - tags: get,rust-compiler
+        names:
+          - rustup
+      - tags: get,generic-python-lib,_package.transformers
         names:
           - transformers
       - tags: get,generic-python-lib,_package.datasets
         names:
           - datasets
-      - tags: get,generic-python-lib,_package.sentencepiece==0.1.99
+      - tags: get,generic-python-lib,_package.sentencepiece
         names:
           - sentencepiece
       - tags: get,generic-python-lib,_package.protobuf
         names:
           - protobuf
-      - tags: get,generic-python-lib,_package.accelerate==0.21.0
+      - tags: get,generic-python-lib,_package.accelerate
         names:
           - accelerate
-      - tags: get,generic-python-lib,_package.absl-py==1.4.0
+      - tags: get,generic-python-lib,_package.absl-py
         names:
           - absl-py
-      - tags: get,generic-python-lib,_package.evaluate==0.4.0
+      - tags: get,generic-python-lib,_package.evaluate
         names:
           - evaluate
-      - tags: get,generic-python-lib,_package.nltk==3.8.1
+      - tags: get,generic-python-lib,_package.nltk
         names:
           - nltk
-      - tags: get,generic-python-lib,_package.rouge-score==0.1.2
+      - tags: get,generic-python-lib,_package.rouge-score
         names:
           - rouge-score
-      - tags: get,generic-python-lib,_package.pybind11==2.10.4
+      - tags: get,generic-python-lib,_package.pybind11
         names:
           - rouge-score
       - tags: get,generic-python-lib,_mxeval

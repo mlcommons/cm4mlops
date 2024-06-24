@@ -229,7 +229,8 @@
     "mxeval": {
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "mxeval",
-        "CM_GENERIC_PYTHON_PIP_URL": "git+https://github.com/amazon-science/mxeval.git@e09974f990eeaf0c0e8f2b5eaff4be66effb2c86"
+        "CM_GENERIC_PYTHON_PIP_URL": "git+https://github.com/amazon-science/mxeval.git",
+        "CM_PIP_ERROR_SKIP": "true"
       }
     },
     "fiftyone": {
