@@ -469,7 +469,7 @@ variations:
 
     docker:
       deps:
-      - tags: get,dataset,imagenet,validation,original
+      - tags: get,dataset,imagenet,validation,original,_full
         names:
           - imagenet-original
           - dataset-original
