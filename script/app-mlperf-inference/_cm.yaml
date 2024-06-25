@@ -349,9 +349,6 @@ variations:
       cnndm-accuracy-script:
         tags: _int32
 
-  intel-original,gptj_,build-harness:
-    docker:
-      run: false
 
   redhat:
     group:
@@ -417,6 +414,9 @@ variations:
   intel-original,resnet50:
     default_variations:
       precision: int8
+    add_deps_recursive:
+      imagenet-accuracy-script:
+        tags: _int32
 
   intel-original,retinanet:
     default_variations:
@@ -462,6 +462,7 @@ variations:
       - mlperf-accuracy-script
       - imagenet-accuracy-script
       tags: run,accuracy,mlperf,_imagenet
+
     docker:
       deps:
       - tags: get,dataset,imagenet,validation,original

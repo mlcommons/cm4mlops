@@ -670,6 +670,7 @@ variations:
       - tags: generate,user-conf,mlperf,inference
         names:
         - user-conf-generator
+      - tags: get,generic-sys-util,_rsync
 
     env:
       CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE: run_harness

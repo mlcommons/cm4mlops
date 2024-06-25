@@ -138,8 +138,8 @@ def preprocess(i):
         elif 'resnet50' in env['CM_MODEL']:
             env['MODEL_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
             env['DATASET_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
-            env['CM_RUN_DIR'] = i['run_script_input']['path']
-            env['CM_RUN_CMD'] = "bash run_resnet50_harness.sh " + ("--accuracy" if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy" else "")
+            env['CM_RUN_DIR'] = env['CM_MLPERF_OUTPUT_DIR']
+            env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_resnet50_harness.sh')} "
 
         elif "gptj" in env['CM_MODEL']:
             env['CM_RUN_DIR'] = i['run_script_input']['path']
