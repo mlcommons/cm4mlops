@@ -70,7 +70,7 @@ def preprocess(i):
 
 
     x="" if os_info['platform'] == 'windows' else "'"
-    if "llama2-70b" in env['CM_MODEL']:
+    if "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env["CM_MODEL"]:
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] +=  " --mlperf-conf " + x+ env['CM_MLPERF_CONF'] + x
     else:
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] +=  " --mlperf_conf "+ x + env['CM_MLPERF_CONF'] + x
@@ -101,7 +101,7 @@ def preprocess(i):
     if 'CM_MLPERF_USER_CONF' in env:
         user_conf_path = env['CM_MLPERF_USER_CONF']
         x="" if os_info['platform'] == 'windows' else "'"
-        if 'llama2-70b' in env['CM_MODEL']:
+        if 'llama2-70b' in env['CM_MODEL'] or "mixtral-8x7b" in env["CM_MODEL"]:
             scenario_extra_options +=  " --user-conf " + x + user_conf_path + x
         else:
             scenario_extra_options +=  " --user_conf " + x + user_conf_path + x
@@ -307,6 +307,22 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
                 " --model-path " + env['MODEL_DIR']
         cmd = cmd.replace("--count", "--total-sample-count")
+    
+    elif "mixtral-8x7b" in env['CM_MODEL']:
+        env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "mixtral-8x7b")
+        backend = env['CM_MLPERF_BACKEND']
+        device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] != "gpu" else "cuda"
+        cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " main.py " \
+                " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + \
+                " --dataset-path " + env['CM_DATASET_PREPROCESSED_PATH'] + \
+                " --device " + device.replace("cuda", "cuda:0") + \
+                 env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
+                 scenario_extra_options + mode_extra_options + \
+                " --output-log-dir " + env['CM_MLPERF_OUTPUT_DIR'] + \
+                ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
+                " --model-path " + env['MODEL_DIR']
+        cmd = cmd.replace("--count", "--total-sample-count")
+
     elif "3d-unet" in env['CM_MODEL']:
 
         env['RUN_DIR'] = env['CM_MLPERF_INFERENCE_3DUNET_PATH']

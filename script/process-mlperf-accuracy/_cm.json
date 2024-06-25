@@ -326,6 +326,26 @@
       },
       "group": "dataset"
     },
+    "openorca-gsm8k-mbxp": {
+      "deps": [
+        {
+          "names": [
+            "openorca-gsm8k-mbxp-combined"
+          ],
+          "tags": "get,dataset-mixtral,openorca-mbxp-gsm8k-combined"
+        },
+        {
+          "names": [
+            "mixtral-8x7b-model"
+          ],
+          "tags": "get,ml-model,mixtral"
+        }
+      ],
+      "env": {
+        "CM_DATASET": "openorca-gsm8k-mbxp-combined"
+      },
+      "group": "dataset"
+    },
     "coco2014": {
       "deps": [
         {

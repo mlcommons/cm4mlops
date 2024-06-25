@@ -227,6 +227,10 @@ variations:
   reference,llama2-70b_:
     default_variations:
       backend: pytorch
+  
+  reference,mixtral-8x7b:
+    default_variations:
+      backend: pytorch
 
   reference,resnet50:
     default_variations:
@@ -602,6 +606,36 @@ variations:
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _llama2-70b-99.9
+  
+  mixtral-8x7b:
+    env:
+      CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
+    posthook_deps:
+    - enable_if_env:
+        CM_MLPERF_LOADGEN_MODE:
+        - accuracy
+        - all
+        CM_MLPERF_ACCURACY_RESULTS_DIR:
+        - 'on'
+      skip_if_env:
+        CM_MLPERF_IMPLEMENTATION:
+        - nvidia
+      names:
+      - mlperf-accuracy-script
+      - openorca-gsm8k-mbxp-combined-accuracy-script
+      tags: run,accuracy,mlperf,_openorca-gsm8k-mbxp,_float32
+
+  mixtral-8x7b:
+    group:
+      model
+    base:
+    - mixtral-8x7b
+    env:
+      CM_MODEL:
+        mixtral-8x7b
+    add_deps_recursive:
+      mlperf-inference-implementation:
+        tags: _mixtral-8x7b
 
   rnnt:
     group:
