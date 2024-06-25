@@ -5,7 +5,7 @@ name: MLPerf loadgen with HuggingFace bert onnx fp32 squad model
 
 on:
   pull_request:
-    branches: [ "main", "dev", "mlperf-inference" ]
+    branches: [ "main", "dev" ]
     paths:
       - '.github/workflows/test-mlperf-loadgen-onnx-huggingface-bert-fp32-squad.yml'
       - '**'

@@ -83,6 +83,10 @@ def preprocess(i):
             i['run_script_input']['script_name'] = "build_bert_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "bert_inference")
             env['DATA_PATH'] = os.path.join(os.getcwd(), "harness", "bert")
+        if "resnet50" in env['CM_MODEL']:
+            i['run_script_input']['script_name'] = "build_resnet50_harness"
+            env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "resnet50_inference")
+            env['DATA_PATH'] = os.path.join(os.getcwd(), "harness", "resnet50")
         elif "gpt" in env['CM_MODEL']:
             i['run_script_input']['script_name'] = "build_gptj_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "gptj_inference")
@@ -120,17 +124,24 @@ def preprocess(i):
          audit_path = env['CM_MLPERF_INFERENCE_AUDIT_PATH']
          shutil.copy(audit_path, env['CM_RUN_DIR'])
 
+        if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy":
+            env['LOADGEN_MODE'] = 'Accuracy'
+        else:
+            env['LOADGEN_MODE'] = 'Performance'
+
         if 'bert' in env['CM_MODEL']:
             env['MODEL_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
             env['DATASET_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
             env['CM_RUN_DIR'] = i['run_script_input']['path']
             env['CM_RUN_CMD'] = "bash run_bert_harness.sh " + ("--accuracy" if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy" else "")
 
+        elif 'resnet50' in env['CM_MODEL']:
+            env['MODEL_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
+            env['DATASET_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
+            env['CM_RUN_DIR'] = env['CM_MLPERF_OUTPUT_DIR']
+            env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_resnet50_harness.sh')} "
+
         elif "gptj" in env['CM_MODEL']:
-            if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy":
-                env['LOADGEN_MODE'] = 'Accuracy'
-            else:
-                env['LOADGEN_MODE'] = 'Performance'
             env['CM_RUN_DIR'] = i['run_script_input']['path']
             if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == "v3.1":
                 env['CM_RUN_CMD'] = "bash run_gptj_harness_v3_1.sh "

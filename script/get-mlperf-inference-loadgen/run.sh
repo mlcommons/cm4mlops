@@ -36,7 +36,9 @@ if [ "${?}" != "0" ]; then exit 1; fi
 
 # Clean build directory (too large)
 cd "${CUR_DIR}"
-rm -rf build
+if [[ $CM_MLPERF_INFERENCE_LOADGEN_BUILD_CLEAN == "yes" ]]; then
+  rm -rf build
+fi
 
 PYTHON_VERSION=`${CM_PYTHON_BIN_WITH_PATH} -V |cut -d' ' -f2`
 PYTHON_SHORT_VERSION=${PYTHON_VERSION%.*}

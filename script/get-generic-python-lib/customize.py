@@ -30,6 +30,9 @@ def preprocess(i):
         extra += '  --break-system-packages '
         env['CM_PYTHON_PIP_COMMON_EXTRA'] = " --break-system-packages"
 
+    if env.get('CM_GENERIC_PYTHON_PACKAGE_INSTALL_DEPS', '') == "no":
+        env['CM_PYTHON_PIP_COMMON_EXTRA'] = " --no-deps"
+
     if env.get('CM_GENERIC_PYTHON_PIP_UNINSTALL_DEPS', '') != '':
         r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'uninstall_deps'})
         if r['return']>0: return r

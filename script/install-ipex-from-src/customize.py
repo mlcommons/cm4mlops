@@ -19,7 +19,6 @@ def preprocess(i):
 
     run_cmd="python setup.py clean && python setup.py install"
 
-    env['CM_RUN_DIR'] = env['IPEX_DIR']
     env['CM_RUN_CMD'] = run_cmd
 
     return {'return':0}
@@ -27,5 +26,8 @@ def preprocess(i):
 def postprocess(i):
 
     env = i['env']
+    env['CM_IPEX_BUILD_PATH'] = os.path.join(os.getcwd(), "ipex_src", "build")
+    env['CM_IPEX_INSTALLED_PATH'] = os.path.join(env['CM_IPEX_BUILD_PATH'], "Release", "packages", "intel_extension_for_pytorch")
+    env['CM_DEPENDENT_CACHED_PATH'] = env['CM_IPEX_INSTALLED_PATH']
 
     return {'return':0}

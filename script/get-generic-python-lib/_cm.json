@@ -160,6 +160,11 @@
         "CM_COLORED_VERSION"
       ]
     },
+    "no-deps": {
+      "env": {
+        "CM_GENERIC_PYTHON_PACKAGE_INSTALL_DEPS": "no"
+      }
+    },
     "conda.#": {
       "ad": {
         "python-pip": {

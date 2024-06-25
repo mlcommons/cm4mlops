@@ -207,7 +207,16 @@
             "sympy"
           ],
           "tags": "get,generic,conda-package,_package.sympy,_source.conda-forge"
-        }
+        },
+	    {
+	      "tags": "get,cmake",
+	      "version_max": "3.26.4"
+	    },
+	    {
+	      "tags": "get,gcc",
+	      "version_max": "12.3",
+	      "version_max_usable": "12.3"
+	    }
       ],
       "env": {
         "CM_CONDA_ENV": "yes",
