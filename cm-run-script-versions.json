@@ -1,0 +1,522 @@
+[
+  {
+    "detect,os": {
+      "parent": "app-abtf-inference,43eb68e6a63e42ed ( mlcommons-python,_abtf-poc-model,_pytorch,_cpu,_test,_poc-demo,_singlestream )",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "detect-cpu,586c8a43320142f7",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,cpu": {
+      "parent": "app-abtf-inference,43eb68e6a63e42ed ( mlcommons-python,_abtf-poc-model,_pytorch,_cpu,_test,_poc-demo,_singlestream )",
+      "script_alias": "detect-cpu",
+      "script_tags": "detect,cpu,detect-cpu,info",
+      "script_uid": "586c8a43320142f7",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,sys-utils-cm": {
+      "parent": "app-abtf-inference,43eb68e6a63e42ed ( mlcommons-python,_abtf-poc-model,_pytorch,_cpu,_test,_poc-demo,_singlestream )",
+      "script_alias": "get-sys-utils-cm",
+      "script_tags": "get,sys-utils-cm",
+      "script_uid": "bc90993277e84b8e",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,python": {
+      "parent": "app-abtf-inference,43eb68e6a63e42ed ( mlcommons-python,_abtf-poc-model,_pytorch,_cpu,_test,_poc-demo,_singlestream )",
+      "script_alias": "get-python3",
+      "script_tags": "get,python,python3,get-python,get-python3",
+      "script_uid": "d0b5dd74373f4a62",
+      "script_variations": "",
+      "version": "3.10.12"
+    }
+  },
+  {
+    "get,generic-python-lib,_package.cmind": {
+      "parent": "app-abtf-inference,43eb68e6a63e42ed ( mlcommons-python,_abtf-poc-model,_pytorch,_cpu,_test,_poc-demo,_singlestream )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "package.cmind",
+      "version": "2.3.1"
+    }
+  },
+  {
+    "get,mlperf,inference,src": {
+      "parent": "get-mlperf-inference-utils,e341e5f86d8342e5",
+      "script_alias": "get-mlperf-inference-src",
+      "script_tags": "get,src,source,inference,inference-src,inference-source,mlperf,mlcommons",
+      "script_uid": "4b57186581024797",
+      "script_variations": "",
+      "version": "master"
+    }
+  },
+  {
+    "get,mlperf,inference,utils": {
+      "parent": "app-abtf-inference,43eb68e6a63e42ed ( mlcommons-python,_abtf-poc-model,_pytorch,_cpu,_test,_poc-demo,_singlestream )",
+      "script_alias": "get-mlperf-inference-utils",
+      "script_tags": "get,mlperf,inference,util,utils,functions",
+      "script_uid": "e341e5f86d8342e5",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "detect-cpu,586c8a43320142f7",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,cpu": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "detect-cpu",
+      "script_tags": "detect,cpu,detect-cpu,info",
+      "script_uid": "586c8a43320142f7",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,sys-utils-cm": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-sys-utils-cm",
+      "script_tags": "get,sys-utils-cm",
+      "script_uid": "bc90993277e84b8e",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,python": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-python3",
+      "script_tags": "get,python,python3,get-python,get-python3",
+      "script_uid": "d0b5dd74373f4a62",
+      "script_variations": "",
+      "version": "3.10.12"
+    }
+  },
+  {
+    "get,generic-python-lib,_package.cmind": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "package.cmind",
+      "version": "2.3.1"
+    }
+  },
+  {
+    "get,generic-python-lib,_torch": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "torch",
+      "version": "2.3.0"
+    }
+  },
+  {
+    "get,generic-python-lib,_torchvision": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "torchvision",
+      "version": "0.18.0"
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "generate-mlperf-inference-user-conf,3af4475745964b93",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "detect-cpu,586c8a43320142f7",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,cpu": {
+      "parent": "generate-mlperf-inference-user-conf,3af4475745964b93",
+      "script_alias": "detect-cpu",
+      "script_tags": "detect,cpu,detect-cpu,info",
+      "script_uid": "586c8a43320142f7",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,python": {
+      "parent": "generate-mlperf-inference-user-conf,3af4475745964b93",
+      "script_alias": "get-python3",
+      "script_tags": "get,python,python3,get-python,get-python3",
+      "script_uid": "d0b5dd74373f4a62",
+      "script_variations": "",
+      "version": "3.10.12"
+    }
+  },
+  {
+    "get,mlcommons,inference,src": {
+      "parent": "generate-mlperf-inference-user-conf,3af4475745964b93",
+      "script_alias": "get-mlperf-inference-src",
+      "script_tags": "get,src,source,inference,inference-src,inference-source,mlperf,mlcommons",
+      "script_uid": "4b57186581024797",
+      "script_variations": "",
+      "version": "master"
+    }
+  },
+  {
+    "get,cache,dir,_name.mlperf-inference-sut-configs": {
+      "parent": "get-mlperf-inference-sut-configs,c2fbf72009e2445b",
+      "script_alias": "get-cache-dir",
+      "script_tags": "get,cache,dir,directory",
+      "script_uid": "48f4622e059b45ce",
+      "script_variations": "name.mlperf-inference-sut-configs",
+      "version": ""
+    }
+  },
+  {
+    "get,sut,configs": {
+      "parent": "generate-mlperf-inference-user-conf,3af4475745964b93",
+      "script_alias": "get-mlperf-inference-sut-configs",
+      "script_tags": "get,mlperf,inference,sut,configs,sut-configs",
+      "script_uid": "c2fbf72009e2445b",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "generate,user-conf,mlperf,inference": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "generate-mlperf-inference-user-conf",
+      "script_tags": "generate,mlperf,inference,user-conf,inference-user-conf",
+      "script_uid": "3af4475745964b93",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,generic-python-lib,_package.mlcommons-loadgen": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "package.mlcommons-loadgen",
+      "version": "4.0.1"
+    }
+  },
+  {
+    "get,generic-python-lib,_package.psutil": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "package.psutil",
+      "version": "5.9.8"
+    }
+  },
+  {
+    "get,generic-python-lib,_opencv-python": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "opencv-python",
+      "version": "4.10.0.84"
+    }
+  },
+  {
+    "get,generic-python-lib,_numpy": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "numpy",
+      "version": "1.26.4"
+    }
+  },
+  {
+    "get,generic-python-lib,_pycocotools": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "pycocotools",
+      "version": "2.0.8"
+    }
+  },
+  {
+    "get,generic-python-lib,_package.torchmetrics": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "package.torchmetrics",
+      "version": "1.4.0.post0"
+    }
+  },
+  {
+    "get,generic-python-lib,_package.faster-coco-eval": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-generic-python-lib",
+      "script_tags": "get,install,generic,generic-python-lib",
+      "script_uid": "94b62a682bc44791",
+      "script_variations": "package.faster-coco-eval",
+      "version": "1.5.7"
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "download-file,9cdc8dc41aae437e ( rclone,_url.https://automotive.mlcommons-storage.org/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip )",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,rclone": {
+      "parent": "download-file,9cdc8dc41aae437e ( rclone,_url.https://automotive.mlcommons-storage.org/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip )",
+      "script_alias": "get-rclone",
+      "script_tags": "get,rclone",
+      "script_uid": "22ffb43c49c9419e",
+      "script_variations": "",
+      "version": "1.65.2"
+    }
+  },
+  {
+    "download,file,_rclone,_url.https://automotive.mlcommons-storage.org/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip": {
+      "parent": "download-and-extract,c67e81a4ce2649f5 ( extract,_rclone,_url.https://automotive.mlcommons-storage.org/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip )",
+      "script_alias": "download-file",
+      "script_tags": "download,file,download-file",
+      "script_uid": "9cdc8dc41aae437e",
+      "script_variations": "rclone,url.https://automotive.mlcommons-storage.org/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "extract-file,3f0b76219d004817 ( path./home/anandhu/CM/repos/local/cache/4f54662c90f14507/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip )",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "extract,file,_path./home/anandhu/CM/repos/local/cache/4f54662c90f14507/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip": {
+      "parent": "download-and-extract,c67e81a4ce2649f5 ( extract,_rclone,_url.https://automotive.mlcommons-storage.org/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip )",
+      "script_alias": "extract-file",
+      "script_tags": "extract,file",
+      "script_uid": "3f0b76219d004817",
+      "script_variations": "path./home/anandhu/CM/repos/local/cache/4f54662c90f14507/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip",
+      "version": ""
+    }
+  },
+  {
+    "download-and-extract,file,_extract,_rclone,_url.https://automotive.mlcommons-storage.org/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip": {
+      "parent": "get-dataset-cognata-mlcommons,6e2b5db76833416d ( abtf-poc )",
+      "script_alias": "download-and-extract",
+      "script_tags": "dae,file,download-and-extract",
+      "script_uid": "c67e81a4ce2649f5",
+      "script_variations": "extract,rclone,url.https://automotive.mlcommons-storage.org/Cognata_Dataset_PoC_Demo%2F10002_Urban_Clear_Morning.zip",
+      "version": ""
+    }
+  },
+  {
+    "get,dataset,raw,mlcommons-cognata,_abtf-poc": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-dataset-cognata-mlcommons",
+      "script_tags": "get,raw,dataset,cognata,mlcommons-cognata,ml-task--object-detection,ml-task--image-segmentation",
+      "script_uid": "6e2b5db76833416d",
+      "script_variations": "abtf-poc",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "get-ml-model-abtf-ssd-pytorch,59cfc2a22f5d4f46 ( abtf-poc )",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "get-git-repo,ed603e7292974f10 ( repo.https://github.com/mlcommons/abtf-ssd-pytorch,_branch.cognata )",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,git,repo,_repo.https://github.com/mlcommons/abtf-ssd-pytorch,_branch.cognata": {
+      "parent": "get-ml-model-abtf-ssd-pytorch,59cfc2a22f5d4f46 ( abtf-poc )",
+      "script_alias": "get-git-repo",
+      "script_tags": "get,git,repo,repository,clone",
+      "script_uid": "ed603e7292974f10",
+      "script_variations": "repo.https://github.com/mlcommons/abtf-ssd-pytorch,branch.cognata",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "download-file,9cdc8dc41aae437e ( rclone,_url.https://automotive.mlcommons-storage.org/SSD_ResNet50%2Fbaseline_8MP_ss_scales_fm1_5x5_all_ep60.pth )",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "get,rclone": {
+      "parent": "download-file,9cdc8dc41aae437e ( rclone,_url.https://automotive.mlcommons-storage.org/SSD_ResNet50%2Fbaseline_8MP_ss_scales_fm1_5x5_all_ep60.pth )",
+      "script_alias": "get-rclone",
+      "script_tags": "get,rclone",
+      "script_uid": "22ffb43c49c9419e",
+      "script_variations": "",
+      "version": "1.65.2"
+    }
+  },
+  {
+    "download,file,_rclone,_url.https://automotive.mlcommons-storage.org/SSD_ResNet50%2Fbaseline_8MP_ss_scales_fm1_5x5_all_ep60.pth": {
+      "parent": "get-ml-model-abtf-ssd-pytorch,59cfc2a22f5d4f46 ( abtf-poc )",
+      "script_alias": "download-file",
+      "script_tags": "download,file,download-file",
+      "script_uid": "9cdc8dc41aae437e",
+      "script_variations": "rclone,url.https://automotive.mlcommons-storage.org/SSD_ResNet50%2Fbaseline_8MP_ss_scales_fm1_5x5_all_ep60.pth",
+      "version": ""
+    }
+  },
+  {
+    "get,ml-model,abtf-ssd-pytorch,_abtf-poc": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "get-ml-model-abtf-ssd-pytorch",
+      "script_tags": "get,ml-model,abtf-ssd-pytorch,cmc",
+      "script_uid": "59cfc2a22f5d4f46",
+      "script_variations": "abtf-poc",
+      "version": ""
+    }
+  },
+  {
+    "detect,os": {
+      "parent": "detect-cpu,586c8a43320142f7",
+      "script_alias": "detect-os",
+      "script_tags": "detect-os,detect,os,info",
+      "script_uid": "863735b7db8c44fc",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "detect,cpu": {
+      "parent": "benchmark-program,19f369ef47084895",
+      "script_alias": "detect-cpu",
+      "script_tags": "detect,cpu,detect-cpu,info",
+      "script_uid": "586c8a43320142f7",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "benchmark-program,program": {
+      "parent": "benchmark-program-mlperf,cfff0132a8aa4018",
+      "script_alias": "benchmark-program",
+      "script_tags": "program,benchmark,benchmark-program",
+      "script_uid": "19f369ef47084895",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "benchmark-mlperf": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "benchmark-program-mlperf",
+      "script_tags": "mlperf,benchmark-mlperf",
+      "script_uid": "cfff0132a8aa4018",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "save,mlperf,inference,state": {
+      "parent": "demo-ml-model-abtf-cognata-pytorch-loadgen,4b78c060c5974068 ( abtf-poc-model,_pytorch,_singlestream,_cpu )",
+      "script_alias": "save-mlperf-inference-implementation-state",
+      "script_tags": "save,mlperf,inference,implementation,state",
+      "script_uid": "b14b813229c444f8",
+      "script_variations": "",
+      "version": ""
+    }
+  },
+  {
+    "run-mlperf-inference,demo,abtf-model,_abtf-poc-model,_pytorch,_singlestream,_cpu": {
+      "parent": "app-abtf-inference,43eb68e6a63e42ed ( mlcommons-python,_abtf-poc-model,_pytorch,_cpu,_test,_poc-demo,_singlestream )",
+      "script_alias": "demo-ml-model-abtf-cognata-pytorch-loadgen",
+      "script_tags": "demo,run-mlperf-inference,object-detection,abtf-model",
+      "script_uid": "4b78c060c5974068",
+      "script_variations": "abtf-poc-model,pytorch,singlestream,cpu",
+      "version": ""
+    }
+  },
+  {
+    "app,abtf-inference,_mlcommons-python,_abtf-poc-model,_pytorch,_cpu,_test,_poc-demo,_singlestream": {
+      "parent": null,
+      "script_alias": "app-abtf-inference",
+      "script_tags": "app,app-mlperf-inference,mlperf-inference,abtf-inference",
+      "script_uid": "43eb68e6a63e42ed",
+      "script_variations": "mlcommons-python,abtf-poc-model,pytorch,cpu,test,poc-demo,singlestream",
+      "version": ""
+    }
+  }
+]

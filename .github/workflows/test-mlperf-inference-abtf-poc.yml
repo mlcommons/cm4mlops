@@ -37,7 +37,7 @@ jobs:
         cm pull repo mlcommons@cm4abtf --branch=poc
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on docker
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --adr.compiler.tags=gcc --quiet --docker --docker_it=no  -v --gh_token=${{ secrets.ABTF_ACCESS_TOKEN }}
+        cm run script --tags=run-abtf,inference,_poc-demo --adr.compiler.tags=gcc --quiet -v --gh_token=${{ secrets.ABTF_ACCESS_TOKEN }}
 
   build2:
     runs-on: ${{ matrix.os }}
