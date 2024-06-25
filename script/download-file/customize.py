@@ -114,7 +114,10 @@ def preprocess(i):
                 env['CM_DOWNLOAD_CONFIG_CMD'] = env['CM_RCLONE_CONFIG_CMD']
             rclone_copy_using = env.get('CM_RCLONE_COPY_USING', 'sync')
             if env["CM_HOST_OS_TYPE"] == "windows":
-                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url.replace("%", "%%")}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'].replace("%", "%%"))}{q} -P"
+                # have to modify the variable from url to temp_url if it is going to be used anywhere after this point
+                url = url.replace("%", "%%")
+                temp_download_file = env['CM_DOWNLOAD_FILENAME'].replace("%", "%%")
+                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P"
             else:
                 env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
 
