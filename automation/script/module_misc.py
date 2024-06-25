@@ -1189,6 +1189,22 @@ def regenerate_script_cmd(i):
 
     i_run_cmd = i['run_cmd']
 
+    #Cleanup from env everything that has a host path value
+    if i_run_cmd.get('env'):
+        for key in list(i_run_cmd.get('env')):
+            if type(i_run_cmd['env'][key]) == str and ((os.path.join("local", "cache", "") in i_run_cmd['env'][key]) or (os.path.join("CM", "repos", "") in i_run_cmd['env'][key])) :
+                del(i_run_cmd['env'][key])
+            elif type(i_run_cmd['env'][key]) == list:
+                values_to_remove = []
+                for val in i_run_cmd['env'][key]:
+                    if type(val) == str and ((os.path.join("local", "cache", "") in val) or (os.path.join("CM", "repos", "") in val)):
+                        values_to_remove.append(val)
+                if values_to_remove == i_run_cmd['env'][key]:
+                    del(i_run_cmd['env'][key])
+                else:
+                    for val in values_to_remove:
+                        i_run_cmd['env'][key].remove(val)
+
     docker_run_cmd_prefix = i['docker_run_cmd_prefix']
 
     # Regenerate command from dictionary input
@@ -1403,8 +1419,9 @@ def dockerfile(i):
         variations = meta.get('variations', {})
         docker_settings = meta.get('docker', {})
         state['docker'] = docker_settings
+        add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = {}, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1426,6 +1443,11 @@ def dockerfile(i):
             continue
         '''
 
+        d_env = i_run_cmd_arc.get('env', {})
+        for key in list(d_env.keys()):
+            if key.startswith("CM_TMP_"):
+                del(d_env[key])
+
         # Check if need to update/map/mount inputs and env
         r = process_inputs({'run_cmd_arc': i_run_cmd_arc,
                             'docker_settings': docker_settings,
@@ -1446,7 +1468,6 @@ def dockerfile(i):
         if r['return']>0: return r
 
         run_cmd  = r['run_cmd_string']
-
 
         cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
         cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
@@ -1559,6 +1580,20 @@ def dockerfile(i):
 
     return {'return':0}
 
+# we mount the main folder of the CM cache entry in case any file/folder in that cache entry is needed inside the container
+def get_host_path(value):
+    path_split = value.split(os.sep)
+    if len(path_split) == 1:
+        return value
+
+    new_value = ''
+    if "cache" in path_split and "local":
+        repo_entry_index = path_split.index("local")
+        if len(path_split) >= repo_entry_index + 3:
+            return os.sep.join(path_split[0:repo_entry_index+3])
+
+    return value
+
 def get_container_path(value):
     path_split = value.split(os.sep)
     if len(path_split) == 1:
@@ -1566,12 +1601,14 @@ def get_container_path(value):
 
     new_value = ''
     if "cache" in path_split and "local" in path_split:
-        new_path_split = [ "", "home", "cmuser" ]
+        new_path_split = [ "", "home", "cmuser", "CM", "repos" ]
         repo_entry_index = path_split.index("local")
-        new_path_split += path_split[repo_entry_index:]
-        return "/".join(new_path_split)
+        if len(path_split) >= repo_entry_index + 3:
+            new_path_split1 = new_path_split + path_split[repo_entry_index:repo_entry_index+3]
+            new_path_split2 = new_path_split + path_split[repo_entry_index:]
+            return "/".join(new_path_split1), "/".join(new_path_split2)
 
-    return value
+    return value, value
 
 
 ############################################################
@@ -1700,6 +1737,13 @@ def docker(i):
     if image_repo == '':
         image_repo = 'cknowledge'
 
+    # Host system needs to have docker
+    r = self_module.cmind.access({'action':'run',
+                                'automation':'script',
+                                'tags': "get,docker"})
+    if r['return'] > 0:
+        return r
+
     for artifact in sorted(lst, key = lambda x: x.meta.get('alias','')):
 
         meta = artifact.meta
@@ -1730,8 +1774,9 @@ def docker(i):
         variations = meta.get('variations', {})
         docker_settings = meta.get('docker', {})
         state['docker'] = docker_settings
+        add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = {}, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1760,8 +1805,8 @@ def docker(i):
             update_path_for_docker('.', mounts, force_path_target=current_path_target)
 
 
-        _os = i.get('docker_os', docker_settings.get('docker_os', 'ubuntu'))
-        version = i.get('docker_os_version', docker_settings.get('docker_os_version', '22.04'))
+        _os = i.get('docker_os', docker_settings.get('os', 'ubuntu'))
+        version = i.get('docker_os_version', docker_settings.get('os_version', '22.04'))
 
         deps = docker_settings.get('deps', [])
         if deps:
@@ -1769,7 +1814,7 @@ def docker(i):
             run_state = {'deps':[], 'fake_deps':[], 'parent': None}
             run_state['script_id'] = script_alias + "," + script_uid
             run_state['script_variation_tags'] = variation_tags
-            r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', {}, '', False, '', verbose, show_time, ' ', run_state)
+            r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', [], '', False, '', verbose, show_time, ' ', run_state)
             if r['return'] > 0:
                 return r
 
@@ -1816,7 +1861,7 @@ def docker(i):
             if tmp_values:
                 for tmp_value in tmp_values:
                     if tmp_value in env:
-                        new_host_mount = env[tmp_value]
+                        new_host_mount = get_host_path(env[tmp_value])
                     else:# we skip those mounts
                         mounts[index] = None
                         skip = True
@@ -1826,8 +1871,8 @@ def docker(i):
             if tmp_values:
                 for tmp_value in tmp_values:
                     if tmp_value in env:
-                        new_container_mount = get_container_path(env[tmp_value])
-                        container_env_string += " --env.{}={} ".format(tmp_value, new_container_mount)
+                        new_container_mount, new_container_mount_env = get_container_path(env[tmp_value])
+                        container_env_string += " --env.{}={} ".format(tmp_value, new_container_mount_env)
                     else:# we skip those mounts
                         mounts[index] = None
                         skip = True
@@ -1854,12 +1899,16 @@ def docker(i):
                 env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format(key, value))
 
         docker_use_host_group_id = i.get('docker_use_host_group_id', docker_settings.get('use_host_group_id'))
-        if docker_use_host_group_id in [True, 'True', 'yes'] and os.name != 'nt':
-            env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('CM_ADD_DOCKER_GROUP_ID', '\\"-g $(id -g $USER) -o\\"'))
+        if str(docker_use_host_group_id).lower() not in ['false', 'no', '0'] and os.name != 'nt':
+            env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('GID', '\\" $(id -g $USER) \\"'))
+
+        docker_use_host_user_id = i.get('docker_use_host_user_id', docker_settings.get('use_host_user_id'))
+        if str(docker_use_host_user_id).lower() not in ['false', 'no', '0'] and os.name != 'nt':
+            env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('UID', '\\" $(id -u $USER) \\"'))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
-        docker_os = i.get('docker_os', docker_settings.get('docker_os', 'ubuntu'))
-        docker_os_version = i.get('docker_os_version', docker_settings.get('docker_os_version', '22.04'))
+        docker_os = i.get('docker_os', docker_settings.get('os', 'ubuntu'))
+        docker_os_version = i.get('docker_os_version', docker_settings.get('os_version', '22.04'))
         image_tag_extra = i.get('docker_image_tag_extra', docker_settings.get('image_tag_extra', '-latest'))
 
         if not docker_base_image:
@@ -1872,7 +1921,7 @@ def docker(i):
                 dockerfilename_suffix = dockerfilename_suffix[len(dockerfilename_suffix) - 1]
 
 
-        cm_repo=i.get('docker_cm_repo', 'mlcommons@cm4mlops')
+        cm_repo=i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
 
         docker_path = i.get('docker_path', '').strip()
         if docker_path == '': 
@@ -1932,7 +1981,6 @@ def docker(i):
                                    'docker_settings':docker_settings,
                                    'docker_run_cmd_prefix':i.get('docker_run_cmd_prefix','')})
         if r['return']>0: return r
-
         run_cmd  = r['run_cmd_string'] + ' ' + container_env_string + ' --docker_run_deps '
 
         env['CM_RUN_STATE_DOCKER'] = True
@@ -1952,7 +2000,7 @@ def docker(i):
 
         if i.get('docker_push_image', '') in ['True', True, 'yes']:
             env['CM_DOCKER_PUSH_IMAGE'] = 'yes'
-        
+
         cm_docker_input = {'action': 'run',
                            'automation': 'script',
                            'tags': 'run,docker,container',

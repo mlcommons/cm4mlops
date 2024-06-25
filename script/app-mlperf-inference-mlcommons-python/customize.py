@@ -75,9 +75,10 @@ def preprocess(i):
     else:
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] +=  " --mlperf_conf "+ x + env['CM_MLPERF_CONF'] + x
 
-    env['MODEL_DIR'] = env.get('CM_ML_MODEL_PATH')
-    if not env['MODEL_DIR']:
-        env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH')))
+    if env.get('CM_NETWORK_LOADGEN', '') != "lon":
+        env['MODEL_DIR'] = env.get('CM_ML_MODEL_PATH')
+        if not env['MODEL_DIR']:
+            env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH')))
 
     RUN_CMD = ""
     state['RUN'] = {}
@@ -176,10 +177,16 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
     if env['CM_MODEL'] in [ "gptj-99", "gptj-99.9"  ]:
 
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "gpt-j")
-        cmd = env['CM_PYTHON_BIN_WITH_PATH'] +  \
-            " main.py --model-path=" + env['CM_ML_MODEL_FILE_WITH_PATH'] + ' --dataset-path=' + env['CM_DATASET_EVAL_PATH'] + " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + " " + env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
-            ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
-            scenario_extra_options + mode_extra_options + dataset_options
+        if env.get('CM_NETWORK_LOADGEN', '') != "lon":
+            cmd = env['CM_PYTHON_BIN_WITH_PATH'] +  \
+                " main.py --model-path=" + env['CM_ML_MODEL_FILE_WITH_PATH'] + ' --dataset-path=' + env['CM_DATASET_EVAL_PATH'] + " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + " " + env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
+                ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
+                scenario_extra_options + mode_extra_options + dataset_options
+        else:
+            cmd = env['CM_PYTHON_BIN_WITH_PATH'] +  \
+                " main.py" + ' --dataset-path=' + env['CM_DATASET_EVAL_PATH'] + " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + " " + env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
+                ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
+                scenario_extra_options + mode_extra_options + dataset_options
         cmd = cmd.replace("--count", "--max_examples")
         if env['CM_MLPERF_DEVICE'] == "gpu":
             gpu_options = " --gpu"
@@ -188,7 +195,6 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
             gpu_options = ""
         cmd = cmd + gpu_options
         env['LOG_PATH'] = env['CM_MLPERF_OUTPUT_DIR']
-        return cmd, env['RUN_DIR']
 
     if env['CM_MODEL'] in [ "resnet50", "retinanet" ]:
 

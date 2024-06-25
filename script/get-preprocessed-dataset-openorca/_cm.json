@@ -48,6 +48,12 @@
       ]
     },
     {
+      "tags": "get,generic-python-lib,_package.transformers",
+      "names": [
+        "transformers"
+      ]
+    },
+    {
       "tags": "get,ml-model,llama2"
     }
   ],

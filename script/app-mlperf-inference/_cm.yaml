@@ -175,12 +175,16 @@ variations:
       implementation
     default:
       true
+    default_variations:
+      reproducibility: r4.1_default
     add_deps_recursive:
       imagenet-accuracy-script:
         tags: _float32
       squad-accuracy-script:
         tags: _float32
       librispeech-accuracy-script:
+        tags: _int32
+      cnndm-accuracy-script:
         tags: _int32
     env:
       CM_MLPERF_PYTHON: 'yes'
@@ -189,6 +193,7 @@ variations:
       CM_IMAGENET_ACCURACY_DTYPE: float32
       CM_OPENIMAGES_ACCURACY_DTYPE: float32
       CM_LIBRISPEECH_ACCURACY_DTYPE: float32
+      CM_CNNDM_ACCURACY_DTYPE: int32
     prehook_deps:
       - names:
          - python-reference-mlperf-inference
@@ -235,12 +240,24 @@ variations:
     default_variations:
       backend: onnxruntime
 
+  nvidia-original,r4.1_default:
+    docker:
+      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+
+  nvidia-original,r4.1_default,gptj_:
+    docker:
+      deps:
+        - tags: get,ml-model,gptj,_nvidia,_fp8
+    env:
+      BUILD_TRTLLM: 1
+
   nvidia-original:
     docker:
       interactive: True
       extra_run_args: ' --runtime=nvidia --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v3.1-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-l4-public
-      docker:os_version: "20.04"
+      os: "ubuntu"
+      os_version: "20.04"
       deps:
         - tags: get,mlperf,inference,nvidia,scratch,space
         - tags: get,nvidia-docker
@@ -256,6 +273,7 @@ variations:
     default_variations:
       backend: tensorrt
       device: cuda
+      reproducibility: r4.1_default
     group:
       implementation
     add_deps_recursive:
@@ -268,17 +286,12 @@ variations:
       cnndm-accuracy-script:
         tags: _int32
     env:
+      BUILD_TRTLLM: 0
       CM_MLPERF_IMPLEMENTATION: nvidia
       CM_SQUAD_ACCURACY_DTYPE: float16
       CM_IMAGENET_ACCURACY_DTYPE: int32
       CM_CNNDM_ACCURACY_DTYPE: int32
       CM_LIBRISPEECH_ACCURACY_DTYPE: int8
-    deps:
-      - tags: get,cuda-devices
-        skip_if_env:
-          CM_CUDA_DEVICE_PROP_GLOBAL_MEMORY:
-            - "yes"
-            - "on"
     prehook_deps:
       - names:
          - nvidia-original-mlperf-inference
@@ -308,18 +321,17 @@ variations:
       - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
       skip_run_cmd: 'no'
       shm_size: '32gb'
-      docker_os: ubuntu
-      docker_real_run: false
+      os: ubuntu
+      real_run: false
       run: true
       docker_input_mapping:
-        imagenet_path: IMAGENET_PATH
-        gptj_checkpoint_path: GPTJ_CHECKPOINT_PATH
         criteo_preprocessed_path: CRITEO_PREPROCESSED_PATH
         dlrm_data_path: DLRM_DATA_PATH
         intel_gptj_int8_model_path: CM_MLPERF_INFERENCE_INTEL_GPTJ_INT8_MODEL_PATH
     default_variations:
       device: cpu
       backend: pytorch
+      reproducibility: r4.1_default
     prehook_deps:
       - names:
          - intel
@@ -333,13 +345,34 @@ variations:
       CM_MLPERF_IMPLEMENTATION: intel
 
   intel-original,gptj_:
-    docker:
-      deps:
-      - tags: get,ml-model,gptj
+    adr:
+      cnndm-accuracy-script:
+        tags: _int32
 
   intel-original,gptj_,build-harness:
     docker:
       run: false
+
+  redhat:
+    group:
+      implementation
+    default_variations:
+      device: cuda
+      backend: openshift
+      reproducibility: r4.0_default
+    prehook_deps:
+      - names:
+         - redhat
+         - redhat-harness
+         - mlperf-inference-implementation
+        tags: reproduce,mlperf,inference,redhat
+        skip_if_env:
+          CM_SKIP_RUN:
+            - yes
+    env:
+      CM_MLPERF_IMPLEMENTATION: redhat
+    docker:
+      interactive: True
 
   qualcomm:
     alias: kilt
@@ -350,6 +383,7 @@ variations:
     default_variations:
       device: qaic
       backend: glow
+      reproducibility: r4.0_default
     prehook_deps:
       - names:
          - kilt
@@ -430,7 +464,7 @@ variations:
       tags: run,accuracy,mlperf,_imagenet
     docker:
       deps:
-      - tags: get,dataset,imagenet,original
+      - tags: get,dataset,imagenet,validation,original
         names:
           - imagenet-original
           - dataset-original
@@ -624,6 +658,9 @@ variations:
     alias: gptj_
 
   gptj_:
+    docker:
+      deps:
+      - tags: get,ml-model,gptj,raw
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
     posthook_deps:
@@ -633,9 +670,6 @@ variations:
         - all
         CM_MLPERF_ACCURACY_RESULTS_DIR:
         - 'on'
-      skip_if_env:
-        CM_MLPERF_IMPLEMENTATION:
-        - intel
       names:
       - cnndm-accuracy-script
       - mlperf-accuracy-script
@@ -807,6 +841,15 @@ variations:
       mlperf-inference-implementation:
         tags: _pytorch
 
+  openshift:
+    group: backend
+    env:
+      CM_MLPERF_BACKEND:
+        openshift
+    add_deps_recursive:
+      mlperf-inference-implementation:
+        tags: _openshift
+
   ncnn:
     group: backend
     env:
@@ -893,9 +936,16 @@ variations:
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _cpu
+
+  cuda,reference:
+    docker:
+      base_image: nvcr.io/nvidia/pytorch:24.03-py3
+
   cuda:
     docker:
       all_gpus: 'yes'
+      deps:
+        - tags: get,nvidia-docker 
     group:
       device
     env:
@@ -904,6 +954,12 @@ variations:
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _cuda
+    deps:
+      - tags: get,cuda-devices
+        skip_if_env:
+          CM_CUDA_DEVICE_PROP_GLOBAL_MEMORY:
+            - "yes"
+            - "on"
   rocm:
     docker:
       all_gpus: 'yes'
@@ -1128,6 +1184,8 @@ variations:
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
 
   r4.0_default:
     group:
@@ -1139,14 +1197,34 @@ variations:
       nvidia-inference-server:
         version: r3.1
         tags: _ctuning
+      intel-harness:
+        tags: _v3.1
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
+
+  r4.1_default:
+    group:
+      reproducibility
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r4.0
+        tags: _go
+      nvidia-inference-server:
+        version: r4.0
+        tags: _go
+      intel-harness:
+        tags: _v4.0
+    default_env:
+      CM_SKIP_SYS_UTILS: 'yes'
+      CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
+
 
 invalid_variation_combinations:
-  -
-    - resnet50
-    - pytorch
   -
     - retinanet
     - tf
@@ -1236,22 +1314,28 @@ gui:
   title: "CM GUI for the MLPerf inference benchmark"
 
 docker:
+  use_host_group_id: True
+  use_host_user_id: True
   deps:
     - tags: get,mlperf,inference,results,dir
     - tags: get,mlperf,inference,submission,dir
   pre_run_cmds:
+    #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
   mounts:
    - "${{ CM_DATASET_IMAGENET_PATH }}:${{ CM_DATASET_IMAGENET_PATH }}"
    - "${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}"
    - "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}"
+   - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
   skip_run_cmd: 'no'
   shm_size: '32gb'
+  interactive: True
   extra_run_args: ' --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
-  docker_os: ubuntu
-  docker_real_run: False
-  docker_os_version: '22.04'
+  os: ubuntu
+  cm_repo: gateoverflow@cm4mlops
+  real_run: False
+  os_version: '22.04'
   docker_input_mapping:
     imagenet_path: IMAGENET_PATH
     gptj_checkpoint_path: GPTJ_CHECKPOINT_PATH

@@ -5,6 +5,10 @@
   "ARGS": [
     "CM_GH_TOKEN"
   ],
+  "ARGS_DEFAULT": {
+    "UID" : "1000",
+    "GID" : "1000"
+  },
   "ENTRYPOINT": "[\"/bin/bash\", \"-c\"]",
   "ENV": {
     "TZ": "US/Pacific",
@@ -14,9 +18,9 @@
     "ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ >/etc/timezone"
   ],
   "PYTHON": "python3",
-  "USERID": "",
+  "UID": "",
   "USER": "cmuser",
-  "GROUPID": "",
+  "GID": "",
   "GROUP": "cm",
   "SHELL": "[\"/bin/bash\", \"-c\"]",
   "WORKDIR": "/home/cmuser",
@@ -25,7 +29,7 @@
       "package-manager-update-cmd": "apt-get update -y",
       "package-manager-get-cmd": "apt-get install -y", 
       "packages": [
-        "python3", "python3-pip", "git", "sudo", "wget"
+        "python3", "python3-pip", "git", "sudo", "wget", "python3-venv"
       ],
       "versions": {
         "18.04": {
@@ -39,6 +43,9 @@
         },
         "23.04": {
           "FROM": "ubuntu:23.04"
+        },
+        "24.04": {
+          "FROM": "ubuntu:24.04"
         }
       }
     },

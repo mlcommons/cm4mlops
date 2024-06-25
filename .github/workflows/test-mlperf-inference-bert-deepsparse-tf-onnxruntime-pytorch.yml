@@ -5,7 +5,7 @@ name: MLPerf inference bert (deepsparse, tf, onnxruntime, pytorch)
 
 on:
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-inference-bert-deepsparse-tf-onnxruntime-pytorch.yml'
       - '**'
@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         # 3.12 didn't work on 20240305 - need to check
-        python-version: [ "3.11", "3.9" ]
+        python-version: [ "3.11" ]
         backend: [ "deepsparse", "tf", "onnxruntime", "pytorch" ]
         precision: [ "int8", "fp32" ]
         exclude:

@@ -19,7 +19,7 @@ def preprocess(i):
 
     CM_DOCKER_BUILD_ARGS = env.get('+ CM_DOCKER_BUILD_ARGS', [])
 
-    if 'CM_GH_TOKEN' in env:
+    if env.get('CM_GH_TOKEN', '') != '':
         CM_DOCKER_BUILD_ARGS.append( "CM_GH_TOKEN="+env['CM_GH_TOKEN'] )
 
     if CM_DOCKER_BUILD_ARGS:

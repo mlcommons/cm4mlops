@@ -8,6 +8,22 @@
   "deps": [
     {
       "tags": "detect,os"
+    },
+    {
+      "tags": "get,generic-sys-util,_md5sha1sum",
+      "enable_if_env": {
+        "CM_HOST_OS_FLAVOR": [
+          "macos"
+        ]
+      },
+      "skip_if_any_env": {
+        "CM_EXTRACT_EXTRACTED_CHECKSUM_FILE": [
+          "off"
+        ],
+        "CM_EXTRACT_EXTRACTED_CHECKSUM": [
+          "off"
+        ]
+      }
     }
   ],
   "input_description": {},

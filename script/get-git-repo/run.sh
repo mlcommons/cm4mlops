@@ -15,7 +15,7 @@ if [ ! -d "${CM_TMP_GIT_PATH}" ]; then
   echo ""
 
   ${CM_GIT_CLONE_CMD}
-  if [ "${?}" != "0" ]; then exit $?; fi
+  test $? -eq 0 || exit $?
 
   cd ${folder}
 
@@ -25,7 +25,7 @@ if [ ! -d "${CM_TMP_GIT_PATH}" ]; then
     cmd="git checkout -b ${CM_GIT_SHA} ${CM_GIT_SHA}"
     echo "$cmd"
     eval "$cmd"
-    if [ "${?}" != "0" ]; then exit $?; fi
+    test $? -eq 0 || exit $?
 
   elif [ ! -z ${CM_GIT_CHECKOUT_TAG} ]; then
 
@@ -36,19 +36,24 @@ if [ ! -d "${CM_TMP_GIT_PATH}" ]; then
     cmd="git checkout tags/${CM_GIT_CHECKOUT_TAG} -b ${CM_GIT_CHECKOUT_TAG}"
     echo "$cmd"
     eval "$cmd"
-    if [ "${?}" != "0" ]; then exit $?; fi
+    test $? -eq 0 || exit $?
   
   else
     cmd="git rev-parse HEAD >> ../tmp-cm-git-hash.out"
     echo "$cmd"
     eval "$cmd"
-    if [ "${?}" != "0" ]; then exit $?; fi
+    test $? -eq 0 || exit $?
   fi
 
 else
   cd ${folder}
 fi
 
+if [ ! -z ${CM_GIT_PR_TO_APPLY} ]; then
+  git fetch origin ${CM_GIT_PR_TO_APPLY}:tmp-apply
+  git config user.email "temp@example.com"
+  git merge tmp-apply --no-edit
+fi
 
 IFS=',' read -r -a submodules <<< "${CM_GIT_SUBMODULES}"
 
@@ -57,7 +62,7 @@ do
     echo ""
     echo "Initializing submodule ${submodule}"
     git submodule update --init "${submodule}"
-    if [ "${?}" != "0" ]; then exit $?; fi
+    test $? -eq 0 || exit $?
 done
 
 if [ ${CM_GIT_PATCH} == "yes" ]; then
@@ -67,7 +72,7 @@ if [ ${CM_GIT_PATCH} == "yes" ]; then
     echo ""
     echo "Applying patch $patch_file"
     git apply "$patch_file"
-    if [ "${?}" != "0" ]; then exit $?; fi
+    test $? -eq 0 || exit $?
   done
 fi
 

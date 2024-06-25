@@ -14,6 +14,39 @@ def preprocess(i):
 
     script_path = i['run_script_input']['path']
 
+    if env.get('CM_GIT_CHECKOUT', '' ) == '' and env.get('CM_GIT_URL', '' ) == '' and env.get('CM_VERSION','') == '':
+        # if custom checkout and url parameters are not set and CM_VERSION is not specified
+        env['CM_VERSION'] = "master"
+        env["CM_GIT_CHECKOUT"] = "master"
+        env["CM_GIT_URL"] = "https://github.com/mlcommons/inference"
+    elif env.get('CM_GIT_CHECKOUT', '' ) != '' and env.get('CM_TMP_GIT_CHECKOUT', '' ) != '' and env.get('CM_GIT_CHECKOUT', '' )!=env.get('CM_TMP_GIT_CHECKOUT', '' ):
+        # if checkout branch is assigned inside version and custom branch is also specified
+        return {"return":1, "error":"Conflicting branches between version assigned and user specified."} 
+    elif env.get('CM_GIT_URL', '' ) != '' and env.get('CM_TMP_GIT_URL', '' ) != '' and env.get('CM_GIT_URL', '' )!=env.get('CM_TMP_GIT_URL', '' ):
+        # if GIT URL is assigned inside version and custom branch is also specified
+        return {"return":1, "error":"Conflicting URL's between version assigned and user specified."} 
+    
+    if env.get('CM_VERSION','') == '':
+        env['CM_VERSION'] = "custom"
+    
+    # check whether branch and url is specified, 
+    # if not try to assign the values specified in version parameters,
+    # if version parameters does not have the value to a parameter, set the default one
+    if env.get('CM_GIT_CHECKOUT', '' ) == '':
+        if env.get('CM_TMP_GIT_CHECKOUT', '' ) != '':
+            env["CM_GIT_CHECKOUT"] = env["CM_TMP_GIT_CHECKOUT"]
+        else:
+            env["CM_GIT_CHECKOUT"] = "master"
+    
+    if env.get('CM_GIT_URL', '' ) == '':
+        if env.get('CM_TMP_GIT_URL', '' ) != '':
+            env["CM_GIT_URL"] = env["CM_TMP_GIT_URL"]
+        else:
+            env["CM_GIT_URL"] = "https://github.com/mlcommons/inference"
+    
+    if env.get("CM_MLPERF_LAST_RELEASE", '') == '':
+        env["CM_MLPERF_LAST_RELEASE"] = "v4.0"
+
     if 'CM_GIT_DEPTH' not in env:
         env['CM_GIT_DEPTH'] = ''
 
@@ -82,7 +115,7 @@ def postprocess(i):
     if env.get('CM_GIT_REPO_CURRENT_HASH', '') != '':
         env['CM_VERSION'] += "-git-"+env['CM_GIT_REPO_CURRENT_HASH']
 
-    return {'return':0}
+    return {'return':0, 'version': env['CM_VERSION']}
 
 
 def get_valid_models(mlperf_version, mlperf_path):

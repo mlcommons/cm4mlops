@@ -27,7 +27,7 @@ def preprocess(i):
     run_dir = r ['run_dir']
     print(run_cmd)
     print(run_dir)
-    return {'return':1}
+    return {'return':1, 'error': 'Run command needs to be tested!'}
 
 def get_run_cmd(model, i):
     env = i['env']

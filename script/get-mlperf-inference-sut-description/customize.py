@@ -33,7 +33,9 @@ def preprocess(i):
 
     sut = hw_name + sut_suffix
     script_path = i['run_script_input']['path']
-    sut_path = os.path.join(os.getcwd(), "suts", sut + ".json")
+    sut_desc_path=env['CM_MLPERF_INFERENCE_SUT_DESC_PATH']
+
+    sut_path = os.path.join(sut_desc_path, "suts", sut + ".json")
     if os.path.exists(sut_path) and env.get('CM_SUT_DESC_CACHE', '') == "yes":
         print(f"Reusing SUT description file {sut}")
         state['CM_SUT_META'] = json.load(open(sut_path))

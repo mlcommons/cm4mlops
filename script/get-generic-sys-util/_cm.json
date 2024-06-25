@@ -291,6 +291,132 @@
         }
       }
     },
+    "libffi-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libffi_dev"
+      },
+      "state": {
+        "libffi_dev": {
+          "apt": "libffi-dev",
+          "dnf": "libffi-devel",
+          "yum": "libffi-devel",
+          "brew": "libffi-dev"
+        }
+      }
+    },
+    "libssl-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libssl_dev"
+      },
+      "state": {
+        "libssl_dev": {
+          "apt": "libssl-dev",
+          "dnf": "libssl-devel",
+          "yum": "libssl-devel",
+          "brew": "libssl-dev"
+        }
+      }
+    },
+    "libev-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libev_dev"
+      },
+      "state": {
+        "libev_dev": {
+          "apt": "libev-dev"
+        }
+      }
+    },
+    "libgdbm-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libgdbm_dev"
+      },
+      "state": {
+        "libgdbm_dev": {
+          "apt": "libgdbm-dev"
+        }
+      }
+    },
+    "liblzma-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "liblzma_dev"
+      },
+      "state": {
+        "liblzma_dev": {
+          "apt": "liblzma-dev"
+        }
+      }
+    },
+    "libncurses-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libncurses_dev"
+      },
+      "state": {
+        "libncurses_dev": {
+          "apt": "libncurses-dev",
+          "dnf": "libncurses-devel",
+          "yum": "libncurses-devel"
+        }
+      }
+    },
+    "libreadline-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libreadline_dev"
+      },
+      "state": {
+        "libreadline_dev": {
+          "apt": "libreadline-dev",
+          "dnf": "libreadline-devel",
+          "yum": "lireadline-devel"
+        }
+      }
+    },
+    "libsqlite3-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libsqlite3_dev"
+      },
+      "state": {
+        "libsqlite3_dev": {
+          "apt": "libsqlite3-dev"
+        }
+      }
+    },
+    "tk-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "tk_dev"
+      },
+      "state": {
+        "tk_dev": {
+          "apt": "tk-dev"
+        }
+      }
+    },
+    "libbz2-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libbz2_dev"
+      },
+      "state": {
+        "libbz2_dev": {
+          "apt": "libbz2-dev",
+          "dnf": "libbzip2-devel",
+          "yum": "libbzip2-devel",
+          "zlib-devel": "libbz2-devel"
+        }
+      }
+    },
+    "zlib1g-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "zlib1g_dev"
+      },
+      "state": {
+        "zlib1g_dev": {
+          "apt": "zlib1g-dev",
+          "dnf": "zlib-devel",
+          "yum": "zlib-devel",
+          "zypper": "zlib-devel"
+        }
+      }
+    },
     "numactl": {
       "env": {
         "CM_SYS_UTIL_NAME": "numactl"
@@ -304,12 +430,12 @@
       },
       "deps": [
         {
-	  "tags": "install,numactl,from.src",
-	  "enable_if_env": {
+	        "tags": "install,numactl,from.src",
+	        "enable_if_env": {
             "CM_HOST_OS_FLAVOR": [ "rhel" ],
-	    "CM_HOST_OS_VERSION": [ "9.1", "9.2", "9.3" ]
-	  }
-	}
+	          "CM_HOST_OS_VERSION": [ "9.1", "9.2", "9.3" ]
+	        }
+	      }
       ]
     },
     "g++-12": {
@@ -320,6 +446,28 @@
         "g++12": {
           "apt": "g++-12",
           "dnf": "gcc-toolset-12-gcc-c++"
+        }
+      }
+    },
+    "nlohmann-json3-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "nlohmann_json3_dev"
+      },
+      "state": {
+        "nlohmann_json3_dev": {
+          "apt": "nlohmann-json3-dev",
+          "dnf": "nlohmann-json-dev"
+        }
+      }
+    },
+    "md5sha1sum": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "md5sha1sum"
+      },
+      "state": {
+        "md5sha1sum": {
+          "apt": "",
+          "brew": "md5sha1sum"
         }
       }
     }

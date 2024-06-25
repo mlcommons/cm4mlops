@@ -25,7 +25,7 @@ def preprocess(i):
 
     results_dir_split = results_dir.split(xsep)
     dataset = env['CM_DATASET']
-    regenerate_accuracy_file = env.get('CM_MLPERF_REGENERATE_ACCURACY_FILE', False)
+    regenerate_accuracy_file = env.get('CM_MLPERF_REGENERATE_ACCURACY_FILE', env.get('CM_RERUN', False))
 
     for result_dir in results_dir_split:
 
@@ -63,13 +63,21 @@ def preprocess(i):
                 "' --output_dtype " + env['CM_ACCURACY_DTYPE'] + env.get('CM_OUTPUT_TRANSPOSED','') + max_examples_string + " > '" + out_file + "'"
 
         elif dataset == "cnndm":
-            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "gpt-j",
-                "evaluation.py") + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
-                "' --dataset-file '" + env['CM_DATASET_EVAL_PATH'] + "'"+ " --dtype " + env.get('CM_ACCURACY_DTYPE', "float32")  +" > '" + out_file + "'"
+            if env.get('CM_MLPERF_IMPLEMENTATION', '') == 'intel':
+                accuracy_checker_file = env['CM_MLPERF_INFERENCE_INTEL_GPTJ_ACCURACY_FILE_WITH_PATH']
+                env['+PYTHONPATH'] =  [os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_GPTJ_DATASET_FILE_WITH_PATH'])] + [os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_GPTJ_DATASET_ITEM_FILE_WITH_PATH'])] + env['+PYTHONPATH']
+                suffix_string = " --model-name-or-path '"+ env['GPTJ_CHECKPOINT_PATH'] +"'"
+            else:
+                accuracy_checker_file = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "gpt-j",
+                "evaluation.py")
+                suffix_string = " --dtype " + env.get('CM_ACCURACY_DTYPE', "float32")
+            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + accuracy_checker_file + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
+                "' --dataset-file '" + env['CM_DATASET_EVAL_PATH'] + "'" +suffix_string +" > '" + out_file + "'"
 
         elif dataset == "openorca":
-            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "llama2-70b",
-                "evaluate-accuracy.py") + "' --checkpoint-path '" + env['CM_ML_MODEL_LLAMA2_FILE_WITH_PATH'] + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
+            accuracy_checker_file = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "llama2-70b",
+                "evaluate-accuracy.py")
+            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + accuracy_checker_file + "' --checkpoint-path '" + env['CM_ML_MODEL_LLAMA2_FILE_WITH_PATH'] + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
                 "' --dataset-file '" + env['CM_DATASET_PREPROCESSED_PATH'] + "'"+ " --dtype " + env.get('CM_ACCURACY_DTYPE', "int32")  +" > '" + out_file + "'"
 
 
@@ -105,9 +113,7 @@ def preprocess(i):
         else:
             return {'return': 1, 'error': 'Unsupported dataset'}
 
-        outfile = os.path.join(result_dir, "accuracy.txt")
-        if not os.path.exists(outfile) or (os.stat(outfile).st_size == 0) or env.get("CM_REGENERATE_MEASURE_FILES", False):
-            run_cmds.append(CMD)
+        run_cmds.append(CMD)
 
 
     if os_info['platform'] == 'windows':

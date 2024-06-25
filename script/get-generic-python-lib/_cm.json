@@ -160,6 +160,11 @@
         "CM_COLORED_VERSION"
       ]
     },
+    "no-deps": {
+      "env": {
+        "CM_GENERIC_PYTHON_PACKAGE_INSTALL_DEPS": "no"
+      }
+    },
     "conda.#": {
       "ad": {
         "python-pip": {
@@ -831,6 +836,14 @@
       },
       "new_env_keys": [
         "CM_TORCH_VERSION*"
+      ],
+      "deps": [
+        {
+          "tags": "get,generic-python-lib,_package.networkx",
+	  "enable_if_env": {
+	    "CM_PYTHON_MINOR_VERSION": [ "7", "8" ]
+	  }
+        }
       ]
     },
     "torch,pre": {

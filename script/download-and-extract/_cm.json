@@ -23,6 +23,7 @@
     "CM_EXTRACT_EXTRACTED_PATH",
     "<<<CM_DOWNLOAD_FINAL_ENV_NAME>>>",
     "<<<CM_EXTRACT_FINAL_ENV_NAME>>>",
+    "<<<CM_DAE_FINAL_ENV_NAME>>>",
     "CM_GET_DEPENDENT_CACHED_PATH"
   ],
   "new_state_keys": [],
@@ -113,11 +114,14 @@
       "group": "download-tool"
     },
     "keep": {
+      "group": "keep",
+      "default": "true",
       "env": {
         "CM_EXTRACT_REMOVE_EXTRACTED": "no"
       }
     },
     "no-remove-extracted": {
+      "group": "keep",
       "env": {
         "CM_EXTRACT_REMOVE_EXTRACTED": "no"
       }

@@ -86,7 +86,7 @@
       ],
       "env": {
         "CM_CONDA_ENV": "yes",
-	"CM_FOR_INTEL_MLPERF_INFERENCE": "yes"
+        "CM_FOR_INTEL_MLPERF_INFERENCE_BERT": "yes"
       }
     },
     "repo.#": {

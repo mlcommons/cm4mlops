@@ -14,6 +14,7 @@ def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
+
     inp = i['input']
     state = i['state']
     script_path = i['run_script_input']['path']
@@ -176,6 +177,9 @@ def preprocess(i):
         del(env['OUTPUT_BASE_DIR'])
         state = {}
         docker_extra_input = {}
+
+        del(env['CM_HW_NAME'])
+
         for k in inp:
             if k.startswith("docker_"):
                 docker_extra_input[k] = inp[k]
@@ -215,6 +219,11 @@ def preprocess(i):
             r = cm.access(ii)
             if r['return'] > 0:
                 return r
+            if action == "docker":
+                return {'return': 0} # We run commands interactively inside the docker container
+
+            if state.get('docker', {}):
+                del(state['docker'])
 
         if env.get("CM_MLPERF_LOADGEN_COMPLIANCE", "") == "yes":
             for test in test_list:
@@ -229,12 +238,13 @@ def preprocess(i):
                 r = cm.access(ii)
                 if r['return'] > 0:
                     return r
+                if state.get('docker', {}):
+                    del(state['docker'])
 
     if state.get("cm-mlperf-inference-results"):
         #print(state["cm-mlperf-inference-results"])
         for sut in state["cm-mlperf-inference-results"]:#only one sut will be there
-            # Grigori: that may not work properly since customize may have another Python than MLPerf
-            # (for example, if we use virtual env)
+            # Better to do this in a stand alone CM script with proper deps but currently we manage this by modifying the sys path of the python executing CM
             import mlperf_utils
 
             print(sut)
