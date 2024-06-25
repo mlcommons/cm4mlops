@@ -62,14 +62,20 @@ def preprocess(i):
     env['CONDA_PREFIX'] = env['CM_CONDA_PREFIX']
 
     if env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "calibration":
-        calibration_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'calibration', master_model, backend+"-"+device)
+        if master_model == "resnet50":
+            i['run_script_input']['script_name'] = "prepare_imagenet_calibration"
+        else:
+            calibration_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'calibration', master_model, backend+"-"+device)
 
-        if "gpt" in env['CM_MODEL']:
-            i['run_script_input']['script_name'] = "calibrate_gptj_int4_model"
-            calibration_path = os.path.join(calibration_root, "INT4")
-            env['CM_MLPERF_INFERENCE_INTEL_CALIBRATION_PATH'] = calibration_path
-            env['INT4_CALIBRATION_DIR'] = os.path.join(calibration_path, "data", "quantized-int4-model")
+            if "gpt" in env['CM_MODEL']:
+                i['run_script_input']['script_name'] = "calibrate_gptj_int4_model"
+                calibration_path = os.path.join(calibration_root, "INT4")
+                env['CM_MLPERF_INFERENCE_INTEL_CALIBRATION_PATH'] = calibration_path
+                env['INT4_CALIBRATION_DIR'] = os.path.join(calibration_path, "data", "quantized-int4-model")
 
+    elif env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "compilation":
+        if master_model == "resnet50":
+            i['run_script_input']['script_name'] = "compile_resnet50"
 
     elif env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "build_harness":
         print(f"Harness Root: {harness_root}")
@@ -77,6 +83,10 @@ def preprocess(i):
             i['run_script_input']['script_name'] = "build_bert_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "bert_inference")
             env['DATA_PATH'] = os.path.join(os.getcwd(), "harness", "bert")
+        if "resnet50" in env['CM_MODEL']:
+            i['run_script_input']['script_name'] = "build_resnet50_harness"
+            env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "resnet50_inference")
+            env['DATA_PATH'] = os.path.join(os.getcwd(), "harness", "resnet50")
         elif "gpt" in env['CM_MODEL']:
             i['run_script_input']['script_name'] = "build_gptj_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "gptj_inference")
@@ -114,17 +124,24 @@ def preprocess(i):
          audit_path = env['CM_MLPERF_INFERENCE_AUDIT_PATH']
          shutil.copy(audit_path, env['CM_RUN_DIR'])
 
+        if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy":
+            env['LOADGEN_MODE'] = 'Accuracy'
+        else:
+            env['LOADGEN_MODE'] = 'Performance'
+
         if 'bert' in env['CM_MODEL']:
             env['MODEL_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
             env['DATASET_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
             env['CM_RUN_DIR'] = i['run_script_input']['path']
             env['CM_RUN_CMD'] = "bash run_bert_harness.sh " + ("--accuracy" if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy" else "")
 
+        elif 'resnet50' in env['CM_MODEL']:
+            env['MODEL_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
+            env['DATASET_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
+            env['CM_RUN_DIR'] = i['run_script_input']['path']
+            env['CM_RUN_CMD'] = "bash run_resnet50_harness.sh " + ("--accuracy" if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy" else "")
+
         elif "gptj" in env['CM_MODEL']:
-            if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy":
-                env['LOADGEN_MODE'] = 'Accuracy'
-            else:
-                env['LOADGEN_MODE'] = 'Performance'
             env['CM_RUN_DIR'] = i['run_script_input']['path']
             if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == "v3.1":
                 env['CM_RUN_CMD'] = "bash run_gptj_harness_v3_1.sh "

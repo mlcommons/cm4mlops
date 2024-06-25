@@ -5,7 +5,6 @@ import hashlib
 def preprocess(i):
 
     os_info = i['os_info']
-
     env = i['env']
     meta = i['meta']
 
@@ -127,7 +126,8 @@ def preprocess(i):
     #verify checksum if file already present
     if env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
         x='*' if os_info['platform'] == 'windows' else ''
-        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum -c ".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q)
+        x_c='s' if os_info['platform'] == 'darwin' else ''
+        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum -c{} ".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q, x_c)
     else:
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = ""
 

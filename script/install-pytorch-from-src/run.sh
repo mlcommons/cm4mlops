@@ -1,5 +1,11 @@
 #!/bin/bash
 
+gcc()
+{
+  ${CM_GCC_BIN_WITH_PATH} "$@"
+}
+export -f gcc
+
 CUR_DIR=$PWD
 if [[ ! -e pytorch/dist/torch*.whl ]]; then
   rm -rf pytorch

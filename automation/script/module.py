@@ -4429,7 +4429,7 @@ def update_env_with_values(env, fail_on_not_found=False):
 
         if not tmp_values:
             if key == 'CM_GIT_URL' and env.get('CM_GIT_AUTH', "no") == "yes":
-                if 'CM_GH_TOKEN' in env and '@' not in env['CM_GIT_URL']:
+                if env.get('CM_GH_TOKEN','') != '' and '@' not in env['CM_GIT_URL']:
                     params = {}
                     params["token"] = env['CM_GH_TOKEN']
                     value = get_git_url("token", value, params)
