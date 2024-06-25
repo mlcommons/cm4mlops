@@ -54,8 +54,9 @@ def preprocess(i):
                 path_bin = os.path.join(cur_dir, file_name)
                 env['CM_RCLONE_BIN_WITH_PATH'] = path_bin
 
-                if env['CM_HOST_OS_TYPE'] != "windows":
-                    env['+PATH'] = cur_dir
+                if not env.get('+PATH', []):
+                    env['+PATH'] = []
+                env['+PATH'].append(cur_dir)
 
 
             r = automation.run_native_script({'run_script_input':run_script_input, 
