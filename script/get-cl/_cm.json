@@ -24,7 +24,8 @@
     "compiler",
     "c-compiler",
     "cpp-compiler",
-    "get-cl"
+    "get-cl",
+    "gcc"
   ],
   "uid": "7dbb770faff947c0"
 }
