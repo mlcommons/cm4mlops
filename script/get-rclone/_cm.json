@@ -6,6 +6,14 @@
   "deps": [
     {
       "tags": "detect,os"
+    },
+    {
+      "enable_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "windows"
+        ]
+      },
+      "tags": "get,sys-utils-min"
     }
   ],
   "category": "Detection or installation of tools and artifacts",

@@ -231,6 +231,13 @@
         "CM_GENERIC_PYTHON_PIP_URL": "git+https://github.com/NVIDIA/dllogger#egg=dllogger"
       }
     },
+    "mxeval": {
+      "env": {
+        "CM_GENERIC_PYTHON_PACKAGE_NAME": "mxeval",
+        "CM_GENERIC_PYTHON_PIP_URL": "git+https://github.com/amazon-science/mxeval.git",
+        "CM_PIP_ERROR_SKIP": "true"
+      }
+    },
     "fiftyone": {
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "fiftyone"

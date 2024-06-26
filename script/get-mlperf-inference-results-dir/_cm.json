@@ -36,11 +36,11 @@
         "CM_MLPERF_INFERENCE_RESULTS_VERSION": "#"
       }
     },
-    "version.4_0": {
+    "version.4_1": {
       "group": "version",
       "default": true,
       "env": {
-        "CM_MLPERF_INFERENCE_RESULTS_VERSION": "4_0"
+        "CM_MLPERF_INFERENCE_RESULTS_VERSION": "4_1"
       }
     }
   },

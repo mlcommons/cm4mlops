@@ -407,6 +407,18 @@ deps:
       CM_MLPERF_CUSTOM_MODEL_PATH:
       - "on"
 
+  ## mixtral-8x7b
+  - tags: get,ml-model,mixtral
+    names:
+    - ml-model
+    - mixtral-model
+    enable_if_env:
+      CM_MODEL:
+      - mixtral-8x7b
+    skip_if_env:
+      CM_MLPERF_CUSTOM_MODEL_PATH:
+      - "on"
+
   ## 3d-unet
   - tags: get,ml-model,medical-imaging,3d-unet
     names:
@@ -512,6 +524,14 @@ deps:
       CM_MODEL:
       - llama2-70b-99
       - llama2-70b-99.9
+
+  ## OpenOrca,mbxp,gsm8k combined dataset for mixtral-8x7b
+  - tags: get,dataset-mixtral,openorca-mbxp-gsm8k-combined
+    names:
+    - openorca-mbxp-gsm8k-combined-preprocessed
+    enable_if_env:
+      CM_MODEL:
+      - mixtral-8x7b
 
   ## Kits19 for 3d-unet
   - tags: get,dataset,kits19,preprocessed
@@ -935,6 +955,52 @@ variations:
       CM_MODEL: llama2-70b-99.9
     base:
       - llama2-70b_
+
+  mixtral-8x7b:
+    group: models
+    env:
+      CM_MODEL: mixtral-8x7b
+    deps:
+      - tags: get,rust-compiler
+        names:
+          - rustup
+      - tags: get,generic-python-lib,_package.transformers
+        names:
+          - transformers
+      - tags: get,generic-python-lib,_package.datasets
+        names:
+          - datasets
+      - tags: get,generic-python-lib,_package.sentencepiece
+        names:
+          - sentencepiece
+      - tags: get,generic-python-lib,_package.protobuf
+        names:
+          - protobuf
+      - tags: get,generic-python-lib,_package.accelerate
+        names:
+          - accelerate
+      - tags: get,generic-python-lib,_package.absl-py
+        names:
+          - absl-py
+      - tags: get,generic-python-lib,_package.evaluate
+        names:
+          - evaluate
+      - tags: get,generic-python-lib,_package.nltk
+        names:
+          - nltk
+      - tags: get,generic-python-lib,_package.rouge-score
+        names:
+          - rouge-score
+      - tags: get,generic-python-lib,_package.pybind11
+        names:
+          - rouge-score
+      - tags: get,generic-python-lib,_mxeval
+        names:
+          - rouge-score
+  
+  mixtral-8x7b,cuda:
+    default_env:
+      CM_MLPERF_LOADGEN_BATCH_SIZE: 1
 
   3d-unet-99.9:
     group: models
