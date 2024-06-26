@@ -608,6 +608,16 @@ variations:
         tags: _llama2-70b-99.9
   
   mixtral-8x7b:
+    group:
+      model
+    base:
+    - mixtral-8x7b
+    env:
+      CM_MODEL:
+        mixtral-8x7b
+    add_deps_recursive:
+      mlperf-inference-implementation:
+        tags: _mixtral-8x7b
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
     posthook_deps:
@@ -623,19 +633,7 @@ variations:
       names:
       - mlperf-accuracy-script
       - openorca-gsm8k-mbxp-combined-accuracy-script
-      tags: run,accuracy,mlperf,_openorca-gsm8k-mbxp,_float32
-
-  mixtral-8x7b:
-    group:
-      model
-    base:
-    - mixtral-8x7b
-    env:
-      CM_MODEL:
-        mixtral-8x7b
-    add_deps_recursive:
-      mlperf-inference-implementation:
-        tags: _mixtral-8x7b
+      tags: run,accuracy,mlperf,_openorca-gsm8k-mbxp,_int32
 
   rnnt:
     group:

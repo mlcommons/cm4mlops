@@ -58,6 +58,11 @@ def preprocess(i):
                     env['+PATH'] = []
                 env['+PATH'].append(cur_dir)
 
+                if not env.get('+PATH', []):
+                    env['+PATH'] = []
+                env['+PATH'].append(cur_dir)
+
+
             r = automation.run_native_script({'run_script_input':run_script_input, 
                                               'env':env, 
                                               'script_name':install_script})
