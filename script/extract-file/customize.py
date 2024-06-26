@@ -25,6 +25,9 @@ def preprocess(i):
     filename = env.get('CM_EXTRACT_FILEPATH','')
     if filename == '':
         return {'return': 1, 'error': 'Extract with no download requested and CM_EXTRACT_FILEPATH is not set'}
+    
+    if windows:
+        filename = filename.replace("%", "%%")
 
     env['CM_EXTRACT_FILENAME'] = filename
 
