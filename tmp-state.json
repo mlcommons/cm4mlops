@@ -1,0 +1,204 @@
+{
+  "CM_HW_META": {
+    "accelerator_frequency": "",
+    "accelerator_host_interconnect": "N/A",
+    "accelerator_interconnect": "N/A",
+    "accelerator_interconnect_topology": "",
+    "accelerator_memory_capacity": "N/A",
+    "accelerator_memory_configuration": "N/A",
+    "accelerator_model_name": "N/A",
+    "accelerator_on-chip_memories": "",
+    "accelerators_per_node": "0",
+    "cooling": "air",
+    "division": "open",
+    "framework": "pytorch",
+    "host_memory_capacity": "19G",
+    "host_memory_configuration": "undefined",
+    "host_network_card_count": "1",
+    "host_networking": "Gig Ethernet",
+    "host_networking_topology": "N/A",
+    "host_processor_caches": "L1d cache: 192 KiB (6 instances), L1i cache: 192 KiB (6 instances), L2 cache: 3 MiB (6 instances), L3 cache: 8 MiB (2 instances)",
+    "host_processor_core_count": "6",
+    "host_processor_frequency": "2100.0000",
+    "host_processor_interconnect": "",
+    "host_processor_model_name": "AMD Ryzen 5 5500U with Radeon Graphics",
+    "host_processors_per_node": "1",
+    "host_storage_capacity": "205G",
+    "host_storage_type": "SSD",
+    "hw_notes": "",
+    "number_of_nodes": "1",
+    "operating_system": "Ubuntu 22.04 (linux-5.15.0-107-generic-glibc2.35)",
+    "other_software_stack": "Python: 3.10.12, GCC-11.4.0",
+    "status": "available",
+    "submitter": "CTuning",
+    "sw_notes": "",
+    "system_name": "anandhu_VivoBook_ASUSLaptop_X515UA_M515UA (auto detected)",
+    "system_type": "edge",
+    "system_type_detail": "edge server"
+  },
+  "CM_SUT_CONFIG": {
+    "anandhu_VivoBook_ASUSLaptop_X515UA_M515UA-reference-cpu-pytorch-v2.3.0-default_config": {
+      "3d-unet-99": {
+        "Offline": {
+          "target_qps": 1.0
+        },
+        "Server": {
+          "target_qps": 1.0
+        },
+        "SingleStream": {
+          "target_latency": 500
+        }
+      },
+      "3d-unet-99.9": {
+        "Offline": {
+          "target_qps": 1.0
+        },
+        "Server": {
+          "target_qps": 1.0
+        },
+        "SingleStream": {
+          "target_latency": 500
+        }
+      },
+      "bert-99": {
+        "Offline": {
+          "target_qps": 1.0
+        },
+        "Server": {
+          "target_qps": 1.0
+        },
+        "SingleStream": {
+          "target_latency": 1
+        }
+      },
+      "bert-99.9": {
+        "Offline": {
+          "target_qps": 1.0
+        },
+        "Server": {
+          "target_qps": 1.0
+        }
+      },
+      "gpt-j": {
+        "Offline": {
+          "target_qps": 1.0
+        },
+        "Server": {
+          "target_qps": 1.0
+        },
+        "SingleStream": {
+          "target_latency": 500
+        }
+      },
+      "llama2-70b-99": {
+        "Offline": {
+          "target_qps": 0.1
+        },
+        "Server": {
+          "target_qps": 0.1
+        },
+        "SingleStream": {
+          "target_latency": 2000
+        }
+      },
+      "llama2-70b-99.9": {
+        "Offline": {
+          "target_qps": 0.1
+        },
+        "Server": {
+          "target_qps": 0.1
+        },
+        "SingleStream": {
+          "target_latency": 2000
+        }
+      },
+      "resnet50": {
+        "MultiStream": {
+          "target_latency": 0.1
+        },
+        "Offline": {
+          "target_qps": 1.0
+        },
+        "Server": {
+          "target_qps": 1.0
+        },
+        "SingleStream": {
+          "target_latency": 0.1
+        }
+      },
+      "retinanet": {
+        "MultiStream": {
+          "target_latency": 1
+        },
+        "Offline": {
+          "target_qps": 1.0
+        },
+        "Server": {
+          "target_qps": 1.0
+        },
+        "SingleStream": {
+          "target_latency": 1000
+        }
+      },
+      "sdxl": {
+        "Offline": {
+          "target_qps": 1.0
+        },
+        "Server": {
+          "target_qps": 1.0
+        },
+        "SingleStream": {
+          "target_latency": 200
+        }
+      }
+    }
+  },
+  "CM_SUT_CONFIG_NAME": "anandhu_VivoBook_ASUSLaptop_X515UA_M515UA-reference-cpu-pytorch-v2.3.0-default_config",
+  "CM_SUT_CONFIG_PATH": {
+    "anandhu_VivoBook_ASUSLaptop_X515UA_M515UA-reference-cpu-pytorch-v2.3.0-default_config": "/home/anandhu/CM/repos/local/cache/0a0ca8118bc54941/anandhu_VivoBook_ASUSLaptop_X515UA_M515UA/reference-implementation/cpu-device/pytorch-framework/framework-version-v2.3.0/default_config-config.yaml"
+  },
+  "CM_SUT_META": {
+    "accelerator_frequency": "",
+    "accelerator_host_interconnect": "N/A",
+    "accelerator_interconnect": "N/A",
+    "accelerator_interconnect_topology": "",
+    "accelerator_memory_capacity": "N/A",
+    "accelerator_memory_configuration": "N/A",
+    "accelerator_model_name": "N/A",
+    "accelerator_on-chip_memories": "",
+    "accelerators_per_node": "0",
+    "cooling": "air",
+    "division": "open",
+    "framework": "pytorch",
+    "host_memory_capacity": "19G",
+    "host_memory_configuration": "undefined",
+    "host_network_card_count": "1",
+    "host_networking": "Gig Ethernet",
+    "host_networking_topology": "N/A",
+    "host_processor_caches": "L1d cache: 192 KiB (6 instances), L1i cache: 192 KiB (6 instances), L2 cache: 3 MiB (6 instances), L3 cache: 8 MiB (2 instances)",
+    "host_processor_core_count": "6",
+    "host_processor_frequency": "2100.0000",
+    "host_processor_interconnect": "",
+    "host_processor_model_name": "AMD Ryzen 5 5500U with Radeon Graphics",
+    "host_processors_per_node": "1",
+    "host_storage_capacity": "205G",
+    "host_storage_type": "SSD",
+    "hw_notes": "",
+    "number_of_nodes": "1",
+    "operating_system": "Ubuntu 22.04 (linux-5.15.0-107-generic-glibc2.35)",
+    "other_software_stack": "Python: 3.10.12, GCC-11.4.0",
+    "status": "available",
+    "submitter": "CTuning",
+    "sw_notes": "",
+    "system_name": "anandhu_VivoBook_ASUSLaptop_X515UA_M515UA (auto detected)",
+    "system_type": "edge",
+    "system_type_detail": "edge server"
+  },
+  "docker": {},
+  "mlperf-inference-implementation": {
+    "script_id": "app-abtf-inference,43eb68e6a63e42ed:mlcommons-python,abtf-poc-model,pytorch,cpu,test,poc-demo,singlestream"
+  },
+  "mlperf_inference_run_cmd": "cm run script --tags=run-abtf,inference,_poc-demo --adr.compiler.tags=gcc --quiet -v",
+  "os_uname_all": "Linux anandhu-VivoBook-ASUSLaptop-X515UA-M515UA 5.15.0-107-generic #117-Ubuntu SMP Fri Apr 26 12:26:49 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux",
+  "os_uname_machine": "x86_64"
+}
