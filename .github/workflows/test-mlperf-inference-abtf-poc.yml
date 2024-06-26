@@ -92,4 +92,4 @@ jobs:
         cm pull repo mlcommons@cm4abtf --branch=poc
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --adr.compiler.tags=gcc --quiet  -v
+        cm run script --tags=run-abtf,inference,_poc-demo --quiet --env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off  -v
