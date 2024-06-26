@@ -3,7 +3,7 @@
 # as portable and reusable automation recipes with simple tags, native scripts 
 # and a unified CLI, Python API and JSON/YAML meta descriptions.
 #
-# This is a stable prototype of the CM script automation
+# This is a stable prototype of the CM script automation being developed by Grigori Fursin and Arjun Suresh
 #
 # TBD: when we have bandwidth and resources, we should refactor it
 # and make it cleaner and simpler while keeping full backwards compatibility.
