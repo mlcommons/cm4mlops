@@ -8,7 +8,7 @@ cd ipex_src
 
 git submodule update --init --recursive
 
-if [[ ${aCM_INTEL_IPEX_RESNET50_PATCH} == "yes" ]]; then
+if [[ ${CM_INTEL_IPEX_RESNET50_PATCH} == "yes" ]]; then
   bash ${CM_TMP_CURRENT_SCRIPT_PATH}/apply_intel_resnet50_patch.sh
   test "$?" -eq 0 || exit "$?"
 fi
