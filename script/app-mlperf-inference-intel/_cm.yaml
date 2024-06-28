@@ -112,12 +112,6 @@ deps:
   ########################################################################
   # Install OpenImages
 
-  - enable_if_env:
-      CM_MODEL:
-      - retinanet
-    tags: compile,intel,model,_retinanet
-    names:
-      - retinanet-compiler
 
   - enable_if_env:
       CM_MODEL:
