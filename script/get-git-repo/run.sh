@@ -51,9 +51,16 @@ fi
 
 if [ ! -z ${CM_GIT_PR_TO_APPLY} ]; then
   git fetch origin ${CM_GIT_PR_TO_APPLY}:tmp-apply
-  git config user.email "temp@example.com"
-  git merge tmp-apply --no-edit
 fi
+
+IFS=',' read -r -a cherrypicks <<< "${CM_GIT_CHERRYPICKS}"
+for cherrypick in "${cherrypicks[@]}"
+do
+  echo ""
+  echo "Applying cherrypick $cherrypick"
+  git cherry-pick $cherrypick
+  test $? -eq 0 || exit $?
+done
 
 IFS=',' read -r -a submodules <<< "${CM_GIT_SUBMODULES}"
 

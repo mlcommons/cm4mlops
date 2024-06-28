@@ -11,6 +11,10 @@ git submodule update --init --recursive
 if [[ ${CM_INTEL_IPEX_RESNET50_PATCH} == "yes" ]]; then
   bash ${CM_TMP_CURRENT_SCRIPT_PATH}/apply_intel_resnet50_patch.sh
   test "$?" -eq 0 || exit "$?"
+
+elif [[ ${CM_INTEL_IPEX_RETINANET_PATCH} == "yes" ]]; then
+  bash ${CM_TMP_CURRENT_SCRIPT_PATH}/apply_intel_retinanet_patch.sh
+  test "$?" -eq 0 || exit "$?"
 fi
 
 rm -rf build
