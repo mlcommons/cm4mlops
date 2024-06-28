@@ -158,7 +158,7 @@
     "for-intel-mlperf-inference-retinanet": {
       "adr": {
         "conda-package": {
-          "tags": "_name.retinanet50-pt"
+          "tags": "_name.retinanet-pt"
         },
         "pytorch": {
           "tags": "_for-intel-mlperf-inference-retinanet"

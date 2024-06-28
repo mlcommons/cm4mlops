@@ -38,4 +38,7 @@ def postprocess(i):
     env = i['env']
     version = env.get('CM_VERSION', '')
 
+    if env['CM_CONDA_PKG_NAME'] == "python":
+        env['CM_PYTHON_BIN_WITH_PATH'] = os.path.join(os.path.dirname(env['CM_CONDA_BIN_WITH_PATH']), "python")
+
     return {'return':0, 'version': version}
