@@ -29,9 +29,7 @@ def preprocess(i):
 
     URL = 'https://github.com/microsoft/onnxruntime/releases/download/v{}/{}'.format(version, FILENAME)
 
-    logging.infot ('')
     logging.info ('Downloading from {}'.format(URL))
-    logging.info ('')
 
     env['FOLDER'] = FOLDER
     env['FILENAME'] = FILENAME
