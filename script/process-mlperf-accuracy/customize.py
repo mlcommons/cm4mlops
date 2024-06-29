@@ -1,7 +1,7 @@
 from cmind import utils
 import cmind as cm
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -12,7 +12,7 @@ def preprocess(i):
     results_dir = env.get("CM_MLPERF_ACCURACY_RESULTS_DIR", "")
 
     if results_dir == "":
-        print("Please set CM_MLPERF_ACCURACY_RESULTS_DIR")
+        logging.infot("Please set CM_MLPERF_ACCURACY_RESULTS_DIR")
         return {'return':-1}
 
     # In fact, we expect only 1 command line here
@@ -139,16 +139,16 @@ def postprocess(i):
         accuracy_file = os.path.join(result_dir, "accuracy.txt")
 
         if os.path.exists(accuracy_file):
-            print ('')
-            print ('Accuracy file: {}'.format(accuracy_file))
-            print ('')
+            logging.info ('')
+            logging.info ('Accuracy file: {}'.format(accuracy_file))
+            logging.info ('')
 
             x = ''
             with open(accuracy_file, "r") as fp:
                 x=fp.read()
 
             if x!='':
-                print(x)
+                logging.info(x)
 
                 # Trying to extract accuracy dict
                 for y in x.split('\n'):
@@ -164,6 +164,6 @@ def postprocess(i):
                         except ValueError as e:
                            pass
 
-            print ('')
+            logging.info ('')
     return {'return':0}
 

@@ -1,11 +1,11 @@
 ﻿import cmind as cm
 import time
-
+import logging
 times = []
 
 steps = 10
 
-print ('Running search with tags {} times ...'.format(steps))
+logging.info ('Running search with tags {} times ...'.format(steps))
 
 for step in range(steps):
 
@@ -22,4 +22,4 @@ for step in range(steps):
 step = 0
 for t in times:
     step += 1
-    print ("{}) {:0.3f} sec.".format(step, t))
+    logging.info ("{}) {:0.3f} sec.".format(step, t))

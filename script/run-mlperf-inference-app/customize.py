@@ -6,7 +6,7 @@ import subprocess
 import cmind as cm
 import copy
 from tabulate import tabulate
-
+import logging
 summary_ext = ['.csv', '.json', '.xlsx']
 
 ##################################################################################
@@ -70,7 +70,7 @@ def preprocess(i):
     if env.get('CM_RUN_STYLE', '') == "valid" and 'CM_RUN_MLPERF_ACCURACY' not in env:
         env['CM_RUN_MLPERF_ACCURACY'] = "on"
 
-    print("Using MLCommons Inference source from " + env['CM_MLPERF_INFERENCE_SOURCE'])
+    logging.info("Using MLCommons Inference source from " + env['CM_MLPERF_INFERENCE_SOURCE'])
 
 
     if 'CM_MLPERF_LOADGEN_EXTRA_OPTIONS' not in env:
@@ -165,12 +165,12 @@ def preprocess(i):
     if clean:
         path_to_clean = output_dir
 
-        print ('=========================================================')
-        print ('Cleaning results in {}'.format(path_to_clean))
+        logging.info ('=========================================================')
+        logging.info ('Cleaning results in {}'.format(path_to_clean))
         if os.path.exists(path_to_clean):
             shutil.rmtree(path_to_clean)
 
-        print ('=========================================================')
+        logging.info ('=========================================================')
 
     if str(env.get('CM_MLPERF_USE_DOCKER', '')).lower() in [ "1", "true", "yes"]:
         action = "docker"
@@ -209,7 +209,7 @@ def preprocess(i):
         for mode in env['CM_MLPERF_LOADGEN_MODES']:
             env['CM_MLPERF_LOADGEN_MODE'] = mode
 
-            print(f"\nRunning loadgen scenario: {scenario} and mode: {mode}")
+            logging.info(f"\nRunning loadgen scenario: {scenario} and mode: {mode}")
             ii = {'action':action, 'automation':'script', 'tags': scenario_tags, 'quiet': 'true',
                 'env': copy.deepcopy(env), 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
                 copy.deepcopy(add_deps_recursive), 'ad': ad, 'adr': copy.deepcopy(adr), 'v': verbose, 'print_env': print_env, 'print_deps': print_deps, 'dump_version_info': dump_version_info}
@@ -247,11 +247,11 @@ def preprocess(i):
             # Better to do this in a stand alone CM script with proper deps but currently we manage this by modifying the sys path of the python executing CM
             import mlperf_utils
 
-            print(sut)
+            logging.info(sut)
             result_table, headers = mlperf_utils.get_result_table(state["cm-mlperf-inference-results"][sut])
-            print(tabulate(result_table, headers = headers, tablefmt="pretty"))
+            logging.info(tabulate(result_table, headers = headers, tablefmt="pretty"))
 
-            print(f"\nThe MLPerf inference results are stored at {output_dir}\n")
+            logging.info(f"\nThe MLPerf inference results are stored at {output_dir}\n")
 
     return {'return':0}
 
@@ -280,7 +280,7 @@ def get_valid_scenarios(model, category, mlperf_version, mlperf_path):
 
     valid_scenarios = config[mlperf_version]["required-scenarios-"+category][internal_model_name]
 
-    print("Valid Scenarios for " + model + " in " + category + " category are :" +  str(valid_scenarios))
+    logging.info("Valid Scenarios for " + model + " in " + category + " category are :" +  str(valid_scenarios))
 
     return valid_scenarios
 
@@ -295,10 +295,10 @@ def postprocess(i):
         x2 = env.get('CM_MLPERF_INFERENCE_CONF_PATH','')
 
         if x1 != '' and x2 != '':
-            print ('')
-            print ('Path to the MLPerf inference benchmark reference sources: {}'.format(x1))
-            print ('Path to the MLPerf inference reference configuration file: {}'.format(x2))
-            print ('')
+            logging.info ('')
+            logging.info ('Path to the MLPerf inference benchmark reference sources: {}'.format(x1))
+            logging.info ('Path to the MLPerf inference reference configuration file: {}'.format(x2))
+            logging.info ('')
 
     return {'return':0}
 

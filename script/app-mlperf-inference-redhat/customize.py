@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 import shutil
+import logging
 
 def preprocess(i):
 
@@ -25,8 +26,8 @@ def preprocess(i):
         return r
     run_cmd = r['run_cmd']
     run_dir = r ['run_dir']
-    print(run_cmd)
-    print(run_dir)
+    logging.info(run_cmd)
+    logging.info(run_dir)
     return {'return':1, 'error': 'Run command needs to be tested'}
 
 def get_run_cmd(model, i):

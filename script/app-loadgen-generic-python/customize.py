@@ -3,7 +3,7 @@
 from cmind import utils
 import os
 import shutil
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -83,9 +83,9 @@ def preprocess(i):
 
     env['CM_RUN_OPTS'] = run_opts
 
-    print ('')
-    print ('Assembled flags: {}'.format(run_opts))
-    print ('')    
+    logging.info ('')
+    logging.info ('Assembled flags: {}'.format(run_opts))
+    logging.info ('')    
 
     return {'return':0}
 

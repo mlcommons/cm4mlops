@@ -2,7 +2,7 @@ from cmind import utils
 import os
 import yaml
 import shutil
-
+import logging
 def postprocess(i):
     env = i['env']
     state = i['state']
@@ -50,7 +50,7 @@ def postprocess(i):
         if os.path.exists(config_path_default):
             shutil.copy(config_path_default, config_path)
         else:
-            print(f"Config file missing for given hw_name: '{env['CM_HW_NAME']}', implementation: '{implementation_string}', device: '{device},  backend: '{backend}', copying from default")
+            logging.info(f"Config file missing for given hw_name: '{env['CM_HW_NAME']}', implementation: '{implementation_string}', device: '{device},  backend: '{backend}', copying from default")
             src_config = os.path.join(env['CM_TMP_CURRENT_SCRIPT_PATH'], "configs", "default", "config.yaml")
             shutil.copy(src_config, config_path)
             os.makedirs(os.path.dirname(config_path_default), exist_ok=True)

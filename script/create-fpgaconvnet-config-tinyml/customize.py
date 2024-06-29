@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -43,7 +43,7 @@ def postprocess(i):
 
     json_location = os.path.join(env['CM_RUN_DIR'], env['CM_TINY_NETWORK_NAME'] + ".json")
     if os.path.exists(json_location):
-        print(f"JSON configuration file for {network} created at {json_location}")
+        logging.info(f"JSON configuration file for {network} created at {json_location}")
     else:
         return {'return':1, 'error': "JSON configuration file generation failed"}
 

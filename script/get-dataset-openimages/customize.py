@@ -1,15 +1,15 @@
 from cmind import utils
 import os
 import shutil
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
 
-    print ("")
-    print ("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
-    print ("")
+    logging.info ("")
+    logging.info ("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
+    logging.info ("")
 
     if os_info['platform'] == 'windows':
         MLPERF_CLASSES=['Airplane','Antelope','Apple','Backpack','Balloon','Banana',

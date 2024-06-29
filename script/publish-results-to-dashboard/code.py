@@ -1,14 +1,14 @@
 # Developer: Grigori Fursin
 
 import os
-
+import logging
 def main():
     # For now quick prototype hardwired to "summary.json" from MLPerf
     # Later need to clean it and make it universal
 
-    print ('')
-    print ('Reading summary.json ...')
-    print ('')
+    logging.info ('')
+    logging.info ('Reading summary.json ...')
+    logging.info ('')
 
     import json
     filename = os.environ.get('MLPERF_INFERENCE_SUBMISSION_SUMMARY','')
@@ -22,9 +22,9 @@ def main():
 
     f.close()
 
-    print ('=========================================================')
-    print ('Sending results to W&B dashboard ...')
-    print ('')
+    logging.info ('=========================================================')
+    logging.info ('Sending results to W&B dashboard ...')
+    logging.info ('')
 
     import wandb
 
@@ -86,7 +86,7 @@ def main():
 
         wandb.finish()
 
-    print ('=========================================================')
+    logging.info ('=========================================================')
 
 if __name__ == '__main__':
     main()

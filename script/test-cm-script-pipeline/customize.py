@@ -2,12 +2,12 @@
 
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
-    print ('')
-    print ('customize.py: preprocess')
-    print ('')
+    logging.info ('')
+    logging.info ('customize.py: preprocess')
+    logging.info ('')
 
     return {'return':0}
 
@@ -17,9 +17,9 @@ def postprocess(i):
     run_script_input = i['run_script_input']
     env = i['env']
 
-    print ('')
-    print ('customize.py: postprocess')
-    print ('')
+    logging.info ('')
+    logging.info ('customize.py: postprocess')
+    logging.info ('')
 
     r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'run2'})
     if r['return']>0:
@@ -30,9 +30,9 @@ def postprocess(i):
 def detect_version(i):
 
 
-    print ('')
-    print ('customize.py: detect_version')
-    print ('')
+    logging.info ('')
+    logging.info ('customize.py: detect_version')
+    logging.info ('')
 
 
     return {'return':0}

@@ -1,5 +1,6 @@
 from cmind import utils
 import os
+import logging
 
 lscpu_out = 'tmp-lscpu.out'
 
@@ -34,7 +35,7 @@ def postprocess(i):
             f = 'tmp-systeminfo.csv'
 
             if not os.path.isfile(f):
-                print ('WARNING: {} file was not generated!'.format(f))
+                logging.info ('WARNING: {} file was not generated!'.format(f))
             else:
                 keys = {}
                 j = 0
@@ -98,7 +99,7 @@ def postprocess(i):
     ###############################################################################
     # Linux
     if not os.path.isfile(lscpu_out):
-        print ('WARNING: lscpu.out file was not generated!')
+        logging.warning ('WARNING: lscpu.out file was not generated!')
 
         # Currently ignore this error though probably should fail?
         # But need to check that is supported on all platforms.

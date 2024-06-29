@@ -2,7 +2,7 @@ from cmind import utils
 import os
 import shutil
 import glob
-
+import logging
 def preprocess(i):
 
     env = i['env']
@@ -11,7 +11,7 @@ def preprocess(i):
         env['CM_DATASET_PREPROCESSED_PATH'] = os.getcwd()
 
     if env.get('CM_DATASET_REFERENCE_PREPROCESSOR',"0") == "1":
-        print("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
+        logging.info("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
 
     if env.get('CM_ML_MODEL_NAME', '') == 'retinanet':
         if env.get('CM_DATASET_QUANTIZE', '') == '1':

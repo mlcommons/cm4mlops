@@ -5,7 +5,7 @@ supported_extensions = ['jpeg', 'jpg', 'gif', 'png']
 import os
 import cv2
 import numpy as np
-
+import logging
 # Load and preprocess image
 def load_image(image_path,            # Full path to processing image
                target_size,           # Desired size of resulting image
@@ -114,7 +114,7 @@ def preprocess_files(selected_filenames, source_dir, destination_dir, crop_perce
         full_output_path = os.path.join(destination_dir, output_filename)
         image_data.tofile(full_output_path)
 
-        print("[{}]:  Stored {}".format(current_idx+1, full_output_path) )
+        logging.info("[{}]:  Stored {}".format(current_idx+1, full_output_path) )
 
         output_filenames.append(output_filename)
 
@@ -171,7 +171,7 @@ def preprocess():
 
     interpolation_method    = os.getenv('CM_DATASET_INTERPOLATION_METHOD', '')
 
-    print(("From: {}, To: {}, Size: {}, Crop: {}, InterSize: {}, 2BGR: {}, OFF: {}, VOL: '{}', FOF: {},"+
+    logging.info(("From: {}, To: {}, Size: {}, Crop: {}, InterSize: {}, 2BGR: {}, OFF: {}, VOL: '{}', FOF: {},"+
         " DTYPE: {}, DLAYOUT: {}, EXT: {}, NORM: {}, SMEAN: {}, GCM: {}, GSTD: {}, QUANTIZE: {}, QUANT_SCALE: {}, QUANT_OFFSET: {}, CONV_UNSIGNED: {}, INTER: {}").format(
         source_dir, destination_dir, square_side, crop_percentage, inter_size, convert_to_bgr, offset, volume, fof_name,
         data_type, data_layout, new_file_extension, normalize_data, subtract_mean, given_channel_means, given_channel_stds, quantize, quant_scale, quant_offset, convert_to_unsigned, interpolation_method) )

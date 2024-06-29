@@ -3,6 +3,7 @@ import os
 import sys
 import argparse
 import yaml
+import logging
 
 def parse_args(add_help=True):
     parser = argparse.ArgumentParser(description='Print node precision info for the onnx file', add_help=add_help)
@@ -45,7 +46,7 @@ def main(args):
     elif set(list2) < set(node_names):
         valid_list = list2
     else:
-        print("Node names are not matching with the expected ones in the input onnx file.")
+        logging.info("Node names are not matching with the expected ones in the input onnx file.")
         sys.exit(1)
 
     node_precision_info = {}
@@ -61,7 +62,7 @@ def main(args):
     with open(args.output, "w") as f:
         f.write(yaml_output)
 
-    print(f"Node precision info successfully printed out to {args.output}")
+    logging.info(f"Node precision info successfully printed out to {args.output}")
 
     
 if __name__ == "__main__":

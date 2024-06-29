@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -20,16 +20,16 @@ def preprocess(i):
             return r
         cmd = r['cmd']
     
-        print("Compiling from "+ os.getcwd())
+        logging.info("Compiling from "+ os.getcwd())
 
         env['CM_QAIC_MODEL_FINAL_COMPILATION_CMD'] = cmd
 
         env['CM_RUN_CMD'] = cmd
     else:
         import shutil
-        print("Creating cache entry from " + env['CM_REGISTER_CACHE'] + " to "  + os.getcwd())
+        logging.info("Creating cache entry from " + env['CM_REGISTER_CACHE'] + " to "  + os.getcwd())
         r = shutil.copytree(env['CM_REGISTER_CACHE'], os.path.join(os.getcwd(), "elfs"))
-        print(r)
+        logging.info(r)
 
     return {'return':0}
 

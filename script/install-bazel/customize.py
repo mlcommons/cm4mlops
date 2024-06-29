@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
     
     os_info = i['os_info']
@@ -15,7 +15,7 @@ def preprocess(i):
     if need_version == '':
         return {'return':1, 'error':'internal problem - CM_VERSION is not defined in env'}
 
-    print (recursion_spaces + '    # Requested version: {}'.format(need_version))
+    logging.info (recursion_spaces + '    # Requested version: {}'.format(need_version))
 
 #    if 'CM_GIT_CHECKOUT' not in env:
 #        env['CM_GIT_CHECKOUT'] = 'releases/gcc-' + need_version

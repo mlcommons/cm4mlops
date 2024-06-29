@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -46,9 +46,9 @@ def preprocess(i):
 
         cmd = python_path + ' -m venv ' + name + create_dir.format(name)
 
-        print ('====================================================================')
+        logging.info ('====================================================================')
 
-        print ('Creating venv: "{}" ...'.format(cmd))
+        logging.info ('Creating venv: "{}" ...'.format(cmd))
         os.system(cmd)
 
 
@@ -81,11 +81,11 @@ def preprocess(i):
             with open(script_file, 'w') as f:
                 f.write(cmd)
 
-        print ('====================================================================')
-        print ('Please run the following command:')
-        print ('')
-        print (xcmd)
-        print ('====================================================================')
+        logging.info ('====================================================================')
+        logging.info ('Please run the following command:')
+        logging.info ('')
+        logging.info (xcmd)
+        logging.info ('====================================================================')
 
     return {'return':0}
 

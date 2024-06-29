@@ -7,7 +7,7 @@ import onnxruntime as rt
 import numpy as np
 import time
 import json
-
+import logging
 from PIL import Image
 
 model_path          = os.environ['CK_ENV_ONNX_MODEL_ONNX_FILEPATH']
@@ -108,26 +108,26 @@ if data_layout == 'NHWC':
 else:
     (samples, channels, height, width) = model_input_shape
 
-print("")
-print("Data layout: {}".format(data_layout) )
-print("Input layers: {}".format([ str(x) for x in sess.get_inputs()]))
-print("Output layers: {}".format([ str(x) for x in sess.get_outputs()]))
-print("Input layer name: " + input_layer_name)
-print("Expected input shape: {}".format(model_input_shape))
-print("Output layer name: " + output_layer_name)
-print("Data normalization: {}".format(normalize_data_bool))
-print("Subtract mean: {}".format(subtract_mean_bool))
-print('Per-channel means to subtract: {}'.format(given_channel_means))
-print("Background/unlabelled classes to skip: {}".format(bg_class_offset))
-print("")
+logging.info("")
+logging.info("Data layout: {}".format(data_layout) )
+logging.info("Input layers: {}".format([ str(x) for x in sess.get_inputs()]))
+logging.info("Output layers: {}".format([ str(x) for x in sess.get_outputs()]))
+logging.info("Input layer name: " + input_layer_name)
+logging.info("Expected input shape: {}".format(model_input_shape))
+logging.info("Output layer name: " + output_layer_name)
+logging.info("Data normalization: {}".format(normalize_data_bool))
+logging.info("Subtract mean: {}".format(subtract_mean_bool))
+logging.info('Per-channel means to subtract: {}'.format(given_channel_means))
+logging.info("Background/unlabelled classes to skip: {}".format(bg_class_offset))
+logging.info("")
 
 starting_index = 1
 
 start_time = time.time()
 
 for batch_idx in range(batch_count):
-    print ('')
-    print ("Batch {}/{}:".format(batch_idx+1, batch_count))
+    logging.info ('')
+    logging.info ("Batch {}/{}:".format(batch_idx+1, batch_count))
 
     batch_filenames = [ imagenet_path + '/' + "ILSVRC2012_val_00000{:03d}.JPEG".format(starting_index + batch_idx*batch_size + i) for i in range(batch_size) ]
 
@@ -142,26 +142,26 @@ for batch_idx in range(batch_count):
 
     cm_status = {'classifications':[]}
     
-    print ('')
+    logging.info ('')
     top_classification = ''
     for in_batch_idx in range(batch_size):
         softmax_vector = batch_predictions[in_batch_idx][bg_class_offset:]    # skipping the background class on the left (if present)
         top5_indices = list(reversed(softmax_vector.argsort()))[:5]
 
-        print(' * ' + batch_filenames[in_batch_idx] + ' :')
+        logging.info(' * ' + batch_filenames[in_batch_idx] + ' :')
 
         for class_idx in top5_indices:
             if top_classification == '':
                 top_classification = labels[class_idx]
 
-            print("\t{}\t{}\t{}".format(class_idx, softmax_vector[class_idx], labels[class_idx]))
+            logging.info("\t{}\t{}\t{}".format(class_idx, softmax_vector[class_idx], labels[class_idx]))
 
             cm_status['classifications'].append({'class_idx':int(class_idx),
                                                  'softmax': float(softmax_vector[class_idx]),
                                                  'label':labels[class_idx]})
 
-    print ('')
-    print ('Top classification: {}'.format(top_classification))
+    logging.info ('')
+    logging.info ('Top classification: {}'.format(top_classification))
     cm_status['top_classification'] = top_classification
 
 avg_time = (time.time() - start_time) / batch_count

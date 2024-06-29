@@ -6,6 +6,7 @@ import numpy as np
 from PIL import Image
 import torch
 import torchvision
+import logging
 
 SUPPORTED_EXTENSIONS = ['jpeg', 'jpg', 'gif', 'png']
 
@@ -72,7 +73,7 @@ def preprocess_files(selected_filenames, source_dir, destination_dir, square_sid
         full_output_path = os.path.join(destination_dir, output_filename)
         image_data.tofile(full_output_path)
 
-        print(f"[{current_idx+1}]:  Stored {full_output_path}")
+        logging.info(f"[{current_idx+1}]:  Stored {full_output_path}")
         output_signatures.append(f'{output_filename};{original_width};{original_height}')
 
     return output_signatures
@@ -123,7 +124,7 @@ def preprocess():
         if convert_to_bgr:
             given_channel_stds = given_channel_stds[::-1]
 
-    print(f"From: {source_directory}, To: {destination_directory}, Size: {square_side}, Crop: {crop_percentage}, InterSize: {inter_size}, 2BGR: {convert_to_bgr}, " +
+    logging.info(f"From: {source_directory}, To: {destination_directory}, Size: {square_side}, Crop: {crop_percentage}, InterSize: {inter_size}, 2BGR: {convert_to_bgr}, " +
       f"OFF: {offset}, VOL: '{volume}', FOF: {fof_name}, DTYPE: {data_type}, DLAYOUT: {data_layout}, EXT: {new_file_extension}, " +
       f"NORM: {normalize_data}, SMEAN: {subtract_mean}, GCM: {given_channel_means}, GSTD: {given_channel_stds}, QUANTIZE: {quantize}, QUANT_SCALE: {quant_scale}, " +
       f"QUANT_OFFSET: {quant_offset}, CONV_UNSIGNED: {convert_to_unsigned}, INTER: {interpolation_method}")

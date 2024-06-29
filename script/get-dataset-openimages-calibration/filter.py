@@ -1,7 +1,7 @@
 import json
 import sys
 import os
-
+import logging
 with open(sys.argv[1], "r") as f:
     data = json.load(f)
 
@@ -17,4 +17,4 @@ for box in annots:
 
 sorted_image_data = sorted(data['images'], key=lambda x: x['num_boxes'], reverse= os.environ.get('CM_CALIBRATION_FILTER_ORDER_BY_NUM_BOXES_ASC', '') == "yes")
 for image in data['images']:
-    print(image['file_name'])
+    logging.info(image['file_name'])

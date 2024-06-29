@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
     os_info = i['os_info']
 
@@ -36,6 +36,6 @@ def preprocess(i):
 def postprocess(i):
 
     env = i['env']
-    print(env['CM_OUTPUT'] + " generated in " + env['CM_RUN_DIR'])
+    logging.info(env['CM_OUTPUT'] + " generated in " + env['CM_RUN_DIR'])
 
     return {'return':0}

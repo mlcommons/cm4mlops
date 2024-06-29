@@ -3,7 +3,7 @@ import os
 from os.path import exists
 import shutil
 import glob
-
+import logging
 def preprocess(i):
 
     env = i['env']
@@ -15,7 +15,7 @@ def preprocess(i):
             return {'return': 1, 'error': 'No preprocessed images found in '+env['CM_IMAGENET_PREPROCESSED_PATH']}
     else:
         if env.get('CM_DATASET_REFERENCE_PREPROCESSOR',"0") == "1":
-            print("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
+            logging.info("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
 
         env['CM_DATASET_PREPROCESSED_PATH'] = os.getcwd()
         if env['CM_DATASET_TYPE'] == "validation" and not exists(os.path.join(env['CM_DATASET_PATH'], "val_map.txt")):

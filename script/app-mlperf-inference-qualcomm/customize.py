@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 import shutil
+import logging
 
 def preprocess(i):
 
@@ -22,7 +23,7 @@ def preprocess(i):
 
     kilt_root = env['CM_KILT_CHECKOUT_PATH']
 
-    print(f"Harness Root: {kilt_root}")
+    logging.info(f"Harness Root: {kilt_root}")
 
     source_files = []
     env['CM_SOURCE_FOLDER_PATH'] = env['CM_KILT_CHECKOUT_PATH']
@@ -119,7 +120,7 @@ def preprocess(i):
     elif env['CM_MLPERF_DEVICE'] == 'qaic':
         source_files.append(os.path.join(kilt_root, "devices", "qaic", "api", "master", "QAicInfApi.cpp"))
 
-    print(f"Compiling the source files: {source_files}")
+    logging.info(f"Compiling the source files: {source_files}")
     env['CM_CXX_SOURCE_FILES'] = ";".join(source_files)
 
     env['+ CXXFLAGS'].append("-std=c++17")

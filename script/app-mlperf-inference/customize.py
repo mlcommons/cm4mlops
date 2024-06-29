@@ -9,7 +9,7 @@ import cmind as cm
 import platform
 import sys
 import mlperf_utils
-
+import logging
 def preprocess(i):
 
     env = i['env']
@@ -132,7 +132,7 @@ def postprocess(i):
         pattern["Offline"] = "Samples per second: (.*)\n"
         pattern["SingleStream"] = "Mean latency \(ns\)\s*:(.*)"
         pattern["MultiStream"] = "Mean latency \(ns\)\s*:(.*)"
-        print("\n")
+        logging.info("\n")
         with open("mlperf_log_summary.txt", "r") as fp:
             summary = fp.read()
 
@@ -152,8 +152,8 @@ def postprocess(i):
             sut_config[model_full_name][scenario] = {}
         sut_config[model_full_name][scenario][metric] = value
 
-        print(f"SUT: {sut_name}, model: {model_full_name}, scenario: {scenario}, {metric} updated as {value}")
-        print(f"New config stored in {sut_config_path}")
+        logging.info(f"SUT: {sut_name}, model: {model_full_name}, scenario: {scenario}, {metric} updated as {value}")
+        logging.info(f"New config stored in {sut_config_path}")
         with open(sut_config_path, "w") as f:
             yaml.dump(sut_config, f)
 
@@ -184,8 +184,8 @@ def postprocess(i):
                     state['app_mlperf_inference_log_summary'][y[0].strip().lower()]=y[1].strip()
 
         if env.get("CM_MLPERF_PRINT_SUMMARY", "").lower() not in [ "no", "0", "false"]:
-            print("\n")
-            print(mlperf_log_summary)
+            logging.info("\n")
+            logging.info(mlperf_log_summary)
 
         with open ("measurements.json", "w") as fp:
             json.dump(measurements, fp, indent=2)
@@ -359,7 +359,7 @@ def postprocess(i):
 
         SCRIPT_PATH = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "compliance", "nvidia", test, "run_verification.py")
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " " + SCRIPT_PATH + " -r " + RESULT_DIR + " -c " + COMPLIANCE_DIR + " -o "+ OUTPUT_DIR
-        print(cmd)
+        logging.info(cmd)
         os.system(cmd)
 
         if test == "TEST01":
@@ -376,7 +376,7 @@ def postprocess(i):
 
             ACCURACY_DIR = os.path.join(RESULT_DIR, "accuracy")
             if not os.path.exists(ACCURACY_DIR):
-                print("Accuracy run not yet completed")
+                logging.info("Accuracy run not yet completed")
                 return {'return':1, 'error': 'TEST01 needs accuracy run to be completed first'}
 
             cmd = "cd " + TEST01_DIR + " &&  bash " + SCRIPT_PATH + " " + os.path.join(ACCURACY_DIR, "mlperf_log_accuracy.json") + " " + \
@@ -391,7 +391,7 @@ def postprocess(i):
                 data = file.read().replace('\n', '\t')
 
             if 'TEST PASS' not in data:
-                print("\nDeterministic TEST01 failed... Trying with non-determinism.\n")
+                logging.info("\nDeterministic TEST01 failed... Trying with non-determinism.\n")
             # #Normal test failed, trying the check with non-determinism
 
                 CMD = "cd "+ ACCURACY_DIR+" && "+  env['CM_PYTHON_BIN_WITH_PATH'] + ' ' + accuracy_filepath + accuracy_log_file_option_name + \
@@ -414,7 +414,7 @@ def postprocess(i):
         state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario][test] = "passed" if is_valid else "failed"
 
     else:
-        print(test)
+        logging.info(test)
 
 
     if state.get('mlperf-inference-implementation') and state['mlperf-inference-implementation'].get('version_info'):

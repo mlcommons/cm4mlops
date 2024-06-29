@@ -6,7 +6,7 @@ import subprocess
 import csv
 import json
 import copy
-
+import logging
 
 file_summary = 'summary.csv'
 file_summary_json = 'mlperf-inference-summary-{}.json'
@@ -64,10 +64,10 @@ def preprocess(i):
 
             skip_submission_checker = env.get('CM_SKIP_SUBMISSION_CHECKER','') in ['yes','True']
 
-            print ('')
-            print ('Processing results in path: {}'.format(path))
-            print ('Version: {}'.format(version))
-            print ('')
+            logging.info ('')
+            logging.info ('Processing results in path: {}'.format(path))
+            logging.info ('Version: {}'.format(version))
+            logging.info ('')
 
             if skip_submission_checker:
                 if not os.path.isfile(file_summary):
@@ -76,7 +76,7 @@ def preprocess(i):
                 if os.path.isfile(file_summary):
                     os.remove(file_summary)
 
-                print ('* Running submission checker ...')
+                logging.info ('* Running submission checker ...')
 
                 xenv = {}
 
@@ -94,7 +94,7 @@ def preprocess(i):
                     ii['env'] = xenv
 
                 if version!='':
-                    print ('  Version detected from cache tags: {}'.format(version))
+                    logging.info ('  Version detected from cache tags: {}'.format(version))
                     ii['version']=version
 
                 r = cm.access(ii)
@@ -103,11 +103,11 @@ def preprocess(i):
                     return r
 
                 if r['return']>0:
-                    print ('')
-                    print ('WARNING: script returned non-zero value - possible issue - please check!')
-                    print ('')
+                    logging.info ('')
+                    logging.info ('WARNING: script returned non-zero value - possible issue - please check!')
+                    logging.info ('')
                     input ('Press Enter to continue')
-                    print ('')
+                    logging.info ('')
 
             r = convert_summary_csv_to_experiment(path, version, env)
             if r['return']>0: return r
@@ -116,7 +116,7 @@ def preprocess(i):
 
 
 def convert_summary_csv_to_experiment(path, version, env):
-    print ('* Processing MLPerf repo in cache path: {}'.format(path))
+    logging.info ('* Processing MLPerf repo in cache path: {}'.format(path))
 
     cur_dir = os.getcwd()
 
@@ -126,7 +126,7 @@ def convert_summary_csv_to_experiment(path, version, env):
     burl = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url'])
     url = burl.decode('UTF-8').strip()
 
-    print ('  Git URL: {}'.format(url))
+    logging.info ('  Git URL: {}'.format(url))
 
     os.chdir(cur_dir)
 
@@ -224,9 +224,9 @@ def convert_summary_csv_to_experiment(path, version, env):
         target_repo='' if env_target_repo=='' else env_target_repo+':'
 
         
-        print ('')
+        logging.info ('')
         for name in experiment:
-            print ('    Preparing experiment artifact "{}"'.format(name))
+            logging.info ('    Preparing experiment artifact "{}"'.format(name))
 
             tags = name.split('--')
             if 'mlperf' not in tags: tags.insert(0, 'mlperf')

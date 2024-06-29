@@ -3,7 +3,7 @@
 import streamlit as st
 import os
 import cmind
-
+import logging
 import misc
 
 def page(i):
@@ -460,10 +460,10 @@ def page(i):
 
                 cmd2 = prefix + 'bash -c "{}"'.format(cli2)
 
-            print ('Running command:')
-            print ('')
-            print ('  {}'.format(cmd2))
-            print ('')
+            logging.info ('Running command:')
+            logging.info ('')
+            logging.info ('  {}'.format(cmd2))
+            logging.info ('')
 
             os.system(cmd2)
 

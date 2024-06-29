@@ -1,5 +1,5 @@
 import typing
-
+import logging
 import numpy as np
 import onnx
 import onnxruntime as ort
@@ -58,7 +58,7 @@ class XModelFactory(ModelFactory):
         self.session_options.inter_op_num_threads = inter_op_threads
 
     def create(self) -> Model:
-        print ('Loading model: {}'.format(self.model_path))
+        logging.info ('Loading model: {}'.format(self.model_path))
 #        model = onnx.load(self.model_path)
         session_eps = [self.execution_provider]
         session = ort.InferenceSession(

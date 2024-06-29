@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
     os_info = i['os_info']
 
@@ -27,8 +27,8 @@ def preprocess(i):
 
 def postprocess(i):
 
-    print ('')
-    print ('Please check "diff.png"')
-    print ('')
+    logging.info ('')
+    logging.info ('Please check "diff.png"')
+    logging.info ('')
 
     return {'return':0}

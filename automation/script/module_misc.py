@@ -1,4 +1,5 @@
 import os
+import logging
 from cmind import utils
     
 # Meta deps
@@ -158,7 +159,7 @@ def doc(i):
         meta = artifact.meta
         original_meta = artifact.original_meta
 
-        print ('Documenting {}'.format(path))
+        logging.info ('Documenting {}'.format(path))
 
         alias = meta.get('alias','')
         uid = meta.get('uid','')
@@ -1428,7 +1429,7 @@ def dockerfile(i):
         docker_settings = state['docker']
 
         if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
-            print("docker.run set to False in _cm.json")
+            logging.error("docker.run set to False in _cm.json")
             continue
         '''run_config_path = os.path.join(script_path,'run_config.yml')
         if not os.path.exists(run_config_path):
@@ -1575,8 +1576,8 @@ def dockerfile(i):
         if r['return'] > 0:
             return r
 
-        print ('')
-        print ("Dockerfile generated at " + dockerfile_path)
+        logging.info ('')
+        logging.info ("Dockerfile generated at " + dockerfile_path)
 
     return {'return':0}
 
@@ -1783,7 +1784,7 @@ def docker(i):
         docker_settings = state['docker']
 
         if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
-            print("docker.run set to False in _cm.json")
+            logging.error("docker.run set to False in _cm.json")
             continue
         '''
         if not docker_settings or not docker_settings.get('build') or not run_config.get('run_with_default_inputs'):
@@ -1990,11 +1991,11 @@ def docker(i):
 
         final_run_cmd = run_cmd if docker_skip_run_cmd not in [ 'yes', True, 'True' ] else 'cm version'
 
-        print ('')
-        print ('CM command line regenerated to be used inside Docker:')
-        print ('')
-        print (final_run_cmd)
-        print ('')
+        logging.info ('')
+        logging.info ('CM command line regenerated to be used inside Docker:')
+        logging.info ('')
+        logging.info (final_run_cmd)
+        logging.info ('')
 
         docker_recreate_image = 'yes' if not norecreate_docker_image else 'no'
 
@@ -2054,7 +2055,7 @@ def docker(i):
         if i.get('docker_save_script', ''):
             cm_docker_input['save_script'] = i['docker_save_script']
 
-        print ('')
+        logging.info ('')
 
         r = self_module.cmind.access(cm_docker_input)
         if r['return'] > 0:
@@ -2073,7 +2074,7 @@ def check_gh_token(i, docker_settings, quiet):
         if quiet:
             return rx
 
-        print ('')
+        logging.info ('')
         gh_token = input ('Enter GitHub token to access private CM repositories required for this CM script: ')
 
         if gh_token == '':

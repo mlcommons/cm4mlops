@@ -1,7 +1,7 @@
 import cmind
 import os
 import sys
-
+import logging
 models = {
         "mobilenet": {
             "v1": {
@@ -96,10 +96,10 @@ for model in variation_strings:
                             }
                         }
                     }
-            print(cm_input)
+            logging.info(cm_input)
             r = cmind.access(cm_input)
             if r['return'] > 0:
-                print(r)
+                logging.info(r)
                 #exit(1)
 
 

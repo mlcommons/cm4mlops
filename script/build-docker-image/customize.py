@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 from os.path import exists
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -77,12 +77,12 @@ def preprocess(i):
 
         CMD = ''.join(XCMD)
 
-        print ('================================================')
-        print ('CM generated the following Docker build command:')
-        print ('')
-        print (CMD)
+        logging.info ('================================================')
+        logging.info ('CM generated the following Docker build command:')
+        logging.info ('')
+        logging.info (CMD)
 
-        print ('')
+        logging.info ('')
 
     env['CM_DOCKER_BUILD_CMD'] = CMD
 
@@ -115,15 +115,15 @@ def postprocess(i):
             with open(dockerfile_path + '.build.bat', 'w') as f:
                 f.write(PCMD + '\n')
 
-        print ('================================================')
-        print ('CM generated the following Docker push command:')
-        print ('')
-        print (PCMD)
+        logging.info ('================================================')
+        logging.info ('CM generated the following Docker push command:')
+        logging.info ('')
+        logging.info (PCMD)
 
-        print ('')
+        logging.info ('')
 
         r = os.system(PCMD)
-        print ('')
+        logging.info ('')
 
         if r>0: 
             return {'return':1, 'error':'pushing to Docker Hub failed'}

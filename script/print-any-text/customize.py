@@ -2,7 +2,7 @@
 
 from cmind import utils
 import os
-
+import logging
 def postprocess(i):
 
     env = i['env']
@@ -20,11 +20,11 @@ def postprocess(i):
                 if kk!='':
                     vv = e.get(kk)
 
-                    print ('{}[{}]: {}'.format(t, kk, vv))
+                    logging.info ('{}[{}]: {}'.format(t, kk, vv))
                     printed = True
 
     if printed:
-        print ('')
+        logging.info ('')
 
     return {'return':0}
 

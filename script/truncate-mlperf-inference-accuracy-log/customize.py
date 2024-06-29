@@ -3,7 +3,7 @@ import cmind as cm
 import os
 import subprocess
 from os.path import exists
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -11,7 +11,7 @@ def preprocess(i):
     submission_dir = env.get("CM_MLPERF_INFERENCE_SUBMISSION_DIR", "")
 
     if submission_dir == "":
-        print("Please set CM_MLPERF_INFERENCE_SUBMISSION_DIR")
+        logging.info("Please set CM_MLPERF_INFERENCE_SUBMISSION_DIR")
         return {'return': 1, 'error':'CM_MLPERF_INFERENCE_SUBMISSION_DIR is not specified in env in run-mlperf-accuracy-log-truncator'}
 
     submitter = env.get("CM_MLPERF_SUBMITTER", "CTuning")

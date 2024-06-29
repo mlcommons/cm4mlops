@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -66,8 +66,8 @@ def preprocess(i):
        env['CM_JAVAC_PREBUILT_URL'] = url
        env['CM_JAVAC_PREBUILT_FILENAME'] = filename
 
-       print ('')
-       print (recursion_spaces + '    Downloading and installing prebuilt Java from {} ...'.format(url+filename))
+       logging.info ('')
+       logging.info (recursion_spaces + '    Downloading and installing prebuilt Java from {} ...'.format(url+filename))
 
        
        rr = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install-prebuilt'})
@@ -79,8 +79,8 @@ def preprocess(i):
        if not os.path.isfile(target_file):
            return {'return':1, 'error':'can\'t find target file {}'.format(target_file)}
 
-       print ('')
-       print (recursion_spaces + '    Registering file {} ...'.format(target_file))
+       logging.info ('')
+       logging.info (recursion_spaces + '    Registering file {} ...'.format(target_file))
 
        env[env_path_key] = target_file
 
@@ -112,7 +112,7 @@ def detect_version(i):
 
     version = r['version']
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 

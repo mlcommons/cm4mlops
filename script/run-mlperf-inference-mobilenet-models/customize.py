@@ -2,7 +2,7 @@ from cmind import utils
 import os
 import cmind
 import sys
-
+import logging
 
 def preprocess(i):
 
@@ -175,7 +175,7 @@ def preprocess(i):
 
                 if env.get('CM_MLPERF_ACCURACY_MODE','') == "yes":
                     cm_input['mode'] = 'accuracy'
-                    print(cm_input)
+                    logging.info(cm_input)
                     r = cmind.access(cm_input)
                     if r['return'] > 0:
                         return r
@@ -183,7 +183,7 @@ def preprocess(i):
                 if env.get('CM_MLPERF_PERFORMANCE_MODE','') == "yes":
                     cm_input['mode'] = 'performance'
 
-                    print(cm_input)
+                    logging.info(cm_input)
                     r = cmind.access(cm_input)
                     if r['return'] > 0:
                         return r

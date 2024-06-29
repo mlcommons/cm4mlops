@@ -1,27 +1,27 @@
 # Developer(s): Grigori Fursin
 
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
     meta = i['meta']
 
-    print ("********************************************************")
-    print ('- Importing CM library ...')
+    logging.info ("********************************************************")
+    logging.info ('- Importing CM library ...')
     import cmind
-    print ('  SUCCESS!')
+    logging.info ('  SUCCESS!')
 
     cmind.utils.debug_here(__file__, port=5678, text='Debugging customize.py!', env=env, env_debug_uid='8d96cd9fa4734204').breakpoint()
 
-    print ('')
-    print ('- List CM repos ...')
-    print ('')
+    logging.info ('')
+    logging.info ('- List CM repos ...')
+    logging.info ('')
     r = cmind.access({'action':'show', 'automation':'repo', 'out':'con'})
-    print ('')
-    print ('  SUCCESS!')
-    print ("********************************************************")
+    logging.info ('')
+    logging.info ('  SUCCESS!')
+    logging.info ("********************************************************")
 
 
     return {'return':0}

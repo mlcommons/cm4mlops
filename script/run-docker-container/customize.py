@@ -3,7 +3,7 @@ import cmind as cm
 import os
 import subprocess
 from os.path import exists
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -49,11 +49,11 @@ def preprocess(i):
     else:
         CMD += " 2> /dev/null"
 
-    print ('')
-    print ('Checking Docker images:')
-    print ('')
-    print ('  '+CMD)
-    print ('')
+    logging.info ('')
+    logging.info ('Checking Docker images:')
+    logging.info ('')
+    logging.info ('  '+CMD)
+    logging.info ('')
     
     try:
         docker_image = subprocess.check_output(CMD, shell=True).decode("utf-8")
@@ -64,7 +64,7 @@ def preprocess(i):
 
     if recreate_image != 'yes':
         if docker_image:
-            print("Docker image exists with ID: " + docker_image)
+            logging.infot("Docker image exists with ID: " + docker_image)
             env['CM_DOCKER_IMAGE_EXISTS'] = "yes"
 
 #    elif recreate_image == "yes":
@@ -173,19 +173,19 @@ def postprocess(i):
         CONTAINER="docker run -dt "+ run_opts + " --rm " + docker_image_repo + "/" + docker_image_name + ":" + docker_image_tag + " bash"
         CMD = "ID=`" + CONTAINER + "` && docker exec $ID bash -c '" + run_cmd + "' && docker kill $ID >/dev/null"
 
-        print ('=========================')
-        print ("Container launch command:")
-        print ('')
-        print (CMD)
-        print ('')
-        print ("Running "+run_cmd+" inside docker container")
+        logging.info ('=========================')
+        logging.info ("Container launch command:")
+        logging.info ('')
+        logging.info (CMD)
+        logging.info ('')
+        logging.info ("Running "+run_cmd+" inside docker container")
 
         record_script({'cmd':CMD, 'env': env})
 
-        print ('')
+        logging.info ('')
         docker_out = subprocess.check_output(CMD, shell=True).decode("utf-8")
 
-        print(docker_out)
+        logging.info(docker_out)
 
     else:
         x = "'"
@@ -202,14 +202,14 @@ def postprocess(i):
         CONTAINER="docker run " + x1 + " --entrypoint " + x + x + " " + run_opts + " " + docker_image_repo + "/" + docker_image_name + ":" + docker_image_tag
         CMD =  CONTAINER + " bash -c " + x + run_cmd + x2 + x
 
-        print ('')
-        print ("Container launch command:")
-        print ('')
-        print (CMD)
+        logging.info ('')
+        logging.info ("Container launch command:")
+        logging.info ('')
+        logging.info (CMD)
 
         record_script({'cmd':CMD, 'env': env})
 
-        print ('')
+        logging.info ('')
         docker_out = os.system(CMD)
 
     return {'return':0}

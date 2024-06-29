@@ -7,6 +7,7 @@ import sys
 import importlib.util
 import platform
 import os
+import logging
 
 class CustomInstallCommand(install):
     def run(self):
@@ -53,7 +54,7 @@ class CustomInstallCommand(install):
                         subprocess.check_call(['sudo', 'apt-get', 'update'])
                         subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
             elif self.system == 'Windows':
-                print(f"Please install the following packages manually: {packages}")
+                logging.info(f"Please install the following packages manually: {packages}")
 
 
 
@@ -98,7 +99,7 @@ class CustomInstallCommand(install):
         import cmind
         #r = cmind.access({'action':'rm', 'automation':'repo', 'data_uoa':'mlcommons@cm4mlops', 'force': True})
         r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'branch': 'mlperf-inference'})
-        print(r)
+        logging.debug(r)
         if r['return'] > 0:
            return r['return']
     

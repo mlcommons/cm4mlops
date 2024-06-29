@@ -1,6 +1,7 @@
+import logging
 def main():
-    print ('')
-    print ('HELLO WORLD from Python')
+    logging.info ('')
+    logging.info ('HELLO WORLD from Python')
 
 if __name__ == '__main__':
     main()

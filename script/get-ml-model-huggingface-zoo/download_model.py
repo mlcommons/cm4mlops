@@ -1,5 +1,6 @@
 from huggingface_hub import hf_hub_download
 import os
+import logging
 
 model_stub = os.environ.get('CM_MODEL_ZOO_STUB', '')
 model_task = os.environ.get('CM_MODEL_TASK', '')
@@ -7,7 +8,7 @@ model_task = os.environ.get('CM_MODEL_TASK', '')
 revision = os.environ.get('CM_HF_REVISION','')
 
 if model_task == "prune":
-    print("Downloading model: " + model_stub)
+    logging.info("Downloading model: " + model_stub)
 
     for filename in ["pytorch_model.bin", "config.json"]:
 
@@ -40,8 +41,8 @@ else:
             # List all files in a directory
             path = model_stub+'/'+full_subfolder
 
-            print ('')
-            print ('Listing files in {} ...'.format(path))
+            logging.info ('')
+            logging.info ('Listing files in {} ...'.format(path))
 
             def list_hf_files(path):
                 all_files = []
@@ -63,8 +64,8 @@ else:
             
             files=list_hf_files(path)
 
-            print ('')
-            print ('Found {} files'.format(len(files)))
+            logging.info ('')
+            logging.info ('Found {} files'.format(len(files)))
             
             for f in files:
 
@@ -79,10 +80,10 @@ else:
                     model_filenames.append(ff)
 
 
-        print ('')
+        logging.info ('')
         for model_filename in model_filenames:
 
-            print("Downloading file {} / {} ...".format(model_stub, model_filename))
+            logging.info("Downloading file {} / {} ...".format(model_stub, model_filename))
 
             extra_dir = os.path.dirname(model_filename)
 
@@ -101,7 +102,7 @@ else:
                        cache_dir=os.getcwd())
         
 
-        print ('')
+        logging.info ('')
         
         with open('tmp-run-env.out', 'w') as f:
             f.write(f"CM_ML_MODEL_FILE_WITH_PATH={os.path.join(os.getcwd(),base_model_filename)}")

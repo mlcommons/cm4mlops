@@ -2,8 +2,8 @@
 
 import cmind
 import sys
-
-print(sys.executable)
+import logging
+logging.info(sys.executable)
 
 r = cmind.access('run "cm-debug"')
-print(r)
+logging.info(r)

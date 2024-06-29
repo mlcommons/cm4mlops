@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -15,7 +15,7 @@ def preprocess(i):
     if need_version == '':
         return {'return':1, 'error':'internal problem - CM_VERSION is not defined in env'}
 
-    print (recursion_spaces + '    # Requested version: {}'.format(need_version))
+    logging.info (recursion_spaces + '    # Requested version: {}'.format(need_version))
 
     version_split = need_version.split(".")
     while len(version_split) < 3:
@@ -61,10 +61,10 @@ def preprocess(i):
 
     package_url = 'https://github.com/Kitware/CMake/releases/download/v' + need_version + '/' + package_name
 
-    print (recursion_spaces + '    # Prepared package URL: {}'.format(package_url))
+    logging.info (recursion_spaces + '    # Prepared package URL: {}'.format(package_url))
 
-    print ('')
-    print ('Downloading from {} ...'.format(package_url))
+    logging.info ('')
+    logging.info ('Downloading from {} ...'.format(package_url))
 
     cm = automation.cmind
 
@@ -77,7 +77,7 @@ def preprocess(i):
 
     # Check what to do with this file depending on OS
     if os_info['platform'] == 'windows':
-        print ('Unzipping file {}'.format(filename))
+        logging.info ('Unzipping file {}'.format(filename))
 
         r = cm.access({'action':'unzip_file', 
                        'automation':'utils,dc2743f8450541e3', 
@@ -86,7 +86,7 @@ def preprocess(i):
         if r['return']>0: return r
 
         if os.path.isfile(filename):
-            print ('Removing file {}'.format(filename))
+            logging.info ('Removing file {}'.format(filename))
             os.remove(filename)
 
         path_bin = os.path.join(os.getcwd(), 'bin')

@@ -1,7 +1,7 @@
 import cmind
 import os
 import copy
-
+import logging
 base_path={}
 base_path_meta={}
 
@@ -94,7 +94,7 @@ def load_cfg(i):
 
                 r = cmind.utils.load_yaml_and_json(full_path_without_ext)
                 if r['return']>0:
-                    print ('Warning: problem loading file {}'.format(full_path))
+                    logging.info ('Warning: problem loading file {}'.format(full_path))
                 else:
                     meta = r['meta']
 

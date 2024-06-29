@@ -1,5 +1,5 @@
 import os
-
+import logging
 from cmind.automation import Automation
 from cmind import utils
 
@@ -47,6 +47,6 @@ class CAutomation(Automation):
         """
 
         import json
-        print (json.dumps(i, indent=2))
+        logging.info (json.dumps(i, indent=2))
 
         return {'return':0}

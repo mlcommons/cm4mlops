@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -34,7 +34,7 @@ def preprocess(i):
 
         if env.get('CM_INPUT','').strip()=='' and env.get('CM_TMP_PATH','').strip()=='':
 
-            print (i['recursion_spaces'] + '    Starting deep search for {} - it may take some time ...'.format(file_name))
+            logging.info (i['recursion_spaces'] + '    Starting deep search for {} - it may take some time ...'.format(file_name))
 
             paths = ['C:\\Program Files\\Microsoft Visual Studio',
                      'C:\\Program Files (x86)\\Microsoft Visual Studio',
@@ -112,7 +112,7 @@ def detect_version(i):
 
     version = r['version']
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 

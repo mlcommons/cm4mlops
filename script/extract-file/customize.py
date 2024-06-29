@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import hashlib
-
+import logging
 def preprocess(i):
 
     variation_tags = i.get('variation_tags',[])
@@ -113,10 +113,10 @@ def preprocess(i):
                             env.get('CM_EXTRACT_TOOL_EXTRA_OPTIONS', '') + \
                             ' ' + env.get('CM_EXTRACT_TOOL_OPTIONS', '')+ ' '+ x + filename + x
 
-    print ('')
-    print ('Current directory: {}'.format(os.getcwd()))
-    print ('Command line: "{}"'.format(env['CM_EXTRACT_CMD']))
-    print ('')
+    logging.info ('')
+    logging.info ('Current directory: {}'.format(os.getcwd()))
+    logging.info ('Command line: "{}"'.format(env['CM_EXTRACT_CMD']))
+    logging.info ('')
     
     final_file = env.get('CM_EXTRACT_EXTRACTED_FILENAME', '')
 

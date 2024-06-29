@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import tarfile
-
+import logging
 def preprocess(i):
 
     recursion_spaces = i['recursion_spaces']
@@ -90,7 +90,7 @@ def preprocess(i):
         return {'return': 1, 'error': 'Please envoke cmr "' + " ".join(tags) + '" --tar_file={full path to the TensorRT tar file}'}
 
 
-    print ('Untaring file - can take some time ...')
+    logging.info ('Untaring file - can take some time ...')
 
     file_name = "trtexec"
     my_tar = tarfile.open(os.path.expanduser(env['CM_TENSORRT_TAR_FILE_PATH']))

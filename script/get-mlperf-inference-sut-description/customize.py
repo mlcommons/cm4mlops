@@ -2,6 +2,7 @@ from cmind import utils
 import os
 import json
 import shutil
+import logging
 
 def preprocess(i):
     env = i['env']
@@ -37,19 +38,19 @@ def preprocess(i):
 
     sut_path = os.path.join(sut_desc_path, "suts", sut + ".json")
     if os.path.exists(sut_path) and env.get('CM_SUT_DESC_CACHE', '') == "yes":
-        print(f"Reusing SUT description file {sut}")
+        logging.info(f"Reusing SUT description file {sut}")
         state['CM_SUT_META'] = json.load(open(sut_path))
     else:
         if not os.path.exists(os.path.dirname(sut_path)):
             os.makedirs(os.path.dirname(sut_path))
 
-        print("Generating SUT description file for " + sut)
+        logging.info("Generating SUT description file for " + sut)
         hw_path = os.path.join(os.getcwd(), "hardware", hw_name + ".json")
         if not os.path.exists(os.path.dirname(hw_path)):
             os.makedirs(os.path.dirname(hw_path))
         if not os.path.exists(hw_path):
             default_hw_path = os.path.join(script_path, "hardware", "default.json")
-            print("HW description file for " + hw_name + " not found. Copying from default!!!")
+            logging.info("HW description file for " + hw_name + " not found. Copying from default!!!")
             shutil.copy(default_hw_path, hw_path)
 
         state['CM_HW_META'] = json.load(open(hw_path))

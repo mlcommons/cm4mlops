@@ -1,4 +1,5 @@
 import os
+import logging
 from cmind import utils
     
 # Pring help about script
@@ -10,29 +11,29 @@ def print_help(i):
     if len(meta)==0 and path=='':
         return {'return':0}
 
-    print ('')
-    print ('Help for this CM script ({},{}):'.format(meta.get('alias',''), meta.get('uid','')))
+    logging.info ('')
+    logging.info ('Help for this CM script ({},{}):'.format(meta.get('alias',''), meta.get('uid','')))
 
-    print ('')
-    print ('Path to this automation recipe: {}'.format(path))
+    logging.info ('')
+    logging.info ('Path to this automation recipe: {}'.format(path))
 
     variations = meta.get('variations',{})
     if len(variations)>0:
-        print ('')
-        print ('Available variations:')
-        print ('')
+        logging.info ('')
+        logging.info ('Available variations:')
+        logging.info ('')
         for v in sorted(variations):
-            print ('  _'+v)
+            logging.info ('  _'+v)
 
     input_mapping = meta.get('input_mapping', {})
     if len(input_mapping)>0:
-        print ('')
-        print ('Available flags mapped to environment variables:')
-        print ('')
+        logging.info ('')
+        logging.info ('Available flags mapped to environment variables:')
+        logging.info ('')
         for k in sorted(input_mapping):
             v = input_mapping[k]
 
-            print ('  --{}  ->  --env.{}'.format(k,v))
+            logging.info ('  --{}  ->  --env.{}'.format(k,v))
 
     input_description = meta.get('input_description', {})
     if len(input_description)>0:
@@ -46,9 +47,9 @@ def print_help(i):
                 sorted_keys.append(k)
         
         
-        print ('')
-        print ('Available flags (Python API dict keys):')
-        print ('')
+        logging.info ('')
+        logging.info ('Available flags (Python API dict keys):')
+        logging.info ('')
         for k in all_keys:
             v = input_description[k]
             n = v.get('desc','')
@@ -56,12 +57,12 @@ def print_help(i):
             x = '  --'+k
             if n!='': x+='  ({})'.format(n)
 
-            print (x)
+            logging.info (x)
 
         if len(sorted_keys)>0:
-            print ('')
-            print ('Main flags:')
-            print ('')
+            logging.info ('')
+            logging.info ('Main flags:')
+            logging.info ('')
             for k in sorted_keys:
                 v = input_description[k]
                 n = v.get('desc','')
@@ -81,11 +82,11 @@ def print_help(i):
 
                 if n!='': x+='   ({})'.format(n)
 
-                print (x)
+                logging.info (x)
 
 
 
-    print ('')
+    logging.info ('')
     x = input ('Would you like to see a Python API with a list of common keys/flags for all scripts including this one (y/N)? ')
 
     x = x.strip().lower()
