@@ -76,6 +76,8 @@ def preprocess(i):
     elif env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "compilation":
         if master_model == "resnet50":
             i['run_script_input']['script_name'] = "compile_resnet50"
+        elif master_model == "retinanet":
+            i['run_script_input']['script_name'] = "compile_retinanet"
 
     elif env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "build_harness":
         print(f"Harness Root: {harness_root}")

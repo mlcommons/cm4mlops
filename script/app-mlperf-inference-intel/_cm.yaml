@@ -410,7 +410,7 @@ variations:
         tags: _name.retinanet-pt
     deps:
       - tags: get,conda,_name.retinanet-pt
-      - tags: get,python,_conda.resnet50-pt
+      - tags: get,python,_conda.retinanet-pt
         adr:
           conda-python:
             version: "3.9"
