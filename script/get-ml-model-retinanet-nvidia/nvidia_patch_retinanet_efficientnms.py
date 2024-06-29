@@ -17,7 +17,7 @@ import onnx
 import argparse
 import json
 import re
-
+import logging
 import onnx_graphsurgeon as gs
 import numpy as np
 import os
@@ -56,9 +56,9 @@ attrs = {
 attrs.update(node_attrs)
 
 anchors = np.load(anchor_xywh_1x1_npy)
-print(f"anchors shape: {anchors.shape}, top 4: {anchors[0, :]}")
+logging.info(f"anchors shape: {anchors.shape}, top 4: {anchors[0, :]}")
 anchors = np.expand_dims(anchors, axis=0)
-print(f"anchors shape: {anchors.shape}")
+logging.info(f"anchors shape: {anchors.shape}")
 
 anchor_tensor = gs.Constant(name="anchor", values=anchors)
 

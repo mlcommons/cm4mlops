@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -43,7 +43,7 @@ def preprocess(i):
                 if env.get('CM_TMP_FAIL_IF_NOT_FOUND','').lower() == 'yes':
                     return r
 
-                print (recursion_spaces+'    # {}'.format(r['error']))
+                logging.info (recursion_spaces+'    # {}'.format(r['error']))
 
             # Attempt to run installer
             r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install'})
@@ -90,6 +90,6 @@ def postprocess(i):
 
     version = r['version']
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}

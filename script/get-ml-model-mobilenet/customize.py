@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -16,7 +16,7 @@ def preprocess(i):
     url = env['CM_PACKAGE_URL']
     env['CM_ML_MODEL_STARTING_WEIGHTS_FILENAME'] = url
 
-    print ('Downloading from {}'.format(url))
+    logging.info ('Downloading from {}'.format(url))
 
     r = cm.access({'action':'download_file', 
                    'automation':'utils,dc2743f8450541e3', 

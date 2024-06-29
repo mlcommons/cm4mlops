@@ -4,7 +4,7 @@ import typing
 import importlib
 import os
 import psutil
-
+import logging
 import utils
 
 import numpy as np
@@ -23,10 +23,10 @@ class XModel(Model):
 
     def predict(self, input: ModelInput):
         
-        print ('')
+        logging.info ('')
         utils.print_host_memory_use('Host memory used')
                                         
-        print ('Running inference ...')
+        logging.info ('Running inference ...')
         with torch.no_grad():
             output = self.session(input)
         
@@ -56,8 +56,8 @@ class XModelFactory(ModelFactory):
 
 
     def create(self) -> Model:
-        print ('')
-        print ('Loading model: {}'.format(self.model_path))
+        logging.info ('')
+        logging.info ('Loading model: {}'.format(self.model_path))
 
         if self.execution_provider == 'CPUExecutionProvider':
             torch_provider = 'cpu'
@@ -86,8 +86,8 @@ class XModelFactory(ModelFactory):
         if not os.path.isfile(cm_model_module):
             raise Exception('cm.py interface for a PyTorch model was not found in {}'.format(self.model_code))
 
-        print ('')
-        print ('Collective Mind Connector for the model found: {}'.format(cm_model_module))
+        logging.info ('')
+        logging.info ('Collective Mind Connector for the model found: {}'.format(cm_model_module))
 
         
         # Load CM interface for the model
@@ -98,7 +98,7 @@ class XModelFactory(ModelFactory):
 
         # Init model
         if len(self.model_cfg)>0:
-            print ('Model cfg: {}'.format(self.model_cfg))
+            logging.info ('Model cfg: {}'.format(self.model_cfg))
         
         r = model_module.model_init(checkpoint, self.model_cfg)
         if r['return']>0:

@@ -7,7 +7,7 @@ import time
 import os
 import argparse
 import json
-
+import logging
 from PIL import Image
 import cv2
 
@@ -100,7 +100,7 @@ def run_case(dtype, image, target):
     # Load model
     model_path=os.environ.get('CM_ML_MODEL_FILE_WITH_PATH','')
     if model_path=='':
-        print ('Error: environment variable CM_ML_MODEL_FILE_WITH_PATH is not defined')
+        logging.info ('Error: environment variable CM_ML_MODEL_FILE_WITH_PATH is not defined')
         exit(1)
 
     opt = rt.SessionOptions()
@@ -114,8 +114,8 @@ def run_case(dtype, image, target):
     inputs = [meta.name for meta in sess.get_inputs()]
     outputs = [meta.name for meta in sess.get_outputs()]
 
-    print (inputs)
-    print (outputs)
+    logging.info (inputs)
+    logging.info (outputs)
 
 
 
@@ -128,9 +128,9 @@ def run_case(dtype, image, target):
         del sess
 
         # Load model via ONNX to be used with TVM
-        print ('')
-        print ('ONNX: load model ...')
-        print ('')
+        logging.info ('')
+        logging.info ('ONNX: load model ...')
+        logging.info ('')
 
         onnx_model = onnx.load(model_path)
 
@@ -160,28 +160,28 @@ def run_case(dtype, image, target):
         input_shape = (1, 3, 224, 224)
         shape_dict = {inputs[0]: input_shape}
 
-        print ('')
-        print ('TVM: import model ...')
-        print ('')
+        logging.info ('')
+        logging.info ('TVM: import model ...')
+        logging.info ('')
         # Extra param: opset=12
         mod, params = relay.frontend.from_onnx(onnx_model, shape_dict, freeze_params=True)
 
-        print ('')
-        print ('TVM: transform to static ...')
-        print ('')
+        logging.info ('')
+        logging.info ('TVM: transform to static ...')
+        logging.info ('')
         mod = relay.transform.DynamicToStatic()(mod)
 
-        print ('')
-        print ('TVM: apply extra optimizations ...')
-        print ('')
+        logging.info ('')
+        logging.info ('TVM: apply extra optimizations ...')
+        logging.info ('')
         # Padding optimization
         # Adds extra optimizations
         mod = relay.transform.FoldExplicitPadding()(mod)
 
 
-        print ('')
-        print ('TVM: build model ...')
-        print ('')
+        logging.info ('')
+        logging.info ('TVM: build model ...')
+        logging.info ('')
 
         executor=os.environ.get('MLPERF_TVM_EXECUTOR','graph')
 
@@ -195,9 +195,9 @@ def run_case(dtype, image, target):
                                            params=params)
             lib = graph_module
 
-            print ('')
-            print ('TVM: init graph engine ...')
-            print ('')
+            logging.info ('')
+            logging.info ('TVM: init graph engine ...')
+            logging.info ('')
 
             sess = graph_executor.GraphModule(lib['default'](ctx))
 
@@ -211,9 +211,9 @@ def run_case(dtype, image, target):
 
             r_exec = vm_exec
 
-            print ('')
-            print ('TVM: init VM ...')
-            print ('')
+            logging.info ('')
+            logging.info ('TVM: init VM ...')
+            logging.info ('')
 
             sess = VirtualMachine(r_exec, ctx)
 
@@ -247,15 +247,15 @@ def run_case(dtype, image, target):
     top5=[]
     atop5 = get_top5(output[1][0]) #.asnumpy())
 
-    print ('')
-    print('Prediction Top1:', top1, synset[top1])
+    logging.info ('')
+    logging.info('Prediction Top1:', top1, synset[top1])
 
-    print ('')
-    print('Prediction Top5:')
+    logging.info ('')
+    logging.info('Prediction Top5:')
     for p in atop5:
         out=p[1]-1
         name=synset[out]
-        print (' * {} {}'.format(out, name))
+        logging.info (' * {} {}'.format(out, name))
 
     ck_results={
       'prediction':synset[top1]
@@ -273,7 +273,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.image.strip().lower()=='':
-        print ('Please specify path to an image using CM_IMAGE environment variable!')
+        logging.info ('Please specify path to an image using CM_IMAGE environment variable!')
         exit(1)
 
     # set parameter

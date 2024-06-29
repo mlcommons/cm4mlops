@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -24,7 +24,7 @@ def preprocess(i):
     if devices:
         devices = devices.split(",")
 
-    print(backends)
+    logging.info(backends)
     implementation = env['IMPLEMENTATION']
 
     power = env.get('POWER', '')
@@ -88,7 +88,7 @@ def preprocess(i):
                 run_script_content += "\n\n" +"\n\n".join(cmds)
                 with open(os.path.join(script_path, run_file_name+".sh"), 'w') as f:
                     f.write(run_script_content)
-        print(cmds)
+        logging.info(cmds)
 
 
 

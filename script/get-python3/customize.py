@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -56,7 +56,7 @@ def detect_version(i):
 
     version = r['version']
 
-    print (i['recursion_spaces'] + '      Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '      Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 

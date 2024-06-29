@@ -3,7 +3,7 @@ import cmind as cm
 import os
 import subprocess
 from os.path import exists
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -22,8 +22,8 @@ def preprocess(i):
     input_path = Path(input_dir)
     cd_dir = input_path.parent.absolute()
     CMD =  'tar --directory '+str(cd_dir)+' -czf ' + os.path.join(output_dir, output_file) + ' ' + input_dirname
-    print(CMD)
+    logging.info(CMD)
     ret = os.system(CMD)
-    print("Tar file "+os.path.join(output_dir, output_file)+ " created")
+    logging.info("Tar file "+os.path.join(output_dir, output_file)+ " created")
 
     return {'return':ret}

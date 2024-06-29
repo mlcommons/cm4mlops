@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -10,9 +10,9 @@ def preprocess(i):
     pm = env.get('CM_HOST_OS_PACKAGE_MANAGER')
 
     if os_info['platform'] == 'windows':
-        print ('')
-        print ('WARNING: for now skipping get-generic-sys-util on Windows ...')
-        print ('')
+        logging.info ('')
+        logging.info ('WARNING: for now skipping get-generic-sys-util on Windows ...')
+        logging.info ('')
 
         return {'return':0}
     

@@ -3,7 +3,7 @@
 import streamlit as st
 import os
 import cmind
-
+import logging
 import misc
 
 def main():
@@ -30,7 +30,7 @@ def main():
         if ' ' in script_tags:
             script_tags = script_tags.replace(' ',',')
 
-        print ('Searching CM scripts using tags "{}"'.format(script_tags))
+        logging.info ('Searching CM scripts using tags "{}"'.format(script_tags))
 
         r = cmind.access({'action':'find', 
                           'automation':'script,5b4e0237da074764', 

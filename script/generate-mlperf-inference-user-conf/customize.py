@@ -5,7 +5,7 @@ import shutil
 import subprocess
 import cmind as cm
 import sys
-
+import logging
 def preprocess(i):
 
 
@@ -31,7 +31,7 @@ def preprocess(i):
         env['CM_MLPERF_LOADGEN_SCENARIO'] = "Offline"
 
     if 'CM_MLPERF_LOADGEN_MODE' not in env:
-        print("\nNo mode given. Using accuracy as default\n")
+        logging.info("\nNo mode given. Using accuracy as default\n")
         env['CM_MLPERF_LOADGEN_MODE'] = "accuracy"
 
 
@@ -46,7 +46,7 @@ def preprocess(i):
             env['CM_NUM_THREADS'] = env.get('CM_HOST_CPU_TOTAL_CORES', '1')
 
 
-    print("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
+    logging.info("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
 
     if 'CM_MLPERF_CONF' not in env:
         env['CM_MLPERF_CONF'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "mlperf.conf")
@@ -127,22 +127,22 @@ def preprocess(i):
         conf[metric] = value
     else:
         if metric in conf:
-            print("Original configuration value {} {}".format(conf[metric], metric))
+            logging.info("Original configuration value {} {}".format(conf[metric], metric))
             metric_value = str(float(conf[metric]) * tolerance) #some tolerance
-            print("Adjusted configuration value {} {}".format(metric_value, metric))
+            logging.info("Adjusted configuration value {} {}".format(metric_value, metric))
         else:
             #if env.get("CM_MLPERF_FIND_PERFORMANCE_MODE", '') == "yes":
             if metric == "target_qps":
                 if env.get("CM_MLPERF_FIND_PERFORMANCE_MODE", '') == "yes":
-                    print("In find performance mode: using 1 as target_qps")
+                    logging.info("In find performance mode: using 1 as target_qps")
                 else:
-                    print("No target_qps specified. Using 1 as target_qps")
+                    logging.info("No target_qps specified. Using 1 as target_qps")
                 conf[metric] = 1
             if metric == "target_latency":
                 if env.get("CM_MLPERF_FIND_PERFORMANCE_MODE", '') == "yes":
-                    print("In find performance mode: using 0.5ms as target_latency")
+                    logging.info("In find performance mode: using 0.5ms as target_latency")
                 else:
-                    print("No target_latency specified. Using default")
+                    logging.info("No target_latency specified. Using default")
                 if env.get('CM_MLPERF_USE_MAX_DURATION', 'yes').lower() in [ "no", "false", "0" ] or env.get('CM_MLPERF_MODEL_EQUAL_ISSUE_MODE', 'no').lower() in [ "yes", "1", "true" ]:
                     # Total number of queries needed is a multiple of dataset size. So we dont use max_duration and so we need to be careful with the input latency
                     if '3d-unet' in env['CM_MODEL']:
@@ -322,13 +322,13 @@ def preprocess(i):
 
     if not run_exists or rerun:
 
-        print("Output Dir: '" + OUTPUT_DIR + "'")
-        print(user_conf)
+        logging.info("Output Dir: '" + OUTPUT_DIR + "'")
+        logging.info(user_conf)
         if env.get('CM_MLPERF_POWER','') == "yes" and os.path.exists(env.get('CM_MLPERF_POWER_LOG_DIR', '')):
             shutil.rmtree(env['CM_MLPERF_POWER_LOG_DIR'])
     else:
         if not env.get('CM_MLPERF_COMPLIANCE_RUN_POSTPONED', False):
-            print("Run files exist, skipping run...\n")
+            logging.info("Run files exist, skipping run...\n")
         env['CM_MLPERF_SKIP_RUN'] = "yes"
 
     if not run_exists or rerun or not measure_files_exist(OUTPUT_DIR, \
@@ -342,7 +342,7 @@ def preprocess(i):
         else:
             env['CM_MLPERF_USER_CONF'] = os.path.join(os.path.dirname(user_conf_path), key+".conf")#  user_conf_path
     else:
-        print(f"Measure files exist at {OUTPUT_DIR}. Skipping regeneration...\n")
+        logging.info(f"Measure files exist at {OUTPUT_DIR}. Skipping regeneration...\n")
         env['CM_MLPERF_USER_CONF'] = ''
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -398,7 +398,7 @@ def run_files_exist(mode, OUTPUT_DIR, run_files, env):
 
         SCRIPT_PATH = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "compliance", "nvidia", test, "run_verification.py")
         cmd = env['CM_PYTHON_BIN'] + " " + SCRIPT_PATH + " -r " + RESULT_DIR + " -c " + COMPLIANCE_DIR + " -o "+ OUTPUT_DIR
-        print(cmd)
+        logging.info(cmd)
         os.system(cmd)
 
         is_valid = checker.check_compliance_perf_dir(COMPLIANCE_DIR)

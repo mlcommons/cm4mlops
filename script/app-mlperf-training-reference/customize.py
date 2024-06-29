@@ -35,7 +35,7 @@ def preprocess(i):
         else:
             env['CM_NUM_THREADS'] = env.get('CM_HOST_CPU_TOTAL_CORES', '1')
 
-    print("Using MLCommons Training source from '" + env['CM_MLPERF_TRAINING_SOURCE'] +"'")
+    logging.info("Using MLCommons Training source from '" + env['CM_MLPERF_TRAINING_SOURCE'] +"'")
 
 
     NUM_THREADS = env['CM_NUM_THREADS']

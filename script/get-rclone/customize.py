@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import configparser
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -48,7 +48,7 @@ def preprocess(i):
                     env['CM_RCLONE_ARCHIVE'] = filename
                     env['CM_RCLONE_ARCHIVE_WITH_EXT'] = filename+'.zip'
 
-                    print(recursion_spaces + 'Downloading {}'.format(env['CM_RCLONE_URL']))
+                    logging.info(recursion_spaces + 'Downloading {}'.format(env['CM_RCLONE_URL']))
 
                 cur_dir = os.getcwd()
                 path_bin = os.path.join(cur_dir, file_name)
@@ -73,7 +73,7 @@ def detect_version(i):
 
     version = r['version']
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 
@@ -101,7 +101,7 @@ def postprocess(i):
     
         with open(default_config_path, 'w') as configfile:
             default_config.write(configfile)
-        print({section: dict(default_config[section]) for section in default_config.sections()})
+        logging.info({section: dict(default_config[section]) for section in default_config.sections()})
 
     r = detect_version(i)
 

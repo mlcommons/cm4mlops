@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import subprocess
-
+import logging
 def postprocess(i):
 
     env = i['env']
@@ -20,7 +20,7 @@ def postprocess(i):
     p = {}
 
     for line in lst:
-        print (line)
+        logging.info (line)
 
         j = line.find(':')
         if j>=0:

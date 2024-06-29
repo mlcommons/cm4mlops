@@ -1,12 +1,12 @@
 from cmind import utils
 import os
 import shutil
-
+import logging
 def preprocess(i):
 
     env = i['env']
 
-    print("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
+    logging.info("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
 
     run_dir = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools")
 

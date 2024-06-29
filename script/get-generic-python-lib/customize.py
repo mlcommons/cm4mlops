@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 import cmind as cm
+import logging
 
 def preprocess(i):
 
@@ -86,9 +87,9 @@ def preprocess(i):
             if env.get('CM_GENERIC_PYTHON_PIP_UPDATE','') in [True,'true','yes','on']:
                 extra +=' -U'
 
-            print ('')
-            print (recursion_spaces + '      Extra PIP CMD: ' + extra)
-            print ('')
+            logging.info ('')
+            logging.info (recursion_spaces + '      Extra PIP CMD: ' + extra)
+            logging.info ('')
 
             env['CM_GENERIC_PYTHON_PIP_EXTRA'] = extra
 
@@ -118,7 +119,7 @@ def detect_version(i):
     current_detected_version = version
 
     if env.get('CM_TMP_SILENT','')!='yes':
-        print (i['recursion_spaces'] + '      Detected version: {}'.format(version))
+        logging.info (i['recursion_spaces'] + '      Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 

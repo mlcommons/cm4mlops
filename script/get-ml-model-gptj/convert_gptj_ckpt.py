@@ -23,6 +23,7 @@ from paxml import checkpoints
 from paxml import train_states
 from praxis import py_utils
 from transformers import AutoModelForCausalLM
+import logging
 
 # 6B example
 num_layers = 28
@@ -34,13 +35,13 @@ num_gpus = 1
 
 def convert(base_model_path, pax_model_path):
   """Convert from gpt-j-6b to pax."""
-  print(f'Loading the base model from {base_model_path}')
+  logging.info(f'Loading the base model from {base_model_path}')
 
   base = AutoModelForCausalLM.from_pretrained(
       base_model_path, low_cpu_mem_usage=True
   )
   for key, value in base.state_dict().items():
-    print('%s %s' % (key, value.data.numpy().shape))
+    logging.info('%s %s' % (key, value.data.numpy().shape))
 
   jax_weights = {
       'lm': {
@@ -147,7 +148,7 @@ def convert(base_model_path, pax_model_path):
     }
     jax_weights['lm']['transformer']['x_layers_%d' % layer_idx] = layer_weight
 
-  print(f'Saving the pax model to {pax_model_path}')
+  logging.info(f'Saving the pax model to {pax_model_path}')
   jax_states = train_states.TrainState(
       step=0, mdl_vars={'params': jax_weights}, opt_states={}
   )
@@ -167,7 +168,7 @@ def convert(base_model_path, pax_model_path):
       pax_model_path,
       checkpoint_type=checkpoints.CheckpointType.GDA,
   )
-  print('done')
+  logging.info('done')
 
 
 if __name__ == '__main__':

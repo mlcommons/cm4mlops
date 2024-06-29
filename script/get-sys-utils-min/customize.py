@@ -1,5 +1,6 @@
 from cmind import utils
 import os
+import logging
 
 def preprocess(i):
 
@@ -21,22 +22,22 @@ def preprocess(i):
             for cd in clean_dirs.split(','):
                 if cd != '':
                     if os.path.isdir(cd):
-                        print ('Clearning directory {}'.format(cd))
+                        logging.info ('Clearning directory {}'.format(cd))
                         shutil.rmtree(cd)
 
         url = env['CM_PACKAGE_WIN_URL']
 
         urls = [url] if ';' not in url else url.split(';')
         
-        print ('')
-        print ('Current directory: {}'.format(os.getcwd()))
+        logging.info ('')
+        logging.info ('Current directory: {}'.format(os.getcwd()))
         
         for url in urls:
             
             url = url.strip()
 
-            print ('')
-            print ('Downloading from {}'.format(url))
+            logging.info ('')
+            logging.info ('Downloading from {}'.format(url))
 
             r = cm.access({'action':'download_file', 
                            'automation':'utils,dc2743f8450541e3', 
@@ -45,7 +46,7 @@ def preprocess(i):
 
             filename = r['filename']
 
-            print ('Unzipping file {}'.format(filename))
+            logging.info ('Unzipping file {}'.format(filename))
 
             r = cm.access({'action':'unzip_file', 
                            'automation':'utils,dc2743f8450541e3', 
@@ -53,10 +54,10 @@ def preprocess(i):
             if r['return']>0: return r
 
             if os.path.isfile(filename):
-                print ('Removing file {}'.format(filename))
+                logging.info ('Removing file {}'.format(filename))
                 os.remove(filename)
 
-        print ('')
+        logging.info ('')
 
         # Add to path
         env['+PATH']=[os.path.join(path, 'bin')]

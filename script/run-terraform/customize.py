@@ -3,7 +3,7 @@ import cmind as cm
 import os
 import shutil
 import json
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -13,7 +13,7 @@ def preprocess(i):
     env['CM_TERRAFORM_CONFIG_DIR'] = config_dir
     cache_dir = os.getcwd()
 
-    print(f"Running terraform from {cache_dir}")
+    logging.info(f"Running terraform from {cache_dir}")
 
     shutil.copy(os.path.join(config_dir, "main.tf"), cache_dir)
     env['CM_TERRAFORM_RUN_DIR'] = cache_dir
@@ -84,4 +84,4 @@ def postprocess(i):
 
 def print_attr(instance_attributes, key):
     if key in instance_attributes:
-        print(key.upper() + ": " + str(instance_attributes[key]))
+        logging.info(key.upper() + ": " + str(instance_attributes[key]))

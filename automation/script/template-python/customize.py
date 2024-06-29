@@ -1,10 +1,10 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
-    print ('')
-    print ('Preprocessing ...')
+    logging.info ('')
+    logging.info ('Preprocessing ...')
 
     os_info = i['os_info']
 
@@ -16,14 +16,14 @@ def preprocess(i):
 
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
-    print ('  ENV CM_VAR1: {}'.format(env.get('CM_VAR1','')))
+    logging.info ('  ENV CM_VAR1: {}'.format(env.get('CM_VAR1','')))
     
     return {'return':0}
 
 def postprocess(i):
 
-    print ('')
-    print ('Postprocessing ...')
+    logging.info ('')
+    logging.info ('Postprocessing ...')
 
     env = i['env']
 

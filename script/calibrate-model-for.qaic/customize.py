@@ -2,7 +2,7 @@ from cmind import utils
 import os
 import sys
 import yaml
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -25,7 +25,7 @@ def preprocess(i):
         return r
     cmd = r['cmd']
 
-    print("Profiling from "+ os.getcwd())
+    logging.info("Profiling from "+ os.getcwd())
 
     env['CM_RUN_CMD'] = cmd
 

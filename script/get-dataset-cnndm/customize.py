@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import shutil
-
+import logging
 def preprocess(i):
 
     env = i['env']
@@ -9,7 +9,7 @@ def preprocess(i):
     if env.get('CM_CNNDM_INTEL_VARIATION', '') == 'yes':
         i['run_script_input']['script_name'] = "run-intel"
     else:
-        print("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
+        logging.info("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
 
     return {'return': 0}
 

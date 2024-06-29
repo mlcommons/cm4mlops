@@ -1,5 +1,5 @@
 import os
-
+import logging
 from cmind.automation import Automation
 from cmind import utils
 
@@ -47,7 +47,7 @@ class CAutomation(Automation):
         """
 
         import json
-        print (json.dumps(i, indent=2))
+        logging.info(json.dumps(i, indent=2))
 
         return {'return':0}
 
@@ -121,12 +121,12 @@ class CAutomation(Automation):
             version = meta.get('version','')
 
             if console:
-                print ('')
+                logging.info ('')
 #                print ('* UID: {}'.format(uid))
-                print ('* Tags: {}'.format(','.join(tags)))
-                print ('  Path: {}'.format(path))
+                logging.info ('* Tags: {}'.format(','.join(tags)))
+                logging.info ('  Path: {}'.format(path))
                 if version!='':
-                    print ('  Version: {}'.format(version))
+                    logging.info ('  Version: {}'.format(version))
 
             if show_env and console:
                 path_to_cached_state_file = os.path.join(path, 'cm-cached-state.json')
@@ -140,13 +140,13 @@ class CAutomation(Automation):
 
                     new_env = cached_state.get('new_env', {})
                     if len(new_env)>0:
-                        print ('    New env:')
-                        print (json.dumps(new_env, indent=6, sort_keys=True).replace('{','').replace('}',''))
+                        logging.info ('    New env:')
+                        logging.info (json.dumps(new_env, indent=6, sort_keys=True).replace('{','').replace('}',''))
 
                     new_state = cached_state.get('new_state', {})
                     if len(new_state)>0:
-                        print ('    New state:')
-                        print (json.dumps(new_env, indent=6, sort_keys=True))
+                        logging.info ('    New state:')
+                        logging.info (json.dumps(new_env, indent=6, sort_keys=True))
 
         return {'return':0, 'list': lst}
 

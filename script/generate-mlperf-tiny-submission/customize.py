@@ -24,8 +24,8 @@ def generate_submission(i):
     if not os.path.isdir(submission_dir):
         os.makedirs(submission_dir)
 
-    print('* MLPerf tiny submission dir: {}'.format(submission_dir))
-    print('* MLPerf tiny results dir: {}'.format(results_dir))
+    logging.info('* MLPerf tiny submission dir: {}'.format(submission_dir))
+    logging.info('* MLPerf tiny results dir: {}'.format(results_dir))
     results = [f for f in os.listdir(results_dir) if not os.path.isfile(os.path.join(results_dir, f))]
 
     division=inp.get('division','open')
@@ -35,7 +35,7 @@ def generate_submission(i):
     system_meta = state['CM_SUT_META']
     division = system_meta['division']
 
-    print('* MLPerf tiny division: {}'.format(division))
+    logging.info('* MLPerf tiny division: {}'.format(division))
 
     path_submission_root = submission_dir
     path_submission_division=os.path.join(path_submission_root, division)
@@ -46,7 +46,7 @@ def generate_submission(i):
     submitter = system_meta['submitter']
     env['CM_MLPERF_SUBMITTER'] = submitter
 
-    print('* MLPerf tiny submitter: {}'.format(submitter))
+    logging.info('* MLPerf tiny submitter: {}'.format(submitter))
 
     path_submission=os.path.join(path_submission_division, submitter)
     if not os.path.isdir(path_submission):
@@ -62,8 +62,8 @@ def generate_submission(i):
         target = parts[1]
         framework = backend
 
-        print('* Target: {}'.format(target))
-        print('* Framework: {}'.format(framework))
+        logging.info('* Target: {}'.format(target))
+        logging.info('* Framework: {}'.format(framework))
         result_path = os.path.join(results_dir, res)
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
@@ -95,7 +95,7 @@ def generate_submission(i):
             if not os.path.exists(os.path.join(submission_code_path, "README.md")):
                 with open(os.path.join(submission_code_path, "README.md"), mode='w'): pass #create an empty README
 
-            print('* MLPerf inference model: {}'.format(model))
+            logging.info('* MLPerf inference model: {}'.format(model))
             for scenario in scenarios:
                 result_scenario_path = os.path.join(result_model_path, scenario)
                 submission_scenario_path = os.path.join(submission_model_path, scenario)
@@ -141,7 +141,7 @@ def generate_submission(i):
                             files.append("accuracy.txt")
 
                     for f in files:
-                        print(' * ' + f)
+                        logging.info(' * ' + f)
                         p_target = os.path.join(submission_results_path, f)
                         shutil.copy(os.path.join(result_mode_path, f), p_target)
 

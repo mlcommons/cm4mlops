@@ -7,7 +7,7 @@ import os
 import itertools
 import copy
 import json
-
+import logging
 from cmind.automation import Automation
 from cmind import utils
 
@@ -58,7 +58,7 @@ class CAutomation(Automation):
         """
 
         import json
-        print (json.dumps(i, indent=2))
+        logging.info (json.dumps(i, indent=2))
 
         return {'return':0}
 
@@ -119,8 +119,8 @@ class CAutomation(Automation):
         experiment_path = experiment.path
 
         if console:
-            print ('')
-            print ('Path to CM experiment artifact: {}'.format(experiment_path))
+            logging.info ('')
+            logging.info ('Path to CM experiment artifact: {}'.format(experiment_path))
 
 
         # Get directory with datetime
@@ -136,21 +136,21 @@ class CAutomation(Automation):
             if len(datetimes)==1:
                 datetime = datetimes[0]
             elif len(datetimes)>1:
-                print ('')
-                print ('Select experiment:')
+                logging.info ('')
+                logging.info ('Select experiment:')
 
                 datetimes = sorted(datetimes)
                 
                 num = 0
-                print ('')
+                logging.info ('')
                 for d in datetimes:
-                    print ('{}) {}'.format(num, d.replace('.',' ')))
+                    logging.info ('{}) {}'.format(num, d.replace('.',' ')))
                     num += 1
 
                 if not console:
                     return {'return':1, 'error':'more than 1 experiment found.\nPlease use "cm rerun experiment --dir={date and time}"'}
 
-                print ('')
+                logging.info ('')
                 x=input('Make your selection or press Enter for 0: ')
 
                 x=x.strip()
@@ -192,7 +192,7 @@ class CAutomation(Automation):
             os.makedirs(experiment_path2)
 
         # Change current path
-        print ('Path to experiment: {}'.format(experiment_path2))
+        logging.warning ('Path to experiment: {}'.format(experiment_path2))
 
         os.chdir(experiment_path2)
 
@@ -284,10 +284,10 @@ class CAutomation(Automation):
             
             step += 1
             
-            print ('================================================================')
-            print ('Experiment step: {} out of {}'.format(step, num_steps))
+            logging.infot ('================================================================')
+            logging.info ('Experiment step: {} out of {}'.format(step, num_steps))
 
-            print ('')
+            logging.info ('')
 
             ii = copy.deepcopy(ii_copy)
 
@@ -295,17 +295,17 @@ class CAutomation(Automation):
 
             l_dimensions=len(dimensions)
             if l_dimensions>0:
-                print ('  Updating ENV variables during exploration:')
+                logging.info ('  Updating ENV variables during exploration:')
 
-                print ('')
+                logging.info ('')
                 for j in range(l_dimensions):
                     v = dimensions[j]
                     k = explore_keys[j]
-                    print ('    - Dimension {}: "{}" = {}'.format(j, k, v))
+                    logging.info ('    - Dimension {}: "{}" = {}'.format(j, k, v))
 
                     env[k] = str(v)
 
-                print ('')
+                logging.info ('')
 
             # Generate UID and prepare extra directory:
             r = utils.gen_uid()
@@ -324,8 +324,8 @@ class CAutomation(Automation):
             current_datetime = r['iso_datetime']
 
             # Change current path
-            print ('Path to experiment step: {}'.format(experiment_path3))
-            print ('')
+            logging.info ('Path to experiment step: {}'.format(experiment_path3))
+            logging.info ('')
             os.chdir(experiment_path3)
 
             # Prepare and run experiment in a given placeholder directory
@@ -367,10 +367,10 @@ class CAutomation(Automation):
 
             ii['command'] = cmd_step
                        
-            print ('Generated CMD:')
-            print ('')
-            print (cmd_step)
-            print ('')
+            logging.info ('Generated CMD:')
+            logging.info ('')
+            logging.info (cmd_step)
+            logging.info ('')
             
             # Prepare experiment step input
             experiment_step_input_file = os.path.join(experiment_path3, self.CM_INPUT_FILE)
@@ -494,8 +494,8 @@ class CAutomation(Automation):
         experiment_path = experiment.path
 
         if console:
-            print ('')
-            print ('Path to CM experiment artifact: {}'.format(experiment_path))
+            logging.info ('')
+            logging.info ('Path to CM experiment artifact: {}'.format(experiment_path))
 
         # Check date and time folder
         uid = i.get('uid', '')
@@ -532,21 +532,21 @@ class CAutomation(Automation):
             if len(datetimes)==1:
                 datetime = datetimes[0]
             else:
-                print ('')
-                print ('Available experiments:')
+                logging.info ('')
+                logging.info ('Available experiments:')
 
                 datetimes = sorted(datetimes)
                 
                 num = 0
-                print ('')
+                logging.info ('')
                 for d in datetimes:
-                    print ('{}) {}'.format(num, d.replace('.',' ')))
+                    logging.info ('{}) {}'.format(num, d.replace('.',' ')))
                     num += 1
 
                 if not console:
                     return {'return':1, 'error':'more than 1 experiment found.\nPlease use "cm run experiment --dir={date and time}"'}
                 
-                print ('')
+                logging.info ('')
                 x=input('Make your selection or press Enter for 0: ')
 
                 x=x.strip()
@@ -577,21 +577,21 @@ class CAutomation(Automation):
                 selection = 0
 
             else:
-                print ('')
-                print ('Available Unique IDs of results:')
+                logging.info ('')
+                logging.info ('Available Unique IDs of results:')
 
                 results = sorted(results, key=lambda x: x.get('uid',''))
                 
                 num = 0
-                print ('')
+                logging.info ('')
                 for r in results:
-                    print ('{}) {}'.format(num, r.get('uid','')))
+                    logging.info ('{}) {}'.format(num, r.get('uid','')))
                     num += 1
 
                 if not console:
                     return {'return':1, 'error':'more than 1 result found.\nPlease use "cm run experiment --uid={result UID}"'}
 
-                print ('')
+                logging.info ('')
                 x=input('Make your selection or press Enter for 0: ')
 
                 x=x.strip()
@@ -607,11 +607,11 @@ class CAutomation(Automation):
             
         # Final info
         if console:
-            print ('')
-            print ('Path to experiment: {}'.format(experiment_path2))
+            logging.info ('')
+            logging.info ('Path to experiment: {}'.format(experiment_path2))
 
-            print ('')
-            print ('Result UID: {}'.format(uid))
+            logging.info ('')
+            logging.info ('Result UID: {}'.format(uid))
 
         # Attempt to load cm-input.json
         experiment_input_file = os.path.join(experiment_path2, self.CM_INPUT_FILE)
@@ -631,11 +631,11 @@ class CAutomation(Automation):
         cm_input['tags'] = tags
         
         if console:
-            print ('')
-            print ('Experiment input:')
-            print ('')
-            print (json.dumps(cm_input, indent=2))
-            print ('')
+            logging.info ('')
+            logging.info ('Experiment input:')
+            logging.info ('')
+            logging.info (json.dumps(cm_input, indent=2))
+            logging.info ('')
         
         # Run experiment again
         r = self.cmind.access(cm_input)
@@ -689,21 +689,21 @@ class CAutomation(Automation):
         lst = r['list']
 
         if len(lst)>1:
-            print ('More than 1 experiment artifact found:')
+            logging.info ('More than 1 experiment artifact found:')
 
             lst = sorted(lst, key=lambda x: x.path)
             
             num = 0
-            print ('')
+            logging.info ('')
             for e in lst:
-                print ('{}) {}'.format(num, e.path))
-                print ('        Tags: {}'.format(','.join(e.meta.get('tags',[]))))
+                logging.info ('{}) {}'.format(num, e.path))
+                logging.info ('        Tags: {}'.format(','.join(e.meta.get('tags',[]))))
                 num += 1
 
             if not console:
                 return {'return':1, 'error':'more than 1 experiment artifact found.\nPlease use "cm run experiment {name}" or "cm run experiment --tags={tags separated by comma}"'}
             
-            print ('')
+            logging.info ('')
             x=input('Make your selection or press Enter for 0: ')
 
             x=x.strip()

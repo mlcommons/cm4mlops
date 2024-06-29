@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
     os_info = i['os_info']
     env = i['env']
@@ -29,9 +29,9 @@ def preprocess(i):
 
     URL = 'https://github.com/microsoft/onnxruntime/releases/download/v{}/{}'.format(version, FILENAME)
 
-    print ('')
-    print ('Downloading from {}'.format(URL))
-    print ('')
+    logging.infot ('')
+    logging.info ('Downloading from {}'.format(URL))
+    logging.info ('')
 
     env['FOLDER'] = FOLDER
     env['FILENAME'] = FILENAME

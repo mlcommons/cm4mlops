@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -21,7 +21,7 @@ def preprocess(i):
 
     name = env.get('CM_NAME','')
     if not quiet and name == '':
-        print ('')
+        logging.info ('')
         x = input('Enter some tag to describe this virtual env (mlperf-inf,octoml-bench,etc): ')
         x = x.strip()
 

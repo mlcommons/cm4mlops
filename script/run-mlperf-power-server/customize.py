@@ -2,7 +2,7 @@ from cmind import utils
 import cmind as cm
 import os
 import configparser
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -18,7 +18,7 @@ def preprocess(i):
     config['ptd']['devicePort'] = env['CM_MLPERF_POWER_DEVICE_PORT']
     with open('power-server.conf', 'w') as configfile:
         config.write(configfile)
-    print({section: dict(config[section]) for section in config.sections()})
+    logging.info({section: dict(config[section]) for section in config.sections()})
 
     if env['CM_HOST_OS_TYPE'] == "windows":
         cmd_prefix = ""

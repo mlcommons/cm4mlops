@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -22,7 +22,7 @@ def preprocess(i):
 
     url = url.replace('{{CM_IPOL_YEAR}}', year).replace('{{CM_IPOL_NUMBER}}', number)
 
-    print ('Downloading from {}'.format(url))
+    logging.info ('Downloading from {}'.format(url))
 
     r = cm.access({'action':'download_file', 
                    'automation':'utils,dc2743f8450541e3', 
@@ -31,7 +31,7 @@ def preprocess(i):
 
     filename = r['filename']
 
-    print ('Unzipping file {}'.format(filename))
+    logging.info ('Unzipping file {}'.format(filename))
 
     r = cm.access({'action':'unzip_file', 
                    'automation':'utils,dc2743f8450541e3', 
@@ -39,7 +39,7 @@ def preprocess(i):
     if r['return']>0: return r
 
     if os.path.isfile(filename):
-        print ('Removing file {}'.format(filename))
+        logging.info ('Removing file {}'.format(filename))
         os.remove(filename)
 
     # Get sub-directory from filename
@@ -52,7 +52,7 @@ def preprocess(i):
     # Applying patch
     cmd = 'patch -p0 < {}'.format(os.path.join(script_path, 'patch', '20240127.patch'))
 
-    print ('Patching code: {}'.format(cmd))
+    logging.info ('Patching code: {}'.format(cmd))
     os.system(cmd)
 
     return {'return':0}

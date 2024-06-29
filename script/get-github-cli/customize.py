@@ -1,5 +1,6 @@
 from cmind import utils
 import os
+import logging
 
 def preprocess(i):
 
@@ -25,7 +26,7 @@ def preprocess(i):
            if env.get('CM_TMP_FAIL_IF_NOT_FOUND','').lower() == 'yes':
                return r
 
-           print (recursion_spaces+'    # {}'.format(r['error']))
+           logging.info (recursion_spaces+'    # {}'.format(r['error']))
 
            # Attempt to run installer
            r = {'return':0, 'skip':True, 'script':{'tags':'install,github-cli'}}
@@ -48,7 +49,7 @@ def postprocess(i):
 
     version = r['version']
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
 
     return {'return':0, 'version':version}

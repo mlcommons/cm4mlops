@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     # Pre-set by CM
@@ -59,7 +59,7 @@ def preprocess(i):
         url = 'https://github.com/aria2/aria2/releases/download/release-{}/{}'.format(version, archive_with_ext)
         env['CM_ARIA2_DOWNLOAD_URL'] = url
 
-        print ('URL to download ARIA2: {}'.format(url))
+        logging.info ('URL to download ARIA2: {}'.format(url))
 
         r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install'})
         if r['return']>0: return r
@@ -99,7 +99,7 @@ def detect_version(i):
     if r['return'] >0: return r
 
     version = r['version']
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 

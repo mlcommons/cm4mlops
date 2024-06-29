@@ -2,11 +2,11 @@ import os
 import csv
 import json
 import cmind
-
+import logging
 def main():
     f = os.environ.get('CM_PROCESS_AE_USERS_INPUT_FILE','')
 
-    print ('Input CSV file: {}'.format(f))
+    logging.info ('Input CSV file: {}'.format(f))
 
     users = []
     with open(f, 'r') as ff:
@@ -15,7 +15,7 @@ def main():
             if len(row)>0:
                 users.append(row)
 
-    print ('')
+    logging.info ('')
     html = '<ul>\n'
     for user in sorted(users, key = lambda u: (u['last'].lower(), u['first'].lower())):
 
@@ -23,7 +23,7 @@ def main():
         
         name = full_name + ' ('+user['affiliation']+')'
 
-        print (name)
+        logging.info (name)
 
         html += '  <li>'+name+'\n'
 
@@ -36,7 +36,7 @@ def main():
         lst = r['list']
 
         if len(lst)==0:
-            print ('  CM contributor not found!')
+            logging.info ('  CM contributor not found!')
 
             meta = {
                     'challenges': [
@@ -47,7 +47,7 @@ def main():
                     'organization': user['affiliation']
                    }
 
-            print ('  Adding to mlcommons@ck ...')
+            logging.info ('  Adding to mlcommons@ck ...')
             r = cmind.access({'out':'con',
                               'action':'add',
                               'automation':'contributor,68eae17b590d4f8f', # Need UID since using common function
@@ -62,8 +62,8 @@ def main():
 
     fo = f+'.html'
 
-    print ('')
-    print ('Saved HTML to {}'.format(fo))
+    logging.info ('')
+    logging.info ('Saved HTML to {}'.format(fo))
     
     cmind.utils.save_txt(fo, html)
 

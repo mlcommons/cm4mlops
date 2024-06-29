@@ -1,6 +1,7 @@
 import cmind
 import os
 import pathlib
+import logging
 current_file_path = pathlib.Path(__file__).parent.resolve()
 docker_os = {
         "ubuntu": ["18.04","20.04","22.04"],
@@ -90,9 +91,9 @@ for _os in docker_os:
                             }
                         r = cmind.access(cm_docker_input)
                         if r['return'] > 0:
-                            print(r)
+                            logging.info(r)
                             exit(1)
 
-                        print ('')
-                        print ("Dockerfile generated at " + dockerfile_path)
+                        logging.info ('')
+                        logging.info ("Dockerfile generated at " + dockerfile_path)
 

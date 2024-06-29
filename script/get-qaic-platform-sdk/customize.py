@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import xml.etree.ElementTree as et
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -60,7 +60,7 @@ def detect_version(i):
     if not version:
         return {'return':1, 'error': f'qaic platform sdk version info not found'}
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
     return {'return':0, 'version':version}
 
 def postprocess(i):

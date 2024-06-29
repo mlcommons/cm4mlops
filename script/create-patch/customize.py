@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -35,11 +35,11 @@ def preprocess(i):
     cmd = 'diff -Naur {} {} {} > patch.patch'.format(x_exclude, old_dir, new_dir)
 
     if not quiet:
-        print ('')
-        print ('Running command:')
-        print ('')
-        print (cmd)
-        print ('')
+        logging.info ('')
+        logging.info ('Running command:')
+        logging.info ('')
+        logging.info (cmd)
+        logging.info ('')
 
     os.system(cmd)
 

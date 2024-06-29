@@ -5,7 +5,7 @@ import time
 import os
 import shutil
 import numpy as np
-
+import logging
 
 import torch
 import torchvision.models as models
@@ -120,7 +120,7 @@ def main():
     for batch_index in range(BATCH_COUNT):
         batch_number = batch_index+1
         if FULL_REPORT or (batch_number % 10 == 0):
-            print("\nBatch {} of {}".format(batch_number, BATCH_COUNT))
+            logging.info("\nBatch {} of {}".format(batch_number, BATCH_COUNT))
       
         begin_time = time.time()
 
@@ -136,7 +136,7 @@ def main():
         total_load_time += load_time
         images_loaded += BATCH_SIZE
         if FULL_REPORT:
-            print("Batch loaded in %fs" % (load_time))
+            logging.info("Batch loaded in %fs" % (load_time))
 
         # Classify one batch
         begin_time = time.time()
@@ -150,7 +150,7 @@ def main():
 
         classification_time = time.time() - begin_time
         if FULL_REPORT:
-            print("Batch classified in %fs" % (classification_time))
+            logging.info("Batch classified in %fs" % (classification_time))
 
         total_classification_time += classification_time
         # Remember first batch prediction time
@@ -170,8 +170,8 @@ def main():
 
             top5_indices = list(reversed(softmax_vector.argsort()))[:5]
             for class_idx in top5_indices:
-                print("\t{}\t{}\t{}".format(class_idx, softmax_vector[class_idx], labels[class_idx]))
-            print("")
+                logging.info("\t{}\t{}\t{}".format(class_idx, softmax_vector[class_idx], labels[class_idx]))
+            logging.info("")
                     
 
     test_time = time.time() - test_time_begin

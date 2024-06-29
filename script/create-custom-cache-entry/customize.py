@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import shutil
-
+import logging
 def preprocess(i):
 
     # CM script internal variables
@@ -9,7 +9,7 @@ def preprocess(i):
 
     extra_cache_tags = []
     if env.get('CM_EXTRA_CACHE_TAGS','').strip() == '':
-        print ('')
+        logging.info ('')
         extra_cache_tags_str = input('Enter extra tags for the custom CACHE entry separated by comma: ')
 
         extra_cache_tags = extra_cache_tags_str.strip().split(',')

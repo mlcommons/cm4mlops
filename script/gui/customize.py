@@ -6,7 +6,7 @@ import os
 import json
 import shutil
 import subprocess
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -23,7 +23,7 @@ def preprocess(i):
         if ' ' in script_tags:
             script_tags = script_tags.replace(' ',',')
 
-        print ('Searching CM scripts using tags "{}"'.format(script_tags))
+        logging.info ('Searching CM scripts using tags "{}"'.format(script_tags))
 
         r = cm.access({'action':'find', 
                        'automation':'script', 
@@ -37,7 +37,7 @@ def preprocess(i):
             env['CM_GUI_SCRIPT_PATH'] = script.path
             env['CM_GUI_SCRIPT_ALIAS'] = script.meta['alias']
 
-            print ('Script found in path {}'.format(script.path))
+            logging.info ('Script found in path {}'.format(script.path))
 
     env['CM_GUI_SCRIPT_TAGS'] = script_tags
 
@@ -59,6 +59,6 @@ def preprocess(i):
 
     env['CM_GUI_EXTRA_CMD'] = extra_cmd
 
-    print ('Prepared extra CMD for streamlit: {}'.format(extra_cmd))
+    logging.info ('Prepared extra CMD for streamlit: {}'.format(extra_cmd))
 
     return {'return':0}

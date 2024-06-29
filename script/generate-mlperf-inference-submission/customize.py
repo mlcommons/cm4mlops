@@ -6,6 +6,7 @@ import cmind
 import sys
 from tabulate import tabulate
 import mlperf_utils
+import logging
 
 def preprocess(i):
     return {'return': 0}
@@ -37,17 +38,17 @@ def generate_submission(i):
     submission_dir = env.get('CM_MLPERF_INFERENCE_SUBMISSION_DIR', '')
 
     if env.get('CM_MLPERF_CLEAN_SUBMISSION_DIR','')!='':
-        print ('=================================================')
-        print ('Cleaning {} ...'.format(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']))
+        logging.info ('=================================================')
+        logging.info ('Cleaning {} ...'.format(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']))
         if os.path.exists(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']):
             shutil.rmtree(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'])
-        print ('=================================================')
+        logging.info ('=================================================')
 
     if not os.path.isdir(submission_dir):
         os.makedirs(submission_dir)
 
-    print('* MLPerf inference submission dir: {}'.format(submission_dir))
-    print('* MLPerf inference results dir: {}'.format(results_dir))
+    logging.info('* MLPerf inference submission dir: {}'.format(submission_dir))
+    logging.info('* MLPerf inference results dir: {}'.format(results_dir))
     results = [f for f in os.listdir(results_dir) if not os.path.isfile(os.path.join(results_dir, f))]
 
     system_meta_default = state['CM_SUT_META']
@@ -72,7 +73,7 @@ def generate_submission(i):
     if division not in ['open','closed']:
         return {'return':1, 'error':'"division" must be "open" or "closed"'}
 
-    print('* MLPerf inference division: {}'.format(division))
+    logging.info('* MLPerf inference division: {}'.format(division))
 
     path_submission_root = submission_dir
     path_submission_division=os.path.join(path_submission_root, division)
@@ -87,7 +88,7 @@ def generate_submission(i):
         submitter = system_meta_default['submitter']
         env['CM_MLPERF_SUBMITTER'] = submitter
 
-    print('* MLPerf inference submitter: {}'.format(submitter))
+    logging.info('* MLPerf inference submitter: {}'.format(submitter))
 
     if 'Collective' not in system_meta_default.get('sw_notes'):
         system_meta['sw_notes'] =  "Automated by MLCommons CM v{}. ".format(cmind.__version__) + system_meta_default['sw_notes']
@@ -119,19 +120,19 @@ def generate_submission(i):
             framework_version = parts[4]
             run_config = parts[5]
 
-            print('* System: {}'.format(system))
-            print('* Implementation: {}'.format(implementation))
-            print('* Device: {}'.format(device))
-            print('* Framework: {}'.format(framework))
-            print('* Framework Version: {}'.format(framework_version))
-            print('* Run Config: {}'.format(run_config))
+            logging.info('* System: {}'.format(system))
+            logging.info('* Implementation: {}'.format(implementation))
+            logging.info('* Device: {}'.format(device))
+            logging.info('* Framework: {}'.format(framework))
+            logging.info('* Framework Version: {}'.format(framework_version))
+            logging.info('* Run Config: {}'.format(run_config))
 
             new_res = system + "-" + "-".join(parts[1:])
 
             # Override framework and framework versions from the folder name
             system_meta_default['framework'] = framework + " " + framework_version
         else:
-            print(parts)
+            logging.info(parts)
             return {'return': 1}
         result_path = os.path.join(results_dir, res)
         platform_prefix = inp.get('platform_prefix', '')
@@ -168,7 +169,7 @@ def generate_submission(i):
                 with open(os.path.join(submission_code_path, "README.md"), mode='w') as f:
                     f.write("TBD") #create an empty README
 
-            print('* MLPerf inference model: {}'.format(model))
+            logging.info('* MLPerf inference model: {}'.format(model))
             for scenario in scenarios:
                 results[model][scenario] = {}
                 result_scenario_path = os.path.join(result_model_path, scenario)
@@ -178,11 +179,11 @@ def generate_submission(i):
 
                 if duplicate and scenario=='singlestream':
                     if not os.path.exists(os.path.join(result_model_path, "offline")):
-                        print('Duplicating results from {} to offline:'.format(scenario))
+                        logging.info('Duplicating results from {} to offline:'.format(scenario))
                         shutil.copytree(result_scenario_path, os.path.join(result_model_path, "offline"))
                         scenarios.append("offline")
                     if not os.path.exists(os.path.join(result_model_path, "multistream")):
-                        print('Duplicating results from {} to multistream:'.format(scenario))
+                        logging.info('Duplicating results from {} to multistream:'.format(scenario))
                         shutil.copytree(result_scenario_path, os.path.join(result_model_path, "multistream"))
                         scenarios.append("multistream")
 
@@ -299,7 +300,7 @@ def generate_submission(i):
                             shutil.copytree(os.path.join(result_mode_path, "images"), os.path.join(submission_results_path, "images"))
 
                     for f in files:
-                        print(' * ' + f)
+                        logging.info(' * ' + f)
                         p_target = os.path.join(submission_results_path, f)
                         shutil.copy(os.path.join(result_mode_path, f), p_target)
 
@@ -322,7 +323,7 @@ def generate_submission(i):
 
         result_table, headers = mlperf_utils.get_result_table(results)
 
-        print(tabulate(result_table, headers = headers, tablefmt="pretty"))
+        logging.info(tabulate(result_table, headers = headers, tablefmt="pretty"))
         sut_readme_file = os.path.join(measurement_path, "README.md")
         with open(sut_readme_file, mode='w') as f:
             f.write(tabulate(result_table, headers = headers, tablefmt="github"))

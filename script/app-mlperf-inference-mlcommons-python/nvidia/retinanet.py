@@ -25,6 +25,7 @@ import glob
 import random
 import time
 import pycuda
+import logging
 from PIL import Image
 from importlib import import_module
 from typing import Dict, Tuple, List, Optional
@@ -155,7 +156,7 @@ class TRTTester:
         trt.init_libnvinfer_plugins(self.logger, "")
 
         if self.onnx_path is not None and not skip_engine_build:
-            print(f"Creating engines from onnx: {self.onnx_path}")
+            logging.info(f"Creating engines from onnx: {self.onnx_path}")
             self.create_trt_engine()
         else:
             if not os.path.exists(engine_file):
@@ -264,14 +265,14 @@ class TRTTester:
         image_ids = cocoGt.getImgIds()
         cat_ids = cocoGt.getCatIds()
         num_images = min(num_samples, len(image_ids))
-        print(f"Total number of images: {len(image_ids)}, number of categories: {len(cat_ids)}, running num_images: {num_images}")
+        logging.info(f"Total number of images: {len(image_ids)}, number of categories: {len(cat_ids)}, running num_images: {num_images}")
 
         detections = []
         batch_idx = 0
         for image_idx in range(0, num_images, self.batch_size):
             # Print Progress
             if batch_idx % 20 == 0:
-                print(f"Processing batch: {batch_idx} image: {image_idx}/{num_images}")
+                logging.info(f"Processing batch: {batch_idx} image: {image_idx}/{num_images}")
 
             end_idx = min(image_idx + self.batch_size, num_images)
             imgs = []
@@ -409,7 +410,7 @@ class PytorchTester:
         image_ids = cocoGt.getImgIds()
         cat_ids = cocoGt.getCatIds()
         num_images = min(num_samples, len(image_ids))
-        print(f"Total number of images: {len(image_ids)}, number of categories: {len(cat_ids)}, running num_images: {num_images}")
+        logging.info(f"Total number of images: {len(image_ids)}, number of categories: {len(cat_ids)}, running num_images: {num_images}")
 
         coco_detections = []
         for image_idx in range(0, num_images, self.batch_size):
@@ -427,7 +428,7 @@ class PytorchTester:
             for idx in range(image_idx, end_idx):
                 image_id = image_ids[idx]
                 tensor = load_img_pytorch(os.path.join(self.image_dir, cocoGt.imgs[image_id]["file_name"]), do_transform=True).numpy()
-                print(tensor.shape)
+                logging.info(tensor.shape)
                 img.append(tensor)
             img = np.ascontiguousarray(np.stack(img), dtype=np.float32)
 

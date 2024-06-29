@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import json
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -90,14 +90,14 @@ def detect_version_nvcc(i):
 
     version = r['version']
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 
 def detect_version_cuda_lib(i):
 
     env = i['env']
-    print(env)
+    logging.info(env)
     cuda_rt_file_path = env['CM_CUDA_RT_WITH_PATH']
     cuda_lib_path=os.path.dirname(cuda_rt_file_path)
     cuda_path = os.path.abspath(os.path.join(cuda_lib_path, os.pardir))
@@ -116,7 +116,7 @@ def detect_version_cuda_lib(i):
     env['CM_CUDA_VERSION'] = cuda_version
     version = cuda_version
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    logging.info (i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
     return {'return':0, 'version':version}
 
@@ -151,7 +151,7 @@ def postprocess(i):
         parent_path = os.path.dirname(parent_path)
         while os.path.isdir(parent_path):
             if os.path.exists(os.path.join(parent_path, "include")):
-                print("Path is "+parent_path)
+                logging.info("Path is "+parent_path)
                 found_path = parent_path
                 cuda_path = found_path
                 env['CM_CUDA_INSTALLED_PATH'] = cuda_path

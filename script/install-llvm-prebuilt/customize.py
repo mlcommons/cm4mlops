@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -16,7 +16,7 @@ def preprocess(i):
     if need_version == '':
         return {'return':1, 'error':'internal problem - CM_VERSION is not defined in env'}
 
-    print (recursion_spaces + '    # Requested version: {}'.format(need_version))
+    logging.info (recursion_spaces + '    # Requested version: {}'.format(need_version))
 
     host_os_bits = env['CM_HOST_OS_BITS']
 
@@ -52,12 +52,12 @@ def preprocess(i):
             package_name = 'LLVM-' + need_version + '-win' + host_os_bits + '.exe'
             clang_file_name = "clang.exe"
 
-            print('')
-            print('WARNING: Please copy the following path and then paste it')
-            print('         when LLVM installer asks you about the "Destination Folder":')
-            print('')
-            print(os.getcwd())
-            print('')
+            logging.info('')
+            logging.info('WARNING: Please copy the following path and then paste it')
+            logging.info('         when LLVM installer asks you about the "Destination Folder":')
+            logging.info('')
+            logging.info(os.getcwd())
+            logging.info('')
             input('Press Enter to continue!')
 
         else:
@@ -154,10 +154,10 @@ def preprocess(i):
 
     package_url = 'https://github.com/llvm/llvm-project/releases/download/llvmorg-' + need_version + '/' + package_name
 
-    print (recursion_spaces + '    # Prepared package URL: {}'.format(package_url))
+    logging.info (recursion_spaces + '    # Prepared package URL: {}'.format(package_url))
 
-    print ('')
-    print ('Downloading from {} ...'.format(package_url))
+    logging.info ('')
+    logging.info ('Downloading from {} ...'.format(package_url))
 
     cm = automation.cmind
 

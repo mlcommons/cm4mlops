@@ -4,7 +4,7 @@ import logging
 import os
 import re
 import typing
-
+import logging
 import mlperf_loadgen
 import psutil
 
@@ -38,7 +38,7 @@ def main(
     loadgen_duration_sec: float
 ):
     
-    print ('=====================================================================')
+    logging.info ('=====================================================================')
     
     if backend == 'onnxruntime':
         from backend_onnxruntime import XModelFactory
@@ -135,7 +135,7 @@ def main(
             harness.issue_query, harness.flush_queries
         )
 
-        print ('=====================================================================')
+        logging.info ('=====================================================================')
         logger.info("Test Started")
 
         mlperf_loadgen.StartTestWithLogSettings(
@@ -143,7 +143,7 @@ def main(
         )
 
         logger.info("Test Finished")
-        print ('=====================================================================')
+        logging.info ('=====================================================================')
 
         # Parse output file
         output_summary = {}
@@ -159,11 +159,11 @@ def main(
         mlperf_loadgen.DestroySUT(system_under_test)
         mlperf_loadgen.DestroyQSL(query_sample_libary)
         logger.info("Test Completed")
-        print ('=====================================================================')
+        logging.info ('=====================================================================')
 
 
 if __name__ == "__main__":
-    print ('')
+    logging.info ('')
     
     logging.basicConfig(
         level=logging.DEBUG,

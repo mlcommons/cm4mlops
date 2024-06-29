@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
     
     os_info = i['os_info']
@@ -41,7 +41,7 @@ def preprocess(i):
 
     sdk_manager_file = 'sdkmanager'+ext
 
-    print ('')
+    logging.info ('')
 
     found = False
 
@@ -69,8 +69,8 @@ def preprocess(i):
 
         env['CM_ANDROID_CMDLINE_TOOLS_URL'] = package_url
 
-        print ('')
-        print ('Downloading from {} ...'.format(package_url))
+        logging.info ('')
+        logging.info ('Downloading from {} ...'.format(package_url))
 
         cm = automation.cmind
 
@@ -81,7 +81,7 @@ def preprocess(i):
 
         filename = r['filename']
 
-        print ('Unzipping file {}'.format(filename))
+        logging.info ('Unzipping file {}'.format(filename))
 
         r = cm.access({'action':'unzip_file', 
                        'automation':'utils,dc2743f8450541e3', 
@@ -109,7 +109,7 @@ def preprocess(i):
     paths.append(sdk_manager_dir)
 
     # Prepare SDK
-    print ('Preparing Android SDK manager ...')
+    logging.info ('Preparing Android SDK manager ...')
 
     r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'prepare-sdk-manager'})
     if r['return']>0: return r

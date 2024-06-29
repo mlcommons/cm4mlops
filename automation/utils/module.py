@@ -1,5 +1,5 @@
 import os
-
+import logging
 from cmind.automation import Automation
 from cmind import utils
 
@@ -47,7 +47,7 @@ class CAutomation(Automation):
         """
 
         import json
-        print (json.dumps(i, indent=2))
+        logging.info (json.dumps(i, indent=2))
 
         return {'return':0}
 
@@ -206,8 +206,8 @@ class CAutomation(Automation):
         if os.path.isfile(path_to_file):
             os.remove(path_to_file)
 
-        print ('Downloading to {}'.format(path_to_file))
-        print ('')
+        logging.info ('Downloading to {}'.format(path_to_file))
+        logging.info ('')
 
         # Download
         size = -1
@@ -255,7 +255,7 @@ class CAutomation(Automation):
         except Exception as e:
             return {'return':1, 'error':format(e)}
 
-        print ('')
+        logging.info ('')
         if size == 0:
             file_stats=os.stat(path_to_file)
             size = file_stats.st_size
@@ -763,7 +763,7 @@ class CAutomation(Automation):
 
                 s+=dir_path2+f
 
-        print (s)
+        logging.info (s)
 
         return {'return':0}
 
@@ -786,7 +786,7 @@ class CAutomation(Automation):
         import secrets
         s = secrets.token_urlsafe(16)       
 
-        print (s)
+        logging.info (s)
 
         return {'return':0, 'secret': s}
 
@@ -883,7 +883,7 @@ class CAutomation(Automation):
         r = utils.gen_uid()
 
         if console:
-            print (r['uid'])
+            logging.info (r['uid'])
 
         return r
 
@@ -1034,7 +1034,7 @@ class CAutomation(Automation):
         meta = r['meta']
 
         import json
-        print (json.dumps(meta, indent=2))
+        logging.info (json.dumps(meta, indent=2))
         
         return {'return':0}
 
@@ -1065,6 +1065,6 @@ class CAutomation(Automation):
         meta = r['meta']
 
         import json
-        print (json.dumps(meta, indent=2))
+        logging.info (json.dumps(meta, indent=2))
         
         return {'return':0}

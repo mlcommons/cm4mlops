@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+import logging
 import os.path
 import os
 import csv
@@ -48,7 +48,7 @@ def main():
         request = service.spreadsheets().values().update(spreadsheetId=DOCUMENT_ID, range=sheet_name, valueInputOption="USER_ENTERED", body={"values": values}).execute()
 
     except HttpError as err:
-        print(err)
+        logging.info(err)
 
 
 if __name__ == '__main__':

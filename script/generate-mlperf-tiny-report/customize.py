@@ -5,6 +5,7 @@ import os
 import subprocess
 import json
 import shutil
+import logging
 
 def preprocess(i):
 
@@ -48,8 +49,8 @@ def preprocess(i):
             env['CM_TINYMLPERF_CURRENT_DIR'] = cur_dir
             env['CM_TINYMLPERF_REPO_VERSION'] = version
 
-            print ('')
-            print ('Repo path: {}'.format(path))
+            logging.info ('')
+            logging.info ('Repo path: {}'.format(path))
 
             r = automation.run_native_script({'run_script_input':run_script_input, 
                                               'env':env, 

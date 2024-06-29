@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -22,9 +22,9 @@ def preprocess(i):
 # Windows has moved to get-sys-utils-min and will be always run with "detect,os"!
    
     if os_info['platform'] == 'windows':
-        print ('')
-        print ('This script is not used on Windows')
-        print ('')
+        logging.info ('')
+        logging.info ('This script is not used on Windows')
+        logging.info ('')
 
    # If windows, download here otherwise use run.sh
 
@@ -78,10 +78,10 @@ def preprocess(i):
 #        env['+PATH']=[os.path.join(path, 'bin')]
 #
     else:
-        print ('')
-        print ('***********************************************************************')
-        print ('This script will attempt to install minimal system dependencies for CM.')
-        print ('Note that you may be asked for your SUDO password ...')
-        print ('***********************************************************************')
+        logging.info ('')
+        logging.info ('***********************************************************************')
+        logging.info ('This script will attempt to install minimal system dependencies for CM.')
+        logging.info ('Note that you may be asked for your SUDO password ...')
+        logging.info ('***********************************************************************')
 
     return {'return':0}

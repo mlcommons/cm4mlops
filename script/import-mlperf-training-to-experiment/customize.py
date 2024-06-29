@@ -1,6 +1,6 @@
 import cmind as cm
 from cmind import utils
-
+import logging
 import os
 import subprocess
 import csv
@@ -105,9 +105,9 @@ def preprocess(i):
             env['CM_MLPERF_TRAINING_CURRENT_DIR'] = cur_dir
             env['CM_MLPERF_TRAINING_REPO_VERSION'] = version
 
-            print ('')
-            print ('Repo path:    {}'.format(path))
-            print ('Repo version: {}'.format(version))
+            logging.info ('')
+            logging.info ('Repo path:    {}'.format(path))
+            logging.info ('Repo version: {}'.format(version))
 
             r = automation.run_native_script({'run_script_input':run_script_input, 
                                               'env':env, 
@@ -122,7 +122,7 @@ def preprocess(i):
 
 
 def convert_summary_csv_to_experiment(path, version, env):
-    print ('* Processing MLPerf training results repo in cache path: {}'.format(path))
+    logging.info ('* Processing MLPerf training results repo in cache path: {}'.format(path))
 
     cur_dir = os.getcwd()
 
@@ -132,7 +132,7 @@ def convert_summary_csv_to_experiment(path, version, env):
     burl = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url'])
     url = burl.decode('UTF-8').strip()
 
-    print ('  Git URL: {}'.format(url))
+    logging.info ('  Git URL: {}'.format(url))
 
     os.chdir(cur_dir)
 
@@ -238,9 +238,9 @@ def convert_summary_csv_to_experiment(path, version, env):
         env_target_repo=env.get('CM_IMPORT_MLPERF_TRAINING_TARGET_REPO','').strip()
         target_repo='' if env_target_repo=='' else env_target_repo+':'
 
-        print ('')
+        logging.info ('')
         for name in experiment:
-            print ('    Preparing experiment artifact "{}"'.format(name))
+            logging.info ('    Preparing experiment artifact "{}"'.format(name))
 
             tags = name.split('--')
             if 'mlperf' not in tags: tags.insert(0, 'mlperf')

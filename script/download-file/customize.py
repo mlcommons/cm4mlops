@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import hashlib
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -26,16 +26,16 @@ def preprocess(i):
         env['CM_DOWNLOAD_FILENAME'] = filepath
         
         if not quiet:
-            print ('')
-            print ('Using local file: {}'.format(filepath))
+            logging.info ('')
+            logging.info ('Using local file: {}'.format(filepath))
     else:
         url = env.get('CM_DOWNLOAD_URL','')
 
         if url=='':
             return {'return':1, 'error': 'please specify URL using --url={URL} or --env.CM_DOWNLOAD_URL={URL}'}
 
-        print ('')
-        print ('Downloading from {}'.format(url))
+        logging.info ('')
+        logging.info ('Downloading from {}'.format(url))
         
         if '&' in url and tool != "cmutil":
             if os_info['platform'] == 'windows':
@@ -74,7 +74,7 @@ def preprocess(i):
                 env['CM_DOWNLOAD_FILENAME'] = "index.html"
 
         if tool == "cmutil":
-            print ('')
+            logging.info ('')
 
             cm = automation.cmind
             for i in range(1,5):
@@ -87,7 +87,7 @@ def preprocess(i):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
                 if url == '':
                     break
-                print(f"Download from {oldurl} failed, trying from {url}")
+                logging.info(f"Download from {oldurl} failed, trying from {url}")
 
             if r['return']>0: return r
 

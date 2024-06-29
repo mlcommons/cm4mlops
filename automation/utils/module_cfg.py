@@ -1,7 +1,7 @@
 ﻿import os
 import cmind
 import copy
-
+import logging
 base_path={}
 base_path_meta={}
 
@@ -93,7 +93,7 @@ def load_cfg(i):
 
                 r = cmind.utils.load_yaml_and_json(full_path_without_ext)
                 if r['return']>0:
-                    print ('Warning: problem loading file {}'.format(full_path))
+                    logging.info ('Warning: problem loading file {}'.format(full_path))
                 else:
                     meta = r['meta']
 
@@ -263,10 +263,10 @@ def select_cfg(i):
     select = 0
     if len(selector) > 1:
         xtitle = ' ' + title if title!='' else ''
-        print ('')
-        print ('Available{} configurations:'.format(xtitle))
+        logging.info ('')
+        logging.info ('Available{} configurations:'.format(xtitle))
         
-        print ('')
+        logging.info ('')
 
         for s in range(0, len(selector)):
             ss = selector[s]
@@ -277,7 +277,7 @@ def select_cfg(i):
 
             r = cmind.utils.load_yaml_and_json(full_path_without_ext)
             if r['return']>0:
-                print ('Warning: problem loading configuration file {}'.format(path))
+                logging.warning ('Warning: problem loading configuration file {}'.format(path))
 
             meta = r['meta']
             ss['meta'] = meta
@@ -292,11 +292,11 @@ def select_cfg(i):
             if x!='': x+=' '
             x += '('+alias+')'
             
-            print ('{}) {}'.format(s, x))
+            logging.info ('{}) {}'.format(s, x))
 
             s+=1
         
-        print ('')
+        logging.info ('')
         select = input ('Enter configuration number of press Enter for 0: ')
 
         if select.strip() == '': select = '0'

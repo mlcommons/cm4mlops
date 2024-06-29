@@ -1,3 +1,4 @@
+import logging
 try:
     import cmind as cm
 
@@ -9,6 +10,6 @@ try:
 except ImportError as e:
     from sys import stderr
     from subprocess import call
-    print('WARNING: CM module for python is not installed & jupyter notebooks will not be supported', file=stderr)
+    logging.info('WARNING: CM module for python is not installed & jupyter notebooks will not be supported', file=stderr)
     retcode = call(['cm', 'test', 'script'])
     exit(retcode)

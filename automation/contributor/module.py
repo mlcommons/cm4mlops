@@ -1,5 +1,5 @@
 import os
-
+import logging
 from cmind.automation import Automation
 from cmind import utils
 
@@ -47,7 +47,7 @@ class CAutomation(Automation):
         """
 
         import json
-        print (json.dumps(i, indent=2))
+        logging.info (json.dumps(i, indent=2))
 
         return {'return':0}
 
@@ -131,7 +131,7 @@ class CAutomation(Automation):
         
         i['meta'] = meta
 
-        print ('')
+        logging.info ('')
 
         r = self.cmind.access(i)
         if r['return']>0: return r
@@ -140,14 +140,14 @@ class CAutomation(Automation):
 
         path2 = os.path.dirname(path)
         
-        print ('')
-        print ('Please go to {}, add your directory to Git, commit and create PR:'.format(path2))
-        print ('')
-        print ('cd {}'.format(path2))
-        print ('git add "{}"'.format(name))
-        print ('git commit "{}"'.format(name))
-        print ('')
-        print ('Please join https://discord.gg/JjWNWXKxwT to discuss challenges!')
-        print ('Looking forward to your contributions!')
+        logging.info ('')
+        logging.info ('Please go to {}, add your directory to Git, commit and create PR:'.format(path2))
+        logging.info ('')
+        logging.info ('cd {}'.format(path2))
+        logging.info ('git add "{}"'.format(name))
+        logging.info ('git commit "{}"'.format(name))
+        logging.info ('')
+        logging.info ('Please join https://discord.gg/JjWNWXKxwT to discuss challenges!')
+        logging.info ('Looking forward to your contributions!')
 
         return r

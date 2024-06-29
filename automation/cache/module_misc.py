@@ -1,4 +1,5 @@
 import os
+import logging
 from cmind import utils
     
 
@@ -54,9 +55,9 @@ def copy_to_remote(i):
     if len(r['list']) == 0:
         pass #fixme
     elif len(r['list']) > 1:
-        print("Multiple cache entries found: ")
+        logging.warning("Multiple cache entries found: ")
         for k in sorted(r['list'], key = lambda x: x.meta.get('alias','')):
-            print(k.path)
+            logging.info(k.path)
         x = input("Would you like to copy them all? Y/n: ")
         if x.lower() == 'n':
             return {'return': 0}
@@ -68,7 +69,7 @@ def copy_to_remote(i):
         cacheid = os.path.basename(path)
 
         copy_cmd = f"rsync -avz --exclude cm-cached-state.json -e 'ssh -p {remote_port}' {path} {remote_user}@{remote_host}:{remote_cm_cache_location}"
-        print(copy_cmd)
+        logging.info(copy_cmd)
         os.system(copy_cmd)
 
         cm_cached_state_json_file = os.path.join(path, "cm-cached-state.json")
@@ -92,7 +93,7 @@ def copy_to_remote(i):
 
         remote_cached_state_file_location = os.path.join(remote_cm_cache_location, cacheid, "cm-cached-state.json")
         copy_cmd = f"rsync -avz -e 'ssh -p {remote_port}' tmp_remote_cached_state.json {remote_user}@{remote_host}:{remote_cached_state_file_location}"
-        print(copy_cmd)
+        logging.info(copy_cmd)
         os.system(copy_cmd)
 
     return {'return':0}

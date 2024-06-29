@@ -1,7 +1,7 @@
 from cmind import utils
 import os
 import shutil
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -32,8 +32,8 @@ def postprocess(i):
 
     sessions_path = os.path.join(home_directory, 'eembc', 'runner', 'sessions')
 
-    print ('')
-    print ('Path to EEMBC runner sessions: {}'.format(sessions_path))
+    logging.info ('')
+    logging.info ('Path to EEMBC runner sessions: {}'.format(sessions_path))
 
     env['CM_EEMBC_ENERGY_RUNNER_SESSIONS'] = sessions_path
 
@@ -42,16 +42,16 @@ def postprocess(i):
 
     datasets_path = os.path.join(home_directory, 'eembc', 'runner', 'benchmarks', 'ulp-mlperf', 'datasets')
 
-    print ('')
-    print ('Path to EEMBC runner datasets: {}'.format(datasets_path))
+    logging.info ('')
+    logging.info ('Path to EEMBC runner datasets: {}'.format(datasets_path))
 
     if not os.path.isdir(datasets_path):
         os.makedirs(datasets_path)
 
     env['CM_EEMBC_ENERGY_RUNNER_DATASETS'] = datasets_path
 
-    print ('')
-    print ('Copying datasets to EEMBC user space ...')
+    logging.info ('')
+    logging.info ('Copying datasets to EEMBC user space ...')
 
     shutil.copytree(datasets_src_path, datasets_path, dirs_exist_ok=True)
 

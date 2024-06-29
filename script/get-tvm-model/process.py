@@ -1,5 +1,6 @@
 import os
 import tempfile
+import logging
 from typing import Dict, Tuple, Optional, List, Any, Union
 
 if os.environ.get("CM_TVM_FRONTEND_FRAMEWORK", None) == "pytorch":
@@ -58,7 +59,7 @@ def get_mod_params(
             raise RuntimeError(
                 "Error: Cannot find proper shapes in environment variables"
             )
-    print(f"Shape dict {shape_dict}")
+    logging.info(f"Shape dict {shape_dict}")
     if frontend == "pytorch":
         torch_model = getattr(torchvision.models, model_name)(weights=None)
         torch_model.load_state_dict(torch.load(model_path))
@@ -91,7 +92,7 @@ def tune_model(
     work_dir = os.path.join(os.getcwd(), "metaschedule_workdir")
     if not os.path.exists(work_dir):
         os.mkdir(work_dir)
-    print("Extracting tasks...")
+    logging.info("Extracting tasks...")
     extracted_tasks = meta_schedule.relay_integration.extract_tasks(
         mod, target, params
     )
@@ -99,7 +100,7 @@ def tune_model(
         extracted_tasks, work_dir, strategy="evolutionary"
     )
 
-    print("Begin tuning...")
+    logging.info("Begin tuning...")
     evaluator_config = meta_schedule.runner.config.EvaluatorConfig(
         number=1,
         repeat=10,
@@ -189,11 +190,11 @@ def serialize_vm(
 def main() -> None:
     model_path = os.environ.get('CM_ML_MODEL_FILE_WITH_PATH', None)
     compiled_model = os.path.join(os.getcwd(), 'model-tvm.so')
-    print('TVM model: ' + model_path)
+    logging.info('TVM model: ' + model_path)
     if model_path.endswith('.so') or model_path.endswith('.dylib'):
         compiled_model = model_path
         if not os.path.isfile(compiled_model):
-            print('')
+            logging.info('')
             raise RuntimeError(
                 f"Error: Model file {compiled_model} not found!"
             )
@@ -246,7 +247,7 @@ def main() -> None:
         with open(os.path.join(os.getcwd(), "tvm_executor"), "w") as file:
             file.write("virtual_machine" if use_vm else "graph_executor")
         lib.export_library(compiled_model)
-        print('TVM compiled model: ' + compiled_model)
+        logging.info('TVM compiled model: ' + compiled_model)
 
 if __name__ == "__main__":
     main()

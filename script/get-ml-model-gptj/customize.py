@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -9,7 +9,7 @@ def preprocess(i):
     if env.get('CM_GPTJ_INTEL_MODEL', '') == 'yes':
         i['run_script_input']['script_name'] = 'run-intel'
         harness_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'code', 'gptj-99', 'pytorch-cpu')
-        print(f"Harness Root: {harness_root}")
+        logging.info(f"Harness Root: {harness_root}")
         env['CM_HARNESS_CODE_ROOT'] = harness_root
         env['CM_CALIBRATION_CODE_ROOT'] = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'calibration')
 

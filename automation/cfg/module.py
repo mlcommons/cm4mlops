@@ -3,7 +3,7 @@
 # Written by Grigori Fursin
 
 import os
-
+import logging
 from cmind.automation import Automation
 from cmind import utils
 
@@ -51,7 +51,7 @@ class CAutomation(Automation):
         """
 
         import json
-        print (json.dumps(i, indent=2))
+        logging.info (json.dumps(i, indent=2))
 
         return {'return':0}
 
@@ -124,9 +124,9 @@ class CAutomation(Automation):
             if r['return']>0: return r
 
         # Print config
-        print ('Config:')
-        print ('')
-        print (json.dumps(config, indent=2))
+        logging.info ('Config:')
+        logging.info ('')
+        logging.info (json.dumps(config, indent=2))
 
         return {'return':0}
 

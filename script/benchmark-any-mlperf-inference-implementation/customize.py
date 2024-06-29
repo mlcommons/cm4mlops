@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -133,7 +133,7 @@ def preprocess(i):
 
     with open(os.path.join(script_path, run_file_name+".sh"), 'w') as f:
         f.write(run_script_content)
-    print(run_script_content)
+    logging.info(run_script_content)
 
     run_script_input = i['run_script_input']
     r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':run_file_name})

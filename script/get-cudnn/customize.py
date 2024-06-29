@@ -2,7 +2,7 @@ from cmind import utils
 import os
 import tarfile
 import shutil
-
+import logging
 def preprocess(i):
 
     recursion_spaces = i['recursion_spaces']
@@ -100,7 +100,7 @@ def preprocess(i):
     if env.get('CM_CUDNN_TAR_FILE_PATH','')=='':
         return {'return': 1, 'error': 'Please envoke cm run script "get cudnn" --tar_file={full path to the cuDNN tar file}'}
 
-    print ('Untaring file - can take some time ...')
+    logging.info ('Untaring file - can take some time ...')
 
     my_tar = tarfile.open(os.path.expanduser(env['CM_CUDNN_TAR_FILE_PATH']))
     folder_name = my_tar.getnames()[0]
@@ -123,9 +123,9 @@ def preprocess(i):
     env['CM_CUDA_PATH_INCLUDE_CUDNN'] = env['CM_CUDA_PATH_INCLUDE']
 
     try:
-        print("Copying cudnn include files to {}(CUDA_INCLUDE_PATH)".format(cuda_inc_path))
+        logging.info("Copying cudnn include files to {}(CUDA_INCLUDE_PATH)".format(cuda_inc_path))
         shutil.copytree(inc_path, cuda_inc_path, dirs_exist_ok = True)
-        print("Copying cudnn lib files to {}CUDA_LIB_PATH".format(cuda_lib_path))
+        logging.info("Copying cudnn lib files to {}CUDA_LIB_PATH".format(cuda_lib_path))
         shutil.copytree(lib_path, cuda_lib_path, dirs_exist_ok = True)
     except:
         #Need to copy to system path via run.sh

@@ -2,7 +2,7 @@
 
 import os
 import psutil
-
+import logging
 def print_host_memory_use(text=''):
 
     pid = os.getpid()

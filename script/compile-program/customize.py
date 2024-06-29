@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
     os_info = i['os_info']
 
@@ -17,7 +17,7 @@ def preprocess(i):
 
     # If windows, need to extend it more ...
     if os_info['platform'] == 'windows' and env.get('CM_COMPILER_FAMILY','')!='LLVM':
-        print ("WARNING: compile-program script should be extended to support flags for non-LLVM compilers on Windows")
+        logging.warning ("WARNING: compile-program script should be extended to support flags for non-LLVM compilers on Windows")
         return {'return':0}
 
     LDFLAGS = env.get('+ LDFLAGS', [])

@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
     os_info = i['os_info']
     env = i['env']
@@ -48,15 +48,15 @@ def preprocess(i):
         env['CM_RUN_CMD'] += " 2>&1 ; echo \$? > exitstatus | tee " + q+ os.path.join(logs_dir, "console.out") + q
 
     # Print info
-    print ('***************************************************************************')
-    print ('CM script::benchmark-program/run.sh')
-    print ('')
-    print ('Run Directory: {}'.format(env.get('CM_RUN_DIR','')))
+    logging.info ('***************************************************************************')
+    logging.info ('CM script::benchmark-program/run.sh')
+    logging.info ('')
+    logging.info ('Run Directory: {}'.format(env.get('CM_RUN_DIR','')))
 
-    print ('')
-    print ('CMD: {}'.format(env.get('CM_RUN_CMD','')))
+    logging.info ('')
+    logging.info ('CMD: {}'.format(env.get('CM_RUN_CMD','')))
 
-    print ('')
+    logging.info ('')
 
     return {'return':0}
 

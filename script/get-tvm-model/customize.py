@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-
+import logging
 def preprocess(i):
 
     os_info = i['os_info']
@@ -29,7 +29,7 @@ def preprocess(i):
                 "Error: the found workdir does not contain database_tuning_record.json")
 
         if env.get('CM_TUNE_TVM_MODEL', '') != '':
-            print("The \"tune-model\" variation is selected, but at the same time the path to the existing \"work_dir\" is also specified. The compiled model will be based on the found existing \"work_dir\".")
+            logging.info("The \"tune-model\" variation is selected, but at the same time the path to the existing \"work_dir\" is also specified. The compiled model will be based on the found existing \"work_dir\".")
             env["CM_TUNE_TVM_MODEL"] = "no"
             
     
