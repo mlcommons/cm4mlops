@@ -3792,7 +3792,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                     if extra_paths[extra_path] not in env:
                         env[extra_paths[extra_path]] = []
                     env[extra_paths[extra_path]].append(epath)
-        logging.info ()
+
         logging.info (recursion_spaces + '    # Found artifact in {}'.format(file_path))
 
         if env_path_key != '':
