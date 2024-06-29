@@ -74,6 +74,11 @@
         "CM_GIT_CHECKOUT": "#"
       }
     },
+    "python.#": {
+      "env": {
+        "CM_PYTHON_BIN_WITH_PATH": "#"
+      }
+    },
     "cuda": {
       "deps": [
         {

@@ -78,6 +78,7 @@ def preprocess(i):
             i['run_script_input']['script_name'] = "compile_resnet50"
         elif master_model == "retinanet":
             i['run_script_input']['script_name'] = "compile_retinanet"
+            env['CM_ML_MODEL_RETINANET_INT8_FILE_WITH_PATH'] = os.path.join(os.path.dirname(env['CM_ML_MODEL_FILE_WITH_PATH']), 'retinanet-int8-model.pth')
 
     elif env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "build_harness":
         print(f"Harness Root: {harness_root}")
@@ -85,10 +86,13 @@ def preprocess(i):
             i['run_script_input']['script_name'] = "build_bert_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "bert_inference")
             env['DATA_PATH'] = os.path.join(os.getcwd(), "harness", "bert")
-        if "resnet50" in env['CM_MODEL']:
+        elif "resnet50" in env['CM_MODEL']:
             i['run_script_input']['script_name'] = "build_resnet50_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "resnet50_inference")
             env['DATA_PATH'] = os.path.join(os.getcwd(), "harness", "resnet50")
+        elif "retinanet" in env['CM_MODEL']:
+            i['run_script_input']['script_name'] = "build_retinanet_harness"
+            env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "retinanet_inference")
         elif "gpt" in env['CM_MODEL']:
             i['run_script_input']['script_name'] = "build_gptj_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "gptj_inference")
@@ -142,6 +146,12 @@ def preprocess(i):
             env['DATASET_PATH'] = os.path.dirname(os.path.dirname(env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH']))
             env['CM_RUN_DIR'] = env['CM_MLPERF_OUTPUT_DIR']
             env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_resnet50_harness.sh')} "
+
+        elif 'retinanet' in env['CM_MODEL']:
+            env['MODEL_PATH'] = env['CM_ML_MODEL_RETINANET_INT8_FILE_WITH_PATH']
+            env['DATA_DIR'] = env['CM_DATASET_PATH']
+            env['CM_RUN_DIR'] = env['CM_MLPERF_OUTPUT_DIR']
+            env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_retinanet_harness.sh')} "
 
         elif "gptj" in env['CM_MODEL']:
             env['CM_RUN_DIR'] = i['run_script_input']['path']
