@@ -1,10 +1,11 @@
 #!/bin/bash
 
-CPUS_PER_INSTANCE=4
+CPUS_PER_INSTANCE=8
 number_threads=`nproc --all`
 export number_cores=`lscpu -b -p=Core,Socket | grep -v '^#' | sort -u | wc -l`
 number_sockets=`grep physical.id /proc/cpuinfo | sort -u | wc -l`
 cpu_per_socket=$((number_cores/number_sockets))
+number_instance=$((number_cores/CPUS_PER_INSTANCE))
 
 WORKERS_PER_PROC=${WORKERS_PER_PROC:-4}
 THREADS_PER_INSTANCE=$((( ${WORKERS_PER_PROC} * ${CM_HOST_CPU_THREADS_PER_CORE}) / ${CM_HOST_CPU_SOCKETS}))
@@ -38,9 +39,9 @@ CONFIG="  --scenario ${scenario} --mode ${LOADGEN_MODE} --model_name retinanet \
 	--data_path ${DATA_DIR} \
     --mlperf_conf ${CM_MLPERF_CONF} --user_conf ${CM_MLPERF_USER_CONF} \
 	--cpus_per_instance $CPUS_PER_INSTANCE \
-    --num_instance $number_cores \
+    --num_instance $number_instance \
 	--total_sample_count 24781 \
-	--batch_size 2
+	--batch_size 1
 	"
 
 cmd=" ${executable} ${CONFIG}"
