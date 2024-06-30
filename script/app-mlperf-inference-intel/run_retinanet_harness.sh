@@ -43,7 +43,7 @@ CONFIG="  --scenario ${scenario} --mode ${LOADGEN_MODE} --model_name retinanet \
 	--batch_size 2
 	"
 
-cmd="gdb --args ${executable} ${CONFIG}"
+cmd=" ${executable} ${CONFIG}"
 echo "$cmd"
 eval "$cmd"
 test "$?" -eq 0 || exit "$?"

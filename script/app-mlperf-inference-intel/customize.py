@@ -149,7 +149,7 @@ def preprocess(i):
 
         elif 'retinanet' in env['CM_MODEL']:
             env['MODEL_PATH'] = env['CM_ML_MODEL_RETINANET_INT8_FILE_WITH_PATH']
-            env['DATA_DIR'] = env['CM_DATASET_PATH']
+            env['DATA_DIR'] = env['CM_DATASET_PATH_ROOT']
             env['CM_RUN_DIR'] = env['CM_MLPERF_OUTPUT_DIR']
             env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_retinanet_harness.sh')} "
 
