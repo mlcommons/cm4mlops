@@ -61,7 +61,7 @@ for cherrypick in "${cherrypicks[@]}"
 do
   echo ""
   echo "Applying cherrypick $cherrypick"
-  git cherry-pick $cherrypick
+  git cherry-pick -n $cherrypick
   test $? -eq 0 || exit $?
 done
 

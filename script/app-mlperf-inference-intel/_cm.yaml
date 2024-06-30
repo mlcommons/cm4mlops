@@ -117,9 +117,17 @@ deps:
       CM_MODEL:
       - retinanet
     names:
-      - openimages-preprocessed
-      - dataset-preprocessed
-    tags: get,dataset,preprocessed,openimages,_for.retinanet.onnx,_NCHW,_validation,_custom-annotations
+      - openimages-original
+      - dataset-original
+    tags: get,dataset,original,openimages,_validation,_custom-annotations
+
+  - enable_if_env:
+      CM_MODEL:
+      - retinanet
+    names:
+      - openimages-calibration
+      - dataset-calibration
+    tags: get,dataset,original,openimages,_calibration
 
 
 
@@ -242,6 +250,10 @@ variations:
 
     deps:
     - tags: get,generic-python-lib,_numpy
+      names:
+        - pip-package
+        - numpy
+      version: "1.23.5"
 
 
   bert_:
@@ -442,12 +454,15 @@ variations:
         names:
         - conda-package
         - jemalloc
-      - tags: get,generic-python-lib,_package.torchvision,_no-deps
-        names:
-          - pip-package
-          - torchvision
-        version: "0.13.0"
       - tags: get,pytorch,from.src,_for-intel-mlperf-inference-retinanet
+        names:
+          - pytorch
+      - tags: get,torchvision,from.src,_sha.8e078971b8aebdeb1746fea58851e3754f103053
+        update_tags_from_env_with_prefix:
+          "_python.":
+            - CM_PYTHON_BIN_WITH_PATH
+        names:
+          - torchvision
       - tags: install,opencv,from.src,_branch.4.x
         names:
           - opencv-from-src
@@ -491,15 +506,14 @@ variations:
       skip_inherit_variation_groups:
         - run-mode
         - loadgen-scenario
+      new_env_keys:
+        - CM_ML_MODEL_RETINANET_INT8_FILE_WITH_PATH
 
   retinanet,compile-model:
     deps: 
-    - tags: reproduce,mlperf,inference,intel,_calibration
-      inherit_variation_tags: true
-      force_cache: true
-      skip_inherit_variation_groups:
-        - run-mode
-        - loadgen-scenario
+    - tags: get,ml-model,retinanet,_pytorch,_fp32
+    new_env_keys:
+      - CM_ML_MODEL_RETINANET_INT8_FILE_WITH_PATH
 
 
   gptj_,pytorch:
