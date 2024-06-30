@@ -1,21 +1,7 @@
 #!/bin/bash
 
-export PATH=${CM_CONDA_BIN_PATH}:$PATH
-
-
-gcc()
-{
-  ${CM_GCC_BIN_WITH_PATH} "$@"
-}
-export -f gcc
-
-g++()
-{
-  ${CM_CXX_COMPILER_WITH_PATH} "$@"
-}
-export -f g++
-
-#exit 1
+#export PATH=${CM_CONDA_BIN_PATH}:$PATH
+#export LIBRARY_PATH=${CM_CONDA_LIB_PATH}:$LIBRARY_PATH
 
 CUR_DIR=$PWD
 rm -rf pytorch
