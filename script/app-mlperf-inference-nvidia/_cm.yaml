@@ -208,6 +208,24 @@ deps:
       - bert-vocab
     tags: get,squad-vocab
 
+    ########################################################################
+  # Install sdxl model
+  - enable_if_env:
+      CM_MODEL:
+      - stable-diffusion-xl
+    names:
+      - stable-diffusion-xl
+      - sdxl-model
+      - ml-model
+    tags: get,ml-model,sdxl,_fp16,_rclone
+
+  - enable_if_env:
+      CM_MODEL:
+      - get,dataset,coco2014,_validation
+    names:
+      - coco2014-preprocessed
+    tags: get,squad-vocab
+
   ########################################################################
   # Install OpenImages
 
@@ -380,6 +398,41 @@ variations:
     - tags: get,generic-python-lib,_onnx-graphsurgeon
     - tags: get,generic-python-lib,_package.onnx
       version: 1.13.1
+
+  sdxl:
+    group: model
+    env:
+      CM_MODEL: stable-diffusion-xl
+      CM_NOT_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/main/script/get-ml-model-stable-diffusion/_cm.json#L174"
+      CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
+      CM_ML_MODEL_INPUTS_DATA_TYPE: int32
+      CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
+    deps:
+      - tags: get,generic-python-lib,_package.diffusers
+        names:
+          - diffusers
+      - tags: get,generic-python-lib,_package.transformers
+        names:
+          - transformers
+      - tags: get,generic-python-lib,_package.accelerate
+        names:
+          - accelerate
+      - tags: get,generic-python-lib,_package.torchmetrics
+        names:
+          - torchmetrics
+      - tags: get,generic-python-lib,_package.torch-fidelity
+        names:
+          - torch-fidelity
+      - tags: get,generic-python-lib,_package.open_clip_torch
+        names:
+          - open-clip
+      - tags: get,generic-python-lib,_package.opencv-python
+        names:
+          - opencv-python
+      - tags: get,generic-python-lib,_package.scipy
+        names:
+          - scipy
+        version: 1.10.1
 
   bert_:
     deps:
@@ -718,6 +771,7 @@ variations:
           CM_MODEL:
             - dlrm-v2-99
             - dlrm-v2-99.9
+            - sdxl
 
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
@@ -827,6 +881,8 @@ variations:
           CM_MODEL:
            - dlrm-v2-99
            - dlrm-v2-99.9
+           - sdxl
+
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
         skip_inherit_variation_groups:

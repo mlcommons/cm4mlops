@@ -70,6 +70,20 @@ def preprocess(i):
         model_name = "bert"
         model_path = fp32_model_path
 
+    elif "stable-diffusion" in env["CM_MODEL"]:
+        target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'coco', 'SDXL')
+        if not os.path.exists(target_data_path):
+            cmds.append("make download_data BENCHMARKS='stable-diffusion-xl'")
+        fp16_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'official_pytorch', 'fp16', 'stable_diffusion_fp16', 'checkpoint_pipe')
+        
+        if not os.path.exists(os.path.dirname(fp16_model_path)):
+          cmds.append(f"mkdir -p {os.path.dirname(fp16_model_path)}")
+        
+        if not os.path.exists(fp16_model_path):
+            cmds.append(f"ln -sf {env['SDXL_CHECKPOINT_PATH']} {fp16_model_path}")
+        model_name = "stable-diffusion"
+        model_path = fp16_model_path
+
     elif "3d-unet" in env['CM_MODEL']:
         target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'KiTS19', 'kits19', 'data')
         target_data_path_base_dir = os.path.dirname(target_data_path)
