@@ -22,7 +22,7 @@ def preprocess(i):
         return {'return': 1, 'error': 'Please select a variation specifying the device to run on'}
 
     ml_model = env['CM_MODEL']
-    master_model = ml_model.replace("-99", "").replace("-99.9","")
+    master_model = ml_model.replace("-99.9", "").replace("-99","")
     master_model = master_model.replace("gptj", "gpt-j")
 
     backend = env['CM_MLPERF_BACKEND']
@@ -61,9 +61,12 @@ def preprocess(i):
     loadgen_mode = env['CM_MLPERF_LOADGEN_MODE']
     env['CONDA_PREFIX'] = env['CM_CONDA_PREFIX']
 
+
     if env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "calibration":
         if master_model == "resnet50":
             i['run_script_input']['script_name'] = "prepare_imagenet_calibration"
+        if master_model == "3d-unet":
+            i['run_script_input']['script_name'] = "prepare_3d-unet_data_model"
         else:
             calibration_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'calibration', master_model, backend+"-"+device)
 
