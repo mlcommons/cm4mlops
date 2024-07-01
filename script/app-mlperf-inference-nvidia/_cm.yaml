@@ -443,6 +443,10 @@ variations:
       - tags: get,generic-python-lib,_package.nvidia-ammo
         names:
           - nvidia-ammo
+        version: 0.7.4
+        env:
+          CM_GENERIC_PYTHON_PIP_INDEX_URL: "https://pypi.nvidia.com"
+          CM_GENERIC_PYTHON_PIP_EXTRA: "--no-cache-dir"
       - tags: get,generic-python-lib,_package.optimum
         names:
           - optimum
