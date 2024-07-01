@@ -264,7 +264,7 @@ variations:
       CM_BENCHMARK: MEDICAL_IMAGING
     deps:
       - tags: get,dataset,kits19,preprocessed
-      - tags: get,ml-model,medical-imaging,3d-unet
+      - tags: get,ml-model,medical-imaging,3d-unet,_pytorch,_weights
 
   bert_:
     env:

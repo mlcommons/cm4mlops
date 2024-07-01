@@ -156,6 +156,10 @@ def preprocess(i):
             env['CM_RUN_DIR'] = env['CM_MLPERF_OUTPUT_DIR']
             env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_retinanet_harness.sh')} "
 
+        elif '3d-unet' in env['CM_MODEL']:
+            env['CM_RUN_DIR'] = env['CM_MLPERF_OUTPUT_DIR']
+            env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_3d-unet_harness.sh')} "
+
         elif "gptj" in env['CM_MODEL']:
             env['CM_RUN_DIR'] = i['run_script_input']['path']
             if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == "v3.1":
