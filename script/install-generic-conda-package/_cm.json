@@ -48,6 +48,14 @@
   ],
   "uid": "d9275487f5314195",
   "variations": {
+    "package.python": {
+      "env": {
+        "CM_CONDA_PKG_NAME": "python"
+      },
+      "new_env_keys": [
+        "CM_PYTHON_BIN_WITH_PATH"
+      ]
+    },
     "package.#": {
       "env": {
         "CM_CONDA_PKG_NAME": "#"
