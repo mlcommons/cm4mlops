@@ -440,6 +440,12 @@ variations:
       - tags: get,generic-python-lib,_package.cuda-python
         names:
           - cuda-python
+      - tags: get,generic-python-lib,_package.ninja
+        names:
+          - ninja
+      - tags: get,generic-python-lib,_package.onnxruntime
+        names:
+          - onnxruntime
       - tags: get,generic-python-lib,_package.nvidia-ammo
         names:
           - nvidia-ammo
@@ -454,9 +460,6 @@ variations:
         names:
           - onnx
         version: 1.14.0
-      - tags: get,generic-python-lib,_package.onnxruntime
-        names:
-          - onnxruntime
       - tags: get,generic-python-lib,_package.scipy
         names:
           - scipy
