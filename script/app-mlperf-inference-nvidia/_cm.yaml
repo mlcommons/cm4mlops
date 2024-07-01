@@ -799,6 +799,7 @@ variations:
           CM_MODEL:
             - dlrm-v2-99
             - dlrm-v2-99.9
+            - stable-diffusion-xl
 
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
