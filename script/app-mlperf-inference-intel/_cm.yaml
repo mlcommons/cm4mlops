@@ -119,7 +119,7 @@ deps:
     names:
       - openimages-original
       - dataset-original
-    tags: get,dataset,original,openimages,_validation,_custom-annotations
+    tags: get,dataset,original,openimages,_full,_validation,_custom-annotations
 
   - enable_if_env:
       CM_MODEL:
