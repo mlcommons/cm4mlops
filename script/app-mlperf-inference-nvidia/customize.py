@@ -72,19 +72,10 @@ def preprocess(i):
 
     elif "stable-diffusion" in env["CM_MODEL"]:
         target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'coco', 'SDXL')
-        if not os.path.exists(target_data_path):
-            cmds.append("make download_data BENCHMARKS='stable-diffusion-xl'")
-        fp16_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'official_pytorch', 'fp16', 'stable_diffusion_fp16')
-        
-        if not os.path.exists(os.path.dirname(fp16_model_path)):
-          cmds.append(f"mkdir -p {os.path.dirname(fp16_model_path)}")
-        
-        if not os.path.exists(fp16_model_path):
-            cmds.append(f"ln -sf {env['SDXL_CHECKPOINT_PATH']} {fp16_model_path}")
-        
-        cmds.append("make download_model BENCHMARKS='stable-diffusion-xl'")
 
-        model_name = "stable-diffusion"
+        fp16_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'official_pytorch', 'fp16', 'stable_diffusion_fp16')
+
+        model_name = "stable-diffusion-x1"
         model_path = fp16_model_path
 
     elif "3d-unet" in env['CM_MODEL']:
@@ -200,7 +191,7 @@ def preprocess(i):
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_dev_clean_500_raw')}")
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_train_clean_512_wav')}")
         cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
-
+    
     else:
         scenario=env['CM_MLPERF_LOADGEN_SCENARIO'].lower()
 

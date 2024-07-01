@@ -795,7 +795,6 @@ variations:
           CM_MODEL:
             - dlrm-v2-99
             - dlrm-v2-99.9
-            - stable-diffusion-xl
 
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
@@ -835,6 +834,7 @@ variations:
           - triton
           - batch-size
           - build-engine-options
+
 
   singlestream:
     group: loadgen-scenario
@@ -927,6 +927,7 @@ variations:
             - bert-99.9
             - dlrm-v2-99
             - dlrm-v2-99.9
+            - stable-diffusion-xl
     env:
       CM_MLPERF_NVIDIA_HARNESS_RUN_MODE: run_harness
       MLPERF_NVIDIA_RUN_COMMAND: run_harness
