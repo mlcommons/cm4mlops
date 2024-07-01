@@ -221,10 +221,10 @@ deps:
 
   - enable_if_env:
       CM_MODEL:
-      - get,dataset,coco2014,_validation
+      - stable-diffusion-xl
     names:
       - coco2014-preprocessed
-    tags: get,squad-vocab
+    tags: get,dataset,coco2014,_validation
 
   ########################################################################
   # Install OpenImages
