@@ -24,6 +24,10 @@
       "tags": "get,python3"
     },
     {
+      "tags": "get,compiler",
+      "names": [ "compiler" ]
+    },
+    {
       "env": {
         "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_PYTORCH_VISION_SRC_REPO_PATH"
       },

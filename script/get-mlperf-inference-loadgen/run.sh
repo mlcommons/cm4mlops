@@ -48,12 +48,12 @@ MLPERF_INFERENCE_PYTHON_SITE_BASE=${INSTALL_DIR}"/python"
 cd "${CM_MLPERF_INFERENCE_SOURCE}/loadgen"
 #CFLAGS="-std=c++14 -O3" ${CM_PYTHON_BIN_WITH_PATH} setup.py bdist_wheel
 #${CM_PYTHON_BIN_WITH_PATH} -m pip install --force-reinstall `ls dist/mlperf_loadgen-*cp3${PYTHON_MINOR_VERSION}*.whl` --target="${MLPERF_INFERENCE_PYTHON_SITE_BASE}"
-${CM_PYTHON_BIN_WITH_PATH} -m pip install .
+${CM_PYTHON_BIN_WITH_PATH} -m pip install . --target="${MLPERF_INFERENCE_PYTHON_SITE_BASE}"
 
 if [ "${?}" != "0" ]; then exit 1; fi
 
 # Clean the built wheel
-find . -name 'mlcommons_loadgen*.whl' | xargs rm
+#find . -name 'mlcommons_loadgen*.whl' | xargs rm
 
 echo "******************************************************"
 echo "Loadgen is built and installed to ${INSTALL_DIR} ..."
