@@ -401,6 +401,8 @@ variations:
 
   sdxl:
     group: model
+    default_variations:
+      batch-size: batch_size.2
     env:
       CM_MODEL: stable-diffusion-xl
       CM_NOT_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/main/script/get-ml-model-stable-diffusion/_cm.json#L174"
@@ -429,6 +431,28 @@ variations:
       - tags: get,generic-python-lib,_package.opencv-python
         names:
           - opencv-python
+      - tags: get,generic-python-lib,_package.polygraphy
+        names:
+          - polygraphy
+      - tags: get,generic-python-lib,_package.nvtx
+        names:
+          - nvtx
+      - tags: get,generic-python-lib,_package.cuda-python
+        names:
+          - cuda-python
+      - tags: get,generic-python-lib,_package.nvidia-ammo
+        names:
+          - nvidia-ammo
+      - tags: get,generic-python-lib,_package.optimum
+        names:
+          - optimum
+      - tags: get,generic-python-lib,_package.onnx
+        names:
+          - onnx
+        version: 1.14.0
+      - tags: get,generic-python-lib,_package.onnxruntime
+        names:
+          - onnxruntime
       - tags: get,generic-python-lib,_package.scipy
         names:
           - scipy
@@ -771,7 +795,7 @@ variations:
           CM_MODEL:
             - dlrm-v2-99
             - dlrm-v2-99.9
-            - sdxl
+            - stable-diffusion-xl
 
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
@@ -881,7 +905,7 @@ variations:
           CM_MODEL:
            - dlrm-v2-99
            - dlrm-v2-99.9
-           - sdxl
+           - stable-diffusion-xl
 
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
@@ -1198,6 +1222,11 @@ variations:
     group: gpu-name
     env:
       CM_NVIDIA_CUSTOM_GPU: "yes"
+
+  rtx_4090,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.1
+      use_graphs: "True"
 
   rtx_4090,resnet50,offline,run_harness:
     default_variations:
