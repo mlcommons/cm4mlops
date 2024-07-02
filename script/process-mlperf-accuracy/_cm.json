@@ -202,6 +202,11 @@
       "deps": [
         {
           "tags": "get,dataset,preprocessed,medical-imaging,kits19"
+        },
+        {
+          "tags": "get,generic-python-lib,_pandas",
+          "version_max": "1.53.0",
+          "version_max_usable": "1.53.0"
         }
       ],
       "env": {

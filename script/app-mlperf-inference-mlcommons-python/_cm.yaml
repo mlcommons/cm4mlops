@@ -934,6 +934,9 @@ variations:
       - tags: get,generic-python-lib,_package.nltk
         names:
           - nltk
+      - tags: get,generic-python-lib,_package.numpy
+        names:
+          - numpy
       - tags: get,generic-python-lib,_package.rouge-score
         names:
           - rouge-score
