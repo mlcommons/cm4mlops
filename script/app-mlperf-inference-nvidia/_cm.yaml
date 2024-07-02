@@ -88,6 +88,7 @@ input_mapping:
   num_sort_segments: CM_MLPERF_NVIDIA_HARNESS_NUM_SORT_SEGMENTS
   skip_postprocess: CM_MLPERF_NVIDIA_HARNESS_SKIP_POSTPROCESS
   embedding_weights_on_gpu_part: CM_MLPERF_NVIDIA_HARNESS_EMBEDDING_WEIGHTS_ON_GPU_PART
+  sdxl_batcher_time_limit: CM_MLPERF_NVIDIA_HARNESS_SDXL_SERVER_BATCHER_TIME_LIMIT
 
 
 # Dependencies on other CM scripts
@@ -1451,6 +1452,7 @@ variations:
     env:
       CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
       CM_MLPERF_LOADGEN_SERVER_TARGET_QPS: 0.55
+      CM_MLPERF_NVIDIA_HARNESS_SDXL_SERVER_BATCHER_TIME_LIMIT: 0
   
   l4,sdxl,server,run_harness,num-gpu.8:
     default_variations:
@@ -1458,6 +1460,7 @@ variations:
     env:
       CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
       CM_MLPERF_LOADGEN_SERVER_TARGET_QPS: 5.05
+      CM_MLPERF_NVIDIA_HARNESS_SDXL_SERVER_BATCHER_TIME_LIMIT: 0
 
   l4,resnet50:
     default_env:
