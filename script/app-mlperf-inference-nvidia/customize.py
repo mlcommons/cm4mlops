@@ -70,6 +70,21 @@ def preprocess(i):
         model_name = "bert"
         model_path = fp32_model_path
 
+    elif "stable-diffusion" in env["CM_MODEL"]:
+        target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'coco', 'SDXL')
+        if not os.path.exists(target_data_path):
+            cmds.append("make download_data BENCHMARKS='stable-diffusion-xl'")
+        fp16_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'official_pytorch', 'fp16', 'stable_diffusion_fp16')
+
+        if not os.path.exists(os.path.dirname(fp16_model_path)):
+          cmds.append(f"mkdir -p {os.path.dirname(fp16_model_path)}")
+
+        if not os.path.exists(fp16_model_path):
+            cmds.append(f"ln -sf {env['SDXL_CHECKPOINT_PATH']} {fp16_model_path}")
+
+        model_name = "stable-diffusion-xl"
+        model_path = fp16_model_path
+
     elif "3d-unet" in env['CM_MODEL']:
         target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'KiTS19', 'kits19', 'data')
         target_data_path_base_dir = os.path.dirname(target_data_path)
@@ -175,6 +190,13 @@ def preprocess(i):
     if make_command == "download_model":
         if not os.path.exists(model_path):
             cmds.append(f"make download_model BENCHMARKS='{model_name}'")
+        elif "stable-diffusion" in env['CM_MODEL']:
+            folders = ["clip1", "clip2", "unetxl", "vae"]
+            for folder in folders:
+                onnx_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'onnx_models', folder, 'model.onnx')
+                if not os.path.exists(onnx_model_path):
+                    cmds.append(f"make download_model BENCHMARKS='{model_name}'")
+                    break
         else:
             return {'return':0}
 
@@ -183,7 +205,7 @@ def preprocess(i):
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_dev_clean_500_raw')}")
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_train_clean_512_wav')}")
         cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
-
+    
     else:
         scenario=env['CM_MLPERF_LOADGEN_SCENARIO'].lower()
 
@@ -385,6 +407,10 @@ def preprocess(i):
         enable_sort = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
         if enable_sort and enable_sort.lower() not in [ "no", "false" ]:
             run_config += f" --enable_sort"
+        
+        sdxl_server_batcher_time_limit = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
+        if sdxl_server_batcher_time_limit:
+            run_config += f" --sdxl_batcher_time_limit {sdxl_server_batcher_time_limit}"
 
         num_sort_segments = env.get('CM_MLPERF_NVIDIA_HARNESS_NUM_SORT_SEGMENTS')
         if num_sort_segments:
@@ -410,6 +436,9 @@ def preprocess(i):
         extra_build_engine_options_string = env.get('CM_MLPERF_NVIDIA_HARNESS_EXTRA_BUILD_ENGINE_OPTIONS', '')
 
         extra_run_options_string = env.get('CM_MLPERF_NVIDIA_HARNESS_EXTRA_RUN_OPTIONS', '') #will be ignored during build engine
+
+        if "stable-diffusion" in env["CM_MODEL"]:
+            extra_build_engine_options_string += f" --model_path {os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL/')}"
 
         run_config += " --no_audit_verify"
 
