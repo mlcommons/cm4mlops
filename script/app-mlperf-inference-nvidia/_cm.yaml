@@ -219,13 +219,6 @@ deps:
       - ml-model
     tags: get,ml-model,sdxl,_fp16,_rclone
 
-  - enable_if_env:
-      CM_MODEL:
-      - stable-diffusion-xl
-    names:
-      - coco2014-preprocessed
-    tags: get,dataset,coco2014,_validation
-
   ########################################################################
   # Install OpenImages
 
