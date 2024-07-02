@@ -76,7 +76,7 @@ def preprocess(i):
             cmds.append("make download_data BENCHMARKS='stable-diffusion-xl'")
         fp16_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'official_pytorch', 'fp16', 'stable_diffusion_fp16')
 
-        model_name = "stable-diffusion-x1"
+        model_name = "stable-diffusion-xl"
         model_path = fp16_model_path
 
     elif "3d-unet" in env['CM_MODEL']:
