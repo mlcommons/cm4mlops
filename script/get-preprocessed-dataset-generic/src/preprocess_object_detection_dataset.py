@@ -38,7 +38,7 @@ def load_image(image_path, target_size, data_type='uint8', convert_to_bgr=False,
 
 def quantize_to_uint8(image, scale, offset):
     quantized_image = (image.astype(np.float64) / scale + offset).astype(np.float64)
-    output = np.round_(quantized_image)
+    output = np.round(quantized_image)
     output = np.clip(output, 0, 255)
     return output.astype(np.uint8)
 

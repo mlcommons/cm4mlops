@@ -69,11 +69,14 @@
   "new_env_keys": [
     "CM_DATASET_PATH",
     "CM_DATASET_PATH_ROOT",
+    "CM_DATASET_OPENIMAGES_DATASET_PATH",
+    "CM_DATASET_OPENIMAGES_DATASET_PATH_ROOT",
     "CM_DATASET_ANNOTATIONS_DIR_PATH",
     "CM_DATASET_ANNOTATIONS_FILE_PATH",
     "CM_DATASET_CALIBRATION_ANNOTATIONS_FILE_PATH",
     "CM_DATASET_VALIDATION_ANNOTATIONS_FILE_PATH",
-    "CM_CALIBRATION_DATASET_PATH"
+    "CM_CALIBRATION_DATASET_PATH",
+    "CM_CALIBRATION_DATASET_PATH_ROOT"
   ],
   "tags": [
     "get",
@@ -113,7 +116,12 @@
       ],
       "env": {
         "CM_DATASET_CALIBRATION": "yes"
-      }
+      },
+      "new_env_keys": [
+        "CM_DATASET_CALIBRATION_ANNOTATIONS_FILE_PATH",
+        "CM_CALIBRATION_DATASET_PATH",
+        "CM_CALIBRATION_DATASET_PATH_ROOT"
+      ]
     },
     "filter": {
     },
@@ -136,7 +144,16 @@
       "default": true,
       "env": {
         "CM_DATASET_CALIBRATION": "no"
-      }
+      },
+      "new_env_keys": [
+        "CM_DATASET_PATH",
+        "CM_DATASET_PATH_ROOT",
+        "CM_DATASET_OPENIMAGES_DATASET_PATH",
+        "CM_DATASET_OPENIMAGES_DATASET_PATH_ROOT",
+        "CM_DATASET_ANNOTATIONS_DIR_PATH",
+        "CM_DATASET_ANNOTATIONS_FILE_PATH",
+        "CM_DATASET_VALIDATION_ANNOTATIONS_FILE_PATH"
+      ]
     },
     "size.#": {
       "group": "size",

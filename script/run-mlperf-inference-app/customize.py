@@ -101,7 +101,7 @@ def preprocess(i):
     test_list = ["TEST01",  "TEST05"]
     if env['CM_MODEL']  in ["resnet50"]:
         test_list.append("TEST04")
-    if "gpt" in env['CM_MODEL'] or "sdxl" in env['CM_MODEL'] or "llama2-70b" in env['CM_MODEL']:
+    if "gpt" in env['CM_MODEL'] or "sdxl" in env['CM_MODEL'] or "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env['CM_MODEL']:
         test_list.remove("TEST01")
         test_list.remove("TEST05")
 
@@ -555,6 +555,9 @@ def gui(i):
     
     elif model.startswith('llama2-'):
         github_doc_model = 'llama2-70b'
+    
+    elif model.startswith('mixtral-'):
+        github_doc_model = 'mixtral-8x7b'
 
     if github_doc_model == '': github_doc_model = model
     

@@ -48,7 +48,7 @@ def preprocess(i):
         verify_ssl = env.get('CM_VERIFY_SSL', "True")
         if str(verify_ssl).lower() in [ "no", "false" ]:
             verify_ssl = False
-            if tool == 'wget':
+            if tool == 'wget' or tool == "gdown":
                 extra_download_options += " --no-check-certificate"
         else:
             verify_ssl = True
@@ -113,7 +113,13 @@ def preprocess(i):
             if env.get('CM_RCLONE_CONFIG_CMD', '') != '':
                 env['CM_DOWNLOAD_CONFIG_CMD'] = env['CM_RCLONE_CONFIG_CMD']
             rclone_copy_using = env.get('CM_RCLONE_COPY_USING', 'sync')
-            env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
+            if env["CM_HOST_OS_TYPE"] == "windows":
+                # have to modify the variable from url to temp_url if it is going to be used anywhere after this point
+                url = url.replace("%", "%%")
+                temp_download_file = env['CM_DOWNLOAD_FILENAME'].replace("%", "%%")
+                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P"
+            else:
+                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
 
         filename = env['CM_DOWNLOAD_FILENAME']
         env['CM_DOWNLOAD_DOWNLOADED_FILENAME'] = filename

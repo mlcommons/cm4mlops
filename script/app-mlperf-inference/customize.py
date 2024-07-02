@@ -108,6 +108,8 @@ def postprocess(i):
           pass #No compliance check for now
       elif 'llama2-70b' in model:
           pass #No compliance check for now
+      elif 'mixtral-8x7b' in model:
+          pass #No compliance check for now
       else:
         pass # Not giving an error now. But accuracy paths need to be done for other benchmarks which may need the non-determinism test
         #return {'return': 1, 'error': f'Accuracy paths not done for model {model}'}
