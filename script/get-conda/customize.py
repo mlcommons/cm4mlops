@@ -78,6 +78,8 @@ def postprocess(i):
     conda_bin_path = os.path.dirname(env['CM_CONDA_BIN_WITH_PATH'])
     env['CM_CONDA_BIN_PATH'] = conda_bin_path
 
+    env['+PATH'] = [ conda_bin_path ]
+
     conda_prefix = os.path.dirname(conda_bin_path)
     env['CM_CONDA_PREFIX'] = conda_prefix
     env['CONDA_PREFIX'] = conda_prefix
@@ -87,6 +89,7 @@ def postprocess(i):
     if os.path.exists(conda_lib_path):
         env['CM_CONDA_LIB_PATH'] = conda_lib_path
         env['+LD_LIBRARY_PATH'] = [ conda_lib_path ]
+        env['+LIBRARY_PATH'] = [ conda_lib_path ]
 
     version = r['version']
 

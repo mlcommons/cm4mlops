@@ -107,6 +107,11 @@
         "CM_GIT_PR_TO_APPLY": "#"
       }
     },
+    "cherrypicks.#": {
+      "env": {
+        "CM_GIT_CHERRYPICKS": "#"
+      }
+    },
     "repo.#": {
       "group": "repo",
       "env": {

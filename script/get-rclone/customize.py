@@ -53,7 +53,15 @@ def preprocess(i):
                 cur_dir = os.getcwd()
                 path_bin = os.path.join(cur_dir, file_name)
                 env['CM_RCLONE_BIN_WITH_PATH'] = path_bin
-                env['+PATH']=[cur_dir]
+                
+                if not env.get('+PATH', []):
+                    env['+PATH'] = []
+                env['+PATH'].append(cur_dir)
+
+                if not env.get('+PATH', []):
+                    env['+PATH'] = []
+                env['+PATH'].append(cur_dir)
+
 
             r = automation.run_native_script({'run_script_input':run_script_input, 
                                               'env':env, 

@@ -15,9 +15,8 @@ def preprocess(i):
         run_cmd="CC=clang CXX=clang++ USE_CUDA=OFF python -m pip install -e . "
 
         env['CM_RUN_CMD'] = run_cmd
-    elif env.get('CM_MLPERF_INFERENCE_INTEL_RESNET50_MODEL', '') == "yes":
-        i['run_script_input']['script_name'] = "run-intel-mlperf-inference-resnet50"
-        run_cmd="CC=clang CXX=clang++ USE_CUDA=OFF python -m pip install -e . "
+    elif env.get('CM_MLPERF_INFERENCE_INTEL_MODEL', '') in [ "resnet50", "retinanet" ]:
+        i['run_script_input']['script_name'] = "run-intel-mlperf-inference-vision"
         run_cmd=f"CC={env['CM_C_COMPILER_WITH_PATH']} CXX={env['CM_CXX_COMPILER_WITH_PATH']} USE_CUDA=OFF python -m pip install -e . "
 
         env['CM_RUN_CMD'] = run_cmd
