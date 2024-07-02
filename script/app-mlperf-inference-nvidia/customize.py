@@ -407,6 +407,10 @@ def preprocess(i):
         enable_sort = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
         if enable_sort and enable_sort.lower() not in [ "no", "false" ]:
             run_config += f" --enable_sort"
+        
+        sdxl_server_batcher_time_limit = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
+        if sdxl_server_batcher_time_limit:
+            run_config += f" --sdxl_batcher_time_limit {sdxl_server_batcher_time_limit}"
 
         num_sort_segments = env.get('CM_MLPERF_NVIDIA_HARNESS_NUM_SORT_SEGMENTS')
         if num_sort_segments:
