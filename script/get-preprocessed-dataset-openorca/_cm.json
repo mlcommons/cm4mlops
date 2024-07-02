@@ -110,5 +110,8 @@
       },
       "group": "dataset-type"
     }
+  },
+  "docker": {
+    "real_run": false
   }
 }
