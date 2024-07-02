@@ -6,6 +6,7 @@ rm -rf ipex_src
 cp -r ${IPEX_DIR} ipex_src
 cd ipex_src
 
+git submodule sync
 git submodule update --init --recursive
 
 if [[ ${CM_INTEL_IPEX_RESNET50_PATCH} == "yes" ]]; then
@@ -17,6 +18,10 @@ elif [[ ${CM_INTEL_IPEX_RETINANET_PATCH} == "yes" ]]; then
   test "$?" -eq 0 || exit "$?"
 
 elif [[ ${CM_INTEL_IPEX_3D_UNET_PATCH} == "yes" ]]; then
+  cd third_party/mkl-dnn
+  git fetch --tags && git checkout v2.7
+  test "$?" -eq 0 || exit "$?"
+  cd ../../
   bash ${CM_TMP_CURRENT_SCRIPT_PATH}/apply_intel_3d-unet_patch.sh
   test "$?" -eq 0 || exit "$?"
 fi

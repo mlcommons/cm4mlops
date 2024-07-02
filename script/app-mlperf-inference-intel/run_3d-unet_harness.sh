@@ -19,6 +19,9 @@ cp -r ${CM_HARNESS_CODE_ROOT}/meta $OUTDIR/
 cp ${CM_HARNESS_CODE_ROOT}/unet3d_jit_model.pt $OUTDIR/
 cp ${CM_HARNESS_CODE_ROOT}/calibration_result.json $OUTDIR/
 ln -sf ${CM_HARNESS_CODE_ROOT}/build $OUTDIR/build
+#the log path is hardcoded in the intel implementation. This is a hack to get them to where we want
+rm -rf $OUTDIR/output_logs
+ln -sf $OUTDIR $OUTDIR/output_logs 
 
 PYTHON_VERSION=`python -c 'import sys; print ("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
 SITE_PACKAGES=`python -c 'import site; print (site.getsitepackages()[0])'`
@@ -28,7 +31,7 @@ export LD_PRELOAD=$CONDA_PREFIX/lib/libjemalloc.so:$LD_PRELOAD
 export MALLOC_CONF="oversize_threshold:1,background_thread:true,percpu_arena:percpu,metadata_thp:always,dirty_decay_ms:9000000000,muzzy_decay_ms:9000000000";
 
 
-
+#cd ${CM_HARNESS_CODE_ROOT}
 cmd="python ${CM_HARNESS_CODE_ROOT}/run.py   \
       --mode ${LOADGEN_MODE} \
       --workload-name 3dunet \
