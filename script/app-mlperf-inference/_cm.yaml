@@ -522,6 +522,7 @@ variations:
   3d-unet_:
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
+      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     posthook_deps:
     - enable_if_env:
         CM_MLPERF_LOADGEN_MODE:
@@ -541,8 +542,8 @@ variations:
     group:
       model
     env:
-      CM_MODEL:
-        stable-diffusion-xl
+      CM_MODEL: stable-diffusion-xl
+      CM_MLPERF_INFERENCE_TEST_QPS: "0.05"
     default_variations:
       precision: float16
       device: cuda
@@ -567,6 +568,7 @@ variations:
   llama2-70b_:
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
+      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     posthook_deps:
     - enable_if_env:
         CM_MLPERF_LOADGEN_MODE:
@@ -1359,6 +1361,7 @@ docker:
    - "${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}"
    - "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}"
    - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
+   - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
   skip_run_cmd: 'no'
   shm_size: '32gb'

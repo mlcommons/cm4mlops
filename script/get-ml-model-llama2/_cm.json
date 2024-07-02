@@ -11,6 +11,9 @@
   "input_mapping": {
     "checkpoint": "LLAMA2_CHECKPOINT_PATH"
   },
+  "docker": {
+    "real_run": false
+  },
   "new_env_keys": [
     "CM_ML_MODEL_*",
     "LLAMA2_CHECKPOINT_PATH"
