@@ -76,6 +76,12 @@ def preprocess(i):
             cmds.append("make download_data BENCHMARKS='stable-diffusion-xl'")
         fp16_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'official_pytorch', 'fp16', 'stable_diffusion_fp16')
 
+        if not os.path.exists(os.path.dirname(fp16_model_path)):
+          cmds.append(f"mkdir -p {os.path.dirname(fp16_model_path)}")
+
+        if not os.path.exists(fp16_model_path):
+            cmds.append(f"ln -sf {env['SDXL_CHECKPOINT_PATH']} {fp16_model_path}")
+
         model_name = "stable-diffusion-xl"
         model_path = fp16_model_path
 
@@ -184,6 +190,13 @@ def preprocess(i):
     if make_command == "download_model":
         if not os.path.exists(model_path):
             cmds.append(f"make download_model BENCHMARKS='{model_name}'")
+        elif "stable-diffusion" in env['CM_MODEL']:
+            folders = ["clip1", "clip2", "unetxl", "vae"]
+            for folder in folders:
+                onnx_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'onnx_models', folder, 'model.onnx')
+                if not os.path.exists(onnx_model_path):
+                    cmds.append(f"make download_model BENCHMARKS='{model_name}'")
+                    break
         else:
             return {'return':0}
 
