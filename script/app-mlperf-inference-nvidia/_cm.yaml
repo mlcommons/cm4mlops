@@ -1024,6 +1024,38 @@ variations:
   gpu_memory.80,gptj_,offline,run_harness:
     default_variations:
       batch-size: batch_size.32
+  
+  gpu_memory.16,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.2
+
+  gpu_memory.24,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.2
+  
+  gpu_memory.32,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.3
+  
+  gpu_memory.80,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.8
+  
+  gpu_memory.96,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.8
+  
+  gpu_memory.96,sdxl,server,run_harness:
+    default_variations:
+      batch-size: batch_size.8
+
+  gpu_memory.80,sdxl,server,run_harness:
+    default_variations:
+      batch-size: batch_size.8
+  
+  gpu_memory.140,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.8
 
   gpu_memory.16,bert_,offline,run_harness:
     default_variations:
@@ -1218,6 +1250,10 @@ variations:
   orin,rnnt,singlestream,run_harness:
     env:
       CM_MLPERF_NVIDIA_HARNESS_NUM_WARMUPS: "1"
+  
+  orin,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.1
 
   rtx_4090:
     group: gpu-name
@@ -1226,7 +1262,12 @@ variations:
 
   rtx_4090,sdxl,offline,run_harness:
     default_variations:
-      batch-size: batch_size.1
+      batch-size: batch_size.2
+      use_graphs: "True"
+  
+  rtx_4090,sdxl,server,run_harness:
+    default_variations:
+      batch-size: batch_size.2
       use_graphs: "True"
 
   rtx_4090,resnet50,offline,run_harness:
@@ -1391,6 +1432,34 @@ variations:
     group: gpu-name
     env:
       CM_NVIDIA_CUSTOM_GPU: "yes"
+
+  l4,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.1
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
+      CM_MLPERF_LOADGEN_OFFLINE_TARGET_QPS: 0.6
+    
+  l4,sdxl,offline,run_harness,num-gpu.8:
+    default_variations:
+      batch-size: batch_size.1
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
+      CM_MLPERF_LOADGEN_OFFLINE_TARGET_QPS: 4.8
+    
+  l4,sdxl,server,run_harness,num-gpu.1:
+    default_variations:
+      batch-size: batch_size.1
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
+      CM_MLPERF_LOADGEN_SERVER_TARGET_QPS: 0.55
+  
+  l4,sdxl,server,run_harness,num-gpu.8:
+    default_variations:
+      batch-size: batch_size.1
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
+      CM_MLPERF_LOADGEN_SERVER_TARGET_QPS: 5.05
 
   l4,resnet50:
     default_env:
