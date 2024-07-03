@@ -88,6 +88,7 @@ input_mapping:
   num_sort_segments: CM_MLPERF_NVIDIA_HARNESS_NUM_SORT_SEGMENTS
   skip_postprocess: CM_MLPERF_NVIDIA_HARNESS_SKIP_POSTPROCESS
   embedding_weights_on_gpu_part: CM_MLPERF_NVIDIA_HARNESS_EMBEDDING_WEIGHTS_ON_GPU_PART
+  sdxl_batcher_time_limit: CM_MLPERF_NVIDIA_HARNESS_SDXL_SERVER_BATCHER_TIME_LIMIT
 
 
 # Dependencies on other CM scripts
@@ -207,6 +208,17 @@ deps:
     names:
       - bert-vocab
     tags: get,squad-vocab
+
+    ########################################################################
+  # Install sdxl model
+  - enable_if_env:
+      CM_MODEL:
+      - stable-diffusion-xl
+    names:
+      - stable-diffusion-xl
+      - sdxl-model
+      - ml-model
+    tags: get,ml-model,sdxl,_fp16,_rclone
 
   ########################################################################
   # Install OpenImages
@@ -380,6 +392,70 @@ variations:
     - tags: get,generic-python-lib,_onnx-graphsurgeon
     - tags: get,generic-python-lib,_package.onnx
       version: 1.13.1
+
+  sdxl:
+    group: model
+    env:
+      CM_MODEL: stable-diffusion-xl
+      CM_NOT_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/main/script/get-ml-model-stable-diffusion/_cm.json#L174"
+      CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
+      CM_ML_MODEL_INPUTS_DATA_TYPE: int32
+      CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
+    deps:
+      - tags: get,generic-python-lib,_package.diffusers
+        names:
+          - diffusers
+      - tags: get,generic-python-lib,_package.transformers
+        names:
+          - transformers
+      - tags: get,generic-python-lib,_package.accelerate
+        names:
+          - accelerate
+      - tags: get,generic-python-lib,_package.torchmetrics
+        names:
+          - torchmetrics
+      - tags: get,generic-python-lib,_package.torch-fidelity
+        names:
+          - torch-fidelity
+      - tags: get,generic-python-lib,_package.open_clip_torch
+        names:
+          - open-clip
+      - tags: get,generic-python-lib,_package.opencv-python
+        names:
+          - opencv-python
+      - tags: get,generic-python-lib,_package.polygraphy
+        names:
+          - polygraphy
+      - tags: get,generic-python-lib,_package.nvtx
+        names:
+          - nvtx
+      - tags: get,generic-python-lib,_package.cuda-python
+        names:
+          - cuda-python
+      - tags: get,generic-python-lib,_package.ninja
+        names:
+          - ninja
+      - tags: get,generic-python-lib,_package.onnxruntime
+        names:
+          - onnxruntime
+      - tags: get,generic-python-lib,_package.nvidia-ammo
+        names:
+          - nvidia-ammo
+        version: 0.7.4
+        env:
+          CM_GENERIC_PYTHON_PIP_INDEX_URL: "https://pypi.nvidia.com"
+          CM_GENERIC_PYTHON_PIP_EXTRA: "--no-cache-dir"
+      - tags: get,generic-python-lib,_package.optimum
+        names:
+          - optimum
+      - tags: get,generic-python-lib,_package.onnx
+        names:
+          - onnx
+        version: 1.14.0
+      - tags: get,generic-python-lib,_package.scipy
+        names:
+          - scipy
+        version: 1.10.1
 
   bert_:
     deps:
@@ -758,6 +834,7 @@ variations:
           - batch-size
           - build-engine-options
 
+
   singlestream:
     group: loadgen-scenario
     env:
@@ -827,6 +904,8 @@ variations:
           CM_MODEL:
            - dlrm-v2-99
            - dlrm-v2-99.9
+           - stable-diffusion-xl
+
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
         skip_inherit_variation_groups:
@@ -847,6 +926,7 @@ variations:
             - bert-99.9
             - dlrm-v2-99
             - dlrm-v2-99.9
+            - stable-diffusion-xl
     env:
       CM_MLPERF_NVIDIA_HARNESS_RUN_MODE: run_harness
       MLPERF_NVIDIA_RUN_COMMAND: run_harness
@@ -943,6 +1023,38 @@ variations:
   gpu_memory.80,gptj_,offline,run_harness:
     default_variations:
       batch-size: batch_size.32
+  
+  gpu_memory.16,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.2
+
+  gpu_memory.24,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.2
+  
+  gpu_memory.32,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.3
+  
+  gpu_memory.80,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.8
+  
+  gpu_memory.96,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.8
+  
+  gpu_memory.96,sdxl,server,run_harness:
+    default_variations:
+      batch-size: batch_size.8
+
+  gpu_memory.80,sdxl,server,run_harness:
+    default_variations:
+      batch-size: batch_size.8
+  
+  gpu_memory.140,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.8
 
   gpu_memory.16,bert_,offline,run_harness:
     default_variations:
@@ -1137,11 +1249,25 @@ variations:
   orin,rnnt,singlestream,run_harness:
     env:
       CM_MLPERF_NVIDIA_HARNESS_NUM_WARMUPS: "1"
+  
+  orin,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.1
 
   rtx_4090:
     group: gpu-name
     env:
       CM_NVIDIA_CUSTOM_GPU: "yes"
+
+  rtx_4090,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.2
+      use_graphs: "True"
+  
+  rtx_4090,sdxl,server,run_harness:
+    default_variations:
+      batch-size: batch_size.2
+      use_graphs: "True"
 
   rtx_4090,resnet50,offline,run_harness:
     default_variations:
@@ -1305,6 +1431,36 @@ variations:
     group: gpu-name
     env:
       CM_NVIDIA_CUSTOM_GPU: "yes"
+
+  l4,sdxl,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.1
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
+      CM_MLPERF_LOADGEN_OFFLINE_TARGET_QPS: 0.6
+    
+  l4,sdxl,offline,run_harness,num-gpu.8:
+    default_variations:
+      batch-size: batch_size.1
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
+      CM_MLPERF_LOADGEN_OFFLINE_TARGET_QPS: 4.8
+    
+  l4,sdxl,server,run_harness,num-gpu.1:
+    default_variations:
+      batch-size: batch_size.1
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
+      CM_MLPERF_LOADGEN_SERVER_TARGET_QPS: 0.55
+      CM_MLPERF_NVIDIA_HARNESS_SDXL_SERVER_BATCHER_TIME_LIMIT: 0
+  
+  l4,sdxl,server,run_harness,num-gpu.8:
+    default_variations:
+      batch-size: batch_size.1
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: 'True'
+      CM_MLPERF_LOADGEN_SERVER_TARGET_QPS: 5.05
+      CM_MLPERF_NVIDIA_HARNESS_SDXL_SERVER_BATCHER_TIME_LIMIT: 0
 
   l4,resnet50:
     default_env:
