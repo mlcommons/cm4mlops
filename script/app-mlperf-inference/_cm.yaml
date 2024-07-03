@@ -1351,8 +1351,8 @@ docker:
   use_host_group_id: True
   use_host_user_id: True
   deps:
-    - tags: get,mlperf,inference,results,dir
-    - tags: get,mlperf,inference,submission,dir
+    - tags: get,mlperf,inference,results,dir,local
+    - tags: get,mlperf,inference,submission,dir,local
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
