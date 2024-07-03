@@ -24,6 +24,7 @@
     "get",
     "mlperf",
     "inference",
+    "local",
     "results",
     "dir",
     "directory"

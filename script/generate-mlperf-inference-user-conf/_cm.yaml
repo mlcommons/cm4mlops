@@ -73,7 +73,7 @@ deps:
     - python
     - python3
 
-  - tags: get,mlperf,results,dir
+  - tags: get,mlperf,results,dir,local
     names:
       - get-mlperf-results-dir
     skip_if_env:
