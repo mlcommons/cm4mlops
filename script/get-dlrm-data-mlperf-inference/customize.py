@@ -58,6 +58,9 @@ def preprocess(i):
         file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_labels.npy")
         run_cmd += xsep + ("echo {} {} | md5sum -c").format('dd68f93301812026ed6f58dfb0757fa7', file_path)
 
+        env['CM_DLRM_V2_DAY23_FILE_PATH'] = os.path.join(dlrm_data_path, "criteo", "day23", "raw_data")
+        env['CM_DLRM_V2_AGGREGATION_TRACE_FILE_PATH'] = dlrm_data_path, "criteo", "day23", "sample_partition.txt")
+
         env['CM_RUN_CMD'] = run_cmd
 
     return {'return':0}
