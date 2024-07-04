@@ -793,6 +793,10 @@ variations:
       mlperf-inference-implementation:
         tags: _dlrm-v2-99.9
 
+  dlrm_,nvidia:
+    docker:
+      deps:
+        - tags: get,dlrm,data,mlperf,inference,_nvidia
   mobilenet:
     group:
       model
