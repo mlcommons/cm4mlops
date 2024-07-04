@@ -111,7 +111,6 @@
       "group": "gpu"
     },
     "fp8": {
-      "default": true,
       "env": {
         "CM_ML_MODEL_INPUT_DATA_TYPES": "fp8",
         "CM_ML_MODEL_PRECISION": "fp8",
