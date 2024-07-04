@@ -7,7 +7,7 @@ def preprocess(i):
 
     env = i['env']
 
-    dlrm_data_path = env.get('CM_DLRM_DATA_PATH', '')
+    dlrm_data_path = env.get('CM_DLRM_DATA_PATH', env.get('DLRM_DATA_PATH', ''))
     if dlrm_data_path == '' or not os.path.exists(dlrm_data_path):
         return {'return': 1, 'error': f'Please input a valid path as --dlrm_data_path'} 
     meta = i['meta']
