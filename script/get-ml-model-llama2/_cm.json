@@ -119,6 +119,13 @@
       },
       "group": "precision"
     },
+    "pytorch": {
+      "default": true,
+      "env": {
+        "CM_ML_MODEL_FRAMEWORK": "pytorch"
+      },
+      "group": "framework"
+    },
     "nvidia": {
       "default_variations": {
         "framework": "pytorch"
@@ -154,7 +161,7 @@
           "tags": "get,cuda-devices"
         },
         {
-          "tags": "get,ml-model,gpt-j,_fp32,_pytorch",
+          "tags": "get,ml-model,llama2-70b,_fp32_pytorch",
           "env": {
           },
           "force_new_env_keys": [
@@ -183,13 +190,6 @@
         "CM_ML_MODEL_WEIGHT_DATA_TYPES": "int8"
       },
       "group": "precision"
-    },
-    "pytorch": {
-      "default": true,
-      "env": {
-        "CM_ML_MODEL_FRAMEWORK": "pytorch"
-      },
-      "group": "framework"
     },
     "pytorch,fp32": {
       "env": {}
