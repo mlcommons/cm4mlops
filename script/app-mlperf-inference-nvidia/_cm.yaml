@@ -235,22 +235,7 @@ deps:
       - retinanet
     names:
       - openimages-calibration
-    tags: get,dataset,original,openimages,_calibration
-
-
-  ########################################################################
-  # Install openorca dataset
-
-  - enable_if_env:
-      CM_MODEL:
-      - gptj-99
-      - gptj-99.9
-      CM_MLPERF_NVIDIA_HARNESS_RUN_MODE:
-      - preprocess_dataset
-    names:
-      - openorca-original
-    tags: get,dataset,original,openorca
-
+    tags: get,dataset,original,openimages,_calibration   
 
   ########################################################################
   # Install MLPerf inference dependencies
