@@ -558,6 +558,58 @@ variations:
       CM_ML_MODEL_INPUTS_DATA_TYPE: fp32
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: fp16
 
+llama2_70b_:
+    deps:
+      - tags: get,generic-python-lib,_package.transformers
+        names:
+          - transformers
+      - tags: get,generic-python-lib,_package.datasets
+        names:
+          - datasets
+      - tags: get,generic-python-lib,_package.sentencepiece
+        names:
+          - sentencepiece
+      - tags: get,generic-python-lib,_package.protobuf
+        names:
+          - protobuf
+      - tags: get,generic-python-lib,_package.accelerate
+        names:
+          - accelerate
+      - tags: get,generic-python-lib,_package.absl-py
+        names:
+          - absl-py
+      - tags: get,generic-python-lib,_package.evaluate
+        names:
+          - evaluate
+      - tags: get,generic-python-lib,_package.nltk
+        names:
+          - nltk
+      - tags: get,generic-python-lib,_package.numpy
+        names:
+          - numpy
+      - tags: get,generic-python-lib,_package.rouge-score
+        names:
+          - rouge-score
+    env:
+      CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/b18ff890ff559e21d2e27a3b54cd26467ac1fd9e/script/get-ml-model-llama2/_cm.json#L51"
+      CM_ML_MODEL_INPUTS_DATA_TYPE: int32
+      CM_ML_MODEL_WEIGHTS_DATA_TYPE: fp16
+      CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
+
+llama2_70b-99:
+    group: model
+    base:
+    - llama2_70b_
+    env:
+      CM_MODEL: llama2_70b-99
+
+llama2_70b-99.9:
+    group: model
+    base:
+    - llama2_70b_
+    env:
+      CM_MODEL: llama2_70b-99.9
+
   gptj_:
     deps:
     - tags: get,generic-python-lib,_package.datasets
@@ -985,6 +1037,10 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_NUM_SORT_SEGMENTS: '2'
       CM_MLPERF_NVIDIA_HARNESS_SKIP_POSTPROCESS: True
 
+  gpu_memory.80,num-gpus.2,llama2-70b,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.896
+      
   gpu_memory.16,gptj_,offline,run_harness:
     default_variations:
       batch-size: batch_size.4

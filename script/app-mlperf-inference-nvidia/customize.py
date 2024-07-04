@@ -186,6 +186,19 @@ def preprocess(i):
 
         model_name = "gptj"
         model_path = fp8_model_path
+    
+    elif "llama2-70b" in env["CM_MODEL"]:
+        target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca', 'open_orca_gpt4_tokenized_llama.sampled_24576.pkl')
+        if not os.path.exists(target_data_path):
+            if env.get('CM_NVIDIA_LLAMA_DATASET_PATH', '') == '':
+                return {'return': 1, 'error': 'Please specify the path to LLAMA2 dataset (pickle file)'}
+            cmds.append(f"ln -sf {env['CM_NVIDIA_LLAMA_DATASET_PATH']} {target_data_path}")
+
+        
+        
+        model_name = "llama2-70b"
+        model_path = fp8_model_path
+
     #cmds.append(f"make prebuild")
     if make_command == "download_model":
         if not os.path.exists(model_path):
@@ -204,7 +217,14 @@ def preprocess(i):
         if env['CM_MODEL'] == "rnnt":
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_dev_clean_500_raw')}")
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_train_clean_512_wav')}")
-        cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
+        if "llama2-70b" in env["CM_MODEL"]:
+            # Preprocessing script in the inference results repo is not checking whether the preprocessed 
+            # file is already there, so we are handling it here.
+            target_preprocessed_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca', 'input_ids_padded.npy')
+            if not os.path.exists(target_preprocessed_data_path):
+                cmds.append("BENCHMARKS=llama2 make preprocess_data")
+        else:
+            cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
     
     else:
         scenario=env['CM_MLPERF_LOADGEN_SCENARIO'].lower()
