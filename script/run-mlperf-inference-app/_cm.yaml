@@ -37,6 +37,7 @@ default_env:
 
 input_mapping:
   backend: CM_MLPERF_BACKEND
+  batch_size: CM_MLPERF_LOADGEN_MAX_BATCHSIZE
   beam_size: GPTJ_BEAM_SIZE
   category: CM_MLPERF_SUBMISSION_SYSTEM_TYPE
   clean: CM_MLPERF_CLEAN_ALL
@@ -46,6 +47,7 @@ input_mapping:
   debug: CM_DEBUG_SCRIPT_BENCHMARK_PROGRAM
   device: CM_MLPERF_DEVICE
   division: CM_MLPERF_SUBMISSION_DIVISION
+  dlrm_data_path: DLRM_DATA_PATH
   docker: CM_MLPERF_USE_DOCKER
   dump_version_info: CM_DUMP_VERSION_INFO
   save_console_log: CM_SAVE_CONSOLE_LOG
@@ -92,7 +94,6 @@ input_mapping:
   target_qps: CM_MLPERF_LOADGEN_TARGET_QPS
   test_query_count: CM_TEST_QUERY_COUNT
   threads: CM_NUM_THREADS
-  batch_size: CM_MLPERF_LOADGEN_MAX_BATCHSIZE
   sut: CM_MLPERF_INFERENCE_SUT_VARIATION
 
 new_state_keys:

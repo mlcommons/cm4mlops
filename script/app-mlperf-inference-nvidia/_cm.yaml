@@ -163,7 +163,7 @@ deps:
       - dlrm-v2-99.9
     skip_if_env:
       DLRM_DATA_PATH:
-      - on
+      - 'on'
     names:
       - criteo-preprocessed
     tags: get,dataset,preprocessed,criteo
