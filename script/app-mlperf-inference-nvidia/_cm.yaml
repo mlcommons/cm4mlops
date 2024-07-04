@@ -544,6 +544,7 @@ variations:
 
   dlrm_:
     deps:
+    - tags: get,dlrm,data,mlperf,inference
     - tags: get,generic-python-lib,_torch
     - tags: get,generic-python-lib,_package.torchsnapshot
     - tags: get,generic-python-lib,_package.torchrec

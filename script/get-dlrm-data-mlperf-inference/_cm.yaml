@@ -9,6 +9,8 @@ tags:
 - mlperf
 - inference
 uid: 34bdfcd9c8364935
+docker:
+  real_run: false
 new_env_keys:
   - CM_DLRM_DATA_PATH
 input_mapping:
