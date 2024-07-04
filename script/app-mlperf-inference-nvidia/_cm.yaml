@@ -543,6 +543,9 @@ variations:
     - tags: get,generic-sys-util,_sox
 
   dlrm_:
+    new_env_keys:
+      - CM_DLRM_V2_DAY23_FILE_PATH
+      - CM_DLRM_V2_AGGREGATION_TRACE_FILE_PATH
     deps:
     - tags: get,dlrm,data,mlperf,inference,_nvidia
     - tags: get,generic-python-lib,_torch
