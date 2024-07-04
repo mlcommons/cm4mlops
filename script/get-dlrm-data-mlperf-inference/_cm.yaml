@@ -13,6 +13,7 @@ docker:
   real_run: false
 new_env_keys:
   - CM_DLRM_DATA_PATH
+  - DLRM_DATA_PATH
 input_mapping:
   dlrm_data_path: CM_DLRM_DATA_PATH
 variations:
