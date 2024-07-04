@@ -17,11 +17,14 @@ input_mapping:
   dlrm_data_path: CM_DLRM_DATA_PATH
 variations:
   nvidia:
+    group: implementation
+    default: true
     new_env_keys:
     - CM_DLRM_V2_DAY23_FILE_PATH
     - CM_DLRM_V2_AGGREGATION_TRACE_FILE_PATH
     env:
       CM_DLRM_DATA_VARIATION: nvidia
   intel:
+    group: implementation
     env:
       CM_DLRM_DATA_VARIATION: intel
