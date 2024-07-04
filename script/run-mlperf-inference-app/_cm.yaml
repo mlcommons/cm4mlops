@@ -94,6 +94,7 @@ input_mapping:
   threads: CM_NUM_THREADS
   batch_size: CM_MLPERF_LOADGEN_MAX_BATCHSIZE
   sut: CM_MLPERF_INFERENCE_SUT_VARIATION
+  nvidia_llama2_dataset_target: CM_NVIDIA_LLAMA_DATASET_PATH
 
 new_state_keys:
 - app_mlperf_inference_*
