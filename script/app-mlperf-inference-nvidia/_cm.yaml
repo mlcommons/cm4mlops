@@ -558,7 +558,7 @@ variations:
       CM_ML_MODEL_INPUTS_DATA_TYPE: fp32
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: fp16
 
-llama2_70b_:
+  llama2_70b_:
     deps:
       - tags: get,generic-python-lib,_package.transformers
         names:
@@ -596,14 +596,14 @@ llama2_70b_:
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: fp16
       CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
 
-llama2_70b-99:
+  llama2_70b-99:
     group: model
     base:
     - llama2_70b_
     env:
       CM_MODEL: llama2_70b-99
 
-llama2_70b-99.9:
+  llama2_70b-99.9:
     group: model
     base:
     - llama2_70b_
