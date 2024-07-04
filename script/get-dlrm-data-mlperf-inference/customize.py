@@ -69,6 +69,6 @@ def postprocess(i):
 
     env = i['env']
 
-    env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_DLRM_DATA_PATH']
+    env['CM_GET_DEPENDENT_CACHED_PATH'] = env.get('CM_DLRM_DATA_PATH', env['DLRM_DATA_PATH'])
 
     return {'return':0}
