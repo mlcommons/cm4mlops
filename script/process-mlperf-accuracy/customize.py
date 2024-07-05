@@ -89,6 +89,13 @@ def preprocess(i):
 
         elif dataset == "coco2014":
             env['+PYTHONPATH'] = [ os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools") ]
+            extra_options = ""
+            if env.get('CM_SDXL_STATISTICS_FILE_PATH', '') != '':
+                extra_options += f" --statistics-path '{env['CM_SDXL_STATISTICS_FILE_PATH']}' "
+            if env.get('CM_SDXL_COMPLIANCE_IMAGES_PATH', '') != '':
+                extra_options += f" --compliance-images-path '{env['CM_SDXL_COMPLIANCE_IMAGES_PATH']}' "
+            if env.get('CM_SDXL_ACCURACY_RUN_DEVICE', '') != '':
+                extra_options += f" --device '{env['CM_SDXL_ACCURACY_RUN_DEVICE']}' "
             #env['DATASET_ANNOTATIONS_FILE_PATH'] = env['CM_DATASET_ANNOTATIONS_FILE_PATH']
             CMD =  env['CM_PYTHON_BIN_WITH_PATH'] + " '" + os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools",
                 "accuracy_coco.py") + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
