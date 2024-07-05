@@ -3,11 +3,10 @@
 #export PATH=${CM_CONDA_BIN_PATH}:${PATH}
 #echo $LD_LIBRARY_PATH
 #exit 1
-#export LD_LIBRARY_PATH=""
-
 rm -rf ipex_src
 cp -r ${IPEX_DIR} ipex_src
 cd ipex_src
+pwd
 
 git submodule sync
 git submodule update --init --recursive
@@ -29,6 +28,11 @@ elif [[ ${CM_INTEL_IPEX_3D_UNET_PATCH} == "yes" ]]; then
   test "$?" -eq 0 || exit "$?"
 
 elif [[ ${CM_INTEL_IPEX_DLRM_V2_PATCH} == "yes" ]]; then
+  export LD_LIBRARY_PATH=""
+  wget https://raw.githubusercontent.com/mlcommons/inference_results_v3.1/main/closed/Intel/code/dlrm-v2-99/pytorch-cpu-int8/ipex.patch
+  test "$?" -eq 0 || exit "$?"
+  git apply ipex.patch
+  test "$?" -eq 0 || exit "$?"
   cd third_party/libxsmm
   git checkout c21bc5ddb4
   test "$?" -eq 0 || exit "$?"

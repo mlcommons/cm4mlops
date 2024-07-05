@@ -159,7 +159,7 @@
         }
       },
       "base": [
-        "branch.llm_feature_branch"
+        "sha.7256d0848ba81bb802dd33fca0e33049a751db58"
       ],
       "deps": [
         {
@@ -214,12 +214,11 @@
           "version": "1.23.5"
         },
         {
-           "tags": "get,generic-python-lib,_torch",
+           "tags": "get,generic-python-lib,_package.torch,_path.https://download.pytorch.org/whl/nightly/cpu-cxx11-abi/torch-2.1.0.dev20230715%2Bcpu.cxx11.abi-cp39-cp39-linux_x86_64.whl",
            "names": [
              "pip-package",
              "pip-torch"
-           ],
-           "version": "2.2"
+           ]
         },
         {
            "tags": "get,generic-python-lib,_package.torch,_url.git+https://github.com/pytorch/pytorch.git@927dc662386af052018212c7d01309a506fc94cd",
