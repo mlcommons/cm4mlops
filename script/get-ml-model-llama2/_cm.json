@@ -160,7 +160,7 @@
           "tags": "get,cuda-devices"
         },
         {
-          "tags": "get,ml-model,llama2-70b,_fp32_pytorch",
+          "tags": "get,ml-model,llama2-70b,_fp32,_pytorch",
           "env": {
           },
           "force_new_env_keys": [

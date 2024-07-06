@@ -17,7 +17,7 @@ def preprocess(i):
         if path == '' or not os.path.exists(path):
             env['CM_TMP_REQUIRE_DOWNLOAD'] = 'yes'
 
-        return {'return':0}
+    return {'return':0}
 
 def postprocess(i):
 

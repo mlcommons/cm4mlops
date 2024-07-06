@@ -216,6 +216,7 @@ def preprocess(i):
             if action == "docker":
                 for k in docker_extra_input:
                     ii[k] = docker_extra_input[k]
+            print(ii)
             r = cm.access(ii)
             if r['return'] > 0:
                 return r
