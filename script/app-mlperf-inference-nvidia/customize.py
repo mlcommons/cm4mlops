@@ -196,7 +196,8 @@ def preprocess(i):
         if not os.path.exists(target_data_file_path):
             if env.get('CM_NVIDIA_LLAMA_DATASET_FILE_PATH', '') == '':
                 return {'return': 1, 'error': 'Please specify the path to LLAMA2 dataset (pickle file)'}
-            cmds.append(f"mkdir {target_data_path}")
+            if not os.path.exists(target_data_path):
+                cmds.append(f"mkdir {target_data_path}")
             cmds.append(f"ln -sf {env['CM_NVIDIA_LLAMA_DATASET_FILE_PATH']} {target_data_file_path}")
 
         
@@ -231,7 +232,7 @@ def preprocess(i):
             # file is already there, so we are handling it here.
             target_preprocessed_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca', 'input_ids_padded.npy')
             if not os.path.exists(target_preprocessed_data_path):
-                cmds.append("BENCHMARKS=llama2 make preprocess_data")
+                cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
         else:
             cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
     
