@@ -12,6 +12,8 @@ def preprocess(i):
         return {'return': 1, 'error': f'Please input a valid path as --dlrm_data_path'} 
     meta = i['meta']
 
+    script_path=i['run_script_input']['path']
+
     automation = i['automation']
 
     quiet = (env.get('CM_QUIET', False) == 'yes')
@@ -57,6 +59,9 @@ def preprocess(i):
 
         file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_labels.npy")
         run_cmd += xsep + ("echo {} {} | md5sum -c").format('dd68f93301812026ed6f58dfb0757fa7', file_path)
+
+        dir_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32")
+        run_cmd += xsep + ("cd {}; md5sum -c {}").format(dir_path, os.path.join(script_path, "checksums.txt" ))
 
         env['CM_DLRM_V2_DAY23_FILE_PATH'] = os.path.join(dlrm_data_path, "criteo", "day23", "raw_data")
         env['CM_DLRM_V2_AGGREGATION_TRACE_FILE_PATH'] = os.path.join(dlrm_data_path, "criteo", "day23", "sample_partition.txt")
