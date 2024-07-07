@@ -1,5 +1,6 @@
 #!/bin/bash
 
+<<COMMENT
 if [[ ! -e ${CM_NVIDIA_MLPERF_SCRATCH_PATH}/models/Llama2/Llama-2-70b-chat-hf ]]; then
   mkdir -p ${CM_NVIDIA_MLPERF_SCRATCH_PATH}/models/Llama2/Llama-2-70b-chat-hf
   cd ${LLAMA2_CHECKPOINT_PATH}
@@ -19,3 +20,7 @@ export DOCKER_RUN_ARGS="$DOCKER_RUN_ARGS"
 export RUN_CMD="$RUN_CMD"
 make -C docker run LOCAL_USER=1
 test $? -eq 0 || exit $?
+COMMENT
+
+echo ${CM_NVIDIA_MLPERF_SCRATCH_PATH}
+

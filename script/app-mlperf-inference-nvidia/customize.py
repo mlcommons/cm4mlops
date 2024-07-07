@@ -188,12 +188,16 @@ def preprocess(i):
         model_path = fp8_model_path
     
     elif "llama2" in env["CM_MODEL"]:
-        target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca', 'open_orca_gpt4_tokenized_llama.sampled_24576.pkl')
-        fp8_model_path = "TO DO"
-        if not os.path.exists(target_data_path):
+        # path to which the data file is present
+        target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca')
+        # path to the dataset file
+        target_data_file_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca','open_orca_gpt4_tokenized_llama.sampled_24576.pkl')
+        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo','Llama2-70b-tp2pp1-fp8')
+        if not os.path.exists(target_data_file_path):
             if env.get('CM_NVIDIA_LLAMA_DATASET_FILE_PATH', '') == '':
                 return {'return': 1, 'error': 'Please specify the path to LLAMA2 dataset (pickle file)'}
-            cmds.append(f"ln -sf {env['CM_NVIDIA_LLAMA_DATASET_FILE_PATH']} {target_data_path}")
+            cmds.append(f"mkdir {target_data_path}")
+            cmds.append(f"ln -sf {env['CM_NVIDIA_LLAMA_DATASET_FILE_PATH']} {target_data_file_path}")
 
         
         
@@ -203,7 +207,11 @@ def preprocess(i):
     #cmds.append(f"make prebuild")
     if make_command == "download_model":
         if not os.path.exists(model_path):
-            cmds.append(f"make download_model BENCHMARKS='{model_name}'")
+            if "llama2" in env['CM_MODEL']:
+              if not os.path.exists(os.path.join(model_path, 'config.json')):
+                return {'return': 1, 'error': 'Quantised model absent - did not detect config.json'}
+            else:
+              cmds.append(f"make download_model BENCHMARKS='{model_name}'")
         elif "stable-diffusion" in env['CM_MODEL']:
             folders = ["clip1", "clip2", "unetxl", "vae"]
             for folder in folders:

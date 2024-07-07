@@ -560,6 +560,7 @@ variations:
 
   llama2-70b_:
     deps:
+      - tags: get,ml-model,llama2-70b,_nvidia,_fp8
       - tags: get,generic-python-lib,_package.transformers
         names:
           - transformers
