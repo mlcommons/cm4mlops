@@ -128,6 +128,19 @@
         }
       }
     },
+    "libpng-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libpng-dev"
+      },
+      "state": {
+        "libpng-dev": {
+          "apt": "libpng-dev",
+          "dnf": "libpng-devel",
+          "yum": "libpng-devel",
+          "brew": ""
+        }
+      }
+    },
     "screen": {
       "env": {
         "CM_SYS_UTIL_NAME": "screen"
