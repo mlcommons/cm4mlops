@@ -1024,6 +1024,10 @@ variations:
     default_variations:
       batch-size: batch_size.1
 
+  llama2-70b_,run_harness:
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_FP8: 'True'
+
   gptj_,run_harness:
     deps:
     - tags: install,pytorch,from.src
