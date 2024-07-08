@@ -307,7 +307,7 @@
         }
       ],
       "env": {
-        "CM_DATASET": "squad"
+        "CM_DATASET": "terabyte"
       },
       "group": "dataset"
     },

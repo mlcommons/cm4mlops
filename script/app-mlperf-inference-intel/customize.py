@@ -65,8 +65,10 @@ def preprocess(i):
     if env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "calibration":
         if master_model == "resnet50":
             i['run_script_input']['script_name'] = "prepare_imagenet_calibration"
-        if master_model == "3d-unet":
+        elif master_model == "3d-unet":
             i['run_script_input']['script_name'] = "prepare_3d-unet_data_model"
+        elif "dlrm-v2" in master_model:
+            i['run_script_input']['script_name'] = "calibrate_dlrm_v2_model"
         else:
             calibration_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'calibration', master_model, backend+"-"+device)
 

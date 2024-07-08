@@ -195,12 +195,13 @@ def postprocess(i):
         x1 = ''
         x2 = ''
         if env.get('CM_DOCKER_INTERACTIVE_MODE', '') in ['yes', 'True', True]:
+            run_cmd_prefix = "("
             x1 = '-it'
-            x2 = " && bash "
+            x2 = " && bash ) || bash"
 
 
         CONTAINER="docker run " + x1 + " --entrypoint " + x + x + " " + run_opts + " " + docker_image_repo + "/" + docker_image_name + ":" + docker_image_tag
-        CMD =  CONTAINER + " bash -c " + x + run_cmd + x2 + x
+        CMD =  CONTAINER + " bash -c " + x + run_cmd_prefix + run_cmd + x2 + x
 
         print ('')
         print ("Container launch command:")

@@ -163,7 +163,7 @@ deps:
       - dlrm-v2-99.9
     skip_if_env:
       DLRM_DATA_PATH:
-      - on
+      - 'on'
     names:
       - criteo-preprocessed
     tags: get,dataset,preprocessed,criteo
@@ -528,7 +528,11 @@ variations:
     - tags: get,generic-sys-util,_sox
 
   dlrm_:
+    new_env_keys:
+      - CM_DLRM_V2_DAY23_FILE_PATH
+      - CM_DLRM_V2_AGGREGATION_TRACE_FILE_PATH
     deps:
+    - tags: get,dlrm,data,mlperf,inference,_nvidia
     - tags: get,generic-python-lib,_torch
     - tags: get,generic-python-lib,_package.torchsnapshot
     - tags: get,generic-python-lib,_package.torchrec
@@ -1267,10 +1271,14 @@ variations:
   gpu_memory.40,dlrm_,offline,run_harness:
     default_variations:
       batch-size: batch_size.1400
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_EMBEDDING_WEIGHTS_ON_GPU_PART: "0.40"
 
   gpu_memory.24,dlrm_,offline,run_harness:
     default_variations:
       batch-size: batch_size.1400
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_EMBEDDING_WEIGHTS_ON_GPU_PART: "0.30"
 
   gpu_memory.32,dlrm_,offline,run_harness:
     default_variations:
@@ -1279,6 +1287,8 @@ variations:
   gpu_memory.48,dlrm_,offline,run_harness:
     default_variations:
       batch-size: batch_size.1400
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_EMBEDDING_WEIGHTS_ON_GPU_PART: "0.50"
 
   gpu_memory.80,dlrm_,offline,run_harness:
     default_variations:

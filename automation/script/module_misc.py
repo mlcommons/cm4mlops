@@ -1827,6 +1827,7 @@ def docker(i):
         for c_input in input_mapping:
             if c_input in i:
                 env[input_mapping[c_input]] = i[c_input]
+                #del(i[c_input])
 
         # Updating environment variables from CM input based on docker_input_mapping from meta
 
@@ -1835,11 +1836,11 @@ def docker(i):
         for c_input in docker_input_mapping:
             if c_input in i:
                 env[docker_input_mapping[c_input]] = i[c_input]
+                #del(i[c_input])
 
         container_env_string = '' # env keys corresponding to container mounts are explicitly passed to the container run cmd
         for index in range(len(mounts)):
             mount = mounts[index]
-
             # Since windows may have 2 :, we search from the right
             j = mount.rfind(':')
             if j>0:
@@ -1858,10 +1859,12 @@ def docker(i):
 
             tmp_values = re.findall(r'\${{ (.*?) }}', str(host_mount))
             skip = False
+            host_env_key = None
             if tmp_values:
                 for tmp_value in tmp_values:
                     if tmp_value in env:
-                        new_host_mount = get_host_path(env[tmp_value])
+                        host_env_key = tmp_value
+                        new_host_mount = get_host_path(env[tmp_value]) 
                     else:# we skip those mounts
                         mounts[index] = None
                         skip = True
@@ -1870,18 +1873,28 @@ def docker(i):
             tmp_values = re.findall(r'\${{ (.*?) }}', str(container_mount))
             if tmp_values:
                 for tmp_value in tmp_values:
+                    container_env_key = tmp_value
                     if tmp_value in env:
                         new_container_mount, new_container_mount_env = get_container_path(env[tmp_value])
-                        container_env_string += " --env.{}={} ".format(tmp_value, new_container_mount_env)
+                        container_env_key = new_container_mount_env
+                        #container_env_string += " --env.{}={} ".format(tmp_value, new_container_mount_env)
                     else:# we skip those mounts
                         mounts[index] = None
                         skip = True
                         break
+            else:
+                container_env_key = str(container_mount)
 
             if skip:
                 continue
             mounts[index] = new_host_mount+":"+new_container_mount
-
+            if host_env_key:
+                container_env_string += " --env.{}={} ".format(host_env_key, container_env_key)
+                # check if the below lines are needed when inputs are mapped to container paths
+                '''for v in docker_input_mapping:
+                    if docker_input_mapping[v] == host_env_key:
+                        i[v] = container_env_key
+                ''' 
         mounts = list(filter(lambda item: item is not None, mounts))
 
         mount_string = "" if len(mounts)==0 else ",".join(mounts)
