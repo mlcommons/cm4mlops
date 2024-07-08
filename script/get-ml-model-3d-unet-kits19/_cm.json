@@ -60,7 +60,7 @@
     "pytorch,fp32,weights": {
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_ML_MODEL_FILE": "retinanet_model_10.pth",
+        "CM_ML_MODEL_FILE": "3dunet_kits19_pytorch_checkpoint.pth",
         "CM_PACKAGE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_pytorch_checkpoint.pth?download=1",
         "CM_UNZIP": "yes"
       }

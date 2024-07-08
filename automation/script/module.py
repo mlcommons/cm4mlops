@@ -3,7 +3,7 @@
 # as portable and reusable automation recipes with simple tags, native scripts 
 # and a unified CLI, Python API and JSON/YAML meta descriptions.
 #
-# This is a stable prototype of the CM script automation
+# This is a stable prototype of the CM script automation being developed by Grigori Fursin and Arjun Suresh
 #
 # TBD: when we have bandwidth and resources, we should refactor it
 # and make it cleaner and simpler while keeping full backwards compatibility.
@@ -4443,7 +4443,11 @@ def update_env_with_values(env, fail_on_not_found=False):
             if tmp_value not in env and fail_on_not_found:
                 return {'return':1, 'error':'variable {} is not in env'.format(tmp_value)}
             if tmp_value in env:
-                value = value.replace("<<<"+tmp_value+">>>", str(env[tmp_value]))
+                if type(value) == str:
+                    value = value.replace("<<<"+tmp_value+">>>", str(env[tmp_value]))
+                elif type(value) == list:
+                    for i,val in enumerate(value):
+                        value[i] = value[i].replace("<<<"+tmp_value+">>>", str(env[tmp_value]))
 
         env[key] = value
 

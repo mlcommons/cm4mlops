@@ -1,10 +1,11 @@
 #!/bin/bash
 
-CPUS_PER_INSTANCE=1
+CPUS_PER_INSTANCE=8
 number_threads=`nproc --all`
 export number_cores=`lscpu -b -p=Core,Socket | grep -v '^#' | sort -u | wc -l`
 number_sockets=`grep physical.id /proc/cpuinfo | sort -u | wc -l`
 cpu_per_socket=$((number_cores/number_sockets))
+number_instance=$((number_cores/CPUS_PER_INSTANCE))
 
 WORKERS_PER_PROC=${WORKERS_PER_PROC:-4}
 THREADS_PER_INSTANCE=$((( ${WORKERS_PER_PROC} * ${CM_HOST_CPU_THREADS_PER_CORE}) / ${CM_HOST_CPU_SOCKETS}))
@@ -18,14 +19,8 @@ export KMP_BLOCKTIME=1
 export $KMP_SETTING
 
 
-export DATA_DIR=${CM_HARNESS_CODE_ROOT}/ILSVRC2012_img_val
-export RN50_START=${CM_HARNESS_CODE_ROOT}/models/resnet50-start-int8-model.pth
-export RN50_END=${CM_HARNESS_CODE_ROOT}/models/resnet50-end-int8-model.pth
-export RN50_FULL=${CM_HARNESS_CODE_ROOT}/models/resnet50-full.pth
-
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${CONDA_PREFIX}/lib
 
-rsync -avz  ${CM_HARNESS_CODE_ROOT}/val_data/ ${DATA_DIR}/
 executable="${CM_HARNESS_CODE_ROOT}/build/bin/mlperf_runner"
 
 number_threads=`nproc --all`
@@ -39,14 +34,14 @@ scenario="Offline"
 #python ../../user_config.py
 
 #--warmup_iters 20 \
-CONFIG="  --scenario ${scenario} --mode ${LOADGEN_MODE} --model_name resnet50 \
-	--rn50-part1 ${RN50_START} --rn50-part3 ${RN50_END} --rn50-full-model ${RN50_FULL} \
+CONFIG="  --scenario ${scenario} --mode ${LOADGEN_MODE} --model_name retinanet \
+	--model_path ${MODEL_PATH} \
 	--data_path ${DATA_DIR} \
     --mlperf_conf ${CM_MLPERF_CONF} --user_conf ${CM_MLPERF_USER_CONF} \
 	--cpus_per_instance $CPUS_PER_INSTANCE \
-    --num_instance $number_cores \
-	--total_sample_count 50000 \
-	--batch_size 256
+    --num_instance $number_instance \
+	--total_sample_count 24781 \
+	--batch_size 1
 	"
 
 cmd=" ${executable} ${CONFIG}"

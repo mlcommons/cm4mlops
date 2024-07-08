@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CUR_DIR=$PWD
+echo "$CUR_DIR"
 SCRIPT_DIR=${CM_TMP_CURRENT_SCRIPT_PATH}
 
 folder=${CM_GIT_CHECKOUT_FOLDER}
@@ -50,10 +51,19 @@ else
 fi
 
 if [ ! -z ${CM_GIT_PR_TO_APPLY} ]; then
+  echo ""
+  echo "Fetching from ${CM_GIT_PR_TO_APPLY}"
   git fetch origin ${CM_GIT_PR_TO_APPLY}:tmp-apply
-  git config user.email "temp@example.com"
-  git merge tmp-apply --no-edit
 fi
+
+IFS=',' read -r -a cherrypicks <<< "${CM_GIT_CHERRYPICKS}"
+for cherrypick in "${cherrypicks[@]}"
+do
+  echo ""
+  echo "Applying cherrypick $cherrypick"
+  git cherry-pick -n $cherrypick
+  test $? -eq 0 || exit $?
+done
 
 IFS=',' read -r -a submodules <<< "${CM_GIT_SUBMODULES}"
 
