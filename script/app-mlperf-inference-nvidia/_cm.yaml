@@ -448,6 +448,7 @@ variations:
         env:
           CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL: "https://pypi.nvidia.com"
           CM_GENERIC_PYTHON_PIP_EXTRA: "--no-cache-dir"
+          CM_SDXL_ACCURACY_RUN_DEVICE: " gpu"
       - tags: get,generic-python-lib,_package.optimum
         names:
           - optimum
