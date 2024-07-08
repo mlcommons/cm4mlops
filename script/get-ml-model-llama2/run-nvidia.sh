@@ -13,7 +13,11 @@ cd ${CM_TENSORRT_LLM_CHECKOUT_PATH}
 make -C docker build
 test $? -eq 0 || exit $?
 
-RUN_CMD="bash -c 'python3 scripts/build_wheel.py -a=${CM_GPU_ARCH} --clean --install --trt_root /usr/local/tensorrt/ && python examples/quantization/quantize.py --dtype=float16  --output_dir=/mnt/models/Llama2/fp8-quantized-ammo/Llama2-70b-tp${CM_NVIDIA_TP_SIZE}pp1-fp8 --model_dir=/mnt/models/Llama2/Llama-2-70b-chat-hf/repo --qformat=fp8 --kv_cache_dtype=fp8 --tp_size ${CM_NVIDIA_TP_SIZE}'"
+if [ "${CM_NVIDIA_TP_SIZE}" -eq 1 ]; then
+  RUN_CMD="bash -c 'python3 scripts/build_wheel.py -a=${CM_GPU_ARCH} --clean --install --trt_root /usr/local/tensorrt/ && python examples/quantization/quantize.py --dtype=float16  --output_dir=/mnt/models/Llama2/fp8-quantized-ammo/llama2-70b-chat-hf-tp${CM_NVIDIA_TP_SIZE}pp1-fp8-02072024 --model_dir=/mnt/models/Llama2/Llama-2-70b-chat-hf/repo --qformat=fp8 --kv_cache_dtype=fp8 --tp_size ${CM_NVIDIA_TP_SIZE}'"
+else
+  RUN_CMD="bash -c 'python3 scripts/build_wheel.py -a=${CM_GPU_ARCH} --clean --install --trt_root /usr/local/tensorrt/ && python examples/quantization/quantize.py --dtype=float16  --output_dir=/mnt/models/Llama2/fp8-quantized-ammo/llama2-70b-chat-hf-tp${CM_NVIDIA_TP_SIZE}pp1-fp8 --model_dir=/mnt/models/Llama2/Llama-2-70b-chat-hf/repo --qformat=fp8 --kv_cache_dtype=fp8 --tp_size ${CM_NVIDIA_TP_SIZE}'"
+fi
 DOCKER_RUN_ARGS=" -v ${CM_NVIDIA_MLPERF_SCRATCH_PATH}:/mnt"
 export DOCKER_RUN_ARGS="$DOCKER_RUN_ARGS"
 export RUN_CMD="$RUN_CMD"

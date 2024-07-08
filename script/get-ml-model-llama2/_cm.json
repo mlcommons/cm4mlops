@@ -99,6 +99,12 @@
       },
       "group": "precision"
     },
+    "tp_size.#": {
+      "env": {
+        "CM_NVIDIA_TP_SIZE": "#"
+      },
+      "group": "gpu"
+    },
     "generic": {
       "env":{
         "CM_NVIDIA_TP_SIZE": 2
