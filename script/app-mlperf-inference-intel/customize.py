@@ -31,6 +31,8 @@ def preprocess(i):
     if env.get('CM_MLPERF_INFERENCE_CODE_VERSION', '') == 'v4.0':
         if 'gptj' in ml_model:
             code_base_folder = "ITREX"
+    if 'dlrm-v2' in ml_model:
+        code_base_folder = "pytorch-cpu-int8"
 
     harness_root = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'Intel', 'code', ml_model, code_base_folder)
 
@@ -161,6 +163,10 @@ def preprocess(i):
         elif '3d-unet' in env['CM_MODEL']:
             env['CM_RUN_DIR'] = env['CM_MLPERF_OUTPUT_DIR']
             env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_3d-unet_harness.sh')} "
+
+        elif 'dlrm' in env['CM_MODEL']:
+            env['CM_RUN_DIR'] = i['run_script_input']['path']
+            env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_dlrm_v2_harness.sh')} "
 
         elif "gptj" in env['CM_MODEL']:
             env['CM_RUN_DIR'] = i['run_script_input']['path']
