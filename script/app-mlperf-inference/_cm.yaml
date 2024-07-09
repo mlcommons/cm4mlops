@@ -254,6 +254,9 @@ variations:
     docker:
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            tp_size: CM_NVIDIA_TP_SIZE
+        
     env:
       BUILD_TRTLLM: 1
   
