@@ -279,8 +279,8 @@ docker:
     scratch_path: MLPERF_SCRATCH_PATH
   deps:
     - tags: get,mlperf,inference,nvidia,scratch,space
-    - tags: get,mlperf,inference,results,dir
-    - tags: get,mlperf,inference,submission,dir
+    - tags: get,mlperf,inference,results,dir,local
+    - tags: get,mlperf,inference,submission,dir,local
     - tags: get,nvidia-docker
       skip_if_env:
         CM_SKIP_GET_NVIDIA_DOCKER:

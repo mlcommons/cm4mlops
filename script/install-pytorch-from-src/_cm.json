@@ -386,7 +386,11 @@
         {
           "tags": "get,cmake",
           "version_min": "3.25.0"
-	      }
+        },
+        {
+          "tags": "get,generic-python-lib,_package.numpy",
+          "version": "1.22.4"
+        }
       ],
       "ad": {
         "pytorch-src-repo": {

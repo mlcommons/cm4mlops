@@ -39,7 +39,6 @@
   "uid": "9252c4d90d5940b7",
   "variations": {
     "60": {
-      "default": true,
       "env": {
         "CM_DATASET_SIZE": "60"
       },
@@ -58,6 +57,7 @@
       "group": "dataset-type"
     },
     "full": {
+      "default": true,
       "env": {
         "CM_DATASET_SIZE": "24576"
       },

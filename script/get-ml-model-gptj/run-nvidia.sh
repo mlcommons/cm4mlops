@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [[ ! -e ${CM_NVIDIA_MLPERF_SCRATCH_PATH}/models/GPTJ-6B/checkpoint-final ]]; then
+  mkdir -p ${CM_NVIDIA_MLPERF_SCRATCH_PATH}/models/GPTJ-6B/
   cp -r ${GPTJ_CHECKPOINT_PATH} ${CM_NVIDIA_MLPERF_SCRATCH_PATH}/models/GPTJ-6B/checkpoint-final
   test $? -eq 0 || exit $?
 fi

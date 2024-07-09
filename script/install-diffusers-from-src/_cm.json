@@ -1,5 +1,5 @@
 {
-  "alias": "install-torchvision-from-src",
+  "alias": "install-diffusers-from-src",
   "automation_alias": "script",
   "automation_uid": "5b4e0237da074764",
   "cache": true,
@@ -24,25 +24,18 @@
       "tags": "get,python3"
     },
     {
-      "tags": "get,compiler",
-      "names": [ "compiler" ]
-    },
-    {
-      "tags": "get,generic-sys-util,_libpng-dev",
-      "enable_if_env": {
-        "CM_TORCHVISION_NEEDS_PNG": [
-          "yes"
-        ]
-      }
+      "names": [
+        "compiler"
+      ],
+      "tags": "get,compiler"
     },
     {
       "env": {
-        "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_PYTORCH_VISION_SRC_REPO_PATH"
+        "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_DIFFUSERS_SRC_REPO_PATH"
       },
-      "extra_cache_tags": "pytorchvision,torchvision,torchvision-src,src,pytorchvision-src,pytorchvision-src-repo",
+      "extra_cache_tags": "diffusers,diffusers-src,src,diffusers-src,diffusers-src-repo",
       "names": [
-        "pytorchision-src-repo",
-        "torchision-src-repo"
+        "diffusers-src-repo"
       ],
       "tags": "get,git,repo",
       "update_tags_from_env_with_prefix": {
@@ -62,11 +55,11 @@
     }
   ],
   "env": {
-    "CM_GIT_URL": "https://github.com/pytorch/vision"
+    "CM_GIT_URL": "https://github.com/huggingface/diffusers.git"
   },
-  "name": "Build pytorchvision from sources",
+  "name": "Build diffusers from sources",
   "new_env_keys": [
-    "CM_PYTORCHVISION_*"
+    "CM_DIFFUSERS_*"
   ],
   "prehook_deps": [],
   "sort": 1000,
@@ -75,20 +68,14 @@
     "get",
     "src",
     "from.src",
-    "pytorchvision",
-    "torchvision",
-    "src-pytorchvision"
+    "diffusers",
+    "src-diffusers"
   ],
-  "uid": "68b855780d474546",
+  "uid": "b2ddda995f63412f",
   "variations": {
     "branch.#": {
       "env": {
         "CM_GIT_CHECKOUT": "#"
-      }
-    },
-    "python.#": {
-      "env": {
-        "CM_PYTHON_BIN_WITH_PATH": "#"
       }
     },
     "cuda": {
@@ -105,36 +92,15 @@
         "CUDA_NVCC_EXECUTABLE": "<<<CM_NVCC_BIN_WITH_PATH>>>",
         "CUDNN_INCLUDE_PATH": "<<<CM_CUDA_PATH_INCLUDE_CUDNN>>>",
         "CUDNN_LIBRARY_PATH": "<<<CM_CUDA_PATH_LIB_CUDNN>>>",
-        "USE_CUDA": "1",
-        "USE_CUDNN": "1",
         "TORCH_CUDA_ARCH_LIST": "Ampere Ada Hopper",
-        "TORCH_CXX_FLAGS": "-D_GLIBCXX_USE_CXX11_ABI=1"
+        "TORCH_CXX_FLAGS": "-D_GLIBCXX_USE_CXX11_ABI=1",
+        "USE_CUDA": "1",
+        "USE_CUDNN": "1"
       }
     },
-    "for-nvidia-mlperf-inference-v4.0": {
-      "base": [
-        "sha.657027f3",
-        "cuda"
-      ],
-      "deps": [
-        {
-          "tags": "install,pytorch,from.src,_for-nvidia-mlperf-inference-v4.0"
-        }
-      ],
+    "python.#": {
       "env": {
-      }
-    },
-    "for-nvidia-mlperf-inference-v3.1": {
-      "base": [
-        "sha.657027f3",
-        "cuda"
-      ],
-      "deps": [
-        {
-          "tags": "install,pytorch,from.src,_for-nvidia-mlperf-inference-v3.1"
-        }
-      ],
-      "env": {
+        "CM_PYTHON_BIN_WITH_PATH": "#"
       }
     },
     "repo.#": {
@@ -143,10 +109,10 @@
       },
       "group": "repo"
     },
-    "repo.https://github.com/pytorch/vision": {
+    "repo.https://github.com/huggingface/diffusers": {
       "default": true,
       "env": {
-        "CM_GIT_URL": "https://github.com/pytorch/vision"
+        "CM_GIT_URL": "https://github.com/huggingface/diffusers"
       },
       "group": "repo"
     },
