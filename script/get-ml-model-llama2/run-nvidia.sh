@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Set tp size is ${CM_NVIDIA_TP_SIZE}"
+
 if [[ ! -e ${CM_NVIDIA_MLPERF_SCRATCH_PATH}/models/Llama2/Llama-2-70b-chat-hf ]]; then
   mkdir -p ${CM_NVIDIA_MLPERF_SCRATCH_PATH}/models/Llama2/Llama-2-70b-chat-hf
   cd ${LLAMA2_CHECKPOINT_PATH}
