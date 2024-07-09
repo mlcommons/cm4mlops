@@ -192,7 +192,8 @@ def preprocess(i):
         target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca')
         # path to the dataset file
         target_data_file_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca','open_orca_gpt4_tokenized_llama.sampled_24576.pkl')
-        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo','Llama2-70b-tp2pp1-fp8')
+        tmp_tp_size = env['CM_NVIDIA_TP_SIZE']
+        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo',f'Llama2-70b-tp{tmp_tp_size}pp1-fp8')
         if not os.path.exists(target_data_file_path):
             if env.get('CM_NVIDIA_LLAMA_DATASET_FILE_PATH', '') == '':
                 return {'return': 1, 'error': 'Please specify the path to LLAMA2 dataset (pickle file)'}
@@ -433,6 +434,10 @@ def preprocess(i):
         use_fp8 = env.get('CM_MLPERF_NVIDIA_HARNESS_USE_FP8')
         if use_fp8 and use_fp8.lower() not in [ "no", "false" ]:
             run_config += f" --use_fp8"
+
+        if "llama2" in env["CM_MODEL"]:
+            run_config += f" --fp8_quant_model_path={fp8_model_path}"
+            run_config += f" --tensor_parallelism={tmp_tp_size}"
 
         enable_sort = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
         if enable_sort and enable_sort.lower() not in [ "no", "false" ]:
