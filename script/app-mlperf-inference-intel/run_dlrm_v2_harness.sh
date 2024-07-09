@@ -41,12 +41,17 @@ common_opt="--config ${CM_MLPERF_CONF}"
 cd ${CM_HARNESS_CODE_ROOT}
 OUTPUT_DIR="${CM_MLPERF_OUTPUT_DIR}"
 
+if [[ "${CM_MLPERF_LOADGEN_MODE}" == "accuracy" ]]; then
+  accuracy_opt=" --accuracy"
+else
+  accuracy_opt=""
+fi
 
 USER_CONF="${CM_MLPERF_USER_CONF}"
 cmd="python -u python/runner.py --profile $profile $common_opt --model dlrm --model-path $model_path \
 --dataset multihot-criteo --dataset-path $DATA_DIR --output $OUTPUT_DIR $EXTRA_OPS \
 --max-ind-range=40000000 --samples-to-aggregate-quantile-file=${PWD}/tools/dist_quantile.txt \
---max-batchsize=$BATCH_SIZE --scenario=Offline"
+--max-batchsize=$BATCH_SIZE --scenario=${CM_MLPERF_LOADGEN_SCENARIO} ${accuracy_opt}"
 
 
 echo "$cmd"
