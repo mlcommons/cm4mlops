@@ -193,7 +193,7 @@ def preprocess(i):
         # path to the dataset file
         target_data_file_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca','open_orca_gpt4_tokenized_llama.sampled_24576.pkl')
         tmp_tp_size = env['CM_NVIDIA_TP_SIZE']
-        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo',f'Llama2-70b-chat-hf-tp{tmp_tp_size}pp1-fp8')
+        fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo',f'llama2-70b-chat-hf-tp{tmp_tp_size}pp1-fp8')
         if not os.path.exists(target_data_file_path):
             if env.get('CM_NVIDIA_LLAMA_DATASET_FILE_PATH', '') == '':
                 return {'return': 1, 'error': 'Please specify the path to LLAMA2 dataset (pickle file)'}
