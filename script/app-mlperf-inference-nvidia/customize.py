@@ -193,7 +193,7 @@ def preprocess(i):
         # path to the dataset file
         target_data_file_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca','open_orca_gpt4_tokenized_llama.sampled_24576.pkl')
         tmp_tp_size = env['CM_NVIDIA_TP_SIZE']
-        if tmp_tp_size == 1:
+        if tmp_tp_size == "1":
             os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo',f'llama2-70b-chat-hf-tp{tmp_tp_size}pp1-fp8-02072024')
         else:
             fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo',f'llama2-70b-chat-hf-tp{tmp_tp_size}pp1-fp8')
