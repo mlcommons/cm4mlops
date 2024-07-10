@@ -982,6 +982,10 @@ variations:
     group: device-memory
     env:
       CM_NVIDIA_GPU_MEMORY: "80"
+  gpu_memory.#:
+    group: device-memory
+    env:
+      CM_NVIDIA_GPU_MEMORY: "#"
 
   singlestream,resnet50:
     env:
