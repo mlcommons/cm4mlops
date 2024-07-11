@@ -78,24 +78,12 @@
         "CM_GIT_CHECKOUT": "#"
       }
     },
-    "cuda": {
-      "deps": [
-        {
-          "names": [
-            "cuda"
-          ],
-          "tags": "get,cuda,_cudnn"
-        }
+    "for-intel-mlperf-inference-v4.0-sdxl": {
+      "base": [
+        "tag.v0.25.1"
       ],
       "env": {
-        "CUDA_HOME": "<<<CM_CUDA_INSTALLED_PATH>>>",
-        "CUDA_NVCC_EXECUTABLE": "<<<CM_NVCC_BIN_WITH_PATH>>>",
-        "CUDNN_INCLUDE_PATH": "<<<CM_CUDA_PATH_INCLUDE_CUDNN>>>",
-        "CUDNN_LIBRARY_PATH": "<<<CM_CUDA_PATH_LIB_CUDNN>>>",
-        "TORCH_CUDA_ARCH_LIST": "Ampere Ada Hopper",
-        "TORCH_CXX_FLAGS": "-D_GLIBCXX_USE_CXX11_ABI=1",
-        "USE_CUDA": "1",
-        "USE_CUDNN": "1"
+        "CM_INTEL_MLPERF_INFERENCE_v4_0_STABLE_DIFFUSION_PATCH": "yes"
       }
     },
     "python.#": {
@@ -123,7 +111,7 @@
     },
     "tag.#": {
       "ad": {
-        "pytorch-src-repo": {
+        "diffusers-src-repo": {
           "tags": "_no-recurse-submodules,_full-history"
         }
       },
