@@ -423,6 +423,9 @@ variations:
       - tags: get,generic-python-lib,_package.onnxruntime
         names:
           - onnxruntime
+      - tags: get,generic-python-lib,_package.colored
+        names:
+          - colored
       - tags: get,generic-python-lib,_package.nvidia-ammo
         names:
           - nvidia-ammo
@@ -430,6 +433,7 @@ variations:
         env:
           CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL: "https://pypi.nvidia.com"
           CM_GENERIC_PYTHON_PIP_EXTRA: "--no-cache-dir"
+          CM_SDXL_ACCURACY_RUN_DEVICE: " gpu"
       - tags: get,generic-python-lib,_package.optimum
         names:
           - optimum
@@ -1015,6 +1019,10 @@ variations:
     group: device-memory
     env:
       CM_NVIDIA_GPU_MEMORY: "80"
+  gpu_memory.#:
+    group: device-memory
+    env:
+      CM_NVIDIA_GPU_MEMORY: "#"
 
   singlestream,resnet50:
     env:
