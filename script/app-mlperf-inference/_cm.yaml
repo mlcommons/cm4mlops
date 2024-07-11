@@ -264,6 +264,9 @@ variations:
     docker:
       deps:
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            _tp_size.:
+            - CM_NVIDIA_TP_SIZE
     env:
       BUILD_TRTLLM: 1
 
