@@ -93,6 +93,8 @@ def preprocess(i):
             i['run_script_input']['script_name'] = "build_bert_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "bert_inference")
             env['DATA_PATH'] = os.path.join(os.getcwd(), "harness", "bert")
+        elif "stable-diffusion" in env['CM_MODEL']:
+            i['run_script_input']['script_name'] = "build_sdxl_harness"
         elif "resnet50" in env['CM_MODEL']:
             i['run_script_input']['script_name'] = "build_resnet50_harness"
             env['CM_MLPERF_INFERENCE_INTEL_HARNESS_PATH'] = os.path.join(os.getcwd(), "harness", "build", "resnet50_inference")
@@ -167,6 +169,10 @@ def preprocess(i):
         elif 'dlrm' in env['CM_MODEL']:
             env['CM_RUN_DIR'] = i['run_script_input']['path']
             env['CM_RUN_CMD'] = f"bash {os.path.join(i['run_script_input']['path'],'run_dlrm_v2_harness.sh')} "
+
+        elif 'stable-diffusion' in env['CM_MODEL']:
+            env['CM_RUN_DIR'] = i['run_script_input']['path']
+            env['CM_RUN_CMD'] = "bash run_sdxl_harness.sh " + ("--accuracy" if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy" else "")
 
         elif "gptj" in env['CM_MODEL']:
             env['CM_RUN_DIR'] = i['run_script_input']['path']

@@ -331,8 +331,10 @@ variations:
           - optimum
 
   sdxl:
+    group: model
     env:
       CM_BENCHMARK: STANDALONE_SDXL
+      CM_MODEL: stable-diffusion-xl
 
   sdxl,pytorch:
     adr:
@@ -365,6 +367,14 @@ variations:
         names:
         - conda-package
         - jemalloc
+      - tags: get,generic-python-lib,_package.torch,_path.https://download.pytorch.org/whl/nightly/cpu/torch-2.3.0.dev20231214%2Bcpu-cp39-cp39-linux_x86_64.whl
+        names:
+        - pip-package
+        - pip-torch
+      - tags: get,generic-python-lib,_package.torchvision,_path.https://download.pytorch.org/whl/nightly/cpu/torchvision-0.18.0.dev20231214%2Bcpu-cp39-cp39-linux_x86_64.whl
+        names:
+        - pip-package
+        - pip-torchvision
       - tags: get,generic-python-lib,_torch
         names:
         - pip-package
@@ -372,9 +382,6 @@ variations:
       - tags: install,diffusers,from.src,_for-intel-mlperf-inference-v4.0-sdxl
         names:
           - diffusers-from-src
-      - tags: install,onednn,from.src,_branch.rls-v2.6
-        names:
-          - onednn-from-src
       - tags: install,ipex,from.src,_for-intel-mlperf-inference-v4.0-sdxl
         names:
           - ipex-from-src
@@ -388,6 +395,56 @@ variations:
       - tags: get,mlcommons,inference,loadgen,_custom-python,_keep-build
         names:
         - inference-loadgen
+
+  sdxl,build-harness:
+    deps:
+      - tags: get,generic-python-lib,_package.pybind11[global]
+        names:
+          - pip-package
+          - pybind11
+
+  sdxl,run-harness:
+    deps:
+      - tags: get,ml-model,sdxl,_fp32,_pytorch
+      - tags: get,dataset,coco2014,original,_validation
+      - tags: get,generic-python-lib,_package.opencv-python
+        names:
+          - pip-package
+          - opencv
+      - tags: get,generic-python-lib,_package.transformers
+        names:
+          - pip-package
+          - transformers
+      - tags: get,generic-python-lib,_package.accelerate
+        names:
+          - pip-package
+          - accelerate
+      - tags: get,generic-python-lib,_package.open-clip-torch
+        names:
+          - pip-package
+          - open-clip-torch
+      - tags: get,generic-python-lib,_package.pycocotools
+        names:
+          - pip-package
+          - pycocotools
+      - tags: get,generic-python-lib,_package.torchmetrics[image]
+        names:
+          - pip-package
+          - torchmetrics
+      - tags: get,generic-python-lib,_torchvision
+        version: "0.17.1"
+        names:
+          - pip-package
+          - torchvision
+      - tags: get,generic-python-lib,_package.py-libnuma
+        names:
+          - pip-package
+          - libnuma
+
+
+
+
+
   resnet50,pytorch:
     adr:
       conda-package:
