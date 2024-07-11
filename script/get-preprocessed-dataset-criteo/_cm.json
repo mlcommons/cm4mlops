@@ -5,7 +5,7 @@
   "category": "AI/ML datasets",
   "cache": true,
   "docker": {
-    "real_run": false
+    "run": false
   },
   "deps": [
     {
