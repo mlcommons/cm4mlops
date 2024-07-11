@@ -186,10 +186,37 @@ def preprocess(i):
 
         model_name = "gptj"
         model_path = fp8_model_path
+    
+    elif "llama2" in env["CM_MODEL"]:
+        # path to which the data file is present
+        target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca')
+        # path to the dataset file
+        target_data_file_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca','open_orca_gpt4_tokenized_llama.sampled_24576.pkl')
+        tmp_tp_size = env['CM_NVIDIA_TP_SIZE']
+        if tmp_tp_size == "1":
+            fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo',f'llama2-70b-chat-hf-tp{tmp_tp_size}pp1-fp8-02072024')
+        else:
+            fp8_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'],'models','Llama2','fp8-quantized-ammo',f'llama2-70b-chat-hf-tp{tmp_tp_size}pp1-fp8')
+        if not os.path.exists(target_data_file_path):
+            if env.get('CM_NVIDIA_LLAMA_DATASET_FILE_PATH', '') == '':
+                return {'return': 1, 'error': 'Please specify the path to LLAMA2 dataset (pickle file)'}
+            if not os.path.exists(target_data_path):
+                cmds.append(f"mkdir {target_data_path}")
+            cmds.append(f"ln -sf {env['CM_NVIDIA_LLAMA_DATASET_FILE_PATH']} {target_data_file_path}")
+
+        
+        
+        model_name = "llama2-70b"
+        model_path = fp8_model_path
+
     #cmds.append(f"make prebuild")
     if make_command == "download_model":
         if not os.path.exists(model_path):
-            cmds.append(f"make download_model BENCHMARKS='{model_name}'")
+            if "llama2" in env['CM_MODEL']:
+              if not os.path.exists(os.path.join(model_path, 'config.json')):
+                return {'return': 1, 'error': f'Quantised model absent - did not detect config.json in path {model_path}'}
+            else:
+              cmds.append(f"make download_model BENCHMARKS='{model_name}'")
         elif "stable-diffusion" in env['CM_MODEL']:
             folders = ["clip1", "clip2", "unetxl", "vae"]
             for folder in folders:
@@ -204,7 +231,14 @@ def preprocess(i):
         if env['CM_MODEL'] == "rnnt":
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_dev_clean_500_raw')}")
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_train_clean_512_wav')}")
-        cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
+        if "llama2" in env["CM_MODEL"]:
+            # Preprocessing script in the inference results repo is not checking whether the preprocessed 
+            # file is already there, so we are handling it here.
+            target_preprocessed_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca', 'input_ids_padded.npy')
+            if not os.path.exists(target_preprocessed_data_path):
+                cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
+        else:
+            cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
     
     else:
         scenario=env['CM_MLPERF_LOADGEN_SCENARIO'].lower()
@@ -403,6 +437,10 @@ def preprocess(i):
         use_fp8 = env.get('CM_MLPERF_NVIDIA_HARNESS_USE_FP8')
         if use_fp8 and use_fp8.lower() not in [ "no", "false" ]:
             run_config += f" --use_fp8"
+
+        if "llama2" in env["CM_MODEL"]:
+            run_config += f" --fp8_quant_model_path={fp8_model_path}"
+            run_config += f" --tensor_parallelism={tmp_tp_size}"
 
         enable_sort = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
         if enable_sort and enable_sort.lower() not in [ "no", "false" ]:
