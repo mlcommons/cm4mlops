@@ -194,6 +194,7 @@ def postprocess(i):
 
         x1 = ''
         x2 = ''
+        run_cmd_prefix = ""
         if env.get('CM_DOCKER_INTERACTIVE_MODE', '') in ['yes', 'True', True]:
             run_cmd_prefix = "("
             x1 = '-it'
