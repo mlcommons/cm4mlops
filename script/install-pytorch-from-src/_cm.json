@@ -390,6 +390,10 @@
         {
           "tags": "get,generic-python-lib,_package.numpy",
           "version": "1.22.4"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.networkx",
+          "version": "3.1"
         }
       ],
       "ad": {
