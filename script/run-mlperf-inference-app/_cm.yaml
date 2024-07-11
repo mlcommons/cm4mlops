@@ -53,6 +53,7 @@ input_mapping:
   save_console_log: CM_SAVE_CONSOLE_LOG
   execution_mode: CM_MLPERF_RUN_STYLE
   find_performance: CM_MLPERF_FIND_PERFORMANCE_MODE
+  framework: CM_MLPERF_BACKEND
   gpu_name: CM_NVIDIA_GPU_NAME
   hw_name: CM_HW_NAME
   hw_notes_extra: CM_MLPERF_SUT_SW_NOTES_EXTRA
