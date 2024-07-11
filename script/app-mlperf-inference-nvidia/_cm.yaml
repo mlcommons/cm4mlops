@@ -161,9 +161,11 @@ deps:
       CM_MODEL:
       - dlrm-v2-99
       - dlrm-v2-99.9
-    skip_if_env:
+    skip_if_any_env:
       DLRM_DATA_PATH:
       - 'on'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - criteo-preprocessed
     tags: get,dataset,preprocessed,criteo
@@ -174,9 +176,11 @@ deps:
       CM_MODEL:
       - dlrm-v2-99
       - dlrm-v2-99.9
-    skip_if_env:
+    skip_if_any_env:
       DLRM_DATA_PATH:
       - on
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - dlrm-model
     tags: get,ml-model,dlrm,_pytorch
