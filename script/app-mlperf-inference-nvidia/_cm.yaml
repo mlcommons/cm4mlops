@@ -383,13 +383,16 @@ variations:
       version: 1.13.1
 
   sdxl:
+    new_env_keys:                                                                      
+      - CM_SDXL_ACCURACY_RUN_DEVICE
     group: model
     env:
       CM_MODEL: stable-diffusion-xl
       CM_NOT_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/main/script/get-ml-model-stable-diffusion/_cm.json#L174"
-      CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
+      CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: "quantization, affine fusion"
       CM_ML_MODEL_INPUTS_DATA_TYPE: int32
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
+      CM_SDXL_ACCURACY_RUN_DEVICE: "gpu"
     deps:
       - tags: get,generic-python-lib,_package.diffusers
         names:
@@ -437,7 +440,6 @@ variations:
         env:
           CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL: "https://pypi.nvidia.com"
           CM_GENERIC_PYTHON_PIP_EXTRA: "--no-cache-dir"
-          CM_SDXL_ACCURACY_RUN_DEVICE: " gpu"
       - tags: get,generic-python-lib,_package.optimum
         names:
           - optimum
