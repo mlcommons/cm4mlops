@@ -1,0 +1,35 @@
+uid: c3eff27c791048aa
+alias: run-vllm-server
+
+automation_alias: script
+automation_uid: 5b4e0237da074764
+
+cache: false
+
+category: DevOps automation
+
+tags:
+- run
+- server
+- vllm
+- vllm-server
+
+input_mapping:
+  model: CM_VLLM_SERVER_MODEL_NAME
+  tp_size: CM_VLLM_SERVER_TP_SIZE
+  pp_size: CM_VLLM_SERVER_PP_SIZE
+  distributed-executor-backend: CM_VLLM_SERVER_DIST_EXEC_BACKEND
+  api_key: CM_VLLM_SERVER_API_KEY
+
+deps:
+  - tags: get,python3,get-python3
+    version_max: "3.11"
+    version_max_usable: "3.11.0"    
+  
+  - tags: get,ml-model,huggingface,zoo,_clone-repo
+    update_tags_from_env_with_prefix:
+      _model-stub.:
+      - CM_VLLM_SERVER_MODEL_NAME
+    enable_if_env:
+      CM_VLLM_SERVER_MODEL_NAME: [ on ]
+  - tags: get,generic-python-lib,_package.vllm
