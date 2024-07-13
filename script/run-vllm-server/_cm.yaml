@@ -23,7 +23,7 @@ input_mapping:
 
 deps:
   - tags: get,python3,get-python3
-    version_max: "3.11"
+    version_max: "3.11.999"
     version_max_usable: "3.11.0"    
   
   - tags: get,ml-model,huggingface,zoo,_clone-repo
