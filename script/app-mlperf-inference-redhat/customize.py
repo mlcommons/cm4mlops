@@ -73,6 +73,8 @@ def get_run_cmd(model, i):
         submitter = "RedHat-Supermicro"
         run_dir = os.path.join(env['CM_MLPERF_INFERENCE_IMPLEMENTATION_REPO'], "open", submitter, "code", model)
 
+        return {'return': 0, 'run_cmd': run_cmd, 'run_dir': run_dir}
+
 def postprocess(i):
 
     env = i['env']

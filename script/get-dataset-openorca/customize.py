@@ -11,7 +11,6 @@ def preprocess(i):
         download_cmd = "rclone copy mlc-inference:mlcommons-inference-wg-public/open_orca . -P"
         run_cmd = f"{auth_s3_bucket} && {download_cmd}"
 
-        print(run_cmd)
         env['CM_RUN_CMD'] = run_cmd
 
     return {'return': 0}
@@ -19,7 +18,9 @@ def preprocess(i):
 def postprocess(i):
     env = i['env']
     if env.get('CM_DATASET_CALIBRATION','') == "no":
-        if env.get("CM_MLPERF_IMPLEMENTATION", "") != "redhat":
+        if env.get("CM_MLPERF_IMPLEMENTATION", "") == "redhat":
+            env['CM_DATASET_OPENORCA_PATH'] = os.path.join(os.getcwd(), 'open_orca', 'open_orca_gpt4_tokenized_llama.sampled_24576.pkl.gz')
+        else:
             env['CM_DATASET_PATH_ROOT'] = env['CM_DATASET_OPENORCA_PATH']
             env['CM_DATASET_PATH'] = env['CM_DATASET_OPENORCA_PATH']
             env['CM_DATASET_OPENORCA_PARQUET'] = os.path.join(env['CM_DATASET_OPENORCA_PATH'], '1M-GPT4-Augmented.parquet')
