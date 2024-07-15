@@ -52,6 +52,26 @@ def get_run_cmd(model, i):
         run_dir = os.path.join(env['CM_MLPERF_INFERENCE_IMPLEMENTATION_REPO'], "open", submitter, "code", "gptj-99")
 
         return {'return': 0, 'run_cmd': run_cmd, 'run_dir': run_dir}
+    
+    if "llama2" in model:
+        scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
+        device = env['CM_MLPERF_DEVICE']
+        mode = env['CM_MLPERF_LOADGEN_MODE']
+        outdir = env['CM_MLPERF_OUTPUT_DIR']
+        mlperf_conf_path = env['CM_MLPERF_CONF']
+        user_conf_path = env['CM_MLPERF_USER_CONF']
+        api_server = env.get('CM_MLPERF_INFERENCE_API_SERVER', 'localhost:8000/v1')
+        api_model_name = env['CM_VLLM_SERVER_MODEL_NAME']
+        dataset_path = env['CM_DATASET_OPENORCA_PATH']
+        precision = env['CM_MLPERF_MODEL_PRECISION']
+        if mode == "accuracy":
+            accuracy_string = " --accuracy "
+        else:
+            accuracy_string = ""
+
+        run_cmd = f"python3 -u main.py --scenario {scenario} --api-model-name {api_model_name} --api-server {api_server} --mlperf-conf {mlperf_conf_path} {accuracy_string} --vllm --user-conf {user_conf_path} --dataset-path {dataset_path} --output-log-dir {outdir} --dtype float32 --device {device} "
+        submitter = "RedHat-Supermicro"
+        run_dir = os.path.join(env['CM_MLPERF_INFERENCE_IMPLEMENTATION_REPO'], "open", submitter, "code", model)
 
 def postprocess(i):
 
