@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE.md)
 [![Python Version](https://img.shields.io/badge/python-3+-blue.svg)](https://github.com/mlcommons/ck/tree/master/cm/cmind)
 [![Powered by CM](https://img.shields.io/badge/Powered_by-MLCommons%20CM-blue)](https://github.com/mlcommons/ck).
-[![Downloads](https://static.pepy.tech/badge/cmind)](https://pepy.tech/project/cmind)
+[![Downloads](https://static.pepy.tech/badge/cm4mlops)](https://pepy.tech/project/cm4mlops)
 
 [![CM script automation test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-scripts.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-scripts.yml)
 [![CM script automation features test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-script-features.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-script-features.yml)

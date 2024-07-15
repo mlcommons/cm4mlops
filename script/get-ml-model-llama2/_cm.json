@@ -16,7 +16,8 @@
   },
   "new_env_keys": [
     "CM_ML_MODEL_*",
-    "LLAMA2_CHECKPOINT_PATH"
+    "LLAMA2_CHECKPOINT_PATH",
+    "CM_NVIDIA_TP_SIZE"
   ],
   "prehook_deps": [
     {
@@ -98,11 +99,29 @@
       },
       "group": "precision"
     },
-    "int8": {
+    "tp_size.#": {
       "env": {
-        "CM_ML_MODEL_INPUT_DATA_TYPES": "int8",
-        "CM_ML_MODEL_PRECISION": "int8",
-        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "int8"
+        "CM_NVIDIA_TP_SIZE": "#"
+      },
+      "group": "gpu"
+    },
+    "generic": {
+      "env":{
+        "CM_NVIDIA_TP_SIZE": 2
+      },
+      "group": "gpu"
+    },
+    "L40s": {
+      "env":{
+        "CM_NVIDIA_TP_SIZE": 4
+      },
+      "group": "gpu"
+    },
+    "fp8": {
+      "env": {
+        "CM_ML_MODEL_INPUT_DATA_TYPES": "fp8",
+        "CM_ML_MODEL_PRECISION": "fp8",
+        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "fp8"
       },
       "group": "precision"
     },
@@ -112,6 +131,71 @@
         "CM_ML_MODEL_FRAMEWORK": "pytorch"
       },
       "group": "framework"
+    },
+    "nvidia": {
+      "default_variations": {
+        "framework": "pytorch"
+      },
+      "group": "model-provider",
+      "env": {
+        "CM_TMP_ML_MODEL_PROVIDER": "nvidia"
+      }
+    },
+    "pytorch,nvidia": {
+      "default_variations": {
+        "precision": "fp8",
+        "gpu": "generic"
+      },
+      "deps": [
+        {
+          "tags": "get,git,repo,_repo.https://github.com/NVIDIA/TensorRT-LLM.git,_sha.0ab9d17a59c284d2de36889832fe9fc7c8697604",
+          "extra_cache_tags": "tensorrt-llm",
+          "env": {
+            "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_TENSORRT_LLM_CHECKOUT_PATH"
+          }
+        },
+        {
+          "tags": "get,cuda",
+          "names": [
+            "cuda"
+          ]
+        },
+        {
+          "tags": "get,nvidia,scratch,space"
+        },
+        {
+          "tags": "get,cuda-devices"
+        },
+        {
+          "tags": "get,ml-model,llama2-70b,_fp32,_pytorch",
+          "env": {
+          },
+          "force_new_env_keys": [
+            "LLAMA2_CHECKPOINT_PATH"
+          ]
+        },
+        {
+          "tags": "get,nvidia,inference,common-code",
+          "names": [
+            "nvidia-inference-common-code"
+          ]
+        },
+        {
+          "tags": "get,python3",
+          "names": [
+            "python",
+            "python3"
+          ]
+        }
+      ]
+    },
+    "int8": {
+      "env": {
+        "CM_ML_MODEL_INPUT_DATA_TYPES": "int8",
+        "CM_ML_MODEL_PRECISION": "int8",
+        "CM_ML_MODEL_WEIGHT_DATA_TYPES": "int8"
+      },
+      "group": "precision"
     },
     "pytorch,fp32": {
       "env": {}

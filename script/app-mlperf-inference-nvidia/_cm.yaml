@@ -161,9 +161,11 @@ deps:
       CM_MODEL:
       - dlrm-v2-99
       - dlrm-v2-99.9
-    skip_if_env:
+    skip_if_any_env:
       DLRM_DATA_PATH:
       - 'on'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - criteo-preprocessed
     tags: get,dataset,preprocessed,criteo
@@ -174,9 +176,11 @@ deps:
       CM_MODEL:
       - dlrm-v2-99
       - dlrm-v2-99.9
-    skip_if_env:
+    skip_if_any_env:
       DLRM_DATA_PATH:
       - on
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - dlrm-model
     tags: get,ml-model,dlrm,_pytorch
@@ -235,22 +239,7 @@ deps:
       - retinanet
     names:
       - openimages-calibration
-    tags: get,dataset,original,openimages,_calibration
-
-
-  ########################################################################
-  # Install openorca dataset
-
-  - enable_if_env:
-      CM_MODEL:
-      - gptj-99
-      - gptj-99.9
-      CM_MLPERF_NVIDIA_HARNESS_RUN_MODE:
-      - preprocess_dataset
-    names:
-      - openorca-original
-    tags: get,dataset,original,openorca
-
+    tags: get,dataset,original,openimages,_calibration   
 
   ########################################################################
   # Install MLPerf inference dependencies
@@ -394,13 +383,16 @@ variations:
       version: 1.13.1
 
   sdxl:
+    new_env_keys:                                                                      
+      - CM_SDXL_ACCURACY_RUN_DEVICE
     group: model
     env:
       CM_MODEL: stable-diffusion-xl
       CM_NOT_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/main/script/get-ml-model-stable-diffusion/_cm.json#L174"
-      CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
+      CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: "quantization, affine fusion"
       CM_ML_MODEL_INPUTS_DATA_TYPE: int32
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
+      CM_SDXL_ACCURACY_RUN_DEVICE: "gpu"
     deps:
       - tags: get,generic-python-lib,_package.diffusers
         names:
@@ -448,7 +440,6 @@ variations:
         env:
           CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL: "https://pypi.nvidia.com"
           CM_GENERIC_PYTHON_PIP_EXTRA: "--no-cache-dir"
-          CM_SDXL_ACCURACY_RUN_DEVICE: " gpu"
       - tags: get,generic-python-lib,_package.optimum
         names:
           - optimum
@@ -580,6 +571,58 @@ variations:
       CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: affine fusion
       CM_ML_MODEL_INPUTS_DATA_TYPE: fp32
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: fp16
+
+  llama2-70b_:
+    deps:
+      - tags: get,generic-python-lib,_package.transformers
+        names:
+          - transformers
+      - tags: get,generic-python-lib,_package.datasets
+        names:
+          - datasets
+      - tags: get,generic-python-lib,_package.sentencepiece
+        names:
+          - sentencepiece
+      - tags: get,generic-python-lib,_package.protobuf
+        names:
+          - protobuf
+      - tags: get,generic-python-lib,_package.accelerate
+        names:
+          - accelerate
+      - tags: get,generic-python-lib,_package.absl-py
+        names:
+          - absl-py
+      - tags: get,generic-python-lib,_package.evaluate
+        names:
+          - evaluate
+      - tags: get,generic-python-lib,_package.nltk
+        names:
+          - nltk
+      - tags: get,generic-python-lib,_package.numpy
+        names:
+          - numpy
+      - tags: get,generic-python-lib,_package.rouge-score
+        names:
+          - rouge-score
+    env:
+      CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/b18ff890ff559e21d2e27a3b54cd26467ac1fd9e/script/get-ml-model-llama2/_cm.json#L51"
+      CM_ML_MODEL_INPUTS_DATA_TYPE: int32
+      CM_ML_MODEL_WEIGHTS_DATA_TYPE: fp16
+      CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
+
+  llama2-70b-99:
+    group: model
+    base:
+    - llama2-70b_
+    env:
+      CM_MODEL: llama2-70b-99
+
+  llama2-70b-99.9:
+    group: model
+    base:
+    - llama2-70b_
+    env:
+      CM_MODEL: llama2-70b-99.9
 
   gptj_:
     deps:
@@ -999,6 +1042,10 @@ variations:
     default_variations:
       batch-size: batch_size.1
 
+  llama2-70b_,run_harness:
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_USE_FP8: 'True'
+
   gptj_,run_harness:
     deps:
     - tags: install,pytorch,from.src
@@ -1012,6 +1059,10 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_NUM_SORT_SEGMENTS: '2'
       CM_MLPERF_NVIDIA_HARNESS_SKIP_POSTPROCESS: True
 
+  gpu_memory.80,num-gpus.2,llama2-70b,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.896
+      
   gpu_memory.16,gptj_,offline,run_harness:
     default_variations:
       batch-size: batch_size.4

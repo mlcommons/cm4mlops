@@ -96,6 +96,8 @@ input_mapping:
   test_query_count: CM_TEST_QUERY_COUNT
   threads: CM_NUM_THREADS
   sut: CM_MLPERF_INFERENCE_SUT_VARIATION
+  nvidia_llama2_dataset_file_path: CM_NVIDIA_LLAMA_DATASET_FILE_PATH
+  tp_size: CM_NVIDIA_TP_SIZE
 
 new_state_keys:
 - app_mlperf_inference_*
@@ -250,10 +252,22 @@ variations:
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r3.1_default
     group: benchmark-version
 
+  r4.0-dev:
+    env:
+      CM_MLPERF_INFERENCE_VERSION: '4.0-dev'
+      CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.0-dev_default
+    group: benchmark-version
+
   r4.0:
     env:
       CM_MLPERF_INFERENCE_VERSION: '4.0'
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.0_default
+    group: benchmark-version
+
+  r4.1-dev:
+    env:
+      CM_MLPERF_INFERENCE_VERSION: '4.1-dev'
+      CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.1-dev_default
     group: benchmark-version
 
   r4.1:
