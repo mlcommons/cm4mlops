@@ -252,10 +252,22 @@ variations:
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r3.1_default
     group: benchmark-version
 
+  r4.0-dev:
+    env:
+      CM_MLPERF_INFERENCE_VERSION: '4.0-dev'
+      CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.0-dev_default
+    group: benchmark-version
+
   r4.0:
     env:
       CM_MLPERF_INFERENCE_VERSION: '4.0'
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.0_default
+    group: benchmark-version
+
+  r4.1-dev:
+    env:
+      CM_MLPERF_INFERENCE_VERSION: '4.1-dev'
+      CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.1-dev_default
     group: benchmark-version
 
   r4.1:
