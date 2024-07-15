@@ -107,13 +107,14 @@ deps:
 
   - tags: get,git,repo
     names:
-      inference-results
-      inference-code
-    updats_tags_from_env_with_prefix:
-      _repo.: CM_MLPERF_INFERENCE_RESULTS_REPO
+      - inference-results
+      - inference-code
+    update_tags_from_env_with_prefix:
+      _repo.:
+        - CM_MLPERF_INFERENCE_RESULTS_REPO
     env:
       CM_GIT_CHECKOUT_PATH_ENV_NAME: CM_MLPERF_INFERENCE_IMPLEMENTATION_REPO
-    extra_cache_tags: inference-implementation,mlperf
+    extra_cache_tags: results,repo,mlperf
 
 # Post dependencies to run this app including for power measurement
 post_deps:
@@ -296,10 +297,11 @@ variations:
   fp32:
     group: precision
 
-  r4.0_default:
+  r4.1-dev_default:
     group: version
     default: true
     env:
       CM_MLPERF_INFERENCE_RESULTS_REPO: https://github.com/mlcommons/inference_results_v4.0
+
 docker:
   real_run: False

@@ -27,7 +27,12 @@ def preprocess(i):
     run_dir = r ['run_dir']
     print(run_cmd)
     print(run_dir)
-    return {'return':1, 'error': 'Run command needs to be tested'}
+    env['CM_MLPERF_RUN_CMD'] = run_cmd
+    env['CM_RUN_DIR'] = run_dir
+    env['CM_RUN_CMD'] = run_cmd
+
+    return {'return':0}
+    #return {'return':1, 'error': 'Run command needs to be tested'}
 
 def get_run_cmd(model, i):
     env = i['env']

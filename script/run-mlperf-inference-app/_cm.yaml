@@ -36,6 +36,7 @@ default_env:
   CM_MLPERF_RUN_STYLE: test
 
 input_mapping:
+  api_server: CM_MLPERF_INFERENCE_API_SERVER
   backend: CM_MLPERF_BACKEND
   batch_size: CM_MLPERF_LOADGEN_MAX_BATCHSIZE
   beam_size: GPTJ_BEAM_SIZE
