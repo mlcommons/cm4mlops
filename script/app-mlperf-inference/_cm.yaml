@@ -1078,7 +1078,7 @@ variations:
 
   valid,retinanet:
     adr:
-      openimages-accuracy-script:
+      openimages-accuracy-script-disabled:
         tags: _nvidia-pycocotools
 
   valid:
