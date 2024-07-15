@@ -178,7 +178,7 @@ variations:
     default:
       true
     default_variations:
-      reproducibility: r4.1_default
+      reproducibility: r4.1-dev_default
     add_deps_recursive:
       imagenet-accuracy-script:
         tags: _float32
@@ -246,6 +246,17 @@ variations:
     default_variations:
       backend: onnxruntime
 
+  nvidia-original,r4.1-dev_default:
+    docker:
+      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+
+  nvidia-original,r4.1-dev_default,gptj_:
+    docker:
+      deps:
+        - tags: get,ml-model,gptj,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            tp_size: CM_NVIDIA_TP_SIZE
+
   nvidia-original,r4.1_default:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
@@ -260,6 +271,16 @@ variations:
     env:
       BUILD_TRTLLM: 1
   
+  nvidia-original,r4.1-dev_default,llama2-70b_:
+    docker:
+      deps:
+        - tags: get,ml-model,llama2-70b,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            _tp_size.:
+            - CM_NVIDIA_TP_SIZE
+    env:
+      BUILD_TRTLLM: 1
+
   nvidia-original,r4.1_default,llama2-70b_:
     docker:
       deps:
@@ -292,7 +313,7 @@ variations:
     default_variations:
       backend: tensorrt
       device: cuda
-      reproducibility: r4.1_default
+      reproducibility: r4.1-dev_default
     group:
       implementation
     add_deps_recursive:
@@ -350,7 +371,7 @@ variations:
     default_variations:
       device: cpu
       backend: pytorch
-      reproducibility: r4.1_default
+      reproducibility: r4.1-dev_default
     prehook_deps:
       - names:
          - intel
@@ -375,7 +396,7 @@ variations:
     default_variations:
       device: cuda
       backend: openshift
-      reproducibility: r4.0_default
+      reproducibility: r4.1-dev_default
     prehook_deps:
       - names:
          - redhat
@@ -399,7 +420,7 @@ variations:
     default_variations:
       device: qaic
       backend: glow
-      reproducibility: r4.0_default
+      reproducibility: r4.1-dev_default
     prehook_deps:
       - names:
          - kilt
@@ -571,9 +592,6 @@ variations:
         - all
         CM_MLPERF_ACCURACY_RESULTS_DIR:
         - 'on'
-      skip_if_env:
-        CM_MLPERF_IMPLEMENTATION:
-        - nvidia
       names:
       - mlperf-accuracy-script
       - coco2014-accuracy-script
@@ -1060,7 +1078,7 @@ variations:
 
   valid,retinanet:
     adr:
-      openimages-accuracy-script:
+      openimages-accuracy-script-disabled:
         tags: _nvidia-pycocotools
 
   valid:
@@ -1239,6 +1257,24 @@ variations:
     env:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
 
+  r4.0-dev_default:
+    group:
+      reproducibility
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r3.1
+        tags: _ctuning
+      nvidia-inference-server:
+        version: r3.1
+        tags: _ctuning
+      intel-harness:
+        tags: _v3.1
+    default_env:
+      CM_SKIP_SYS_UTILS: 'yes'
+      CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
+
   r4.0_default:
     group:
       reproducibility
@@ -1256,6 +1292,25 @@ variations:
       CM_REGENERATE_MEASURE_FILES: 'yes'
     env:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
+
+        #uses public code for inference v4.1
+  r4.1-dev_default:
+    group:
+      reproducibility
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r4.0
+        tags: _go
+      nvidia-inference-server:
+        version: r4.0
+        tags: _go
+      intel-harness:
+        tags: _v4.0
+    default_env:
+      CM_SKIP_SYS_UTILS: 'yes'
+      CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
 
   r4.1_default:
     group:
