@@ -11,7 +11,7 @@
       "names": [
         "mlperf-inference-results"
       ],
-      "tags": "get,mlperf,inference,results",
+      "tags": "get,mlperf,inference,results,official",
       "inherit_variation_tags": true
     }
   ],

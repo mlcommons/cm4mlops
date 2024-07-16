@@ -215,7 +215,7 @@
       },
       "deps": [
         {
-          "tags": "get,git,repo,_repo.https://github.com/NVIDIA/TensorRT-LLM.git,_sha.0ab9d17a59c284d2de36889832fe9fc7c8697604",
+          "tags": "get,git,repo,_lfs,_repo.https://github.com/NVIDIA/TensorRT-LLM.git,_sha.0ab9d17a59c284d2de36889832fe9fc7c8697604",
           "extra_cache_tags": "tensorrt-llm",
           "env": {
             "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_TENSORRT_LLM_CHECKOUT_PATH"

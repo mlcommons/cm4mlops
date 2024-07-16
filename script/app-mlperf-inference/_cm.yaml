@@ -61,6 +61,8 @@ input_mapping:
   readme: CM_MLPERF_README
   debug: CM_DEBUG_SCRIPT_BENCHMARK_PROGRAM
   gpu_name: CM_NVIDIA_GPU_NAME
+  nvidia_llama2_dataset_file_path: CM_NVIDIA_LLAMA_DATASET_FILE_PATH
+  tp_size: CM_NVIDIA_TP_SIZE
 
 # Duplicate CM environment variables to the ones used in native apps
 env_key_mappings:
@@ -176,7 +178,7 @@ variations:
     default:
       true
     default_variations:
-      reproducibility: r4.1_default
+      reproducibility: r4.1-dev_default
     add_deps_recursive:
       imagenet-accuracy-script:
         tags: _float32
@@ -244,6 +246,17 @@ variations:
     default_variations:
       backend: onnxruntime
 
+  nvidia-original,r4.1-dev_default:
+    docker:
+      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+
+  nvidia-original,r4.1-dev_default,gptj_:
+    docker:
+      deps:
+        - tags: get,ml-model,gptj,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            tp_size: CM_NVIDIA_TP_SIZE
+
   nvidia-original,r4.1_default:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
@@ -252,6 +265,29 @@ variations:
     docker:
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            tp_size: CM_NVIDIA_TP_SIZE
+        
+    env:
+      BUILD_TRTLLM: 1
+  
+  nvidia-original,r4.1-dev_default,llama2-70b_:
+    docker:
+      deps:
+        - tags: get,ml-model,llama2-70b,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            _tp_size.:
+            - CM_NVIDIA_TP_SIZE
+    env:
+      BUILD_TRTLLM: 1
+
+  nvidia-original,r4.1_default,llama2-70b_:
+    docker:
+      deps:
+        - tags: get,ml-model,llama2-70b,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            _tp_size.:
+            - CM_NVIDIA_TP_SIZE
     env:
       BUILD_TRTLLM: 1
 
@@ -277,7 +313,7 @@ variations:
     default_variations:
       backend: tensorrt
       device: cuda
-      reproducibility: r4.1_default
+      reproducibility: r4.1-dev_default
     group:
       implementation
     add_deps_recursive:
@@ -335,7 +371,7 @@ variations:
     default_variations:
       device: cpu
       backend: pytorch
-      reproducibility: r4.1_default
+      reproducibility: r4.1-dev_default
     prehook_deps:
       - names:
          - intel
@@ -360,7 +396,7 @@ variations:
     default_variations:
       device: cuda
       backend: openshift
-      reproducibility: r4.0_default
+      reproducibility: r4.1-dev_default
     prehook_deps:
       - names:
          - redhat
@@ -384,7 +420,7 @@ variations:
     default_variations:
       device: qaic
       backend: glow
-      reproducibility: r4.0_default
+      reproducibility: r4.1-dev_default
     prehook_deps:
       - names:
          - kilt
@@ -546,7 +582,6 @@ variations:
       CM_MLPERF_INFERENCE_TEST_QPS: "0.05"
     default_variations:
       precision: float16
-      device: cuda
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _sdxl
@@ -557,9 +592,6 @@ variations:
         - all
         CM_MLPERF_ACCURACY_RESULTS_DIR:
         - 'on'
-      skip_if_env:
-        CM_MLPERF_IMPLEMENTATION:
-        - nvidia
       names:
       - mlperf-accuracy-script
       - coco2014-accuracy-script
@@ -793,6 +825,10 @@ variations:
       mlperf-inference-implementation:
         tags: _dlrm-v2-99.9
 
+  dlrm_,nvidia:
+    docker:
+      deps:
+        - tags: get,dlrm,data,mlperf,inference,_nvidia
   mobilenet:
     group:
       model
@@ -1042,7 +1078,7 @@ variations:
 
   valid,retinanet:
     adr:
-      openimages-accuracy-script:
+      openimages-accuracy-script-disabled:
         tags: _nvidia-pycocotools
 
   valid:
@@ -1221,6 +1257,24 @@ variations:
     env:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
 
+  r4.0-dev_default:
+    group:
+      reproducibility
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r3.1
+        tags: _ctuning
+      nvidia-inference-server:
+        version: r3.1
+        tags: _ctuning
+      intel-harness:
+        tags: _v3.1
+    default_env:
+      CM_SKIP_SYS_UTILS: 'yes'
+      CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
+
   r4.0_default:
     group:
       reproducibility
@@ -1238,6 +1292,25 @@ variations:
       CM_REGENERATE_MEASURE_FILES: 'yes'
     env:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
+
+        #uses public code for inference v4.1
+  r4.1-dev_default:
+    group:
+      reproducibility
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r4.0
+        tags: _go
+      nvidia-inference-server:
+        version: r4.0
+        tags: _go
+      intel-harness:
+        tags: _v4.0
+    default_env:
+      CM_SKIP_SYS_UTILS: 'yes'
+      CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
 
   r4.1_default:
     group:
@@ -1351,8 +1424,8 @@ docker:
   use_host_group_id: True
   use_host_user_id: True
   deps:
-    - tags: get,mlperf,inference,results,dir
-    - tags: get,mlperf,inference,submission,dir
+    - tags: get,mlperf,inference,results,dir,local
+    - tags: get,mlperf,inference,submission,dir,local
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
@@ -1363,6 +1436,7 @@ docker:
    - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
    - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
+   - "${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}:${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}"
   skip_run_cmd: 'no'
   shm_size: '32gb'
   interactive: True
@@ -1379,3 +1453,5 @@ docker:
     submission_dir: SUBMISSION_DIR
     dlrm_data_path: DLRM_DATA_PATH
     intel_gptj_int8_model_path: CM_MLPERF_INFERENCE_INTEL_GPTJ_INT8_MODEL_PATH
+    nvidia_llama2_dataset_file_path: CM_NVIDIA_LLAMA_DATASET_FILE_PATH
+    tp_size: CM_NVIDIA_TP_SIZE

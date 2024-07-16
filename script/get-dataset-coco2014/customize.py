@@ -18,7 +18,7 @@ def postprocess(i):
     env = i['env']
     if env.get('CM_DATASET_CALIBRATION','') == "no":
         env['CM_DATASET_PATH_ROOT'] = os.path.join(os.getcwd(), 'install')
-        env['CM_DATASET_PATH'] = os.path.join(os.getcwd(), 'install', 'validation', 'data')
+        #env['CM_DATASET_PATH'] = os.path.join(os.getcwd(), 'install', 'validation', 'data')
         env['CM_DATASET_CAPTIONS_DIR_PATH'] = os.path.join(os.getcwd(), 'install', 'captions')
         env['CM_DATASET_LATENTS_DIR_PATH'] = os.path.join(os.getcwd(), 'install', 'latents')
     else:

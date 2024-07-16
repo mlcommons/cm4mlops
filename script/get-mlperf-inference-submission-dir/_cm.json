@@ -25,6 +25,7 @@
     "mlperf",
     "inference",
     "submission",
+    "local",
     "dir",
     "directory"
   ],
