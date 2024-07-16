@@ -22,7 +22,7 @@
       "env": {
         "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_MLPERF_INFERENCE_RESULTS_PATH"
       },
-      "extra_cache_tags": "mlperf,inference,results"
+      "extra_cache_tags": "mlperf,inference,results,official"
     }
   ],
   "deps": [
@@ -34,6 +34,7 @@
     "get",
     "results",
     "inference",
+    "official",
     "inference-results",
     "mlcommons",
     "mlperf"

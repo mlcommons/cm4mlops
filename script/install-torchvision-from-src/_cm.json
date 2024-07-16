@@ -28,6 +28,14 @@
       "names": [ "compiler" ]
     },
     {
+      "tags": "get,generic-sys-util,_libpng-dev",
+      "enable_if_env": {
+        "CM_TORCHVISION_NEEDS_PNG": [
+          "yes"
+        ]
+      }
+    },
+    {
       "env": {
         "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_PYTORCH_VISION_SRC_REPO_PATH"
       },

@@ -21,6 +21,7 @@ def preprocess(i):
             env['INT8_MODEL_DIR'] = os.getcwd()
         else:
             env['INT4_MODEL_DIR'] = os.getcwd()
+
     elif env.get('CM_TMP_ML_MODEL_PROVIDER', '') == 'nvidia':
         i['run_script_input']['script_name'] = 'run-nvidia'
         gpu_arch = int(float(env['CM_CUDA_DEVICE_PROP_GPU_COMPUTE_CAPABILITY']) * 10)

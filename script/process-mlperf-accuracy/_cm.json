@@ -307,7 +307,7 @@
         }
       ],
       "env": {
-        "CM_DATASET": "squad"
+        "CM_DATASET": "terabyte"
       },
       "group": "dataset"
     },
@@ -359,6 +359,9 @@
             "coco2014-original"
           ],
           "tags": "get,dataset,coco2014,original"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.ijson"
         }
       ],
       "env": {
