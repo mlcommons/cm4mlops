@@ -517,7 +517,7 @@ deps:
       - stable-diffusion-xl
 
   ## OpenOrca for LLAMA2-70b
-  - tags: get,preprocessed,dataset,openorca,_validation
+  - tags: get,preprocessed,dataset,openorca,_validation,_mlcommons
     names:
     - openorca-preprocessed
     enable_if_env:
