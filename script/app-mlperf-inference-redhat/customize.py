@@ -74,7 +74,7 @@ def get_run_cmd(model, i):
         else:
             accuracy_string = ""
 
-        run_cmd = f"python3 -u {os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], 'language', 'llama2-70b', 'main.py')} --scenario {scenario} --model-path {api_model_name} --api-model-name {api_model_name} --api-server {api_server} --mlperf-conf {mlperf_conf_path} {accuracy_string} --vllm --user-conf {user_conf_path} --dataset-path {dataset_path} --output-log-dir {outdir} --dtype float32 --device {device} "
+        run_cmd = f"python3 -u  'main.py' --scenario {scenario} --model-path {api_model_name} --api-model-name {api_model_name} --api-server {api_server} --mlperf-conf {mlperf_conf_path} {accuracy_string} --vllm --user-conf {user_conf_path} --dataset-path {dataset_path} --output-log-dir {outdir} --dtype float32 --device {device} "
         submitter = "RedHat-Supermicro"
         run_dir = os.path.join(env['CM_MLPERF_INFERENCE_IMPLEMENTATION_REPO'], "open", submitter, "code", model)
 
