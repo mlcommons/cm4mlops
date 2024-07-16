@@ -280,9 +280,6 @@ variations:
             - CM_NVIDIA_TP_SIZE
     env:
       BUILD_TRTLLM: 1
-    skip_if_env:
-      CM_MLPERF_INFERENCE_API_SERVER: 
-      - "*"
 
   nvidia-original,r4.1_default,llama2-70b_:
     docker:
@@ -293,9 +290,6 @@ variations:
             - CM_NVIDIA_TP_SIZE
     env:
       BUILD_TRTLLM: 1
-    skip_if_env:
-      CM_MLPERF_INFERENCE_API_SERVER:
-      - "*"
 
   nvidia-original:
     docker:
