@@ -13,11 +13,6 @@
       "force_env_keys": [
         "CM_GIT_*"
       ],
-      "skip_if_env": {
-        "CM_MLPERF_IMPLEMENTATION": [
-            "redhat"
-        ]
-      },
       "names": [
         "openorca-src"
       ],
@@ -80,13 +75,6 @@
         "CM_DATASET_CALIBRATION": "no"
       },
       "group": "dataset-type"
-    },
-    "redhat": {
-      "deps":[
-        {
-          "tags":"get,rclone"
-        }
-      ]
     }
   }
 }
