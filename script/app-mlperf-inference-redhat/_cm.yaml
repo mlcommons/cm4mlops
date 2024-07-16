@@ -243,9 +243,11 @@ variations:
 
   llama2-70b_:
     deps:
-      - tags: get,dataset,openorca,language-processing,original
+      - tags: get,dataset,openorca,language-processing,original,_redhat
         env:
           CM_MLPERF_IMPLEMENTATION: redhat
+    env:
+        CM_VLLM_SERVER_MODEL_NAME: NousResearch/Meta-Llama-3-8B-Instruct # assigned just for testing purpose
 
   llama2-70b-99:
     group: model
@@ -260,7 +262,6 @@ variations:
     - llama2-70b_
     env:
       CM_MODEL: llama2-70b-99.9
-      CM_VLLM_SERVER_MODEL_NAME: NousResearch/Meta-Llama-3-8B-Instruct # assigned just for testing purpose
 
   singlestream:
     group: loadgen-scenario
