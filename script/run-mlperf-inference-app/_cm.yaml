@@ -99,6 +99,7 @@ input_mapping:
   sut: CM_MLPERF_INFERENCE_SUT_VARIATION
   nvidia_llama2_dataset_file_path: CM_NVIDIA_LLAMA_DATASET_FILE_PATH
   tp_size: CM_NVIDIA_TP_SIZE
+  vllm_model_name: CM_VLLM_SERVER_MODEL_NAME
 
 new_state_keys:
 - app_mlperf_inference_*
