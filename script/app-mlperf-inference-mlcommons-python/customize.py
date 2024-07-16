@@ -306,7 +306,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
                 " --output-log-dir " + env['CM_MLPERF_OUTPUT_DIR'] + \
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
                 " --model-path " + env['MODEL_DIR']
-        if env.get('CM_API_SERVER', '') != '':
+        if env.get('CM_MLPERF_INFERENCE_API_SERVER', '') != '':
             env['CM_VLLM_SERVER_MODEL_NAME'] = "NousResearch/Meta-Llama-3-8B-Instruct"
             if env.get('CM_MLPERF_INFERENCE_API_SERVER') == '':
                 env['CM_MLPERF_INFERENCE_API_SERVER'] = "http://localhost:8000"
