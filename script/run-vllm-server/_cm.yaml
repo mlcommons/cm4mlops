@@ -45,7 +45,9 @@ deps:
 docker:
   port_maps:
     - "8000:8000"
-  base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+  base_image: nvcr.io/nvidia/pytorch:24.06-py3
   interactive: True
   extra_run_args: ' --ulimit memlock=-1'
   all_gpus: 'yes'
+  os: "ubuntu"
+  os_version: "22.04"
