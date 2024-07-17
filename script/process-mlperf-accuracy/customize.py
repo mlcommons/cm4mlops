@@ -77,7 +77,11 @@ def preprocess(i):
         elif dataset == "openorca":
             accuracy_checker_file = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "llama2-70b",
                 "evaluate-accuracy.py")
-            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + accuracy_checker_file + "' --checkpoint-path '" + env['CM_ML_MODEL_LLAMA2_FILE_WITH_PATH'] + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
+            if env.get('CM_VLLM_SERVER_MODEL_NAME','') == '':
+                checkpoint_path = env['CM_ML_MODEL_LLAMA2_FILE_WITH_PATH']
+            else:
+                checkpoint_path = env['CM_VLLM_SERVER_MODEL_NAME']
+            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + accuracy_checker_file + "' --checkpoint-path '" + checkpoint_path + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
                 "' --dataset-file '" + env['CM_DATASET_PREPROCESSED_PATH'] + "'"+ " --dtype " + env.get('CM_ACCURACY_DTYPE', "int32")  +" > '" + out_file + "'"
         
         elif dataset == "openorca-gsm8k-mbxp-combined":

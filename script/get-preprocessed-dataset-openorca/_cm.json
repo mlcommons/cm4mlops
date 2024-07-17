@@ -24,7 +24,13 @@
         "openorca-original",
         "dataset-original"
       ],
-      "tags": "get,dataset,original,openorca"
+      "tags": "get,dataset,original,openorca",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_BY_MLC": [
+          "on",
+          "yes"
+        ]
+      }
     },
     {
       "force_env_keys": [
@@ -33,7 +39,13 @@
       "names": [
         "inference-src"
       ],
-      "tags": "mlperf,inference,source"
+      "tags": "mlperf,inference,source",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_BY_MLC": [
+          "on",
+          "yes"
+        ]
+      }
     },
     {
       "tags": "get,generic-python-lib,_package.pyarrow",
@@ -54,7 +66,14 @@
       ]
     },
     {
-      "tags": "get,ml-model,llama2"
+      "tags": "get,ml-model,llama2",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_BY_MLC": [
+          "on",
+          "yes"
+        ]
+      }
+
     }
   ],
   "env": {
@@ -73,7 +92,6 @@
   "uid": "5614c39cb1564d72",
   "variations": {
     "60": {
-      "default": true,
       "ad": {
         "dataset-original": {
           "tags": "_60"
@@ -88,6 +106,7 @@
       "group": "dataset-type"
     },
     "full": {
+      "default": true,
       "ad": {
         "dataset-original": {
           "tags": "_full"
@@ -109,6 +128,33 @@
         "CM_DATASET_CALIBRATION": "no"
       },
       "group": "dataset-type"
+    },
+    "mlcommons": {
+      "env": {
+        "CM_DATASET_PREPROCESSED_BY_MLC": "yes",
+        "CM_RCLONE_CONFIG_CMD": "rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com",
+        "CM_RCLONE_URL": "mlc-inference:mlcommons-inference-wg-public/open_orca"
+      },
+      "deps": [
+        {
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_OPENORCA_PREPROCESSED_ROOT",
+            "CM_EXTRACT_FINAL_ENV_NAME": "CM_OPENORCA_PREPROCESSED_ROOT",
+            "CM_EXTRACT_TO_FOLDER": "openorca-preprocessed"
+          },
+          "tags": "download-and-extract,_rclone",
+          "update_tags_from_env_with_prefix": {
+            "_url.": [
+              "CM_RCLONE_URL"
+            ]
+          },
+          "force_cache": true,
+          "names": [
+            "dae"
+          ],
+          "extra_cache_tags": "openorca,preprocessed,dataset"
+        }
+      ]
     }
   },
   "docker": {
