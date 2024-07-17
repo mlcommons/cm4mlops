@@ -1,1 +1,0 @@
-docker run  --entrypoint ''  -p 8000:8000 cknowledge/cm-script-run-vllm-server:ubuntu-22.04-latest bash -c 'cm run script --tags=run,vllm-server --model=NousResearch/Hermes-2-Theta-Llama-3-8B --api_key=    '
