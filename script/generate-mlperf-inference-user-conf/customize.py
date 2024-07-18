@@ -256,8 +256,8 @@ def preprocess(i):
         ranging_user_conf += ml_model_name + "." + scenario + ".min_duration = 300000" + "\n"
 
     if env['CM_MLPERF_RUN_STYLE'] == "test":
-        max_duration_test_s = env.get('CM_MLPERF_MAX_DURATION_TEST', 30)
-        max_duration_test = max_duration_test_s * 1000 # in milliseconds
+        max_duration_test_s = int(env.get('CM_MLPERF_MAX_DURATION_TEST', 30))
+        max_duration_test = str(max_duration_test_s * 1000) # in milliseconds
         query_count = env.get('CM_TEST_QUERY_COUNT', "5")
         user_conf += ml_model_name + "." + scenario + ".max_query_count = " + query_count + "\n"
         user_conf += ml_model_name + "." + scenario + ".min_query_count = " + query_count + "\n"
@@ -272,8 +272,8 @@ def preprocess(i):
 
     elif env['CM_MLPERF_RUN_STYLE'] == "fast":
         user_conf += ml_model_name + "." + scenario + ".sample_concatenate_permutation = 0" + "\n"
-        max_duration_fast_s = env.get('CM_MLPERF_MAX_DURATION_FAST', 120)
-        max_duration_fast = max_duration_fast_s * 1000 # in milliseconds
+        max_duration_fast_s = int(env.get('CM_MLPERF_MAX_DURATION_FAST', 120))
+        max_duration_fast = str(max_duration_fast_s * 1000) # in milliseconds
         if scenario == "Server":
             user_conf += ml_model_name + "." + scenario + f".max_duration = {max_duration_fast}" + "\n"
             target_qps = conf['target_qps']
@@ -282,10 +282,10 @@ def preprocess(i):
             env['CM_MLPERF_MAX_QUERY_COUNT'] = query_count
 
     else:
-        max_duration_valid_s = env.get('CM_MLPERF_MAX_DURATION_VALID', 660)
-        max_duration_valid = max_duration_valid_s * 1000 # in milliseconds
-        max_duration_ranging_s = env.get('CM_MLPERF_MAX_DURATION_RANGING', 300)
-        max_duration_ranging = max_duration_ranging_s * 1000 # in milliseconds
+        max_duration_valid_s = int(env.get('CM_MLPERF_MAX_DURATION_VALID', 660))
+        max_duration_valid = str(max_duration_valid_s * 1000) # in milliseconds
+        max_duration_ranging_s = int(env.get('CM_MLPERF_MAX_DURATION_RANGING', 300))
+        max_duration_ranging = str(max_duration_ranging_s * 1000) # in milliseconds
         if scenario == "MultiStream" or scenario == "SingleStream":
             if env.get('CM_MLPERF_USE_MAX_DURATION', 'yes').lower() not in [ "no", "false", "0" ] and env.get('CM_MLPERF_MODEL_EQUAL_ISSUE_MODE', 'no').lower() not in [ "yes", "1", "true" ]:
                 user_conf += ml_model_name + "." + scenario + f".max_duration = {max_duration_valid}" + "\n"
