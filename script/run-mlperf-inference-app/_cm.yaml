@@ -101,6 +101,7 @@ input_mapping:
   tp_size: CM_NVIDIA_TP_SIZE
   vllm_model_name: CM_VLLM_SERVER_MODEL_NAME
   num_workers: CM_MLPERF_INFERENCE_NUM_WORKERS
+  max_test_duration: CM_MLPERF_MAX_DURATION_TEST
 
 new_state_keys:
 - app_mlperf_inference_*
