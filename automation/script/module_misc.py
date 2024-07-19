@@ -1077,6 +1077,10 @@ def doc(i):
     r = utils.save_txt(output_file, s)
     if r['return']>0: return r
 
+    out_docs_file = os.path.join("..", "docs", "scripts", category, alias, "index.md")
+    r = utils.save_txt(out_docs_file, s)
+    if r['return']>0: return r
+
     return {'return':0}
 
 
