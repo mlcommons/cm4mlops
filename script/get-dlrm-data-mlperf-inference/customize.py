@@ -9,7 +9,9 @@ def preprocess(i):
 
     dlrm_data_path = env.get('CM_DLRM_DATA_PATH', env.get('DLRM_DATA_PATH', ''))
     if dlrm_data_path == '' or not os.path.exists(dlrm_data_path):
-        return {'return': 1, 'error': f'Please input a valid path as --dlrm_data_path'} 
+        print(f'Data path is not given as input through --dlrm_data_path. Using the cache directory:{os.getcwd()} as the data path'}
+        dlrm_data_path = os.getcwd()
+
     meta = i['meta']
 
     script_path=i['run_script_input']['path']
@@ -50,22 +52,18 @@ def preprocess(i):
             env['CM_DLRM_DATASET_DOWNLOAD'] = True
         
         run_cmd = ''
+        xsep = ' && '
 
-        # th eremaining condition need to be checked if CM_DLRM_DATASET_DOWNLOAD have not already been set to True
         if env['CM_DLRM_DATASET_DOWNLOAD'] != True:
             if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot_unpacked")):
                 os.system(f"unzip {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot.npz')} -d {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot_unpacked')}")
 
-            if os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")):
-                file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")
-                run_cmd = ("echo {} {} | md5sum -c").format('c46b7e31ec6f2f8768fa60bdfc0f6e40', file_path)
-
-        xsep = ' && '
-        if run_cmd != '':
-            run_cmd += xsep
+        if os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")) or env['CM_DLRM_DATASET_DOWNLOAD'] == True:
+            file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")
+            run_cmd = xsep + ("echo {} {} | md5sum -c").format('c46b7e31ec6f2f8768fa60bdfc0f6e40', file_path)
         
         file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_dense.npy")
-        run_cmd +=  ("echo {} {} | md5sum -c").format('cdf7af87cbc7e9b468c0be46b1767601', file_path)
+        run_cmd += xsep + ("echo {} {} | md5sum -c").format('cdf7af87cbc7e9b468c0be46b1767601', file_path)
 
         file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_labels.npy")
         run_cmd += xsep + ("echo {} {} | md5sum -c").format('dd68f93301812026ed6f58dfb0757fa7', file_path)
@@ -84,6 +82,9 @@ def postprocess(i):
 
     env = i['env']
 
-    env['CM_GET_DEPENDENT_CACHED_PATH'] = env.get('CM_DLRM_DATA_PATH', env['DLRM_DATA_PATH'])
+    if env.get('CM_DLRM_DATA_PATH', '') == '' and env.get('DLRM_DATA_PATH', '') == '':
+        env['CM_DLRM_DATA_PATH'] = os.getcwd()
+    else:
+        env['CM_GET_DEPENDENT_CACHED_PATH'] = env.get('CM_DLRM_DATA_PATH', env['DLRM_DATA_PATH'])
 
     return {'return':0}
