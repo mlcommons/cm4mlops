@@ -22,38 +22,48 @@ def preprocess(i):
 
     if variation == "nvidia":
         if not os.path.exists(os.path.join(dlrm_data_path, "model")):
-            return {'return': 1, 'error': f'model directory is missing inside {dlrm_data_path}'} 
+            print(f'model directory is missing inside {dlrm_data_path}')
+            env['CM_DLRM_MODEL_DOWNLOAD'] = True 
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo")):
-            return {'return': 1, 'error': f'criteo directory is missing inside {dlrm_data_path}'} 
+            print(f'criteo directory is missing inside {dlrm_data_path}')
+            env['CM_DLRM_DATASET_DOWNLOAD'] = True
         if not os.path.exists(os.path.join(dlrm_data_path, "model", "model_weights")):
-            return {'return': 1, 'error': f'model_weights directory is missing inside {dlrm_data_path}/model'} 
+            print(f'model_weights directory is missing inside {dlrm_data_path}/model')
+            env['CM_DLRM_MODEL_DOWNLOAD'] = True
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23")):
-            return {'return': 1, 'error': f'day23 directory is missing inside {dlrm_data_path}/day23'} 
+            print(f'day23 directory is missing inside {dlrm_data_path}/day23')
+            env['CM_DLRM_DATASET_DOWNLOAD'] = True
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32")):
-            return {'return': 1, 'error': f'fp32 directory is missing inside {dlrm_data_path}/day23'} 
-
+            print(f'fp32 directory is missing inside {dlrm_data_path}/criteo/day23')
+            env['CM_DLRM_DATASET_DOWNLOAD'] = True
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")) and not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot_unpacked")):
-            return {'return': 1, 'error': f'day_23_sparse_multi_hot.npz is missing inside {dlrm_data_path}/criteo/day23/fp32'} 
+            print(f'day_23_sparse_multi_hot.npz or day_23_sparse_multi_hot_unpacked is missing inside {dlrm_data_path}/criteo/day23/fp32')
+            env['CM_DLRM_DATASET_DOWNLOAD'] = True
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_dense.npy")):
-            return {'return': 1, 'error': f'day_23_dense.npy is missing inside {dlrm_data_path}/criteo/day23/fp32'} 
+            print(f'day_23_dense.npy is missing inside {dlrm_data_path}/criteo/day23/fp32')
+            env['CM_DLRM_DATASET_DOWNLOAD'] = True
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_labels.npy")):
-            return {'return': 1, 'error': f'day_23_labels.npy is missing inside {dlrm_data_path}/criteo/day23/fp32'} 
+            print(f'day_23_labels.npy is missing inside {dlrm_data_path}/criteo/day23/fp32')
+            env['CM_DLRM_DATASET_DOWNLOAD'] = True
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "raw_data")):
-            return {'return': 1, 'error': f'raw_data is missing inside {dlrm_data_path}/criteo/day23'} 
+            print(f'raw_data is missing inside {dlrm_data_path}/criteo/day23')
+            env['CM_DLRM_DATASET_DOWNLOAD'] = True
+        
+        run_cmd = ''
 
+        # th eremaining condition need to be checked if CM_DLRM_DATASET_DOWNLOAD have not already been set to True
+        if env['CM_DLRM_DATASET_DOWNLOAD'] != True:
+            if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot_unpacked")):
+                os.system(f"unzip {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot.npz')} -d {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot_unpacked')}")
 
-        if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot_unpacked")):
-            os.system(f"unzip {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot.npz')} -d {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot_unpacked')}")
+            if os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")):
+                file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")
+                run_cmd = ("echo {} {} | md5sum -c").format('c46b7e31ec6f2f8768fa60bdfc0f6e40', file_path)
 
         xsep = ' && '
-        run_cmd = ''
-        if os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")):
-            file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")
-            run_cmd = ("echo {} {} | md5sum -c").format('c46b7e31ec6f2f8768fa60bdfc0f6e40', file_path)
-
         if run_cmd != '':
             run_cmd += xsep
-
+        
         file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_dense.npy")
         run_cmd +=  ("echo {} {} | md5sum -c").format('cdf7af87cbc7e9b468c0be46b1767601', file_path)
 
