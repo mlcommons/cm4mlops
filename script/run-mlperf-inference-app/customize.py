@@ -111,13 +111,14 @@ def preprocess(i):
     variation_device= ",_" + env["CM_MLPERF_DEVICE"] if env.get("CM_MLPERF_DEVICE","") != "" else ""
     variation_run_style= ",_" + env.get("CM_MLPERF_RUN_STYLE", "test")
     variation_reproducibility= ",_" + env["CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS"] if env.get("CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS","") != "" else ""
-
+    variation_all_models= ",_all_models" if env.get("CM_MLPERF_ALL_MODELS"."") == "yes" else ""
+    
     if env.get("CM_MLPERF_MODEL_PRECISION", '') != '':
         variation_quantization_string= ",_" + env["CM_MLPERF_MODEL_PRECISION"]
     else:
         variation_quantization_string = ""
 
-    tags =  "app,mlperf,inference,generic,"+variation_implementation+variation_model+variation_backend+variation_device+variation_run_style+variation_reproducibility+variation_quantization_string+power_variation
+    tags =  "app,mlperf,inference,generic,"+variation_implementation+variation_model+variation_backend+variation_device+variation_run_style+variation_reproducibility+variation_quantization_string+power_variation+variation_all_models
     verbose = inp.get('v', False)
     print_env = inp.get('print_env', False)
     print_deps = inp.get('print_deps', False)
