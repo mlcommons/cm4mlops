@@ -246,7 +246,7 @@ variations:
     default_variations:
       backend: onnxruntime
 
-  all_models,nvidia-original:
+  all-models,nvidia-original:
     docker:
       deps:
         - tags: get,ml-model,gptj,raw
