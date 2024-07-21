@@ -47,6 +47,20 @@ def preprocess(i):
         logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
         env['CM_RUN_CMD'] += " 2>&1 ; echo \$? > exitstatus | tee " + q+ os.path.join(logs_dir, "console.out") + q
 
+    # additional arguments and tags for measuring system informations(only if 'CM_PROFILE_NVIDIA_POWER' is 'on')
+    if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
+        env['CM_SYS_UTILISATION_SCRIPT_TAGS'] = ''
+        # this section is for selecting the variation 
+        if env.get('CM_MLPERF_DEVICE', '') == "gpu":
+            env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += ',_cuda'
+        elif env.get('CM_MLPERF_DEVICE', '') == "cpu":
+            env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += ',_cpu'
+        # this section is for supplying the input arguments/tags
+        env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += f" --log_dir={logs_dir}"   # specify the logs directory
+        if env.get('CM_SYSTEM_INFO_MEASUREMENT_INTERVAL', '') != '':        # specifying the interval in which the system information should be measured
+            env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += f" --interval={env['CM_SYSTEM_INFO_MEASUREMENT_INTERVAL']}"
+
+
     # Print info
     print ('***************************************************************************')
     print ('CM script::benchmark-program/run.sh')

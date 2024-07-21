@@ -38,6 +38,15 @@ if [[ "${CM_DEBUG_SCRIPT_BENCHMARK_PROGRAM}" == "True" ]]; then
   exit 0
 fi
 
+if [[ "${CM_PROFILE_NVIDIA_POWER}" == "on" ]]; then
+  echo "Starting monitoring system utilisation!!!"
+  echo "cm run script --tags=record,system,utilisation${CM_SYS_UTILISATION_SCRIPT_TAGS}"
+  cm run script --tags=record,system,utilisation${CM_SYS_UTILISATION_SCRIPT_TAGS} &
+  cmd1_pid=$!
+  echo $cmd1_pid
+  test $? -eq 0 || exit 1
+fi
+
 # Check CM_RUN_CMD0
 if [[ "${CM_RUN_CMD0}" != "" ]]; then
   eval ${CM_RUN_CMD0}
@@ -57,3 +66,10 @@ else
 fi
 
 test $? -eq 0 || exit $? 
+
+
+if [[ "${CM_PROFILE_NVIDIA_POWER}" == "on" ]]; then
+  echo "killing process ${cmd1_pid}"
+  kill ${cmd1_pid}
+  test $? -eq 0 || exit $? 
+fi
