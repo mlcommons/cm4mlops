@@ -2,7 +2,7 @@ from cmind import utils
 import os
 import shutil
 import psutil       # used to measure the system infos(have not tested for obtaining gpu info)
-import json         # used to write the measurements to json file
+import csv         # used to write the measurements to csv format as txt file
 from datetime import datetime, timezone        
 import time
 
@@ -25,7 +25,7 @@ def preprocess(i):
     
     logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
 
-    log_json_file_path = os.path.join(logs_dir, 'sys_utilisation_info.json')
+    log_json_file_path = os.path.join(logs_dir, 'sys_utilisation_info.txt')
 
     interval = int(env.get('CM_SYSTEM_INFO_MEASUREMENT_INTERVAL', '2'))
 
@@ -35,25 +35,31 @@ def preprocess(i):
 
     print("Started measuring system info!")
 
-    while True:
-        memory = psutil.virtual_memory()
-        cpu_util = psutil.cpu_percent(interval=0)
-        total_memory_gb = memory.total / (1024 ** 3)  
-        used_memory_gb = memory.used / (1024 ** 3)    
+    csv_headers = ['timestamp', 'cpu_utilisation', 'total_memory_gb', 'used_memory_gb']
 
-        data = {
-            'timestamp': datetime.now(timezone.utc).isoformat(),
-            'cpu_utilisation': cpu_util,
-            'total_memory_gb': total_memory_gb,
-            'used_memory_gb': used_memory_gb
-        }
+    with open(log_json_file_path, 'a', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=csv_headers)
+        # If the file is empty, write headers
+        if f.tell() == 0:
+            writer.writeheader()
 
-        # Append data to JSON file
-        with open(log_json_file_path, 'a') as f:
-            json.dump(data, f)
-            f.write(',\n')  # Add newline for readability
+        while True:
+            memory = psutil.virtual_memory()
+            cpu_util = psutil.cpu_percent(interval=0)
+            total_memory_gb = memory.total / (1024 ** 3)
+            used_memory_gb = memory.used / (1024 ** 3)
 
-        time.sleep(interval)
+            data = {
+                'timestamp': datetime.now(timezone.utc).isoformat(),
+                'cpu_utilisation': cpu_util,
+                'total_memory_gb': total_memory_gb,
+                'used_memory_gb': used_memory_gb
+            }
+
+            # Write data as a row to CSV file
+            writer.writerow(data)
+
+            time.sleep(interval)
 
     return {'return':0}
 
