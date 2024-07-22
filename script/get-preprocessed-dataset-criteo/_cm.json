@@ -31,37 +31,87 @@
       "names": [
         "dlrm-src"
       ],
-      "tags": "get,dlrm,src"
+      "tags": "get,dlrm,src",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
       "names": [
         "inference-src"
       ],
-      "tags": "mlperf,mlcommons,inference,source,src"
+      "tags": "mlperf,mlcommons,inference,source,src",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
-      "tags": "get,generic-python-lib,_scikit-learn"
+      "tags": "get,generic-python-lib,_scikit-learn",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
-      "tags": "get,generic-python-lib,_torch"
+      "tags": "get,generic-python-lib,_torch",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
-      "tags": "get,generic-python-lib,_opencv-python"
+      "tags": "get,generic-python-lib,_opencv-python",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
-      "tags": "get,generic-python-lib,_decorator"
+      "tags": "get,generic-python-lib,_decorator",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
-      "tags": "get,generic-python-lib,_psutil"
+      "tags": "get,generic-python-lib,_psutil",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
-      "tags": "get,generic-python-lib,_onnx"
+      "tags": "get,generic-python-lib,_onnx",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
-      "tags": "get,generic-python-lib,_tqdm"
+      "tags": "get,generic-python-lib,_tqdm",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     },
     {
-      "tags": "get,generic-python-lib,_mlperf_logging"
+      "tags": "get,generic-python-lib,_mlperf_logging",
+      "skip_if_env": {
+        "CM_DATASET_PREPROCESSED_PATH": [
+          "on"
+        ]
+      }
     }
   ],
   "input_mapping": {
@@ -70,7 +120,8 @@
     "threads": "CM_NUM_PREPROCESS_THREADS"
   },
   "new_env_keys": [
-    "CM_DATASET_*"
+    "CM_DATASET_*",
+    "CM_CRITEO_PREPROCESSED_PATH"
   ],
   "tags": [
     "get",
@@ -118,6 +169,37 @@
         "CM_CRITEO_FAKE": "yes"
       }
     },
+    "mlc": {
+      "group": "src",
+      "env": {
+        "CM_DATASET_PREPROCESSED_CRITEO_FROM_MLC": "yes",
+        "CM_DATASET_PREPROCESSED_PATH": "on"
+      }
+    },
+    "multihot,mlc": {
+      "env": {
+        "CM_RCLONE_CONFIG_CMD": "rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com",
+        "CM_RCLONE_URL": "mlc-inference:mlcommons-inference-wg-public/dlrm_preprocessed",
+        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_DATASET_PREPROCESSED_PATH",
+        "CM_EXTRACT_FINAL_ENV_NAME": "CM_DATASET_PREPROCESSED_PATH",
+        "CM_EXTRACT_TO_FOLDER": "criteo-preprocessed"
+      },
+      "deps": [
+        {
+          "tags": "download-and-extract,_rclone",
+          "update_tags_from_env_with_prefix": {
+            "_url.": [
+              "CM_RCLONE_URL"
+            ]
+          },
+          "force_cache": true,
+          "names": [
+            "dae"
+          ],
+          "extra_cache_tags": "criteo,preprocessed,dataset"
+        }
+      ]
+    },
     "multihot": {
       "group": "type",
       "default": true,
@@ -130,22 +212,52 @@
           "names": [
             "mlperf-training",
             "training-src"
-          ]
+          ],
+          "skip_if_env": {
+            "CM_DATASET_PREPROCESSED_CRITEO_FROM_MLC": [
+              "yes"
+            ]
+          }
         },
         {
-          "tags": "get,generic-python-lib,_package.typing_inspect"
+          "tags": "get,generic-python-lib,_package.typing_inspect",
+          "skip_if_env": {
+            "CM_DATASET_PREPROCESSED_CRITEO_FROM_MLC": [
+              "yes"
+            ]
+          }
         },
         {
-          "tags": "get,generic-python-lib,_package.iopath"
+          "tags": "get,generic-python-lib,_package.iopath",
+          "skip_if_env": {
+            "CM_DATASET_PREPROCESSED_CRITEO_FROM_MLC": [
+              "yes"
+            ]
+          }
         },
         {
-          "tags": "get,generic-python-lib,_package.fbgemm_gpu"
+          "tags": "get,generic-python-lib,_package.fbgemm_gpu",
+          "skip_if_env": {
+            "CM_DATASET_PREPROCESSED_CRITEO_FROM_MLC": [
+              "yes"
+            ]
+          }
         },
         {
-          "tags": "get,generic-python-lib,_package.torchrec"
+          "tags": "get,generic-python-lib,_package.torchrec",
+          "skip_if_env": {
+            "CM_DATASET_PREPROCESSED_CRITEO_FROM_MLC": [
+              "yes"
+            ]
+          }
         },
         {
-          "tags": "get,generic-python-lib,_package.pyre_extensions"
+          "tags": "get,generic-python-lib,_package.pyre_extensions",
+          "skip_if_env": {
+            "CM_DATASET_PREPROCESSED_CRITEO_FROM_MLC": [
+              "yes"
+            ]
+          }
         }
       ]
     }

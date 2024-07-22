@@ -36,6 +36,7 @@ default_env:
   CM_MLPERF_RUN_STYLE: test
 
 input_mapping:
+  api_server: CM_MLPERF_INFERENCE_API_SERVER
   backend: CM_MLPERF_BACKEND
   batch_size: CM_MLPERF_LOADGEN_MAX_BATCHSIZE
   beam_size: GPTJ_BEAM_SIZE
@@ -98,6 +99,9 @@ input_mapping:
   sut: CM_MLPERF_INFERENCE_SUT_VARIATION
   nvidia_llama2_dataset_file_path: CM_NVIDIA_LLAMA_DATASET_FILE_PATH
   tp_size: CM_NVIDIA_TP_SIZE
+  vllm_model_name: CM_VLLM_SERVER_MODEL_NAME
+  num_workers: CM_MLPERF_INFERENCE_NUM_WORKERS
+  max_test_duration: CM_MLPERF_MAX_DURATION_TEST
 
 new_state_keys:
 - app_mlperf_inference_*
