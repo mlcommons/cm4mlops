@@ -82,7 +82,7 @@ new_env_keys:
   - CM_HW_NAME
   - CM_ML_MODEL_*
   - CM_MAX_EXAMPLES
-
+  - CM_VLLM_*
 new_state_keys:
   - mlperf-inference-implementation
   - CM_SUT_*
@@ -403,9 +403,11 @@ deps:
       CM_MODEL:
       - llama2-70b-99
       - llama2-70b-99.9
-    skip_if_env:
+    skip_if_any_env:
       CM_MLPERF_CUSTOM_MODEL_PATH:
-      - "on"
+        - "on"
+      CM_MLPERF_INFERENCE_API_SERVER:
+        - "on"
 
   ## mixtral-8x7b
   - tags: get,ml-model,mixtral
@@ -517,7 +519,7 @@ deps:
       - stable-diffusion-xl
 
   ## OpenOrca for LLAMA2-70b
-  - tags: get,preprocessed,dataset,openorca,_validation
+  - tags: get,preprocessed,dataset,openorca,_validation,_mlcommons
     names:
     - openorca-preprocessed
     enable_if_env:
@@ -849,7 +851,6 @@ variations:
       CM_MLPERF_MODEL_SKIP_BATCHING: true
     deps:
     - tags: get,generic-python-lib,_package.pydantic
-      version_max: "1.10.9"
     - tags: get,generic-python-lib,_tokenization
     - tags: get,generic-python-lib,_six
     - tags: get,generic-python-lib,_package.absl-py
