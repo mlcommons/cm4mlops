@@ -29,3 +29,12 @@ def preprocess(i):
         print("Using MLCommons Training source from '" + env['CM_MLPERF_TRAINING_SOURCE'] +"'")
 
     return {'return': 0}
+
+def postprocess(i):
+
+    env = i['env']
+    env['CM_CRITEO_PREPROCESSED_PATH'] = env['CM_DATASET_PREPROCESSED_PATH']
+
+    env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_CRITEO_PREPROCESSED_PATH']
+
+    return {'return': 0}

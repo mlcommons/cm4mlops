@@ -220,8 +220,9 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
     return result_string, result
 
 def get_result_table(results):
+   
     
-    headers = ["Model", "Scenario", "Accuracy", "QPS", "Latency (in ms)", "Power Efficiency (in samples/J)", "TEST01", "TEST05", "TEST04"]
+    headers = ["Model", "Scenario", "Accuracy", "Throughput", "Latency (in ms)", "Power Efficiency (in samples/J)", "TEST01", "TEST05", "TEST04"]
     table = []
     for model in results:
         for scenario in results[model]:

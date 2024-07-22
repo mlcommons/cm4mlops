@@ -27,7 +27,12 @@ def preprocess(i):
     run_dir = r ['run_dir']
     print(run_cmd)
     print(run_dir)
-    return {'return':1, 'error': 'Run command needs to be tested'}
+    env['CM_MLPERF_RUN_CMD'] = run_cmd
+    env['CM_RUN_DIR'] = run_dir
+    env['CM_RUN_CMD'] = run_cmd
+
+    return {'return':0}
+    #return {'return':1, 'error': 'Run command needs to be tested'}
 
 def get_run_cmd(model, i):
     env = i['env']
@@ -50,6 +55,28 @@ def get_run_cmd(model, i):
         run_cmd = f"python3 -u main.py --scenario {scenario} --model-path {model_path} --api-server {api_server} --api-model-name gpt-j-cnn --mlperf-conf {mlperf_conf_path} {accuracy_string} --vllm --user-conf {user_conf_path} --dataset-path {dataset_path} --output-log-dir {outdir} --dtype float32 --device {device} "
         submitter = "CTuning"
         run_dir = os.path.join(env['CM_MLPERF_INFERENCE_IMPLEMENTATION_REPO'], "open", submitter, "code", "gptj-99")
+
+        return {'return': 0, 'run_cmd': run_cmd, 'run_dir': run_dir}
+    
+    if "llama2" in model:
+        scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
+        device = env['CM_MLPERF_DEVICE']
+        mode = env['CM_MLPERF_LOADGEN_MODE']
+        outdir = env['CM_MLPERF_OUTPUT_DIR']
+        mlperf_conf_path = env['CM_MLPERF_CONF']
+        user_conf_path = env['CM_MLPERF_USER_CONF']
+        api_server = env.get('CM_MLPERF_INFERENCE_API_SERVER', 'localhost:8000/v1')
+        api_model_name = env['CM_VLLM_SERVER_MODEL_NAME']
+        dataset_path = env['CM_DATASET_OPENORCA_PATH']
+        precision = env['CM_MLPERF_MODEL_PRECISION']
+        if mode == "accuracy":
+            accuracy_string = " --accuracy "
+        else:
+            accuracy_string = ""
+
+        run_cmd = f"python3 -u  'main.py' --scenario {scenario} --model-path {api_model_name} --api-model-name {api_model_name} --api-server {api_server} --mlperf-conf {mlperf_conf_path} {accuracy_string} --vllm --user-conf {user_conf_path} --dataset-path {dataset_path} --output-log-dir {outdir} --dtype float32 --device {device} "
+        submitter = "RedHat-Supermicro"
+        run_dir = os.path.join(env['CM_MLPERF_INFERENCE_IMPLEMENTATION_REPO'], "open", submitter, "code", model)
 
         return {'return': 0, 'run_cmd': run_cmd, 'run_dir': run_dir}
 

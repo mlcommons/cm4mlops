@@ -323,7 +323,12 @@
           "names": [
             "llama2-model"
           ],
-          "tags": "get,ml-model,llama2"
+          "tags": "get,ml-model,llama2",
+          "skip_if_env": {
+            "CM_MLPERF_INFERENCE_API_SERVER": [
+              "on"
+            ]
+          }
         }
       ],
       "env": {
