@@ -453,9 +453,6 @@ def postprocess(i):
         is_valid = checker.check_compliance_perf_dir(COMPLIANCE_DIR)
         state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario][test] = "passed" if is_valid else "failed"
 
-    else:
-        print(test)
-
 
     if state.get('mlperf-inference-implementation') and state['mlperf-inference-implementation'].get('version_info'):
         with open(os.path.join(output_dir, "cm-version-info.json"), "w") as f:
