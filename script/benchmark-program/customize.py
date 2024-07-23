@@ -60,7 +60,6 @@ def preprocess(i):
         if env.get('CM_SYSTEM_INFO_MEASUREMENT_INTERVAL', '') != '':        # specifying the interval in which the system information should be measured
             env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += f" --interval={env['CM_SYSTEM_INFO_MEASUREMENT_INTERVAL']}"
 
-
     # Print info
     print ('***************************************************************************')
     print ('CM script::benchmark-program/run.sh')

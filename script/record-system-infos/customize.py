@@ -37,7 +37,7 @@ def preprocess(i):
 
     csv_headers = ['timestamp', 'cpu_utilisation', 'total_memory_gb', 'used_memory_gb']
 
-    with open(log_json_file_path, 'a', newline='') as f:
+    with open(log_json_file_path, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=csv_headers)
         # If the file is empty, write headers
         if f.tell() == 0:
@@ -58,7 +58,7 @@ def preprocess(i):
 
             # Write data as a row to CSV file
             writer.writerow(data)
-
+            print("raw written")        # To be removed. Currently present for debugging purpose.
             time.sleep(interval)
 
     return {'return':0}
