@@ -242,41 +242,6 @@ def postprocess(i):
         if power_efficiency:
             state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario]['power_efficiency'] = power_efficiency
             state['cm-mlperf-inference-results-last']['power_efficiency'] = power_efficiency
-    
-    # portion of the code where the avg utilisation and system informations are extracted
-    # NOTE: The section is under development and print statements are added for further debugging
-    if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
-        system_utilisation_info_dump = {}
-        logs_dir = output_dir
-        # logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
-        sys_utilisation_log = pd.read_csv(os.path.join(logs_dir, 'sys_utilisation_info.txt'), dtype={'cpu_utilisation': float, 'used_memory_gb': float})
-        with open(os.path.join(logs_dir, 'mlperf_log_detail.txt'), 'r') as file:
-            log_txt = file.read()
-            #patterns for matching the power_begin and power_end in mlperf log
-            pattern_begin = r'\"key\"\:\s\"power_begin\"\,\s\"value\"\:\s\"(.*?)\"'
-            pattern_end = r'\"key\"\:\s\"power_end\"\,\s\"value\"\:\s\"(.*?)\"'
-            # match the patterns with the text present in the log details file
-            match_begin = re.findall(pattern_begin, log_txt)[0]
-            match_end = re.findall(pattern_end, log_txt)[0]
-            power_begin_time = pd.Timestamp(datetime.strptime(match_begin, '%m-%d-%Y %H:%M:%S.%f')).replace(tzinfo=timezone.utc)
-            power_end_time = pd.Timestamp(datetime.strptime(match_end, '%m-%d-%Y %H:%M:%S.%f')).replace(tzinfo=timezone.utc)
-        #converts timestamp key value to datetime objects
-        sys_utilisation_log['timestamp'] = pd.to_datetime(sys_utilisation_log['timestamp'])
-        for i in range(len(sys_utilisation_log['timestamp'])):
-            print(f"{sys_utilisation_log['timestamp'][i]} {power_begin_time}")
-            print(sys_utilisation_log['timestamp'][i]>=power_begin_time)
-        print(f"{sys_utilisation_log['timestamp'][0]} {power_begin_time}")
-        print(sys_utilisation_log['timestamp'][0]>=power_begin_time)
-        filtered_log = sys_utilisation_log[(sys_utilisation_log['timestamp'] >= power_begin_time) & 
-                               (sys_utilisation_log['timestamp'] <= power_end_time)]
-        print(filtered_log)
-        # Calculate average of cpu_utilisation and used_memory_gb
-        system_utilisation_info_dump["avg_cpu_utilisation"] = filtered_log['cpu_utilisation'].mean()
-        system_utilisation_info_dump["avg_used_memory_gb"] = filtered_log['used_memory_gb'].mean()
-        print("\nSystem utilisation info for the current run:")
-        print(system_utilisation_info_dump)
-        print("\n")
-
 
         # Record basic host info
         host_info = {
@@ -452,7 +417,43 @@ def postprocess(i):
         import submission_checker as checker
         is_valid = checker.check_compliance_perf_dir(COMPLIANCE_DIR)
         state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario][test] = "passed" if is_valid else "failed"
+    else:
+        print(test)
 
+
+    # portion of the code where the avg utilisation and system informations are extracted
+    # NOTE: The section is under development and print statements are added for further debugging
+    if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
+        system_utilisation_info_dump = {}
+        logs_dir = output_dir
+        # logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
+        sys_utilisation_log = pd.read_csv(os.path.join(logs_dir, 'sys_utilisation_info.txt'), dtype={'cpu_utilisation': float, 'used_memory_gb': float})
+        with open(os.path.join(logs_dir, 'mlperf_log_detail.txt'), 'r') as file:
+            log_txt = file.read()
+            #patterns for matching the power_begin and power_end in mlperf log
+            pattern_begin = r'\"key\"\:\s\"power_begin\"\,\s\"value\"\:\s\"(.*?)\"'
+            pattern_end = r'\"key\"\:\s\"power_end\"\,\s\"value\"\:\s\"(.*?)\"'
+            # match the patterns with the text present in the log details file
+            match_begin = re.findall(pattern_begin, log_txt)[0]
+            match_end = re.findall(pattern_end, log_txt)[0]
+            power_begin_time = pd.Timestamp(datetime.strptime(match_begin, '%m-%d-%Y %H:%M:%S.%f')).replace(tzinfo=timezone.utc)
+            power_end_time = pd.Timestamp(datetime.strptime(match_end, '%m-%d-%Y %H:%M:%S.%f')).replace(tzinfo=timezone.utc)
+        #converts timestamp key value to datetime objects
+        sys_utilisation_log['timestamp'] = pd.to_datetime(sys_utilisation_log['timestamp'])
+        for i in range(len(sys_utilisation_log['timestamp'])):
+            print(f"{sys_utilisation_log['timestamp'][i]} {power_begin_time}")
+            print(sys_utilisation_log['timestamp'][i]>=power_begin_time)
+        print(f"{sys_utilisation_log['timestamp'][0]} {power_begin_time}")
+        print(sys_utilisation_log['timestamp'][0]>=power_begin_time)
+        filtered_log = sys_utilisation_log[(sys_utilisation_log['timestamp'] >= power_begin_time) & 
+                               (sys_utilisation_log['timestamp'] <= power_end_time)]
+        print(filtered_log)
+        # Calculate average of cpu_utilisation and used_memory_gb
+        system_utilisation_info_dump["avg_cpu_utilisation"] = filtered_log['cpu_utilisation'].mean()
+        system_utilisation_info_dump["avg_used_memory_gb"] = filtered_log['used_memory_gb'].mean()
+        print("\nSystem utilisation info for the current run:")
+        print(system_utilisation_info_dump)
+        print("\n")
 
     if state.get('mlperf-inference-implementation') and state['mlperf-inference-implementation'].get('version_info'):
         with open(os.path.join(output_dir, "cm-version-info.json"), "w") as f:
