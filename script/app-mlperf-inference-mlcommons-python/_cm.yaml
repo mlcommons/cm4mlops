@@ -910,6 +910,8 @@ variations:
         version: 1.10.1
 
   llama2-70b_:
+    env:
+      CM_MLPERF_MODEL_SKIP_BATCHING: true
     deps:
       - tags: get,generic-python-lib,_package.transformers
         names:

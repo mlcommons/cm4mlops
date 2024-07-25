@@ -318,7 +318,6 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
             cmd += f" --num-workers {env['CM_MLPERF_INFERENCE_NUM_WORKERS']}"
 
         cmd = cmd.replace("--count", "--total-sample-count")
-        cmd = cmd.replace("--max-batchsize", "--batch-size")
     
     elif "mixtral-8x7b" in env['CM_MODEL']:
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "mixtral-8x7b")
