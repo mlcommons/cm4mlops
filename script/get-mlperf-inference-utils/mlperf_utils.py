@@ -81,7 +81,6 @@ def get_accuracy_metric(config, model, path):
             acc_type1,tmp = target[ii:ii+2]
             for i in range(0, len(acc_upper_limit), 2):
                 acc_type, acc_target = acc_upper_limit[i:i+2]
-                print(acc_type)
                 if acc_type != acc_type1:
                     continue
                 acc_limits[ii//2] = acc_target
