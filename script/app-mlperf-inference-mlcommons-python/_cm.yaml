@@ -911,7 +911,7 @@ variations:
 
   llama2-70b_:
     env:
-      CM_MLPERF_MODEL_SKIP_BATCHING: true
+      CM_MLPERF_MODEL_SKIP_BATCHING: false
     deps:
       - tags: get,generic-python-lib,_package.transformers
         names:
@@ -953,7 +953,7 @@ variations:
 
   llama2-70b_,cuda:
     default_env:
-      CM_MLPERF_LOADGEN_BATCH_SIZE: 8
+      CM_MLPERF_LOADGEN_MAX_BATCHSIZE: 8
 
   llama2-70b-99.9:
     group: models
