@@ -33,6 +33,9 @@ def preprocess(i):
     run_state = i['run_script_input']['run_state']
     state['mlperf-inference-implementation']['script_id'] = run_state['script_id']+":"+",".join(run_state['script_variation_tags'])
 
+    if env.get('CM_VLLM_SERVER_MODEL_NAME', '') != '' and env.get('CM_ML_MODEL_FULL_NAME', '') == '':
+        env['CM_ML_MODEL_FULL_NAME'] = env['CM_VLLM_SERVER_MODEL_NAME'].replace("/", "_")
+
     return {'return':0}
 
 def postprocess(i):
