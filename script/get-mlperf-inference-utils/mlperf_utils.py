@@ -176,13 +176,13 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
         result['power'] = power_result
         result['power_efficiency'] = power_efficiency_result
 
-    compliance_list = [ "TEST01", "TEST05", "TEST04" ]
+    compliance_list = [ "TEST01", "TEST05", "TEST04", "TEST06" ]
     if division == "closed":
         for test in compliance_list:
             test_path = os.path.join(result_path, test)
             if os.path.exists(test_path): #We dont consider missing test folders now - submission checker will do that
                 #test_pass = checker.check_compliance_dir(test_path, mlperf_model, scenario, config, "closed", system_json, sub_res)
-                test_pass = checker.check_compliance_perf_dir(test_path)
+                test_pass = checker.check_compliance_perf_dir(test_path) if test != "TEST06" else True
                 if test_pass and test in [ "TEST01", "TEST06" ]:
                     #test_pass = checker.check_compliance_acc_dir(test_path, mlperf_model, config)
                     pass # accuracy truncation script is done after submission generation. We assume here that it'll pass 
