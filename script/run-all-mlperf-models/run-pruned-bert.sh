@@ -46,26 +46,25 @@ scenario="SingleStream"
 if [[ $scenario == "Offline" ]]; then
 for stub in ${zoo_stub_list[@]}; do
 cmd="cm run script --tags=run,mlperf,inference,generate-run-cmds,_find-performance  \
-   --adr.python.version_min=3.8 \
-   --implementation=reference \
-   --model=bert-99 \
-   --precision=int8 \
-   --backend=deepsparse \
-   --device=cpu \
-   --scenario=Offline \
-   --test_query_count=15000 \
-   --adr.mlperf-inference-implementation.max_batchsize=$max_batchsize \
-   --results_dir=$HOME/results_dir \
-   --env.CM_MLPERF_NEURALMAGIC_MODEL_ZOO_STUB=$stub \
-   ${rerun} \
-   --quiet"
-  echo ${cmd}
-  eval ${cmd}
+  --adr.python.version_min=3.8 \
+  --implementation=reference \
+  --model=bert-99 \
+  --precision=int8 \
+  --backend=deepsparse \
+  --device=cpu \
+  --scenario=Offline \
+  --test_query_count=15000 \
+  --adr.mlperf-inference-implementation.max_batchsize=$max_batchsize \
+  --env.CM_MLPERF_NEURALMAGIC_MODEL_ZOO_STUB=$stub \
+  ${rerun} \
+  --quiet"
+ echo ${cmd}
+ eval ${cmd}
 done
 fi
 
 for stub in ${zoo_stub_list[@]}; do
- cmd="cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission  \
+ cmd="cm run script --tags=run,mlperf,inference,generate-run-cmds  \
    --adr.python.version_min=3.8 \
    --adr.compiler.tags=gcc \
    --implementation=reference \
@@ -76,8 +75,6 @@ for stub in ${zoo_stub_list[@]}; do
    --scenario=$scenario \
    --execution_mode=valid \
    --adr.mlperf-inference-implementation.max_batchsize=$max_batchsize \
-   ${power} \
-   --results_dir=$HOME/results_dir \
    --env.CM_MLPERF_NEURALMAGIC_MODEL_ZOO_STUB=$stub \
    --quiet"
   echo ${cmd}
