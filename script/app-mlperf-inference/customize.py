@@ -291,9 +291,9 @@ def postprocess(i):
             cmd = ""
             xcmd = ""
 
-        readme_init = "This experiment is generated using the [MLCommons Collective Mind automation framework (CM)](https://github.com/mlcommons/ck).\n\n"
+        readme_init = "This experiment is generated using the [MLCommons Collective Mind automation framework (CM)](https://github.com/mlcommons/cm4mlops).\n\n"
 
-        readme_init+= "*Check [CM MLPerf docs](https://mlcommons.github.io/inference) for more details.*\n\n"
+        readme_init+= "*Check [CM MLPerf docs](https://docs.mlcommons.org/inference) for more details.*\n\n"
 
         readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n\n".format(platform.platform(), 
             platform.processor(), sys.version, cm.__version__)
@@ -301,10 +301,10 @@ def postprocess(i):
         x = repo_name
         if repo_hash!='': x+=' --checkout='+str(repo_hash)
         
-        readme_body += "## CM Run Command\n\nSee [CM installation guide](https://github.com/mlcommons/ck/blob/master/docs/installation.md).\n\n"+ \
+        readme_body += "## CM Run Command\n\nSee [CM installation guide](https://docs.mlcommons.org/inference/install/).\n\n"+ \
             "```bash\npip install -U cmind\n\ncm rm cache -f\n\ncm pull repo {}\n\n{}\n```".format(x, xcmd)
 
-        readme_body += "\n*Note that if you want to use the [latest automation recipes](https://access.cknowledge.org/playground/?action=scripts) for MLPerf (CM scripts),\n"+ \
+        readme_body += "\n*Note that if you want to use the [latest automation recipes](https://docs.mlcommons.org/inference) for MLPerf (CM scripts),\n"+ \
                        " you should simply reload {} without checkout and clean CM cache as follows:*\n\n".format(repo_name) + \
                        "```bash\ncm rm repo {}\ncm pull repo {}\ncm rm cache -f\n\n```".format(repo_name, repo_name)
         
