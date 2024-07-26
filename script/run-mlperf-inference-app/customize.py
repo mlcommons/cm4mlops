@@ -101,9 +101,12 @@ def preprocess(i):
     test_list = ["TEST01",  "TEST05"]
     if env['CM_MODEL']  in ["resnet50"]:
         test_list.append("TEST04")
-    if "gpt" in env['CM_MODEL'] or "sdxl" in env['CM_MODEL'] or "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env['CM_MODEL']:
+    if "gpt" in env['CM_MODEL'] or "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env['CM_MODEL']:
         test_list.remove("TEST01")
         test_list.remove("TEST05")
+
+    if "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env['CM_MODEL']:
+        test_list.append("TEST06")
 
     variation_implementation= "_" + env.get("CM_MLPERF_IMPLEMENTATION", "reference")
     variation_model= ",_" + env["CM_MLPERF_MODEL"]
