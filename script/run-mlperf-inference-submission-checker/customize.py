@@ -53,7 +53,7 @@ def preprocess(i):
 
     x_version = ' --version ' + version +' ' if version!='' else ''
 
-    CMD = env['CM_PYTHON_BIN_WITH_PATH'] + ' ' + submission_checker_file + ' --input "' + submission_dir + '"' + \
+    CMD = env['CM_PYTHON_BIN_WITH_PATH'] + ' \'' + submission_checker_file + '\' --input \'' + submission_dir + '\'' + \
             x_submitter + \
             x_version + \
             skip_compliance + extra_map + power_check + extra_args
@@ -61,7 +61,8 @@ def preprocess(i):
     report_generator_file = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "tools", "submission",
             "generate_final_report.py")
     env['CM_RUN_CMD'] = CMD
-    env['CM_POST_RUN_CMD'] = env['CM_PYTHON_BIN_WITH_PATH'] + ' ' + report_generator_file + ' --input summary.csv'
+    print(CMD)
+    env['CM_POST_RUN_CMD'] = env['CM_PYTHON_BIN_WITH_PATH'] + ' \'' + report_generator_file + '\' --input summary.csv'
 
     return {'return':0}
 
