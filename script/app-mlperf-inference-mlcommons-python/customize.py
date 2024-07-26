@@ -54,7 +54,7 @@ def preprocess(i):
         else:
             env['CM_NUM_THREADS'] = env.get('CM_HOST_CPU_TOTAL_CORES', '1')
 
-    if env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE','') != '' and not env.get('CM_MLPERF_MODEL_SKIP_BATCHING', False):
+    if env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE','') != '' and str(env.get('CM_MLPERF_MODEL_SKIP_BATCHING', False)).lower() not in [ "true", "1", "yes"] :
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] += " --max-batchsize " + str(env['CM_MLPERF_LOADGEN_MAX_BATCHSIZE'])
 
     if env.get('CM_MLPERF_LOADGEN_BATCH_SIZE','') != '':
