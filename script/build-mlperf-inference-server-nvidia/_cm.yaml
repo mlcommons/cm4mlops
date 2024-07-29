@@ -111,6 +111,7 @@ deps:
 
   # Detect pycuda
   - tags: get,generic-python-lib,_pycuda
+    version: "2022.2.2"
     skip_if_env:
       CM_RUN_STATE_DOCKER:
         - 'yes'

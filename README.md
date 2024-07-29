@@ -22,6 +22,8 @@ and web services adaptable to continuously changing models, data sets, software 
 We develop and test [CM scripts](script) as a community effort to support the following projects:
 * [CM for MLPerf](https://docs.mlcommons.org/inference): modularize and automate MLPerf benchmarks 
   (maintained by [MLCommons](https://mlcommons.org) and originally developed by [cKnowledge.org](https://cKnowledge.org), [OctoML](https://octoml.ai) and [cTuning.org](https://cTuning.org))
+  * [Modular C++ harness for MLPerf loadgen](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-mlcommons-cpp)
+  * [Modular Python harness for MLPerf loadgen](https://github.com/mlcommons/cm4mlops/tree/main/script/app-loadgen-generic-python)
 * [CM for research and education](https://cTuning.org/ae): provide a common interface to automate and reproduce results from research papers 
   and MLPerf benchmarks (maintained by [cTuning foundation](https://cTuning.org) and [cKnowledge.org](https://cKnowledge.org))
 * [CM for ABTF](https://github.com/mlcommons/cm4abtf): provide a unified CM interface to run automotive benchmarks

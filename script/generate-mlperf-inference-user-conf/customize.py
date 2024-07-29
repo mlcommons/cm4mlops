@@ -403,7 +403,11 @@ def run_files_exist(mode, OUTPUT_DIR, run_files, env):
         test = env['CM_MLPERF_LOADGEN_COMPLIANCE_TEST']
 
         SCRIPT_PATH = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "compliance", "nvidia", test, "run_verification.py")
-        cmd = env['CM_PYTHON_BIN'] + " " + SCRIPT_PATH + " -r " + RESULT_DIR + " -c " + COMPLIANCE_DIR + " -o "+ OUTPUT_DIR
+        if test == "TEST06":
+            cmd = f"{env['CM_PYTHON_BIN_WITH_PATH']}  {SCRIPT_PATH}  -c  {COMPLIANCE_DIR}  -o  {OUTPUT_DIR} --scenario {scenario} --dtype int32"
+        else:
+            cmd = f"{env['CM_PYTHON_BIN_WITH_PATH']}  {SCRIPT_PATH}  -r {RESULT_DIR} -c  {COMPLIANCE_DIR}  -o  {OUTPUT_DIR}"
+
         print(cmd)
         os.system(cmd)
 

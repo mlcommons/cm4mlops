@@ -262,6 +262,9 @@ deps:
       CM_MLPERF_NVIDIA_HARNESS_RUN_MODE:
       - run_harness
 
+  - tags: get,generic-python-lib,_package.pycuda
+    version: "2022.2.2"
+
   - tags: get,generic-python-lib,_package.nvmitten
     update_tags_from_env_with_prefix:
       _path.:
