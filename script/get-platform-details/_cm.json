@@ -9,6 +9,16 @@
       "tags": "detect,os"
     }
   ],
+  "prehook_deps": [
+    {
+      "enable_if_env": {
+        "CM_INSTALL_NUMACTL": [
+          "True"
+        ]
+      },
+      "tags": "get,sys-util,generic,_numactl"
+    }
+  ],
   "tags": [
     "get",
     "platform",
