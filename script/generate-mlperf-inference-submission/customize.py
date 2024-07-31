@@ -110,30 +110,75 @@ def generate_submission(i):
     code_path = os.path.join(path_submission, "code")
 
     for res in results:
-        parts = res.split("-")
-        if len(parts) > 5: #result folder structure used by CM script
-            system = parts[0] if system == 'default' else system
-            implementation = parts[1]
-            device = parts[2]
-            framework = parts[3]
-            framework_version = parts[4]
-            run_config = parts[5]
-
-            print('* System: {}'.format(system))
-            print('* Implementation: {}'.format(implementation))
-            print('* Device: {}'.format(device))
-            print('* Framework: {}'.format(framework))
-            print('* Framework Version: {}'.format(framework_version))
-            print('* Run Config: {}'.format(run_config))
-
-            new_res = system + "-" + "-".join(parts[1:])
-
-            # Override framework and framework versions from the folder name
-            system_meta_default['framework'] = framework + " " + framework_version
-        else:
-            print(parts)
-            return {'return': 1}
         result_path = os.path.join(results_dir, res)
+        # checks for json file containing system meta
+        sys_meta = {} # variable to store the system meta 
+        sys_meta_path = "" # for debugging purpose when the meta data does not match
+        sys_meta_no_check_flag = 0 # will not check individual model folders if its set to 1
+
+        model_mapping_combined = {} # to store all the model mapping related to an SUT
+        model_mapping_no_check_flag = 0 # will not check individual folders if set to 1
+
+        # check whether the root folder contains the system meta file
+        # if yes then there is no need to check for meta files inside individual model folders
+        if "system_meta.json" in os.listdir(result_path):
+            with open(os.path.join(result_path, "system_meta.json"), 'r') as f:
+                    sys_meta = json.load(f)
+                    sys_meta_path = os.path.join(result_path, "system_meta.json")
+                    sys_meta_no_check_flag = 1
+                    print(f"System meta found in path {sys_meta_path} , skipping individual directories!")
+
+        # Check whether the root folder contains the model mapping file
+        if "model_mapping.json" in os.listdir(result_path):
+            with open(os.path.join(result_path, "model_mapping.json"), 'r') as f:
+                model_mapping_combined.update(json.load(f))
+                model_mapping_no_check_flag = 1
+                print(f"model mapping found in path {sys_meta_path} , skipping individual directories!")
+
+        if sys_meta_no_check_flag == 0 or model_mapping_no_check_flag == 0:
+            models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
+            for model in models:
+                result_model_path = os.path.join(result_path, model)
+                scenarios = [f for f in os.listdir(result_model_path) if not os.path.isfile(os.path.join(result_model_path, f))]
+                for scenario in scenarios:
+                    result_scenario_path = os.path.join(result_model_path, scenario)
+                    modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
+                    for mode in modes:
+                        result_mode_path = os.path.join(result_scenario_path,mode)
+                        if mode == "performance":
+                            compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
+                            # check if system meta was already taken from root folder
+                            if sys_meta_no_check_flag == 0:
+                                tmp_system_meta_file_path = os.path.join(compliance_performance_run_path, "system_meta.json")
+                                if os.path.exists(tmp_system_meta_file_path):
+                                    with open(tmp_system_meta_file_path, 'r') as f:
+                                        tmp_system_meta_data = json.load(f)
+                                        # check whether the temp dictionary is empty
+                                        if not sys_meta:
+                                            # populate the meta data loaded to tmp dictionary for comparing with othhers
+                                            sys_meta = tmp_system_meta_data
+                                            sys_meta_path = tmp_system_meta_file_path
+                                        else:
+                                            # compare whether the details are equal
+                                            if sys_meta != tmp_system_meta_data:
+                                                # error - meta file mismatch
+                                                return {"return":1, "error":f"Meta file mismatch between {sys_meta_path} and {tmp_system_meta_file_path}"}
+                            # check if model mapping was already taken from root folder
+                            if model_mapping_no_check_flag == 0:
+                                tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
+                                if os.path.exists(tmp_model_mapping_file_path):
+                                    with open(tmp_model_mapping_file_path, 'r') as f:
+                                        model_mapping_combined.update(json.load(f))
+                                else:
+                                    return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
+                                
+        system = sys_meta["system_name"]
+        implementation = sys_meta["implementation"]
+        device = sys_meta["device"]
+        framework = sys_meta["framework"].replace(" ","_")
+        run_config = sys_meta["run_config"]
+        new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
+
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
             sub_res = platform_prefix + "-" + new_res
@@ -148,6 +193,9 @@ def generate_submission(i):
         if not os.path.isdir(submission_system_path):
             os.makedirs(submission_system_path)
         system_file = os.path.join(submission_system_path, sub_res+".json")
+
+        # TODO: Where should the model_mapping combined json be saved
+        print(model_mapping_combined)
 
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
 
