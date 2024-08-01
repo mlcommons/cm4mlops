@@ -204,7 +204,7 @@ def postprocess(i):
 
         # map the custom model for inference result to the official model
         # if custom model name is not set, the official model name will be mapped to itself
-        official_model_name = env['CM_MLPERF_MODEL']
+        official_model_name = model
         model_mapping = {model_full_name: official_model_name}
         with open("model_mapping.json", "w") as fp:
             json.dump(model_mapping, fp, indent=2)
