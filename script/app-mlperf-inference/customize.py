@@ -192,9 +192,20 @@ def postprocess(i):
         with open ("measurements.json", "w") as fp:
             json.dump(measurements, fp, indent=2)
 
+        state['CM_SUT_META']['implementation'] = env['CM_MLPERF_IMPLEMENTATION']
+        state['CM_SUT_META']['device'] = env['CM_MLPERF_DEVICE']
+        state['CM_SUT_META']['run_config'] = env['CM_MLPERF_INFERENCE_SUT_RUN_CONFIG']
         system_meta = state['CM_SUT_META']
         with open("system_meta.json", "w") as fp:
             json.dump(system_meta, fp, indent=2)
+
+        # map the custom model for inference result to the official model
+        # if custom model name is not set, the official model name will be mapped to itself
+        official_model_name = env['CM_MLPERF_MODEL']
+        model_mapping = {model_full_name: official_model_name}
+        with open("model_mapping.json", "w") as fp:
+            json.dump(model_mapping, fp, indent=2)
+
 
         # Add to the state
         state['app_mlperf_inference_measurements'] = copy.deepcopy(measurements)

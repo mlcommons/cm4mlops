@@ -32,6 +32,7 @@ def postprocess(i):
             run_config.append(env.get(f'CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX{i}'))
 
     run_config_string = "_".join(run_config) if run_config else 'default_config'
+    env['CM_MLPERF_INFERENCE_SUT_RUN_CONFIG'] = run_config_string
 
     if env.get('CM_SUT_NAME', '') == '':
         env['CM_SUT_NAME'] = env['CM_HW_NAME'] + "-" + implementation_string + "-" + device + "-" + backend + "-" + backend_version + "-" + run_config_string
