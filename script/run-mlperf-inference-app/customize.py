@@ -105,7 +105,7 @@ def preprocess(i):
         test_list.remove("TEST01")
         test_list.remove("TEST05")
 
-    if "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env['CM_MODEL']:
+    if "llama2" in env['CM_MODEL'].lower() or "mixtral-8x7b" in env['CM_MODEL']:
         test_list.append("TEST06")
 
     variation_implementation= "_" + env.get("CM_MLPERF_IMPLEMENTATION", "reference")
