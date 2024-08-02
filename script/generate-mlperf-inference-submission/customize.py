@@ -128,11 +128,14 @@ def generate_submission(i):
                     print(f"System meta found in path {sys_meta_path} , skipping individual directories!")
 
         # Check whether the root folder contains the model mapping file
+        # expects json file in the format:
+        # {
+        #   custom_model1:official_model(could be any official model),
+        #   custom_model2:official_model(could be any official model)
+        # }
         if "model_mapping.json" in os.listdir(result_path):
             with open(os.path.join(result_path, "model_mapping.json"), 'r') as f:
-                existing_model_mappings = json.load(f)
-                for custom_model in existing_model_mappings: 
-                    model_mapping_combined.update({custom_model:existing_model_mappings[custom_model]})
+                model_mapping_combined = json.load(f)
 
         # Preprocessing part.
         # Iterates through the folder structure and finds the system meta and model mapping json files.
@@ -167,7 +170,8 @@ def generate_submission(i):
                                             # error - meta file mismatch
                                             return {"return":1, "error":f"Meta file mismatch between {sys_meta_path} and {tmp_system_meta_file_path}"}
                             else:
-                                return {"return":1, "error":f"system_meta.json not found in {tmp_system_meta_file_path}"}
+                                if sys_meta: # to be discussed, what if its present in one folder and not in the next one?
+                                    return {"return":1, "error":f"system_meta.json not found in {tmp_system_meta_file_path}"}
                         # model mapping part 
                         tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
                         if os.path.exists(tmp_model_mapping_file_path):
@@ -178,14 +182,39 @@ def generate_submission(i):
                                         model_mapping_combined.update({new_custom_model:new_model_mapping[new_custom_model]})
                         else:
                             return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
-                                
-        system = sys_meta["system_name"]
-        implementation = sys_meta["implementation"]
-        device = sys_meta["device"]
-        framework = sys_meta["framework"].replace(" ","_")
-        run_config = sys_meta["run_config"]
-        new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
 
+        if sys_meta:               
+            system = sys_meta["system_name"]
+            implementation = sys_meta["implementation"]
+            device = sys_meta["device"]
+            framework = sys_meta["framework"].replace(" ","_")
+            run_config = sys_meta["run_config"]
+            new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
+        else:
+            parts = res.split("-")
+        if len(parts) > 5: #result folder structure used by CM script
+            system = parts[0] if system == 'default' else system
+            implementation = parts[1]
+            device = parts[2]
+            framework = parts[3]
+            framework_version = parts[4]
+            run_config = parts[5]
+
+            print('* System: {}'.format(system))
+            print('* Implementation: {}'.format(implementation))
+            print('* Device: {}'.format(device))
+            print('* Framework: {}'.format(framework))
+            print('* Framework Version: {}'.format(framework_version))
+            print('* Run Config: {}'.format(run_config))
+
+            new_res = system + "-" + "-".join(parts[1:])
+
+            # Override framework and framework versions from the folder name
+            system_meta_default['framework'] = framework + " " + framework_version
+        else:
+            print(parts)
+            return {'return': 1}
+            
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
             sub_res = platform_prefix + "-" + new_res
