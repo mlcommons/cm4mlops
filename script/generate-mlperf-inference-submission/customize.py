@@ -192,28 +192,28 @@ def generate_submission(i):
             new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
         else:
             parts = res.split("-")
-        if len(parts) > 5: #result folder structure used by CM script
-            system = parts[0] if system == 'default' else system
-            implementation = parts[1]
-            device = parts[2]
-            framework = parts[3]
-            framework_version = parts[4]
-            run_config = parts[5]
+            if len(parts) > 5: #result folder structure used by CM script
+                system = parts[0] if system == 'default' else system
+                implementation = parts[1]
+                device = parts[2]
+                framework = parts[3]
+                framework_version = parts[4]
+                run_config = parts[5]
 
-            print('* System: {}'.format(system))
-            print('* Implementation: {}'.format(implementation))
-            print('* Device: {}'.format(device))
-            print('* Framework: {}'.format(framework))
-            print('* Framework Version: {}'.format(framework_version))
-            print('* Run Config: {}'.format(run_config))
+                print('* System: {}'.format(system))
+                print('* Implementation: {}'.format(implementation))
+                print('* Device: {}'.format(device))
+                print('* Framework: {}'.format(framework))
+                print('* Framework Version: {}'.format(framework_version))
+                print('* Run Config: {}'.format(run_config))
 
-            new_res = system + "-" + "-".join(parts[1:])
+                new_res = system + "-" + "-".join(parts[1:])
 
-            # Override framework and framework versions from the folder name
-            system_meta_default['framework'] = framework + " " + framework_version
-        else:
-            print(parts)
-            return {'return': 1}
+                # Override framework and framework versions from the folder name
+                system_meta_default['framework'] = framework + " " + framework_version
+            else:
+                print(parts)
+                return {'return': 1}
             
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
