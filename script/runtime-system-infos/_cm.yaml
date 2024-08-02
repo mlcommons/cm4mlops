@@ -1,5 +1,5 @@
 # Identification of this CM script
-alias: record-system-infos
+alias: runtime-system-infos
 uid: 755cf27627784001
 cache: false
 automation_alias: script
