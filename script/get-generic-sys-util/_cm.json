@@ -50,6 +50,21 @@
         }
       }
     },
+    "linux-tools": {
+      "deps":[
+        {
+          "tags":"detect,os"
+        }
+      ],
+      "env": {
+        "CM_SYS_UTIL_NAME": "linux-tools"
+      },
+      "state": {
+        "linux-tools": {
+          "apt": "linux-tools-<<<CM_HOST_OS_KERNEL_VERSION>>>"
+        }
+      }
+    },
     "sox": {
       "env": {
         "CM_SYS_UTIL_NAME": "sox"

@@ -2,7 +2,7 @@
   "alias": "get-platform-details",
   "automation_alias": "script",
   "automation_uid": "5b4e0237da074764",
-  "cache": true,
+  "cache": false,
   "category": "Platform information",
   "deps": [
     {
@@ -17,6 +17,14 @@
         ]
       },
       "tags": "get,sys-util,generic,_numactl"
+    },
+    {
+      "enable_if_env": {
+        "CM_INSTALL_CPUPOWER": [
+          "True"
+        ]
+      },
+      "tags": "get,sys-util,generic,_linux-tools"
     }
   ],
   "tags": [
