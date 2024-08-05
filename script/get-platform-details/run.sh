@@ -4,21 +4,6 @@ OUTPUT_FILE="system_info.txt"
 
 echo "WARNING: sudo permission is needed to some packages for measuring the platform details"
 
-# Install numactl if not installed
-if [[ $CM_INSTALL_NUMACTL == "True" ]]; then
-    echo "Installing numactl..."
-    sudo apt-get update
-    sudo apt-get install -y numactl
-fi
-
-# for accessing cpupower package
-# NOTW: To be tested on more devices
-if [[ $CM_INSTALL_CPUPOWER == "True" ]]; then
-    echo "Installing linux-tools-common for cpupower package..."
-    sudo apt-get update
-    sudo apt-get install -y linux-tools-$CM_HOST_OS_KERNEL_VERSION
-fi
-
 if [[ ${CM_HOST_OS_FLAVOR} == "macos" ]]; then
     echo "WARNING: To be done for the mac os"
 else
