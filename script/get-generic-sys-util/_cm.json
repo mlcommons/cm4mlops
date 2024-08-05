@@ -143,6 +143,19 @@
         }
       }
     },
+    "psmisc": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "psmisc"
+      },
+      "state": {
+        "psmisc": {
+          "apt": "psmisc",
+          "dnf": "psmisc",
+          "yum": "psmisc",
+          "brew": "pstree"
+        }
+      }
+    },
     "libpng-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libpng-dev"
