@@ -38,10 +38,10 @@ rerun=""
 power=" --power=yes --adr.mlperf-power-client.power_server=192.168.0.15 --env.CM_MLPERF_SKIP_POWER_CHECKS=yes"
 power=" --power=yes --adr.mlperf-power-client.power_server=192.168.0.15"
 power=""
-max_batchsize=128
 max_batchsize=1
-scenario="Offline"
+max_batchsize=128
 scenario="SingleStream"
+scenario="Offline"
 
 if [[ $scenario == "Offline" ]]; then
 for stub in ${zoo_stub_list[@]}; do
@@ -55,7 +55,6 @@ cmd="cm run script --tags=run,mlperf,inference,generate-run-cmds,_find-performan
    --scenario=Offline \
    --test_query_count=15000 \
    --adr.mlperf-inference-implementation.max_batchsize=$max_batchsize \
-   --results_dir=$HOME/results_dir \
    --env.CM_MLPERF_NEURALMAGIC_MODEL_ZOO_STUB=$stub \
    ${rerun} \
    --quiet"
@@ -77,7 +76,6 @@ for stub in ${zoo_stub_list[@]}; do
    --execution_mode=valid \
    --adr.mlperf-inference-implementation.max_batchsize=$max_batchsize \
    ${power} \
-   --results_dir=$HOME/results_dir \
    --env.CM_MLPERF_NEURALMAGIC_MODEL_ZOO_STUB=$stub \
    --quiet"
   echo ${cmd}
