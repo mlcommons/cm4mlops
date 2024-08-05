@@ -50,6 +50,21 @@
         }
       }
     },
+    "linux-tools": {
+      "deps":[
+        {
+          "tags":"detect,os"
+        }
+      ],
+      "env": {
+        "CM_SYS_UTIL_NAME": "linux-tools"
+      },
+      "state": {
+        "linux-tools": {
+          "apt": "linux-tools-<<<CM_HOST_OS_KERNEL_VERSION>>>"
+        }
+      }
+    },
     "sox": {
       "env": {
         "CM_SYS_UTIL_NAME": "sox"
@@ -124,6 +139,45 @@
           "apt": "rapidjson-dev",
           "dnf": "rapidjson-devel",
           "yum": "rapidjson-devel",
+          "brew": ""
+        }
+      }
+    },
+    "psmisc": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "psmisc"
+      },
+      "state": {
+        "psmisc": {
+          "apt": "psmisc",
+          "dnf": "psmisc",
+          "yum": "psmisc",
+          "brew": "pstree"
+        }
+      }
+    },
+    "systemd": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "systemd"
+      },
+      "state": {
+        "systemd": {
+          "apt": "systemd",
+          "dnf": "systemd",
+          "yum": "systemd",
+          "brew": ""
+        }
+      }
+    },
+    "dmidecode": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "dmidecode"
+      },
+      "state": {
+        "dmidecode": {
+          "apt": "dmidecode",
+          "dnf": "dmidecode",
+          "yum": "dmidecode",
           "brew": ""
         }
       }
