@@ -13,6 +13,9 @@
     },
     {
       "tags": "get,sys-util,generic,_systemd"
+    },
+    {
+      "tags": "get,sys-util,generic,_dmidecode"
     }
   ],
   "prehook_deps": [

@@ -169,6 +169,19 @@
         }
       }
     },
+    "dmidecode": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "dmidecode"
+      },
+      "state": {
+        "dmidecode": {
+          "apt": "dmidecode",
+          "dnf": "dmidecode",
+          "yum": "dmidecode",
+          "brew": ""
+        }
+      }
+    },
     "libpng-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libpng-dev"
