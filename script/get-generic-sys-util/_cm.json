@@ -156,6 +156,19 @@
         }
       }
     },
+    "systemd": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "systemd"
+      },
+      "state": {
+        "systemd": {
+          "apt": "systemd",
+          "dnf": "systemd",
+          "yum": "systemd",
+          "brew": ""
+        }
+      }
+    },
     "libpng-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libpng-dev"

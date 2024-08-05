@@ -10,6 +10,9 @@
     },
     {
       "tags": "get,sys-util,generic,_psmisc"
+    },
+    {
+      "tags": "get,sys-util,generic,_systemd"
     }
   ],
   "prehook_deps": [
