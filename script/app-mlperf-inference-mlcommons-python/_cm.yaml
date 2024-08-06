@@ -1029,21 +1029,21 @@ variations:
     deps:
     - tags: get,generic-python-lib,_package.nibabel
 
-  dlrm-99.9:
+  dlrm-v2-99.9:
     group: models
     base:
-    - dlrm
+    - dlrm-v2_
     env:
       CM_MODEL: dlrm-99.9
 
-  dlrm-99:
+  dlrm-v2-99:
     group: models
     base:
-    - dlrm
+    - dlrm-v2_
     env:
       CM_MODEL: dlrm-99
 
-  dlrm:
+  dlrm-v2_:
     env:
       CM_MLPERF_MODEL_SKIP_BATCHING: true
     deps:
