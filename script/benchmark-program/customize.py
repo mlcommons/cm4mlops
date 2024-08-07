@@ -56,9 +56,31 @@ def preprocess(i):
         elif env.get('CM_MLPERF_DEVICE', '') == "cpu":
             env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += ',_cpu'
         # this section is for supplying the input arguments/tags
-        env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += f" --log_dir={logs_dir}"   # specify the logs directory
+        env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += ' --log_dir=\"' + logs_dir + '\"'   # specify the logs directory
         if env.get('CM_SYSTEM_INFO_MEASUREMENT_INTERVAL', '') != '':        # specifying the interval in which the system information should be measured
-            env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += f" --interval={env['CM_SYSTEM_INFO_MEASUREMENT_INTERVAL']}"
+            env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += ' --interval=\"' + env['CM_SYSTEM_INFO_MEASUREMENT_INTERVAL'] + '\"'
+    
+    # generate the pre run cmd - recording runtime system infos 
+    pre_run_cmd = ""
+    if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
+        pass
+        # Note: To be fixed
+        # running the script as a process in background
+        # pre_run_cmd = pre_run_cmd + '\"' + 'cm run script --tags=runtime,system,utilisation' + env['CM_SYS_UTILISATION_SCRIPT_TAGS'] + ' &\" '
+        # obtain the command if of the background process
+        # pre_run_cmd += 'cmd_pid=$!' + ' && ' + 'echo $cmd_pid' + ' && '
+        # # check whether the command is running or not
+        # pre_run_cmd += "ps -p $cmd_pid || { echo 'Process $cmd_pid is not running, exiting'; exit 1; }"
+    env['CM_PRE_RUN_CMD'] = pre_run_cmd
+    print(f"Pre run command for recording the runtime system information: {pre_run_cmd}")
+
+    # generate the post run cmd - for killing the process that records runtime system infos
+    post_run_cmd = ""
+    if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
+        pass
+        # post_run_cmd += "echo 'killing process ${cmd_pid}' && kill -TERM ${cmd_pid} && test $? -eq 0 || exit $? "
+    env['CM_POST_RUN_CMD'] = post_run_cmd
+    print(f"Post run command for killing the process that measures the runtime system information: {post_run_cmd}")
 
     # Print info
     print ('***************************************************************************')
