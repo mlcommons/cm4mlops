@@ -39,7 +39,7 @@ if [[ "${CM_DEBUG_SCRIPT_BENCHMARK_PROGRAM}" == "True" ]]; then
 fi
 
 echo $CM_PRE_RUN_CMD
-${CM_PRE_RUN_CMD}
+eval ${CM_PRE_RUN_CMD}
 
 # Check CM_RUN_CMD0
 if [[ "${CM_RUN_CMD0}" != "" ]]; then
@@ -62,4 +62,4 @@ fi
 test $? -eq 0 || exit $? 
 
 
-${CM_POST_RUN_CMD}
+eval ${CM_POST_RUN_CMD}
