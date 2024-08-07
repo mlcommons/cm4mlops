@@ -53,6 +53,9 @@ def postprocess(i):
     #    return {'return': 0}
 
     output_dir = env['CM_MLPERF_OUTPUT_DIR']
+
+    result_sut_folder_path = env['CM_MLPERF_INFERENCE_RESULTS_SUT_PATH']
+
     mode = env['CM_MLPERF_LOADGEN_MODE']
 
     if not os.path.exists(output_dir) or not os.path.exists(os.path.join(output_dir, "mlperf_log_summary.txt")):
@@ -195,9 +198,26 @@ def postprocess(i):
         with open ("measurements.json", "w") as fp:
             json.dump(measurements, fp, indent=2)
 
+        cm_sut_info = {}
+        cm_sut_info['system_name'] = state['CM_SUT_META']['system_name']
+        cm_sut_info['implementation'] = env['CM_MLPERF_IMPLEMENTATION']
+        cm_sut_info['device'] = env['CM_MLPERF_DEVICE']
+        cm_sut_info['framework'] = state['CM_SUT_META']['framework']
+        cm_sut_info['run_config'] = env['CM_MLPERF_INFERENCE_SUT_RUN_CONFIG']
+        with open(os.path.join(result_sut_folder_path,"cm_sut_info.json"), "w") as fp:
+            json.dump(cm_sut_info, fp, indent=2)
+
         system_meta = state['CM_SUT_META']
         with open("system_meta.json", "w") as fp:
             json.dump(system_meta, fp, indent=2)
+
+        # map the custom model for inference result to the official model
+        # if custom model name is not set, the official model name will be mapped to itself
+        official_model_name = model
+        model_mapping = {model_full_name: official_model_name}
+        with open("model_mapping.json", "w") as fp:
+            json.dump(model_mapping, fp, indent=2)
+
 
         # Add to the state
         state['app_mlperf_inference_measurements'] = copy.deepcopy(measurements)

@@ -10,6 +10,24 @@ import mlperf_utils
 def preprocess(i):
     return {'return': 0}
 
+# Helper function to fill dictionary from JSON file
+def fill_from_json(file_path, keys, sut_info):
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+        for key in keys:
+            if key in data and sut_info[key] is None:
+                sut_info[key] = data[key]
+            elif key in data and sut_info[key] != data[key]:
+                return -1 # error saying there is a mismatch in the value of a key
+        return sut_info
+    
+# Helper function to check whether all the keys(sut information) are assigned
+def check_dict_filled(keys, sut_info):
+    for key in keys:
+        if key in sut_info and sut_info[key] is None:
+            return False
+    return True
+
 def generate_submission(i):
 
     # Save current user directory
@@ -110,30 +128,96 @@ def generate_submission(i):
     code_path = os.path.join(path_submission, "code")
 
     for res in results:
-        parts = res.split("-")
-        if len(parts) > 5: #result folder structure used by CM script
-            system = parts[0] if system == 'default' else system
-            implementation = parts[1]
-            device = parts[2]
-            framework = parts[3]
-            framework_version = parts[4]
-            run_config = parts[5]
-
-            print('* System: {}'.format(system))
-            print('* Implementation: {}'.format(implementation))
-            print('* Device: {}'.format(device))
-            print('* Framework: {}'.format(framework))
-            print('* Framework Version: {}'.format(framework_version))
-            print('* Run Config: {}'.format(run_config))
-
-            new_res = system + "-" + "-".join(parts[1:])
-
-            # Override framework and framework versions from the folder name
-            system_meta_default['framework'] = framework + " " + framework_version
-        else:
-            print(parts)
-            return {'return': 1}
         result_path = os.path.join(results_dir, res)
+        # variable to check whether the sut_meta.json is present in the root folder
+        saved_system_meta_file_path = os.path.join(result_path, 'system_meta.json')
+        # checks for json file containing system meta
+        sut_info = {
+            "system_name": None,
+            "implementation": None,
+            "device": None,
+            "framework": None,
+            "run_config": None
+        } # variable to store the system meta 
+
+        model_mapping_combined = {} # to store all the model mapping related to an SUT
+
+        # check whether the root folder contains the sut infos
+        # if yes then there is no need to check for meta files inside individual model folders
+        if "cm_sut_info.json" in os.listdir(result_path):
+            sut_info = fill_from_json(os.path.join(result_path, "cm_sut_info.json"), sut_info.keys(), sut_info)
+            if sut_info == -1:
+                return {'return':1, 'error':f"key value mismatch. Refer the populating dictionary:\n{sut_info}\n and file {os.path.join(result_path, 'cm_sut_info.json')}"}
+            if check_dict_filled(sut_info.keys(), sut_info):
+                print(f"sut info completely filled from {os.path.join(result_path, 'cm_sut_info.json')}!")
+
+        # Check whether the root folder contains the model mapping file
+        # expects json file in the format:
+        # {
+        #   custom_model1:official_model(could be any official model),
+        #   custom_model2:official_model(could be any official model)
+        # }
+        if "model_mapping.json" in os.listdir(result_path):
+            with open(os.path.join(result_path, "model_mapping.json"), 'r') as f:
+                model_mapping_combined = json.load(f)
+
+        # Preprocessing part.
+        # Even the model mapping json file is present in root directory, the folders are traversed
+        # and the data is updated provided not duplicated. 
+        models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
+        for model in models:
+            result_model_path = os.path.join(result_path, model)
+            scenarios = [f for f in os.listdir(result_model_path) if not os.path.isfile(os.path.join(result_model_path, f))]
+            for scenario in scenarios:
+                result_scenario_path = os.path.join(result_model_path, scenario)
+                modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
+                for mode in modes:
+                    result_mode_path = os.path.join(result_scenario_path,mode)
+                    if mode == "performance":
+                        compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
+                        # model mapping part 
+                        tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
+                        if os.path.exists(tmp_model_mapping_file_path):
+                            with open(tmp_model_mapping_file_path, 'r') as f:
+                                new_model_mapping = json.load(f)
+                                for new_custom_model in new_model_mapping:
+                                    if new_custom_model not in model_mapping_combined:
+                                        model_mapping_combined.update({new_custom_model:new_model_mapping[new_custom_model]})
+                        else:
+                            return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
+
+        if check_dict_filled(sut_info.keys(), sut_info):              
+            system = sut_info["system_name"]
+            implementation = sut_info["implementation"]
+            device = sut_info["device"]
+            framework = sut_info["framework"].replace(" ","_")
+            run_config = sut_info["run_config"]
+            new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
+        else:
+            parts = res.split("-")
+            if len(parts) > 5: #result folder structure used by CM script
+                system = parts[0] if system == 'default' else system
+                implementation = parts[1]
+                device = parts[2]
+                framework = parts[3]
+                framework_version = parts[4]
+                run_config = parts[5]
+
+                print('* System: {}'.format(system))
+                print('* Implementation: {}'.format(implementation))
+                print('* Device: {}'.format(device))
+                print('* Framework: {}'.format(framework))
+                print('* Framework Version: {}'.format(framework_version))
+                print('* Run Config: {}'.format(run_config))
+
+                new_res = system + "-" + "-".join(parts[1:])
+
+                # Override framework and framework versions from the folder name
+                system_meta_default['framework'] = framework + " " + framework_version
+            else:
+                print(parts)
+                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.system_name\n2.implementation\n3.framework\n4.run_config\nInclude a cm_sut_info.json file with the above content in {result_path}"}
+            
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
             sub_res = platform_prefix + "-" + new_res
@@ -148,6 +232,10 @@ def generate_submission(i):
         if not os.path.isdir(submission_system_path):
             os.makedirs(submission_system_path)
         system_file = os.path.join(submission_system_path, sub_res+".json")
+
+        # Save the model mapping json file
+        with open(os.path.join(path_submission,"model_mapping.json"), "w") as fp:
+            json.dump(model_mapping_combined, fp, indent=2)
 
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
 
@@ -234,14 +322,16 @@ def generate_submission(i):
                         result_mode_path=os.path.join(result_mode_path, 'run_1')
                         submission_results_path=os.path.join(submission_mode_path, 'run_1')
 
-                        if os.path.exists(os.path.join(result_mode_path, "system_meta.json")):
-                            with open(os.path.join(result_mode_path, "system_meta.json"), "r") as f:
-                                saved_system_meta = json.load(f)
-                                for key in list(saved_system_meta):
-                                    if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
-                                        del(saved_system_meta[key])
-                                system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
-                        system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults
+                        if not os.path.exists(saved_system_meta_file_path):
+                            saved_system_meta_file_path = os.path.join(result_mode_path, "system_meta.json")
+                            if os.path.exists(saved_system_meta_file_path):
+                                with open(saved_system_meta_file_path, "r") as f:
+                                    saved_system_meta = json.load(f)
+                                    for key in list(saved_system_meta):
+                                        if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
+                                            del(saved_system_meta[key])
+                                    system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
+                                system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults
 
                     if not os.path.isdir(submission_results_path):
                         os.makedirs(submission_results_path)
