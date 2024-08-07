@@ -1739,7 +1739,7 @@ def docker(i):
 
     image_repo = i.get('docker_image_repo','')
     if image_repo == '':
-        image_repo = 'cknowledge'
+        image_repo = 'local'
 
     # Host system needs to have docker
     r = self_module.cmind.access({'action':'run',

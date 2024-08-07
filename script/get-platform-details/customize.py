@@ -21,8 +21,8 @@ def preprocess(i):
     if not check_installation("numactl",os_info):
         env['CM_INSTALL_NUMACTL'] = 'True'
     
-    if not check_installation("cpupower",os_info):
-        env['CM_INSTALL_CPUPOWER'] = 'True'
+    #if not check_installation("cpupower",os_info):
+    env['CM_INSTALL_CPUPOWER'] = 'True'
         
     return {'return':0}
 
