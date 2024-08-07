@@ -60,11 +60,10 @@ def preprocess(i):
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_labels.npy")):
             print(f'day_23_labels.npy is missing inside {dlrm_data_path}/criteo/day23/fp32')
             env['CM_DLRM_DATASET_DOWNLOAD'] = True
-        # TBD: raw data is not available with mlcommons hosted dataset
-        #if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "raw_data")):
-        #    print(f'raw_data is missing inside {dlrm_data_path}/criteo/day23')
-        #    env['CM_DLRM_DATASET_DOWNLOAD'] = True
-        
+        if not os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "raw_data")):
+            if env.get('CM_CRITEO_DAY23_RAW_DATA_PATH', '') == '':
+                return {'return':1, 'error':'Raw data missing inside {dlrm_data_path}/criteo/day23. Specify the target folder through input mapping(--criteo_day23_raw_data_path="path to raw criteo dataset")'}
+
         run_cmd = ''
         xsep = ' && '
 
