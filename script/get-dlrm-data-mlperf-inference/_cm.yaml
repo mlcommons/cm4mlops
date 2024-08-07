@@ -16,7 +16,6 @@ new_env_keys:
   - DLRM_DATA_PATH
 input_mapping:
   dlrm_data_path: CM_DLRM_DATA_PATH
-
 prehook_deps:
   - tags: get,ml-model,dlrm,_pytorch
     enable_if_env:
