@@ -38,6 +38,9 @@ if [[ "${CM_DEBUG_SCRIPT_BENCHMARK_PROGRAM}" == "True" ]]; then
   exit 0
 fi
 
+echo $CM_PRE_RUN_CMD
+eval ${CM_PRE_RUN_CMD}
+
 # Check CM_RUN_CMD0
 if [[ "${CM_RUN_CMD0}" != "" ]]; then
   eval ${CM_RUN_CMD0}
@@ -56,4 +59,9 @@ else
   test $exitstatus -eq 0 || $exitstatus
 fi
 
+eval ${CM_POST_RUN_CMD}
 test $? -eq 0 || exit $? 
+
+test $exitstatus -eq 0 || $exitstatus
+
+
