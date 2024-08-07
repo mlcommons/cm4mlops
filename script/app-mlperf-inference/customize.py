@@ -291,7 +291,7 @@ def postprocess(i):
                 repo_name = os.path.basename(repo_path)
 
                 # Check dev
-                if repo_name == 'cm4mlops': repo_name = 'gateoverflow@cm4mlops'
+                #if repo_name == 'cm4mlops': repo_name = 'mlcommons@cm4mlops'
 
                 r = cm.access({'action':'system',
                                'automation':'utils',
@@ -374,8 +374,9 @@ def postprocess(i):
 
         with open ("README.md", "w") as fp:
             fp.write(readme)
-        with open ("README-extra.md", "w") as fp:
-            fp.write(extra_readme)
+        if extra_readme:
+            with open ("README-extra.md", "w") as fp:
+                fp.write(extra_readme)
 
     elif mode == "compliance":
 

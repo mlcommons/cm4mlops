@@ -1442,7 +1442,8 @@ docker:
   interactive: True
   extra_run_args: ' --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
   os: ubuntu
-  cm_repo: gateoverflow@cm4mlops
+  cm_repo: mlcommons@cm4mlops
+  cm_repo_flags: ' --branch=mlperf-inference '
   real_run: False
   os_version: '22.04'
   docker_input_mapping:
