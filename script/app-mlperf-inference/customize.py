@@ -465,14 +465,16 @@ def postprocess(i):
             power_end_time = pd.Timestamp(datetime.strptime(match_end, '%m-%d-%Y %H:%M:%S.%f')).replace(tzinfo=timezone.utc)
         #converts timestamp key value to datetime objects
         sys_utilisation_log['timestamp'] = pd.to_datetime(sys_utilisation_log['timestamp'])
+        '''
         for i in range(len(sys_utilisation_log['timestamp'])):
             print(f"{sys_utilisation_log['timestamp'][i]} {power_begin_time}")
             print(sys_utilisation_log['timestamp'][i]>=power_begin_time)
-        print(f"{sys_utilisation_log['timestamp'][0]} {power_begin_time}")
-        print(sys_utilisation_log['timestamp'][0]>=power_begin_time)
+        '''
+        #print(f"{sys_utilisation_log['timestamp'][0]} {power_begin_time}")
+        #print(sys_utilisation_log['timestamp'][0]>=power_begin_time)
         filtered_log = sys_utilisation_log[(sys_utilisation_log['timestamp'] >= power_begin_time) & 
                                (sys_utilisation_log['timestamp'] <= power_end_time)]
-        print(filtered_log)
+        #print(filtered_log)
         # Calculate average of cpu_utilisation and used_memory_gb
         system_utilisation_info_dump["avg_cpu_utilisation"] = filtered_log['cpu_utilisation'].mean()
         system_utilisation_info_dump["avg_used_memory_gb"] = filtered_log['used_memory_gb'].mean()

@@ -59,7 +59,9 @@ else
   test $exitstatus -eq 0 || $exitstatus
 fi
 
+eval ${CM_POST_RUN_CMD}
 test $? -eq 0 || exit $? 
 
+test $exitstatus -eq 0 || $exitstatus
 
-eval ${CM_POST_RUN_CMD}
+
