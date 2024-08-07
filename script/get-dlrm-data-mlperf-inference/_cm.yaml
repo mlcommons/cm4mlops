@@ -19,15 +19,11 @@ input_mapping:
 
 prehook_deps:
   - tags: get,ml-model,dlrm,_pytorch
-    update_tags_from_env_with_prefix:
-      download_path: CM_DLRM_DATA_PATH
     enable_if_env:
       CM_DLRM_MODEL_DOWNLOAD:
         - "on"
   - tags: get,dataset,preprocessed,criteo,_mlc
-    update_tags_from_env_with_prefix:
-      output_dir: CM_DLRM_DATA_PATH
-    skip_if_env:
+    enable_if_env:
       CM_DLRM_DATASET_DOWNLOAD:
         - "on"
 variations:
