@@ -1,5 +1,6 @@
 from cmind import utils
 import os
+import re
 
 def preprocess(i):
 
@@ -30,6 +31,15 @@ def preprocess(i):
     package_name = package.get(pm)
     if not package_name:
         return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
+    
+    # Temporary handling of dynamic state variables
+    tmp_values = re.findall(r'<<<(.*?)>>>', str(package_name))
+    for tmp_value in tmp_values:
+            if tmp_value not in env:
+                return {'return':1, 'error':'variable {} is not in env'.format(tmp_value)}
+            if tmp_value in env:
+                if type(package_name) == str:
+                    package_name = package_name.replace("<<<"+tmp_value+">>>", str(env[tmp_value]))
 
     install_cmd = env.get('CM_HOST_OS_PACKAGE_MANAGER_INSTALL_CMD')
     if not install_cmd:

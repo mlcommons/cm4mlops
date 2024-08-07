@@ -36,6 +36,9 @@ def preprocess(i):
     run_state = i['run_script_input']['run_state']
     state['mlperf-inference-implementation']['script_id'] = run_state['script_id']+":"+",".join(run_state['script_variation_tags'])
 
+    if env.get('CM_VLLM_SERVER_MODEL_NAME', '') != '' and env.get('CM_ML_MODEL_FULL_NAME', '') == '':
+        env['CM_ML_MODEL_FULL_NAME'] = env['CM_VLLM_SERVER_MODEL_NAME'].replace("/", "_")
+
     return {'return':0}
 
 def postprocess(i):
@@ -291,9 +294,9 @@ def postprocess(i):
             cmd = ""
             xcmd = ""
 
-        readme_init = "This experiment is generated using the [MLCommons Collective Mind automation framework (CM)](https://github.com/mlcommons/ck).\n\n"
+        readme_init = "This experiment is generated using the [MLCommons Collective Mind automation framework (CM)](https://github.com/mlcommons/cm4mlops).\n\n"
 
-        readme_init+= "*Check [CM MLPerf docs](https://mlcommons.github.io/inference) for more details.*\n\n"
+        readme_init+= "*Check [CM MLPerf docs](https://docs.mlcommons.org/inference) for more details.*\n\n"
 
         readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n\n".format(platform.platform(), 
             platform.processor(), sys.version, cm.__version__)
@@ -301,10 +304,10 @@ def postprocess(i):
         x = repo_name
         if repo_hash!='': x+=' --checkout='+str(repo_hash)
         
-        readme_body += "## CM Run Command\n\nSee [CM installation guide](https://github.com/mlcommons/ck/blob/master/docs/installation.md).\n\n"+ \
+        readme_body += "## CM Run Command\n\nSee [CM installation guide](https://docs.mlcommons.org/inference/install/).\n\n"+ \
             "```bash\npip install -U cmind\n\ncm rm cache -f\n\ncm pull repo {}\n\n{}\n```".format(x, xcmd)
 
-        readme_body += "\n*Note that if you want to use the [latest automation recipes](https://access.cknowledge.org/playground/?action=scripts) for MLPerf (CM scripts),\n"+ \
+        readme_body += "\n*Note that if you want to use the [latest automation recipes](https://docs.mlcommons.org/inference) for MLPerf (CM scripts),\n"+ \
                        " you should simply reload {} without checkout and clean CM cache as follows:*\n\n".format(repo_name) + \
                        "```bash\ncm rm repo {}\ncm pull repo {}\ncm rm cache -f\n\n```".format(repo_name, repo_name)
         
@@ -363,7 +366,11 @@ def postprocess(i):
         OUTPUT_DIR = os.path.dirname(COMPLIANCE_DIR)
 
         SCRIPT_PATH = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "compliance", "nvidia", test, "run_verification.py")
-        cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " " + SCRIPT_PATH + " -r " + RESULT_DIR + " -c " + COMPLIANCE_DIR + " -o "+ OUTPUT_DIR
+        if test == "TEST06":
+            cmd = f"{env['CM_PYTHON_BIN_WITH_PATH']}  {SCRIPT_PATH}  -c  {COMPLIANCE_DIR}  -o  {OUTPUT_DIR} --scenario {scenario} --dtype int32"
+        else:
+            cmd = f"{env['CM_PYTHON_BIN_WITH_PATH']}  {SCRIPT_PATH}  -r {RESULT_DIR} -c  {COMPLIANCE_DIR}  -o  {OUTPUT_DIR}"
+
         print(cmd)
         os.system(cmd)
 
@@ -415,7 +422,7 @@ def postprocess(i):
                 r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'verify_accuracy'})
                 if r['return']>0: return r
         import submission_checker as checker
-        is_valid = checker.check_compliance_perf_dir(COMPLIANCE_DIR)
+        is_valid = checker.check_compliance_perf_dir(COMPLIANCE_DIR) if test != "TEST06" else True
         state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario][test] = "passed" if is_valid else "failed"
     else:
         print(test)

@@ -17,7 +17,8 @@
       "tags": "get,python3"
     },
     {
-      "tags": "get,generic-python-lib,_pycuda"
+      "tags": "get,generic-python-lib,_pycuda",
+      "version": "2022.2.2"
     },
     {
       "tags": "get,git,_repo.https://github.com/NVIDIA/mitten",
