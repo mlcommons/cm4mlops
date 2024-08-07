@@ -11,7 +11,7 @@ docker:
 
 # User-friendly tags to find this CM script
 tags:
-  - record
+  - runtime
   - system
   - utilisation
   - infos

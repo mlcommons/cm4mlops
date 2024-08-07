@@ -52,13 +52,13 @@ def preprocess(i):
     # done to be made available to signal_handler function in case of kill signals
     # as of now handles for only SIGTERM  
     global f
-    with open(log_json_file_path, 'w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=csv_headers)
-        # If the file is empty, write headers
-        if f.tell() == 0:
-            writer.writeheader()
+    while True:
+        with open(log_json_file_path, 'a', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=csv_headers)
+            # If the file is empty, write headers
+            if f.tell() == 0:
+                writer.writeheader()
 
-        while True:
             memory = psutil.virtual_memory()
             cpu_util = psutil.cpu_percent(interval=0)
             total_memory_gb = memory.total / (1024 ** 3)
@@ -75,6 +75,7 @@ def preprocess(i):
             writer.writerow(data)
             print("raw written")        # To be removed. Currently present for debugging purpose.
             time.sleep(interval)
+            f.close()
 
     return {'return':0}
 

@@ -424,9 +424,6 @@ def postprocess(i):
         import submission_checker as checker
         is_valid = checker.check_compliance_perf_dir(COMPLIANCE_DIR) if test != "TEST06" else True
         state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario][test] = "passed" if is_valid else "failed"
-    else:
-        print(test)
-
 
     # portion of the code where the avg utilisation and system informations are extracted
     # NOTE: The section is under development and print statements are added for further debugging
