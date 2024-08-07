@@ -70,16 +70,22 @@ def get_accuracy_metric(config, model, path):
     acc_upper_limit = config.get_accuracy_upper_limit(model)
     patterns = []
     acc_targets = []
-    acc_limits = []
-    up_patterns = []
+    acc_limits = [None] * (len(target)//2)
+    up_patterns = [None] * (len(target)//2)
     acc_types = []
 
     if acc_upper_limit is not None:
         acc_limit_check = True
-        for i in range(0, len(acc_upper_limit), 2):
-            acc_type, acc_target = acc_upper_limit[i:i+2]
-            acc_limits.append(acc_target)
-            up_patterns.append(checker.ACC_PATTERN[acc_type])
+
+        for ii in range(0, len(target), 2):
+            acc_type1,tmp = target[ii:ii+2]
+            for i in range(0, len(acc_upper_limit), 2):
+                acc_type, acc_target = acc_upper_limit[i:i+2]
+                if acc_type != acc_type1:
+                    continue
+                acc_limits[ii//2] = acc_target
+                up_patterns[ii//2] = checker.ACC_PATTERN[acc_type]
+
 
     for i in range(0, len(target), 2):
         acc_type, acc_target = target[i:i+2]
@@ -109,6 +115,8 @@ def get_accuracy_metric(config, model, path):
                 acc = None
             if acc_upper_limit is not None:
                 for i, (pattern, acc_limit) in enumerate(zip(up_patterns, acc_limits)):
+                    if not pattern:
+                        continue
                     m = re.match(pattern, line)
                     if m:
                         acc = m.group(1)
@@ -168,13 +176,13 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
         result['power'] = power_result
         result['power_efficiency'] = power_efficiency_result
 
-    compliance_list = [ "TEST01", "TEST05", "TEST04" ]
+    compliance_list = [ "TEST01", "TEST05", "TEST04", "TEST06" ]
     if division == "closed":
         for test in compliance_list:
             test_path = os.path.join(result_path, test)
             if os.path.exists(test_path): #We dont consider missing test folders now - submission checker will do that
                 #test_pass = checker.check_compliance_dir(test_path, mlperf_model, scenario, config, "closed", system_json, sub_res)
-                test_pass = checker.check_compliance_perf_dir(test_path)
+                test_pass = checker.check_compliance_perf_dir(test_path) if test != "TEST06" else True
                 if test_pass and test in [ "TEST01", "TEST06" ]:
                     #test_pass = checker.check_compliance_acc_dir(test_path, mlperf_model, config)
                     pass # accuracy truncation script is done after submission generation. We assume here that it'll pass 
@@ -197,7 +205,7 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
     for i, acc in enumerate(acc_results):
         accuracy_results.append(str(round(float(acc_results[acc]), 5)))
         accuracy_result_string += f"`{acc}`: `{round(float(acc_results[acc]), 5)}`"
-        if not acc_limits:
+        if not acc_limits or not acc_limits[i]:
             accuracy_result_string += f", Required accuracy for closed division `>= {round(acc_targets[i], 5)}`"
         else:
             accuracy_result_string += f", Required accuracy for closed division `>= {round(acc_targets[i], 5)}` and `<= {round(acc_limits[i], 5)}`"

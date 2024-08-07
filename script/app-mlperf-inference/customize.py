@@ -9,6 +9,9 @@ import cmind as cm
 import platform
 import sys
 import mlperf_utils
+import pandas as pd
+import re
+from datetime import datetime,timezone
 
 def preprocess(i):
 
@@ -33,6 +36,9 @@ def preprocess(i):
     run_state = i['run_script_input']['run_state']
     state['mlperf-inference-implementation']['script_id'] = run_state['script_id']+":"+",".join(run_state['script_variation_tags'])
 
+    if env.get('CM_VLLM_SERVER_MODEL_NAME', '') != '' and env.get('CM_ML_MODEL_FULL_NAME', '') == '':
+        env['CM_ML_MODEL_FULL_NAME'] = env['CM_VLLM_SERVER_MODEL_NAME'].replace("/", "_")
+
     return {'return':0}
 
 def postprocess(i):
@@ -50,6 +56,9 @@ def postprocess(i):
     #    return {'return': 0}
 
     output_dir = env['CM_MLPERF_OUTPUT_DIR']
+
+    result_sut_folder_path = env['CM_MLPERF_INFERENCE_RESULTS_SUT_PATH']
+
     mode = env['CM_MLPERF_LOADGEN_MODE']
 
     if not os.path.exists(output_dir) or not os.path.exists(os.path.join(output_dir, "mlperf_log_summary.txt")):
@@ -192,9 +201,26 @@ def postprocess(i):
         with open ("measurements.json", "w") as fp:
             json.dump(measurements, fp, indent=2)
 
+        cm_sut_info = {}
+        cm_sut_info['system_name'] = state['CM_SUT_META']['system_name']
+        cm_sut_info['implementation'] = env['CM_MLPERF_IMPLEMENTATION']
+        cm_sut_info['device'] = env['CM_MLPERF_DEVICE']
+        cm_sut_info['framework'] = state['CM_SUT_META']['framework']
+        cm_sut_info['run_config'] = env['CM_MLPERF_INFERENCE_SUT_RUN_CONFIG']
+        with open(os.path.join(result_sut_folder_path,"cm_sut_info.json"), "w") as fp:
+            json.dump(cm_sut_info, fp, indent=2)
+
         system_meta = state['CM_SUT_META']
         with open("system_meta.json", "w") as fp:
             json.dump(system_meta, fp, indent=2)
+
+        # map the custom model for inference result to the official model
+        # if custom model name is not set, the official model name will be mapped to itself
+        official_model_name = model
+        model_mapping = {model_full_name: official_model_name}
+        with open("model_mapping.json", "w") as fp:
+            json.dump(model_mapping, fp, indent=2)
+
 
         # Add to the state
         state['app_mlperf_inference_measurements'] = copy.deepcopy(measurements)
@@ -265,7 +291,7 @@ def postprocess(i):
                 repo_name = os.path.basename(repo_path)
 
                 # Check dev
-                if repo_name == 'cm4mlops': repo_name = 'gateoverflow@cm4mlops'
+                #if repo_name == 'cm4mlops': repo_name = 'mlcommons@cm4mlops'
 
                 r = cm.access({'action':'system',
                                'automation':'utils',
@@ -288,9 +314,9 @@ def postprocess(i):
             cmd = ""
             xcmd = ""
 
-        readme_init = "This experiment is generated using the [MLCommons Collective Mind automation framework (CM)](https://github.com/mlcommons/ck).\n\n"
+        readme_init = "This experiment is generated using the [MLCommons Collective Mind automation framework (CM)](https://github.com/mlcommons/cm4mlops).\n\n"
 
-        readme_init+= "*Check [CM MLPerf docs](https://mlcommons.github.io/inference) for more details.*\n\n"
+        readme_init+= "*Check [CM MLPerf docs](https://docs.mlcommons.org/inference) for more details.*\n\n"
 
         readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n\n".format(platform.platform(), 
             platform.processor(), sys.version, cm.__version__)
@@ -298,10 +324,10 @@ def postprocess(i):
         x = repo_name
         if repo_hash!='': x+=' --checkout='+str(repo_hash)
         
-        readme_body += "## CM Run Command\n\nSee [CM installation guide](https://github.com/mlcommons/ck/blob/master/docs/installation.md).\n\n"+ \
+        readme_body += "## CM Run Command\n\nSee [CM installation guide](https://docs.mlcommons.org/inference/install/).\n\n"+ \
             "```bash\npip install -U cmind\n\ncm rm cache -f\n\ncm pull repo {}\n\n{}\n```".format(x, xcmd)
 
-        readme_body += "\n*Note that if you want to use the [latest automation recipes](https://access.cknowledge.org/playground/?action=scripts) for MLPerf (CM scripts),\n"+ \
+        readme_body += "\n*Note that if you want to use the [latest automation recipes](https://docs.mlcommons.org/inference) for MLPerf (CM scripts),\n"+ \
                        " you should simply reload {} without checkout and clean CM cache as follows:*\n\n".format(repo_name) + \
                        "```bash\ncm rm repo {}\ncm pull repo {}\ncm rm cache -f\n\n```".format(repo_name, repo_name)
         
@@ -348,8 +374,9 @@ def postprocess(i):
 
         with open ("README.md", "w") as fp:
             fp.write(readme)
-        with open ("README-extra.md", "w") as fp:
-            fp.write(extra_readme)
+        if extra_readme:
+            with open ("README-extra.md", "w") as fp:
+                fp.write(extra_readme)
 
     elif mode == "compliance":
 
@@ -360,7 +387,11 @@ def postprocess(i):
         OUTPUT_DIR = os.path.dirname(COMPLIANCE_DIR)
 
         SCRIPT_PATH = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "compliance", "nvidia", test, "run_verification.py")
-        cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " " + SCRIPT_PATH + " -r " + RESULT_DIR + " -c " + COMPLIANCE_DIR + " -o "+ OUTPUT_DIR
+        if test == "TEST06":
+            cmd = f"{env['CM_PYTHON_BIN_WITH_PATH']}  {SCRIPT_PATH}  -c  {COMPLIANCE_DIR}  -o  {OUTPUT_DIR} --scenario {scenario} --dtype int32"
+        else:
+            cmd = f"{env['CM_PYTHON_BIN_WITH_PATH']}  {SCRIPT_PATH}  -r {RESULT_DIR} -c  {COMPLIANCE_DIR}  -o  {OUTPUT_DIR}"
+
         print(cmd)
         os.system(cmd)
 
@@ -412,12 +443,44 @@ def postprocess(i):
                 r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'verify_accuracy'})
                 if r['return']>0: return r
         import submission_checker as checker
-        is_valid = checker.check_compliance_perf_dir(COMPLIANCE_DIR)
+        is_valid = checker.check_compliance_perf_dir(COMPLIANCE_DIR) if test != "TEST06" else True
         state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario][test] = "passed" if is_valid else "failed"
 
-    else:
-        print(test)
-
+    # portion of the code where the avg utilisation and system informations are extracted
+    # NOTE: The section is under development and print statements are added for further debugging
+    if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
+        system_utilisation_info_dump = {}
+        logs_dir = output_dir
+        # logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
+        sys_utilisation_log = pd.read_csv(os.path.join(logs_dir, 'sys_utilisation_info.txt'), dtype={'cpu_utilisation': float, 'used_memory_gb': float})
+        with open(os.path.join(logs_dir, 'mlperf_log_detail.txt'), 'r') as file:
+            log_txt = file.read()
+            #patterns for matching the power_begin and power_end in mlperf log
+            pattern_begin = r'\"key\"\:\s\"power_begin\"\,\s\"value\"\:\s\"(.*?)\"'
+            pattern_end = r'\"key\"\:\s\"power_end\"\,\s\"value\"\:\s\"(.*?)\"'
+            # match the patterns with the text present in the log details file
+            match_begin = re.findall(pattern_begin, log_txt)[0]
+            match_end = re.findall(pattern_end, log_txt)[0]
+            power_begin_time = pd.Timestamp(datetime.strptime(match_begin, '%m-%d-%Y %H:%M:%S.%f')).replace(tzinfo=timezone.utc)
+            power_end_time = pd.Timestamp(datetime.strptime(match_end, '%m-%d-%Y %H:%M:%S.%f')).replace(tzinfo=timezone.utc)
+        #converts timestamp key value to datetime objects
+        sys_utilisation_log['timestamp'] = pd.to_datetime(sys_utilisation_log['timestamp'])
+        '''
+        for i in range(len(sys_utilisation_log['timestamp'])):
+            print(f"{sys_utilisation_log['timestamp'][i]} {power_begin_time}")
+            print(sys_utilisation_log['timestamp'][i]>=power_begin_time)
+        '''
+        #print(f"{sys_utilisation_log['timestamp'][0]} {power_begin_time}")
+        #print(sys_utilisation_log['timestamp'][0]>=power_begin_time)
+        filtered_log = sys_utilisation_log[(sys_utilisation_log['timestamp'] >= power_begin_time) & 
+                               (sys_utilisation_log['timestamp'] <= power_end_time)]
+        #print(filtered_log)
+        # Calculate average of cpu_utilisation and used_memory_gb
+        system_utilisation_info_dump["avg_cpu_utilisation"] = filtered_log['cpu_utilisation'].mean()
+        system_utilisation_info_dump["avg_used_memory_gb"] = filtered_log['used_memory_gb'].mean()
+        print("\nSystem utilisation info for the current run:")
+        print(system_utilisation_info_dump)
+        print("\n")
 
     if state.get('mlperf-inference-implementation') and state['mlperf-inference-implementation'].get('version_info'):
         with open(os.path.join(output_dir, "cm-version-info.json"), "w") as f:

@@ -6,7 +6,8 @@
   "category": "MLPerf benchmark support",
   "new_env_keys": [
     "CM_HW_*",
-    "CM_SUT_*"
+    "CM_SUT_*",
+    "CM_MLPERF_INFERENCE_SUT_RUN_CONFIG"
   ],
   "new_state_keys": [
     "CM_SUT_*"
