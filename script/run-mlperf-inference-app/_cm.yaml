@@ -103,6 +103,7 @@ input_mapping:
   num_workers: CM_MLPERF_INFERENCE_NUM_WORKERS
   max_test_duration: CM_MLPERF_MAX_DURATION_TEST
   all_models: CM_MLPERF_ALL_MODELS
+  criteo_day23_raw_data_path: CM_CRITEO_DAY23_RAW_DATA_PATH
 
 new_state_keys:
 - app_mlperf_inference_*

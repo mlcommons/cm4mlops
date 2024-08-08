@@ -257,9 +257,6 @@ variations:
               - "yes"
               - "True"
         - tags: get,ml-model,gptj,_nvidia,_fp8
-          update_tags_from_env_with_prefix:
-            _tp-size.: 
-              - CM_NVIDIA_TP_SIZE 
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_GPTJ:
               - "yes"
@@ -281,8 +278,6 @@ variations:
               - "yes"
               - "True"
         - tags: get,dlrm,data,mlperf,inference,_nvidia
-          enable_if_env:
-            DLRM_DATA_PATH: "on"
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_DLRM:
               - "yes"
