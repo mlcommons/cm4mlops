@@ -205,6 +205,8 @@ variations:
           CM_SKIP_RUN:
             - yes
 
+  all-models: {}
+
   python:
     alias: reference
   
@@ -256,7 +258,8 @@ variations:
               - "True"
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            tp_size: CM_NVIDIA_TP_SIZE 
+            _tp_size: 
+            - CM_NVIDIA_TP_SIZE 
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_GPTJ:
               - "yes"
@@ -266,7 +269,7 @@ variations:
             _tp_size.:
             - CM_NVIDIA_TP_SIZE
           skip_if_env:
-            CM_MLPERF_NVIDIA_SKIP_LLAMA2-70B:
+            CM_MLPERF_NVIDIA_SKIP_LLAMA2_70B:
               - "yes"
               - "True"
         - tags: get,dataset,imagenet,validation,original,_full
