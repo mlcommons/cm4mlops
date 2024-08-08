@@ -99,7 +99,7 @@
       },
       "group": "precision"
     },
-    "tp_size.#": {
+    "tp-size.#": {
       "env": {
         "CM_NVIDIA_TP_SIZE": "#"
       },

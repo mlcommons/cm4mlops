@@ -258,16 +258,16 @@ variations:
               - "True"
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            _tp_size: 
-            - CM_NVIDIA_TP_SIZE 
+            _tp-size.: 
+              - CM_NVIDIA_TP_SIZE 
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_GPTJ:
               - "yes"
               - "True"
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            _tp_size.:
-            - CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_LLAMA2_70B:
               - "yes"
@@ -299,7 +299,8 @@ variations:
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            tp_size: CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
 
   nvidia-original,r4.1_default:
     docker:
@@ -310,7 +311,8 @@ variations:
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            tp_size: CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
         
     env:
       BUILD_TRTLLM: 1
@@ -320,8 +322,8 @@ variations:
       deps:
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            _tp_size.:
-            - CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
     env:
       BUILD_TRTLLM: 1
 
@@ -330,8 +332,8 @@ variations:
       deps:
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            _tp_size.:
-            - CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
     env:
       BUILD_TRTLLM: 1
 
