@@ -205,6 +205,8 @@ variations:
           CM_SKIP_RUN:
             - yes
 
+  all-models: {}
+
   python:
     alias: reference
   
@@ -245,6 +247,48 @@ variations:
   reference,bert_:
     default_variations:
       backend: onnxruntime
+
+  all-models,nvidia-original:
+    docker:
+      deps:
+        - tags: get,ml-model,gptj,raw
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_GPTJ:
+              - "yes"
+              - "True"
+        - tags: get,ml-model,gptj,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            _tp_size: 
+            - CM_NVIDIA_TP_SIZE 
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_GPTJ:
+              - "yes"
+              - "True"
+        - tags: get,ml-model,llama2-70b,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            _tp_size.:
+            - CM_NVIDIA_TP_SIZE
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_LLAMA2_70B:
+              - "yes"
+              - "True"
+        - tags: get,dataset,imagenet,validation,original,_full
+          names:
+            - imagenet-original
+            - dataset-original
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_RESNET50:
+              - "yes"
+              - "True"
+        - tags: get,dlrm,data,mlperf,inference,_nvidia
+          enable_if_env:
+            DLRM_DATA_PATH: "on"
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_DLRM:
+              - "yes"
+              - "True"
+      env:
+        BUILD_TRTLLM: 1
 
   nvidia-original,r4.1-dev_default:
     docker:
