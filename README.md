@@ -139,6 +139,10 @@ cm run script \
 
 [Grigori Fursin](https://cKnowledge.org/gfursin) and [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh)
 
+## Major script developers
+
+Arjun Suresh, Anandhu S, Grigori Fursin
+
 ## Funding
 
 We thank [cKnowledge.org](https://cKnowledge.org), [cTuning foundation](https://cTuning.org)
