@@ -21,20 +21,18 @@ and web services adaptable to continuously changing models, data sets, software 
 
 We develop and test [CM scripts](script) as a community effort to support the following projects:
 * [CM for MLPerf](https://docs.mlcommons.org/inference): modularize and automate MLPerf benchmarks 
-  (maintained by [MLCommons](https://mlcommons.org) and originally developed by [cKnowledge.org](https://cKnowledge.org), [OctoML](https://octoml.ai) and [cTuning.org](https://cTuning.org))
   * [Modular C++ harness for MLPerf loadgen](https://github.com/mlcommons/cm4mlops/tree/main/script/app-mlperf-inference-mlcommons-cpp)
   * [Modular Python harness for MLPerf loadgen](https://github.com/mlcommons/cm4mlops/tree/main/script/app-loadgen-generic-python)
 * [CM for research and education](https://cTuning.org/ae): provide a common interface to automate and reproduce results from research papers 
-  and MLPerf benchmarks (maintained by [cTuning foundation](https://cTuning.org) and [cKnowledge.org](https://cKnowledge.org))
-* [CM for ABTF](https://github.com/mlcommons/cm4abtf): provide a unified CM interface to run automotive benchmarks
-  (maintained by [MLCommons](https://mlcommons.org) and originally developed by [cKnowledge.org](https://cKnowledge.org))
+  and MLPerf benchmarks;
+* [CM for ABTF](https://github.com/mlcommons/cm4abtf): provide a unified CM interface to run automotive benchmarks;
 * [CM for optimization](https://access.cknowledge.org/playground/?action=challenges): co-design efficient and cost-effective 
-  software and hardware for AI, ML and other emerging workloads via open challenges 
-  (maintained by [cKnowledge.org](https://cKnowledge.org))
+  software and hardware for AI, ML and other emerging workloads via open challenges. 
 
 You can read this [ArXiv paper](https://arxiv.org/abs/2406.16791) to learn more about the CM motivation and long-term vision.
 
 Please provide your feedback or submit your issues [here](https://github.com/mlcommons/cm4mlops/issues).
+
 
 ## Catalog
 
@@ -137,9 +135,20 @@ cm run script \
 
 [Apache 2.0](LICENSE.md)
 
-## Acknowledgments
+## Authors
+
+[Grigori Fursin](https://cKnowledge.org/gfursin) and [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh)
+
+## Major script developers
+
+Arjun Suresh, Anandhu S, Grigori Fursin
+
+## Funding
 
 We thank [cKnowledge.org](https://cKnowledge.org), [cTuning foundation](https://cTuning.org)
 and [MLCommons](https://mlcommons.org) for sponsoring this project!
-We also thank all [volunteers, collaborators and contributors](https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md) 
+
+## Acknowledgments
+
+We thank all [volunteers, collaborators and contributors](https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md) 
 for their support, fruitful discussions, and useful feedback! 
