@@ -120,7 +120,8 @@
     "threads": "CM_NUM_PREPROCESS_THREADS"
   },
   "new_env_keys": [
-    "CM_DATASET_*",
+    "CM_DATASET_PREPROCESSED_PATH",
+    "CM_DATASET_CRITEO_MULTIHOT",
     "CM_CRITEO_PREPROCESSED_PATH"
   ],
   "tags": [

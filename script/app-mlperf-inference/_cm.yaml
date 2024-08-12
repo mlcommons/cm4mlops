@@ -873,6 +873,17 @@ variations:
     docker:
       deps:
         - tags: get,dlrm,data,mlperf,inference,_nvidia
+
+  dlrm_,intel:
+    docker:
+      deps:
+        - tags: get,preprocessed,dataset,criteo,_mlc
+
+  dlrm_,reference:
+    docker:
+      deps:
+        - tags: get,preprocessed,dataset,criteo,_mlc
+
   mobilenet:
     group:
       model
@@ -1481,6 +1492,7 @@ docker:
    - "${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}"
    - "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}"
    - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
+   - "${{ CM_CRITEO_PREPROCESSED_PATH }}:${{ CM_CRITEO_PREPROCESSED_PATH }}"
    - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
    - "${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}:${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}"
