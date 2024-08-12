@@ -449,6 +449,12 @@ deps:
       CM_MODEL:
       - dlrm-99
       - dlrm-99.9
+      - dlrm-v2-99
+      - dlrm-v2-99.9
+    skip_if_env:
+      CM_ML_MODEL_FILE_WITH_PATH:
+        - on
+
 
   ########################################################################
   # Install datasets
@@ -553,13 +559,16 @@ deps:
       - rnnt
 
   ## Criteo for dlrm
-  - tags: get,dataset,criteo,preprocessed
+  - tags: get,dataset,criteo,preprocessed,_mlc
     names:
     - criteo-preprocessed
     enable_if_env:
       CM_MODEL:
-      - dlrm-99
-      - dlrm-99.9
+      - dlrm-v2-99
+      - dlrm-v2-99.9
+    skip_if_env:
+      CM_DATASET_PREPROCESSED_PATH:
+      - on
 
   ########################################################################
   # Install MLPerf inference dependencies
@@ -1034,14 +1043,14 @@ variations:
     base:
     - dlrm-v2_
     env:
-      CM_MODEL: dlrm-99.9
+      CM_MODEL: dlrm-v2-99.9
 
   dlrm-v2-99:
     group: models
     base:
     - dlrm-v2_
     env:
-      CM_MODEL: dlrm-99
+      CM_MODEL: dlrm-v2-99
 
   dlrm-v2_:
     env:

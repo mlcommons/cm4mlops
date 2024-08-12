@@ -883,6 +883,10 @@ variations:
     docker:
       deps:
         - tags: get,preprocessed,dataset,criteo,_mlc
+        - tags: get,ml-model,dlrm,_pytorch,_fp32
+      mounts:
+        - ${{ CM_ML_MODEL_FILE_WITH_PATH }}:${{ CM_ML_MODEL_FILE_WITH_PATH }}
+
 
   mobilenet:
     group:
