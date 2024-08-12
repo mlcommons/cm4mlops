@@ -1056,6 +1056,8 @@ variations:
     env:
       CM_MLPERF_MODEL_SKIP_BATCHING: true
       CM_ML_MODEL_DATASET_TYPE: multihot-criteo
+
+  dlrm-v2_,pytorch:
     deps:
     - tags: get,dlrm,src
       names:
@@ -1076,13 +1078,13 @@ variations:
     - tags: get,generic-python-lib,_package.torchmetrics
       version: "0.11.0"
     - tags: get,generic-python-lib,_package.torchrec
-      version: 0.4.0
+      version: "0.4.0"
     - tags: get,generic-python-lib,_package.fbgemm-gpu
-      version: 0.3.2
+      version: "0.3.2"
     - tags: get,generic-python-lib,_package.fbgemm-gpu-cpu
-      version: 0.3.2
+      version: "0.3.2"
     - tags: get,generic-python-lib,_torch
-      version: 1.13.1
+      version: "1.13.1"
 
 
   rnnt:
