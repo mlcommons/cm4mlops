@@ -139,6 +139,9 @@
       "group": "model-provider",
       "env": {
         "CM_TMP_ML_MODEL_PROVIDER": "amd"
+      },
+      "default_env": {
+        "CM_LLAMA2_QUANTIZATION_DEVICE": ""
       }
     },
     "pytorch,amd": {
