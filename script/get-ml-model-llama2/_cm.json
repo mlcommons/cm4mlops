@@ -177,6 +177,9 @@
         },
         {
           "tags": "get,generic-python-lib,_package.nltk"
+        },
+        {
+          "tags": "get,generic-python-lib,_torch"
         }
       ]
     },
