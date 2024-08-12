@@ -14,8 +14,14 @@ def preprocess(i):
     else:
         path = env.get('LLAMA2_CHECKPOINT_PATH', '').strip()
 
-        if path == '' or not os.path.exists(path):
-            env['CM_TMP_REQUIRE_DOWNLOAD'] = 'yes'
+        if env.get('CM_TMP_ML_MODEL_PROVIDER', '') == 'amd':
+            env['CM_TMP_REQUIRE_DOWNLOAD'] = 'no'
+            i['run_script_input']['script_name'] = 'run-amd'
+            env['AMD_CODE_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'AMD', 'code')
+        else:
+            if path == '' or not os.path.exists(path):
+                env['CM_TMP_REQUIRE_DOWNLOAD'] = 'yes'
+
 
     return {'return':0}
 

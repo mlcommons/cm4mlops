@@ -148,11 +148,32 @@
       },
       "deps": [
         {
-          "tags": "get,git,repo,_repo.https://github.com/mlcommons/submission_inference_v4.1",
+          "tags": "get,python3",
+          "names": [
+            "python",
+            "python3"
+          ]
+        },
+        {
+          "tags": "get,ml-model,llama2-70b,_fp32,_pytorch",
+          "env": {
+          },
+          "force_new_env_keys": [
+            "LLAMA2_CHECKPOINT_PATH"
+          ]
+        },
+        {
+          "tags": "get,preprocessed,dataset,openorca,_calibration,_mlc"
+        },
+        {
+          "tags": "get,git,repo,_repo.https://github.com/mlcommons/submissions_inference_v4.1",
           "extra_cache_tags": "inference,submissions",
           "env": {
             "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_MLPERF_INFERENCE_RESULTS_PATH"
           }
+        },
+        {
+          "tags": "get,generic-python-lib,_quark-amd"
         }
       ]
     },
