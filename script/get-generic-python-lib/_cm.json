@@ -231,6 +231,23 @@
         "CM_GENERIC_PYTHON_PIP_URL": "git+https://github.com/NVIDIA/dllogger#egg=dllogger"
       }
     },
+    "quark-amd": {
+      "deps": [
+        {
+          "tags": "download,file,_wget,_url.https://www.xilinx.com/bin/public/openDownload?filename=quark-0.1.0+a9827f5-py39-none-any.whl",
+          "extra_cache_tags": "quark-amd",
+          "force_cache": true,
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_QUARK_AMD_WHL_PATH",
+            "CM_DOWNLOAD_FILENAME": "quark-0.1.0+a9827f5-py39-none-any.whl"
+          }
+        }
+      ],
+      "env": {
+        "CM_GENERIC_PYTHON_PACKAGE_NAME": "quark",
+        "CM_GENERIC_PYTHON_PIP_URL": "<<<CM_QUARK_AMD_WHL_PATH>>>"
+      }
+    },
     "mxeval": {
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "mxeval",

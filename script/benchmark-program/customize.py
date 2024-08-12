@@ -63,25 +63,21 @@ def preprocess(i):
     # generate the pre run cmd - recording runtime system infos 
     pre_run_cmd = ""
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
-        #pass
-        # Note: To be fixed
         # running the script as a process in background
-         pre_run_cmd = pre_run_cmd +  'cm run script --tags=runtime,system,utilisation' + env['CM_SYS_UTILISATION_SCRIPT_TAGS'] + ' --quiet  & '
+        pre_run_cmd = pre_run_cmd +  'cm run script --tags=runtime,system,utilisation' + env['CM_SYS_UTILISATION_SCRIPT_TAGS'] + ' --quiet  & '
         # obtain the command if of the background process
-         pre_run_cmd += ' cmd_pid=\$!' + ' && ' + 'echo CMD_PID=\$cmd_pid'
-        #pre_run_cmd += ' && '
-        # # check whether the command is running or not
-        # pre_run_cmd += "ps -p $cmd_pid || { echo 'Process $cmd_pid is not running, exiting'; exit 1; }"
+        pre_run_cmd += ' cmd_pid=\$!' + ' && ' + 'echo CMD_PID=\$cmd_pid'
+        print(f"Pre run command for recording the runtime system information: {pre_run_cmd}")
+
     env['CM_PRE_RUN_CMD'] = pre_run_cmd
-    print(f"Pre run command for recording the runtime system information: {pre_run_cmd}")
 
     # generate the post run cmd - for killing the process that records runtime system infos
     post_run_cmd = ""
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
-        #pass
         post_run_cmd += "echo 'killing process \${cmd_pid}' && kill -TERM \${cmd_pid}"
+        print(f"Post run command for killing the process that measures the runtime system information: {post_run_cmd}")
+
     env['CM_POST_RUN_CMD'] = post_run_cmd
-    print(f"Post run command for killing the process that measures the runtime system information: {post_run_cmd}")
 
     # Print info
     print ('***************************************************************************')
