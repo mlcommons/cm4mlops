@@ -36,7 +36,8 @@ fi
 
 if [[ ${require_download} == "1" ]]; then
   echo ""
-  rm -f ${CM_DOWNLOAD_FILENAME}
+  echo ${CM_PRE_DOWNLOAD_CLEAN_CMD}
+  ${CM_PRE_DOWNLOAD_CLEAN_CMD}
 
   echo ""
   echo "${CM_DOWNLOAD_CMD}"

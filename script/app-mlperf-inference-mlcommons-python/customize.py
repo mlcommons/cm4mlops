@@ -350,15 +350,13 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
 
     elif "dlrm" in env['CM_MODEL']: # DLRM is in draft stage
 
-        env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_DLRM_PATH'], "..", "dlrm_v2", "pytorch")
-        if 'terabyte' in env['CM_ML_MODEL_DATASET']:
-            dataset = "terabyte"
-        elif 'kaggle' in env['CM_ML_MODEL_DATASET']:
-            dataset = "kaggle"
-        elif 'multihot-criteo-sample' in env['CM_ML_MODEL_DATASET']:
+        env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_DLRM_V2_PATH'], "pytorch")
+        if 'multihot-criteo-sample' in env['CM_ML_MODEL_DATASET_TYPE']:
             dataset = "multihot-criteo-sample"
-        elif 'multihot-criteo' in env['CM_ML_MODEL_DATASET']:
+        elif 'multihot-criteo' in env['CM_ML_MODEL_DATASET_TYPE']:
             dataset = "multihot-criteo"
+
+        env['MODEL_DIR'] = os.path.join(env['MODEL_DIR'], "model_weights")
 
         if env.get('CM_MLPERF_BIN_LOADER', '') == 'yes':
             mlperf_bin_loader_string = " --mlperf-bin-loader"
