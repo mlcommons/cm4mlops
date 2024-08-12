@@ -205,6 +205,9 @@ variations:
           CM_SKIP_RUN:
             - yes
 
+  neuralmagic:
+    alias: reference
+    
   all-models: {}
 
   python:
