@@ -132,6 +132,26 @@
       },
       "group": "framework"
     },
+    "amd": {
+      "default_variations": {
+        "framework": "pytorch"
+      },
+      "group": "model-provider",
+      "env": {
+        "CM_TMP_ML_MODEL_PROVIDER": "amd"
+      }
+    },
+    "pytorch,amd": {
+      "default_variations": {
+        "precision": "fp8",
+        "gpu": "generic"
+      },
+      "deps": [
+        {
+          "tags": "get,mlperf,inference,results"
+        }
+      ]
+    },
     "nvidia": {
       "default_variations": {
         "framework": "pytorch"

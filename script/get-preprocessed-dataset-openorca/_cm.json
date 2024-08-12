@@ -79,9 +79,6 @@
   "env": {
     "CM_DATASET": "OPENORCA"
   },
-  "new_env_keys": [
-    "CM_DATASET_PREPROCESSED_PATH"
-  ],
   "tags": [
     "get",
     "dataset",
@@ -98,12 +95,6 @@
         }
       },
       "group": "size"
-    },
-    "calibration": {
-      "env": {
-        "CM_DATASET_CALIBRATION": "yes"
-      },
-      "group": "dataset-type"
     },
     "full": {
       "default": true,
@@ -127,7 +118,27 @@
       "env": {
         "CM_DATASET_CALIBRATION": "no"
       },
+      "group": "dataset-type",
+      "new_env_keys": [
+        "CM_DATASET_PREPROCESSED_PATH",
+        "CM_DATASET_OPENORCA_PREPROCESSED_PATH"
+      ]
+    },
+    "calibration": {
+      "base": [
+        "mlcommons"
+      ],
+      "new_env_keys": [
+        "CM_DATASET_CALIBRATION_PATH",
+        "CM_DATASET_OPENORCA_CALIBRATION_PATH"
+      ],
+      "env": {
+        "CM_DATASET_CALIBRATION": "yes"
+      },
       "group": "dataset-type"
+    },
+    "mlc": {
+      "alias": "mlcommons"
     },
     "mlcommons": {
       "env": {
