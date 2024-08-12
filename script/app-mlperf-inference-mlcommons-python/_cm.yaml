@@ -567,7 +567,7 @@ deps:
       - dlrm-v2-99
       - dlrm-v2-99.9
     skip_if_env:
-      CM_DATASET_PREPROCESSED_PATH:
+      CM_CRITEO_PREPROCESSED_PATH:
       - on
 
   ########################################################################
