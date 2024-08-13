@@ -433,6 +433,35 @@ variations:
       cnndm-accuracy-script:
         tags: _int32
 
+  amd:
+    group:
+      implementation
+    docker:
+      interactive: True
+      extra_run_args: ' --privileged'
+      mounts:
+      - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
+      - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
+      skip_run_cmd: 'no'
+      shm_size: '32gb'
+      os: ubuntu
+      real_run: false
+      run: true
+    default_variations:
+      device: cpu
+      backend: pytorch
+      reproducibility: r4.1-dev_default
+    prehook_deps:
+      - names:
+         - amd
+         - amd-harness
+         - mlperf-inference-implementation
+        tags: reproduce,mlperf,inference,amd
+        skip_if_env:
+          CM_SKIP_RUN:
+            - yes
+    env:
+      CM_MLPERF_IMPLEMENTATION: amd
 
   redhat:
     group:
