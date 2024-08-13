@@ -243,7 +243,22 @@ variations:
 
   llama2-70b_:
     deps:
-      - tags: get,dataset,openorca,language-processing,original
+      - tags: get,preprocessed,dataset,openorca,_mlc,_validation
+      - tags: get,ml-model,llama2,_fp32,_pytorch
+      - tags: get,ml-model,llama2,_amd,_pytorch
+      - tags: get,preprocessed,dataset,openorca,_mlc,_validation
+      - tags: download,file,_url.https://github.com/vllm-project/vllm/blob/38c4b7e863570a045308af814c72f4504297222e/tests/fp8_kv/llama2-70b-fp8-kv/kv_cache_scales.json
+        extra_cache_tags: llama2-scales,kv-cache
+        force_cache: true
+        env:
+           CM_DOWNLOAD_FINAL_ENV_NAME: QUANTIZATION_PARAM_PATH
+      - tags: get,generic-python-lib,_package.vllm
+        names:
+          - vllm
+      - tags: get,git,repo,_repo.https://github.com/mlcommons/submissions_inference_v4.1
+        extra_cache_tags: inference,submissions
+        env:
+           CM_GIT_CHECKOUT_PATH_ENV_NAME: CM_MLPERF_INFERENCE_RESULTS_PATH
 
   llama2-70b-99:
     group: model

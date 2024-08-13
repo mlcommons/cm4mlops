@@ -1598,6 +1598,11 @@ def get_host_path(value):
 
     return value
 
+def get_container_path_script(i):
+    tmp_dep_cached_path = i['tmp_dep_cached_path']
+    value_mnt,value_env = get_container_path(tmp_dep_cached_path)
+    return {'return': 0, 'value_mnt': value_mnt, 'value_env': value_env}
+
 def get_container_path(value):
     path_split = value.split(os.sep)
     if len(path_split) == 1:
