@@ -252,6 +252,9 @@ variations:
         force_cache: true
         env:
            CM_DOWNLOAD_FINAL_ENV_NAME: QUANTIZATION_PARAM_PATH
+      - tags: get,generic-python-lib,_package.vllm
+        names:
+          - vllm
 
 
   llama2-70b-99:
