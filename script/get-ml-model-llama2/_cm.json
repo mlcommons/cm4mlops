@@ -134,7 +134,8 @@
     },
     "amd": {
       "default_variations": {
-        "framework": "pytorch"
+        "framework": "pytorch",
+        "precision": "fp8"
       },
       "group": "model-provider",
       "env": {
