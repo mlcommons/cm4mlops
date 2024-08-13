@@ -13,9 +13,9 @@ def preprocess(i):
             env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_DATASET_CALIBRATION_PATH']
             env['CM_DATASET_OPENORCA_CALIBRATION_PATH'] = env['CM_DATASET_CALIBRATION_PATH']
         else:
-            env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_DATASET_PREPROCESSED_PATH']
             env['CM_DATASET_PREPROCESSED_PATH'] = os.path.join(env['CM_OPENORCA_PREPROCESSED_ROOT'], "open_orca_gpt4_tokenized_llama.sampled_24576.pkl.gz")
             env['CM_DATASET_OPENORCA_PREPROCESSED_PATH'] = env['CM_DATASET_PREPROCESSED_PATH']
+            env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_DATASET_PREPROCESSED_PATH']
         #run_cmd = f"gunzip -k {env['CM_DATASET_PREPROCESSED_PATH']}"
         run_cmd = ''
     else:
