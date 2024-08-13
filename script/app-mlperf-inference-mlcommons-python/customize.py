@@ -125,6 +125,10 @@ def preprocess(i):
             env['DATA_DIR'] = env.get('CM_DATASET_PREPROCESSED_PATH')
         else:
             env['DATA_DIR'] = env.get('CM_DATASET_PATH')
+
+        if "dlrm" in env['CM_MODEL']:
+            env['DATA_DIR'] = env['CM_CRITEO_PREPROCESSED_PATH']
+
         dataset_options = ''
 
     if env.get('CM_MLPERF_EXTRA_DATASET_ARGS','') != '':
