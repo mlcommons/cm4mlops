@@ -4276,7 +4276,7 @@ def find_cached_script(i):
                 if not os.path.exists(dependent_cached_path):
                     #TODO Need to restrict the below check to within container env
                     i['tmp_dep_cached_path'] = dependent_cached_path
-                    r = utils.call_internal_module(self, __file__, 'module_misc', 'get_container_path_script', i)
+                    r = utils.call_internal_module(self_obj, __file__, 'module_misc', 'get_container_path_script', i)
                     if not os.path.exists(r['value_env']):
                         #Need to rm this cache entry
                         skip_cached_script = True
