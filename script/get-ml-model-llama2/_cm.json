@@ -140,6 +140,10 @@
       "env": {
         "CM_TMP_ML_MODEL_PROVIDER": "amd"
       },
+      "new_env_keys": [
+        "CM_LLAMA2_FINAL_SAFE_TENSORS_ROOT",
+        "CM_LLAMA2_FINAL_SAFE_TENSORS_PATH"
+      ],
       "default_env": {
         "CM_LLAMA2_QUANTIZATION_DEVICE": ""
       }
