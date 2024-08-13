@@ -20,9 +20,6 @@ def preprocess(i):
     if 'CM_MLPERF_DEVICE' not in env:
         return {'return': 1, 'error': 'Please select a variation specifying the device to run on'}
 
-    r = get_run_cmd(env['CM_MODEL'], i)
-    if r['return'] > 0:
-        return r
     if llama2 in env['CM_MODEL']:
         env['CM_RUN_DIR'] = i['run_script_input']['path']
         env['CM_RUN_CMD'] = "bash run-llama2.sh "
