@@ -18,6 +18,8 @@ def preprocess(i):
             env['CM_TMP_REQUIRE_DOWNLOAD'] = 'no'
             i['run_script_input']['script_name'] = 'run-amd'
             env['AMD_CODE_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_PATH'], 'closed', 'AMD', 'code')
+            env['CM_LLAMA2_FINAL_SAFE_TENSORS_ROOT'] = os.getcwd()
+            env['CM_LLAMA2_FINAL_SAFE_TENSORS_PATH'] = os.path.join(env['CM_LLAMA2_FINAL_SAFE_TENSORS_ROOT'], "llama.safetensors")
         else:
             if path == '' or not os.path.exists(path):
                 env['CM_TMP_REQUIRE_DOWNLOAD'] = 'yes'
