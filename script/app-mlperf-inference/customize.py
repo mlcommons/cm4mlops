@@ -9,7 +9,6 @@ import cmind as cm
 import platform
 import sys
 import mlperf_utils
-import pandas as pd
 import re
 from datetime import datetime,timezone
 
@@ -449,6 +448,7 @@ def postprocess(i):
     # portion of the code where the avg utilisation and system informations are extracted
     # NOTE: The section is under development and print statements are added for further debugging
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
+        import pandas as pd
         system_utilisation_info_dump = {}
         logs_dir = output_dir
         # logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])

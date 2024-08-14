@@ -104,6 +104,11 @@ deps:
 
   - tags: get,mlperf,inference,utils
 
+  - tags: install,pip-package,for-cmind-python,_package.pandas
+    enable_if_env:
+      CM_PROFILE_NVIDIA_POWER:
+        - on
+
 posthook_deps:
   - tags: get,mlperf,sut,description #populate system meta information like framework
 
