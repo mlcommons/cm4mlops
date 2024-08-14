@@ -4280,7 +4280,7 @@ def find_cached_script(i):
                     if not os.path.exists(r['value_env']):
                         #Need to rm this cache entry
                         skip_cached_script = True
-                    continue
+                        continue
 
             if not skip_cached_script:
                 cached_script_version = cached_script.meta.get('version', '')
