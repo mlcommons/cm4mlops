@@ -461,7 +461,7 @@ deps:
       - dlrm-v2-99.9
     skip_if_env:
       CM_ML_MODEL_FILE_WITH_PATH:
-        - on
+        - 'on'
 
 
   ########################################################################
@@ -1085,7 +1085,7 @@ variations:
     - tags: get,generic-python-lib,_package.torchmetrics
       version: "0.11.0"
     - tags: get,generic-python-lib,_package.torchrec
-      version: "0.4.0"
+      version: "0.3.2"
     - tags: get,generic-python-lib,_package.fbgemm-gpu
       version: "0.3.2"
     - tags: get,generic-python-lib,_package.fbgemm-gpu-cpu
