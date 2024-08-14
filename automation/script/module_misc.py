@@ -1422,6 +1422,7 @@ def dockerfile(i):
 
         variations = meta.get('variations', {})
         docker_settings = meta.get('docker', {})
+        docker_settings['dockerfile_env'] = dockerfile_env
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
@@ -1430,6 +1431,7 @@ def dockerfile(i):
             return r
 
         docker_settings = state['docker']
+        dockerfile_env = docker_settings['dockerfile_env']
 
         if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
             print("docker.run set to False in _cm.json")

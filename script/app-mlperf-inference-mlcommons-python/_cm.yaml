@@ -1070,6 +1070,9 @@ variations:
     - tags: get,dlrm,src
       names:
       - dlrm-src
+    # to force the version
+    - tags: get,generic-python-lib,_torch
+      version: "1.13.1"
     - tags: get,generic-python-lib,_mlperf_logging
     - tags: get,generic-python-lib,_opencv-python
     - tags: get,generic-python-lib,_tensorboard

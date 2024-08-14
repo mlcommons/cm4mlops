@@ -915,6 +915,8 @@ variations:
         - tags: get,ml-model,dlrm,_pytorch,_fp32
       mounts:
         - ${{ CM_ML_MODEL_FILE_WITH_PATH }}:${{ CM_ML_MODEL_FILE_WITH_PATH }}
+      dockerfile_env:
+        CM_ML_MODEL_FILE_WITH_PATH: "on"
 
 
   mobilenet:
