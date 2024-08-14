@@ -1102,9 +1102,6 @@ variations:
     - tags: get,generic-python-lib,_inflect
     - tags: get,generic-python-lib,_unidecode
     - tags: get,generic-python-lib,_toml
-    add_deps_recursive:
-      mlperf-implementation:
-        tags: _repo.https://github.com/GATEOverflow/inference
 
   retinanet:
     group: models
