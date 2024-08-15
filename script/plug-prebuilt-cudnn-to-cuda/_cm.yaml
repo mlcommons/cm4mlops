@@ -20,6 +20,7 @@ default_version: 9.3.0
 
 deps:
   - tags: detect,os
+  - tags: detect,cpu
   - tags: get,cuda
 
 docker:
