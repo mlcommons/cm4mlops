@@ -64,7 +64,7 @@ done
 fi
 
 for stub in ${zoo_stub_list[@]}; do
- cmd="cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission  \
+ cmd="cm run script --tags=run,mlperf,inference,generate-run-cmds  \
    --adr.python.version_min=3.8 \
    --adr.compiler.tags=gcc \
    --implementation=reference \

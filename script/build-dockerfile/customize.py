@@ -180,6 +180,8 @@ def preprocess(i):
 
     f.write(EOL+'# Install python packages' + EOL)
     python = get_value(env, config, 'PYTHON', 'CM_DOCKERFILE_PYTHON')
+    f.write('RUN {} -m venv cm-venv'.format(python) + " " + EOL)
+    f.write('RUN . cm-venv/bin/activate' + EOL)
     f.write('RUN {} -m pip install --user '.format(python) + " ".join(get_value(env, config, 'python-packages')) + ' ' + pip_extra_flags + ' ' + EOL)
 
     f.write(EOL+'# Download CM repo for scripts' + EOL)

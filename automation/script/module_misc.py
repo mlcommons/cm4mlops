@@ -1422,6 +1422,7 @@ def dockerfile(i):
 
         variations = meta.get('variations', {})
         docker_settings = meta.get('docker', {})
+        docker_settings['dockerfile_env'] = dockerfile_env
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
@@ -1430,6 +1431,7 @@ def dockerfile(i):
             return r
 
         docker_settings = state['docker']
+        dockerfile_env = docker_settings['dockerfile_env']
 
         if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
             print("docker.run set to False in _cm.json")
@@ -1598,6 +1600,11 @@ def get_host_path(value):
 
     return value
 
+def get_container_path_script(i):
+    tmp_dep_cached_path = i['tmp_dep_cached_path']
+    value_mnt,value_env = get_container_path(tmp_dep_cached_path)
+    return {'return': 0, 'value_mnt': value_mnt, 'value_env': value_env}
+
 def get_container_path(value):
     path_split = value.split(os.sep)
     if len(path_split) == 1:
@@ -1739,7 +1746,7 @@ def docker(i):
 
     image_repo = i.get('docker_image_repo','')
     if image_repo == '':
-        image_repo = 'cknowledge'
+        image_repo = 'local'
 
     # Host system needs to have docker
     r = self_module.cmind.access({'action':'run',

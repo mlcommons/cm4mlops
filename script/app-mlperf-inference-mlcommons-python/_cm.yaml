@@ -187,6 +187,10 @@ deps:
     names:
     - ml-engine-pytorch
     - pytorch
+    skip_if_env:
+      CM_MODEL:
+        - dlrm-v2-99
+        - dlrm-v2-99.9
     enable_if_env:
       CM_MLPERF_BACKEND:
       - pytorch
@@ -212,6 +216,10 @@ deps:
   - tags: get,generic-python-lib,_torchvision
     names:
     - ml-engine-torchvision
+    skip_if_env:
+      CM_MODEL:
+        - dlrm-v2-99
+        - dlrm-v2-99.9
     enable_if_env:
       CM_MLPERF_BACKEND:
       - pytorch
@@ -449,6 +457,12 @@ deps:
       CM_MODEL:
       - dlrm-99
       - dlrm-99.9
+      - dlrm-v2-99
+      - dlrm-v2-99.9
+    skip_if_env:
+      CM_ML_MODEL_FILE_WITH_PATH:
+        - 'on'
+
 
   ########################################################################
   # Install datasets
@@ -553,13 +567,16 @@ deps:
       - rnnt
 
   ## Criteo for dlrm
-  - tags: get,dataset,criteo,preprocessed
+  - tags: get,dataset,criteo,preprocessed,_mlc
     names:
     - criteo-preprocessed
     enable_if_env:
       CM_MODEL:
-      - dlrm-99
-      - dlrm-99.9
+      - dlrm-v2-99
+      - dlrm-v2-99.9
+    skip_if_env:
+      CM_CRITEO_PREPROCESSED_PATH:
+      - on
 
   ########################################################################
   # Install MLPerf inference dependencies
@@ -1029,27 +1046,33 @@ variations:
     deps:
     - tags: get,generic-python-lib,_package.nibabel
 
-  dlrm-99.9:
+  dlrm-v2-99.9:
     group: models
     base:
-    - dlrm
+    - dlrm-v2_
     env:
-      CM_MODEL: dlrm-99.9
+      CM_MODEL: dlrm-v2-99.9
 
-  dlrm-99:
+  dlrm-v2-99:
     group: models
     base:
-    - dlrm
+    - dlrm-v2_
     env:
-      CM_MODEL: dlrm-99
+      CM_MODEL: dlrm-v2-99
 
-  dlrm:
+  dlrm-v2_:
     env:
       CM_MLPERF_MODEL_SKIP_BATCHING: true
+      CM_ML_MODEL_DATASET_TYPE: multihot-criteo
+
+  dlrm-v2_,pytorch:
     deps:
     - tags: get,dlrm,src
       names:
       - dlrm-src
+    # to force the version
+    - tags: get,generic-python-lib,_torch
+      version: "1.13.1"
     - tags: get,generic-python-lib,_mlperf_logging
     - tags: get,generic-python-lib,_opencv-python
     - tags: get,generic-python-lib,_tensorboard
@@ -1060,9 +1083,19 @@ variations:
     - tags: get,generic-python-lib,_numpy
       names:
         - numpy
-    - tags: get,generic-python-lib,_package.torchrec
     - tags: get,generic-python-lib,_package.pyre-extensions
     - tags: get,generic-python-lib,_package.torchsnapshot
+    - tags: get,generic-python-lib,_package.torchmetrics
+      version: "0.11.0"
+    - tags: get,generic-python-lib,_package.torchrec
+      version: "0.3.2"
+    - tags: get,generic-python-lib,_package.fbgemm-gpu
+      version: "0.3.2"
+    - tags: get,generic-python-lib,_package.fbgemm-gpu-cpu
+      version: "0.3.2"
+    - tags: get,generic-python-lib,_package.torch
+      version: "1.13.1"
+
 
   rnnt:
     group: models
@@ -1079,9 +1112,6 @@ variations:
     - tags: get,generic-python-lib,_inflect
     - tags: get,generic-python-lib,_unidecode
     - tags: get,generic-python-lib,_toml
-    add_deps_recursive:
-      mlperf-implementation:
-        tags: _repo.https://github.com/GATEOverflow/inference
 
   retinanet:
     group: models
