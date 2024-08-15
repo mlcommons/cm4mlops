@@ -30,4 +30,8 @@ ${CM_SUDO} chmod a+r ${CM_CUDA_PATH_LIB}/libcudnn*
 
 echo "Adding file that cuDNN is installed ..."
 echo ""
-echo "${CM_VERSION}" > ${CUDA_HOME}/cm_installed_cudnn.txt
+if [ "${CM_SUDO}" == "sudo" ]; then
+  ${CM_SUDO} sh -c "echo '${CM_VERSION}' > ${CUDA_HOME}/cm_installed_cudnn.txt"
+else
+  echo "${CM_VERSION}" > ${CUDA_HOME}/cm_installed_cudnn.txt
+fi
