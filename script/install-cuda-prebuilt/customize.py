@@ -7,6 +7,9 @@ def preprocess(i):
 
     env = i['env']
 
+    if str(env.get('CUDA_SKIP_SUDO','')).lower() == 'true':
+        env['CM_SUDO'] = ''
+
     automation = i['automation']
     version = env.get('CM_VERSION')
     if version not in env.get('CM_CUDA_LINUX_FILENAME', ''):

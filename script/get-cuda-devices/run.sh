@@ -5,6 +5,10 @@
 rm a.out
 
 echo ""
+echo "NVCC path: ${CM_NVCC_BIN_WITH_PATH}"
+echo ""
+
+echo ""
 echo "Checking compiler version ..."
 echo ""
 
