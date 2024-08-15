@@ -10,10 +10,13 @@ def preprocess(i):
     if str(env.get('CUDA_SKIP_SUDO','')).lower() == 'true':
         env['CM_SUDO'] = ''
 
+    meta = i['meta']
     automation = i['automation']
     version = env.get('CM_VERSION')
+
     if version not in env.get('CM_CUDA_LINUX_FILENAME', ''):
-        return {'return': 1, 'error': "Only CUDA versions 11.7.0, 11.8.0, 12.0.0, 12.1.1, 12.2.0, 12.3.2 and 12.4.1 are supported now!"}
+        supported_versions = list(meta['versions'].keys())
+        return {'return': 1, 'error': "Only CUDA versions {} are supported now".format(', '.join(supported_versions))}
 
     recursion_spaces = i['recursion_spaces']
     nvcc_bin = "nvcc"
