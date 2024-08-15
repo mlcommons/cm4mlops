@@ -104,6 +104,11 @@ deps:
 
   - tags: get,mlperf,inference,utils
 
+  - tags: install,pip-package,for-cmind-python,_package.pandas
+    enable_if_env:
+      CM_PROFILE_NVIDIA_POWER:
+        - on
+
 posthook_deps:
   - tags: get,mlperf,sut,description #populate system meta information like framework
 
@@ -915,6 +920,8 @@ variations:
         - tags: get,ml-model,dlrm,_pytorch,_fp32
       mounts:
         - ${{ CM_ML_MODEL_FILE_WITH_PATH }}:${{ CM_ML_MODEL_FILE_WITH_PATH }}
+      dockerfile_env:
+        CM_ML_MODEL_FILE_WITH_PATH: "on"
 
 
   mobilenet:
