@@ -49,7 +49,14 @@ def main():
         if system_name != '': label += '(' + system_name + ')'
 
         qps = result.get('Result', 0.0)
-        accuracy = float(result.get('Accuracy', 0.0)) / 100
+        # since v4.1 mlperf results return a key:value pairs for accuracy. We are taking only the first key:value here
+        result_acc = result.get('Accuracy')
+        if result_acc:
+            for key, value in result_acc:
+                accuracy = float(value) / 100
+                break
+        else:
+            accuracy = 0.0
 
         result['performance'] = qps
         result['qps'] = qps
