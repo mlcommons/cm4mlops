@@ -49,7 +49,7 @@ def main():
         if system_name != '': label += '(' + system_name + ')'
 
         qps = result.get('Result', 0.0)
-        accuracy = result.get('Accuracy', 0.0) / 100
+        accuracy = float(result.get('Accuracy', 0.0)) / 100
 
         result['performance'] = qps
         result['qps'] = qps
