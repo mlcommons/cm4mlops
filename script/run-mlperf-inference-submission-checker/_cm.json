@@ -77,6 +77,7 @@
     "input": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
     "submitter": "CM_MLPERF_SUBMITTER",
     "src_version": "CM_MLPERF_SUBMISSION_CHECKER_VERSION",
+    "repository": "CM_MLPERF_RESULTS_GIT_REPO_URL",
     "push_to_github": "CM_MLPERF_RESULT_PUSH_TO_GITHUB",
     "extra_model_benchmark_map": "CM_MLPERF_EXTRA_MODEL_MAPPING",
     "power": "CM_MLPERF_POWER",
