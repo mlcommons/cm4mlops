@@ -960,6 +960,9 @@ variations:
       - tags: get,generic-python-lib,_package.rouge-score
         names:
           - rouge-score
+      - tags: get,generic-python-lib,_package.more-itertools
+        names:
+          - more-itertools
 
   llama2-70b-99:
     group: models
