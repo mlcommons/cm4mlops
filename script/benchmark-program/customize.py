@@ -62,7 +62,14 @@ def preprocess(i):
     
     # generate the pre run cmd - recording runtime system infos 
     pre_run_cmd = ""
+
+    if env.get('CM_PRE_RUN_CMD_EXTERNAL', '') != '':
+        pre_run_cmd += env['CM_PRE_RUN_CMD_EXTERNAL']
+
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
+        if pre_run_cmd != '':
+            pre_run_cmd += ' && '
+
         # running the script as a process in background
         pre_run_cmd = pre_run_cmd +  'cm run script --tags=runtime,system,utilisation' + env['CM_SYS_UTILISATION_SCRIPT_TAGS'] + ' --quiet  & '
         # obtain the command if of the background process
