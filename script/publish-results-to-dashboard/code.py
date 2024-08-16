@@ -51,12 +51,11 @@ def main():
         qps = result.get('Result', 0.0)
         # since v4.1 mlperf results return a key:value pairs for accuracy. We are taking only the first key:value here
         result_acc = result.get('Accuracy')
+        accuracy = 0.0
         if result_acc:
-            for key, value in result_acc:
-                accuracy = float(value) / 100
-                break
-        else:
-            accuracy = 0.0
+            acc_split = result_acc.split(":")
+            if len(acc_split) > 1:
+                accuracy = float(acc_split[1]) / 100
 
         result['performance'] = qps
         result['qps'] = qps
