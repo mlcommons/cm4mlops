@@ -5,7 +5,7 @@ echo "$CUR_DIR"
 SCRIPT_DIR=${CM_TMP_CURRENT_SCRIPT_PATH}
 
 folder=${CM_GIT_CHECKOUT_FOLDER}
-if [ ! -d "${CM_TMP_GIT_PATH}" && 0 ]; then
+if [ ! -d "${CM_TMP_GIT_PATH}" || 1 ]; then
   rm -rf ${folder}
   echo "******************************************************"
   echo "Current directory: ${CUR_DIR}"
