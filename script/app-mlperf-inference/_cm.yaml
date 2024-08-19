@@ -104,6 +104,11 @@ deps:
 
   - tags: get,mlperf,inference,utils
 
+  - tags: install,pip-package,for-cmind-python,_package.pandas
+    enable_if_env:
+      CM_PROFILE_NVIDIA_POWER:
+        - on
+
 posthook_deps:
   - tags: get,mlperf,sut,description #populate system meta information like framework
 
@@ -205,6 +210,11 @@ variations:
           CM_SKIP_RUN:
             - yes
 
+  neuralmagic:
+    alias: reference
+    
+  all-models: {}
+
   python:
     alias: reference
   
@@ -246,6 +256,43 @@ variations:
     default_variations:
       backend: onnxruntime
 
+  all-models,nvidia-original:
+    docker:
+      deps:
+        - tags: get,ml-model,gptj,raw
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_GPTJ:
+              - "yes"
+              - "True"
+        - tags: get,ml-model,gptj,_nvidia,_fp8
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_GPTJ:
+              - "yes"
+              - "True"
+        - tags: get,ml-model,llama2-70b,_nvidia,_fp8
+          update_tags_from_env_with_prefix:
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_LLAMA2_70B:
+              - "yes"
+              - "True"
+        - tags: get,dataset,imagenet,validation,original,_full
+          names:
+            - imagenet-original
+            - dataset-original
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_RESNET50:
+              - "yes"
+              - "True"
+        - tags: get,dlrm,data,mlperf,inference,_nvidia
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_DLRM:
+              - "yes"
+              - "True"
+      env:
+        BUILD_TRTLLM: 1
+
   nvidia-original,r4.1-dev_default:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
@@ -255,7 +302,8 @@ variations:
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            tp_size: CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
 
   nvidia-original,r4.1_default:
     docker:
@@ -266,7 +314,8 @@ variations:
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            tp_size: CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
         
     env:
       BUILD_TRTLLM: 1
@@ -276,8 +325,8 @@ variations:
       deps:
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            _tp_size.:
-            - CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
     env:
       BUILD_TRTLLM: 1
 
@@ -286,8 +335,8 @@ variations:
       deps:
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
-            _tp_size.:
-            - CM_NVIDIA_TP_SIZE
+            _tp-size.:
+              - CM_NVIDIA_TP_SIZE
     env:
       BUILD_TRTLLM: 1
 
@@ -389,6 +438,35 @@ variations:
       cnndm-accuracy-script:
         tags: _int32
 
+  amd:
+    group:
+      implementation
+    docker:
+      interactive: True
+      extra_run_args: ' --privileged'
+      mounts:
+      - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
+      - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
+      skip_run_cmd: 'no'
+      shm_size: '32gb'
+      os: ubuntu
+      real_run: false
+      run: true
+    default_variations:
+      device: cpu
+      backend: pytorch
+      reproducibility: r4.1-dev_default
+    prehook_deps:
+      - names:
+         - amd
+         - amd-harness
+         - mlperf-inference-implementation
+        tags: reproduce,mlperf,inference,amd
+        skip_if_env:
+          CM_SKIP_RUN:
+            - yes
+    env:
+      CM_MLPERF_IMPLEMENTATION: amd
 
   redhat:
     group:
@@ -829,6 +907,23 @@ variations:
     docker:
       deps:
         - tags: get,dlrm,data,mlperf,inference,_nvidia
+
+  dlrm_,intel:
+    docker:
+      deps:
+        - tags: get,preprocessed,dataset,criteo,_mlc
+
+  dlrm_,reference:
+    docker:
+      deps:
+        - tags: get,preprocessed,dataset,criteo,_mlc
+        - tags: get,ml-model,dlrm,_pytorch,_fp32
+      mounts:
+        - ${{ CM_ML_MODEL_FILE_WITH_PATH }}:${{ CM_ML_MODEL_FILE_WITH_PATH }}
+      dockerfile_env:
+        CM_ML_MODEL_FILE_WITH_PATH: "on"
+
+
   mobilenet:
     group:
       model
@@ -892,6 +987,9 @@ variations:
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _tensorrt
+
+  tensorflow:
+    alias: tf
 
   tf:
     group: backend
@@ -1434,6 +1532,7 @@ docker:
    - "${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}"
    - "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}"
    - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
+   - "${{ CM_CRITEO_PREPROCESSED_PATH }}:${{ CM_CRITEO_PREPROCESSED_PATH }}"
    - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
    - "${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}:${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}"
@@ -1442,7 +1541,8 @@ docker:
   interactive: True
   extra_run_args: ' --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
   os: ubuntu
-  cm_repo: gateoverflow@cm4mlops
+  cm_repo: mlcommons@cm4mlops
+  cm_repo_flags: ' --branch=mlperf-inference '
   real_run: False
   os_version: '22.04'
   docker_input_mapping:

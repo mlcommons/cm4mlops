@@ -1329,6 +1329,8 @@ class CAutomation(Automation):
                         if "add_deps_recursive" in versions_meta:
                             self._merge_dicts_with_tags(add_deps_recursive, versions_meta['add_deps_recursive'])
 
+            env['CM_TMP_CURRENT_SCRIPT_PATH'] = path
+
             # Run chain of docker dependencies if current run cmd is from inside a docker container
             docker_deps = []
             if i.get('docker_run_deps'):
@@ -1445,6 +1447,7 @@ class CAutomation(Automation):
             env['CM_TMP_PIP_VERSION_STRING'] = pip_version_string
             if pip_version_string != '':
                 logging.debug(recursion_spaces+'    # potential PIP version string (if needed): '+pip_version_string)
+
 
             # Check if pre-process and detect
             if 'preprocess' in dir(customize_code) and not fake_run:
@@ -2915,6 +2918,10 @@ class CAutomation(Automation):
                 if from_cache and not d.get("dynamic", None):
                     continue
 
+                if d.get('env'):
+                    r = update_env_with_values(d['env'], False, env) #to update env local to a dependency
+                    if r['return']>0: return r
+
                 update_tags_from_env_with_prefix = d.get("update_tags_from_env_with_prefix", {})
                 for t in update_tags_from_env_with_prefix:
                     for key in update_tags_from_env_with_prefix[t]:
@@ -3033,9 +3040,6 @@ class CAutomation(Automation):
                             d[key] = {}
 
                     utils.merge_dicts({'dict1':ii, 'dict2':d, 'append_lists':True, 'append_unique':True})
-
-                    r = update_env_with_values(ii['env']) #to update env local to a dependency
-                    if r['return']>0: return r 
 
                     r = self.cmind.access(ii)
                     if r['return']>0: return r
@@ -4274,9 +4278,13 @@ def find_cached_script(i):
             dependent_cached_path = cached_script.meta.get('dependent_cached_path', '')
             if dependent_cached_path:
                 if not os.path.exists(dependent_cached_path):
-                    #Need to rm this cache entry
-                    skip_cached_script = True
-                    continue
+                    #TODO Need to restrict the below check to within container env
+                    i['tmp_dep_cached_path'] = dependent_cached_path
+                    r = utils.call_internal_module(self_obj, __file__, 'module_misc', 'get_container_path_script', i)
+                    if not os.path.exists(r['value_env']):
+                        #Need to rm this cache entry
+                        skip_cached_script = True
+                        continue
 
             if not skip_cached_script:
                 cached_script_version = cached_script.meta.get('version', '')
@@ -4351,7 +4359,7 @@ def any_enable_or_skip_script(meta, env):
     return False
 
 ############################################################################################################
-def update_env_with_values(env, fail_on_not_found=False):
+def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
     """
     Update any env key used as part of values in meta
     """
@@ -4382,14 +4390,19 @@ def update_env_with_values(env, fail_on_not_found=False):
             continue
 
         for tmp_value in tmp_values:
-            if tmp_value not in env and fail_on_not_found:
+            if tmp_value not in env and tmp_value not in extra_env and fail_on_not_found:
                 return {'return':1, 'error':'variable {} is not in env'.format(tmp_value)}
+            found_env = {}
             if tmp_value in env:
+                found_env = env
+            elif tmp_value in extra_env:
+                found_env = extra_env
+            if found_env:
                 if type(value) == str:
-                    value = value.replace("<<<"+tmp_value+">>>", str(env[tmp_value]))
+                    value = value.replace("<<<"+tmp_value+">>>", str(found_env[tmp_value]))
                 elif type(value) == list:
                     for i,val in enumerate(value):
-                        value[i] = value[i].replace("<<<"+tmp_value+">>>", str(env[tmp_value]))
+                        value[i] = value[i].replace("<<<"+tmp_value+">>>", str(found_env[tmp_value]))
 
         env[key] = value
 
@@ -4618,7 +4631,7 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
                     repo_to_report = 'https://github.com/'+script_repo_alias.replace('@','/')+'/issues'
             
             if repo_to_report == '':
-                repo_to_report = 'https://github.com/mlcommons/ck/issues'
+                repo_to_report = 'https://github.com/mlcommons/cm4mlops/issues'
 
             note = '''
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

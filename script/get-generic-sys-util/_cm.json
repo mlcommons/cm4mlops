@@ -4,15 +4,15 @@
   "automation_uid": "5b4e0237da074764",
   "cache": true,
   "category": "Detection or installation of tools and artifacts",
+  "default_env": {
+    "CM_CLEAN_DIRS": "bin",
+    "CM_SUDO": "sudo"
+  },
   "deps": [
     {
       "tags": "detect,os"
     }
   ],
-  "default_env": {
-    "CM_CLEAN_DIRS": "bin",
-    "CM_SUDO": "sudo"
-  },
   "new_env_keys": [
     "+PATH"
   ],
@@ -24,16 +24,40 @@
   ],
   "uid": "bb0393afa8404a11",
   "variations": {
-    "glog-dev": {
+    "cmake": {
       "env": {
-        "CM_SYS_UTIL_NAME": "glog-dev"
+        "CM_SYS_UTIL_NAME": "cmake"
       },
       "state": {
-        "glog-dev": {
-          "apt": "libgoogle-glog-dev",
-          "dnf": "glog-devel",
-          "yum": "glog-devel",
-          "brew": "glog"
+        "cmake": {
+          "apt": "cmake",
+          "brew": "cmake",
+          "dnf": "cmake",
+          "yum": "cmake"
+        }
+      }
+    },
+    "dmidecode": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "dmidecode"
+      },
+      "state": {
+        "dmidecode": {
+          "apt": "dmidecode",
+          "brew": "",
+          "dnf": "dmidecode",
+          "yum": "dmidecode"
+        }
+      }
+    },
+    "g++-12": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "g++12"
+      },
+      "state": {
+        "g++12": {
+          "apt": "g++-12",
+          "dnf": "gcc-toolset-12-gcc-c++"
         }
       }
     },
@@ -44,240 +68,9 @@
       "state": {
         "gflags-dev": {
           "apt": "libgflags-dev",
+          "brew": "gflags",
           "dnf": "gflags-devel",
-          "yum": "gflags-devel",
-          "brew": "gflags"
-        }
-      }
-    },
-    "sox": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "sox"
-      },
-      "state": {
-        "sox": {
-          "apt": "sox",
-          "dnf": "sox",
-          "brew": "sox"
-        }
-      }
-    },
-    "libre2-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libre2-dev"
-      },
-      "state": {
-        "libre2-dev": {
-          "apt": "libre2-dev",
-          "yum": "libre-devel",
-          "dnf": "libre-devel",
-          "brew": ""
-        }
-      }
-    },
-    "libboost-all-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libboost-all-dev"
-      },
-      "state": {
-        "libboost-all-dev": {
-          "apt": "libboost-all-dev",
-          "dnf": "boost-devel",
-          "yum": "boost-devel",
-          "brew": ""
-        }
-      }
-    },
-    "libnuma-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libnuma-dev"
-      },
-      "state": {
-        "libnuma-dev": {
-          "apt": "libnuma-dev",
-          "yum": "numactl-libs",
-          "dnf": "numactl-libs",
-          "brew": ""
-        }
-      }
-    },
-    "libmpfr-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libmpfr-dev"
-      },
-      "state": {
-        "libmpfr-dev": {
-          "apt": "libmpfr-dev",
-          "yum": "mpfr-devel.x86_64",
-          "dnf": "mpfr-devel.x86_64",
-          "brew": "",
-          "zypper": "mpfr-devel"
-        }
-      }
-    },
-    "rapidjson-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "rapidjson-dev"
-      },
-      "state": {
-        "rapidjson-dev": {
-          "apt": "rapidjson-dev",
-          "dnf": "rapidjson-devel",
-          "yum": "rapidjson-devel",
-          "brew": ""
-        }
-      }
-    },
-    "libpng-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libpng-dev"
-      },
-      "state": {
-        "libpng-dev": {
-          "apt": "libpng-dev",
-          "dnf": "libpng-devel",
-          "yum": "libpng-devel",
-          "brew": ""
-        }
-      }
-    },
-    "screen": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "screen"
-      },
-      "state": {
-        "screen": {
-          "apt": "screen",
-          "dnf": "screen",
-          "yum": "screen",
-          "brew": "screen",
-          "zypper": "rsync"
-        }
-      }
-    },
-    "wget":{
-      "env":{
-        "CM_SYS_UTIL_NAME" : "wget"
-      },
-      "state":{
-        "wget":{
-          "apt": "wget"
-        }
-      }
-    },
-    "ninja-build": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "ninja-build"
-      },
-      "state": {
-        "ninja-build": {
-          "apt": "ninja-build",
-          "dnf": "ninja-build",
-          "yum": "ninja-build",
-          "brew": "ninja-build",
-          "zypper": "ninja-build"
-        }
-      }
-    },
-    "rsync": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "rsync"
-      },
-      "state": {
-        "rsync": {
-          "apt": "rsync",
-          "dnf": "rsync",
-          "yum": "rsync",
-          "brew": "rsync",
-          "zypper": "rsync"
-        }
-      }
-    },
-    "transmission": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "transmission"
-      },
-      "state": {
-        "transmission": {
-          "apt": "transmission-daemon",
-          "dnf": "transmission-daemon",
-          "yum": "transmission-daemon",
-          "brew": "transmission"
-        }
-      }
-    },
-    "libpci-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libpci-dev"
-      },
-      "state": {
-        "libpci-dev": {
-          "apt": "libpci-dev",
-          "dnf": "pciutils-devel",
-          "yum": "pciutils-devel",
-          "brew": ""
-        }
-      }
-    },
-    "libudev-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libudev-dev"
-      },
-      "state": {
-        "libudev-dev": {
-          "apt": "libudev-dev",
-          "dnf": "libudev-devl",
-          "yum": "libudev-devel",
-          "brew": ""
-        }
-      }
-    },
-    "libgmock-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libgmock-dev"
-      },
-      "state": {
-        "libgmock-dev": {
-          "apt": "libgmock-dev",
-          "dnf": "gmock-devel",
-          "yum": "gmock-devel",
-          "brew": ""
-        }
-      }
-    },
-    "zlib": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "zlib"
-      },
-      "state": {
-        "zlib": {
-          "apt": "zlib1g"
-        }
-      }
-    },
-    "nvidia-cuda-toolkit": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "nvidia-cuda-toolkit"
-      },
-      "state": {
-        "nvidia-cuda-toolkit": {
-          "apt": "nvidia-cuda-toolkit",
-          "dnf": "nvidia-cuda-toolkit",
-          "yum": "nvidia-cuda-toolkit",
-          "brew": ""
-        }
-      }
-    },
-    "ntpdate": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "ntpdate"
-      },
-      "state": {
-        "ntpdate": {
-          "apt": "ntpdate",
-          "dnf": "ntpdate",
-          "yum": "ntpdate",
-          "brew": ""
+          "yum": "gflags-devel"
         }
       }
     },
@@ -288,45 +81,48 @@
       "state": {
         "git-lfs": {
           "apt": "git-lfs",
+          "brew": "git-lfs",
           "dnf": "git-lfs",
-          "yum": "git-lfs",
-          "brew": "git-lfs"
+          "yum": "git-lfs"
         }
       }
     },
-    "libffi7": {
+    "glog-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libffi7"
+        "CM_SYS_UTIL_NAME": "glog-dev"
       },
       "state": {
-        "libffi7": {
-          "apt": "libffi7"
+        "glog-dev": {
+          "apt": "libgoogle-glog-dev",
+          "brew": "glog",
+          "dnf": "glog-devel",
+          "yum": "glog-devel"
         }
       }
     },
-    "libffi-dev": {
+    "libboost-all-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libffi_dev"
+        "CM_SYS_UTIL_NAME": "libboost-all-dev"
       },
       "state": {
-        "libffi_dev": {
-          "apt": "libffi-dev",
-          "dnf": "libffi-devel",
-          "yum": "libffi-devel",
-          "brew": "libffi-dev"
+        "libboost-all-dev": {
+          "apt": "libboost-all-dev",
+          "brew": "",
+          "dnf": "boost-devel",
+          "yum": "boost-devel"
         }
       }
     },
-    "libssl-dev": {
+    "libbz2-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libssl_dev"
+        "CM_SYS_UTIL_NAME": "libbz2_dev"
       },
       "state": {
-        "libssl_dev": {
-          "apt": "libssl-dev",
-          "dnf": "libssl-devel",
-          "yum": "libssl-devel",
-          "brew": "libssl-dev"
+        "libbz2_dev": {
+          "apt": "libbz2-dev",
+          "dnf": "libbzip2-devel",
+          "yum": "libbzip2-devel",
+          "zlib-devel": "libbz2-devel"
         }
       }
     },
@@ -340,6 +136,29 @@
         }
       }
     },
+    "libffi-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libffi_dev"
+      },
+      "state": {
+        "libffi_dev": {
+          "apt": "libffi-dev",
+          "brew": "libffi-dev",
+          "dnf": "libffi-devel",
+          "yum": "libffi-devel"
+        }
+      }
+    },
+    "libffi7": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libffi7"
+      },
+      "state": {
+        "libffi7": {
+          "apt": "libffi7"
+        }
+      }
+    },
     "libgdbm-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libgdbm_dev"
@@ -347,6 +166,19 @@
       "state": {
         "libgdbm_dev": {
           "apt": "libgdbm-dev"
+        }
+      }
+    },
+    "libgmock-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libgmock-dev"
+      },
+      "state": {
+        "libgmock-dev": {
+          "apt": "libgmock-dev",
+          "brew": "",
+          "dnf": "gmock-devel",
+          "yum": "gmock-devel"
         }
       }
     },
@@ -360,6 +192,33 @@
         }
       }
     },
+    "libmkl-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libmkl-dev"
+      },
+      "state": {
+        "libmkl-dev": {
+          "apt": "libmkl-dev",
+          "brew": "",
+          "dnf": "",
+          "yum": ""
+        }
+      }
+    },
+    "libmpfr-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libmpfr-dev"
+      },
+      "state": {
+        "libmpfr-dev": {
+          "apt": "libmpfr-dev",
+          "brew": "",
+          "dnf": "mpfr-devel.x86_64",
+          "yum": "mpfr-devel.x86_64",
+          "zypper": "mpfr-devel"
+        }
+      }
+    },
     "libncurses-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libncurses_dev"
@@ -369,6 +228,58 @@
           "apt": "libncurses-dev",
           "dnf": "libncurses-devel",
           "yum": "libncurses-devel"
+        }
+      }
+    },
+    "libnuma-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libnuma-dev"
+      },
+      "state": {
+        "libnuma-dev": {
+          "apt": "libnuma-dev",
+          "brew": "",
+          "dnf": "numactl-libs",
+          "yum": "numactl-libs"
+        }
+      }
+    },
+    "libpci-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libpci-dev"
+      },
+      "state": {
+        "libpci-dev": {
+          "apt": "libpci-dev",
+          "brew": "",
+          "dnf": "pciutils-devel",
+          "yum": "pciutils-devel"
+        }
+      }
+    },
+    "libpng-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libpng-dev"
+      },
+      "state": {
+        "libpng-dev": {
+          "apt": "libpng-dev",
+          "brew": "",
+          "dnf": "libpng-devel",
+          "yum": "libpng-devel"
+        }
+      }
+    },
+    "libre2-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libre2-dev"
+      },
+      "state": {
+        "libre2-dev": {
+          "apt": "libre2-dev",
+          "brew": "",
+          "dnf": "libre-devel",
+          "yum": "libre-devel"
         }
       }
     },
@@ -394,71 +305,69 @@
         }
       }
     },
-    "tk-dev": {
+    "libssl-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "tk_dev"
+        "CM_SYS_UTIL_NAME": "libssl_dev"
       },
       "state": {
-        "tk_dev": {
-          "apt": "tk-dev"
+        "libssl_dev": {
+          "apt": "libssl-dev",
+          "brew": "libssl-dev",
+          "dnf": "libssl-devel",
+          "yum": "libssl-devel"
         }
       }
     },
-    "libbz2-dev": {
+    "libudev-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libbz2_dev"
+        "CM_SYS_UTIL_NAME": "libudev-dev"
       },
       "state": {
-        "libbz2_dev": {
-          "apt": "libbz2-dev",
-          "dnf": "libbzip2-devel",
-          "yum": "libbzip2-devel",
-          "zlib-devel": "libbz2-devel"
+        "libudev-dev": {
+          "apt": "libudev-dev",
+          "brew": "",
+          "dnf": "libudev-devl",
+          "yum": "libudev-devel"
         }
       }
     },
-    "zlib1g-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "zlib1g_dev"
-      },
-      "state": {
-        "zlib1g_dev": {
-          "apt": "zlib1g-dev",
-          "dnf": "zlib-devel",
-          "yum": "zlib-devel",
-          "zypper": "zlib-devel"
-        }
-      }
-    },
-    "numactl": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "numactl"
-      },
-      "state": {
-        "numactl": {
-          "apt": "numactl",
-          "dnf": "numactl-devel",
-          "yum": "numactl-devel"
-        }
-      },
+    "linux-tools": {
       "deps": [
         {
-	        "tags": "install,numactl,from.src",
-	        "enable_if_env": {
-            "CM_HOST_OS_FLAVOR": [ "rhel" ],
-	          "CM_HOST_OS_VERSION": [ "9.1", "9.2", "9.3" ]
-	        }
-	      }
-      ]
-    },
-    "g++-12": {
+          "tags": "detect,os"
+        }
+      ],
       "env": {
-        "CM_SYS_UTIL_NAME": "g++12"
+        "CM_SYS_UTIL_NAME": "linux-tools"
       },
       "state": {
-        "g++12": {
-          "apt": "g++-12",
-          "dnf": "gcc-toolset-12-gcc-c++"
+        "linux-tools": {
+          "apt": "linux-tools-<<<CM_HOST_OS_KERNEL_VERSION>>>"
+        }
+      }
+    },
+    "md5sha1sum": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "md5sha1sum"
+      },
+      "state": {
+        "md5sha1sum": {
+          "apt": "",
+          "brew": "md5sha1sum"
+        }
+      }
+    },
+    "ninja-build": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "ninja-build"
+      },
+      "state": {
+        "ninja-build": {
+          "apt": "ninja-build",
+          "brew": "ninja-build",
+          "dnf": "ninja-build",
+          "yum": "ninja-build",
+          "zypper": "ninja-build"
         }
       }
     },
@@ -473,14 +382,204 @@
         }
       }
     },
-    "md5sha1sum": {
+    "ntpdate": {
       "env": {
-        "CM_SYS_UTIL_NAME": "md5sha1sum"
+        "CM_SYS_UTIL_NAME": "ntpdate"
       },
       "state": {
-        "md5sha1sum": {
-          "apt": "",
-          "brew": "md5sha1sum"
+        "ntpdate": {
+          "apt": "ntpdate",
+          "brew": "",
+          "dnf": "ntpdate",
+          "yum": "ntpdate"
+        }
+      }
+    },
+    "numactl": {
+      "deps": [
+        {
+          "enable_if_env": {
+            "CM_HOST_OS_FLAVOR": [
+              "rhel"
+            ],
+            "CM_HOST_OS_VERSION": [
+              "9.1",
+              "9.2",
+              "9.3"
+            ]
+          },
+          "tags": "install,numactl,from.src"
+        }
+      ],
+      "env": {
+        "CM_SYS_UTIL_NAME": "numactl"
+      },
+      "state": {
+        "numactl": {
+          "apt": "numactl",
+          "dnf": "numactl-devel",
+          "yum": "numactl-devel"
+        }
+      }
+    },
+    "nvidia-cuda-toolkit": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "nvidia-cuda-toolkit"
+      },
+      "state": {
+        "nvidia-cuda-toolkit": {
+          "apt": "nvidia-cuda-toolkit",
+          "brew": "",
+          "dnf": "nvidia-cuda-toolkit",
+          "yum": "nvidia-cuda-toolkit"
+        }
+      }
+    },
+    "psmisc": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "psmisc"
+      },
+      "state": {
+        "psmisc": {
+          "apt": "psmisc",
+          "brew": "pstree",
+          "dnf": "psmisc",
+          "yum": "psmisc"
+        }
+      }
+    },
+    "rapidjson-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "rapidjson-dev"
+      },
+      "state": {
+        "rapidjson-dev": {
+          "apt": "rapidjson-dev",
+          "brew": "",
+          "dnf": "rapidjson-devel",
+          "yum": "rapidjson-devel"
+        }
+      }
+    },
+    "rsync": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "rsync"
+      },
+      "state": {
+        "rsync": {
+          "apt": "rsync",
+          "brew": "rsync",
+          "dnf": "rsync",
+          "yum": "rsync",
+          "zypper": "rsync"
+        }
+      }
+    },
+    "screen": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "screen"
+      },
+      "state": {
+        "screen": {
+          "apt": "screen",
+          "brew": "screen",
+          "dnf": "screen",
+          "yum": "screen",
+          "zypper": "rsync"
+        }
+      }
+    },
+    "sox": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "sox"
+      },
+      "state": {
+        "sox": {
+          "apt": "sox",
+          "brew": "sox",
+          "dnf": "sox"
+        }
+      }
+    },
+    "systemd": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "systemd"
+      },
+      "state": {
+        "systemd": {
+          "apt": "systemd",
+          "brew": "",
+          "dnf": "systemd",
+          "yum": "systemd"
+        }
+      }
+    },
+    "tk-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "tk_dev"
+      },
+      "state": {
+        "tk_dev": {
+          "apt": "tk-dev"
+        }
+      }
+    },
+    "transmission": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "transmission"
+      },
+      "state": {
+        "transmission": {
+          "apt": "transmission-daemon",
+          "brew": "transmission",
+          "dnf": "transmission-daemon",
+          "yum": "transmission-daemon"
+        }
+      }
+    },
+    "wget": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "wget"
+      },
+      "state": {
+        "wget": {
+          "apt": "wget"
+        }
+      }
+    },
+    "xz": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "xz"
+      },
+      "state": {
+        "xz": {
+          "apt": "xz-utils",
+          "brew": "xz",
+          "dnf": "xz",
+          "yum": "xz"
+        }
+      }
+    },
+    "zlib": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "zlib"
+      },
+      "state": {
+        "zlib": {
+          "apt": "zlib1g"
+        }
+      }
+    },
+    "zlib1g-dev": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "zlib1g_dev"
+      },
+      "state": {
+        "zlib1g_dev": {
+          "apt": "zlib1g-dev",
+          "dnf": "zlib-devel",
+          "yum": "zlib-devel",
+          "zypper": "zlib-devel"
         }
       }
     }

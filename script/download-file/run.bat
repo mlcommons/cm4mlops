@@ -40,7 +40,7 @@ if exist "%CM_DOWNLOAD_DOWNLOADED_PATH%" (
 
 if "!require_download!" == "1" (
     echo.
-    del /Q %CM_DOWNLOAD_FILENAME%
+    cmd /c %CM_PRE_DOWNLOAD_CLEAN_CMD%
  
     echo.
     echo %CM_DOWNLOAD_CMD%
