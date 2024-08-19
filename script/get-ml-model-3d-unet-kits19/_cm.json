@@ -42,7 +42,9 @@
     "onnx,fp32": {
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_PACKAGE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_128x128x128_dynbatch.onnx?download=1"
+        "CM_ML_MODEL_FILE": "3dunet_kits19_128x128x128_dynbatch.onnx",
+        "CM_PACKAGE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_128x128x128_dynbatch.onnx?download=1",
+        "CM_DOWNLOAD_CHECKSUM":"82f0618fde78f9839e7c712274019b4a"
       }
     },
     "pytorch": {
@@ -54,7 +56,9 @@
     "pytorch,fp32": {
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_PACKAGE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_pytorch.ptc?download=1"
+        "CM_ML_MODEL_FILE": "3dunet_kits19_pytorch.ptc",
+        "CM_PACKAGE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_pytorch.ptc?download=1",
+        "CM_DOWNLOAD_CHECKSUM":"2251109371f408c9f10a4320ffdcaef8"
       }
     },
     "pytorch,fp32,weights": {
@@ -62,6 +66,7 @@
         "CM_ML_MODEL_ACCURACY": "0.86170",
         "CM_ML_MODEL_FILE": "3dunet_kits19_pytorch_checkpoint.pth",
         "CM_PACKAGE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_pytorch_checkpoint.pth?download=1",
+        "CM_DOWNLOAD_CHECKSUM":"09c696e3ec13d83c628498bcd831eb5b",
         "CM_UNZIP": "yes"
       }
     },
@@ -84,6 +89,7 @@
         "CM_ML_MODEL_ACCURACY": "0.86170",
         "CM_ML_MODEL_FILE": "3dunet_kits19_128x128x128.tf",
         "CM_PACKAGE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_128x128x128.tf.zip?download=1",
+        "CM_DOWNLOAD_CHECKSUM":"9497108bd0504ae8f85a764a807b76a9",
         "CM_UNZIP": "yes"
       }
     }
