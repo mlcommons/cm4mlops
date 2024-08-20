@@ -144,12 +144,12 @@ def generate_submission(i):
 
         # check whether the root folder contains the sut infos
         # if yes then there is no need to check for meta files inside individual model folders
-        if "cm_sut_info.json" in os.listdir(result_path):
-            sut_info = fill_from_json(os.path.join(result_path, "cm_sut_info.json"), sut_info.keys(), sut_info)
+        if "cm-sut-info.json" in os.listdir(result_path):
+            sut_info = fill_from_json(os.path.join(result_path, "cm-sut-info.json"), sut_info.keys(), sut_info)
             if sut_info == -1:
-                return {'return':1, 'error':f"key value mismatch. Refer the populating dictionary:\n{sut_info}\n and file {os.path.join(result_path, 'cm_sut_info.json')}"}
+                return {'return':1, 'error':f"key value mismatch. Refer the populating dictionary:\n{sut_info}\n and file {os.path.join(result_path, 'cm-sut-info.json')}"}
             if check_dict_filled(sut_info.keys(), sut_info):
-                print(f"sut info completely filled from {os.path.join(result_path, 'cm_sut_info.json')}!")
+                print(f"sut info completely filled from {os.path.join(result_path, 'cm-sut-info.json')}!")
 
         # Check whether the root folder contains the model mapping file
         # expects json file in the format:
@@ -216,7 +216,7 @@ def generate_submission(i):
                 system_meta_default['framework'] = framework + " " + framework_version
             else:
                 print(parts)
-                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.system_name\n2.implementation\n3.framework\n4.run_config\nInclude a cm_sut_info.json file with the above content in {result_path}"}
+                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.system_name\n2.implementation\n3.framework\n4.run_config\nInclude a cm-sut-info.json file with the above content in {result_path}"}
             
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
