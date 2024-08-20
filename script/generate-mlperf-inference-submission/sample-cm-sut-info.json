@@ -1,6 +1,4 @@
 {
-    "submitter_organisation": "MLCommons",
-    "system_name": "ASUS_VivoBook",
     "hardware_name": "VivoBook-ASUSLaptop-X515UA-M515UA",
     "implementation": "reference",
     "device": "cpu",
