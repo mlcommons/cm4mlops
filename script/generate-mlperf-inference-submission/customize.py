@@ -276,6 +276,12 @@ def generate_submission(i):
 
                 modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
                 power_run = False
+
+                #we check for the existance of mlperf_log_summary.txt mlperf_log_detail.txt to consider a result folder as valid. Rest of the checks are done later by the submission checker
+                files_to_check = [ "mlperf_log_summary.txt", "mlperf_log_detail.txt" ]
+                if not all([os.path.exists(os.path.join(result_scenario_path, "performance", "run_1", f)) for f in files_to_check]):
+                    continue
+
                 for mode in modes:
                     result_mode_path = os.path.join(result_scenario_path, mode)
                     submission_mode_path = os.path.join(submission_scenario_path, mode)
