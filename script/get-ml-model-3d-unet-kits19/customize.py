@@ -1,6 +1,5 @@
 from cmind import utils
 import os
-import hashlib
 
 def preprocess(i):
 
@@ -13,10 +12,6 @@ def preprocess(i):
     cm = automation.cmind
 
     path = os.path.dirname(env['CM_ML_MODEL_FILE_WITH_PATH'])
-
-    # unzipping .pth file is not handled in download-and-extract
-    if env.get('CM_UNZIP') == "yes":
-        os.system("unzip -o "+env['CM_ML_MODEL_FILE_WITH_PATH'])
          
     if env.get("CM_DAE_EXTRACT_DOWNLOADED", " ") != " ":
         env['CM_ML_MODEL_PATH'] = os.path.join(path, env['CM_ML_MODEL_FILE'])

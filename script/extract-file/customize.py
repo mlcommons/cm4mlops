@@ -42,7 +42,7 @@ def preprocess(i):
     # By default remove archive after extraction
     remove_extracted = False if env.get('CM_EXTRACT_REMOVE_EXTRACTED','').lower() == 'no' else True
 
-    if filename.endswith(".zip"):
+    if filename.endswith(".zip") or filename.endswith(".pth"):
         env['CM_EXTRACT_TOOL'] = "unzip"
     elif filename.endswith(".tar.gz"):
         if windows:
