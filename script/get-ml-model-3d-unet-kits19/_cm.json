@@ -97,7 +97,7 @@
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
         "CM_ML_MODEL_FILE": "3dunet_kits19_pytorch_checkpoint.pth",
-        "CM_UNZIP": "yes"
+        "CM_DAE_EXTRACT_DOWNLOADED": "yes"
       }
     },
     "weights": {
