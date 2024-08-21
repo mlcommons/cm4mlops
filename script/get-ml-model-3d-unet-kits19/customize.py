@@ -19,4 +19,6 @@ def preprocess(i):
     else:
         env['CM_ML_MODEL_PATH'] = path
 
+    env['CM_GET_DEPENDENT_CACHED_PATH'] =  env['CM_ML_MODEL_PATH']
+    
     return {'return':0}

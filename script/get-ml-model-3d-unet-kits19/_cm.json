@@ -43,6 +43,7 @@
       "deps":[
         {
           "tags": "download,file,download-file,_wget",
+          "extra_cache_tags": "3d-unet,medical-imaging",
           "force-cache": true,
           "env": {
             "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
@@ -67,6 +68,7 @@
       "deps":[
         {
           "tags": "download,file,download-file,_wget",
+          "extra_cache_tags": "3d-unet,medical-imaging",
           "force-cache": true,
           "env": {
             "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
@@ -84,7 +86,8 @@
     "pytorch,fp32,weights": {
       "deps":[
         {
-          "tags": "download-and-extract,_wget",
+          "tags": "download-and-extract,_wget,_extract",
+          "extra_cache_tags": "3d-unet,medical-imaging",
           "force-cache": true,
           "env": {
             "CM_DAE_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
@@ -96,8 +99,7 @@
       ],
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_ML_MODEL_FILE": "3dunet_kits19_pytorch_checkpoint.pth",
-        "CM_DAE_EXTRACT_DOWNLOADED": "yes"
+        "CM_ML_MODEL_FILE": "3dunet_kits19_pytorch_checkpoint.pth"
       }
     },
     "weights": {
@@ -117,7 +119,8 @@
     "tf,fp32": {
       "deps":[
         {
-          "tags": "download-and-extract,_wget",
+          "tags": "download-and-extract,_wget,_extract",
+          "extra_cache_tags": "3d-unet,medical-imaging",
           "force-cache": true,
           "env": {
             "CM_DAE_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
@@ -129,8 +132,7 @@
       ],
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_ML_MODEL_FILE": "3dunet_kits19_128x128x128.tf",
-        "CM_DAE_EXTRACT_DOWNLOADED": "yes"
+        "CM_ML_MODEL_FILE": "3dunet_kits19_128x128x128.tf"
       }
     }
   },
