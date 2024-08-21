@@ -22,15 +22,6 @@
     "medical-imaging"
   ],
   "uid": "fb7e31419c0f4226",
-  "deps":[
-    {
-      "tags": "download,file,download-file,_wget",
-      "force-cache": true,
-      "env": {
-        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH"
-      }
-    }
-  ],
   "variations": {
     "fp32": {
       "default": true,
@@ -49,11 +40,20 @@
       "group": "framework"
     },
     "onnx,fp32": {
+      "deps":[
+        {
+          "tags": "download,file,download-file,_wget",
+          "force-cache": true,
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
+            "CM_DOWNLOAD_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_128x128x128_dynbatch.onnx?download=1",
+            "CM_DOWNLOAD_CHECKSUM":"82f0618fde78f9839e7c712274019b4a",
+            "CM_DOWNLOAD_FILENAME": "3dunet_kits19_128x128x128_dynbatch.onnx"
+          }
+        }
+      ],
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_DOWNLOAD_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_128x128x128_dynbatch.onnx?download=1",
-        "CM_DOWNLOAD_CHECKSUM":"82f0618fde78f9839e7c712274019b4a",
-        "CM_DOWNLOAD_FILENAME": "3dunet_kits19_128x128x128_dynbatch.onnx",
         "CM_ML_MODEL_FILE": "3dunet_kits19_128x128x128_dynbatch.onnx" 
       }
     },
@@ -64,20 +64,38 @@
       "group": "framework"
     },
     "pytorch,fp32": {
+      "deps":[
+        {
+          "tags": "download,file,download-file,_wget",
+          "force-cache": true,
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
+            "CM_DOWNLOAD_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_pytorch.ptc?download=1",
+            "CM_DOWNLOAD_CHECKSUM":"2251109371f408c9f10a4320ffdcaef8",
+            "CM_DOWNLOAD_FILENAME": "3dunet_kits19_pytorch.ptc"
+          }
+        }
+      ],
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_DOWNLOAD_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_pytorch.ptc?download=1",
-        "CM_DOWNLOAD_CHECKSUM":"2251109371f408c9f10a4320ffdcaef8",
-        "CM_DOWNLOAD_FILENAME": "3dunet_kits19_pytorch.ptc",
         "CM_ML_MODEL_FILE": "3dunet_kits19_pytorch.ptc"
       }
     },
     "pytorch,fp32,weights": {
+      "deps":[
+        {
+          "tags": "download-and-extract,_wget",
+          "force-cache": true,
+          "env": {
+            "CM_DAE_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
+            "CM_DAE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_pytorch_checkpoint.pth?download=1",
+            "CM_DOWNLOAD_CHECKSUM":"09c696e3ec13d83c628498bcd831eb5b",
+            "CM_DOWNLOAD_FILENAME": "3dunet_kits19_pytorch_checkpoint.pth"
+          }
+        }
+      ],
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_DOWNLOAD_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_pytorch_checkpoint.pth?download=1",
-        "CM_DOWNLOAD_CHECKSUM":"09c696e3ec13d83c628498bcd831eb5b",
-        "CM_DOWNLOAD_FILENAME": "3dunet_kits19_pytorch_checkpoint.pth",
         "CM_ML_MODEL_FILE": "3dunet_kits19_pytorch_checkpoint.pth",
         "CM_UNZIP": "yes"
       }
@@ -97,13 +115,22 @@
       "alias": "tf"
     },
     "tf,fp32": {
+      "deps":[
+        {
+          "tags": "download-and-extract,_wget",
+          "force-cache": true,
+          "env": {
+            "CM_DAE_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
+            "CM_DAE_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_128x128x128.tf.zip?download=1",
+            "CM_DOWNLOAD_CHECKSUM":"9497108bd0504ae8f85a764a807b76a9",
+            "CM_DOWNLOAD_FILENAME": "3dunet_kits19_128x128x128.tf.zip"
+          }
+        }
+      ],
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.86170",
-        "CM_DOWNLOAD_URL": "https://zenodo.org/record/5597155/files/3dunet_kits19_128x128x128.tf.zip?download=1",
-        "CM_DOWNLOAD_CHECKSUM":"9497108bd0504ae8f85a764a807b76a9",
-        "CM_DOWNLOAD_FILENAME": "3dunet_kits19_128x128x128.tf.zip",
         "CM_ML_MODEL_FILE": "3dunet_kits19_128x128x128.tf",
-        "CM_UNZIP": "yes"
+        "CM_DAE_EXTRACT_DOWNLOADED": "yes"
       }
     }
   },

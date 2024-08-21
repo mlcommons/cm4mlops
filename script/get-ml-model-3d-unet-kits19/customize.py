@@ -14,14 +14,14 @@ def preprocess(i):
 
     path = os.path.dirname(env['CM_ML_MODEL_FILE_WITH_PATH'])
 
-    print(env['CM_ML_MODEL_ACCURACY'])
-    
+    # unzipping .pth file is not handled in download-and-extract
     if env.get('CM_UNZIP') == "yes":
-            zip_filename = env['CM_ML_MODEL_FILE_WITH_PATH']
-            os.system("unzip -o "+zip_filename)
-            model_filename = env['CM_ML_MODEL_FILE']
-            env['CM_ML_MODEL_FILE_WITH_PATH']=os.path.join(path, model_filename)
-
-    env['CM_ML_MODEL_PATH']=path
+        os.system("unzip -o "+env['CM_ML_MODEL_FILE_WITH_PATH'])
+         
+    if env.get("CM_DAE_EXTRACT_DOWNLOADED", " ") != " ":
+        env['CM_ML_MODEL_PATH'] = os.path.join(path, env['CM_ML_MODEL_FILE'])
+        env['CM_ML_MODEL_FILE_WITH_PATH'] = env['CM_ML_MODEL_PATH']
+    else:
+        env['CM_ML_MODEL_PATH'] = path
 
     return {'return':0}
