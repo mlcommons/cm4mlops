@@ -412,7 +412,7 @@ def generate_submission(i):
                         f.write("TBD") #create an empty README
                 else:
                     readme_suffix = ""
-                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision)
+                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, model_precision, division, system_file)
 
                     for key in result:
                         results[model][scenario][key] = result[key]
