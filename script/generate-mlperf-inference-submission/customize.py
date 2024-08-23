@@ -352,6 +352,12 @@ def generate_submission(i):
                     if os.path.exists(user_conf_path):
                         shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
                     measurements_json_path = os.path.join(result_mode_path, "measurements.json")
+                    # get model precision
+                    model_precision = "fp32"
+                    if os.path.exists(measurements_json_path):
+                        with open(measurements_json_path, "r") as f:
+                            measurements_json = json.load(f)
+                            model_precision = measurements_json.get("weight_data_types", "fp32")
                     if os.path.exists(user_conf_path):
                         shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, sub_res+'.json'))
                     files = []
@@ -406,7 +412,7 @@ def generate_submission(i):
                         f.write("TBD") #create an empty README
                 else:
                     readme_suffix = ""
-                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file)
+                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision)
 
                     for key in result:
                         results[model][scenario][key] = result[key]
