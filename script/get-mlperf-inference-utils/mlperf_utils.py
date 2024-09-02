@@ -133,7 +133,7 @@ def get_accuracy_metric(config, model, path):
 
     return is_valid, acc_results, acc_targets, acc_limits
 
-def get_result_string(version, model, scenario, result_path, has_power, sub_res, model_precision, division="open", system_json=None):
+def get_result_string(version, model, scenario, result_path, has_power, sub_res, division="open", system_json=None, model_precision="fp32"):
 
     config = checker.Config(
         version,
