@@ -255,6 +255,18 @@ versions:
         names:
         - pytorchvision
         - torchvision
+  
+  r4.1:
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r4.0
+      nvidia-scratch-space:
+        tags: _version.5_0
+    default_env:
+      BUILD_TRTLLM: 1
+    deps:
+      - tags: get,generic-python-lib,_package.torch
+      - tags: get,generic-python-lib,_package.torchrec
 
 docker:
   skip_run_cmd: 'no'
