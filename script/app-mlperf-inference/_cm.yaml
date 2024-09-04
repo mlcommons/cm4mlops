@@ -1416,10 +1416,10 @@ variations:
     add_deps_recursive:
       nvidia-inference-common-code:
         version: r4.1
-        tags: _anandhu
+        tags: _go
       nvidia-inference-server:
         version: r4.1
-        tags: _anandhu
+        tags: _go
       intel-harness:
         tags: _v4.1
     default_env:
