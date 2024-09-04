@@ -1415,13 +1415,13 @@ variations:
       reproducibility
     add_deps_recursive:
       nvidia-inference-common-code:
-        version: r4.0
-        tags: _go
+        version: r4.1
+        tags: _anandhu
       nvidia-inference-server:
-        version: r4.0
-        tags: _go
+        version: r4.1
+        tags: _anandhu
       intel-harness:
-        tags: _v4.0
+        tags: _v4.1
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'
