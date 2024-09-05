@@ -24,11 +24,6 @@ def preprocess(i):
     if util == '':
         return {'return': 1, 'error': 'Please select a variation specifying the sys util name'}
 
-
-
-    if not package:
-        return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
-
     package_name = package.get(pm)
     if not package_name:
         return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
