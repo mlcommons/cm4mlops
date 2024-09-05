@@ -459,6 +459,11 @@ variations:
           - scipy
         version: 1.10.1
 
+  sdxl,r4.1_default:
+    deps:
+    - tags: get,generic-python-lib,_package.torch
+    - tags: get,generic-python-lib,_package.torchrec
+
   bert_:
     deps:
     - tags: get,generic-python-lib,_transformers

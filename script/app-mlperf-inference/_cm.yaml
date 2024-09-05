@@ -1428,6 +1428,12 @@ variations:
     env:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
 
+  r4.1_default,nvidia-original:
+    deps:
+      - tags: get,sys-util,generic,_g++-11
+      - tags: get,sys-util,generic,_g++-9
+      - tags: get,sys-util,generic,_gcc-11
+      - tags: get,sys-util,generic,_gcc-9
 
 invalid_variation_combinations:
   -
