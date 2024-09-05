@@ -126,6 +126,8 @@ deps:
   - inference-src
   tags: get,mlcommons,inference,src
 - tags: get,sut,description
+  skip_if_env:
+    CM_MLPERF_USE_DOCKER: [ on ]
 
 - tags: get,mlperf,inference,results,dir
   names:
