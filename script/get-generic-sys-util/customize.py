@@ -24,6 +24,12 @@ def preprocess(i):
     if util == '':
         return {'return': 1, 'error': 'Please select a variation specifying the sys util name'}
 
+
+    package = state.get(util)
+
+    if not package:
+        return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
+
     package_name = package.get(pm)
     if not package_name:
         return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
@@ -35,7 +41,6 @@ def preprocess(i):
             else:
                 package_name = "libffi8"
 
-    package = state.get(util)
     # Temporary handling of dynamic state variables
     tmp_values = re.findall(r'<<<(.*?)>>>', str(package_name))
     for tmp_value in tmp_values:
