@@ -459,10 +459,11 @@ variations:
           - scipy
         version: 1.10.1
 
-  sdxl,r4.1_default:
+  sdxl,r4.1:
     deps:
     - tags: get,generic-python-lib,_package.torch
     - tags: get,generic-python-lib,_package.torchrec
+    - tags: get,generic-python-lib,_package.typeguard
 
   bert_:
     deps:
