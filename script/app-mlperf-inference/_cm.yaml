@@ -1427,6 +1427,7 @@ variations:
       CM_REGENERATE_MEASURE_FILES: 'yes'
     env:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
+      CM_MLPERF_INFERENCE_VERSION: '4.1'
 
   r4.1_default,nvidia-original:
     deps:
@@ -1434,6 +1435,7 @@ variations:
       - tags: get,sys-util,generic,_g++-9
       - tags: get,sys-util,generic,_gcc-11
       - tags: get,sys-util,generic,_gcc-9
+      - tags: get,generic-python-lib,_package.typeguard
 
 invalid_variation_combinations:
   -
