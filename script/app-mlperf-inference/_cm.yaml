@@ -304,7 +304,12 @@ variations:
           update_tags_from_env_with_prefix:
             _tp-size.:
               - CM_NVIDIA_TP_SIZE
-
+  
+  nvidia-original,r4.1_default,sdxl:
+    docker:
+      deps:
+        - tags: get,ml-model,sdxl,_fp16,_rclone
+  
   nvidia-original,r4.1_default:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.1-cuda12.4-pytorch24.04-ubuntu22.04-x86_64-release
@@ -1430,12 +1435,17 @@ variations:
       CM_MLPERF_INFERENCE_VERSION: '4.1'
 
   r4.1_default,nvidia-original:
-    deps:
-      - tags: get,sys-util,generic,_g++-11
-      - tags: get,sys-util,generic,_g++-9
-      - tags: get,sys-util,generic,_gcc-11
-      - tags: get,sys-util,generic,_gcc-9
-      - tags: get,generic-python-lib,_package.typeguard
+    docker:
+      pre_run_cmds:
+        - cm run script --tags=get,sys-util,generic,_g++-11
+        - cm run script --tags=get,sys-util,generic,_g++-9
+        - cm run script --tags=get,sys-util,generic,_gcc-11
+        - cm run script --tags=get,sys-util,generic,_gcc-9
+        - cm run script --tags=get,generic-python-lib,_package.typeguard
+        - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+        - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
+        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
 
 invalid_variation_combinations:
   -
@@ -1544,13 +1554,14 @@ docker:
    - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
    - "${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}:${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}"
+   - "${{ SDXL_CHECKPOINT_PATH }}:${{ SDXL_CHECKPOINT_PATH }}"
   skip_run_cmd: 'no'
   shm_size: '32gb'
   interactive: True
   extra_run_args: ' --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
   os: ubuntu
   cm_repo: mlcommons@cm4mlops
-  cm_repo_flags: ' --branch=mlperf-inference '
+  cm_repo_flags: ' --branch= nvidia-sdxl-v4.1'
   real_run: False
   os_version: '22.04'
   docker_input_mapping:
