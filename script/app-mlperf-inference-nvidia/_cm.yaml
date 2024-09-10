@@ -461,8 +461,6 @@ variations:
 
   sdxl,v4.1:
     deps:
-    - tags: get,generic-python-lib,_package.torch
-      version: 2.3.0
     - tags: get,generic-python-lib,_package.torchrec
       version: 0.4.0
     - tags: get,generic-python-lib,_package.torchmetrics
