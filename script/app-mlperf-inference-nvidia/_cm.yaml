@@ -321,6 +321,9 @@ variations:
     default: true
     env:
       CM_MLPERF_INFERENCE_CODE_VERSION: "v4.1"
+    adr:
+      pytorch:
+        tags: _for-nvidia-mlperf-inference-v4.1
   v4.0:
     group: version
     env:
