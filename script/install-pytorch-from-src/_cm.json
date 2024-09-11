@@ -377,31 +377,6 @@
         }
       ]
     },
-    "for-nvidia-mlperf-inference-v4.1": {
-      "base": [
-        "sha.6ddf5cf",
-        "cuda"
-      ],
-      "deps": [
-        {
-          "tags": "get,cmake",
-          "version_min": "3.29.0"
-        },
-        {
-          "tags": "get,generic-python-lib,_package.numpy",
-          "version": "1.23.5"
-        },
-        {
-          "tags": "get,generic-python-lib,_package.networkx",
-          "version": "2.6.3"
-        }
-      ],
-      "ad": {
-        "pytorch-src-repo": {
-          "tags": "_no-recurse-submodules,_full-history"
-        }
-      }
-    },
     "for-nvidia-mlperf-inference-v4.0": {
       "base": [
         "sha.32f93b1",
