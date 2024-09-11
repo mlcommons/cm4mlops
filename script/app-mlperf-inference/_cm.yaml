@@ -1429,19 +1429,6 @@ variations:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
       CM_MLPERF_INFERENCE_VERSION: '4.1'
 
-  r4.1_default,nvidia-original:
-    docker:
-      pre_run_cmds:
-        - cm run script --tags=get,sys-util,generic,_g++-11
-        - cm run script --tags=get,sys-util,generic,_g++-9
-        - cm run script --tags=get,sys-util,generic,_gcc-11
-        - cm run script --tags=get,sys-util,generic,_gcc-9
-        - cm run script --tags=get,generic-python-lib,_package.typeguard
-        - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
-        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
-        - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
-        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
-
 invalid_variation_combinations:
   -
     - retinanet
