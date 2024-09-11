@@ -21,7 +21,6 @@ def preprocess(i):
     if env.get('CM_GCC_VERSION', '') != '':
         gcc_major_version = env['CM_GCC_VERSION'].split(".")[0]
         if int(gcc_major_version) > 10:
-            print(env.get('CM_MLPERF_INFERENCE_VERSION',''))
             if env.get('CM_MLPERF_INFERENCE_VERSION','') != "4.1":
                 cxxflags.append("-Wno-error=range-loop-construct")
 

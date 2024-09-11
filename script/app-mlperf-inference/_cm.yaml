@@ -304,12 +304,7 @@ variations:
           update_tags_from_env_with_prefix:
             _tp-size.:
               - CM_NVIDIA_TP_SIZE
-  
-  nvidia-original,r4.1_default,sdxl:
-    docker:
-      deps:
-        - tags: get,ml-model,sdxl,_fp16,_rclone
-  
+
   nvidia-original,r4.1_default:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.1-cuda12.4-pytorch24.04-ubuntu22.04-x86_64-release
@@ -1561,8 +1556,8 @@ docker:
   extra_run_args: ' --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
   os: ubuntu
   cm_repo: mlcommons@cm4mlops
-  cm_repo_flags: ' --branch= nvidia-sdxl-v4.1'
-  real_run: False
+  cm_repo_flags: ' --branch=mlperf-inference'
+  real_ruf: False
   os_version: '22.04'
   docker_input_mapping:
     imagenet_path: IMAGENET_PATH
