@@ -349,6 +349,8 @@ variations:
       os_version: "20.04"
       deps:
         - tags: get,mlperf,inference,nvidia,scratch,space
+          names:
+            - mlperf-inference-nvidia-scratch-space
         - tags: get,nvidia-docker
           skip_if_env:
             CM_SKIP_GET_NVIDIA_DOCKER:
@@ -1114,6 +1116,9 @@ variations:
       all_gpus: 'yes'
       deps:
         - tags: get,nvidia-docker 
+          skip_if_env:
+            CM_SKIP_GET_NVIDIA_DOCKER:
+              - yes
     group:
       device
     env:
@@ -1523,7 +1528,11 @@ docker:
   use_host_user_id: True
   deps:
     - tags: get,mlperf,inference,results,dir,local
+      names:
+      - get-mlperf-inference-results-dir
     - tags: get,mlperf,inference,submission,dir,local
+      names:
+      - get-mlperf-inference-submission-dir
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
