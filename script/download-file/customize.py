@@ -83,45 +83,50 @@ def preprocess(i):
 
         if tool == "cmutil":
             print ('')
+            cmutil_require_download = 0
             if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '':
                 checksum_cmd = f"cd {q}{filepath}{q} {xsep}  md5sum -c{x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
                 checksum_result = subprocess.run(checksum_cmd, cwd=f'{q}{filepath}{q}', capture_output=True, text=True, shell=True)
             elif env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
                 checksum_cmd = f"echo {env.get('CM_DOWNLOAD_CHECKSUM')} {x}{q}{env['CM_DOWNLOAD_FILENAME']}{q} | md5sum -c{x_c}"
                 checksum_result = subprocess.run(checksum_cmd, capture_output=True, text=True, shell=True)
-            if checksum_result and checksum_result.returncode==1:
-                if "checksum did not match" in checksum_result.stderr.lower():
-                    computed_checksum = subprocess.run(f"md5sum {env['CM_DOWNLOAD_FILENAME']}", capture_output=True, text=True, shell=True).stdout.split(" ")[0]
-                    print(f"WARNING: File already present, mismatch between original checksum({env.get('CM_DOWNLOAD_CHECKSUM')}) and computed checksum({computed_checksum}). Deleting the already present file and downloading new.")
-                    try:
-                        os.remove(env['CM_DOWNLOAD_FILENAME'])
-                        print(f"File {env['CM_DOWNLOAD_FILENAME']} deleted successfully.")
-                    except PermissionError:
-                        return {"return":1, "error":f"Permission denied to delete file {env['CM_DOWNLOAD_FILENAME']}."}
-                if "no such file" in checksum_result.stderr.lower():
-                    print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
-
+            if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '' or env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
+                if checksum_result and checksum_result.returncode==1:
+                    if "checksum did not match" in checksum_result.stderr.lower():
+                        computed_checksum = subprocess.run(f"md5sum {env['CM_DOWNLOAD_FILENAME']}", capture_output=True, text=True, shell=True).stdout.split(" ")[0]
+                        print(f"WARNING: File already present, mismatch between original checksum({env.get('CM_DOWNLOAD_CHECKSUM')}) and computed checksum({computed_checksum}). Deleting the already present file and downloading new.")
+                        try:
+                            os.remove(env['CM_DOWNLOAD_FILENAME'])
+                            print(f"File {env['CM_DOWNLOAD_FILENAME']} deleted successfully.")
+                        except PermissionError:
+                            return {"return":1, "error":f"Permission denied to delete file {env['CM_DOWNLOAD_FILENAME']}."}
+                        cmutil_require_download = 1
+                    if "no such file" in checksum_result.stderr.lower():
+                        print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
+                        cmutil_require_download = 1
+                else:
+                    print(f"WARNING: File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
+            else:
+                cmutil_require_download = 1
+                
+            if cmutil_require_download == 1:
                 cm = automation.cmind
                 for i in range(1,5):
                     r = cm.access({'action':'download_file',
-                           'automation':'utils,dc2743f8450541e3',
-                           'url':url,
-                           'verify': verify_ssl})
+                            'automation':'utils,dc2743f8450541e3',
+                            'url':url,
+                            'verify': verify_ssl})
                     if r['return'] == 0: break
                     oldurl = url
                     url = env.get('CM_DOWNLOAD_URL'+str(i),'')
                     if url == '':
                         break
                     print(f"Download from {oldurl} failed, trying from {url}")
-                    
+                        
                 if r['return']>0: return r
-
+    
                 env['CM_DOWNLOAD_CMD'] = ""
                 env['CM_DOWNLOAD_FILENAME'] = r['filename']
-            else:
-                print(f"WARNING: File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
-
-            
 
         elif tool == "wget":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
