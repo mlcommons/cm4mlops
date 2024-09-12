@@ -14,6 +14,22 @@
     "image-classification",
     "imagenet-aux"
   ],
+  "prehook_deps": [
+    {
+      "tags": "download-and-extract,_extract",
+      "env": {
+        "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_FILE>>>",
+        "CM_EXTRACT_FINAL_ENV_NAME": "CM_DATASET_AUX_PATH",
+        "CM_DOWNLOAD_URL": "<<<CM_PACKAGE_URL>>>",
+        "CM_DOWNLOAD_URL1": "<<<CM_PACKAGE_URL1>>>"
+      },
+      "update_tags_from_env_with_prefix": {
+        "_url.": [ "CM_PACKAGE_URL" ]
+      },
+      "force_cache": true,
+      "extra_cache_tags": "imagenet-aux,dataset-aux"
+    }
+  ],
   "uid": "bb2c6dd8c8c64217",
   "variations": {
     "2012": {
@@ -27,7 +43,9 @@
         "2012"
       ],
       "env": {
-        "CM_WGET_URL": "http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz"
+        "CM_PACKAGE_URL": "http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz",
+        "CM_PACKAGE_URL1": "https://www.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz",
+        "CM_DOWNLOAD_CHECKSUM_": "f963098ea0e785a968ca1eb634003a90"
       }
     },
     "from.dropbox": {
@@ -37,7 +55,9 @@
         "2012"
       ],
       "env": {
-        "CM_WGET_URL": "https://www.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz"
+        "CM_PACKAGE_URL": "https://awww.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz",
+        "CM_PACKAGE_URL1": "http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz",
+        "CM_DOWNLOAD_CHECKSUM_": "ee346d67141e476df9c1a3f813552503"
       }
     }
   }

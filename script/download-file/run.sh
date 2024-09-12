@@ -50,5 +50,4 @@ if [[ ${require_download} == "1" ]]; then
      test $? -eq 0 || exit $?
   fi
 fi
-
 test $? -eq 0 || exit $?
