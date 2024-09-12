@@ -89,29 +89,34 @@
     },
     "onnx,fp32,zenodo": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/3733910/files/model.onnx"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/3733910/files/model.onnx",
+        "CM_DOWNLOAD_CHECKSUM":"819b25b19cd8e59080c10892689750ca"
       }
     },
     "onnx,fp32,armi": {
       "env": {
         "CM_PACKAGE_URL": "https://armi.in/files/model.onnx",
-        "CM_PACKAGE_URL1": "https://zenodo.org/record/3733910/files/model.onnx"
+        "CM_PACKAGE_URL1": "https://zenodo.org/record/3733910/files/model.onnx",
+        "CM_DOWNLOAD_CHECKSUM":"819b25b19cd8e59080c10892689750ca"
       }
     },
     "onnx,int8": {
       "env": {
         "CM_ML_MODEL_F1": "90.067",
-        "CM_PACKAGE_URL": "https://zenodo.org/record/3750364/files/bert_large_v1_1_fake_quant.onnx"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/3750364/files/bert_large_v1_1_fake_quant.onnx",
+        "CM_DOWNLOAD_CHECKSUM":"45f88ffb2915362242703c85c38ec2d4"
       }
     },
     "onnx,int8,zenodo": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/3750364/files/bert_large_v1_1_fake_quant.onnx"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/3750364/files/bert_large_v1_1_fake_quant.onnx",
+        "CM_DOWNLOAD_CHECKSUM":"45f88ffb2915362242703c85c38ec2d4"
       }
     },
     "onnx,int8,amazon-s3": {
       "env": {
-        "CM_PACKAGE_URL": "https://mlperf-public.s3.us-west-2.amazonaws.com/bert_large_v1_1_fake_quant.onnx"
+        "CM_PACKAGE_URL": "https://mlperf-public.s3.us-west-2.amazonaws.com/bert_large_v1_1_fake_quant.onnx",
+        "CM_DOWNLOAD_CHECKSUM":"45f88ffb2915362242703c85c38ec2d4"
       }
     },
     "onnx": {
@@ -150,7 +155,8 @@
     },
     "tf,fp32,zenodo": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/3939747/files/model.pb"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/3939747/files/model.pb",
+        "CM_DOWNLOAD_CHECKSUM":"dd72de12e8226f25f0128a1a864b97ad"
       }
     },
     "pytorch": {
@@ -175,13 +181,15 @@
     },
     "pytorch,fp32,zenodo": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/3733896/files/model.pytorch"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/3733896/files/model.pytorch",
+        "CM_DOWNLOAD_CHECKSUM":"00fbcbfaebfa20d87ac9885120a6e9b4"
       }
     },
     "pytorch,fp32,armi": {
       "env": {
         "CM_PACKAGE_URL": "https://armi.in/files/fp32/model.pytorch",
-        "CM_PACKAGE_URL1": "https://zenodo.org/record/3733896/files/model.pytorch"
+        "CM_PACKAGE_URL1": "https://zenodo.org/record/3733896/files/model.pytorch",
+        "CM_DOWNLOAD_CHECKSUM":"00fbcbfaebfa20d87ac9885120a6e9b4"
       }
     },
     "pytorch,int8": {
@@ -191,13 +199,15 @@
     },
     "pytorch,int8,zenodo": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/4792496/files/pytorch_model.bin"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/4792496/files/pytorch_model.bin",
+        "CM_DOWNLOAD_CHECKSUM":"0734c580cb53b4b56a3f400771ffcb7c"
       }
     },
     "pytorch,int8,armi": {
       "env": {
         "CM_PACKAGE_URL": "https://armi.in/files/int8/pytorch_model.bin",
-        "CM_PACKAGE_URL1": "https://zenodo.org/record/4792496/files/pytorch_model.bin"
+        "CM_PACKAGE_URL1": "https://zenodo.org/record/4792496/files/pytorch_model.bin",
+        "CM_DOWNLOAD_CHECKSUM":"0734c580cb53b4b56a3f400771ffcb7c"
       }
     },
     "onnxruntime": {
