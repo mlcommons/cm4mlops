@@ -72,6 +72,13 @@
           "version": "v4.0"
         }
       }
+    },
+    "r4.1": {
+      "add_deps_recursive": {
+        "mlperf-inference-results": {
+          "version": "v4.1"
+        }
+      }
     }
   }
 }
