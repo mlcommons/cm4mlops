@@ -91,6 +91,7 @@ def preprocess(i):
                 checksum_cmd = f"echo {env.get('CM_DOWNLOAD_CHECKSUM')} {x}{q}{env['CM_DOWNLOAD_FILENAME']}{q} | md5sum -c{x_c}"
                 checksum_result = subprocess.run(checksum_cmd, capture_output=True, text=True, shell=True)
             if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '' or env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
+                print(checksum_result) #for debugging
                 if checksum_result and checksum_result.returncode==1:
                     if "checksum did not match" in checksum_result.stderr.lower():
                         computed_checksum = subprocess.run(f"md5sum {env['CM_DOWNLOAD_FILENAME']}", capture_output=True, text=True, shell=True).stdout.split(" ")[0]
@@ -108,7 +109,7 @@ def preprocess(i):
                     print(f"WARNING: File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
             else:
                 cmutil_require_download = 1
-                
+
             if cmutil_require_download == 1:
                 cm = automation.cmind
                 for i in range(1,5):
