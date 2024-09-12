@@ -27,7 +27,7 @@
   "uid": "5e865dbdc65949d2",
   "prehook_deps": [
     {
-      "tags": "download-and-extract,_wget",
+      "tags": "download-and-extract",
       "env": {
         "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_FILE>>>",
         "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
