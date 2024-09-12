@@ -137,12 +137,12 @@ def preprocess(i):
     env['CM_DOWNLOAD_DOWNLOADED_PATH'] = filepath
 
     x='*' if os_info['platform'] == 'windows' else ''
-    x_c='s' if os_info['platform'] == 'darwin' else ''
+    x_c=' -s ' if os_info['platform'] == 'darwin' else ''
     #verify checksum if file already present
     if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '':
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = f"cd {q}{filepath}{q} {xsep}  md5sum -c{x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
     elif env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
-        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum -c{} ".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q, x_c)
+        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum {}-c -".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q, x_c)
     else:
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = ""
 
