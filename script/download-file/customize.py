@@ -21,7 +21,7 @@ def preprocess(i):
     q = '"' if os_info['platform'] == 'windows' else "'"
 
     x='*' if os_info['platform'] == 'windows' else ''
-    x_c='-s' if os_info['platform'] == 'darwin' else ''
+    x_c='-s' if os_info['platform'] == 'darwin_off' else ''
 
     if env.get('CM_DOWNLOAD_LOCAL_FILE_PATH'):
         filepath = env['CM_DOWNLOAD_LOCAL_FILE_PATH']
