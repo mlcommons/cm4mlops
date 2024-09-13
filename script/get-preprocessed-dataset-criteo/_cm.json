@@ -170,34 +170,34 @@
         "CM_CRITEO_FAKE": "yes"
       }
     },
+    "preprocess": {
+      "group": "src"
+    },
     "mlc": {
       "group": "src",
+      "default": true,
       "env": {
         "CM_DATASET_PREPROCESSED_CRITEO_FROM_MLC": "yes",
         "CM_DATASET_PREPROCESSED_PATH": "on"
       }
     },
     "multihot,mlc": {
-      "env": {
-        "CM_RCLONE_CONFIG_CMD": "rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com",
-        "CM_RCLONE_URL": "mlc-inference:mlcommons-inference-wg-public/dlrm_preprocessed",
-        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_DATASET_PREPROCESSED_PATH",
-        "CM_EXTRACT_FINAL_ENV_NAME": "CM_DATASET_PREPROCESSED_PATH",
-        "CM_EXTRACT_TO_FOLDER": "criteo-preprocessed"
-      },
       "deps": [
         {
-          "tags": "download-and-extract,_rclone",
-          "update_tags_from_env_with_prefix": {
-            "_url.": [
-              "CM_RCLONE_URL"
-            ]
-          },
+          "tags": "download-and-extract,_rclone,_url.mlc-inference:mlcommons-inference-wg-public/dlrm_preprocessed",
           "force_cache": true,
           "names": [
             "dae"
           ],
-          "extra_cache_tags": "criteo,preprocessed,dataset"
+          "extra_cache_tags": "criteo,preprocessed,dataset",
+          "env": {
+            "CM_RCLONE_CONFIG_CMD": "rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com",
+            "CM_RCLONE_URL": "mlc-inference:mlcommons-inference-wg-public/dlrm_preprocessed",
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_DATASET_PREPROCESSED_PATH",
+            "CM_EXTRACT_FINAL_ENV_NAME": "CM_DATASET_PREPROCESSED_PATH",
+            "CM_EXTRACT_TO_FOLDER": "criteo-preprocessed",
+            "CM_DOWNLOAD_CHECKSUM_FILE": "<<<CM_TMP_CURRENT_SCRIPT_PATH>>>/checksums.txt"
+          }
         }
       ]
     },

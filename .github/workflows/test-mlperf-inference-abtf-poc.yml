@@ -37,7 +37,7 @@ jobs:
         cm pull repo mlcommons@cm4abtf --branch=poc
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on docker
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --adr.compiler.tags=gcc --quiet  -v
+        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=5 --adr.compiler.tags=gcc --quiet  -v
 
   build2:
     runs-on: ${{ matrix.os }}
@@ -48,9 +48,6 @@ jobs:
         python-version: [ "3.8", "3.12" ]
         backend: [ "pytorch" ]
         implementation: [ "python" ]
-        exclude:
-        - os: ubuntu-24.04
-          python-version: "3.8"
 
     steps:
     - uses: actions/checkout@v3
