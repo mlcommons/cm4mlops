@@ -92,19 +92,18 @@ def preprocess(i):
                 checksum_result = subprocess.run(checksum_cmd, capture_output=True, text=True, shell=True)
             if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '' or env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
                 print(checksum_result) #for debugging
-                if checksum_result and checksum_result.returncode==1:
-                    if "checksum did not match" in checksum_result.stderr.lower():
-                        computed_checksum = subprocess.run(f"md5sum {env['CM_DOWNLOAD_FILENAME']}", capture_output=True, text=True, shell=True).stdout.split(" ")[0]
-                        print(f"WARNING: File already present, mismatch between original checksum({env.get('CM_DOWNLOAD_CHECKSUM')}) and computed checksum({computed_checksum}). Deleting the already present file and downloading new.")
-                        try:
-                            os.remove(env['CM_DOWNLOAD_FILENAME'])
-                            print(f"File {env['CM_DOWNLOAD_FILENAME']} deleted successfully.")
-                        except PermissionError:
-                            return {"return":1, "error":f"Permission denied to delete file {env['CM_DOWNLOAD_FILENAME']}."}
-                        cmutil_require_download = 1
-                    if "no such file" in checksum_result.stderr.lower():
-                        print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
-                        cmutil_require_download = 1
+                if "checksum did not match" in checksum_result.stderr.lower():
+                    computed_checksum = subprocess.run(f"md5sum {env['CM_DOWNLOAD_FILENAME']}", capture_output=True, text=True, shell=True).stdout.split(" ")[0]
+                    print(f"WARNING: File already present, mismatch between original checksum({env.get('CM_DOWNLOAD_CHECKSUM')}) and computed checksum({computed_checksum}). Deleting the already present file and downloading new.")
+                    try:
+                        os.remove(env['CM_DOWNLOAD_FILENAME'])
+                        print(f"File {env['CM_DOWNLOAD_FILENAME']} deleted successfully.")
+                    except PermissionError:
+                        return {"return":1, "error":f"Permission denied to delete file {env['CM_DOWNLOAD_FILENAME']}."}
+                    cmutil_require_download = 1
+                elif "no such file" in checksum_result.stderr.lower():
+                    print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
+                    cmutil_require_download = 1
                 else:
                     print(f"WARNING: File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
             else:
