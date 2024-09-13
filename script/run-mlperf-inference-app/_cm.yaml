@@ -126,6 +126,8 @@ deps:
   - inference-src
   tags: get,mlcommons,inference,src
 - tags: get,sut,description
+  skip_if_env:
+    CM_MLPERF_USE_DOCKER: [ on ]
 
 - tags: get,mlperf,inference,results,dir
   names:
@@ -280,6 +282,13 @@ variations:
     env:
       CM_MLPERF_INFERENCE_VERSION: '4.1'
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.1_default
+    adr:
+      get-mlperf-inference-results-dir:
+        version: "r4.1"
+      get-mlperf-inference-submission-dir:
+        version: "r4.1"
+      mlperf-inference-nvidia-scratch-space:
+        version: "r4.1"
     group: benchmark-version
 
   short:

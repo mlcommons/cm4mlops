@@ -73,7 +73,6 @@ def preprocess(i):
 
             # Write data as a row to CSV file
             writer.writerow(data)
-            print("raw written")        # To be removed. Currently present for debugging purpose.
             time.sleep(interval)
             f.close()
 

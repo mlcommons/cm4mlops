@@ -11,28 +11,14 @@ def preprocess(i):
 
     cm = automation.cmind
 
-    path = os.getcwd()
-
-    url = env['CM_PACKAGE_URL']
-
-    print ('Downloading from {}'.format(url))
-
-    r = cm.access({'action':'download_file', 
-                   'automation':'utils,dc2743f8450541e3', 
-                   'url':url})
-    if r['return']>0: return r
-
-    filename = r['filename']
-
-    if env.get('CM_UNZIP') == "yes":
-        os.system("unzip "+filename)
-        filename = env['CM_ML_MODEL_FILE']
-        env['CM_ML_MODEL_FILE_WITH_PATH']=os.path.join(path, filename)
+    path = os.path.dirname(env['CM_ML_MODEL_FILE_WITH_PATH'])
+         
+    if env.get("CM_DAE_EXTRACT_DOWNLOADED", " ") != " ":
+        env['CM_ML_MODEL_PATH'] = os.path.join(path, env['CM_ML_MODEL_FILE'])
+        env['CM_ML_MODEL_FILE_WITH_PATH'] = env['CM_ML_MODEL_PATH']
     else:
-        # Add to path
-        env['CM_ML_MODEL_FILE']=filename
-        env['CM_ML_MODEL_FILE_WITH_PATH']=r['path']
+        env['CM_ML_MODEL_PATH'] = path
 
-    env['CM_ML_MODEL_PATH']=path
-
+    env['CM_GET_DEPENDENT_CACHED_PATH'] =  env['CM_ML_MODEL_PATH']
+    
     return {'return':0}

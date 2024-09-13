@@ -24,7 +24,9 @@ def preprocess(i):
     if util == '':
         return {'return': 1, 'error': 'Please select a variation specifying the sys util name'}
 
+
     package = state.get(util)
+
     if not package:
         return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
 
@@ -32,6 +34,13 @@ def preprocess(i):
     if not package_name:
         return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
     
+    if util == "libffi":
+        if env.get("CM_HOST_OS_FLAVOR", "") == "ubuntu":
+            if env.get("CM_HOST_OS_VERSION", "") in [ "20.04", "20.10", "21.04", "21.10" ]:
+                package_name = "libffi7"
+            else:
+                package_name = "libffi8"
+
     # Temporary handling of dynamic state variables
     tmp_values = re.findall(r'<<<(.*?)>>>', str(package_name))
     for tmp_value in tmp_values:
