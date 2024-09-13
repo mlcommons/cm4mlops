@@ -189,7 +189,7 @@ def preprocess(i):
 
     env['CM_DOWNLOAD_DOWNLOADED_PATH'] = filepath
 
-    #verify checksum if file already present
+    # verify checksum if file already present
     if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '':
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = f"cd {q}{filepath}{q} {xsep}  md5sum -c {x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
     elif env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
