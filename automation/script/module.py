@@ -2340,7 +2340,9 @@ class CAutomation(Automation):
         # Print filtered paths if console
         if console:
             for script in r['list']:
-                logging.info(script.path)
+#                This should not be logging since the output can be consumed by other external tools and scripts
+#                logging.info(script.path)
+                 print (script.path)
 
         # Finalize output
         r['script_tags'] = script_tags
@@ -2355,7 +2357,7 @@ class CAutomation(Automation):
         Test automation (TBD)
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
