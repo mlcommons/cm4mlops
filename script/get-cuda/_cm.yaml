@@ -38,6 +38,8 @@ deps:
 input_mapping:
   cudnn_tar_file: CM_CUDNN_TAR_FILE_PATH
   cudnn_tar_path: CM_CUDNN_TAR_FILE_PATH
+  skip_sudo: CUDA_SKIP_SUDO
+  skip_cudnn_install: CM_CUDA_SKIP_CUDNN_INSTALL
 
 new_env_keys:
 - CUDA_HOME
@@ -82,6 +84,10 @@ variations:
     - names:
       - cudnn
       tags: get,nvidia,cudnn
+      skip_if_env:
+        CM_CUDA_SKIP_CUDNN_INSTALL:
+          - yes
+
   lib-only:
     env:
       CM_CUDA_FULL_TOOLKIT_INSTALL: 'no'
@@ -91,6 +97,9 @@ variations:
   package-manager:
     env:
       CM_CUDA_PACKAGE_MANAGER_INSTALL: 'yes'
+  prebuilt:
+    env:
+      CM_REQUIRE_INSTALL: 'yes'
   toolkit:
     default: true
     env:

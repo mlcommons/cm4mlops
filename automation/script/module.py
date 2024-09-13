@@ -2340,7 +2340,9 @@ class CAutomation(Automation):
         # Print filtered paths if console
         if console:
             for script in r['list']:
-                logging.info(script.path)
+#                This should not be logging since the output can be consumed by other external tools and scripts
+#                logging.info(script.path)
+                 print (script.path)
 
         # Finalize output
         r['script_tags'] = script_tags
@@ -2355,7 +2357,7 @@ class CAutomation(Automation):
         Test automation (TBD)
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -2641,8 +2643,7 @@ class CAutomation(Automation):
             if k in ii: del ii[k]
 
         if artifact_repo != None:
-            artifact = ii.get('artifact','')
-            ii['artifact'] = utils.assemble_cm_object2(artifact_repo) + ':' + artifact
+            ii['artifact'] = utils.assemble_cm_object2(artifact_repo) + ':' + utils.assemble_cm_object2(artifact_repo)
 
         r_obj=self.cmind.access(ii)
         if r_obj['return']>0: return r_obj
