@@ -16,7 +16,7 @@
   ],
   "prehook_deps": [
     {
-      "tags": "download-and-extract,_extract",
+      "tags": "download-and-extract,_extract,_wget",
       "env": {
         "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_FILE>>>",
         "CM_EXTRACT_FINAL_ENV_NAME": "CM_DATASET_AUX_PATH",
@@ -55,7 +55,7 @@
         "2012"
       ],
       "env": {
-        "CM_PACKAGE_URL": "https://aww.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz",
+        "CM_PACKAGE_URL": "https://www.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz",
         "CM_PACKAGE_URL1": "http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz",
         "CM_DOWNLOAD_CHECKSUM": "ee346d67141e476df9c1a3f813552503"
       }
