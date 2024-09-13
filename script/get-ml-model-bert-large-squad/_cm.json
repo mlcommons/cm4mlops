@@ -84,7 +84,8 @@
     },
     "onnx,fp32": {
       "env": {
-        "CM_ML_MODEL_F1": "90.874"
+        "CM_ML_MODEL_F1": "90.874",
+        "CM_DOWNLOAD_CHECKSUM":"819b25b19cd8e59080c10892689750ca"
       }
     },
     "onnx,fp32,zenodo": {
@@ -101,7 +102,8 @@
     "onnx,int8": {
       "env": {
         "CM_ML_MODEL_F1": "90.067",
-        "CM_PACKAGE_URL": "https://zenodo.org/record/3750364/files/bert_large_v1_1_fake_quant.onnx"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/3750364/files/bert_large_v1_1_fake_quant.onnx",
+        "CM_DOWNLOAD_CHECKSUM":"45f88ffb2915362242703c85c38ec2d4"
       }
     },
     "onnx,int8,zenodo": {
@@ -145,7 +147,8 @@
     },
     "tf,fp32": {
       "env": {
-        "CM_ML_MODEL_F1": "90.874"
+        "CM_ML_MODEL_F1": "90.874",
+        "CM_DOWNLOAD_CHECKSUM":"dd72de12e8226f25f0128a1a864b97ad"
       }
     },
     "tf,fp32,zenodo": {
@@ -186,7 +189,8 @@
     },
     "pytorch,int8": {
       "env": {
-        "CM_ML_MODEL_F1": "90.633"
+        "CM_ML_MODEL_F1": "90.633",
+        "CM_DOWNLOAD_CHECKSUM":"0734c580cb53b4b56a3f400771ffcb7c"
       }
     },
     "pytorch,int8,zenodo": {

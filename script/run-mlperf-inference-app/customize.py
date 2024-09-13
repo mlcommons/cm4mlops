@@ -23,8 +23,10 @@ def preprocess(i):
         return {'return':0}
 
     dump_version_info = env.get('CM_DUMP_VERSION_INFO', True)
-    system_meta = state['CM_SUT_META']
-    env['CM_SUT_META_EXISTS'] = "yes"
+
+    system_meta = state.get('CM_SUT_META', {})
+    if system_meta:
+        env['CM_SUT_META_EXISTS'] = "yes"
 
     env['CM_MODEL'] = env['CM_MLPERF_MODEL']
 
@@ -182,7 +184,8 @@ def preprocess(i):
         state = {}
         docker_extra_input = {}
 
-        del(env['CM_HW_NAME'])
+        if env.get('CM_HW_NAME'):
+            del(env['CM_HW_NAME'])
 
         for k in inp:
             if k.startswith("docker_"):

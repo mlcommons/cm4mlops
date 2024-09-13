@@ -16,9 +16,8 @@ fi
 
 if [[ ${CM_DOWNLOAD_TOOL} == "cmutil" ]]; then
   require_download=0
-fi
 
-if [ -e "${CM_DOWNLOAD_DOWNLOADED_PATH}" ]; then
+elif [ -e "${CM_DOWNLOAD_DOWNLOADED_PATH}" ]; then
   if [[ "${CM_DOWNLOAD_CHECKSUM_CMD}" != "" ]]; then
     echo ""
     echo "${CM_DOWNLOAD_CHECKSUM_CMD}"
@@ -51,5 +50,4 @@ if [[ ${require_download} == "1" ]]; then
      test $? -eq 0 || exit $?
   fi
 fi
-
 test $? -eq 0 || exit $?

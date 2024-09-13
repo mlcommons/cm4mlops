@@ -19,6 +19,9 @@
       "force_env_keys": [
         "CM_GIT_*"
       ],
+      "names": [
+        "inference-results-repo"
+      ],
       "env": {
         "CM_GIT_CHECKOUT_PATH_ENV_NAME": "CM_MLPERF_INFERENCE_RESULTS_PATH"
       },
@@ -63,6 +66,17 @@
       "env": {
         "CM_MLPERF_INFERENCE_RESULTS_VERSION_NAME": "v4.0",
         "CM_GIT_URL": "https://github.com/<<<GITHUB_REPO_OWNER>>>/inference_results_v4.0.git"
+      }
+    },
+    "v4.1": {
+      "env": {
+        "CM_MLPERF_INFERENCE_RESULTS_VERSION_NAME": "v4.1",
+        "CM_GIT_URL": "https://github.com/<<<GITHUB_REPO_OWNER>>>/inference_results_v4.1.git"
+      },
+      "adr": {
+        "inference-results-repo": {
+          "tags": "_branch.cm-fixes"
+        }
       }
     }
   },

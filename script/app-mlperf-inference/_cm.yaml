@@ -307,7 +307,7 @@ variations:
 
   nvidia-original,r4.1_default:
     docker:
-      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.1-cuda12.4-pytorch24.04-ubuntu22.04-x86_64-release
 
   nvidia-original,r4.1_default,gptj_:
     docker:
@@ -349,6 +349,8 @@ variations:
       os_version: "20.04"
       deps:
         - tags: get,mlperf,inference,nvidia,scratch,space
+          names:
+            - mlperf-inference-nvidia-scratch-space
         - tags: get,nvidia-docker
           skip_if_env:
             CM_SKIP_GET_NVIDIA_DOCKER:
@@ -1114,6 +1116,9 @@ variations:
       all_gpus: 'yes'
       deps:
         - tags: get,nvidia-docker 
+          skip_if_env:
+            CM_SKIP_GET_NVIDIA_DOCKER:
+              - yes
     group:
       device
     env:
@@ -1415,19 +1420,19 @@ variations:
       reproducibility
     add_deps_recursive:
       nvidia-inference-common-code:
-        version: r4.0
+        version: r4.1
         tags: _go
       nvidia-inference-server:
-        version: r4.0
+        version: r4.1
         tags: _go
       intel-harness:
-        tags: _v4.0
+        tags: _v4.1
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'
     env:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
-
+      CM_MLPERF_INFERENCE_VERSION: '4.1'
 
 invalid_variation_combinations:
   -
@@ -1523,7 +1528,11 @@ docker:
   use_host_user_id: True
   deps:
     - tags: get,mlperf,inference,results,dir,local
+      names:
+      - get-mlperf-inference-results-dir
     - tags: get,mlperf,inference,submission,dir,local
+      names:
+      - get-mlperf-inference-submission-dir
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
@@ -1536,6 +1545,7 @@ docker:
    - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
    - "${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}:${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}"
+   - "${{ SDXL_CHECKPOINT_PATH }}:${{ SDXL_CHECKPOINT_PATH }}"
   skip_run_cmd: 'no'
   shm_size: '32gb'
   interactive: True
