@@ -16,7 +16,7 @@
   ],
   "prehook_deps": [
     {
-      "tags": "download-and-extract,_extract,_wget",
+      "tags": "download-and-extract,_extract",
       "env": {
         "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_FILE>>>",
         "CM_EXTRACT_FINAL_ENV_NAME": "CM_DATASET_AUX_PATH",
