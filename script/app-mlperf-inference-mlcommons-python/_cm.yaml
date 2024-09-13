@@ -778,12 +778,11 @@ variations:
     env:
       CM_MLPERF_BACKEND: tvm-onnx
       CM_MLPERF_BACKEND_VERSION: <<<CM_ONNXRUNTIME_VERSION>>>
-    adr:
-      numpy:
-        version_max: "1.26.4"
-        version_max_usable: "1.26.4"
     deps:
     - tags: get,generic-python-lib,_onnx
+    - tags: get,generic-python-lib,_numpy
+      version_max: "1.26.4"
+      version_max_usable: "1.26.4"
     - tags: get,tvm
       names:
       - tvm
