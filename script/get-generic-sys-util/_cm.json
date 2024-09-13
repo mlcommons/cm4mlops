@@ -50,6 +50,17 @@
         }
       }
     },
+    "g++-11": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "g++11"
+      },
+      "state": {
+        "g++11": {
+          "apt": "g++-11",
+          "dnf": "gcc-toolset-11-gcc-c++"
+        }
+      }
+    },
     "g++-12": {
       "env": {
         "CM_SYS_UTIL_NAME": "g++12"
@@ -58,6 +69,37 @@
         "g++12": {
           "apt": "g++-12",
           "dnf": "gcc-toolset-12-gcc-c++"
+        }
+      }
+    },
+    "g++-9": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "g++9"
+      },
+      "state": {
+        "g++9": {
+          "apt": "g++-9",
+          "dnf": "gcc-toolset-9-gcc-c++"
+        }
+      }
+    },
+    "gcc-11": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "gcc11"
+      },
+      "state": {
+        "gcc11": {
+          "apt": "gcc-11"
+        }
+      }
+    },
+    "gcc-9": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "gcc9"
+      },
+      "state": {
+        "gcc9": {
+          "apt": "gcc-9"
         }
       }
     },
@@ -136,6 +178,16 @@
         }
       }
     },
+    "libffi": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libffi"
+      },
+      "state": {
+        "libffi7": {
+          "apt": "libffi"
+        }
+      }
+    },
     "libffi-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libffi_dev"
@@ -156,6 +208,16 @@
       "state": {
         "libffi7": {
           "apt": "libffi7"
+        }
+      }
+    },
+    "libffi8": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libffi8"
+      },
+      "state": {
+        "libffi8": {
+          "apt": "libffi8"
         }
       }
     },

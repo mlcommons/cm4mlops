@@ -42,7 +42,7 @@ def preprocess(i):
     # By default remove archive after extraction
     remove_extracted = False if env.get('CM_EXTRACT_REMOVE_EXTRACTED','').lower() == 'no' else True
 
-    if filename.endswith(".zip"):
+    if filename.endswith(".zip") or filename.endswith(".pth"):
         env['CM_EXTRACT_TOOL'] = "unzip"
     elif filename.endswith(".tar.gz"):
         if windows:
@@ -50,6 +50,9 @@ def preprocess(i):
             env['CM_EXTRACT_CMD0'] = 'gzip -d ' + x + filename + x
             filename = filename[:-3] # leave only .tar
             env['CM_EXTRACT_TOOL_OPTIONS'] = ' -xvf'
+            env['CM_EXTRACT_TOOL'] = 'tar '
+        elif os_info['platform'] == 'darwin':
+            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -xvzf '
             env['CM_EXTRACT_TOOL'] = 'tar '
         else:
             env['CM_EXTRACT_TOOL_OPTIONS'] = ' --skip-old-files -xvzf '

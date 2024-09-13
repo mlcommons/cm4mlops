@@ -81,7 +81,7 @@ def preprocess(i):
     # generate the post run cmd - for killing the process that records runtime system infos
     post_run_cmd = ""
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
-        post_run_cmd += "echo 'killing process \${cmd_pid}' && kill -TERM \${cmd_pid}"
+        post_run_cmd += "echo killing process \$cmd_pid && kill -TERM \${cmd_pid}"
         print(f"Post run command for killing the process that measures the runtime system information: {post_run_cmd}")
 
     env['CM_POST_RUN_CMD'] = post_run_cmd

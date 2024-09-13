@@ -62,7 +62,7 @@
       "deps": [
         {
           "names": [ "neural-magic-zoo-downloader" ],
-          "tags": "get,ml-model,zoo,deepsparse,_pruned95_obs_quant-none"
+          "tags": "get,ml-model,zoo,deepsparse,_bert-base-pruned95_obs_quant-none"
         }
       ],
       "env": {
@@ -87,6 +87,7 @@
     }
   },
   "print_env_at_the_end" : {
-    "CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH": "Path to the BERT vocab file"
+    "CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH": "Path to the BERT vocab file",
+    "CM_ML_MODEL_FILE_WITH_PATH": "Path to the ML model"
   }
 }

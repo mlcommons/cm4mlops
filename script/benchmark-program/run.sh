@@ -1,4 +1,20 @@
 #!/bin/bash
+
+# function to safely exit the background process
+safe_exit() {
+  if [[ "${CM_POST_RUN_CMD}" != "" ]]; then
+    eval ${CM_POST_RUN_CMD}
+    if [ $? -eq 0 ]; then
+      exit 0
+    else
+      exit $?
+    fi
+  fi
+}
+
+# trap signals to redirect the execution flow to safe_exit
+trap safe_exit SIGINT SIGTERM
+
 if [[ ${CM_MLPERF_POWER} == "yes" && ${CM_MLPERF_LOADGEN_MODE} == "performance" ]]; then
     exit 0
 fi
@@ -45,18 +61,10 @@ eval ${CM_PRE_RUN_CMD}
 if [[ "${CM_RUN_CMD0}" != "" ]]; then
   eval ${CM_RUN_CMD0}
   exitstatus=$?
-  if [ -e exitstatus ]; then
-    exitstatus=$( cat exitstatus )
-  fi
-  test $exitstatus -eq 0 || $exitstatus
 else
   echo "${CM_RUN_CMD}"
   eval ${CM_RUN_CMD}
   exitstatus=$?
-  if [ -e exitstatus ]; then
-    exitstatus=$( cat exitstatus )
-  fi
-  test $exitstatus -eq 0 || $exitstatus
 fi
 
 eval ${CM_POST_RUN_CMD}

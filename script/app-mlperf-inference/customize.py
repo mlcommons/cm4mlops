@@ -206,7 +206,7 @@ def postprocess(i):
         cm_sut_info['device'] = env['CM_MLPERF_DEVICE']
         cm_sut_info['framework'] = state['CM_SUT_META']['framework']
         cm_sut_info['run_config'] = env['CM_MLPERF_INFERENCE_SUT_RUN_CONFIG']
-        with open(os.path.join(result_sut_folder_path,"cm_sut_info.json"), "w") as fp:
+        with open(os.path.join(result_sut_folder_path,"cm-sut-info.json"), "w") as fp:
             json.dump(cm_sut_info, fp, indent=2)
 
         system_meta = state['CM_SUT_META']
