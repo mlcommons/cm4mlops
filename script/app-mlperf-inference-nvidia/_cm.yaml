@@ -318,12 +318,21 @@ variations:
   # MLPerf inference version
   v4.1:
     group: version
-    default: true
     env:
       CM_MLPERF_INFERENCE_CODE_VERSION: "v4.1"
     adr:
       pytorch:
         tags: _for-nvidia-mlperf-inference-v4.1
+ 
+  v4.1-dev:
+    group: version
+    default: true
+    env:
+      CM_MLPERF_INFERENCE_CODE_VERSION: "v4.0"
+    adr:
+      pytorch:
+        tags: _for-nvidia-mlperf-inference-v4.0
+
   v4.0:
     group: version
     env:
@@ -339,6 +348,7 @@ variations:
     adr:
       pytorch:
         tags: _for-nvidia-mlperf-inference-v3.1
+  
   # Target devices
   cpu:
     group: device
