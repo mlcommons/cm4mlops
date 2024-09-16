@@ -76,7 +76,7 @@
   "uid": "c67e81a4ce2649f5",
   "variations": {
     "cmutil": {
-      "add_deps_recursive": {
+      "add_deps": {
         "download-script": {
           "tags": "_cmutil"
         }
@@ -85,7 +85,7 @@
       "group": "download-tool"
     },
     "curl": {
-      "add_deps_recursive": {
+      "add_deps": {
         "download-script": {
           "tags": "_wget"
         }
@@ -98,7 +98,7 @@
       }
     },
     "rclone": {
-      "add_deps_recursive": {
+      "add_deps": {
         "download-script": {
           "tags": "_rclone"
         }
@@ -106,7 +106,7 @@
       "group": "download-tool"
     },
     "gdown": {
-      "add_deps_recursive": {
+      "add_deps": {
         "download-script": {
           "tags": "_gdown"
         }
@@ -154,7 +154,7 @@
       }
     },
     "wget": {
-      "add_deps_recursive": {
+      "add_deps": {
         "download-script": {
           "tags": "_wget"
         }
