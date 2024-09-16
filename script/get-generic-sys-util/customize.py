@@ -69,4 +69,7 @@ def preprocess(i):
         if env['CM_SYS_UTIL_NAME'] == "numactl" and env['CM_HOST_OS_VERSION'] in [ "9.1", "9.2", "9.3" ]:
             env['CM_SYS_UTIL_INSTALL_CMD'] = ''
 
+    if env.get('CM_SYS_UTIL_CHECK_CMD', '') != '' and env['CM_SYS_UTIL_INSTALL_CMD'] != '':
+            env['CM_SYS_UTIL_INSTALL_CMD'] = f"""{env['CM_SYS_UTIL_CHECK_CMD']} || {env['CM_SYS_UTIL_INSTALL_CMD']}"""
+
     return {'return':0}
