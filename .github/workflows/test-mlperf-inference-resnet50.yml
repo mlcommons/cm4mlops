@@ -27,9 +27,8 @@ jobs:
             implementation: cpp
           - os: macos-latest
             backend: tf
-          - os: macos-latest
-            python-version: "3.9"
           - os: windows-latest
+            implementation: cpp
 
     steps:
     - uses: actions/checkout@v4
