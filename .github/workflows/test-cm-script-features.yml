@@ -13,11 +13,12 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: S{{ matrix.on }}
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.12", "3.11", "3.10", "3.9", "3.8"]
+        on: ["ubuntu-latest", "windows-latest", macos-latest"]
 
     steps:
     - uses: actions/checkout@v3
@@ -32,6 +33,7 @@ jobs:
         cm run script --quiet --tags=get,sys-utils-cm
     - name: Test CM Script Features
       run: |
+        python script/test-cm-core/src/script/test_deps.py
         python script/test-cm-core/src/script/test_install.py
         python script/test-cm-core/src/script/test_docker.py
         python script/test-cm-core/src/script/test_features.py
