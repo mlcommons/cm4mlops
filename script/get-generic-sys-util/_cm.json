@@ -609,6 +609,18 @@
         }
       }
     },
+    "wkhtmltopdf": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "wkhtmltopdf",
+        "CM_SYS_UTIL_CHECK_CMD": "wkhtmltopdf --version"
+      },
+      "state": {
+        "wkhtmltopdf": {
+          "apt": "wkhtmltopdf",
+          "brew": "wkhtmltopdf"
+        }
+      }
+    },
     "xz": {
       "env": {
         "CM_SYS_UTIL_NAME": "xz"
