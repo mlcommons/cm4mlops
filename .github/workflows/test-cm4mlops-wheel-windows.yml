@@ -6,6 +6,9 @@ on:
       - main
       - dev
       - mlperf-inference
+    paths:
+      - '.github/workflows/test-cm4mlops-wheel-windows.yml'
+      - 'setup.py'
 
 jobs:
   build:
