@@ -195,7 +195,7 @@
       "state": {
         "libffi_dev": {
           "apt": "libffi-dev",
-          "brew": "libffi-dev",
+          "brew": "libffi",
           "dnf": "libffi-devel",
           "yum": "libffi-devel"
         }
