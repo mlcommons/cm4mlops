@@ -28,7 +28,6 @@ jobs:
           - os: macos-latest
             backend: tf
           - os: windows-latest
-            implementation: cpp
 
     steps:
     - uses: actions/checkout@v4
