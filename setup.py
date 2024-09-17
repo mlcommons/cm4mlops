@@ -34,7 +34,7 @@ class CustomInstallCommand(install):
         # Call the custom function
         return self.custom_function()
 
-    def is_package_installed(package_name):
+    def is_package_installed(self, package_name):
         try:
             if sys.version_info >= (3, 8):
                 version(package_name)  # Tries to get the version of the package
