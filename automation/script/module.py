@@ -744,8 +744,6 @@ class CAutomation(Automation):
         meta = script_artifact.meta
         path = script_artifact.path
 
-        env['CM_TMP_CURRENT_SCRIPT_PATH'] = path
-
         # Check min CM version requirement
         min_cm_version = meta.get('min_cm_version','').strip()
         if min_cm_version != '':
@@ -1331,6 +1329,9 @@ class CAutomation(Automation):
                         if "add_deps_recursive" in versions_meta:
                             self._merge_dicts_with_tags(add_deps_recursive, versions_meta['add_deps_recursive'])
 
+            r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_PATH', path)
+            if r['return']>0: return r
+            
             # Run chain of docker dependencies if current run cmd is from inside a docker container
             docker_deps = []
             if i.get('docker_run_deps'):
@@ -4359,6 +4360,20 @@ def any_enable_or_skip_script(meta, env):
 
     return False
 
+############################################################################################################
+def _update_env(env, key=None, value=None):
+    if key == None or value == None:
+        return {'return': 1, 'error': 'None value not expected in key and value arguments in _update_env.'}
+    if not isinstance(key, str):
+        return {'return': 1, 'error': 'String value expected inside key argument.'}
+    
+    env[key] = value
+
+    r = update_env_with_values(env)
+    if r['return']>0: return r 
+
+    return {'return': 0}
+    
 ############################################################################################################
 def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
     """
