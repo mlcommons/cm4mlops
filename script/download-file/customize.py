@@ -1,6 +1,6 @@
 from cmind import utils
 import os
-import hashlib
+import subprocess
 
 def preprocess(i):
 
@@ -19,6 +19,9 @@ def preprocess(i):
     xsep = '&&'
 
     q = '"' if os_info['platform'] == 'windows' else "'"
+
+    x='*' if os_info['platform'] == 'windows' else ''
+    x_c='-s' if os_info['platform'] == 'darwin_off' else ''
 
     if env.get('CM_DOWNLOAD_LOCAL_FILE_PATH'):
         filepath = env['CM_DOWNLOAD_LOCAL_FILE_PATH']
@@ -80,39 +83,80 @@ def preprocess(i):
 
         if tool == "cmutil":
             print ('')
+            cmutil_require_download = 0
+            if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '':
+                checksum_cmd = f"cd {q}{filepath}{q} {xsep}  md5sum -c{x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
+                checksum_result = subprocess.run(checksum_cmd, cwd=f'{q}{filepath}{q}', capture_output=True, text=True, shell=True)
+            elif env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
+                checksum_cmd = f"echo {env.get('CM_DOWNLOAD_CHECKSUM')} {x}{q}{env['CM_DOWNLOAD_FILENAME']}{q} | md5sum -c{x_c} -"
+                checksum_result = subprocess.run(checksum_cmd, capture_output=True, text=True, shell=True)
+            if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '' or env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
+                print(checksum_result) #for debugging
+                if "checksum did not match" in checksum_result.stderr.lower():
+                    computed_checksum = subprocess.run(f"md5sum {env['CM_DOWNLOAD_FILENAME']}", capture_output=True, text=True, shell=True).stdout.split(" ")[0]
+                    print(f"WARNING: File already present, mismatch between original checksum({env.get('CM_DOWNLOAD_CHECKSUM')}) and computed checksum({computed_checksum}). Deleting the already present file and downloading new.")
+                    try:
+                        os.remove(env['CM_DOWNLOAD_FILENAME'])
+                        print(f"File {env['CM_DOWNLOAD_FILENAME']} deleted successfully.")
+                    except PermissionError:
+                        return {"return":1, "error":f"Permission denied to delete file {env['CM_DOWNLOAD_FILENAME']}."}
+                    cmutil_require_download = 1
+                elif "no such file" in checksum_result.stderr.lower():
+                    print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
+                    cmutil_require_download = 1
+                else:
+                    print(f"WARNING: File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
+            else:
+                cmutil_require_download = 1
 
-            cm = automation.cmind
-            for i in range(1,5):
-                r = cm.access({'action':'download_file',
-                           'automation':'utils,dc2743f8450541e3',
-                           'url':url,
-                           'verify': verify_ssl})
-                if r['return'] == 0: break
-                oldurl = url
-                url = env.get('CM_DOWNLOAD_URL'+str(i),'')
-                if url == '':
-                    break
-                print(f"Download from {oldurl} failed, trying from {url}")
-
-            if r['return']>0: return r
-
-            env['CM_DOWNLOAD_CMD'] = ""
-            env['CM_DOWNLOAD_FILENAME'] = r['filename']
+            if cmutil_require_download == 1:
+                cm = automation.cmind
+                for i in range(1,5):
+                    r = cm.access({'action':'download_file',
+                            'automation':'utils,dc2743f8450541e3',
+                            'url':url,
+                            'verify': verify_ssl})
+                    if r['return'] == 0: break
+                    oldurl = url
+                    url = env.get('CM_DOWNLOAD_URL'+str(i),'')
+                    if url == '':
+                        break
+                    print(f"Download from {oldurl} failed, trying from {url}")
+                        
+                if r['return']>0: return r
+    
+                env['CM_DOWNLOAD_CMD'] = ""
+                env['CM_DOWNLOAD_FILENAME'] = r['filename']
 
         elif tool == "wget":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
-                extra_download_options +=f" -O {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
+                extra_download_options +=f" --tries=3 -O {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
             env['CM_DOWNLOAD_CMD'] = f"wget -nc {extra_download_options} {url}"
+            for i in range(1,5):
+                url = env.get('CM_DOWNLOAD_URL'+str(i),'')
+                if url == '':
+                    break
+                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && wget -nc {extra_download_options} {url})"
 
         elif tool == "curl":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
                 extra_download_options +=f" --output {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
 
             env['CM_DOWNLOAD_CMD'] = f"curl {extra_download_options} {url}"
+            for i in range(1,5):
+                url = env.get('CM_DOWNLOAD_URL'+str(i),'')
+                if url == '':
+                    break
+                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && curl {extra_download_options} {url})"
 
 
         elif tool == "gdown":
             env['CM_DOWNLOAD_CMD'] = f"gdown {extra_download_options} {url}"
+            for i in range(1,5):
+                url = env.get('CM_DOWNLOAD_URL'+str(i),'')
+                if url == '':
+                    break
+                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && gdown {extra_download_options} {url})"
 
         elif tool == "rclone":
             if env.get('CM_RCLONE_CONFIG_CMD', '') != '':
@@ -127,6 +171,16 @@ def preprocess(i):
                 env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P"
             else:
                 env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
+            for i in range(1,5):
+                url = env.get('CM_DOWNLOAD_URL'+str(i),'')
+                if url == '':
+                    break
+                if env["CM_HOST_OS_TYPE"] == "windows":
+                    url = url.replace("%", "%%")
+                    temp_download_file = env['CM_DOWNLOAD_FILENAME'].replace("%", "%%")
+                    env['CM_DOWNLOAD_CMD'] = f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P)"
+                else:
+                    env['CM_DOWNLOAD_CMD'] = f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
 
         filename = env['CM_DOWNLOAD_FILENAME']
         env['CM_DOWNLOAD_DOWNLOADED_FILENAME'] = filename
@@ -136,13 +190,11 @@ def preprocess(i):
 
     env['CM_DOWNLOAD_DOWNLOADED_PATH'] = filepath
 
-    x='*' if os_info['platform'] == 'windows' else ''
-    x_c=' -s ' if os_info['platform'] == 'darwin_off' else '' #not using this option for now
-    #verify checksum if file already present
+    # verify checksum if file already present
     if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '':
-        env['CM_DOWNLOAD_CHECKSUM_CMD'] = f"cd {q}{filepath}{q} {xsep}  md5sum -c{x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
+        env['CM_DOWNLOAD_CHECKSUM_CMD'] = f"cd {q}{filepath}{q} {xsep}  md5sum -c {x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
     elif env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
-        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum {}-c -".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q, x_c)
+        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum {} -c -".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q, x_c)
     else:
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = ""
 

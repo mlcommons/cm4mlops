@@ -14,11 +14,12 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        on: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.12", "3.9"]
+    runs-on: "${{ matrix.on }}"   
 
     steps:
     - uses: actions/checkout@v3
