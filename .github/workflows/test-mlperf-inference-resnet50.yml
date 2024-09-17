@@ -31,7 +31,6 @@ jobs:
             python-version: "3.9"
           - os: windows-latest
 
-    runs-on: "${{ matrix.os }}"
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
