@@ -2643,7 +2643,7 @@ class CAutomation(Automation):
             if k in ii: del ii[k]
 
         if artifact_repo != None:
-            ii['artifact'] = utils.assemble_cm_object2(artifact_repo) + ':' + utils.assemble_cm_object2(artifact_repo)
+            ii['artifact'] = utils.assemble_cm_object2(artifact_repo) + ':' + utils.assemble_cm_object2(artifact_obj)
 
         r_obj=self.cmind.access(ii)
         if r_obj['return']>0: return r_obj
