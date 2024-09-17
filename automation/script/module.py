@@ -347,19 +347,26 @@ class CAutomation(Automation):
 
         fake_run = i.get('fake_run', False)
         fake_run = i.get('fake_run', False) if 'fake_run' in i else i.get('prepare', False)
-        if fake_run: env['CM_TMP_FAKE_RUN']='yes'
+        if fake_run: 
+            r = _update_env(env, 'CM_TMP_FAKE_RUN', 'yes')
+            if r['return']>0: return r
 
         debug_uid = i.get('debug_uid', '')
         if debug_uid!='':
-            env['CM_TMP_DEBUG_UID'] = debug_uid
+            r = _update_env(env, 'CM_TMP_DEBUG_UID', debug_uid)
+            if r['return']>0: return r
         
         fake_deps = i.get('fake_deps', False)
-        if fake_deps: env['CM_TMP_FAKE_DEPS']='yes'
+        if fake_deps: 
+            r = _update_env(env, 'CM_TMP_FAKE_DEPS', 'yes')
+            if r['return']>0: return r
 
         if str(i.get('skip_sys_utils', '')).lower() in ['true', 'yes']:
-            env['CM_SKIP_SYS_UTILS']='yes' 
+            r = _update_env(env, 'CM_SKIP_SYS_UTILS', 'yes')
+            if r['return']>0: return r
         if str(i.get('skip_sudo', '')).lower() in ['true', 'yes']:
-            env['CM_TMP_SKIP_SUDO']='yes' 
+            r = _update_env(env, 'CM_TMP_SKIP_SUDO', 'yes')
+            if r['return']>0: return r
 
         run_state = i.get('run_state', self.run_state)
         if not run_state.get('version_info', []):
@@ -380,16 +387,18 @@ class CAutomation(Automation):
         if silent:
             if 'verbose' in i: del(i['verbose'])
             if 'v' in i: del(i['v'])
-            env['CM_TMP_SILENT']='yes'
+            r = _update_env(env, 'CM_TMP_SILENT', 'yes')
+            if r['return']>0: return r
             run_state['tmp_silent']=True
         
         if 'verbose' in i: verbose=i['verbose']
         elif 'v' in i: verbose=i['v']
         
         if verbose:
-           env['CM_VERBOSE']='yes'
-           run_state['tmp_verbose']=True
-           logging.getLogger().setLevel(logging.DEBUG)
+            r = _update_env(env, 'CM_VERBOSE', 'yes')
+            if r['return']>0: return r
+            run_state['tmp_verbose']=True
+            logging.getLogger().setLevel(logging.DEBUG)
 
 
         print_deps = i.get('print_deps', False)
@@ -418,15 +427,20 @@ class CAutomation(Automation):
 
         # Detect current path and record in env for further use in native scripts
         current_path = os.path.abspath(os.getcwd())
-        env['CM_TMP_CURRENT_PATH'] = current_path
+        r = _update_env(env, 'CM_TMP_CURRENT_PATH', current_path)
+        if r['return']>0: return r
 
         # Check if quiet mode
         quiet = i.get('quiet', False) if 'quiet' in i else (env.get('CM_QUIET','').lower() == 'yes')
-        if quiet: env['CM_QUIET'] = 'yes'
+        if quiet:
+            r = _update_env(env, 'CM_QUIET', 'yes')
+            if r['return']>0: return r
 
         skip_remembered_selections = i.get('skip_remembered_selections', False) if 'skip_remembered_selections' in i \
             else (env.get('CM_SKIP_REMEMBERED_SELECTIONS','').lower() == 'yes')
-        if skip_remembered_selections: env['CM_SKIP_REMEMBERED_SELECTIONS'] = 'yes'
+        if skip_remembered_selections: 
+            r = _update_env(env, 'CM_SKIP_REMEMBERED_SELECTIONS', 'yes')
+            if r['return']>0: return r
 
         # Prepare debug info
         parsed_script = i.get('parsed_artifact')
@@ -464,13 +478,15 @@ class CAutomation(Automation):
         for key in self.input_flags_converted_to_tmp_env:
             value = i.get(key, '').strip()
             if value != '':
-                env['CM_TMP_' + key.upper()] = value
+                r = _update_env(env, 'CM_TMP_' + key.upper(), value)
+                if r['return']>0: return r
 
         for key in self.input_flags_converted_to_env:
             value = i.get(key, '')
             if type(value)==str: value=value.strip()
             if value != '':
-                env['CM_' + key.upper()] = value
+                r = _update_env(env, 'CM_' + key.upper(), value)
+                if r['return']>0: return r
 
 
         ############################################################################################################
@@ -760,8 +776,11 @@ class CAutomation(Automation):
         if script_artifact.repo_meta.get('prefix', '') != '':
             script_repo_path_with_prefix = os.path.join(script_repo_path, script_artifact.repo_meta['prefix'])
 
-        env['CM_TMP_CURRENT_SCRIPT_REPO_PATH'] = script_repo_path
-        env['CM_TMP_CURRENT_SCRIPT_REPO_PATH_WITH_PREFIX'] = script_repo_path_with_prefix
+        r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_REPO_PATH', script_repo_path)
+        if r['return']>0: return r
+
+        r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_REPO_PATH_WITH_PREFIX', script_repo_path_with_prefix)
+        if r['return']>0: return r
 
         # Check if has --help
         if i.get('help',False):
@@ -972,7 +991,8 @@ class CAutomation(Automation):
                 elif str(state['docker'].get('real_run', True)).lower() in ['false', '0', 'no']:
                     logging.info(recursion_spaces+'  - Doing fake run for script::{} as we are inside docker'.format(found_script_artifact))
                     fake_run = True
-                    env['CM_TMP_FAKE_RUN']='yes'
+                    r = _update_env(env, 'CM_TMP_FAKE_RUN', 'yes')
+                    if r['return']>0: return r
 
 
 
@@ -1263,7 +1283,8 @@ class CAutomation(Automation):
                 found_cached = False
                 remove_tmp_tag = True
 
-                env['CM_RENEW_CACHE_ENTRY']='yes'
+                r = _update_env(env, 'CM_RENEW_CACHE_ENTRY', 'yes')
+                if r['return']>0: return r
 
         # Prepare files to be cleaned
         clean_files = [self.tmp_file_run_state, 
@@ -1317,7 +1338,8 @@ class CAutomation(Automation):
 
                     logging.debug(recursion_spaces+'  - Version is not specified - use either default_version from meta or min/max/usable: {}'.format(version))
 
-                    env['CM_VERSION'] = version
+                    r = _update_env(env, 'CM_VERSION', version)
+                    if r['return']>0: return r
 
                     if 'version-'+version not in cached_tags: cached_tags.append('version-'+version)
 
@@ -1445,7 +1467,8 @@ class CAutomation(Automation):
             elif pip_version_max != '':
                 pip_version_string = '<='+pip_version_max
 
-            env['CM_TMP_PIP_VERSION_STRING'] = pip_version_string
+            r = _update_env(env, 'CM_TMP_PIP_VERSION_STRING', pip_version_string)
+            if r['return']>0: return r
             if pip_version_string != '':
                 logging.debug(recursion_spaces+'    # potential PIP version string (if needed): '+pip_version_string)
 
@@ -4547,9 +4570,12 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
         path = '"' + path + '"'
 
     cur_dir = os.getcwd()
-    
-    env['CM_TMP_CURRENT_SCRIPT_PATH'] = path
-    env['CM_TMP_CURRENT_SCRIPT_WORK_PATH'] = cur_dir
+
+    r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_PATH', path)
+    if r['return']>0: return r
+
+    r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_WORK_PATH', cur_dir)
+    if r['return']>0: return r
 
     # Record state
     if tmp_file_state != '':
