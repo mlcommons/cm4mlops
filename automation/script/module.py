@@ -358,7 +358,7 @@ class CAutomation(Automation):
         if fake_deps: env['CM_TMP_FAKE_DEPS']='yes'
 
         if str(i.get('skip_sys_utils', '')).lower() in ['true', 'yes']:
-           env['CM_SKIP_SYS_UTILS']='yes'
+            env['CM_SKIP_SYS_UTILS']='yes'
         if str(i.get('skip_sudo', '')).lower() in ['true', 'yes']:
             env['CM_TMP_SKIP_SUDO']='yes'
 
