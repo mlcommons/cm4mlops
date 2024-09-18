@@ -387,11 +387,10 @@ class CAutomation(Automation):
         if 'verbose' in i: verbose=i['verbose']
         elif 'v' in i: verbose=i['v']
         
-        
         if verbose:
+            env['CM_VERBOSE']='yes'
+            run_state['tmp_verbose']=True
             logging.getLogger().setLevel(logging.DEBUG)
-            run_state['tmp_verbose'] = True
-            env['CM_VERBOSE'] = 'yes'
 
 
         print_deps = i.get('print_deps', False)
