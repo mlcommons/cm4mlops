@@ -150,7 +150,7 @@
           "env": {
             "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_OPENORCA_PREPROCESSED_ROOT",
             "CM_EXTRACT_FINAL_ENV_NAME": "CM_OPENORCA_PREPROCESSED_ROOT",
-            "CM_EXTRACT_TO_FOLDER": "openorca-preprocessed"
+            "CM_EXTRACT_TO_FOLDER": "openorca-preprocessed",
             "CM_RCLONE_CONFIG_NAME": "mlc-inference"
           },
           "tags": "download-and-extract,_rclone",
