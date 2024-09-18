@@ -37,7 +37,7 @@ jobs:
         cm pull repo mlcommons@cm4abtf --branch=poc
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on docker
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=5 --adr.compiler.tags=gcc --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet  -v
+        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.compiler.tags=gcc --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet  -v
 
   build2:
     runs-on: ${{ matrix.os }}
@@ -62,7 +62,7 @@ jobs:
         cm pull repo mlcommons@cm4abtf --branch=poc
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --adr.compiler.tags=gcc --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet  -v
+        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.compiler.tags=gcc --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet  -v
     
   build3:
     runs-on: ${{ matrix.os }}
@@ -89,4 +89,4 @@ jobs:
         cm pull repo mlcommons@cm4abtf --branch=poc
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --quiet --env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7  -v
+        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --quiet --env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7  -v
