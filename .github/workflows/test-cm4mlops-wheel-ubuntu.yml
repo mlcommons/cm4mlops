@@ -6,6 +6,9 @@ on:
       - main
       - dev
       - mlperf-inference
+    paths:
+      - '.github/workflows/test-cm4mlops-wheel-ubuntu.yml'
+      - 'setup.py'
 
 jobs:
   build:
@@ -13,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, ubuntu-20.04]
-        python-version: ['3.8', '3.11', '3.12']
+        python-version: ['3.7', '3.8', '3.11', '3.12']
         exclude:
         - os: ubuntu-latest
           python-version: "3.8"
