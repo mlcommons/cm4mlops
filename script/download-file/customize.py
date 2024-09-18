@@ -159,7 +159,7 @@ def preprocess(i):
                 env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && gdown {extra_download_options} {url})"
 
         elif tool == "rclone":
-            if env.get('CM_RCLONE_CONFIG_CMD', '') != '':
+            if env.get('CM_RCLONE_CONFIG_CMD', '') != '': #keeping this for backward compatibility. Ideally should be done via get,rclone-config script
                 env['CM_DOWNLOAD_CONFIG_CMD'] = env['CM_RCLONE_CONFIG_CMD']
             rclone_copy_using = env.get('CM_RCLONE_COPY_USING', 'sync')
             if rclone_copy_using == "sync":
@@ -168,19 +168,9 @@ def preprocess(i):
                 # have to modify the variable from url to temp_url if it is going to be used anywhere after this point
                 url = url.replace("%", "%%")
                 temp_download_file = env['CM_DOWNLOAD_FILENAME'].replace("%", "%%")
-                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P"
+                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P --error-on-no-transfer"
             else:
-                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
-            for i in range(1,5):
-                url = env.get('CM_DOWNLOAD_URL'+str(i),'')
-                if url == '':
-                    break
-                if env["CM_HOST_OS_TYPE"] == "windows":
-                    url = url.replace("%", "%%")
-                    temp_download_file = env['CM_DOWNLOAD_FILENAME'].replace("%", "%%")
-                    env['CM_DOWNLOAD_CMD'] = f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P)"
-                else:
-                    env['CM_DOWNLOAD_CMD'] = f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
+                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P --error-on-no-transfer"
 
         filename = env['CM_DOWNLOAD_FILENAME']
         env['CM_DOWNLOAD_DOWNLOADED_FILENAME'] = filename
