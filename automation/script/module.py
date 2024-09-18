@@ -351,15 +351,16 @@ class CAutomation(Automation):
 
         debug_uid = i.get('debug_uid', '')
         if debug_uid!='':
-            env['CM_TMP_DEBUG_UID'] = debug_uid
+            r = _update_env(env, 'CM_TMP_DEBUG_UID', debug_uid)
+            if r['return']>0: return r
         
         fake_deps = i.get('fake_deps', False)
         if fake_deps: env['CM_TMP_FAKE_DEPS']='yes'
 
         if str(i.get('skip_sys_utils', '')).lower() in ['true', 'yes']:
-            env['CM_SKIP_SYS_UTILS']='yes' 
+            env['CM_SKIP_SYS_UTILS']='yes'
         if str(i.get('skip_sudo', '')).lower() in ['true', 'yes']:
-            env['CM_TMP_SKIP_SUDO']='yes' 
+            env['CM_TMP_SKIP_SUDO']='yes'
 
         run_state = i.get('run_state', self.run_state)
         if not run_state.get('version_info', []):
@@ -387,9 +388,9 @@ class CAutomation(Automation):
         elif 'v' in i: verbose=i['v']
         
         if verbose:
-           env['CM_VERBOSE']='yes'
-           run_state['tmp_verbose']=True
-           logging.getLogger().setLevel(logging.DEBUG)
+            env['CM_VERBOSE']='yes'
+            run_state['tmp_verbose']=True
+            logging.getLogger().setLevel(logging.DEBUG)
 
 
         print_deps = i.get('print_deps', False)
@@ -418,7 +419,8 @@ class CAutomation(Automation):
 
         # Detect current path and record in env for further use in native scripts
         current_path = os.path.abspath(os.getcwd())
-        env['CM_TMP_CURRENT_PATH'] = current_path
+        r = _update_env(env, 'CM_TMP_CURRENT_PATH', current_path)
+        if r['return']>0: return r
 
         # Check if quiet mode
         quiet = i.get('quiet', False) if 'quiet' in i else (env.get('CM_QUIET','').lower() == 'yes')
@@ -471,6 +473,9 @@ class CAutomation(Automation):
             if type(value)==str: value=value.strip()
             if value != '':
                 env['CM_' + key.upper()] = value
+
+        r = update_env_with_values(env)
+        if r['return']>0: return r 
 
 
         ############################################################################################################
@@ -1317,7 +1322,8 @@ class CAutomation(Automation):
 
                     logging.debug(recursion_spaces+'  - Version is not specified - use either default_version from meta or min/max/usable: {}'.format(version))
 
-                    env['CM_VERSION'] = version
+                    r = _update_env(env, 'CM_VERSION', version)
+                    if r['return']>0: return r
 
                     if 'version-'+version not in cached_tags: cached_tags.append('version-'+version)
 
@@ -1329,8 +1335,9 @@ class CAutomation(Automation):
                         if "add_deps_recursive" in versions_meta:
                             self._merge_dicts_with_tags(add_deps_recursive, versions_meta['add_deps_recursive'])
 
-            env['CM_TMP_CURRENT_SCRIPT_PATH'] = path
-
+            r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_PATH', path)
+            if r['return']>0: return r
+            
             # Run chain of docker dependencies if current run cmd is from inside a docker container
             docker_deps = []
             if i.get('docker_run_deps'):
@@ -1444,7 +1451,8 @@ class CAutomation(Automation):
             elif pip_version_max != '':
                 pip_version_string = '<='+pip_version_max
 
-            env['CM_TMP_PIP_VERSION_STRING'] = pip_version_string
+            r = _update_env(env, 'CM_TMP_PIP_VERSION_STRING', pip_version_string)
+            if r['return']>0: return r
             if pip_version_string != '':
                 logging.debug(recursion_spaces+'    # potential PIP version string (if needed): '+pip_version_string)
 
@@ -4360,6 +4368,20 @@ def any_enable_or_skip_script(meta, env):
     return False
 
 ############################################################################################################
+def _update_env(env, key=None, value=None):
+    if key == None or value == None:
+        return {'return': 1, 'error': 'None value not expected in key and value arguments in _update_env.'}
+    if not isinstance(key, str):
+        return {'return': 1, 'error': 'String value expected inside key argument.'}
+    
+    env[key] = value
+
+    r = update_env_with_values(env)
+    if r['return']>0: return r 
+
+    return {'return': 0}
+    
+############################################################################################################
 def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
     """
     Update any env key used as part of values in meta
@@ -4532,9 +4554,12 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
         path = '"' + path + '"'
 
     cur_dir = os.getcwd()
-    
-    env['CM_TMP_CURRENT_SCRIPT_PATH'] = path
-    env['CM_TMP_CURRENT_SCRIPT_WORK_PATH'] = cur_dir
+
+    r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_PATH', path)
+    if r['return']>0: return r
+
+    r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_WORK_PATH', cur_dir)
+    if r['return']>0: return r
 
     # Record state
     if tmp_file_state != '':
