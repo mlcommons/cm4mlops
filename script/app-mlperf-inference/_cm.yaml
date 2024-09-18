@@ -665,6 +665,11 @@ variations:
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _sdxl
+    prehook_deps:
+    - enable_if_env:
+        CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+        - 'yes'
+      tags: get,ml-model,sdxl,_fp16,_rclone
     posthook_deps:
     - enable_if_env:
         CM_MLPERF_LOADGEN_MODE:
