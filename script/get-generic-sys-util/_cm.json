@@ -602,7 +602,8 @@
     },
     "wget": {
       "env": {
-        "CM_SYS_UTIL_NAME": "wget"
+        "CM_SYS_UTIL_NAME": "wget",
+        "CM_SYS_UTIL_CHECK_CMD": "wget --version"
       },
       "state": {
         "wget": {
