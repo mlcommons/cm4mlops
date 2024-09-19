@@ -391,13 +391,31 @@ deps:
       - "on"
 
   ## SDXL
-  - tags: get,ml-model,stable-diffusion,text-to-image,sdxl
+  - tags: get,ml-model,stable-diffusion,text-to-image,sdxl_fp16
     names:
     - ml-model
     - sdxl-model
     enable_if_env:
       CM_MODEL:
       - stable-diffusion-xl
+      CM_MLPERF_MODEL_PRECISION: 
+      - float16
+      - bfloat16
+    skip_if_any_env:
+      CM_MLPERF_CUSTOM_MODEL_PATH:
+      - "on"
+      SDXL_CHECKPOINT_PATH:
+      - "on"
+
+  - tags: get,ml-model,stable-diffusion,text-to-image,sdxl_fp32
+    names:
+    - ml-model
+    - sdxl-model
+    enable_if_env:
+      CM_MODEL:
+      - stable-diffusion-xl
+      CM_MLPERF_MODEL_PRECISION: 
+      - float32
     skip_if_any_env:
       CM_MLPERF_CUSTOM_MODEL_PATH:
       - "on"
