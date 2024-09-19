@@ -16,6 +16,10 @@
   "new_env_keys": [
     "+PATH"
   ],
+  "env": {
+    "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED": "no",
+    "CM_SYS_UTIL_VERSION_CMD": ""
+  },
   "tags": [
     "get",
     "sys-util",
@@ -24,6 +28,40 @@
   ],
   "uid": "bb0393afa8404a11",
   "variations": {
+    "detect": {
+      "group": "mode",
+      "default": true,
+      "names": [
+        "detect-sys-util"
+      ],
+      "env": {
+        "CM_GENERIC_SYS_UTIL_RUN_MODE": "detect"
+      },
+      "prehook_deps": [
+        {
+          "tags": "get,generic-sys-util,_install",
+          "inherit_variation_tags": true,
+          "names": [
+            "install-sys-util"
+          ],
+          "skip_inherit_variation_groups": [
+            "mode"
+          ],
+          "enable_if_env": {
+            "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED":
+            [
+              "yes"
+            ]
+          }
+        }
+      ]
+    },
+    "install": {
+      "group": "mode",
+      "env": {
+        "CM_GENERIC_SYS_UTIL_RUN_MODE": "install"
+      }
+    },
     "cmake": {
       "env": {
         "CM_SYS_UTIL_NAME": "cmake"
@@ -603,13 +641,18 @@
     "wget": {
       "env": {
         "CM_SYS_UTIL_NAME": "wget",
-        "CM_SYS_UTIL_CHECK_CMD": "wget --version"
+        "CM_SYS_UTIL_VERSION_CMD": "wget --version",
+        "CM_SYS_UTIL_VERSION_RE": "Wget\\s*([\\d.]+)"
       },
       "state": {
         "wget": {
-          "apt": "wget"
+          "apt": "wget",
+          "brew": "wget"
         }
-      }
+      },
+      "new_env_keys": [
+        "CM_WGET_VERSION"
+      ]
     },
     "wkhtmltopdf": {
       "env": {
