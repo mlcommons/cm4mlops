@@ -17,7 +17,8 @@ def postprocess(i):
 
     env = i['env']
 
-    env['SDXL_CHECKPOINT_PATH'] = env['CM_ML_MODEL_PATH']
-    env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_ML_MODEL_PATH']
+    if env.get('SDXL_CHECKPOINT_PATH', '') == '':
+        env['SDXL_CHECKPOINT_PATH'] = env['CM_ML_MODEL_PATH']
+    env['CM_GET_DEPENDENT_CACHED_PATH'] = env['SDXL_CHECKPOINT_PATH']
 
     return {'return':0}
