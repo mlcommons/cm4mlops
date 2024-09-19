@@ -295,6 +295,11 @@ prehook_deps:
       - sdxl-model
       - ml-model
     tags: get,ml-model,sdxl,_fp16,_rclone
+    skip_if_env:
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
+      CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+      - 'yes'
 
 # Post dependencies to run this app including for power measurement
 post_deps:
