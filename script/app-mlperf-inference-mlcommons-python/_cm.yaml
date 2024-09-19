@@ -398,8 +398,10 @@ deps:
     enable_if_env:
       CM_MODEL:
       - stable-diffusion-xl
-    skip_if_env:
+    skip_if_any_env:
       CM_MLPERF_CUSTOM_MODEL_PATH:
+      - "on"
+      SDXL_CHECKPOINT_PATH:
       - "on"
 
   ## LLAMA2-70B
