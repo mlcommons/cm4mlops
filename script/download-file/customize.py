@@ -136,7 +136,9 @@ def preprocess(i):
 
         elif tool == "wget":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
-                extra_download_options +=f" --tries=3 -O {q}{env['CM_DOWNLOAD_FILENAME']}{q} --no-check-certificate "
+                extra_download_options +=f" --tries=3 -O {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
+                if env.get('CM_ENABLE_NO_CHECK_CERTIFICATE', '') == "yes":
+                    extra_download_options += "--no-check-certificate "
             env['CM_DOWNLOAD_CMD'] = f"wget -nc {extra_download_options} {url}"
             for i in range(1,5):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
