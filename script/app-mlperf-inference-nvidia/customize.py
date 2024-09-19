@@ -80,7 +80,8 @@ def preprocess(i):
           cmds.append(f"mkdir -p {os.path.dirname(fp16_model_path)}")
 
         if not os.path.exists(fp16_model_path):
-            cmds.append(f"ln -sf {env['SDXL_CHECKPOINT_PATH']} {fp16_model_path}")
+            env['CM_REQUIRE_SDXL_MODEL_DOWNLOAD'] = 'yes'
+            cmds.append(f"cp -r {env['SDXL_CHECKPOINT_PATH']}\* {fp16_model_path}")
 
         model_name = "stable-diffusion-xl"
         model_path = fp16_model_path

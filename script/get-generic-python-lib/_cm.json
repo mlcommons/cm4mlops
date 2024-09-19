@@ -886,7 +886,7 @@
     "torch,rocm": {
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "torch",
-        "CM_GENERIC_PYTHON_PIP_INDEX_URL": "https://download.pytorch.org/whl/rocm5.6",
+        "CM_GENERIC_PYTHON_PIP_INDEX_URL": "https://download.pytorch.org/whl/nightly/rocm6.2",
         "CM_GENERIC_PYTHON_PIP_UNINSTALL_DEPS": "torch"
       },
       "new_env_keys": [
@@ -969,7 +969,7 @@
     "torchaudio,rocm": {
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "torchaudio",
-        "CM_GENERIC_PYTHON_PIP_INDEX_URL": "https://download.pytorch.org/whl/rocm5.6",
+        "CM_GENERIC_PYTHON_PIP_INDEX_URL": "https://download.pytorch.org/whl/nightly/rocm6.2",
         "CM_GENERIC_PYTHON_PIP_UNINSTALL_DEPS": "torchaudio"
       },
       "new_env_keys": [
