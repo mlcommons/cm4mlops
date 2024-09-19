@@ -106,7 +106,7 @@ def detect_version(i):
     else:
         r = i['automation'].parse_version({'match_text': version_check_re,
                                        'group_number': 1,
-                                       'env_key': version_key,
+                                       'env_key': version_env_key,
                                        'which_env': env})
         if r['return'] >0: return r
 
