@@ -8,6 +8,26 @@ def preprocess(i):
 
     env = i['env']
     state = i['state']
+    automation = i['automation']
+
+    #Use VERSION_CMD and CHECK_CMD if no CHECK_CMD is set
+    if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and env.get('CM_SYS_UTIL_CHECK_CMD', '') == '':
+        env['CM_SYS_UTIL_CHECK_CMD'] = env['CM_SYS_UTIL_VERSION_CMD']
+
+    if env.get('CM_GENERIC_SYS_UTIL_RUN_MODE', '') == "detect":
+        if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '':
+            r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
+            if r['return'] > 0: #detection failed, do install via prehook_deps
+                env['CM_GENERIC_SYS_UTIL_INSTALL_NEEDED'] = "yes"
+                return {'return': 0}
+            else: #detection is successful, no need to install
+                env['CM_SYS_UTIL_INSTALL_CMD'] = ""
+                return {'return': 0}
+        else: #No detction command available, just install
+            env['CM_GENERIC_SYS_UTIL_INSTALL_NEEDED'] = "yes"
+            return {'return': 0}
+
+    # Only "install" mode reaches here
     pm = env.get('CM_HOST_OS_PACKAGE_MANAGER')
 
     if os_info['platform'] == 'windows':
@@ -73,3 +93,51 @@ def preprocess(i):
             env['CM_SYS_UTIL_INSTALL_CMD'] = f"""{env['CM_SYS_UTIL_CHECK_CMD']} || {env['CM_SYS_UTIL_INSTALL_CMD']}"""
 
     return {'return':0}
+
+
+def detect_version(i):
+    env = i['env']
+    version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
+    version_check_re = env.get('CM_SYS_UTIL_VERSION_RE', '')
+
+    if version_check_re == '' or not os.path.exists("tmp-ver.out"):
+        version = "undetected"
+
+    else:
+        r = i['automation'].parse_version({'match_text': version_check_re,
+                                       'group_number': 1,
+                                       'env_key': version_env_key,
+                                       'which_env': env})
+        if r['return'] >0: return r
+
+        version = r['version']
+
+        print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    return {'return':0, 'version':version}
+
+def postprocess(i):
+    env = i['env']
+
+    version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
+
+    if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" or env.get(version_env_key, '') == '') :
+        automation = i['automation']
+        r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
+        if r['return'] > 0:
+            return r
+
+        r = detect_version(i)
+
+        if r['return'] >0: return r
+
+        version = r['version']
+
+        env[version_env_key] = version
+
+        #Not used now
+        env['CM_GENERIC_SYS_UTIL_'+env['CM_SYS_UTIL_NAME'].upper()+'_CACHE_TAGS'] = 'version-'+version
+
+    if env.get(version_env_key, '') == '':
+        env[version_env_key] = "undetected"
+
+    return {'return':0, 'version': env[version_env_key]}

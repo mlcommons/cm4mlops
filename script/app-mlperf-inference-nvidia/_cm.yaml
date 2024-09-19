@@ -784,7 +784,7 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_MAXN: yes
 
   preprocess-data:
-    alias: preprocess-data
+    alias: preprocess_data
 
   preprocess_data:
     group: run-mode
