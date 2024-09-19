@@ -1375,6 +1375,7 @@ class CAutomation(Automation):
                 r = update_env_with_values(env)
                 if r['return']>0: return r 
 
+
             # Clean some output files
             clean_tmp_files(clean_files, recursion_spaces)
 
@@ -1528,6 +1529,7 @@ class CAutomation(Automation):
             if print_env:
                 import json
                 logging.debug(json.dumps(env, indent=2, sort_keys=True))
+
 
             # Check chain of pre hook dependencies on other CM scripts
             if len(prehook_deps)>0:
@@ -3009,17 +3011,13 @@ class CAutomation(Automation):
 
                 if not run_state['fake_deps']:
                     import copy
-                    tmp_run_state_deps = copy.deepcopy(run_state['deps'])
-                    run_state['deps'] = []
-                    tmp_parent = run_state['parent']
+                    run_state_copy = copy.deepcopy(run_state)
+                    run_state_copy['deps'] = []
 
-                    run_state['parent'] = run_state['script_id']
+                    run_state_copy['parent'] = run_state['script_id']
 
                     if len(run_state['script_variation_tags']) > 0:
-                        run_state['parent'] += " ( " + ',_'.join(run_state['script_variation_tags']) + " )"
-
-                    tmp_script_id = run_state['script_id']
-                    tmp_script_variation_tags = run_state['script_variation_tags']
+                        run_state_copy['parent'] += " ( " + ',_'.join(run_state['script_variation_tags']) + " )"
 
                     # Run collective script via CM API:
                     # Not very efficient but allows logging - can be optimized later
@@ -3039,7 +3037,7 @@ class CAutomation(Automation):
                             'verbose':verbose,
                             'silent':run_state.get('tmp_silent', False),
                             'time':show_time,
-                            'run_state':run_state
+                            'run_state':run_state_copy
 
                         }
 
@@ -3053,15 +3051,12 @@ class CAutomation(Automation):
                     r = self.cmind.access(ii)
                     if r['return']>0: return r
 
-                    run_state['deps'] = tmp_run_state_deps
-                    run_state['parent'] = tmp_parent
-                    run_state['script_id'] = tmp_script_id
-                    run_state['script_variation_tags'] = tmp_script_variation_tags
+                    run_state['version_info'] = run_state_copy.get('version_info')
 
                     # Restore local env
                     env.update(tmp_env)
                     r = update_env_with_values(env)
-                    if r['return']>0: return r 
+                    if r['return']>0: return r
 
         return {'return': 0}
 
