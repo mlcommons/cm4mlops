@@ -81,8 +81,7 @@ def preprocess(i):
 
         if not os.path.exists(fp16_model_path):
             env['CM_REQUIRE_SDXL_MODEL_DOWNLOAD'] = 'yes'
-            if make_command == "generate_engines":
-                cmds.append(f"cp -r {env['SDXL_CHECKPOINT_PATH']}\* {fp16_model_path}")
+            cmds.append(f"cp -r {env['SDXL_CHECKPOINT_PATH']}\* {fp16_model_path}")
 
         model_name = "stable-diffusion-xl"
         model_path = fp16_model_path
