@@ -97,8 +97,9 @@ def preprocess(i):
 
 def detect_version(i):
     env = i['env']
-    version_key = f"""CM_GENERIC_SYS_UTIL_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"""
+    version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
     version_check_re = env.get('CM_SYS_UTIL_VERSION_RE', '')
+
     if version_check_re == '' or not os.path.exists("tmp-ver.out"):
         version = "undetected"
 
@@ -135,5 +136,8 @@ def postprocess(i):
 
         #Not used now
         env['CM_GENERIC_SYS_UTIL_'+env['CM_SYS_UTIL_NAME'].upper()+'_CACHE_TAGS'] = 'version-'+version
+
+    if env.get(version_env_key, '') == '':
+        env[version_env_key] = "undetected"
 
     return {'return':0, 'version': env[version_env_key]}
