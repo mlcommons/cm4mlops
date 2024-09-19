@@ -403,6 +403,11 @@ deps:
       - "on"
       SDXL_CHECKPOINT_PATH:
       - "on"
+    skip_if_env:
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
+      CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+      - 'yes'
 
   ## LLAMA2-70B
   - tags: get,ml-model,llama2
