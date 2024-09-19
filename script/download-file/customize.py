@@ -166,7 +166,7 @@ def preprocess(i):
                 env['CM_DOWNLOAD_CMD'] += f" || (({del_cmd} {env['CM_DOWNLOAD_FILENAME']} || true) && gdown {extra_download_options} {url})"
 
         elif tool == "rclone":
-            if env.get('CM_RCLONE_CONFIG_CMD', '') != '':
+            if env.get('CM_RCLONE_CONFIG_CMD', '') != '': #keeping this for backward compatibility. Ideally should be done via get,rclone-config script
                 env['CM_DOWNLOAD_CONFIG_CMD'] = env['CM_RCLONE_CONFIG_CMD']
             rclone_copy_using = env.get('CM_RCLONE_COPY_USING', 'sync')
             if rclone_copy_using == "sync":
