@@ -41,5 +41,8 @@
         "CM_DOWNLOAD_CHECKSUM":"64800d5d8528ce344256daf115d4965e"
       }
     }
+  },
+  "print_env_at_the_end" : {
+    "CM_DATASET_SQUAD_VOCAB_PATH": "Path to SQUAD vocab file"
   }
 }
