@@ -16,6 +16,10 @@
   "new_env_keys": [
     "+PATH"
   ],
+  "env": {
+    "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED": "no",
+    "CM_SYS_UTIL_VERSION_CMD": ""
+  },
   "tags": [
     "get",
     "sys-util",
@@ -24,6 +28,40 @@
   ],
   "uid": "bb0393afa8404a11",
   "variations": {
+    "detect": {
+      "group": "mode",
+      "default": true,
+      "names": [
+        "detect-sys-util"
+      ],
+      "env": {
+        "CM_GENERIC_SYS_UTIL_RUN_MODE": "detect"
+      },
+      "prehook_deps": [
+        {
+          "tags": "get,generic-sys-util,_install",
+          "inherit_variation_tags": true,
+          "names": [
+            "install-sys-util"
+          ],
+          "skip_inherit_variation_groups": [
+            "mode"
+          ],
+          "enable_if_env": {
+            "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED":
+            [
+              "yes"
+            ]
+          }
+        }
+      ]
+    },
+    "install": {
+      "group": "mode",
+      "env": {
+        "CM_GENERIC_SYS_UTIL_RUN_MODE": "install"
+      }
+    },
     "cmake": {
       "env": {
         "CM_SYS_UTIL_NAME": "cmake"
@@ -50,6 +88,17 @@
         }
       }
     },
+    "g++-11": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "g++11"
+      },
+      "state": {
+        "g++11": {
+          "apt": "g++-11",
+          "dnf": "gcc-toolset-11-gcc-c++"
+        }
+      }
+    },
     "g++-12": {
       "env": {
         "CM_SYS_UTIL_NAME": "g++12"
@@ -58,6 +107,37 @@
         "g++12": {
           "apt": "g++-12",
           "dnf": "gcc-toolset-12-gcc-c++"
+        }
+      }
+    },
+    "g++-9": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "g++9"
+      },
+      "state": {
+        "g++9": {
+          "apt": "g++-9",
+          "dnf": "gcc-toolset-9-gcc-c++"
+        }
+      }
+    },
+    "gcc-11": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "gcc11"
+      },
+      "state": {
+        "gcc11": {
+          "apt": "gcc-11"
+        }
+      }
+    },
+    "gcc-9": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "gcc9"
+      },
+      "state": {
+        "gcc9": {
+          "apt": "gcc-9"
         }
       }
     },
@@ -120,6 +200,7 @@
       "state": {
         "libbz2_dev": {
           "apt": "libbz2-dev",
+          "brew": "bzip2",
           "dnf": "libbzip2-devel",
           "yum": "libbzip2-devel",
           "zlib-devel": "libbz2-devel"
@@ -136,6 +217,16 @@
         }
       }
     },
+    "libffi": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libffi"
+      },
+      "state": {
+        "libffi7": {
+          "apt": "libffi"
+        }
+      }
+    },
     "libffi-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libffi_dev"
@@ -143,7 +234,7 @@
       "state": {
         "libffi_dev": {
           "apt": "libffi-dev",
-          "brew": "libffi-dev",
+          "brew": "libffi",
           "dnf": "libffi-devel",
           "yum": "libffi-devel"
         }
@@ -156,6 +247,16 @@
       "state": {
         "libffi7": {
           "apt": "libffi7"
+        }
+      }
+    },
+    "libffi8": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "libffi8"
+      },
+      "state": {
+        "libffi8": {
+          "apt": "libffi8"
         }
       }
     },
@@ -312,7 +413,7 @@
       "state": {
         "libssl_dev": {
           "apt": "libssl-dev",
-          "brew": "libssl-dev",
+          "brew": "openssl",
           "dnf": "libssl-devel",
           "yum": "libssl-devel"
         }
@@ -539,11 +640,29 @@
     },
     "wget": {
       "env": {
-        "CM_SYS_UTIL_NAME": "wget"
+        "CM_SYS_UTIL_NAME": "wget",
+        "CM_SYS_UTIL_VERSION_CMD": "wget --version",
+        "CM_SYS_UTIL_VERSION_RE": "Wget\\s*([\\d.]+)"
       },
       "state": {
         "wget": {
-          "apt": "wget"
+          "apt": "wget",
+          "brew": "wget"
+        }
+      },
+      "new_env_keys": [
+        "CM_WGET_VERSION"
+      ]
+    },
+    "wkhtmltopdf": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "wkhtmltopdf",
+        "CM_SYS_UTIL_CHECK_CMD": "wkhtmltopdf --version"
+      },
+      "state": {
+        "wkhtmltopdf": {
+          "apt": "wkhtmltopdf",
+          "brew": "wkhtmltopdf"
         }
       }
     },

@@ -213,17 +213,6 @@ deps:
       - bert-vocab
     tags: get,squad-vocab
 
-    ########################################################################
-  # Install sdxl model
-  - enable_if_env:
-      CM_MODEL:
-      - stable-diffusion-xl
-    names:
-      - stable-diffusion-xl
-      - sdxl-model
-      - ml-model
-    tags: get,ml-model,sdxl,_fp16,_rclone
-
   ########################################################################
   # Install OpenImages
 
@@ -294,6 +283,23 @@ prehook_deps:
     names:
       - gptj-model
     tags: get,ml-model,gptj,_pytorch,_rclone
+  
+  # Download model for sdxl
+  - enable_if_env:
+      CM_MODEL:
+      - stable-diffusion-xl
+      CM_REQUIRE_SDXL_MODEL_DOWNLOAD:
+      - 'yes'
+    names:
+      - stable-diffusion-xl
+      - sdxl-model
+      - ml-model
+    tags: get,ml-model,sdxl,_fp16,_rclone
+    skip_if_env:
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
+      CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+      - 'yes'
 
 # Post dependencies to run this app including for power measurement
 post_deps:
@@ -316,9 +322,25 @@ post_deps:
 # Variations to customize dependencies
 variations:
   # MLPerf inference version
-  v4.0:
+  v4.1:
+    group: version
+    env:
+      CM_MLPERF_INFERENCE_CODE_VERSION: "v4.1"
+    adr:
+      pytorch:
+        tags: _for-nvidia-mlperf-inference-v4.1
+ 
+  v4.1-dev:
     group: version
     default: true
+    env:
+      CM_MLPERF_INFERENCE_CODE_VERSION: "v4.0"
+    adr:
+      pytorch:
+        tags: _for-nvidia-mlperf-inference-v4.0
+
+  v4.0:
+    group: version
     env:
       CM_MLPERF_INFERENCE_CODE_VERSION: "v4.0"
       CM_MLPERF_GPTJ_MODEL_FP8_PATH_SUFFIX: GPTJ-FP8-quantized
@@ -332,6 +354,7 @@ variations:
     adr:
       pytorch:
         tags: _for-nvidia-mlperf-inference-v3.1
+  
   # Target devices
   cpu:
     group: device
@@ -454,6 +477,14 @@ variations:
         names:
           - scipy
         version: 1.10.1
+
+  sdxl,v4.1:
+    deps:
+    - tags: get,generic-python-lib,_package.torchrec
+      version: 0.4.0
+    - tags: get,generic-python-lib,_package.torchmetrics
+      version: 1.0.3
+    - tags: get,generic-python-lib,_package.typeguard
 
   bert_:
     deps:
@@ -758,7 +789,7 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_MAXN: yes
 
   preprocess-data:
-    alias: preprocess-data
+    alias: preprocess_data
 
   preprocess_data:
     group: run-mode

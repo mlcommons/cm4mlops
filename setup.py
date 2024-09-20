@@ -8,6 +8,21 @@ import importlib.util
 import platform
 import os
 
+# Try to use importlib.metadata for Python 3.8+ 
+try:
+    if sys.version_info >= (3, 8):
+        from importlib.metadata import version, PackageNotFoundError
+    else:
+        # Fallback to pkg_resources for Python < 3.8
+        import pkg_resources
+        PackageNotFoundError = pkg_resources.DistributionNotFound
+except ImportError:
+    # If importlib.metadata is unavailable, fall back to pkg_resources
+    import pkg_resources
+    PackageNotFoundError = pkg_resources.DistributionNotFound
+
+
+
 class CustomInstallCommand(install):
     def run(self):
         self.get_sys_platform()
@@ -18,6 +33,16 @@ class CustomInstallCommand(install):
 
         # Call the custom function
         return self.custom_function()
+
+    def is_package_installed(self, package_name):
+        try:
+            if sys.version_info >= (3, 8):
+                version(package_name)  # Tries to get the version of the package
+            else:
+                pkg_resources.get_distribution(package_name)  # Fallback for < 3.8
+            return True
+        except PackageNotFoundError:
+            return False
 
     def install_system_packages(self):
         # List of packages to install via system package manager
@@ -37,11 +62,8 @@ class CustomInstallCommand(install):
 
         if name in sys.modules:
             pass #nothing needed
-        elif (spec := importlib.util.find_spec(name)) is not None:
-            module = importlib.util.module_from_spec(spec)
-            sys.modules[name] = module
-            spec.loader.exec_module(module)
-            #print(f"{name} has been imported")
+        elif self.is_package_installed(name):
+            pass
         else:
             packages.append("python3-venv")
         

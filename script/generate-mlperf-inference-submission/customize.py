@@ -144,12 +144,12 @@ def generate_submission(i):
 
         # check whether the root folder contains the sut infos
         # if yes then there is no need to check for meta files inside individual model folders
-        if "cm_sut_info.json" in os.listdir(result_path):
-            sut_info = fill_from_json(os.path.join(result_path, "cm_sut_info.json"), sut_info.keys(), sut_info)
+        if "cm-sut-info.json" in os.listdir(result_path):
+            sut_info = fill_from_json(os.path.join(result_path, "cm-sut-info.json"), sut_info.keys(), sut_info)
             if sut_info == -1:
-                return {'return':1, 'error':f"key value mismatch. Refer the populating dictionary:\n{sut_info}\n and file {os.path.join(result_path, 'cm_sut_info.json')}"}
+                return {'return':1, 'error':f"key value mismatch. Refer the populating dictionary:\n{sut_info}\n and file {os.path.join(result_path, 'cm-sut-info.json')}"}
             if check_dict_filled(sut_info.keys(), sut_info):
-                print(f"sut info completely filled from {os.path.join(result_path, 'cm_sut_info.json')}!")
+                print(f"sut info completely filled from {os.path.join(result_path, 'cm-sut-info.json')}!")
 
         # Check whether the root folder contains the model mapping file
         # expects json file in the format:
@@ -216,7 +216,7 @@ def generate_submission(i):
                 system_meta_default['framework'] = framework + " " + framework_version
             else:
                 print(parts)
-                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.system_name\n2.implementation\n3.framework\n4.run_config\nInclude a cm_sut_info.json file with the above content in {result_path}"}
+                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.system_name\n2.implementation\n3.framework\n4.run_config\nInclude a cm-sut-info.json file with the above content in {result_path}"}
             
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
@@ -276,6 +276,12 @@ def generate_submission(i):
 
                 modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
                 power_run = False
+
+                #we check for the existance of mlperf_log_summary.txt mlperf_log_detail.txt to consider a result folder as valid. Rest of the checks are done later by the submission checker
+                files_to_check = [ "mlperf_log_summary.txt", "mlperf_log_detail.txt" ]
+                if not all([os.path.exists(os.path.join(result_scenario_path, "performance", "run_1", f)) for f in files_to_check]):
+                    continue
+
                 for mode in modes:
                     result_mode_path = os.path.join(result_scenario_path, mode)
                     submission_mode_path = os.path.join(submission_scenario_path, mode)
@@ -346,6 +352,12 @@ def generate_submission(i):
                     if os.path.exists(user_conf_path):
                         shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
                     measurements_json_path = os.path.join(result_mode_path, "measurements.json")
+                    # get model precision
+                    model_precision = "fp32"
+                    if os.path.exists(measurements_json_path):
+                        with open(measurements_json_path, "r") as f:
+                            measurements_json = json.load(f)
+                            model_precision = measurements_json.get("weight_data_types", "fp32")
                     if os.path.exists(user_conf_path):
                         shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, sub_res+'.json'))
                     files = []
@@ -400,7 +412,7 @@ def generate_submission(i):
                         f.write("TBD") #create an empty README
                 else:
                     readme_suffix = ""
-                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file)
+                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision)
 
                     for key in result:
                         results[model][scenario][key] = result[key]

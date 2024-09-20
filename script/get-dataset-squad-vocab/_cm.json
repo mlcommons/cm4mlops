@@ -11,6 +11,7 @@
   "tags": [
     "get",
     "aux",
+    "squad",
     "dataset-aux",
     "language-processing",
     "squad-aux",
@@ -18,13 +19,31 @@
     "squad-vocab"
   ],
   "uid": "e38874fff5094577",
+  "prehook_deps": [
+    {
+      "tags": "download-and-extract,_wget",
+      "env": {
+        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_DATASET_SQUAD_VOCAB_PATH"
+      },
+      "update_tags_from_env_with_prefix": {
+        "_url.": [ "CM_PACKAGE_URL" ]
+      },
+      "force_cache": true,
+      "extra_cache_tags": "bert,get,dataset-squad-vocab"
+    }
+  ],
   "variations": {
     "from.zenodo": {
       "group": "download-source",
       "default": true,
       "env": {
-        "CM_WGET_URL": "https://zenodo.org/record/3733868/files/vocab.txt"
+        "CM_DOWNLOAD_FILENAME": "vocab.txt",
+        "CM_PACKAGE_URL": "https://zenodo.org/record/3733868/files/vocab.txt",
+        "CM_DOWNLOAD_CHECKSUM":"64800d5d8528ce344256daf115d4965e"
       }
     }
+  },
+  "print_env_at_the_end" : {
+    "CM_DATASET_SQUAD_VOCAB_PATH": "Path to SQUAD vocab file"
   }
 }
