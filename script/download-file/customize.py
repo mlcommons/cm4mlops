@@ -23,6 +23,12 @@ def preprocess(i):
     x='*' if os_info['platform'] == 'windows' else ''
     x_c='-s' if os_info['platform'] == 'darwin_off' else ''
 
+    # command for deleting file in windows and linux is different
+    if os_info['platform'] == 'windows':
+        del_cmd = "del /f"
+    else:
+        del_cmd = "rm -f"
+
     if env.get('CM_DOWNLOAD_LOCAL_FILE_PATH'):
         filepath = env['CM_DOWNLOAD_LOCAL_FILE_PATH']
 
@@ -54,10 +60,8 @@ def preprocess(i):
         extra_download_options = env.get('CM_DOWNLOAD_EXTRA_OPTIONS', '')
 
         verify_ssl = env.get('CM_VERIFY_SSL', "True")
-        if str(verify_ssl).lower() in [ "no", "false" ]:
+        if str(verify_ssl).lower() in [ "no", "false" ] or os_info['platform'] == 'windows':
             verify_ssl = False
-            if tool == 'wget' or tool == "gdown":
-                extra_download_options += " --no-check-certificate"
         else:
             verify_ssl = True
 
@@ -91,7 +95,7 @@ def preprocess(i):
                 checksum_cmd = f"echo {env.get('CM_DOWNLOAD_CHECKSUM')} {x}{q}{env['CM_DOWNLOAD_FILENAME']}{q} | md5sum -c{x_c} -"
                 checksum_result = subprocess.run(checksum_cmd, capture_output=True, text=True, shell=True)
             if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '' or env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
-                print(checksum_result) #for debugging
+                #print(checksum_result) #for debugging
                 if "checksum did not match" in checksum_result.stderr.lower():
                     computed_checksum = subprocess.run(f"md5sum {env['CM_DOWNLOAD_FILENAME']}", capture_output=True, text=True, shell=True).stdout.split(" ")[0]
                     print(f"WARNING: File already present, mismatch between original checksum({env.get('CM_DOWNLOAD_CHECKSUM')}) and computed checksum({computed_checksum}). Deleting the already present file and downloading new.")
@@ -102,10 +106,10 @@ def preprocess(i):
                         return {"return":1, "error":f"Permission denied to delete file {env['CM_DOWNLOAD_FILENAME']}."}
                     cmutil_require_download = 1
                 elif "no such file" in checksum_result.stderr.lower():
-                    print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
+                    #print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
                     cmutil_require_download = 1
                 else:
-                    print(f"WARNING: File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
+                    print(f"File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
             else:
                 cmutil_require_download = 1
 
@@ -131,12 +135,15 @@ def preprocess(i):
         elif tool == "wget":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
                 extra_download_options +=f" --tries=3 -O {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
+                if not verify_ssl:
+                    extra_download_options += "--no-check-certificate "
             env['CM_DOWNLOAD_CMD'] = f"wget -nc {extra_download_options} {url}"
             for i in range(1,5):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
                 if url == '':
                     break
-                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && wget -nc {extra_download_options} {url})"
+                env['CM_DOWNLOAD_CMD'] += f" || (({del_cmd} {env['CM_DOWNLOAD_FILENAME']} || true) && wget -nc {extra_download_options} {url})"
+            print(env['CM_DOWNLOAD_CMD'])
 
         elif tool == "curl":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
@@ -147,19 +154,21 @@ def preprocess(i):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
                 if url == '':
                     break
-                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && curl {extra_download_options} {url})"
+                env['CM_DOWNLOAD_CMD'] += f" || (({del_cmd} {env['CM_DOWNLOAD_FILENAME']} || true) && curl {extra_download_options} {url})"
 
 
         elif tool == "gdown":
+            if not verify_ssl:
+                extra_download_options += "--no-check-certificate "
             env['CM_DOWNLOAD_CMD'] = f"gdown {extra_download_options} {url}"
             for i in range(1,5):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
                 if url == '':
                     break
-                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && gdown {extra_download_options} {url})"
+                env['CM_DOWNLOAD_CMD'] += f" || (({del_cmd} {env['CM_DOWNLOAD_FILENAME']} || true) && gdown {extra_download_options} {url})"
 
         elif tool == "rclone":
-            if env.get('CM_RCLONE_CONFIG_CMD', '') != '':
+            if env.get('CM_RCLONE_CONFIG_CMD', '') != '': #keeping this for backward compatibility. Ideally should be done via get,rclone-config script
                 env['CM_DOWNLOAD_CONFIG_CMD'] = env['CM_RCLONE_CONFIG_CMD']
             rclone_copy_using = env.get('CM_RCLONE_COPY_USING', 'sync')
             if rclone_copy_using == "sync":
@@ -168,19 +177,9 @@ def preprocess(i):
                 # have to modify the variable from url to temp_url if it is going to be used anywhere after this point
                 url = url.replace("%", "%%")
                 temp_download_file = env['CM_DOWNLOAD_FILENAME'].replace("%", "%%")
-                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P"
+                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P --error-on-no-transfer"
             else:
-                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
-            for i in range(1,5):
-                url = env.get('CM_DOWNLOAD_URL'+str(i),'')
-                if url == '':
-                    break
-                if env["CM_HOST_OS_TYPE"] == "windows":
-                    url = url.replace("%", "%%")
-                    temp_download_file = env['CM_DOWNLOAD_FILENAME'].replace("%", "%%")
-                    env['CM_DOWNLOAD_CMD'] = f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), temp_download_file)}{q} -P)"
-                else:
-                    env['CM_DOWNLOAD_CMD'] = f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P"
+                env['CM_DOWNLOAD_CMD'] = f"rclone {rclone_copy_using} {q}{url}{q} {q}{os.path.join(os.getcwd(), env['CM_DOWNLOAD_FILENAME'])}{q} -P --error-on-no-transfer"
 
         filename = env['CM_DOWNLOAD_FILENAME']
         env['CM_DOWNLOAD_DOWNLOADED_FILENAME'] = filename
@@ -202,6 +201,7 @@ def preprocess(i):
         env['CM_PRE_DOWNLOAD_CMD'] = ''
 
     if os_info['platform'] == 'windows':
+        env['CM_DOWNLOAD_CMD'] =  env['CM_DOWNLOAD_CMD'].replace('&', '^&').replace('|', '^|').replace('(', '^(').replace(')', '^)')
         if pre_clean:
             env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "del /Q %CM_DOWNLOAD_FILENAME%"
         # Check that if empty CMD, should add ""
