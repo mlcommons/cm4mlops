@@ -36,7 +36,7 @@ jobs:
       run: |
         brew install --cask docker
         brew install docker colima
-        brew services start colima
+        colima start
     - name: Test CM Script Features
       run: |
         python script/test-cm-core/src/script/test_deps.py
