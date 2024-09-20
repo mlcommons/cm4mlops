@@ -45,7 +45,9 @@
         "CM_TMP_ML_MODEL_RETINANET_NO_NMS": [
           "yes"
         ]
-      }
+      },
+      "force_cache": true,
+      "extra_cache_tags": "get,ml-model,model-retinanet"
     }
   ],
   "variations": {
