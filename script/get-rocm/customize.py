@@ -8,6 +8,7 @@ def preprocess(i):
     env = i['env']
 
     recursion_spaces = i['recursion_spaces']
+    return {'return':0}
 
     file_name = 'rocminfo.exe' if os_info['platform'] == 'windows' else 'rocminfo'
     env['FILE_NAME'] = file_name
@@ -44,6 +45,7 @@ def detect_version(i):
     return {'return':0, 'version':version}
 
 def postprocess(i):
+    return {'return':0}
     env = i['env']
 
     r = detect_version(i)
