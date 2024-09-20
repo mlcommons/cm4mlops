@@ -1,1 +1,0 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-models/get-bert-squad-vocab](https://docs.mlcommons.org/cm4mlops/scripts/AI-ML-models/get-bert-squad-vocab) for the documentation of this CM script.

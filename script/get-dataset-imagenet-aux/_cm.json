@@ -59,6 +59,11 @@
         "CM_PACKAGE_URL1": "http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz",
         "CM_DOWNLOAD_CHECKSUM_": "ee346d67141e476df9c1a3f813552503"
       }
+    },
+    "skip_ssl_verification": {
+      "env":{
+        "CM_VERIFY_SSL": "False"
+      }
     }
   }
 }

@@ -282,7 +282,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
     elif "stable-diffusion-xl" in env['CM_MODEL']:
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image")
         backend = env['CM_MLPERF_BACKEND']
-        device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] != "gpu" else "cuda"
+        device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] not in [ "gpu", "rocm" ] else "cuda"
         max_batchsize = env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1')
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " main.py " \
                 " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + \
