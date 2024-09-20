@@ -13,7 +13,7 @@ on:
 jobs:
   build:
 
-    runs-on: S{{ matrix.on }}
+    runs-on: ${{ matrix.on }}
     strategy:
       fail-fast: false
       matrix:
@@ -31,6 +31,10 @@ jobs:
         python -m pip install cmind
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
         cm run script --quiet --tags=get,sys-utils-cm
+    - name: Setup docker on macos
+      if: runner.os =='macos'
+      run: |
+        brew install docker
     - name: Test CM Script Features
       run: |
         python script/test-cm-core/src/script/test_deps.py
