@@ -23,7 +23,8 @@
       "group": "download-source",
       "default": true,
       "env": {
-        "CM_WGET_URL": "https://zenodo.org/record/3733868/files/vocab.txt"
+        "CM_WGET_URL": "https://zenodo.org/record/3733868/files/vocab.txt",
+        "CM_DOWNLOAD_CHECKSUM":"64800d5d8528ce344256daf115d4965e"
       }
     }
   }
