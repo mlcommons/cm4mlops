@@ -80,7 +80,8 @@ def preprocess(i):
           cmds.append(f"mkdir -p {os.path.dirname(fp16_model_path)}")
 
         if not os.path.exists(fp16_model_path):
-            cmds.append(f"ln -sf {env['SDXL_CHECKPOINT_PATH']} {fp16_model_path}")
+            env['CM_REQUIRE_SDXL_MODEL_DOWNLOAD'] = 'yes'
+            cmds.append(f"cp -r {env['SDXL_CHECKPOINT_PATH']}\* {fp16_model_path}")
 
         model_name = "stable-diffusion-xl"
         model_path = fp16_model_path
@@ -91,7 +92,10 @@ def preprocess(i):
         if not os.path.exists(target_data_path_base_dir):
             cmds.append(f"mkdir -p {target_data_path_base_dir}")
  
-        if not os.path.exists(target_data_path):
+        inference_cases_json_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'KiTS19', 'inference_cases.json')
+        calibration_cases_json_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'KiTS19', 'calibration_cases.json')
+
+        if not os.path.exists(target_data_path) or not os.path.exists(inference_cases_json_path) or not os.path.exists(calibration_cases_json_path):
             #cmds.append(f"ln -sf {env['CM_DATASET_PATH']} {target_data_path}")
             cmds.append("make download_data BENCHMARKS='3d-unet'")
 
