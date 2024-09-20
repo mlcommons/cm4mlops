@@ -295,6 +295,8 @@ variations:
     add_deps_recursive:
       submission-checker:
         tags: _short-run
+      coco2014-preprocessed:
+        tags: _size.50
     default: 'true'
     env:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: short
