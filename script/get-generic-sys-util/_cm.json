@@ -413,7 +413,7 @@
       "state": {
         "libssl_dev": {
           "apt": "libssl-dev",
-          "brew": "libssl-dev",
+          "brew": "openssl",
           "dnf": "libssl-devel",
           "yum": "libssl-devel"
         }
