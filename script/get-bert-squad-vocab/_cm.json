@@ -5,8 +5,10 @@
   "cache": true,
   "category": "AI/ML models",
   "env": {
+    "CM_DOWNLOAD_FILENAME": "vocab.txt",
     "CM_ML_MODEL_VOCAB_TXT": "vocab.txt",
-    "CM_BERT_VOCAB_FILE_URL": "https://zenodo.org/record/3733868/files/vocab.txt"
+    "CM_BERT_VOCAB_FILE_URL": "https://zenodo.org/record/3733868/files/vocab.txt",
+    "CM_DOWNLOAD_CHECKSUM":"64800d5d8528ce344256daf115d4965e"
   },
   "new_env_keys": [
     "CM_ML_MODEL_BERT_VOCAB_FILE_WITH_PATH"
@@ -27,7 +29,9 @@
       },
       "update_tags_from_env_with_prefix": {
         "_url.": [ "CM_BERT_VOCAB_FILE_URL" ]
-      }
+      },
+      "force_cache": true,
+      "extra_cache_tags": "bert,get,dataset-squad,vocab,bert-large"
     }
   ],
   "uid": "2f99a545ce734157",
