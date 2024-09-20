@@ -663,7 +663,7 @@ variations:
       CM_MODEL: stable-diffusion-xl
       CM_MLPERF_INFERENCE_TEST_QPS: "0.05"
     default_variations:
-      precision: float16
+      precision: float32
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _sdxl
