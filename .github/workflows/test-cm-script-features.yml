@@ -35,6 +35,7 @@ jobs:
       if: runner.os =='macos'
       run: |
         brew install --cask docker
+        echo "$HOME/.docker/bin" >> $GITHUB_PATH
     - name: Test CM Script Features
       run: |
         python script/test-cm-core/src/script/test_deps.py
