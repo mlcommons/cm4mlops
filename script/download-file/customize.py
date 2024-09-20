@@ -23,6 +23,12 @@ def preprocess(i):
     x='*' if os_info['platform'] == 'windows' else ''
     x_c='-s' if os_info['platform'] == 'darwin_off' else ''
 
+    # command for deleting file in windows and linux is different
+    if os_info['platform'] == 'windows':
+        del_cmd = "del /f"
+    else:
+        del_cmd = "rm -f"
+
     if env.get('CM_DOWNLOAD_LOCAL_FILE_PATH'):
         filepath = env['CM_DOWNLOAD_LOCAL_FILE_PATH']
 
@@ -54,10 +60,8 @@ def preprocess(i):
         extra_download_options = env.get('CM_DOWNLOAD_EXTRA_OPTIONS', '')
 
         verify_ssl = env.get('CM_VERIFY_SSL', "True")
-        if str(verify_ssl).lower() in [ "no", "false" ]:
+        if str(verify_ssl).lower() in [ "no", "false" ] or os_info['platform'] == 'windows':
             verify_ssl = False
-            if tool == 'wget' or tool == "gdown":
-                extra_download_options += " --no-check-certificate"
         else:
             verify_ssl = True
 
@@ -131,12 +135,15 @@ def preprocess(i):
         elif tool == "wget":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
                 extra_download_options +=f" --tries=3 -O {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
+                if not verify_ssl:
+                    extra_download_options += "--no-check-certificate "
             env['CM_DOWNLOAD_CMD'] = f"wget -nc {extra_download_options} {url}"
             for i in range(1,5):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
                 if url == '':
                     break
-                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && wget -nc {extra_download_options} {url})"
+                env['CM_DOWNLOAD_CMD'] += f" || (({del_cmd} {env['CM_DOWNLOAD_FILENAME']} || true) && wget -nc {extra_download_options} {url})"
+            print(env['CM_DOWNLOAD_CMD'])
 
         elif tool == "curl":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
@@ -147,16 +154,18 @@ def preprocess(i):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
                 if url == '':
                     break
-                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && curl {extra_download_options} {url})"
+                env['CM_DOWNLOAD_CMD'] += f" || (({del_cmd} {env['CM_DOWNLOAD_FILENAME']} || true) && curl {extra_download_options} {url})"
 
 
         elif tool == "gdown":
+            if not verify_ssl:
+                extra_download_options += "--no-check-certificate "
             env['CM_DOWNLOAD_CMD'] = f"gdown {extra_download_options} {url}"
             for i in range(1,5):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
                 if url == '':
                     break
-                env['CM_DOWNLOAD_CMD'] += f" || ((rm -f {env['CM_DOWNLOAD_FILENAME']} || true) && gdown {extra_download_options} {url})"
+                env['CM_DOWNLOAD_CMD'] += f" || (({del_cmd} {env['CM_DOWNLOAD_FILENAME']} || true) && gdown {extra_download_options} {url})"
 
         elif tool == "rclone":
             if env.get('CM_RCLONE_CONFIG_CMD', '') != '': #keeping this for backward compatibility. Ideally should be done via get,rclone-config script
@@ -192,6 +201,7 @@ def preprocess(i):
         env['CM_PRE_DOWNLOAD_CMD'] = ''
 
     if os_info['platform'] == 'windows':
+        env['CM_DOWNLOAD_CMD'] =  env['CM_DOWNLOAD_CMD'].replace('&', '^&').replace('|', '^|').replace('(', '^(').replace(')', '^)')
         if pre_clean:
             env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "del /Q %CM_DOWNLOAD_FILENAME%"
         # Check that if empty CMD, should add ""
