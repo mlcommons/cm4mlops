@@ -34,7 +34,7 @@ jobs:
     - name: Setup docker on macos
       if: runner.os =='macos'
       run: |
-        brew install docker
+        brew install --cask docker
     - name: Test CM Script Features
       run: |
         python script/test-cm-core/src/script/test_deps.py
