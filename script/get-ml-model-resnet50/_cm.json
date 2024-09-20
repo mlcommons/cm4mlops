@@ -21,7 +21,9 @@
   "prehook_deps": [
     {
       "env": {
-        "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_FILE>>>"
+        "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_FILE>>>",
+        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
+        "CM_EXTRACT_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH"
       },
       "extra_cache_tags": "ml-model,resnet50,raw,ml-model-resnet50,_<<<CM_ML_MODEL_FRAMEWORK>>>",
       "force_cache": true,
@@ -86,7 +88,8 @@
     "from-tf": {},
     "huggingface_default": {
       "env": {
-        "CM_PACKAGE_URL": "https://huggingface.co/ctuning/mlperf-inference-resnet50-onnx-fp32-imagenet2012-v1.0/resolve/main/resnet50_v1.onnx"
+        "CM_PACKAGE_URL": "https://huggingface.co/ctuning/mlperf-inference-resnet50-onnx-fp32-imagenet2012-v1.0/resolve/main/resnet50_v1.onnx",
+        "CM_DOWNLOAD_CHECKSUM":"f6a4da60cd5f084d97efc2c1ddb10beb"
       }
     },
     "int8": {
@@ -105,12 +108,14 @@
     },
     "ncnn,fp32": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/8073420/files/resnet50_v1.bin?download=1"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/8073420/files/resnet50_v1.bin?download=1",
+        "CM_DOWNLOAD_CHECKSUM":"0360777ab2178a65a8f78c35a7d619e0"
       },
       "post_deps": [
         {
           "env": {
-            "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_PARAM_FILE>>>"
+            "CM_EXTRACT_EXTRACTED_FILENAME": "<<<CM_ML_MODEL_PARAM_FILE>>>",
+            "CM_DOWNLOAD_CHECKSUM": "f9ba6c4d7f66348e6d24c06bfe3f4ae8"
           },
           "extra_cache_tags": "ml-model-params,params,resnet50,ncnn,model-params",
           "tags": "download-and-extract,_url.https://zenodo.org/record/8073420/files/resnet50_v1.param?download="
@@ -150,7 +155,8 @@
         "CM_ML_MODEL_INPUT_SHAPES": "\\\"input_tensor\\\": (BATCH_SIZE, 224, 224, 3)",
         "CM_ML_MODEL_OUTPUT_LAYERS": "softmax_tensor",
         "CM_ML_MODEL_OUTPUT_LAYER_NAME": "softmax_tensor",
-        "CM_ML_MODEL_STARTING_WEIGHTS_FILENAME": "https://zenodo.org/record/2535873/files/resnet50_v1.pb"
+        "CM_ML_MODEL_STARTING_WEIGHTS_FILENAME": "https://zenodo.org/record/2535873/files/resnet50_v1.pb",
+        "CM_DOWNLOAD_CHECKSUM": "7b94a2da05dd30f6c0af23a46bc08886"
       }
     },
     "onnx,from-tf,fp32": {
@@ -161,17 +167,20 @@
       },
       "env": {
         "CM_DOWNLOAD_FILENAME": "resnet50_v1_modified.onnx",
-        "CM_PACKAGE_URL": "https://drive.google.com/uc?id=15wZ_8Vt12cb10IEBsln8wksD1zGwlbOM"
+        "CM_PACKAGE_URL": "https://drive.google.com/uc?id=15wZ_8Vt12cb10IEBsln8wksD1zGwlbOM",
+        "CM_DOWNLOAD_CHECKSUM": "04a510152d9eded924883bdfcf85dd4a"
       }
     },
     "onnx,opset-11": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/4735647/files/resnet50_v1.onnx"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/4735647/files/resnet50_v1.onnx",
+        "CM_DOWNLOAD_CHECKSUM": "f6a4da60cd5f084d97efc2c1ddb10beb"
       }
     },
     "onnx,opset-8": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/2592612/files/resnet50_v1.onnx"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/2592612/files/resnet50_v1.onnx",
+        "CM_DOWNLOAD_CHECKSUM": "a638cf028b5870da29e09ccc2f7182e7"
       }
     },
     "onnxruntime": {
@@ -204,7 +213,8 @@
     },
     "pytorch,fp32": {
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/4588417/files/resnet50-19c8e357.pth"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/4588417/files/resnet50-19c8e357.pth",
+        "CM_DOWNLOAD_CHECKSUM": "9e9c86b324d80e65229fab49b8d9a8e8"
       }
     },
     "pytorch,int8": {
@@ -213,7 +223,8 @@
         "pytorch"
       ],
       "env": {
-        "CM_PACKAGE_URL": "https://zenodo.org/record/4589637/files/resnet50_INT8bit_quantized.pt"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/4589637/files/resnet50_INT8bit_quantized.pt",
+        "CM_DOWNLOAD_CHECKSUM": "6893ea9769b0afce65bb0ddf002f4438"
       }
     },
     "tensorflow": {
@@ -230,7 +241,8 @@
         "CM_ML_MODEL_OUTPUT_LAYER_NAME": "softmax_tensor",
         "CM_ML_MODEL_STARTING_WEIGHTS_FILENAME": "<<<CM_PACKAGE_URL>>>",
         "CM_ML_MODEL_SUBTRACT_MEANS": "YES",
-        "CM_PACKAGE_URL": "https://zenodo.org/record/2535873/files/resnet50_v1.pb"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/2535873/files/resnet50_v1.pb",
+        "CM_DOWNLOAD_CHECKSUM":"7b94a2da05dd30f6c0af23a46bc08886"
       },
       "group": "framework"
     },
@@ -274,7 +286,8 @@
         "CM_EXTRACT_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
         "CM_ML_MODEL_FILE": "resnet50_v1.tflite",
         "CM_ML_MODEL_INPUT_SHAPES": "\\\"input_tensor 2\\\": (BATCH_SIZE, 224, 224, 3)",
-        "CM_PACKAGE_URL": "https://www.dropbox.com/s/cvv2zlfo80h54uz/resnet50_v1.tflite.gz?dl=1"
+        "CM_PACKAGE_URL": "https://www.dropbox.com/s/cvv2zlfo80h54uz/resnet50_v1.tflite.gz?dl=1",
+        "CM_DOWNLOAD_CHECKSUM": "92b5ae497e0de5c2d487507953b6e5cc"
       }
     },
     "tflite,int8,no-argmax": {
@@ -282,14 +295,16 @@
         "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_ML_MODEL_FILE_WITH_PATH",
         "CM_ML_MODEL_FILE": "resnet50_quant_full_mlperf_edgetpu.tflite",
         "CM_ML_MODEL_INPUT_SHAPES": "\\\"input_tensor 2\\\": (BATCH_SIZE, 224, 224, 3)",
-        "CM_PACKAGE_URL": "https://zenodo.org/record/8234946/files/resnet50_quant_full_mlperf_edgetpu.tflite?download=1"
+        "CM_PACKAGE_URL": "https://zenodo.org/record/8234946/files/resnet50_quant_full_mlperf_edgetpu.tflite?download=1",
+        "CM_DOWNLOAD_CHECKSUM":"a657cf1f97545aefd058c1c718cc0e17"
       }
     },
     "tflite,no-argmax": {
       "env": {
         "CM_ML_MODEL_FILE": "resnet50_v1.no-argmax.tflite",
         "CM_ML_MODEL_INPUT_SHAPES": "\\\"input_tensor 2\\\": (BATCH_SIZE, 224, 224, 3)",
-        "CM_PACKAGE_URL": "https://www.dropbox.com/s/vhuqo0wc39lky0a/resnet50_v1.no-argmax.tflite?dl=1"
+        "CM_PACKAGE_URL": "https://www.dropbox.com/s/vhuqo0wc39lky0a/resnet50_v1.no-argmax.tflite?dl=1",
+        "CM_DOWNLOAD_CHECKSUM": "53e81f9f9b459ecfb6d64add3da91564"
       }
     },
     "uint8": {
