@@ -60,10 +60,8 @@ def preprocess(i):
         extra_download_options = env.get('CM_DOWNLOAD_EXTRA_OPTIONS', '')
 
         verify_ssl = env.get('CM_VERIFY_SSL', "True")
-        if str(verify_ssl).lower() in [ "no", "false" ]:
+        if str(verify_ssl).lower() in [ "no", "false" ] or os_info['platform'] == 'windows':
             verify_ssl = False
-            if tool == 'wget' or tool == "gdown":
-                extra_download_options += " --no-check-certificate"
         else:
             verify_ssl = True
 
@@ -137,7 +135,7 @@ def preprocess(i):
         elif tool == "wget":
             if env.get('CM_DOWNLOAD_FILENAME', '') != '':
                 extra_download_options +=f" --tries=3 -O {q}{env['CM_DOWNLOAD_FILENAME']}{q} "
-                if env.get('CM_ENABLE_NO_CHECK_CERTIFICATE', '') == "yes":
+                if not verify_ssl:
                     extra_download_options += "--no-check-certificate "
             env['CM_DOWNLOAD_CMD'] = f"wget -nc {extra_download_options} {url}"
             for i in range(1,5):
@@ -160,6 +158,8 @@ def preprocess(i):
 
 
         elif tool == "gdown":
+            if not verify_ssl:
+                extra_download_options += "--no-check-certificate "
             env['CM_DOWNLOAD_CMD'] = f"gdown {extra_download_options} {url}"
             for i in range(1,5):
                 url = env.get('CM_DOWNLOAD_URL'+str(i),'')
