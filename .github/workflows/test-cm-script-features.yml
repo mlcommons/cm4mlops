@@ -36,7 +36,10 @@ jobs:
       run: |
         brew install --cask docker
         brew install docker colima
-        colima start
+        sudo /Applications/Docker.app/Contents/MacOS/Docker --unattended --install-privileged-components
+        open -a /Applications/Docker.app --args --unattended --accept-license
+        echo "We are waiting for Docker to be up and running. It can take over 2 minutes..."
+        while ! /Applications/Docker.app/Contents/Resources/bin/docker info &>/dev/null; do sleep 1; done
     - name: Test CM Script Features
       run: |
         python script/test-cm-core/src/script/test_deps.py
