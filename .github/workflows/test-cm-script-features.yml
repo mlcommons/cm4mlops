@@ -13,7 +13,7 @@ on:
 jobs:
   build:
 
-    runs-on: S{{ matrix.on }}
+    runs-on: ${{ matrix.on }}
     strategy:
       fail-fast: false
       matrix:
