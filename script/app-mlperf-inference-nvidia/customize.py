@@ -77,11 +77,13 @@ def preprocess(i):
         fp16_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'official_pytorch', 'fp16', 'stable_diffusion_fp16')
 
         if not os.path.exists(os.path.dirname(fp16_model_path)):
-          cmds.append(f"mkdir -p {os.path.dirname(fp16_model_path)}")
+            cmds.append(f"mkdir -p {os.path.dirname(fp16_model_path)}")
 
         if not os.path.exists(fp16_model_path):
+            if os.path.islink(fp16_model_path):
+                cmds.append(f"rm -f {fp16_model_path}")
             env['CM_REQUIRE_SDXL_MODEL_DOWNLOAD'] = 'yes'
-            cmds.append(f"cp -r {env['SDXL_CHECKPOINT_PATH']} {fp16_model_path}")
+            cmds.append(f"cp -r \$SDXL_CHECKPOINT_PATH {fp16_model_path}")
 
         model_name = "stable-diffusion-xl"
         model_path = fp16_model_path
