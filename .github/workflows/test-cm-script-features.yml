@@ -36,6 +36,11 @@ jobs:
       run: |
         brew install --cask docker
         echo "$HOME/.docker/bin" >> $GITHUB_PATH
+        open -a Docker
+        while ! docker system info > /dev/null 2>&1; do
+          sleep 5
+        done
+      shell: bash
     - name: Test CM Script Features
       run: |
         python script/test-cm-core/src/script/test_deps.py
