@@ -398,9 +398,14 @@ deps:
     enable_if_env:
       CM_MODEL:
       - stable-diffusion-xl
-    skip_if_env:
+    skip_if_any_env:
       CM_MLPERF_CUSTOM_MODEL_PATH:
       - "on"
+    skip_if_env:
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
+      CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+      - 'yes'
 
   ## LLAMA2-70B
   - tags: get,ml-model,llama2
@@ -687,6 +692,11 @@ variations:
       pytorch:
         tags: _rocm
 
+  rocm,sdxl:
+    add_deps:
+      mlperf-implementation:
+        tags: _repo.https://github.com/gateoverflow/inference
+
   ray:
     group: framework
     add_deps_recursive:
@@ -909,6 +919,9 @@ variations:
       - tags: get,generic-python-lib,_package.transformers
         names:
           - transformers
+      - tags: get,generic-python-lib,_package.torchvision
+        names:
+          - torchvision
       - tags: get,generic-python-lib,_package.accelerate
         names:
           - accelerate
@@ -1221,7 +1234,7 @@ variations:
     add_deps_recursive:
       ml-model:
         tags:
-          _fp32
+          _fp16
     env:
       CM_MLPERF_QUANTIZATION: off
       CM_MLPERF_MODEL_PRECISION: float16
@@ -1232,7 +1245,7 @@ variations:
     add_deps_recursive:
       ml-model:
         tags:
-          _fp32
+          _fp16
     env:
       CM_MLPERF_QUANTIZATION: off
       CM_MLPERF_MODEL_PRECISION: bfloat16

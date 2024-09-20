@@ -8,9 +8,6 @@
   "deps": [
     {
       "tags": "get,sys-utils-cm"
-    },
-    {
-      "tags": "get,sys-util,generic,generic-sys-util,_wget"
     }
   ],
   "env": {
@@ -28,20 +25,40 @@
     "original"
   ],
   "uid": "6651c119c3ae49b3",
+  "prehook_deps": [
+    {
+      "tags": "download-and-extract,_wget",
+      "env": {
+        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_DATASET_SQUAD_VAL_PATH"
+      },
+      "update_tags_from_env_with_prefix": {
+        "_url.": [ "CM_PACKAGE_URL" ]
+      },
+      "force_cache": true,
+      "extra_cache_tags": "bert,get,dataset-squad"
+    }
+  ],
   "versions": {
     "1.1": {
       "env": {
         "CM_TRAIN_FILENAME": "train-v1.1.json",
         "CM_VAL_FILENAME": "dev-v1.1.json",
-        "CM_WGET_URL": "https://raw.githubusercontent.com/rajpurkar/SQuAD-explorer/master/dataset/dev-v1.1.json"
+	"CM_DOWNLOAD_FILENAME": "dev-v1.1.json",
+        "CM_PACKAGE_URL": "https://raw.githubusercontent.com/rajpurkar/SQuAD-explorer/master/dataset/dev-v1.1.json",
+	"CM_DOWNLOAD_CHECKSUM": "3e85deb501d4e538b6bc56f786231552"
       }
     },
     "2.0": {
       "env": {
         "CM_TRAIN_FILENAME": "train-v2.0.json",
         "CM_VAL_FILENAME": "dev-v2.0.json",
-        "CM_WGET_URL": "https://raw.githubusercontent.com/rajpurkar/SQuAD-explorer/master/dataset/dev-v2.0.json"
+	"CM_DOWNLOAD_FILENAME": "dev-v2.0.json",
+        "CM_PACKAGE_URL": "https://raw.githubusercontent.com/rajpurkar/SQuAD-explorer/master/dataset/dev-v2.0.json",
+	"CM_DOWNLOAD_CHECKSUM": "246adae8b7002f8679c027697b0b7cf8"
       }
     }
+  },
+  "print_env_at_the_end" : {
+    "CM_DATASET_SQUAD_VAL_PATH": "Path to SQUAD dataset"
   }
 }
