@@ -12,7 +12,7 @@ def preprocess(i):
 
     interactive = env.get('CM_DOCKER_INTERACTIVE_MODE','')
 
-    if interactive:
+    if str(interactive).lower() in ['yes', 'true', '1' ]:
         env['CM_DOCKER_DETACHED_MODE']='no'
 
     if 'CM_DOCKER_RUN_SCRIPT_TAGS' not in env:
