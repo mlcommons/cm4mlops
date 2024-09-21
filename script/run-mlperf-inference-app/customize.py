@@ -131,6 +131,7 @@ def preprocess(i):
     add_deps = inp.get('add_deps', {})
     ad = inp.get('ad', {})
     adr = inp.get('adr', {})
+    docker_it = inp.get('docker_it', '')
     adr_from_meta = i['run_script_input'].get('add_deps_recursive')
 
     for key in adr_from_meta:
@@ -226,7 +227,8 @@ def preprocess(i):
             r = cm.access(ii)
             if r['return'] > 0:
                 return r
-            if action == "docker":
+            if action == "docker" and str(docker_it).lower() not in ["no", "false", "0"]:
+                print(f"\nStop Running loadgen scenario: {scenario} and mode: {mode}")
                 return {'return': 0} # We run commands interactively inside the docker container
 
             if state.get('docker', {}):
