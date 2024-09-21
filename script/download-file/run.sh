@@ -35,10 +35,8 @@ fi
 
 if [[ ${require_download} == "1" ]]; then
   echo ""
-  if [ -e "${CM_PRE_DOWNLOAD_CLEAN}" ]; then
-    echo ${CM_PRE_DOWNLOAD_CLEAN_CMD}
-    ${CM_PRE_DOWNLOAD_CLEAN_CMD}
-  fi
+  echo ${CM_PRE_DOWNLOAD_CLEAN_CMD}
+  ${CM_PRE_DOWNLOAD_CLEAN_CMD}
 
   echo ""
   echo "${CM_DOWNLOAD_CMD}"
