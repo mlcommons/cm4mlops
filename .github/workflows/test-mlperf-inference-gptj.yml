@@ -4,8 +4,8 @@
 name: MLPerf inference GPT-J
 
 on:
-  pull_request:
-    branches: [ "main1", "dev1" ]
+  push:
+    branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-inference-gptj.yml'
       - '**'
@@ -13,8 +13,7 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
@@ -23,15 +22,12 @@ jobs:
         precision: [ "bfloat16" ]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python3 -m pip install cmind
+        source gh_action/bin/deactivate || python3 -m venv gh_action
+        source gh_action/bin/activate
+        export CM_REPOS=$HOME/GH_CM
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference GPTJ
       run: |
-        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=gptj --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=gptj-99 --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops
