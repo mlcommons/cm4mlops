@@ -68,7 +68,8 @@
         "CM_PACKAGE_URL": "https://dlrm.s3-us-west-1.amazonaws.com/models/tb00_40M.onnx.tar",
         "CM_UNTAR": "yes",
         "CM_ML_MODEL_FILE": "tb00_40M.onnx",
-        "CM_ML_MODEL_DLRM_MAX_INDEX_RANGE": "40000000"
+        "CM_ML_MODEL_DLRM_MAX_INDEX_RANGE": "40000000",
+        "CM_DOWNLOAD_CHECKSUM": "763b964eaffe5f86e92cdcb60c5dc0de"
       }
     },
     "pytorch": {
@@ -110,7 +111,8 @@
         "CM_PACKAGE_URL": "https://cloud.mlcommons.org/index.php/s/XzfSeLgW8FYfR3S/download",
         "CM_DAE_EXTRACT_DOWNLOADED": "yes",
         "CM_DOWNLOAD_FILENAME": "download",
-        "CM_EXTRACT_UNZIP": "yes"
+        "CM_EXTRACT_UNZIP": "yes",
+        "CM_DOWNLOAD_CHECKSUM": "07e76718b52601303bb5c54fc0a3500c"
       }
     },
     "wget": {
@@ -138,7 +140,8 @@
       "env": {
         "CM_ML_MODEL_ACCURACY": "0.8107",
         "CM_PACKAGE_URL": "https://dlrm.s3-us-west-1.amazonaws.com/models/tb0875_10M.pt",
-        "CM_ML_MODEL_DLRM_MAX_INDEX_RANGE": "10000000"
+        "CM_ML_MODEL_DLRM_MAX_INDEX_RANGE": "10000000",
+        "CM_DOWNLOAD_CHECKSUM": "b7cacffcf75f767faa9cb2af397723aa"
       }
     },
     "onnx,fp32,debug": {
@@ -147,7 +150,8 @@
         "CM_PACKAGE_URL": "https://dlrm.s3-us-west-1.amazonaws.com/models/tb0875_10M.onnx.tar",
         "CM_ML_MODEL_DLRM_MAX_INDEX_RANGE": "10000000",
         "CM_UNTAR": "yes",
-        "CM_ML_MODEL_FILE": "tb0875_10M.onnx"
+        "CM_ML_MODEL_FILE": "tb0875_10M.onnx",
+        "CM_DOWNLOAD_CHECKSUM": "d11255cd9926cda9181a347861e4d263"
       }
     },
     "weight_sharded": {
