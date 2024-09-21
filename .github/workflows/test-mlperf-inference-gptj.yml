@@ -4,8 +4,8 @@
 name: MLPerf inference GPT-J
 
 on:
-  pull_request:
-    branches: [ "main1", "dev1" ]
+  push:
+    branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-inference-gptj.yml'
       - '**'
@@ -14,7 +14,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
@@ -34,4 +34,4 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference GPTJ
       run: |
-        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=gptj --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet
+        cm run script --tags=run-mlperf,inference,_submission,_short,_cuda --submitter="MLCommons" --model=gptj --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet
