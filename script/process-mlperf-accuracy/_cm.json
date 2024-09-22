@@ -61,15 +61,17 @@
         },
         {
           "tags": "get,generic-python-lib,_package.nltk",
-	      "names":
+          "names":
           [
             "pip-package",
             "nltk"
-          ]
+          ],
+          "version_max": "3.8.1",
+          "version_max_usable": "3.8.1"
         },
         {
           "tags": "get,generic-python-lib,_package.evaluate",
-	      "names":
+          "names":
           [
             "pip-package",
             "evaluate"
@@ -77,7 +79,7 @@
         },
         {
           "tags": "get,generic-python-lib,_package.absl-py",
-	      "names":
+          "names":
           [
             "pip-package",
             "absl-py"

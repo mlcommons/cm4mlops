@@ -25,6 +25,7 @@ input_mapping:
   detached: CM_DOCKER_DETACHED_MODE
   device: CM_DOCKER_ADD_DEVICE
   docker_image_base: CM_DOCKER_IMAGE_BASE
+  keep_detached: CM_KEEP_DETACHED_CONTAINER
   docker_os: CM_DOCKER_OS
   docker_os_version: CM_DOCKER_OS_VERSION
   extra_run_args: CM_DOCKER_EXTRA_RUN_ARGS
@@ -49,6 +50,9 @@ input_mapping:
   script_tags: CM_DOCKER_RUN_SCRIPT_TAGS
   shm_size: CM_DOCKER_SHM_SIZE
 
+new_env_keys:
+  - 'CM_DOCKER_CONTAINER_ID'
+
 prehook_deps:
 - names:
   - build-docker-image
@@ -57,4 +61,6 @@ prehook_deps:
     - 'yes'
     CM_DOCKER_SKIP_BUILD:
     - 'yes'
+    CM_DOCKER_CONTAINER_ID:
+    - on
   tags: build,docker,image
