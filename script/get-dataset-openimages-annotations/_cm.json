@@ -17,13 +17,31 @@
     "annotations"
   ],
   "uid": "47e2158ed24c44e9",
+  "prehook_deps": [
+    {
+      "tags": "download-and-extract,_wget,_extract",
+      "env": {
+        "CM_DAE_FINAL_ENV_NAME": "CM_DATASET_ANNOTATIONS_FILE_PATH"
+      },
+      "update_tags_from_env_with_prefix": {
+        "_url.": [ "CM_PACKAGE_URL" ]
+      },
+      "force_cache": true,
+      "extra_cache_tags": "retinanet,get,dataset-openimages-annotations"
+    }
+  ],
   "variations": {
     "from.github": {
       "default": true,
       "env": {
-        "CM_WGET_URL": "https://github.com/mlcommons/inference/releases/download/v2.1/openimages-mlperf_annotations_2.1.json.zip"
+	"CM_DOWNLOAD_FILENAME": "openimages-mlperf_annotations_2.1.json.zip",
+	"CM_DOWNLOAD_CHECKSUM": "817fd8da3aeeb0575f1e2d2926b15e68",
+        "CM_PACKAGE_URL": "https://github.com/mlcommons/inference/releases/download/v2.1/openimages-mlperf_annotations_2.1.json.zip"
       },
       "group": "download-source"
     }
+  },
+  "print_env_at_the_end" : {
+    "CM_DATASET_ANNOTATIONS_FILE_PATH": "Path to OpenImages annotation file"
   }
 }

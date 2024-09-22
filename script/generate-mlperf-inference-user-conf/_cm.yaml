@@ -27,6 +27,9 @@ default_env:
   CM_FAST_FACTOR: '5'
   CM_MLPERF_QUANTIZATION: off
 
+docker:
+  real_run: False
+
 # Map script inputs to environment variables
 input_mapping:
   count: CM_MLPERF_LOADGEN_QUERY_COUNT

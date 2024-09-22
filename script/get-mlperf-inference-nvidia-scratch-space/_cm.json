@@ -36,9 +36,21 @@
     },
     "version.4_0": {
       "group": "version",
-      "default": true,
       "env": {
         "CM_NVIDIA_SCRATCH_SPACE_VERSION": "4_0"
+      }
+    },
+    "version.4_1": {
+      "group": "version",
+      "env": {
+        "CM_NVIDIA_SCRATCH_SPACE_VERSION": "4_1"
+      }
+    },
+    "version.4_1-dev": {
+      "group": "version",
+      "default": true,
+      "env": {
+        "CM_NVIDIA_SCRATCH_SPACE_VERSION": "4_1-dev"
       }
     }
   },

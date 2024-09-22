@@ -15,6 +15,7 @@ def preprocess(i):
     else:
         build_dockerfile = True
         env['CM_BUILD_DOCKERFILE'] = "yes"
+        env['CM_DOCKERFILE_BUILD_FROM_IMAGE_SCRIPT'] = "yes"
 
 
     CM_DOCKER_BUILD_ARGS = env.get('+ CM_DOCKER_BUILD_ARGS', [])
@@ -34,55 +35,54 @@ def preprocess(i):
 #    else:
 #        env['CM_BUILD_DOCKERFILE'] = "no"
 #
-    if "CM_DOCKER_IMAGE_REPO" not in env:
+    if env.get("CM_DOCKER_IMAGE_REPO", "") == '':
         env['CM_DOCKER_IMAGE_REPO'] = "local"
 
     docker_image_name = env.get('CM_DOCKER_IMAGE_NAME', '')
     if docker_image_name == '':
-        docker_image_name = env.get('CM_DOCKER_RUN_SCRIPT_TAGS','').replace(',', '-').replace('_','')
-    if docker_image_name == '':
-        docker_image_name = 'cm'
-
-    env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
+        docker_image_name = "cm-script-" +env.get('CM_DOCKER_RUN_SCRIPT_TAGS','').replace(',', '-').replace('_','-')
+        env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 
     if env.get("CM_DOCKER_IMAGE_TAG", "") == '':
         env['CM_DOCKER_IMAGE_TAG'] = "latest"
 
-    if env.get("CM_DOCKER_CACHE", "yes") in ["no", "False", False]:
+    if str(env.get("CM_DOCKER_CACHE", "yes")).lower() in ["no", "false", "0"]:
         env["CM_DOCKER_CACHE_ARG"] = " --no-cache"
 
     CMD = ''
 
     image_name = get_image_name(env)
 
-    if not build_dockerfile:
-        # Write .dockerignore
-        with open('.dockerignore', 'w') as f:
-            f.write('.git\n')
+    if build_dockerfile:
+        dockerfile_path = "\${CM_DOCKERFILE_WITH_PATH}"
 
-        # Prepare CMD to build image
-        XCMD = [
-               'docker build ' + env.get('CM_DOCKER_CACHE_ARG',''),
-                ' ' + build_args,
-                ' -f "' + dockerfile_path + '"',
-                ' -t "' + image_name,
-                ' .'
-               ]
+    # Write .dockerignore
+    with open('.dockerignore', 'w') as f:
+        f.write('.git\n')
 
-        with open(dockerfile_path + '.build.sh', 'w') as f:
-            f.write(' \\\n'.join(XCMD) + '\n')
+    # Prepare CMD to build image
+    XCMD = [
+            'docker build ' + env.get('CM_DOCKER_CACHE_ARG',''),
+            ' ' + build_args,
+            ' -f "' + dockerfile_path + '"',
+            ' -t "' + image_name,
+            ' .'
+            ]
 
-        with open(dockerfile_path + '.build.bat', 'w') as f:
-            f.write(' ^\n'.join(XCMD) + '\n')
+    with open(dockerfile_path + '.build.sh', 'w') as f:
+        f.write(' \\\n'.join(XCMD) + '\n')
 
-        CMD = ''.join(XCMD)
+    with open(dockerfile_path + '.build.bat', 'w') as f:
+        f.write(' ^\n'.join(XCMD) + '\n')
 
-        print ('================================================')
-        print ('CM generated the following Docker build command:')
-        print ('')
-        print (CMD)
+    CMD = ''.join(XCMD)
 
-        print ('')
+    print ('================================================')
+    print ('CM generated the following Docker build command:')
+    print ('')
+    print (CMD)
+
+    print ('')
 
     env['CM_DOCKER_BUILD_CMD'] = CMD
 

@@ -271,12 +271,27 @@ variations:
       CM_MLPERF_INFERENCE_VERSION: '4.0'
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.0_default
     group: benchmark-version
+    adr:
+      get-mlperf-inference-results-dir:
+        tags: _version.r4_0-dev
+      get-mlperf-inference-submission-dir:
+        tags: _version.r4_0-dev
+      mlperf-inference-nvidia-scratch-space:
+        tags: _version.r4_0-dev
 
   r4.1-dev:
+    default: true
     env:
       CM_MLPERF_INFERENCE_VERSION: '4.1-dev'
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.1-dev_default
     group: benchmark-version
+    adr:
+      get-mlperf-inference-results-dir:
+        tags: _version.r4_1-dev
+      get-mlperf-inference-submission-dir:
+        tags: _version.r4_1-dev
+      mlperf-inference-nvidia-scratch-space:
+        tags: _version.r4_1-dev
 
   r4.1:
     env:
@@ -284,17 +299,18 @@ variations:
       CM_RUN_MLPERF_INFERENCE_APP_DEFAULTS: r4.1_default
     adr:
       get-mlperf-inference-results-dir:
-        version: "r4.1"
+        tags: _version.r4_1
       get-mlperf-inference-submission-dir:
-        version: "r4.1"
+        tags: _version.r4_1
       mlperf-inference-nvidia-scratch-space:
-        version: "r4.1"
+        tags: _version.r4_1
     group: benchmark-version
 
   short:
     add_deps_recursive:
       submission-checker:
         tags: _short-run
+
     default: 'true'
     env:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: short
@@ -327,9 +343,6 @@ variations:
       enable_if_env:
         CM_MLPERF_SKIP_SUBMISSION_GENERATION:
         - 'no'
-        - 'false'
-        - 'False'
-        - '0'
       tags: generate,mlperf,inference,submission
 
 versions:
