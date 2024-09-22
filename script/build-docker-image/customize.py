@@ -39,9 +39,7 @@ def preprocess(i):
 
     docker_image_name = env.get('CM_DOCKER_IMAGE_NAME', '')
     if docker_image_name == '':
-        docker_image_name = env.get('CM_DOCKER_RUN_SCRIPT_TAGS','').replace(',', '-').replace('_','')
-    if docker_image_name == '':
-        docker_image_name = 'cm'
+        docker_image_name = "cm-script-" +env.get('CM_DOCKER_RUN_SCRIPT_TAGS','').replace(',', '-').replace('_','-')
 
     env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 

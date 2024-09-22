@@ -37,10 +37,10 @@
       },
       "group": "version"
     },
-    "version.4_1": {
+    "version.4_1-dev": {
       "default": true,
       "env": {
-        "CM_MLPERF_INFERENCE_SUBMISSION_VERSION": "4_1"
+        "CM_MLPERF_INFERENCE_SUBMISSION_VERSION": "4_1-dev"
       },
       "group": "version"
     }

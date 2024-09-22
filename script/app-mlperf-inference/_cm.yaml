@@ -1565,15 +1565,21 @@ docker:
     - tags: get,mlperf,inference,results,dir,local
       names:
       - get-mlperf-inference-results-dir
+      skip_if_env:
+        OUTPUT_BASE_DIR: [ on ]
     - tags: get,mlperf,inference,submission,dir,local
       names:
       - get-mlperf-inference-submission-dir
+      skip_if_env:
+        CM_MLPERF_INFERENCE_SUBMISSION_DIR: [ on ]
+
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
   mounts:
    - "${{ CM_DATASET_IMAGENET_PATH }}:${{ CM_DATASET_IMAGENET_PATH }}"
    - "${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}"
+   - "${{ OUTPUT_BASE_DIR }}:${{ OUTPUT_BASE_DIR }}"
    - "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}"
    - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
    - "${{ CM_CRITEO_PREPROCESSED_PATH }}:${{ CM_CRITEO_PREPROCESSED_PATH }}"
