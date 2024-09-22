@@ -98,7 +98,8 @@
       "env": {
         "CM_DATASET_SIZE": "500",
         "CM_DAE_FILENAME": "ILSVRC2012_img_val_500.tar",
-        "CM_DAE_URL": "http://cKnowledge.org/ai/data/ILSVRC2012_img_val_500.tar"
+        "CM_DAE_URL": "http://cKnowledge.org/ai/data/ILSVRC2012_img_val_500.tar",
+        "CM_DAE_DOWNLOADED_CHECKSUM": "21dd58bf5d1d77dcc306e10e8271e0c1a1617341"
       }
     },
     "size.#": {
