@@ -95,7 +95,6 @@ def preprocess(i):
     #        env['CM_DOCKER_IMAGE_RECREATE'] = "no"
 
 
-    #print(env)
     return {'return':0}
 
 def postprocess(i):
@@ -304,8 +303,7 @@ def update_docker_info(env):
         docker_image_name = env['CM_DOCKER_IMAGE_NAME']
     else:
         docker_image_name = 'cm-script-'+env['CM_DOCKER_RUN_SCRIPT_TAGS'].replace(',', '-').replace('_','-')
-
-    env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
+        env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 
     docker_image_tag_extra = env.get('CM_DOCKER_IMAGE_TAG_EXTRA', '-latest')
     
