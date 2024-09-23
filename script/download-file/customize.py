@@ -108,6 +108,8 @@ def preprocess(i):
                 elif "no such file" in checksum_result.stderr.lower():
                     #print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
                     cmutil_require_download = 1
+                elif checksum_result.returncode == 1:
+                    return {"return":1, "error":f"Error while checking checksum: {checksum_result.stderr}"}
                 else:
                     print(f"File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
             else:
