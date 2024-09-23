@@ -243,14 +243,32 @@ variations:
     group: submission-generation
 
   scc24-base:
+    base:
+    - short
     adr:
       coco2014-preprocessed:
         tags: _size.50
+      coco2014-dataset:
+        tags: _size.50
+      nvidia-preprocess-data:
+        extra_cache_tags: "scc24-base"
+    deps:
+      - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
+        extra_cache_rm_tags: scc24-main
 
   scc24-main:
+    base:
+    - short
     adr:
       coco2014-preprocessed:
         tags: _size.500
+      coco2014-dataset:
+        tags: _size.500
+      nvidia-preprocess-data:
+        extra_cache_tags: "scc24-main"
+    deps:
+      - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
+        extra_cache_rm_tags: scc24-base
 
   r2.1:
     env:
