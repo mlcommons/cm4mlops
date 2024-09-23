@@ -591,6 +591,9 @@ deps:
   - tags: generate,user-conf,mlperf,inference
     names:
     - user-conf-generator
+    skip_if_env:
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
 
   # Install MLPerf loadgen
   - tags: get,loadgen
