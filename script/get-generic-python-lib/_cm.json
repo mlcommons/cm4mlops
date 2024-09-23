@@ -971,7 +971,8 @@
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "torchaudio",
         "CM_GENERIC_PYTHON_PIP_INDEX_URL": "https://download.pytorch.org/whl/nightly/rocm6.2",
-        "CM_GENERIC_PYTHON_PIP_UNINSTALL_DEPS": "torchaudio"
+        "CM_GENERIC_PYTHON_PIP_UNINSTALL_DEPS": "torchaudio",
+        "CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL": ""
       },
       "new_env_keys": [
         "CM_TORCHAUDIO_VERSION*"
