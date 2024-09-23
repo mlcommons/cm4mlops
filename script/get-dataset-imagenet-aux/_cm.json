@@ -56,7 +56,7 @@
         "2012"
       ],
       "env": {
-        "CM_PACKAGE_URL": "https://waw.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz",
+        "CM_PACKAGE_URL": "https://www.dropbox.com/s/92n2fyej3lzy3s3/caffe_ilsvrc12.tar.gz",
         "CM_PACKAGE_URL1": "http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz",
         "CM_DOWNLOAD_CHECKSUM": "ee346d67141e476df9c1a3f813552503",
         "CM_DOWNLOAD_CHECKSUM1": "f963098ea0e785a968ca1eb634003a90"
