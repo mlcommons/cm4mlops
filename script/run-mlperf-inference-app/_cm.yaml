@@ -242,6 +242,16 @@ variations:
       CM_RUN_SUBMISSION_CHECKER: 'no'
     group: submission-generation
 
+  scc24-base:
+    adr:
+      coco2014-preprocessed:
+        tags: _size.50
+
+  scc24-main:
+    adr:
+      coco2014-preprocessed:
+        tags: _size.500
+
   r2.1:
     env:
       CM_MLPERF_INFERENCE_VERSION: '2.1'
