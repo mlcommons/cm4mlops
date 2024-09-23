@@ -4,15 +4,12 @@
 name: MLPerf inference GPT-J
 
 on:
-  push:
-    branches: [ "main", "dev", "mlperf-inference" ]
-    paths:
-      - '.github/workflows/test-mlperf-inference-gptj.yml'
-      - '**'
-      - '!**.md'
+  schedule:
+    - cron: "1 1 * * */3"
 
 jobs:
   build:
+    if: github.repository_owner == 'gateoverflow'
     runs-on: [ self-hosted, linux, x64 ]
     strategy:
       fail-fast: false
