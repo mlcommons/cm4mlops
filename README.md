@@ -6,9 +6,13 @@
 [![Powered by CM](https://img.shields.io/badge/Powered_by-MLCommons%20CM-blue)](https://github.com/mlcommons/ck).
 [![Downloads](https://static.pepy.tech/badge/cm4mlops)](https://pepy.tech/project/cm4mlops)
 
-[![CM script automation test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-scripts.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-scripts.yml)
 [![CM script automation features test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-script-features.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-script-features.yml)
+[![MLPerf inference bert (deepsparse, tf, onnxruntime, pytorch)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-bert-deepsparse-tf-onnxruntime-pytorch.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-bert-deepsparse-tf-onnxruntime-pytorch.yml)
 [![MLPerf inference MLCommons C++ ResNet50](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml)
+[![MLPerf inference ABTF POC Test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-abtf-poc.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-abtf-poc.yml)
+[![Test Compilation of QAIC Compute SDK (build LLVM from src)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-qaic-compute-sdk-build.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-qaic-compute-sdk-build.yml)
+[![Test QAIC Software kit Compilation](https://github.com/mlcommons/cm4mlops/actions/workflows/test-qaic-software-kit.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-qaic-software-kit.yml)
+
 
 This repository contains reusable and cross-platform automation recipes to run DevOps, MLOps, and MLPerf 
 via a simple and human-readable [Collective Mind interface (CM)](https://github.com/mlcommons/ck) 
