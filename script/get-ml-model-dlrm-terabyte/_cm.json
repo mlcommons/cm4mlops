@@ -111,8 +111,7 @@
         "CM_PACKAGE_URL": "https://cloud.mlcommons.org/index.php/s/XzfSeLgW8FYfR3S/download",
         "CM_DAE_EXTRACT_DOWNLOADED": "yes",
         "CM_DOWNLOAD_FILENAME": "download",
-        "CM_EXTRACT_UNZIP": "yes",
-        "CM_DOWNLOAD_CHECKSUM": "07e76718b52601303bb5c54fc0a3500c"
+        "CM_EXTRACT_UNZIP": "yes"
       }
     },
     "wget": {
