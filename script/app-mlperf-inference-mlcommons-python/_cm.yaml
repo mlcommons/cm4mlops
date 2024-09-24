@@ -216,6 +216,7 @@ deps:
   - tags: get,generic-python-lib,_torchvision
     names:
     - ml-engine-torchvision
+    - torchvision
     skip_if_env:
       CM_MODEL:
         - dlrm-v2-99
@@ -231,6 +232,7 @@ deps:
   - tags: get,generic-python-lib,_torchvision_cuda
     names:
     - ml-engine-torchvision
+    - torchvision
     enable_if_env:
       CM_MLPERF_BACKEND:
       - pytorch
@@ -694,6 +696,8 @@ variations:
   pytorch,rocm:
     add_deps_recursive:
       pytorch:
+        tags: _rocm
+      torchvision:
         tags: _rocm
 
   rocm,sdxl:
