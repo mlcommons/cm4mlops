@@ -74,6 +74,9 @@ def preprocess(i):
         target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'coco', 'SDXL')
         if not os.path.exists(target_data_path):
             cmds.append("make download_data BENCHMARKS='stable-diffusion-xl'")
+            env['CM_REQUIRE_COCO2014_DOWNLOAD'] = 'yes'
+            cmds.append(f"cp -r \${CM_DATASET_PATH_ROOT}/captions/captions.tsv {target_data_path}/captions_5k_final.tsv" )
+            cmds.append(f"cp -r \${CM_DATASET_PATH_ROOT}/latents/latents.pt {target_data_path}/latents.pt" )
         fp16_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'official_pytorch', 'fp16', 'stable_diffusion_fp16')
 
         if not os.path.exists(os.path.dirname(fp16_model_path)):
@@ -361,7 +364,7 @@ def preprocess(i):
         if input_format:
             run_config += f" --input_format={input_format}"
 
-        performance_sample_count = env.get('CM_MLPERF_PERFORMANCE_SAMPLE_COUNT')
+        performance_sample_count = env.get('CM_MLPERF_LOADGEN_PERFORMANCE_SAMPLE_COUNT')
         if performance_sample_count:
             run_config += f" --performance_sample_count={performance_sample_count}"
 
