@@ -250,8 +250,12 @@ variations:
     adr:
       coco2014-preprocessed:
         tags: _size.50
+        env:
+          CM_GENERATE_SAMPLE_ID: 'yes'
       coco2014-dataset:
         tags: _size.50
+        env:
+          CM_GENERATE_SAMPLE_ID: 'yes'
       nvidia-preprocess-data:
         extra_cache_tags: "scc24-base"
     deps:
@@ -264,8 +268,12 @@ variations:
     adr:
       coco2014-preprocessed:
         tags: _size.500
+        env:
+          CM_GENERATE_SAMPLE_ID: 'yes'
       coco2014-dataset:
         tags: _size.500
+        env:
+          CM_GENERATE_SAMPLE_ID: 'yes'
       nvidia-preprocess-data:
         extra_cache_tags: "scc24-main"
     env:
