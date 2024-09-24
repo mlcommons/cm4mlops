@@ -214,12 +214,7 @@ def preprocess(i):
         for x in ['CM_DOWNLOAD_CMD', 'CM_DOWNLOAD_CHECKSUM_CMD']:
             env[x+'_USED']='YES' if env.get(x,'')!='' else 'NO'
     else:
-        # pre_clean variable is used in order to clean the partial download files if checksums are not provided
-        if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') == '' and env.get('CM_DOWNLOAD_CHECKSUM', '') == '':
-            if pre_clean:
-                env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "rm -f {}".format(env['CM_DOWNLOAD_FILENAME'])
-        else:
-            env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "rm -f {}".format(env['CM_DOWNLOAD_FILENAME'])
+        env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "rm -f {}".format(env['CM_DOWNLOAD_FILENAME'])
 
     return {'return':0}
 
