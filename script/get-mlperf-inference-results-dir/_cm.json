@@ -31,6 +31,9 @@
   ],
   "uid": "84f3c5aad5e1444b",
   "variations": {
+    "path.#": {
+      "CM_MLPERF_INFERENCE_RESULTS_DIR" : "#"
+    },
     "version.#": {
       "group": "version",
       "env": {
@@ -39,9 +42,15 @@
     },
     "version.4_1": {
       "group": "version",
-      "default": true,
       "env": {
         "CM_MLPERF_INFERENCE_RESULTS_VERSION": "4_1"
+      }
+    },
+    "version.4_1-dev": {
+      "group": "version",
+      "default": true,
+      "env": {
+        "CM_MLPERF_INFERENCE_RESULTS_VERSION": "4_1-dev"
       }
     }
   },

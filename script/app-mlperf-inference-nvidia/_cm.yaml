@@ -42,7 +42,6 @@ input_mapping:
   mlperf_conf: CM_MLPERF_CONF
   mode: CM_MLPERF_LOADGEN_MODE
   output_dir: CM_MLPERF_OUTPUT_DIR
-  performance_sample_count: CM_MLPERF_PERFORMANCE_SAMPLE_COUNT
   scenario: CM_MLPERF_LOADGEN_SCENARIO
   user_conf: CM_MLPERF_USER_CONF
   devices: CM_MLPERF_NVIDIA_HARNESS_DEVICES
@@ -301,6 +300,16 @@ prehook_deps:
       CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
       - 'yes'
 
+  # Install coco2014 dataset
+  - enable_if_env:
+      CM_REQUIRE_COCO2014_DOWNLOAD:
+      - 'yes'
+      CM_MLPERF_NVIDIA_HARNESS_RUN_MODE:
+      - preprocess_data
+    names:
+      - coco2014-dataset
+    tags: get,dataset,coco2014,_validation
+  
 # Post dependencies to run this app including for power measurement
 post_deps:
 
@@ -477,6 +486,11 @@ variations:
         names:
           - scipy
         version: 1.10.1
+      - tags: get,generic-python-lib,_package.numpy
+        names:
+          - numpy
+        version_max: 1.22.99
+        version_max_usable: "1.22"
 
   sdxl,v4.1:
     deps:
@@ -989,7 +1003,6 @@ variations:
           CM_MODEL:
            - dlrm-v2-99
            - dlrm-v2-99.9
-           - stable-diffusion-xl
 
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
