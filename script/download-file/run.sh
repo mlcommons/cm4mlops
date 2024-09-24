@@ -26,6 +26,9 @@ elif [ -e "${CM_DOWNLOAD_DOWNLOADED_PATH}" ]; then
        # checksum not supposed to fail for locally given file
        if [[ "${CM_DOWNLOAD_LOCAL_FILE_PATH}" != "" ]]; then
           exit 1
+       else
+          echo "Checksum mismatch. Deleting through command: ${CM_PRE_DOWNLOAD_CLEAN_CMD}"
+          ${CM_PRE_DOWNLOAD_CLEAN_CMD}
        fi
     else
        require_download="0"
@@ -35,8 +38,10 @@ fi
 
 if [[ ${require_download} == "1" ]]; then
   echo ""
-  echo ${CM_PRE_DOWNLOAD_CLEAN_CMD}
-  ${CM_PRE_DOWNLOAD_CLEAN_CMD}
+  if [ -e "${CM_PRE_DOWNLOAD_CLEAN}" ]; then
+    echo ${CM_PRE_DOWNLOAD_CLEAN_CMD}
+    ${CM_PRE_DOWNLOAD_CLEAN_CMD}
+  fi
 
   echo ""
   echo "${CM_DOWNLOAD_CMD}"
