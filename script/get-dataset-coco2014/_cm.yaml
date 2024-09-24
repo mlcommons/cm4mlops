@@ -84,6 +84,9 @@ variations:
     env:
       CM_DATASET_SIZE: '#'
     group: size
+  with-sample-ids:
+    env:
+      CM_GENERATE_SAMPLE_ID: 'yes'
   validation:
     default: true
     env:
