@@ -7,27 +7,6 @@
   "new_env_keys": [
     "CM_DATASET_*"
   ],
-  "deps":[
-    {
-      "tags": "detect,detect-os"
-    },
-    {
-      "skip_if_env": {
-        "CM_HOST_OS_TYPE": [
-          "windows"
-        ]
-      },
-      "tags": "get,rclone"
-    },
-    {
-      "enable_if_env": {
-        "CM_HOST_OS_TYPE": [
-          "windows"
-        ]
-      },
-      "tags": "get,rclone"
-    }
-  ],
   "tags": [
     "get",
     "dataset-mixtral",
