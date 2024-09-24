@@ -37,7 +37,7 @@ fi
 
 if [[ ${require_download} == "1" ]]; then
   echo ""
-  if [ "${CM_PRE_DOWNLOAD_CLEAN}" != "" ]; then
+  if [ "${CM_PRE_DOWNLOAD_CLEAN}" != "" ] && [ "${CM_PRE_DOWNLOAD_CLEAN,,}" != "false" ]; then
     echo ${CM_PRE_DOWNLOAD_CLEAN_CMD}
     ${CM_PRE_DOWNLOAD_CLEAN_CMD}
   fi
