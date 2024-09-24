@@ -13,7 +13,7 @@ def preprocess(i):
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
     tool = env.get('CM_DOWNLOAD_TOOL', '')
-    pre_clean = env.get('CM_PRE_DOWNLOAD_CLEAN', True)
+    pre_clean = env.get('CM_PRE_DOWNLOAD_CLEAN', False)
 
     #    xsep = '^&^&' if windows else '&&'
     xsep = '&&'
@@ -214,8 +214,7 @@ def preprocess(i):
         for x in ['CM_DOWNLOAD_CMD', 'CM_DOWNLOAD_CHECKSUM_CMD']:
             env[x+'_USED']='YES' if env.get(x,'')!='' else 'NO'
     else:
-        if pre_clean:
-            env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "rm -f {}".format(env['CM_DOWNLOAD_FILENAME'])
+        env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "rm -f {}".format(env['CM_DOWNLOAD_FILENAME'])
 
     return {'return':0}
 
