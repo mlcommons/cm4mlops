@@ -246,11 +246,15 @@ variations:
     adr:
       coco2014-preprocessed:
         tags: _size.50
+        env:
+          CM_GENERATE_SAMPLE_ID: 'yes'
 
   scc24-main:
     adr:
       coco2014-preprocessed:
         tags: _size.500
+        env:
+          CM_GENERATE_SAMPLE_ID: 'yes'
 
   r2.1:
     env:
