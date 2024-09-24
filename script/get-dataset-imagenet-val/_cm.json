@@ -89,7 +89,7 @@
         "CM_DATASET_SIZE": "50000",
         "CM_IMAGENET_FULL": "yes",
         "CM_DAE_FILENAME": "ILSVRC2012_img_val.tar",
-        "CM_DAE_DOWNLOADED_CHECKSUM": "29b22e2961454d5413ddabcf34fc5622"
+        "CM_DOWNLOAD_CHECKSUM": "29b22e2961454d5413ddabcf34fc5622"
       }
     },
     "size.500": {
@@ -98,7 +98,9 @@
       "env": {
         "CM_DATASET_SIZE": "500",
         "CM_DAE_FILENAME": "ILSVRC2012_img_val_500.tar",
-        "CM_DAE_URL": "http://cKnowledge.org/ai/data/ILSVRC2012_img_val_500.tar"
+	"CM_DOWNLOAD_FILENAME": "ILSVRC2012_img_val_500.tar",
+        "CM_DAE_URL": "http://cKnowledge.org/ai/data/ILSVRC2012_img_val_500.tar",
+        "CM_DOWNLOAD_CHECKSUM": "8627befdd8c2bcf305729020e9db354e"
       }
     },
     "size.#": {

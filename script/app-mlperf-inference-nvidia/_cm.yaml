@@ -300,6 +300,16 @@ prehook_deps:
       CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
       - 'yes'
 
+  # Install coco2014 dataset
+  - enable_if_env:
+      CM_REQUIRE_COCO2014_DOWNLOAD:
+      - 'yes'
+      CM_MLPERF_NVIDIA_HARNESS_RUN_MODE:
+      - preprocess_data
+    names:
+      - coco2014-dataset
+    tags: get,dataset,coco2014,_validation
+  
 # Post dependencies to run this app including for power measurement
 post_deps:
 
@@ -993,7 +1003,6 @@ variations:
           CM_MODEL:
            - dlrm-v2-99
            - dlrm-v2-99.9
-           - stable-diffusion-xl
 
       - tags: reproduce,mlperf,inference,nvidia,harness,_download_model
         inherit_variation_tags: true
