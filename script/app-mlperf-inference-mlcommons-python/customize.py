@@ -296,6 +296,8 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
                  scenario_extra_options + mode_extra_options + \
                 " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
                 " --model-path " + env['CM_ML_MODEL_PATH']
+        if env.get('CM_COCO2014_SAMPLE_ID_PATH','') != '':
+            cmd += " --ids-path " + env['CM_COCO2014_SAMPLE_ID_PATH']
 
     elif "llama2-70b" in env['CM_MODEL']:
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "llama2-70b")

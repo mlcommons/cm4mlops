@@ -33,6 +33,9 @@ else
   eval $cmd
   test $? -eq 0 || exit 1
 fi
+if [[ ${CM_GENERATE_COCO2014_SAMPLE_ID} == "yes" ]]; then
+  cmd="python3 sample_ids.py --tsv-path ${INSTALL_DIR}"
+fi
 cd ${INSTALL_DIR}
 
 test $? -eq 0 || exit 1
