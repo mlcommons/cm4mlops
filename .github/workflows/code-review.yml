@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository_owner == 'gateoverflow' && github.event.pull_request.changed_files > 0
     steps:
-
       # Run code review via OpenAI 
       # Step to run the OpenAI Code Review using the GATEOverflow action
     - name: Run OpenAI Code Review
