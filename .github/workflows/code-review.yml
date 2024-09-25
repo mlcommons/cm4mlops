@@ -4,14 +4,14 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+permissions:
+  issues: write
+
 jobs:
   code_review:
     runs-on: ubuntu-latest
     if: github.repository_owner == 'gateoverflow'
     steps:
-      # Checkout the code
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
       # Run code review via OpenAI 
       - name: Run OpenAI Code Review
