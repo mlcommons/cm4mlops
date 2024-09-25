@@ -223,7 +223,7 @@
           "tags": "get,nvidia,scratch,space"
         },
         {
-          "tags": "get,cuda-devices"
+          "tags": "get,cuda-devices,_with-pycuda"
         },
         {
           "tags": "get,ml-model,llama2-70b,_fp32,_pytorch",

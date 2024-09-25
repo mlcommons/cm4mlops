@@ -1162,7 +1162,7 @@ variations:
       mlperf-inference-implementation:
         tags: _cuda
     deps:
-      - tags: get,cuda-devices
+      - tags: get,cuda-devices,_with-pycuda
         skip_if_env:
           CM_CUDA_DEVICE_PROP_GLOBAL_MEMORY:
             - "yes"
