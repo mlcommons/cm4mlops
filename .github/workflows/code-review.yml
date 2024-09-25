@@ -5,6 +5,7 @@ on:
 jobs:
   code_review_job:
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'gateoverflow'
     name: ChatGPT Code Review
     steps:
       - name: GenAI Code Review
