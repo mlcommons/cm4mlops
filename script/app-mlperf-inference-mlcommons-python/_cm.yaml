@@ -354,7 +354,6 @@ deps:
   - tags: get,ml-model,large-language-model,gptj
     names:
     - ml-model
-    - ml-model-float16
     - gptj-model
     - gpt-j-model
     enable_if_env:
