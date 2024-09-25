@@ -11,19 +11,21 @@ permissions:
 jobs:
   code_review:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'gateoverflow'
+    if: github.repository_owner == 'gateoverflow' && github.event.pull_request.changed_files > 0
     steps:
 
       # Run code review via OpenAI 
-      - name: Run OpenAI Code Review
-        uses: GATEOverflow/genai-code-review@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-          github_pr_id: ${{ github.event.pull_request.number }}
-          openai_model: "gpt-4o"
-          openai_temperature: 0.5
-          openai_max_tokens: 2048
-          mode: "files"  # Options: files, diff
-          language: "en"
-          custom_prompt: "" # optional
+      # Step to run the OpenAI Code Review using the GATEOverflow action
+    - name: Run OpenAI Code Review
+      uses: GATEOverflow/genai-code-review@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
+        openai_api_key: ${{ secrets.OPENAI_API_KEY }}  # OpenAI API key for accessing the GPT model
+        github_pr_id: ${{ github.event.pull_request.number }}  # ID of the pull request to review
+        openai_model: "gpt-4o"  # Model to use for the code review
+        openai_temperature: 0.5  # Temperature setting for the model's output
+        openai_max_tokens: 2048  # Maximum number of tokens for the model's response
+        mode: "files"  # Mode of review, can be "files" or "diff"
+        language: "en"  # Language for the review output
+        custom_prompt: "" # Optional custom prompt for the model
+      continue-on-error: true  # Allow the workflow to continue even if this step fails
