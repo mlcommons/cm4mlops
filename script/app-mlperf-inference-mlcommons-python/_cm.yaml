@@ -355,7 +355,6 @@ deps:
     names:
     - ml-model
     - ml-model-float16
-    - ml-model
     - gptj-model
     - gpt-j-model
     enable_if_env:
