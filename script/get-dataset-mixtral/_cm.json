@@ -36,8 +36,5 @@
       },
       "group": "download-source"
     }
-  },
-  "print_env_at_the_end" : {
-    "CM_DATASET_PREPROCESSED_PATH": "Path to the ML model"
   }
 }
