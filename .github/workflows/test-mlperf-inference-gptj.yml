@@ -16,7 +16,7 @@ jobs:
       matrix:
         python-version: [ "3.12" ]
         backend: [ "pytorch" ]
-        precision: [ "bfloat16" ]
+        precision: [ "float16" ]
 
     steps:
     - name: Install dependencies

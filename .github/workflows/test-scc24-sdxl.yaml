@@ -1,0 +1,56 @@
+name: MLPerf inference SDXL
+
+on:
+  schedule:
+    - cron: "1 3 * * */3"
+
+jobs:
+  build_reference:
+    if: github.repository_owner == 'gateoverflow'
+    runs-on: [ self-hosted, linux, x64 ]
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        backend: [ "pytorch" ]
+        precision: [ "float16" ]
+        device: [ "cuda" ]
+    steps:
+    - name: Install dependencies
+      run: |
+        source gh_action/bin/deactivate || python3 -m venv gh_action
+        source gh_action/bin/activate
+        export CM_REPOS=$HOME/GH_CM
+        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+    - name: Test MLPerf Inference reference SDXL SCC 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        cm run script --tags=run-mlperf,inference,_find-performance,_r4.1-dev,_short,_scc24-base --model=sdxl --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --precision=${{ matrix.precision }} --quiet --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --precision=float16 --clean |
+        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --run-checker --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=open --category=datacenter --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --run_style=test --adr.submission-checker.tags=_short-run --quiet --submitter=MLCommons |
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/cm4mlperf-inference --repo_branch=mlperf-inference-results-scc24 --commit_message="Results from self hosted Github actions - NVIDIARTX4090" --quiet
+        
+  build_nvidia:
+      if: github.repository_owner == 'gateoverflow'
+      runs-on: [ self-hosted, linux, x64 ]
+      strategy:
+        fail-fast: false
+        matrix:
+          python-version: [ "3.12" ]
+          backend: [ "tensorrt" ]
+          precision: [ "float16" ]
+          implementation: [ "nvidia" ]
+      steps:
+      - name: Install dependencies
+        run: |
+          source gh_action/bin/deactivate || python3 -m venv gh_action
+          source gh_action/bin/activate
+          export CM_REPOS=$HOME/GH_CM
+          cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+      - name: Test MLPerf Inference NVIDIA SDXL SCC
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          cm run script --tags=run-mlperf,inference,_find-performance,_r4.1-dev,_short,_scc24-base --model=sdxl --implementation=nvidia --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --precision=${{ matrix.precision }} --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes --quiet --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --precision=float16 --clean |
+          cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --run-checker --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=open --category=datacenter --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --run_style=test --adr.submission-checker.tags=_short-run --quiet --submitter=MLCommons |
+          cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/cm4mlperf-inference --repo_branch=mlperf-inference-results-scc24 --commit_message="Results from self hosted Github actions - NVIDIARTX4090" --quiet

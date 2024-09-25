@@ -1,0 +1,47 @@
+name: MLPerf inference SDXL
+
+on:
+  schedule:
+    - cron: "1 2 * * */3"
+
+jobs:
+  build_reference:
+    if: github.repository_owner == 'gateoverflow'
+    runs-on: [ self-hosted, linux, x64 ]
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        backend: [ "pytorch" ]
+        precision: [ "float16" ]
+    steps:
+    - name: Install dependencies
+      run: |
+        source gh_action/bin/deactivate || python3 -m venv gh_action
+        source gh_action/bin/activate
+        export CM_REPOS=$HOME/GH_CM
+        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+    - name: Test MLPerf Inference SDXL
+      run: |
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=sdxl --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
+
+  build_nvidia:
+      if: github.repository_owner == 'gateoverflow'
+      runs-on: [ self-hosted, linux, x64 ]
+      strategy:
+        fail-fast: false
+        matrix:
+          python-version: [ "3.12" ]
+          backend: [ "tensorrt" ]
+          precision: [ "float16" ]
+          implementation: [ "nvidia" ]
+      steps:
+      - name: Install dependencies
+        run: |
+          source gh_action/bin/deactivate || python3 -m venv gh_action
+          source gh_action/bin/activate
+          export CM_REPOS=$HOME/GH_CM
+          cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+      - name: Test MLPerf Inference SDXL
+        run: |
+          cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=sdxl --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
