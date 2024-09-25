@@ -18,6 +18,7 @@
   },
   "input_mapping": {
     "local_run_file_path": "CUDA_RUN_FILE_LOCAL_PATH",
+    "install_prefix": "CM_CUDA_INSTALL_PREFIX",
     "skip_sudo": "CUDA_SKIP_SUDO"
   },
   "new_env_keys": [
