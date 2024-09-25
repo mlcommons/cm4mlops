@@ -2,6 +2,15 @@ from cmind import utils
 import os
 import subprocess
 
+def preprocess(i):
+
+    env = i['env']
+
+    if str(env.get('CM_CUDA_DEVICES_DETECT_USING_PYCUDA', '')).lower() in [ "1", "yes", "true"]:
+        i['run_script_input']['script_name'] = 'detect'
+
+    return {'return':0} 
+
 def postprocess(i):
 
     env = i['env']
@@ -18,22 +27,36 @@ def postprocess(i):
 
     # properties
     p = {}
+    gpu = {}
+
+    gpu_id = -1
 
     for line in lst:
-        print (line)
+        #print (line)
 
         j = line.find(':')
+
         if j>=0:
-           key = line[:j].strip()
-           val = line[j+1:].strip()
+            key = line[:j].strip()
+            val = line[j+1:].strip()
 
-           p[key] = val
+            if key == "GPU Device ID":
+                gpu_id+=1
+                gpu[gpu_id] = {}
 
-           key_env = 'CM_CUDA_DEVICE_PROP_'+key.upper().replace(' ','_')
-           env[key_env] = val
+            if gpu_id < 0:
+                continue
+
+            gpu[gpu_id][key] = val 
+            p[key] = val
+
+            key_env = 'CM_CUDA_DEVICE_PROP_'+key.upper().replace(' ','_')
+            env[key_env] = val
     
+    state['cm_cuda_num_devices'] = gpu_id
+    env['CM_CUDA_NUM_DEVICES'] = gpu_id
 
     state['cm_cuda_device_prop'] = p
+    state['cm_cuda_devices_prop'] = gpu
     
-    return {'return':0}
-    
+    return {'return':0} 
