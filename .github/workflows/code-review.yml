@@ -13,9 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Run code review via OpenAI
+      # Run code review via OpenAI 
       - name: Run OpenAI Code Review
-        uses: dlidstrom/genai-code-review@v2
+        uses: dlidstrom/genai-code-review@3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openai_api_key: ${{ secrets.openai_api_key }}
