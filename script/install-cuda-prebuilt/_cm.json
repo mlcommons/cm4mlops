@@ -18,7 +18,9 @@
   },
   "input_mapping": {
     "local_run_file_path": "CUDA_RUN_FILE_LOCAL_PATH",
-    "skip_sudo": "CUDA_SKIP_SUDO"
+    "install_prefix": "CM_CUDA_INSTALL_PREFIX",
+    "skip_sudo": "CUDA_SKIP_SUDO",
+    "override-driver-check": "CM_CUDA_DRIVER_INSTALL_OVERRIDE"
   },
   "new_env_keys": [
     "CM_CUDA_*",
@@ -130,6 +132,11 @@
     "12.6.0": {
       "env": {
         "CM_CUDA_LINUX_FILENAME": "cuda_12.6.0_560.28.03_linux.run"
+      }
+    },
+    "12.6.1": {
+      "env": {
+        "CM_CUDA_LINUX_FILENAME": "cuda_12.6.1_560.35.03_linux.run"
       }
     }
   }

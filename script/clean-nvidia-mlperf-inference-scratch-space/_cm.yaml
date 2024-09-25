@@ -10,6 +10,8 @@ tags:
 - mlperf
 - inference
 uid: bb41f6e3608e4e8a
+input_mapping:
+  extra_cache_rm_tags: CM_CLEAN_EXTRA_CACHE_RM_TAGS
 deps:
   # Get Nvidia scratch space where data and models get downloaded
   - tags: get,mlperf,inference,nvidia,scratch,space

@@ -242,6 +242,38 @@ variations:
       CM_RUN_SUBMISSION_CHECKER: 'no'
     group: submission-generation
 
+  scc24-base:
+    base:
+    - short
+    env:
+      CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-base
+    adr:
+      coco2014-preprocessed:
+        tags: _size.50,_with-sample-ids
+      coco2014-dataset:
+        tags: _size.50,_with-sample-ids
+      nvidia-preprocess-data:
+        extra_cache_tags: "scc24-base"
+    deps:
+      - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
+        extra_cache_rm_tags: scc24-main
+
+  scc24-main:
+    base:
+    - short
+    adr:
+      coco2014-preprocessed:
+        tags: _size.500,_with-sample-ids
+      coco2014-dataset:
+        tags: _size.500,_with-sample-ids
+      nvidia-preprocess-data:
+        extra_cache_tags: "scc24-main"
+    env:
+      CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-main
+    deps:
+      - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
+        extra_cache_rm_tags: scc24-base
+
   r2.1:
     env:
       CM_MLPERF_INFERENCE_VERSION: '2.1'
