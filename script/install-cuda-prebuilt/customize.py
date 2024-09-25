@@ -22,6 +22,11 @@ def preprocess(i):
 
     env['CM_CUDA_INSTALL_PREFIX'] = install_prefix
 
+    extra_install_args = ''
+
+    if str(env.get('CM_CUDA_DRIVER_INSTALL_OVERRIDE', '')) != '':
+        extra_install_args += ' --override-driver-check'
+
     recursion_spaces = i['recursion_spaces']
     nvcc_bin = "nvcc"
 
@@ -35,6 +40,8 @@ def preprocess(i):
     env['CM_CUDA_INSTALLED_PATH'] = os.path.join(install_prefix, 'install')
     env['CM_NVCC_BIN_WITH_PATH'] = os.path.join(install_prefix, 'install', 'bin', nvcc_bin)
     env['CM_GET_DEPENDENT_CACHED_PATH'] =  env['CM_NVCC_BIN_WITH_PATH']
+
+    env['CM_CUDA_EXTRA_INSTALL_ARGS'] = extra_install_args
 
     # Set CUDA_RUN_FILE_LOCAL_PATH to empty if not set for backwards compatibility in download file
     env['CUDA_RUN_FILE_LOCAL_PATH'] = env.get('CUDA_RUN_FILE_LOCAL_PATH','')
