@@ -354,6 +354,8 @@ deps:
   - tags: get,ml-model,large-language-model,gptj
     names:
     - ml-model
+    - ml-model-float16
+    - ml-model
     - gptj-model
     - gpt-j-model
     enable_if_env:
@@ -1251,9 +1253,9 @@ variations:
   bfloat16:
     group: precision
     add_deps_recursive:
-      ml-model-bfloat16:
+      ml-model-float16:
         tags:
-          _fp32
+          _fp16
     env:
       CM_MLPERF_QUANTIZATION: off
       CM_MLPERF_MODEL_PRECISION: bfloat16
