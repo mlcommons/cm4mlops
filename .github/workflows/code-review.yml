@@ -15,10 +15,10 @@ jobs:
 
       # Run code review via OpenAI 
       - name: Run OpenAI Code Review
-        uses: dlidstrom/genai-code-review@v3.0.2
+        uses: GATEOverflow/genai-code-review@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           github_pr_id: ${{ github.event.pull_request.number }}
           openai_model: "gpt-4o"
           openai_temperature: 0.5
