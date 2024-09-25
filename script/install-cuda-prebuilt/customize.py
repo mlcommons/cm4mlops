@@ -18,6 +18,10 @@ def preprocess(i):
         supported_versions = list(meta['versions'].keys())
         return {'return': 1, 'error': "Only CUDA versions {} are supported now".format(', '.join(supported_versions))}
 
+    install_prefix = env.get('CM_CUDA_INSTALL_PREFIX', os.getcwd())
+
+    env['CM_CUDA_INSTALL_PREFIX'] = install_prefix
+
     recursion_spaces = i['recursion_spaces']
     nvcc_bin = "nvcc"
 
