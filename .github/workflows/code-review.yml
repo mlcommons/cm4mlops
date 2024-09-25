@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository_owner == 'gateoverflow'
     steps:
-
       # Run code review via OpenAI 
       - name: Run OpenAI Code Review
         uses: GATEOverflow/genai-code-review@v1
