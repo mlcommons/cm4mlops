@@ -15,7 +15,7 @@ jobs:
 
       # Run code review via OpenAI
       - name: Run OpenAI Code Review
-        uses: cirolini/genai-code-review@v2
+        uses: dlidstrom/genai-code-review@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openai_api_key: ${{ secrets.openai_api_key }}
