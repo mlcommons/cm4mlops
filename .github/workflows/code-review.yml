@@ -18,7 +18,7 @@ jobs:
         uses: dlidstrom/genai-code-review@v3.0.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          openai_api_key: ${{ secrets.openai_api_key }}
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           github_pr_id: ${{ github.event.pull_request.number }}
           openai_model: "gpt-4o"
           openai_temperature: 0.5
