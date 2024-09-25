@@ -32,8 +32,8 @@ def preprocess(i):
         extra_options += " --driver"
     env['CUDA_ADDITIONAL_INSTALL_OPTIONS'] = extra_options
 
-    env['CM_CUDA_INSTALLED_PATH'] = os.path.join(os.getcwd(), 'install')
-    env['CM_NVCC_BIN_WITH_PATH'] = os.path.join(os.getcwd(), 'install', 'bin', nvcc_bin)
+    env['CM_CUDA_INSTALLED_PATH'] = os.path.join(install_prefix, 'install')
+    env['CM_NVCC_BIN_WITH_PATH'] = os.path.join(install_prefix, 'install', 'bin', nvcc_bin)
     env['CM_GET_DEPENDENT_CACHED_PATH'] =  env['CM_NVCC_BIN_WITH_PATH']
 
     # Set CUDA_RUN_FILE_LOCAL_PATH to empty if not set for backwards compatibility in download file
