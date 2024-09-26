@@ -558,15 +558,6 @@ deps:
       CM_MODEL:
       - mixtral-8x7b
 
-  ## Kits19 for 3d-unet
-  - tags: get,dataset,kits19,preprocessed
-    names:
-    - kits19-preprocessed
-    enable_if_env:
-      CM_MODEL:
-      - 3d-unet-99
-      - 3d-unet-99.9
-
   ## Librispeech for rnnt
   - tags: get,dataset,librispeech,preprocessed
     names:
@@ -620,6 +611,12 @@ deps:
   - tags: get,generic-python-lib,_package.psutil
 
 prehook_deps:
+  - enable_if_env:
+      CM_REQUIRE_3DUNET_DATASET_DOWNLOAD:
+      - 'yes'
+    names:
+      - kits19-preprocessed
+    tags: get,dataset,kits19,preprocessed
   - names:
     - remote-run-cmds
     tags: remote,run,cmds
