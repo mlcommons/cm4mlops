@@ -34,7 +34,7 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |
-        cm run script --tags=run-mlperf,inference,_find-performance,_full_r4.1-dev --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=0.01 --rerun
+        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --rerun
 
   build_nvidia:
 
@@ -43,7 +43,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ "3.12" ]
-        backend: [ "pytorch" ]
+        backend: [ "tensorrt" ]
         device: [ "cuda" ]
         path_to_llama2_dataset_pickle_file: [ "/mnt/llama2/inference/inference/open_orca/open_orca_gpt4_tokenized_llama.sampled_24576.pkl" ]
 
@@ -59,4 +59,4 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference LLAMA 2 70B NVIDIA implementation
       run: |
-        cm run script --tags=run-mlperf,inference,_find-performance,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=nvidia --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --tp_size=2 --nvidia_llama2_dataset_file_path=${{ matrix.path_to_llama2_dataset_pickle_file }} --target_qps=0.01 --rerun
+        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=nvidia --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --tp_size=2 --nvidia_llama2_dataset_file_path=${{ matrix.path_to_llama2_dataset_pickle_file }} --target_qps=1 --rerun
