@@ -656,7 +656,15 @@ variations:
       - 3d-unet-accuracy-script
       tags: run,accuracy,mlperf,_kits19,_int8
 
-  3d-unet,reference:
+  3d-unet-99,reference:
+    docker:
+      deps:
+        - enable_if_env:
+            CM_MLPERF_DATASET_3DUNET_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,dataset,kits19,preprocessed
+
+  3d-unet-99.9,reference:
     docker:
       deps:
         - enable_if_env:
