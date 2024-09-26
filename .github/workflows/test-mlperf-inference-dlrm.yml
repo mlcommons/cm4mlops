@@ -1,0 +1,85 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: MLPerf inference GPT-J
+
+on:
+  pull_request:
+    branches: [ "main1", "dev1" ]
+    paths:
+      - '.github/workflows/test-mlperf-inference-gptj.yml'
+      - '**'
+      - '!**.md'
+
+jobs:
+  build_reference:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        backend: [ "pytorch" ]
+        device: [ "cpu", "cuda" ]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install cmind
+        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+    - name: Test MLPerf Inference DLRM-v2 reference implementation
+      run: |
+        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=dlrm-v2-99 --implementation=reference --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker --quiet --test_query_count=1 --target_qps=0.01 --rerun
+
+  build_nvidia:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        backend: [ "tensorrt" ]
+        device: [ "cuda" ]
+        
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install cmind
+        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+    - name: Test MLPerf Inference DLRM-v2 NVIDIA implementation
+      run: |
+        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=dlrm-v2-99 --implementation=nvidia --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1
+
+  build_intel:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        backend: [ "pytorch" ]
+        device: [ "cpu" ]
+        
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install cmind
+        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+    - name: Test MLPerf Inference DLRM-v2 INTEL implementation
+      run: |
+        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=dlrm-v2-99 --implementation=intel --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1
