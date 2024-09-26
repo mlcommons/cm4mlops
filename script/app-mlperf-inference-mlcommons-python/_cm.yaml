@@ -1074,7 +1074,10 @@ variations:
       CM_MLPERF_MODEL_SKIP_BATCHING: true
     deps:
     - tags: get,generic-python-lib,_package.nibabel
-    - tags: get,generic-python-lib,_package.scipy==1.10.1
+    - tags: get,generic-python-lib,_package.scipy
+      names:
+        - scipy
+      version: 1.10.1
 
   dlrm-v2-99.9:
     group: models
