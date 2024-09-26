@@ -348,7 +348,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
         cmd = env['CM_PYTHON_BIN_WITH_PATH']+ " run.py --backend=" + backend + " --scenario="+env['CM_MLPERF_LOADGEN_SCENARIO'] + \
             env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
             " --model="+env['CM_ML_MODEL_FILE_WITH_PATH'] + \
-            " --preprocessed_data_dir="+env['CM_DATASET_PREPROCESSED_PATH'] + \
+            " --preprocessed_data_dir="+env['CM_DATASET_KITS19_PREPROCESSED_PATH'] + \
             scenario_extra_options + mode_extra_options + dataset_options
 
         env['LOG_PATH'] = env['CM_MLPERF_OUTPUT_DIR']
