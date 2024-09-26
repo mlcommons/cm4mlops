@@ -26,13 +26,19 @@ if [[ ${CM_DATASET_CALIBRATION} == "no" ]]; then
   cmd="./download-coco-2014.sh -d ${INSTALL_DIR}  ${max_images}"
   echo $cmd
   eval $cmd
-  test $? -eq 0 || exit 1
+  test $? -eq 0 || exit $?
 else
   cmd="./download-coco-2014-calibration.sh -d ${INSTALL_DIR}"
   echo $cmd
   eval $cmd
-  test $? -eq 0 || exit 1
+  test $? -eq 0 || exit $?
+fi
+if [[ ${CM_GENERATE_SAMPLE_ID} == "yes" ]]; then
+  cmd="python3 sample_ids.py --tsv-path ${INSTALL_DIR}/captions/captions.tsv --output-path ${INSTALL_DIR}/sample_ids.txt"
+  echo $cmd
+  eval $cmd
+  test $? -eq 0 || exit $?
 fi
 cd ${INSTALL_DIR}
 
-test $? -eq 0 || exit 1
+test $? -eq 0 || exit $?
