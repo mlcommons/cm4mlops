@@ -185,8 +185,9 @@ deps:
   ## Pytorch (CPU)
   - tags: get,generic-python-lib,_torch
     names:
-    - ml-engine-pytorch
-    - pytorch
+      - torch
+      - ml-engine-pytorch
+      - pytorch
     skip_if_env:
       CM_MODEL:
         - dlrm-v2-99
@@ -838,6 +839,9 @@ variations:
       MLPERF_TVM_TORCH_QUANTIZED_ENGINE: qnnpack
     deps:
     - tags: get,generic-python-lib,_torch
+      names:
+        - torch
+        - pytorch
     - tags: get,tvm
       names:
       - tvm
@@ -865,7 +869,6 @@ variations:
 
   gptj_:
     deps:
-    - tags: get,generic-python-lib,_torch
     - tags: get,generic-python-lib,_package.datasets
     - tags: get,generic-python-lib,_package.attrs
     - tags: get,generic-python-lib,_package.accelerate
@@ -1099,6 +1102,10 @@ variations:
       - dlrm-src
     # to force the version
     - tags: get,generic-python-lib,_torch
+      names:
+        - torch
+        - pytorch
+        - ml-engine-pytorch
       version: "1.13.1"
     - tags: get,generic-python-lib,_mlperf_logging
     - tags: get,generic-python-lib,_opencv-python
