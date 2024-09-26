@@ -133,6 +133,7 @@ def preprocess(i):
     ad = inp.get('ad', {})
     adr = inp.get('adr', {})
     docker_it = inp.get('docker_it', '')
+    docker_dt = inp.get('docker_dt', '')
     adr_from_meta = i['run_script_input'].get('add_deps_recursive')
 
     for key in adr_from_meta:
@@ -237,7 +238,7 @@ def preprocess(i):
                 env['CM_MLPERF_INFERENCE_RESULTS_DIR_'] = os.path.join(env['OUTPUT_BASE_DIR'], f"{env['CM_MLPERF_RUN_STYLE']}_results")
 
             if action == "docker":
-                if str(docker_it).lower() not in ["no", "false", "0"]:
+                if str(docker_dt).lower() not in ["yes", "true", "1"]:
                     print(f"\nStop Running loadgen scenario: {scenario} and mode: {mode}")
                     return {'return': 0} # We run commands interactively inside the docker container
                 else:

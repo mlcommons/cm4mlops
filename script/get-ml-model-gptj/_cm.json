@@ -231,7 +231,7 @@
           "tags": "get,nvidia,scratch,space"
         },
         {
-          "tags": "get,cuda-devices"
+          "tags": "get,cuda-devices,_with-pycuda"
         },
         {
           "tags": "get,ml-model,gpt-j,_fp32,_pytorch",

@@ -180,8 +180,11 @@ def preprocess(i):
 
     f.write(EOL+'# Install python packages' + EOL)
     python = get_value(env, config, 'PYTHON', 'CM_DOCKERFILE_PYTHON')
-    f.write('RUN {} -m venv /home/cmuser/venv/cm'.format(python) + " " + EOL)
-    f.write('ENV PATH="/home/cmuser/venv/cm/bin:$PATH"' + EOL)
+
+    docker_use_virtual_python = env.get('CM_DOCKER_USE_VIRTUAL_PYTHON', "yes")
+    if str(docker_use_virtual_python).lower() not in [ "no", "0", "false"]:
+        f.write('RUN {} -m venv /home/cmuser/venv/cm'.format(python) + " " + EOL)
+        f.write('ENV PATH="/home/cmuser/venv/cm/bin:$PATH"' + EOL)
     #f.write('RUN . /opt/venv/cm/bin/activate' + EOL)
     f.write('RUN {} -m pip install '.format(python) + " ".join(get_value(env, config, 'python-packages')) + ' ' + pip_extra_flags + ' ' + EOL)
 
