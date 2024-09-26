@@ -1,20 +1,16 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: MLPerf inference GPT-J
+name: MLPerf inference LLAMA 2 70B
 
 on:
-  pull_request:
-    branches: [ "main1", "dev1" ]
-    paths:
-      - '.github/workflows/test-mlperf-inference-gptj.yml'
-      - '**'
-      - '!**.md'
+  schedule:
+    - cron: "1 2 * * *"
 
 jobs:
   build_reference:
-
-    runs-on: ubuntu-latest
+    if: github.repository_owner == 'gateoverflow'
+    runs-on: [ self-hosted, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
@@ -23,18 +19,15 @@ jobs:
         device: [ "cpu", "cuda" ]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python3 -m pip install cmind
+        source gh_action/bin/deactivate || python3 -m venv gh_action
+        source gh_action/bin/activate
+        export CM_REPOS=$HOME/GH_CM
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |
-        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --clean
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
 
   build_nvidia:
 
@@ -59,4 +52,4 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference LLAMA 2 70B NVIDIA implementation
       run: |
-        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=nvidia --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --tp_size=2 --nvidia_llama2_dataset_file_path=${{ matrix.path_to_llama2_dataset_pickle_file }} --target_qps=1 --clean
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=nvidia --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --tp_size=2 --nvidia_llama2_dataset_file_path=${{ matrix.path_to_llama2_dataset_pickle_file }} --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
