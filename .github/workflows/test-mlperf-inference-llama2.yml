@@ -34,7 +34,7 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |
-        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --rerun
+        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --clean
 
   build_nvidia:
 
@@ -59,4 +59,4 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference LLAMA 2 70B NVIDIA implementation
       run: |
-        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=nvidia --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --tp_size=2 --nvidia_llama2_dataset_file_path=${{ matrix.path_to_llama2_dataset_pickle_file }} --target_qps=1 --rerun
+        cm run script --tags=run-mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=llama2-70b-99 --implementation=nvidia --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --tp_size=2 --nvidia_llama2_dataset_file_path=${{ matrix.path_to_llama2_dataset_pickle_file }} --target_qps=1 --clean
