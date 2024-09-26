@@ -385,6 +385,7 @@ variations:
       CM_IMAGENET_ACCURACY_DTYPE: int32
       CM_CNNDM_ACCURACY_DTYPE: int32
       CM_LIBRISPEECH_ACCURACY_DTYPE: int8
+      CM_DOCKER_USE_VIRTUAL_PYTHON: no
     prehook_deps:
       - names:
          - nvidia-original-mlperf-inference
