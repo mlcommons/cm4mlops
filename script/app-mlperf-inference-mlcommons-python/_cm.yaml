@@ -446,9 +446,6 @@ deps:
       CM_MODEL:
       - 3d-unet-99
       - 3d-unet-99.9
-    skip_if_env:
-      CM_MLPERF_DATASET_3DUNET_DOWNLOAD_TO_HOST:
-        - 'yes'
 
   ## Rnnt
   - tags: get,ml-model,speech-recognition,rnnt
@@ -569,6 +566,9 @@ deps:
       CM_MODEL:
       - 3d-unet-99
       - 3d-unet-99.9
+    skip_if_env:
+      CM_MLPERF_DATASET_3DUNET_DOWNLOAD_TO_HOST:
+        - 'yes'
 
   ## Librispeech for rnnt
   - tags: get,dataset,librispeech,preprocessed
