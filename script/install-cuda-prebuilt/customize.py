@@ -7,10 +7,25 @@ def preprocess(i):
 
     env = i['env']
 
+    if str(env.get('CUDA_SKIP_SUDO','')).lower() == 'true':
+        env['CM_SUDO'] = ''
+
+    meta = i['meta']
     automation = i['automation']
     version = env.get('CM_VERSION')
+
     if version not in env.get('CM_CUDA_LINUX_FILENAME', ''):
-        return {'return': 1, 'error': "Only CUDA versions 11.7.0, 11.8.0, 12.0.0, 12.1.1, 12.2.0, 12.3.2 and 12.4.1 are supported now!"}
+        supported_versions = list(meta['versions'].keys())
+        return {'return': 1, 'error': "Only CUDA versions {} are supported now".format(', '.join(supported_versions))}
+
+    install_prefix = env.get('CM_CUDA_INSTALL_PREFIX', os.getcwd())
+
+    env['CM_CUDA_INSTALL_PREFIX'] = install_prefix
+
+    extra_install_args = ''
+
+    if str(env.get('CM_CUDA_DRIVER_INSTALL_OVERRIDE', '')) != '':
+        extra_install_args += ' --override-driver-check'
 
     recursion_spaces = i['recursion_spaces']
     nvcc_bin = "nvcc"
@@ -22,9 +37,11 @@ def preprocess(i):
         extra_options += " --driver"
     env['CUDA_ADDITIONAL_INSTALL_OPTIONS'] = extra_options
 
-    env['CM_CUDA_INSTALLED_PATH'] = os.path.join(os.getcwd(), 'install')
-    env['CM_NVCC_BIN_WITH_PATH'] = os.path.join(os.getcwd(), 'install', 'bin', nvcc_bin)
+    env['CM_CUDA_INSTALLED_PATH'] = os.path.join(install_prefix, 'install')
+    env['CM_NVCC_BIN_WITH_PATH'] = os.path.join(install_prefix, 'install', 'bin', nvcc_bin)
     env['CM_GET_DEPENDENT_CACHED_PATH'] =  env['CM_NVCC_BIN_WITH_PATH']
+
+    env['CM_CUDA_EXTRA_INSTALL_ARGS'] = extra_install_args
 
     # Set CUDA_RUN_FILE_LOCAL_PATH to empty if not set for backwards compatibility in download file
     env['CUDA_RUN_FILE_LOCAL_PATH'] = env.get('CUDA_RUN_FILE_LOCAL_PATH','')

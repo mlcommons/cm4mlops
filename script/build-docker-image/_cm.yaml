@@ -42,5 +42,4 @@ prehook_deps:
 - enable_if_env:
     CM_BUILD_DOCKERFILE:
     - 'yes'
-    - '1'
   tags: build,dockerfile

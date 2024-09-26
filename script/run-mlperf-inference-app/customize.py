@@ -23,8 +23,10 @@ def preprocess(i):
         return {'return':0}
 
     dump_version_info = env.get('CM_DUMP_VERSION_INFO', True)
-    system_meta = state['CM_SUT_META']
-    env['CM_SUT_META_EXISTS'] = "yes"
+
+    system_meta = state.get('CM_SUT_META', {})
+    if system_meta:
+        env['CM_SUT_META_EXISTS'] = "yes"
 
     env['CM_MODEL'] = env['CM_MLPERF_MODEL']
 
@@ -98,6 +100,7 @@ def preprocess(i):
     if env.get('OUTPUT_BASE_DIR', '') == '':
         env['OUTPUT_BASE_DIR'] = env.get('CM_MLPERF_INFERENCE_RESULTS_DIR', os.getcwd())
 
+    
     test_list = ["TEST01",  "TEST05"]
     if env['CM_MODEL']  in ["resnet50"]:
         test_list.append("TEST04")
@@ -129,6 +132,8 @@ def preprocess(i):
     add_deps = inp.get('add_deps', {})
     ad = inp.get('ad', {})
     adr = inp.get('adr', {})
+    docker_it = inp.get('docker_it', '')
+    docker_dt = inp.get('docker_dt', '')
     adr_from_meta = i['run_script_input'].get('add_deps_recursive')
 
     for key in adr_from_meta:
@@ -178,11 +183,12 @@ def preprocess(i):
 
     if str(env.get('CM_MLPERF_USE_DOCKER', '')).lower() in [ "1", "true", "yes"]:
         action = "docker"
-        del(env['OUTPUT_BASE_DIR'])
+        #del(env['OUTPUT_BASE_DIR'])
         state = {}
         docker_extra_input = {}
 
-        del(env['CM_HW_NAME'])
+        #if env.get('CM_HW_NAME'):
+        #    del(env['CM_HW_NAME'])
 
         for k in inp:
             if k.startswith("docker_"):
@@ -213,19 +219,31 @@ def preprocess(i):
         for mode in env['CM_MLPERF_LOADGEN_MODES']:
             env['CM_MLPERF_LOADGEN_MODE'] = mode
 
+            env_copy = copy.deepcopy(env)
             print(f"\nRunning loadgen scenario: {scenario} and mode: {mode}")
             ii = {'action':action, 'automation':'script', 'tags': scenario_tags, 'quiet': 'true',
-                'env': copy.deepcopy(env), 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
+                'env': env_copy, 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
                 copy.deepcopy(add_deps_recursive), 'ad': ad, 'adr': copy.deepcopy(adr), 'v': verbose, 'print_env': print_env, 'print_deps': print_deps, 'dump_version_info': dump_version_info}
+
             if action == "docker":
                 for k in docker_extra_input:
                     ii[k] = docker_extra_input[k]
             r = cm.access(ii)
             if r['return'] > 0:
                 return r
-            if action == "docker":
-                return {'return': 0} # We run commands interactively inside the docker container
 
+            if env_copy.get('CM_MLPERF_INFERENCE_FINAL_RESULTS_DIR', '') != '':
+                env['CM_MLPERF_INFERENCE_RESULTS_DIR_'] = env_copy['CM_MLPERF_INFERENCE_FINAL_RESULTS_DIR']
+            else:
+                env['CM_MLPERF_INFERENCE_RESULTS_DIR_'] = os.path.join(env['OUTPUT_BASE_DIR'], f"{env['CM_MLPERF_RUN_STYLE']}_results")
+
+            if action == "docker":
+                if str(docker_dt).lower() not in ["yes", "true", "1"]:
+                    print(f"\nStop Running loadgen scenario: {scenario} and mode: {mode}")
+                    return {'return': 0} # We run commands interactively inside the docker container
+                else:
+                    container_id = env_copy['CM_DOCKER_CONTAINER_ID']
+                    env['CM_DOCKER_CONTAINER_ID'] = container_id
             if state.get('docker', {}):
                 del(state['docker'])
 

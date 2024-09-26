@@ -45,6 +45,7 @@ new_env_keys:
 - CM_DATASET_ANNOTATIONS_DIR_PATH
 - CM_DATASET_ANNOTATIONS_FILE_PATH
 - CM_CALIBRATION_DATASET_PATH
+- CM_COCO2014_SAMPLE_ID_PATH
 
 posthook_deps:
 - enable_if_env:
@@ -83,6 +84,9 @@ variations:
     env:
       CM_DATASET_SIZE: '#'
     group: size
+  with-sample-ids:
+    env:
+      CM_GENERATE_SAMPLE_ID: 'yes'
   validation:
     default: true
     env:

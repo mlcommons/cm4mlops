@@ -1,3 +1,6 @@
+### 20240916
+ * fixed "cm add script"
+
 ### 20240429
  * Added `cm set cfg` automation. For example, we can set default CM script to silent
    using `cm set cfg default --key.script.silent`

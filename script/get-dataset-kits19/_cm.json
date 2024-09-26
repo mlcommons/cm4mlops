@@ -15,6 +15,13 @@
   "deps": [
     {
       "tags": "detect,os"
+    },
+    {
+      "names": [
+        "python3",
+        "python"
+      ],
+      "tags": "get,python3"
     }
   ],
   "new_env_keys": [
