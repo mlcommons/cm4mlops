@@ -21,7 +21,7 @@ def preprocess(i):
     input_args = []
     copy_files = []
 
-    if 'CM_DOCKER_RUN_SCRIPT_TAGS' in env:
+    if env.get('CM_DOCKER_RUN_SCRIPT_TAGS', '') != '':
         script_tags=env['CM_DOCKER_RUN_SCRIPT_TAGS']
         found_scripts = cm.access({'action': 'search', 'automation': 'script', 'tags': script_tags})
         scripts_list = found_scripts['list']
@@ -62,7 +62,7 @@ def preprocess(i):
     else:
         cm_mlops_repo_branch_string = ""
 
-    if 'CM_DOCKERFILE_WITH_PATH' not in env:
+    if env.get('CM_DOCKERFILE_WITH_PATH', '') == '':
         env['CM_DOCKERFILE_WITH_PATH'] = os.path.join(os.getcwd(), "Dockerfile")
 
     dockerfile_with_path = env['CM_DOCKERFILE_WITH_PATH']
@@ -180,9 +180,10 @@ def preprocess(i):
 
     f.write(EOL+'# Install python packages' + EOL)
     python = get_value(env, config, 'PYTHON', 'CM_DOCKERFILE_PYTHON')
-    f.write('RUN {} -m venv cm-venv'.format(python) + " " + EOL)
-    f.write('RUN . cm-venv/bin/activate' + EOL)
-    f.write('RUN {} -m pip install --user '.format(python) + " ".join(get_value(env, config, 'python-packages')) + ' ' + pip_extra_flags + ' ' + EOL)
+    f.write('RUN {} -m venv /home/cmuser/venv/cm'.format(python) + " " + EOL)
+    f.write('ENV PATH="/home/cmuser/venv/cm/bin:$PATH"' + EOL)
+    #f.write('RUN . /opt/venv/cm/bin/activate' + EOL)
+    f.write('RUN {} -m pip install '.format(python) + " ".join(get_value(env, config, 'python-packages')) + ' ' + pip_extra_flags + ' ' + EOL)
 
     f.write(EOL+'# Download CM repo for scripts' + EOL)
 
@@ -259,6 +260,8 @@ def preprocess(i):
 
         s = r['string']
         f.write(s + EOL)
+
+    print(f"""Dockerfile written at {dockerfile_with_path}""")
 
     f.close()
 

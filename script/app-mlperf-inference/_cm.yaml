@@ -263,12 +263,10 @@ variations:
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_GPTJ:
               - "yes"
-              - "True"
         - tags: get,ml-model,gptj,_nvidia,_fp8
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_GPTJ:
               - "yes"
-              - "True"
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
             _tp-size.:
@@ -276,7 +274,6 @@ variations:
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_LLAMA2_70B:
               - "yes"
-              - "True"
         - tags: get,dataset,imagenet,validation,original,_full
           names:
             - imagenet-original
@@ -284,12 +281,17 @@ variations:
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_RESNET50:
               - "yes"
-              - "True"
         - tags: get,dlrm,data,mlperf,inference,_nvidia
           skip_if_env:
             CM_MLPERF_NVIDIA_SKIP_DLRM:
               - "yes"
-              - "True"
+        - enable_if_env:
+            CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,ml-model,sdxl,_fp16,_rclone
+          skip_if_env:
+            CM_MLPERF_NVIDIA_SKIP_SDXL:
+              - "yes"
       env:
         BUILD_TRTLLM: 1
 
@@ -307,7 +309,7 @@ variations:
 
   nvidia-original,r4.1_default:
     docker:
-      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.1-cuda12.4-pytorch24.04-ubuntu22.04-x86_64-release
 
   nvidia-original,r4.1_default,gptj_:
     docker:
@@ -349,6 +351,8 @@ variations:
       os_version: "20.04"
       deps:
         - tags: get,mlperf,inference,nvidia,scratch,space
+          names:
+            - mlperf-inference-nvidia-scratch-space
         - tags: get,nvidia-docker
           skip_if_env:
             CM_SKIP_GET_NVIDIA_DOCKER:
@@ -659,7 +663,7 @@ variations:
       CM_MODEL: stable-diffusion-xl
       CM_MLPERF_INFERENCE_TEST_QPS: "0.05"
     default_variations:
-      precision: float16
+      precision: float32
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _sdxl
@@ -674,6 +678,38 @@ variations:
       - mlperf-accuracy-script
       - coco2014-accuracy-script
       tags: run,accuracy,mlperf,_coco2014
+
+  sdxl,nvidia-original:
+    docker:
+      deps:
+        - enable_if_env:
+            CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,ml-model,sdxl,_fp16,_rclone
+
+  sdxl,reference,float16:
+    docker:
+      deps:
+        - enable_if_env:
+            CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,ml-model,sdxl,_fp16,_rclone
+
+  sdxl,reference,bfloat16:
+    docker:
+      deps:
+        - enable_if_env:
+            CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,ml-model,sdxl,_fp16,_rclone
+
+  sdxl,reference,float32:
+    docker:
+      deps:
+        - enable_if_env:
+            CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,ml-model,sdxl,_fp32,_rclone
 
   llama2-70b_:
     env:
@@ -1114,6 +1150,9 @@ variations:
       all_gpus: 'yes'
       deps:
         - tags: get,nvidia-docker 
+          skip_if_env:
+            CM_SKIP_GET_NVIDIA_DOCKER:
+              - yes
     group:
       device
     env:
@@ -1123,7 +1162,7 @@ variations:
       mlperf-inference-implementation:
         tags: _cuda
     deps:
-      - tags: get,cuda-devices
+      - tags: get,cuda-devices,_with-pycuda
         skip_if_env:
           CM_CUDA_DEVICE_PROP_GLOBAL_MEMORY:
             - "yes"
@@ -1208,7 +1247,7 @@ variations:
     group: precision
     env:
       CM_MLPERF_QUANTIZATION: off
-      CM_MLPERF_MODEL_PRECISION: float32
+      CM_MLPERF_MODEL_PRECISION: float16
     add_deps_recursive:
       python-reference-mlperf-inference:
         tags: _float16
@@ -1219,7 +1258,7 @@ variations:
     group: precision
     env:
       CM_MLPERF_QUANTIZATION: off
-      CM_MLPERF_MODEL_PRECISION: float32
+      CM_MLPERF_MODEL_PRECISION: bfloat16
     add_deps_recursive:
       python-reference-mlperf-inference:
         tags: _bfloat16
@@ -1392,6 +1431,7 @@ variations:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3-cp38-cp38-linux_x86_64.whl'
 
         #uses public code for inference v4.1
+
   r4.1-dev_default:
     group:
       reproducibility
@@ -1415,19 +1455,19 @@ variations:
       reproducibility
     add_deps_recursive:
       nvidia-inference-common-code:
-        version: r4.0
+        version: r4.1
         tags: _go
       nvidia-inference-server:
-        version: r4.0
+        version: r4.1
         tags: _go
       intel-harness:
-        tags: _v4.0
+        tags: _v4.1
     default_env:
       CM_SKIP_SYS_UTILS: 'yes'
       CM_REGENERATE_MEASURE_FILES: 'yes'
     env:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
-
+      CM_MLPERF_INFERENCE_VERSION: '4.1'
 
 invalid_variation_combinations:
   -
@@ -1523,19 +1563,30 @@ docker:
   use_host_user_id: True
   deps:
     - tags: get,mlperf,inference,results,dir,local
+      names:
+      - get-mlperf-inference-results-dir
+      skip_if_env:
+        OUTPUT_BASE_DIR: [ on ]
     - tags: get,mlperf,inference,submission,dir,local
+      names:
+      - get-mlperf-inference-submission-dir
+      skip_if_env:
+        CM_MLPERF_INFERENCE_SUBMISSION_DIR: [ on ]
+
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
   mounts:
    - "${{ CM_DATASET_IMAGENET_PATH }}:${{ CM_DATASET_IMAGENET_PATH }}"
    - "${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR }}"
+   - "${{ OUTPUT_BASE_DIR }}:${{ OUTPUT_BASE_DIR }}"
    - "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}"
    - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
    - "${{ CM_CRITEO_PREPROCESSED_PATH }}:${{ CM_CRITEO_PREPROCESSED_PATH }}"
    - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
    - "${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}:${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}"
+   - "${{ SDXL_CHECKPOINT_PATH }}:${{ SDXL_CHECKPOINT_PATH }}"
   skip_run_cmd: 'no'
   shm_size: '32gb'
   interactive: True

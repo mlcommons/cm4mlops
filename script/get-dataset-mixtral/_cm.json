@@ -7,40 +7,32 @@
   "new_env_keys": [
     "CM_DATASET_*"
   ],
-  "deps":[
-    {
-      "tags": "detect,detect-os"
-    },
-    {
-      "skip_if_env": {
-        "CM_HOST_OS_TYPE": [
-          "windows"
-        ]
-      },
-      "tags": "get,rclone"
-    },
-    {
-      "enable_if_env": {
-        "CM_HOST_OS_TYPE": [
-          "windows"
-        ]
-      },
-      "tags": "get,rclone"
-    }
-  ],
   "tags": [
     "get",
     "dataset-mixtral",
     "openorca-mbxp-gsm8k-combined"
   ],
   "uid": "89e7c91444804775",
+  "prehook_deps": [
+    {
+      "tags": "download-and-extract",
+      "env": {
+        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_DATASET_PREPROCESSED_PATH"
+      },
+      "update_tags_from_env_with_prefix": {
+        "_url.": [ "CM_PACKAGE_URL" ]
+      },
+      "force_cache": true,
+      "extra_cache_tags": "mixtral,get-mixtral-dataset"
+    }
+  ],
   "variations": {
     "mlcommons-storage":{
       "default":true,
       "env":{
-        "CM_RCLONE_WINDOWS_URL": "https://inference.mlcommons-storage.org/mixtral_8x7b%%2F2024.06.06_mixtral_15k_v4.pkl",
-        "CM_RCLONE_LINUX_URL": "https://inference.mlcommons-storage.org/mixtral_8x7b%2F2024.06.06_mixtral_15k_v4.pkl",
-        "CM_DATASET_FILE_NAME": "2024.06.06_mixtral_15k_v4.pkl"
+        "CM_PACKAGE_URL": "https://inference.mlcommons-storage.org/mixtral_8x7b%2F2024.06.06_mixtral_15k_v4.pkl",
+        "CM_DOWNLOAD_FILENAME": "2024.06.06_mixtral_15k_v4.pkl",
+        "CM_DOWNLOAD_CHECKSUM": "78823c13e0e73e518872105c4b09628b"
       },
       "group": "download-source"
     }

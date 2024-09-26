@@ -185,8 +185,9 @@ deps:
   ## Pytorch (CPU)
   - tags: get,generic-python-lib,_torch
     names:
-    - ml-engine-pytorch
-    - pytorch
+      - torch
+      - ml-engine-pytorch
+      - pytorch
     skip_if_env:
       CM_MODEL:
         - dlrm-v2-99
@@ -216,6 +217,7 @@ deps:
   - tags: get,generic-python-lib,_torchvision
     names:
     - ml-engine-torchvision
+    - torchvision
     skip_if_env:
       CM_MODEL:
         - dlrm-v2-99
@@ -231,6 +233,7 @@ deps:
   - tags: get,generic-python-lib,_torchvision_cuda
     names:
     - ml-engine-torchvision
+    - torchvision
     enable_if_env:
       CM_MLPERF_BACKEND:
       - pytorch
@@ -398,9 +401,14 @@ deps:
     enable_if_env:
       CM_MODEL:
       - stable-diffusion-xl
-    skip_if_env:
+    skip_if_any_env:
       CM_MLPERF_CUSTOM_MODEL_PATH:
       - "on"
+    skip_if_env:
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
+      CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+      - 'yes'
 
   ## LLAMA2-70B
   - tags: get,ml-model,llama2
@@ -528,6 +536,7 @@ deps:
   - tags: get,dataset,coco2014,_validation
     names:
     - coco2014-preprocessed
+    - coco2014-dataset
     enable_if_env:
       CM_MODEL:
       - stable-diffusion-xl
@@ -585,6 +594,9 @@ deps:
   - tags: generate,user-conf,mlperf,inference
     names:
     - user-conf-generator
+    skip_if_env:
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
 
   # Install MLPerf loadgen
   - tags: get,loadgen
@@ -686,6 +698,13 @@ variations:
     add_deps_recursive:
       pytorch:
         tags: _rocm
+      torchvision:
+        tags: _rocm
+
+  rocm,sdxl:
+    add_deps:
+      mlperf-implementation:
+        tags: _repo.https://github.com/gateoverflow/inference
 
   ray:
     group: framework
@@ -780,6 +799,9 @@ variations:
       CM_MLPERF_BACKEND_VERSION: <<<CM_ONNXRUNTIME_VERSION>>>
     deps:
     - tags: get,generic-python-lib,_onnx
+    - tags: get,generic-python-lib,_numpy
+      version_max: "1.26.4"
+      version_max_usable: "1.26.4"
     - tags: get,tvm
       names:
       - tvm
@@ -817,6 +839,9 @@ variations:
       MLPERF_TVM_TORCH_QUANTIZED_ENGINE: qnnpack
     deps:
     - tags: get,generic-python-lib,_torch
+      names:
+        - torch
+        - pytorch
     - tags: get,tvm
       names:
       - tvm
@@ -844,7 +869,6 @@ variations:
 
   gptj_:
     deps:
-    - tags: get,generic-python-lib,_torch
     - tags: get,generic-python-lib,_package.datasets
     - tags: get,generic-python-lib,_package.attrs
     - tags: get,generic-python-lib,_package.accelerate
@@ -906,6 +930,9 @@ variations:
       - tags: get,generic-python-lib,_package.transformers
         names:
           - transformers
+      - tags: get,generic-python-lib,_package.torchvision
+        names:
+          - torchvision
       - tags: get,generic-python-lib,_package.accelerate
         names:
           - accelerate
@@ -1075,6 +1102,10 @@ variations:
       - dlrm-src
     # to force the version
     - tags: get,generic-python-lib,_torch
+      names:
+        - torch
+        - pytorch
+        - ml-engine-pytorch
       version: "1.13.1"
     - tags: get,generic-python-lib,_mlperf_logging
     - tags: get,generic-python-lib,_opencv-python
@@ -1216,9 +1247,9 @@ variations:
   float16:
     group: precision
     add_deps_recursive:
-      ml-model:
+      ml-model-float16:
         tags:
-          _fp32
+          _fp16
     env:
       CM_MLPERF_QUANTIZATION: off
       CM_MLPERF_MODEL_PRECISION: float16
@@ -1227,9 +1258,9 @@ variations:
   bfloat16:
     group: precision
     add_deps_recursive:
-      ml-model:
+      ml-model-float16:
         tags:
-          _fp32
+          _fp16
     env:
       CM_MLPERF_QUANTIZATION: off
       CM_MLPERF_MODEL_PRECISION: bfloat16

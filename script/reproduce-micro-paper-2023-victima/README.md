@@ -1,1 +1,0 @@
-Please see [https://docs.mlcommons.org/cm4mlops/scripts/Reproducibility-and-artifact-evaluation/reproduce-micro-paper-2023-victima](https://docs.mlcommons.org/cm4mlops/scripts/Reproducibility-and-artifact-evaluation/reproduce-micro-paper-2023-victima) for the documentation of this CM script.

@@ -51,6 +51,9 @@ def preprocess(i):
             filename = filename[:-3] # leave only .tar
             env['CM_EXTRACT_TOOL_OPTIONS'] = ' -xvf'
             env['CM_EXTRACT_TOOL'] = 'tar '
+        elif os_info['platform'] == 'darwin':
+            env['CM_EXTRACT_TOOL_OPTIONS'] = ' -xvzf '
+            env['CM_EXTRACT_TOOL'] = 'tar '
         else:
             env['CM_EXTRACT_TOOL_OPTIONS'] = ' --skip-old-files -xvzf '
             env['CM_EXTRACT_TOOL'] = 'tar '

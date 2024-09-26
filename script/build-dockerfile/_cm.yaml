@@ -56,7 +56,6 @@ post_deps:
 - enable_if_env:
     CM_BUILD_DOCKER_IMAGE:
     - 'yes'
-    - '1'
   names:
   - build-docker-image
   tags: build,docker,image
