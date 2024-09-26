@@ -447,7 +447,7 @@ deps:
       - 3d-unet-99
       - 3d-unet-99.9
     skip_if_env:
-      CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+      CM_MLPERF_DATASET_3DUNET_DOWNLOAD_TO_HOST:
         - 'yes'
 
   ## Rnnt
