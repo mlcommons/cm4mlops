@@ -1,14 +1,20 @@
-name: Linkspector
-on: [pull_request]
+name: "Check .md README files for broken links"
+
+on:
+  push: 
+    branches: 
+    - master
+
 jobs:
-  check-links:
-    name: runner / linkspector
+  markdown-link-check:
     runs-on: ubuntu-latest
+    # check out the latest version of the code
     steps:
-      - uses: actions/checkout@v4
-      - name: Run linkspector
-        uses: umbrelladocs/action-linkspector@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
-          fail_on_error: true
+    - uses: actions/checkout@v4
+
+    # Checks the status of hyperlinks in .md files in verbose mode
+    - name: Check links
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'yes'
+        check-modified-files-only: 'yes'
