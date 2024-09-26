@@ -83,6 +83,19 @@
       "deps": [
         {
           "tags": "get,rclone"
+        },
+        {
+          "tags": "get,rclone-config",
+          "update_tags_from_env_with_prefix": {
+            "_": [
+              "CM_RCLONE_CONFIG_NAME"
+	    ]
+          },
+          "enable_if_env": {
+            "CM_RCLONE_CONFIG_NAME": [
+              "on"
+            ]
+          }
         }
       ],
       "env": {

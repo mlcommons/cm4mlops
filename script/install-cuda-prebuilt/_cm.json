@@ -2,34 +2,29 @@
   "alias": "install-cuda-prebuilt",
   "automation_alias": "script",
   "automation_uid": "5b4e0237da074764",
-  "category": "CUDA automation",
   "cache": true,
+  "category": "CUDA automation",
+  "default_env": {
+    "CM_SUDO": "sudo"
+  },
   "default_version": "11.8.0",
   "deps": [
     {
       "tags": "detect,os"
     }
   ],
+  "docker": {
+    "run": true
+  },
   "input_mapping": {
-    "local_run_file_path": "CUDA_RUN_FILE_LOCAL_PATH"
+    "local_run_file_path": "CUDA_RUN_FILE_LOCAL_PATH",
+    "install_prefix": "CM_CUDA_INSTALL_PREFIX",
+    "skip_sudo": "CUDA_SKIP_SUDO",
+    "override-driver-check": "CM_CUDA_DRIVER_INSTALL_OVERRIDE"
   },
-  "default_env": {
-    "CM_SUDO": "sudo"
-  },
-  "prehook_deps": [
-    {
-      "tags": "download,file",
-      "names": [ "download-script" ],
-      "update_tags_from_env_with_prefix": {
-        "_url.": [ "WGET_URL" ]
-      },
-      "env": {
-        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_CUDA_RUN_FILE_PATH",
-        "CM_DOWNLOAD_LOCAL_FILE_PATH": "<<<CUDA_RUN_FILE_LOCAL_PATH>>>"
-      },
-      "force_cache": true,
-      "extra_cache_tags": "cuda,run,file"
-    }
+  "new_env_keys": [
+    "CM_CUDA_*",
+    "CM_NVCC_*"
   ],
   "post_deps": [
     {
@@ -41,9 +36,24 @@
       "tags": "get,cuda"
     }
   ],
-  "new_env_keys": [
-    "CM_CUDA_*",
-    "CM_NVCC_*"
+  "prehook_deps": [
+    {
+      "env": {
+        "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_CUDA_RUN_FILE_PATH",
+        "CM_DOWNLOAD_LOCAL_FILE_PATH": "<<<CUDA_RUN_FILE_LOCAL_PATH>>>"
+      },
+      "extra_cache_tags": "cuda,run,file",
+      "force_cache": true,
+      "names": [
+        "download-script"
+      ],
+      "tags": "download,file",
+      "update_tags_from_env_with_prefix": {
+        "_url.": [
+          "WGET_URL"
+        ]
+      }
+    }
   ],
   "tags": [
     "install",
@@ -53,6 +63,21 @@
     "install-prebuilt-cuda"
   ],
   "uid": "14eadcd42ba340c3",
+  "variations": {
+    "driver": {
+      "env": {
+        "CM_CUDA_INSTALL_DRIVER": "yes"
+      },
+      "group": "install-driver"
+    },
+    "no-driver": {
+      "default": true,
+      "env": {
+        "CM_CUDA_INSTALL_DRIVER": "no"
+      },
+      "group": "install-driver"
+    }
+  },
   "versions": {
     "11.7.0": {
       "env": {
@@ -84,28 +109,35 @@
         "CM_CUDA_LINUX_FILENAME": "cuda_12.3.2_545.23.08_linux.run"
       }
     },
+    "12.4.0": {
+      "env": {
+        "CM_CUDA_LINUX_FILENAME": "cuda_12.4.0_550.54.14_linux.run"
+      }
+    },
     "12.4.1": {
       "env": {
         "CM_CUDA_LINUX_FILENAME": "cuda_12.4.1_550.54.15_linux.run"
       }
-    }
-  },
-  "variations": {
-    "no-driver": {
-      "group": "install-driver",
-      "default": true,
+    },
+    "12.5.0": {
       "env": {
-        "CM_CUDA_INSTALL_DRIVER": "no"
+        "CM_CUDA_LINUX_FILENAME": "cuda_12.5.0_555.42.02_linux.run"
       }
     },
-    "driver": {
-      "group": "install-driver",
+    "12.5.1": {
       "env": {
-        "CM_CUDA_INSTALL_DRIVER": "yes"
+        "CM_CUDA_LINUX_FILENAME": "cuda_12.5.1_555.42.06_linux.run"
+      }
+    },
+    "12.6.0": {
+      "env": {
+        "CM_CUDA_LINUX_FILENAME": "cuda_12.6.0_560.28.03_linux.run"
+      }
+    },
+    "12.6.1": {
+      "env": {
+        "CM_CUDA_LINUX_FILENAME": "cuda_12.6.1_560.35.03_linux.run"
       }
     }
-  },
-  "docker": {
-    "run": true
   }
 }

@@ -32,10 +32,12 @@ variations:
     default: true
     env:
       CM_MLPERF_OPENIMAGES_CALIBRATION_OPTION: one
-      CM_DOWNLOAD_CHECKSUM1: f09719174af3553119e2c621157773a6
+      CM_DOWNLOAD_CHECKSUM: 5c3196ddcec4605c6a9fcf004d9615e6
     adr:
       calibration-file-downloader:
         tags: _url.https://github.com/mlcommons/inference/raw/master/calibration/openimages/openimages_cal_images_list.txt
+        env:
+            CM_DOWNLOAD_CHECKSUM: 5c3196ddcec4605c6a9fcf004d9615e6
   filter:
     default_variations:
       filter-size: filter_size.400

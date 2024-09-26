@@ -33,9 +33,25 @@ docker:
 
 new_env_keys:
 - CM_CUDA_DEVICE_*
+- CM_CUDA_NUM_DEVICES
 
 new_state_keys:
 - cm_cuda_device_prop
+- cm_cuda_devices_prop
+- cm_cuda_num_devices
 
 print_files_if_script_error:
 - tmp-run.out
+
+variations:
+  with-pycuda:
+    env:
+      CM_CUDA_DEVICES_DETECT_USING_PYCUDA: 'yes'
+    deps:
+      - tags: get,python3
+        names:
+          - python
+          - python3
+      - tags: get,generic-python-lib,_package.pycuda
+        names:
+          - pycuda

@@ -282,7 +282,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
     elif "stable-diffusion-xl" in env['CM_MODEL']:
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image")
         backend = env['CM_MLPERF_BACKEND']
-        device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] != "gpu" else "cuda"
+        device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] not in [ "gpu", "rocm" ] else "cuda"
         max_batchsize = env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1')
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " main.py " \
                 " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + \
@@ -295,7 +295,9 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
                  env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
                  scenario_extra_options + mode_extra_options + \
                 " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
-                " "#--model-path " + env['MODEL_DIR']
+                " --model-path " + env['CM_ML_MODEL_PATH']
+        if env.get('CM_COCO2014_SAMPLE_ID_PATH','') != '':
+            cmd += " --ids-path " + env['CM_COCO2014_SAMPLE_ID_PATH']
 
     elif "llama2-70b" in env['CM_MODEL']:
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "llama2-70b")

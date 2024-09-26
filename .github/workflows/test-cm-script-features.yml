@@ -13,14 +13,15 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.on }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.12", "3.11", "3.10", "3.9", "3.8"]
+        python-version: ["3.12", "3.8"]
+        on: ["ubuntu-latest", "windows-latest", "macos-latest"]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -30,8 +31,12 @@ jobs:
         python -m pip install cmind
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
         cm run script --quiet --tags=get,sys-utils-cm
+    - name: Run test_docker on linux
+      if: runner.os == 'linux'
+      run: |
+        python script/test-cm-core/src/script/test_docker.py
     - name: Test CM Script Features
       run: |
+        python script/test-cm-core/src/script/test_deps.py
         python script/test-cm-core/src/script/test_install.py
-        python script/test-cm-core/src/script/test_docker.py
         python script/test-cm-core/src/script/test_features.py

@@ -55,6 +55,7 @@
   "variations": {
     "pip-install": {
       "group": "installation-type",
+      "default": true,
       "deps": [
         {
           "tags": "get,generic-python-lib,_apache-tvm"
@@ -76,7 +77,6 @@
     },
     "llvm": {
       "group": "installation-type",
-      "default": true,
       "deps": [
         {
           "names": [ "llvm" ],

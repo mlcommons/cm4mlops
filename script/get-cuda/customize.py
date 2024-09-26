@@ -8,6 +8,9 @@ def preprocess(i):
 
     env = i['env']
 
+    if str(env.get('CUDA_SKIP_SUDO','')).lower() == 'true':
+        env['CM_SUDO'] = ''
+
     recursion_spaces = i['recursion_spaces']
 
     if os_info['platform'] == 'windows':
