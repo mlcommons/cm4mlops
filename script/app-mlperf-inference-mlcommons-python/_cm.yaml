@@ -446,6 +446,9 @@ deps:
       CM_MODEL:
       - 3d-unet-99
       - 3d-unet-99.9
+    skip_if_env:
+      CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+        - 'yes'
 
   ## Rnnt
   - tags: get,ml-model,speech-recognition,rnnt
