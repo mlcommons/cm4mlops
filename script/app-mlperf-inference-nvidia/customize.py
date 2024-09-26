@@ -232,6 +232,7 @@ def preprocess(i):
             for folder in folders:
                 onnx_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'onnx_models', folder, 'model.onnx')
                 if not os.path.exists(onnx_model_path):
+                    env['CM_REQUIRE_SDXL_MODEL_DOWNLOAD'] = 'yes'
                     cmds.append(f"make download_model BENCHMARKS='{model_name}'")
                     break
         else:

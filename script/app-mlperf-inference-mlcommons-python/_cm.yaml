@@ -295,7 +295,6 @@ deps:
     enable_if_env:
       CM_MLPERF_BACKEND:
       - tf
-      - tflite
 
   ## NCNN
   - tags: get,generic-python-lib,_package.ncnn
@@ -305,15 +304,12 @@ deps:
       CM_MLPERF_BACKEND:
       - ncnn
     
-  # - tags: get,generic-python-lib
-  #   names:
-  #   - ml-engine-tflite
-  #   enable_if_env:
-  #     CM_MLPERF_BACKEND:
-  #     - tflite
-  #     CM_MLPERF_DEVICE:
-  #     - tpu
-    
+  - tags: get,tensorflow,lib,_tflite
+    names:
+    - ml-engine-tflite
+    enable_if_env:
+      CM_MLPERF_BACKEND:
+      - tflite 
 
 
   ########################################################################
