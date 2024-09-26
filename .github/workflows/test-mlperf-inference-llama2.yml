@@ -5,18 +5,18 @@ name: MLPerf inference LLAMA 2 70B
 
 on:
   schedule:
-    - cron: "1 2 * * *"
+    - cron: "30 19 * * *"
 
 jobs:
   build_reference:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, linux, x64 ]
+    runs-on: [ self-hosted, GO-i9, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
         python-version: [ "3.12" ]
         backend: [ "pytorch" ]
-        device: [ "cpu", "cuda" ]
+        device: [ "cpu" ]
 
     steps:
     - name: Install dependencies
@@ -28,28 +28,3 @@ jobs:
     - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
-
-  build_nvidia:
-    if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, linux, x64 ]
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [ "3.12" ]
-        backend: [ "tensorrt" ]
-        device: [ "cuda" ]
-        path_to_llama2_dataset_pickle_file: [ "/mnt/llama2/inference/inference/open_orca/open_orca_gpt4_tokenized_llama.sampled_24576.pkl" ]
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python3 -m pip install cmind
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-    - name: Test MLPerf Inference LLAMA 2 70B NVIDIA implementation
-      run: |
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=nvidia --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --tp_size=2 --nvidia_llama2_dataset_file_path=${{ matrix.path_to_llama2_dataset_pickle_file }} --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
