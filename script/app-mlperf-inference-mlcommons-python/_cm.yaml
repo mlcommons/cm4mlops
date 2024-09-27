@@ -1114,7 +1114,6 @@ variations:
         - torch
         - pytorch
         - ml-engine-pytorch
-      version: "1.13.1"
     - tags: get,generic-python-lib,_mlperf_logging
     - tags: get,generic-python-lib,_opencv-python
     - tags: get,generic-python-lib,_tensorboard
@@ -1128,15 +1127,10 @@ variations:
     - tags: get,generic-python-lib,_package.pyre-extensions
     - tags: get,generic-python-lib,_package.torchsnapshot
     - tags: get,generic-python-lib,_package.torchmetrics
-      version: "0.11.0"
     - tags: get,generic-python-lib,_package.torchrec
-      version: "0.3.2"
     - tags: get,generic-python-lib,_package.fbgemm-gpu
-      version: "0.3.2"
     - tags: get,generic-python-lib,_package.fbgemm-gpu-cpu
-      version: "0.3.2"
-    - tags: get,generic-python-lib,_package.torch
-      version: "1.13.1"
+    - tags: set,user,limit,_large-nofile
 
 
   rnnt:
