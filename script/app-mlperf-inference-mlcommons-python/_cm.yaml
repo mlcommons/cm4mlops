@@ -983,7 +983,8 @@ variations:
       - tags: get,generic-python-lib,_package.nltk
         names:
           - nltk
-        version: 3.8.1
+        version_max: 3.8.1
+        version_max_usable: 3.8.1
       - tags: get,generic-python-lib,_package.numpy
         names:
           - numpy
