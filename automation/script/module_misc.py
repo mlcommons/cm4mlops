@@ -1626,49 +1626,6 @@ def docker(i):
 
       (out) (str): if 'con', output to console
 
-      (docker_skip_build) (bool): do not generate Dockerfiles and do not recreate Docker image (must exist)
-        (docker_noregenerate) (bool): do not generate Dockerfiles
-        (docker_norecreate) (bool): do not recreate Docker image
-
-      (docker_cfg) (str): if True, show all available basic docker configurations, otherwise pre-select one
-      (docker_cfg_uid) (str): if True, select docker configuration with this UID
-
-      (docker_path) (str): where to create or find Dockerfile
-      (docker_gh_token) (str): GitHub token for private repositories
-      (docker_save_script) (str): if !='' name of script to save docker command
-      (docker_interactive) (bool): if True, run in interactive mode
-      (docker_it) (bool): the same as `docker_interactive`
-      (docker_detached) (bool): detach Docker
-      (docker_dt) (bool) the same as `docker_detached`
-
-      (docker_base_image) (str): force base image
-      (docker_os) (str): force docker OS (default: ubuntu)
-      (docker_os_version) (str): force docker OS version (default: 22.04)
-      (docker_image_tag_extra) (str): add extra tag (default:-latest)
-
-      (docker_cm_repo) (str): force CM automation repository when building Docker (default: cm4mlops)
-      (docker_cm_repos)
-      (docker_cm_repo_flags)
-
-      (dockerfile_env)
-
-      (docker_skip_cm_sys_upgrade)
-
-      (docker_extra_sys_deps)
-
-      (fake_run_deps)
-      (docker_run_final_cmds)
-
-      (all_gpus)
-      (num_gpus)
-
-      (docker_device)
-
-      (docker_port_maps)
-
-      (docker_shm_size)
-
-      (docker_extra_run_args)
 
     Returns:
       (CM return dict):
