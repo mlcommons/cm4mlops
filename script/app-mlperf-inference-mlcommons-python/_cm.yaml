@@ -420,6 +420,8 @@ deps:
         - "on"
       CM_MLPERF_INFERENCE_API_SERVER:
         - "on"
+      CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+        - 'yes'
 
   ## mixtral-8x7b
   - tags: get,ml-model,mixtral
