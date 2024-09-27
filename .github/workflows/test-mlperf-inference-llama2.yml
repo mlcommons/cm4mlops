@@ -1,0 +1,31 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: MLPerf inference LLAMA 2 70B
+
+on:
+  schedule:
+    - cron: "30 19 * * *"
+
+jobs:
+  build_reference:
+    if: github.repository_owner == 'gateoverflow'
+    runs-on: [ self-hosted, GO-i9, linux, x64 ]
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        backend: [ "pytorch" ]
+        device: [ "cpu" ]
+
+    steps:
+    - name: Install dependencies
+      run: |
+        source gh_action/bin/deactivate || python3 -m venv gh_action
+        source gh_action/bin/activate
+        export CM_REPOS=$HOME/GH_CM
+        python3 -m pip install cm4mlops
+        cm pull repo
+    - name: Test MLPerf Inference LLAMA 2 70B reference implementation
+      run: |
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --env.CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST=yes --adr.inference-src.env.CM_GIT_URL=https://github.com/anandhu-eng/inference.git --clean

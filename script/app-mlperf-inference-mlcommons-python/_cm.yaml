@@ -957,6 +957,7 @@ variations:
   llama2-70b_:
     env:
       CM_MLPERF_MODEL_SKIP_BATCHING: false
+      CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/b18ff890ff559e21d2e27a3b54cd26467ac1fd9e/script/get-ml-model-llama2/_cm.json#L51"
     deps:
       - tags: get,generic-python-lib,_package.transformers
         names:
@@ -982,6 +983,8 @@ variations:
       - tags: get,generic-python-lib,_package.nltk
         names:
           - nltk
+        version_max: 3.8.1
+        version_max_usable: 3.8.1
       - tags: get,generic-python-lib,_package.numpy
         names:
           - numpy
@@ -1111,7 +1114,6 @@ variations:
         - torch
         - pytorch
         - ml-engine-pytorch
-      version: "1.13.1"
     - tags: get,generic-python-lib,_mlperf_logging
     - tags: get,generic-python-lib,_opencv-python
     - tags: get,generic-python-lib,_tensorboard
@@ -1125,15 +1127,10 @@ variations:
     - tags: get,generic-python-lib,_package.pyre-extensions
     - tags: get,generic-python-lib,_package.torchsnapshot
     - tags: get,generic-python-lib,_package.torchmetrics
-      version: "0.11.0"
     - tags: get,generic-python-lib,_package.torchrec
-      version: "0.3.2"
     - tags: get,generic-python-lib,_package.fbgemm-gpu
-      version: "0.3.2"
     - tags: get,generic-python-lib,_package.fbgemm-gpu-cpu
-      version: "0.3.2"
-    - tags: get,generic-python-lib,_package.torch
-      version: "1.13.1"
+    - tags: set,user,limit,_large-nofile
 
 
   rnnt:
