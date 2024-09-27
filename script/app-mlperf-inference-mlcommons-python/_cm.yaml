@@ -420,6 +420,8 @@ deps:
         - "on"
       CM_MLPERF_INFERENCE_API_SERVER:
         - "on"
+      CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+        - 'yes'
 
   ## mixtral-8x7b
   - tags: get,ml-model,mixtral
@@ -562,6 +564,9 @@ deps:
       CM_MODEL:
       - 3d-unet-99
       - 3d-unet-99.9
+    skip_if_env:
+      CM_MLPERF_DATASET_3DUNET_DOWNLOAD_TO_HOST:
+        - 'yes'
 
   ## Librispeech for rnnt
   - tags: get,dataset,librispeech,preprocessed
@@ -1071,6 +1076,10 @@ variations:
       CM_MLPERF_MODEL_SKIP_BATCHING: true
     deps:
     - tags: get,generic-python-lib,_package.nibabel
+    - tags: get,generic-python-lib,_package.scipy
+      names:
+        - scipy
+      version: 1.10.1
 
   dlrm-v2-99.9:
     group: models

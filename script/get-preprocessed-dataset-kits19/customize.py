@@ -17,5 +17,6 @@ def postprocess(i):
     env = i['env']
     if 'CM_DATASET_PREPROCESSED_PATH' not in env:
         env['CM_DATASET_PREPROCESSED_PATH'] = os.getcwd()
+        env['CM_DATASET_KITS19_PREPROCESSED_PATH'] = env['CM_DATASET_PREPROCESSED_PATH']
 
     return {'return': 0}
