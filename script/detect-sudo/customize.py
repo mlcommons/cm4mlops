@@ -1,5 +1,7 @@
 from cmind import utils
 import os, subprocess
+import select
+import sys
 
 def preprocess(i):
 
@@ -45,7 +47,7 @@ def prompt_sudo():
         while True:
             try:
                 r = subprocess.check_output(["sudo", "-p", msg, "echo", "Check sudo"],
-                                            stderr=subprocess.STDOUT, timeout=5)
+                                            stderr=subprocess.STDOUT, timeout=20)
                 print(r.decode('utf-8'))  # Decode bytes to string
                 return 0
             except subprocess.TimeoutExpired:
