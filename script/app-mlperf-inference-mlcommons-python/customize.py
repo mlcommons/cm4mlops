@@ -75,7 +75,7 @@ def preprocess(i):
     else:
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] +=  " --mlperf_conf "+ x + env['CM_MLPERF_CONF'] + x
 
-    if env.get('CM_NETWORK_LOADGEN', '') != "lon" and env.get('CM_MLPERF_INFERENCE_API_SERVER','')=='':
+    if env.get('CM_NETWORK_LOADGEN', '') != "lon" and env.get('CM_MLPERF_INFERENCE_API_SERVER','')=='' and "llama2-70b" not in env['CM_MODEL']:
         env['MODEL_DIR'] = env.get('CM_ML_MODEL_PATH')
         if not env['MODEL_DIR']:
             env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH')))
@@ -318,7 +318,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
             #env['CM_MLPERF_INFERENCE_API_SERVER'] = "http://localhost:8000"
             cmd += f" --api-server {env['CM_MLPERF_INFERENCE_API_SERVER']} --model-path {env['CM_VLLM_SERVER_MODEL_NAME']} --api-model-name {env['CM_VLLM_SERVER_MODEL_NAME']} --vllm "
         else:
-            cmd += f" --model-path {env['MODEL_DIR']}"
+            cmd += f" --model-path {env['LLAMA2_CHECKPOINT_PATH']}"
 
         if env.get('CM_MLPERF_INFERENCE_NUM_WORKERS', '') != '':
             cmd += f" --num-workers {env['CM_MLPERF_INFERENCE_NUM_WORKERS']}"
