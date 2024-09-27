@@ -1130,6 +1130,7 @@ variations:
     - tags: get,generic-python-lib,_package.torchrec
     - tags: get,generic-python-lib,_package.fbgemm-gpu
     - tags: get,generic-python-lib,_package.fbgemm-gpu-cpu
+    - tags: get,generic-python-lib,_package.fvcore
     - tags: set,user,limit,_large-nofile
 
 
