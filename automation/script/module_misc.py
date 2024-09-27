@@ -1677,7 +1677,7 @@ def docker(i):
     # CAREFUL -> artifacts and parsed_artifacts are not supported in input (and should not be?)
     if 'artifacts' in i: del(i['artifacts'])
     if 'parsed_artifacts' in i: del(i['parsed_artifacts'])
-    
+
     # Prepare "clean" input to replicate command
     r = self_module.cmind.access({'action':'prune_input', 'automation':'utils', 'input':i, 'extra_keys_starts_with':['docker_']})
     i_run_cmd_arc = r['new_input']
@@ -1700,7 +1700,7 @@ def docker(i):
         # Check if docker_cfg is turned on but not selected
         if type(docker_cfg) == bool or str(docker_cfg).lower() in ['true','yes']:
             docker_cfg= ''
-        
+
         r = self_module.cmind.access({'action':'select_cfg', 
                                       'automation':'utils,dc2743f8450541e3', 
                                       'tags':'basic,docker,configurations', 
@@ -1715,10 +1715,9 @@ def docker(i):
         selection = r['selection']
 
         docker_input_update = selection['meta']['input']
-        
+
         i.update(docker_input_update)
 
-    
     ########################################################################################
     # Run dockerfile
     if not noregenerate_docker_file:
@@ -1729,7 +1728,7 @@ def docker(i):
     cur_dir = os.getcwd()
 
     console = i.get('out') == 'con'
-    
+
     # Search for script(s)
     r = aux_search({'self_module': self_module, 'input': i})
     if r['return']>0: return r
