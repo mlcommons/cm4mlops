@@ -55,7 +55,7 @@ def preprocess(i):
     if env.get("CM_MLOPS_REPO", "") != "":
         cm_mlops_repo = env["CM_MLOPS_REPO"]
     else:
-        cm_mlops_repo = "mlcommons@ck"
+        cm_mlops_repo = "mlcommons@cm4mlops"
 
     if env.get("CM_MLOPS_REPO_BRANCH", '') != '':
         cm_mlops_repo_branch_string = f" --branch {env['CM_MLOPS_REPO_BRANCH']}"
