@@ -385,6 +385,7 @@ variations:
       CM_IMAGENET_ACCURACY_DTYPE: int32
       CM_CNNDM_ACCURACY_DTYPE: int32
       CM_LIBRISPEECH_ACCURACY_DTYPE: int8
+      CM_DOCKER_USE_VIRTUAL_PYTHON: no
     prehook_deps:
       - names:
          - nvidia-original-mlperf-inference
@@ -656,6 +657,14 @@ variations:
       - 3d-unet-accuracy-script
       tags: run,accuracy,mlperf,_kits19,_int8
 
+  3d-unet_,reference:
+    docker:
+      deps:
+        - enable_if_env:
+            CM_MLPERF_DATASET_3DUNET_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,dataset,kits19,preprocessed
+
   sdxl:
     group:
       model
@@ -753,6 +762,14 @@ variations:
     add_deps_recursive:
       mlperf-inference-implementation:
         tags: _llama2-70b-99.9
+
+  llama2-70b_,reference:
+    docker:
+      deps:
+        - enable_if_env:
+            CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,ml-model,llama2
   
   mixtral-8x7b:
     group:
@@ -1587,6 +1604,7 @@ docker:
    - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
    - "${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}:${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}"
    - "${{ SDXL_CHECKPOINT_PATH }}:${{ SDXL_CHECKPOINT_PATH }}"
+   - "${{ CM_DATASET_KITS19_PREPROCESSED_PATH }}:${{ CM_DATASET_KITS19_PREPROCESSED_PATH }}"
   skip_run_cmd: 'no'
   shm_size: '32gb'
   interactive: True
