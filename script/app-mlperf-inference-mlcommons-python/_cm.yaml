@@ -957,6 +957,7 @@ variations:
   llama2-70b_:
     env:
       CM_MLPERF_MODEL_SKIP_BATCHING: false
+      CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/mlcommons/cm4mlops/blob/b18ff890ff559e21d2e27a3b54cd26467ac1fd9e/script/get-ml-model-llama2/_cm.json#L51"
     deps:
       - tags: get,generic-python-lib,_package.transformers
         names:
@@ -982,6 +983,8 @@ variations:
       - tags: get,generic-python-lib,_package.nltk
         names:
           - nltk
+        version_max: 3.8.1
+        version_max_usable: 3.8.1
       - tags: get,generic-python-lib,_package.numpy
         names:
           - numpy
