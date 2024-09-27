@@ -230,6 +230,7 @@ def select_cfg(i):
     self_module = i['self_module']
     tags = i['tags']
     alias = i.get('alias', '')
+    uid = i.get('uid', '')
     title = i.get('title', '')
 
     # Check if alias is not provided 
@@ -240,6 +241,7 @@ def select_cfg(i):
 
     selector = []
 
+    # Do coarse-grain search for CM artifacts
     for l in lst:
         p = l.path
 
@@ -257,42 +259,50 @@ def select_cfg(i):
                 if not f.startswith('_cm') and (f.endswith('.json') or f.endswith('.yaml')):
                     selector.append({'path':os.path.join(p, f), 'alias':f[:-5]})
 
-    if len(selector) == 0:
+
+    # Load meta for name and UID
+    selector_with_meta = []
+    for s in range(0, len(selector)):
+        ss = selector[s]
+
+        path = ss['path']
+
+        full_path_without_ext = path[:-5]
+
+        r = cmind.utils.load_yaml_and_json(full_path_without_ext)
+        if r['return']>0:
+            print ('Warning: problem loading configuration file {}'.format(path))
+
+        meta = r['meta']
+
+        if uid == '' or meta.get('uid', '') == uid:
+            ss['meta'] = meta
+            selector_with_meta.append(ss)
+
+    # Quit if no configurations found
+    if len(selector_with_meta) == 0:
         return {'return':16, 'error':'configuration was not found'}
 
     select = 0
-    if len(selector) > 1:
+    if len(selector_with_meta) > 1:
         xtitle = ' ' + title if title!='' else ''
         print ('')
         print ('Available{} configurations:'.format(xtitle))
         
         print ('')
 
-        for s in range(0, len(selector)):
-            ss = selector[s]
-
-            path = ss['path']
-
-            full_path_without_ext = path[:-5]
-
-            r = cmind.utils.load_yaml_and_json(full_path_without_ext)
-            if r['return']>0:
-                print ('Warning: problem loading configuration file {}'.format(path))
-
-            meta = r['meta']
-            ss['meta'] = meta
-
-        selector = sorted(selector, key = lambda x: x['meta'].get('name',''))
+        selector_with_meta = sorted(selector_with_meta, key = lambda x: x['meta'].get('name',''))
         s = 0
         for ss in selector:
             alias = ss['alias']
-            name = ss['meta'].get('name','')
+            uid = ss['meta'].get('uid', '')
+            name = ss['meta'].get('name', '')
 
             x = name
             if x!='': x+=' '
-            x += '('+alias+')'
+            x += '(' + uid + ')'
             
-            print ('{}) {}'.format(s, x))
+            print (f'{s}) {x}'.format(s, x))
 
             s+=1
         
@@ -306,6 +316,6 @@ def select_cfg(i):
     if select<0 or select>=len(selector):
         return {'return':1, 'error':'selection is out of range'}
 
-    ss = selector[select]
+    ss = selector_with_meta[select]
 
     return {'return':0, 'selection':ss}

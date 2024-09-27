@@ -1641,6 +1641,7 @@ def docker(i):
       (docker_save_script) (str): if !='' name of script to save docker command
       (docker_interactive) (bool): if True, run in interactive mode
       (docker_cfg) (str): if True, show all available basic docker configurations, otherwise pre-select one
+      (docker_cfg_uid) (str): if True, select docker configuration with this UID
 
     Returns:
       (CM return dict):
@@ -1693,13 +1694,19 @@ def docker(i):
 
     # Check available configurations
     docker_cfg = i.get('docker_cfg', '')
-    if docker_cfg != '':
+    docker_cfg_uid = i.get('docker_cfg_uid', '')
+
+    if docker_cfg != '' or docker_cfg_uid != '':
         # Check if docker_cfg is turned on but not selected
         if type(docker_cfg) == bool or str(docker_cfg).lower() in ['true','yes']:
             docker_cfg= ''
         
-        r = self_module.cmind.access({'action':'select_cfg', 'automation':'utils,dc2743f8450541e3', 
-                                      'tags':'basic,docker,configurations', 'title':'docker', 'alias':docker_cfg})
+        r = self_module.cmind.access({'action':'select_cfg', 
+                                      'automation':'utils,dc2743f8450541e3', 
+                                      'tags':'basic,docker,configurations', 
+                                      'title':'docker', 
+                                      'alias':docker_cfg,
+                                      'uid':docker_cfg_uid})
         if r['return'] > 0: 
             if r['return'] == 16:
                 return {'return':1, 'error':'Docker configuration {} was not found'.format(docker_cfg)}
