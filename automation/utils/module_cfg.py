@@ -236,7 +236,7 @@ def select_cfg(i):
     # Check if alias is not provided 
     r = self_module.cmind.access({'action':'find', 'automation':'cfg', 'tags':'basic,docker,configurations'})
     if r['return'] > 0: return r
-        
+
     lst = r['list']
 
     selector = []
@@ -288,12 +288,12 @@ def select_cfg(i):
         xtitle = ' ' + title if title!='' else ''
         print ('')
         print ('Available{} configurations:'.format(xtitle))
-        
+
         print ('')
 
         selector_with_meta = sorted(selector_with_meta, key = lambda x: x['meta'].get('name',''))
         s = 0
-        for ss in selector:
+        for ss in selector_with_meta:
             alias = ss['alias']
             uid = ss['meta'].get('uid', '')
             name = ss['meta'].get('name', '')
@@ -301,11 +301,11 @@ def select_cfg(i):
             x = name
             if x!='': x+=' '
             x += '(' + uid + ')'
-            
+
             print (f'{s}) {x}'.format(s, x))
 
             s+=1
-        
+
         print ('')
         select = input ('Enter configuration number of press Enter for 0: ')
 
