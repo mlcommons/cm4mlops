@@ -18,10 +18,11 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        source gh_action/bin/deactivate || python3 -m venv gh_action
+        if [ -f "gh_action/bin/activate" ]; then source gh_action/bin/deactivate; fi
+        python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+        cm pull repo
     - name: Test MLPerf Inference reference SDXL SCC 
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -43,10 +44,11 @@ jobs:
       steps:
       - name: Install dependencies
         run: |
-          source gh_action/bin/deactivate || python3 -m venv gh_action
+          if [ -f "gh_action/bin/activate" ]; then source gh_action/bin/deactivate; fi
+          python3 -m venv gh_action
           source gh_action/bin/activate
           export CM_REPOS=$HOME/GH_CM
-          cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+          cm pull repo
       - name: Test MLPerf Inference NVIDIA SDXL SCC
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
