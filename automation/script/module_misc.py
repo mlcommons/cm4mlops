@@ -1638,6 +1638,18 @@ def docker(i):
     import copy
     import re
 
+    from cmind import __version__ as current_cm_version
+
+    self_module = i['self_module']
+
+    if utils.compare_versions(current_cm_version, '2.3.8.1') >= 0 and type(i.get('docker', None)) == dict:
+        # Grigori started cleaning and refactoring this code on 20240929
+        # 
+        # 1. use --docker dictionary instead of --docker_{keys}
+       
+        docker_params = utils.convert_dictionary(i['docker'], 'docker')
+        i.update(docker_params)
+
     quiet = i.get('quiet', False)
 
     detached = i.get('docker_detached', '')
@@ -1655,7 +1667,6 @@ def docker(i):
 
     # Check simplified CMD: cm docker script "python app image-classification onnx"
     # If artifact has spaces, treat them as tags!
-    self_module = i['self_module']
     self_module.cmind.access({'action':'detect_tags_in_artifact', 'automation':'utils', 'input':i})
 
     # CAREFUL -> artifacts and parsed_artifacts are not supported in input (and should not be?)

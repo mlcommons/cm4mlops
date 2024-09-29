@@ -4032,6 +4032,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
           (output_dir) (str): output directory (./ by default)
 
+          (docker) (dict): convert keys into docker_{key} strings for CM >= 2.3.8.1
+
+
           (docker_skip_build) (bool): do not generate Dockerfiles and do not recreate Docker image (must exist)
             (docker_noregenerate) (bool): do not generate Dockerfiles
             (docker_norecreate) (bool): do not recreate Docker image
