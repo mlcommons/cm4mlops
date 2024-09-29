@@ -1642,13 +1642,15 @@ def docker(i):
 
     self_module = i['self_module']
 
-    if utils.compare_versions(current_cm_version, '2.3.8.1') >= 0 and type(i.get('docker', None)) == dict:
+    if type(i.get('docker', None)) == dict:
         # Grigori started cleaning and refactoring this code on 20240929
         # 
         # 1. use --docker dictionary instead of --docker_{keys}
-       
-        docker_params = utils.convert_dictionary(i['docker'], 'docker')
-        i.update(docker_params)
+
+        if utils.compare_versions(current_cm_version, '2.3.8.1') >= 0:
+            docker_params = utils.convert_dictionary(i['docker'], 'docker')
+            i.update(docker_params)
+            del(i['docker'])
 
     quiet = i.get('quiet', False)
 
