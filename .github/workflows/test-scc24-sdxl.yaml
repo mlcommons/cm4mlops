@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: Test MLPerf Inference reference SDXL SCC 
       run: |
-        if [ -f "gh_action/bin/activate" ]; then source gh_action/bin/deactivate; fi
+        if [ -f "gh_action/bin/deactivate" ]; then source gh_action/bin/deactivate; fi
         python3 -m venv gh_action
         source gh_action/bin/activate
         cm pull repo
