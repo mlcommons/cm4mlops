@@ -2,12 +2,12 @@ name: MLPerf inference SDXL
 
 on:
   schedule:
-    - cron: "43 1 * * *"
+    - cron: "43 */6 * * *"
 
 jobs:
   build_reference:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, linux, x64 ]
+    runs-on: [ self-hosted, linux, x64, GO-spr ]
     env:
       CM_REPOS: $HOME/GH_CM
     strategy:
