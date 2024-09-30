@@ -206,7 +206,7 @@ def preprocess(i):
     if not pre_clean:
         env['CM_PRE_DOWNLOAD_CMD'] = ''
 
-    if os_info['platform'] == 'windows' and env.get('CM_DOWNLOAD_CMD, '') != '':
+    if os_info['platform'] == 'windows' and env.get('CM_DOWNLOAD_CMD', '') != '':
         env['CM_DOWNLOAD_CMD'] =  env['CM_DOWNLOAD_CMD'].replace('&', '^&').replace('|', '^|').replace('(', '^(').replace(')', '^)')
         if pre_clean:
             env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "del /Q %CM_DOWNLOAD_FILENAME%"
