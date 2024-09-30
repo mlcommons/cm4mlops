@@ -233,12 +233,18 @@ def preprocess(i):
 
     skip_extra = False
     if 'CM_DOCKER_RUN_CMD' not in env:
+        env['CM_DOCKER_RUN_CMD']=""
         if 'CM_DOCKER_RUN_SCRIPT_TAGS' not in env:
-            env['CM_DOCKER_RUN_CMD']="cm version"
+            env['CM_DOCKER_RUN_CMD']+="cm version"
             skip_extra = True
         else:
-            env['CM_DOCKER_RUN_CMD']="cm run script --tags=" + env['CM_DOCKER_RUN_SCRIPT_TAGS']+ ' --quiet'
-
+            if not env["CM_DOCKER_NOT_PULL_UPDATE"]:
+                env['CM_DOCKER_RUN_CMD'] += "cm pull repo && " 
+            env['CM_DOCKER_RUN_CMD'] += "cm run script --tags=" + env['CM_DOCKER_RUN_SCRIPT_TAGS']+ ' --quiet'
+    else:
+        env['CM_DOCKER_RUN_CMD']="cm pull repo && " + env['CM_DOCKER_RUN_CMD']
+    
+    print(env['CM_DOCKER_RUN_CMD'])
     fake_run = env.get("CM_DOCKER_FAKE_RUN_OPTION"," --fake_run") + dockerfile_env_input_string
     fake_run = fake_run + " --fake_deps" if env.get('CM_DOCKER_FAKE_DEPS') else fake_run
 
