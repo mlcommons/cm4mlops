@@ -2,6 +2,7 @@ from cmind import utils
 import cmind as cm
 import os
 import json
+import re
 
 def preprocess(i):
 
@@ -54,6 +55,17 @@ def preprocess(i):
 
     if env.get("CM_MLOPS_REPO", "") != "":
         cm_mlops_repo = env["CM_MLOPS_REPO"]
+        # the below pattern matches both the HTTPS and SSH git link formats
+        git_link_pattern = r'^(https?://github\.com/([^/]+)/([^/]+)\.git|git@github\.com:([^/]+)/([^/]+)\.git)$'
+        if match := re.match(git_link_pattern, cm_mlops_repo):
+            if match.group(2) and match.group(3):
+                repo_owner = match.group(2)
+                repo_name = match.group(3)
+            elif match.group(4) and match.group(5):
+                repo_owner = match.group(4)
+                repo_name = match.group(5)
+            cm_mlops_repo = f"{repo_owner}@{repo_name}"
+            print(f"Converted repo format from {env['CM_MLOPS_REPO']} to {cm_mlops_repo}")
     else:
         cm_mlops_repo = "mlcommons@ck"
 
