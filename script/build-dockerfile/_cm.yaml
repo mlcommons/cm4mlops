@@ -18,6 +18,7 @@ default_env:
 
     '
   CM_DOCKER_OS: ubuntu
+  CM_DOCKER_NOT_PULL_UPDATE: False
 
 input_mapping:
   build: CM_BUILD_DOCKER_IMAGE
