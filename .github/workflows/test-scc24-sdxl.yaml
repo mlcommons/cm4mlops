@@ -2,7 +2,7 @@ name: MLPerf inference SDXL (SCC)
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "* * * * *"
 
 jobs:
   build_reference:
