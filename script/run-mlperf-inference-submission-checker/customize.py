@@ -55,7 +55,7 @@ def preprocess(i):
 
     x_version = ' --version ' + version +' ' if version!='' else ''
 
-    CMD = env['CM_PYTHON_BIN_WITH_PATH'] + q + submission_checker_file + q +' --input ' + q + submission_dir + q + \
+    CMD = env['CM_PYTHON_BIN_WITH_PATH'] + ' '+ q + submission_checker_file + q +' --input ' + q + submission_dir + q + \
             x_submitter + \
             x_version + \
             skip_compliance + extra_map + power_check + extra_args
@@ -67,7 +67,7 @@ def preprocess(i):
             "generate_final_report.py")
     env['CM_RUN_CMD'] = CMD
     print(CMD)
-    env['CM_POST_RUN_CMD'] = env['CM_PYTHON_BIN_WITH_PATH'] + q + report_generator_file + q + ' --input summary.csv ' + \
+    env['CM_POST_RUN_CMD'] = env['CM_PYTHON_BIN_WITH_PATH'] +' ' + q + report_generator_file + q + ' --input summary.csv ' + \
             x_version + \
             x_submission_repository
 
