@@ -564,7 +564,8 @@
     },
     "rsync": {
       "env": {
-        "CM_SYS_UTIL_NAME": "rsync"
+        "CM_SYS_UTIL_NAME": "rsync",
+        "CM_SYS_UTIL_CHECK_CMD": "rsync --version"
       },
       "state": {
         "rsync": {
