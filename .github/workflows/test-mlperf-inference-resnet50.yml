@@ -27,7 +27,9 @@ jobs:
             implementation: cpp
           - os: macos-latest
             backend: tf
-#          - os: windows-latest
+          - os: windows-latest
+#               MLPerf requires interaction when installing LLVM on Windows - that's why we excluded it here
+
 
     steps:
     - uses: actions/checkout@v4
