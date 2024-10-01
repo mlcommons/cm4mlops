@@ -15,8 +15,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       CM_INDEX: "on"
-      # Set WINDOWS_ADR only for windows-latest
-      WINDOWS_ADR: ${{ matrix.os == 'windows-latest' && ' --adr.loadgen.tags=_from-pip --pip_loadgen=yes ' || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -44,4 +42,9 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference ResNet50
       run: |
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=default --model=resnet50 ${WINDOWS_ADR} --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
+        if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          WINDOWS_FLAGS="--adr.loadgen.tags=_from-pip --pip_loadgen=yes"
+        else
+          WINDOWS_FLAGS=""
+        fi
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=default --model=resnet50 ${WINDOWS_FLAGS} --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
