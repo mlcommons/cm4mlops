@@ -94,6 +94,11 @@ tags:
 - mlcommons
 
 variations:
+  from-pip:
+    env:
+      CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP: 'yes'
+    deps:
+    - tags: get,generic-python-lib,_package.mlcommons-loadgen
   copy:
     add_deps:
       inference-src-loadgen:

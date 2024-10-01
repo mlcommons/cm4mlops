@@ -5,12 +5,12 @@ name: MLPerf inference GPT-J
 
 on:
   schedule:
-    - cron: "1 1 * * */3"
+    - cron: "1 */6 * * *"
 
 jobs:
   build:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, linux, x64 ]
+    runs-on: [ self-hosted, linux, x64, GO-spr ]
     strategy:
       fail-fast: false
       matrix:

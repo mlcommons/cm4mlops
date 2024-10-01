@@ -2,6 +2,7 @@ from cmind import utils
 import os, subprocess
 import select
 import sys
+import grp
 
 def preprocess(i):
 
@@ -24,8 +25,17 @@ def reset_terminal():
     """Reset terminal to default settings."""
     subprocess.run(['stty', 'sane'])
 
-def prompt_retry(timeout=10):
+def prompt_retry(timeout=10, default_retry=False):
     """Prompt the user with a yes/no question to retry the command, with a 10-second timeout."""
+
+    # Check if we're in an interactive terminal
+    if not sys.stdin.isatty():
+        if default_retry:
+            print(f"Non-interactive environment detected. Automatically retrying.")
+        else:
+            print(f"Non-interactive environment detected. Skipping retry.")
+        return default_retry  # Automatically use the default in non-interactive terminals
+
     print(f"Timeout occurred. Do you want to try again? (y/n): ", end='', flush=True)
     
     # Use select to wait for user input with a timeout
@@ -41,8 +51,20 @@ def prompt_retry(timeout=10):
         print("\nNo input received in 10 seconds. Exiting.")
         return False  # No input within the timeout, so don't retry
 
+def is_user_in_sudo_group():
+    """Check if the current user is in the 'sudo' group."""
+    try:
+        sudo_group = grp.getgrnam('sudo').gr_mem
+        return os.getlogin() in sudo_group
+    except KeyError:
+        # 'sudo' group doesn't exist (might be different on some systems)
+        return False
+    except Exception as e:
+        print(f"Error checking sudo group: {str(e)}")
+        return False
+
 def prompt_sudo():
-    if os.geteuid() != 0:  # No sudo required for root user
+    if os.geteuid() != 0 or is_user_in_sudo_group():  # No sudo required for root user
         msg = "[sudo] password for %u:"
         while True:
             try:
