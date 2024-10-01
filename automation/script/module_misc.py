@@ -1335,15 +1335,9 @@ def dockerfile(i):
     Args:
       (CM input dict):
 
-      (out) (str): if 'con', output to console
-
-      parsed_artifact (list): prepared in CM CLI or CM access function
-                                [ (artifact alias, artifact UID) ] or
-                                [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
-
-      (repos) (str): list of repositories to search for automations
-
-      (output_dir) (str): output directory (./ by default)
+        (out) (str): if 'con', output to console
+        (repos) (str): list of repositories to search for automations
+        (output_dir) (str): output directory (./ by default)
 
     Returns:
       (CM return dict):
@@ -1632,15 +1626,6 @@ def docker(i):
 
       (out) (str): if 'con', output to console
 
-      (docker_skip_build) (bool): do not generate Dockerfiles and do not recreate Docker image (must exist)
-        (docker_noregenerate) (bool): do not generate Dockerfiles
-        (docker_norecreate) (bool): do not recreate Docker image
-
-      (docker_path) (str): where to create or find Dockerfile
-      (docker_gh_token) (str): GitHub token for private repositories
-      (docker_save_script) (str): if !='' name of script to save docker command
-      (docker_interactive) (bool): if True, run in interactive mode
-      (docker_cfg) (str): if True, show all available basic docker configurations, otherwise pre-select one
 
     Returns:
       (CM return dict):
@@ -1652,6 +1637,20 @@ def docker(i):
 
     import copy
     import re
+
+    from cmind import __version__ as current_cm_version
+
+    self_module = i['self_module']
+
+    if type(i.get('docker', None)) == dict:
+        # Grigori started cleaning and refactoring this code on 20240929
+        # 
+        # 1. use --docker dictionary instead of --docker_{keys}
+
+        if utils.compare_versions(current_cm_version, '2.3.8.1') >= 0:
+            docker_params = utils.convert_dictionary(i['docker'], 'docker')
+            i.update(docker_params)
+            del(i['docker'])
 
     quiet = i.get('quiet', False)
 
@@ -1670,13 +1669,12 @@ def docker(i):
 
     # Check simplified CMD: cm docker script "python app image-classification onnx"
     # If artifact has spaces, treat them as tags!
-    self_module = i['self_module']
     self_module.cmind.access({'action':'detect_tags_in_artifact', 'automation':'utils', 'input':i})
 
     # CAREFUL -> artifacts and parsed_artifacts are not supported in input (and should not be?)
     if 'artifacts' in i: del(i['artifacts'])
     if 'parsed_artifacts' in i: del(i['parsed_artifacts'])
-    
+
     # Prepare "clean" input to replicate command
     r = self_module.cmind.access({'action':'prune_input', 'automation':'utils', 'input':i, 'extra_keys_starts_with':['docker_']})
     i_run_cmd_arc = r['new_input']
@@ -1693,13 +1691,19 @@ def docker(i):
 
     # Check available configurations
     docker_cfg = i.get('docker_cfg', '')
-    if docker_cfg != '':
+    docker_cfg_uid = i.get('docker_cfg_uid', '')
+
+    if docker_cfg != '' or docker_cfg_uid != '':
         # Check if docker_cfg is turned on but not selected
         if type(docker_cfg) == bool or str(docker_cfg).lower() in ['true','yes']:
             docker_cfg= ''
-        
-        r = self_module.cmind.access({'action':'select_cfg', 'automation':'utils,dc2743f8450541e3', 
-                                      'tags':'basic,docker,configurations', 'title':'docker', 'alias':docker_cfg})
+
+        r = self_module.cmind.access({'action':'select_cfg', 
+                                      'automation':'utils,dc2743f8450541e3', 
+                                      'tags':'basic,docker,configurations', 
+                                      'title':'docker', 
+                                      'alias':docker_cfg,
+                                      'uid':docker_cfg_uid})
         if r['return'] > 0: 
             if r['return'] == 16:
                 return {'return':1, 'error':'Docker configuration {} was not found'.format(docker_cfg)}
@@ -1708,10 +1712,9 @@ def docker(i):
         selection = r['selection']
 
         docker_input_update = selection['meta']['input']
-        
+
         i.update(docker_input_update)
 
-    
     ########################################################################################
     # Run dockerfile
     if not noregenerate_docker_file:
@@ -1722,7 +1725,7 @@ def docker(i):
     cur_dir = os.getcwd()
 
     console = i.get('out') == 'con'
-    
+
     # Search for script(s)
     r = aux_search({'self_module': self_module, 'input': i})
     if r['return']>0: return r

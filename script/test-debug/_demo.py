@@ -5,5 +5,5 @@ import sys
 
 print(sys.executable)
 
-r = cmind.access('run "cm-debug"')
+r = cmind.access('run script "test cm-debug"')
 print(r)
