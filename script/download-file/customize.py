@@ -9,7 +9,7 @@ def preprocess(i):
     
     # env to be passed to the  subprocess
     subprocess_env = {}
-    subprocess_env['PATH'] = ';'.join(env['+PATH'])
+    subprocess_env['PATH'] = ';'.join(env.get('+PATH', ''))
 
     meta = i['meta']
 
