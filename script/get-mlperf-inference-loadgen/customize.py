@@ -6,7 +6,7 @@ def preprocess(i):
     os_info = i['os_info']
     env = i['env']
 
-    if env.get('CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
+    if env.get('CM_TMP_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
         i['run_script_input']['script_name'] = "donotrun"
 
     return {'return':0}
@@ -16,7 +16,7 @@ def postprocess(i):
     os_info = i['os_info']
     env = i['env']
 
-    if env.get('CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
+    if env.get('CM_TMP_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
         return {'return':0}
 
 
