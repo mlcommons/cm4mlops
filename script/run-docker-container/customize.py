@@ -221,10 +221,8 @@ def postprocess(i):
         lines = docker_out.split("\n")
 
         for line in lines:
-            print(f"line = {line}")
             if line.startswith("ID="):
                 ID = line[3:]
-                print(f"My id = {ID}")
                 env['CM_DOCKER_CONTAINER_ID'] = ID
 
         print(docker_out)
