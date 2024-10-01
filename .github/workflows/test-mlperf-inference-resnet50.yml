@@ -27,7 +27,6 @@ jobs:
             implementation: cpp
           - os: macos-latest
             backend: tf
-          - os: windows-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -41,4 +40,4 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference ResNet50
       run: |
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="cTuning" --hw_name=default --model=resnet50 --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=default --model=resnet50 --adr.loadgen.tags=_from-pip --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
