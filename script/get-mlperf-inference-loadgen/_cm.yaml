@@ -40,13 +40,18 @@ deps:
     - CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD_URL
 - names:
   - compiler
-  skip_if_env:
+  skip_if_any_env:
     CM_HOST_OS_TYPE:
     - windows
+    CM_TMP_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP:
+    - 'yes'
   tags: get,compiler
 - enable_if_env:
     CM_HOST_OS_TYPE:
     - windows
+  skip_if_env:
+    CM_TMP_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP:
+    - 'yes'
   names:
   - compiler
   tags: get,cl
