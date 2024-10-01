@@ -7,6 +7,8 @@ def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
+    q = '"' if os_info['platform'] == 'windows' else "'"
+
     submission_dir = env.get("CM_MLPERF_INFERENCE_SUBMISSION_DIR", "")
 
     version = env.get('CM_MLPERF_SUBMISSION_CHECKER_VERSION','')
@@ -49,11 +51,11 @@ def preprocess(i):
 
     extra_args = ' ' + env.get('CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS','')
 
-    x_submitter = ' --submitter "' + submitter + '" ' if submitter!='' else ''
+    x_submitter = ' --submitter ' + q + submitter + q if submitter!='' else ''
 
     x_version = ' --version ' + version +' ' if version!='' else ''
 
-    CMD = env['CM_PYTHON_BIN_WITH_PATH'] + ' \'' + submission_checker_file + '\' --input \'' + submission_dir + '\'' + \
+    CMD = env['CM_PYTHON_BIN_WITH_PATH'] + q + submission_checker_file + q +' --input ' + q + submission_dir + q + \
             x_submitter + \
             x_version + \
             skip_compliance + extra_map + power_check + extra_args
@@ -65,7 +67,7 @@ def preprocess(i):
             "generate_final_report.py")
     env['CM_RUN_CMD'] = CMD
     print(CMD)
-    env['CM_POST_RUN_CMD'] = env['CM_PYTHON_BIN_WITH_PATH'] + ' \'' + report_generator_file + '\' --input summary.csv' + \
+    env['CM_POST_RUN_CMD'] = env['CM_PYTHON_BIN_WITH_PATH'] + q + report_generator_file + q + ' --input summary.csv ' + \
             x_version + \
             x_submission_repository
 
