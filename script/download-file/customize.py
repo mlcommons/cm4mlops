@@ -13,8 +13,7 @@ def escape_special_chars(text, tool=None):
     #handle URL special cases 
     if tool != "rclone":
         text = text.replace('%', "%%")
-
-    print(text)
+        
     return text
 
 def preprocess(i):
