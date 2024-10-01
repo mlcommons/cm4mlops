@@ -702,11 +702,6 @@ variations:
       torchvision:
         tags: _rocm
 
-  rocm,sdxl:
-    add_deps:
-      mlperf-implementation:
-        tags: _repo.https://github.com/gateoverflow/inference
-
   ray:
     group: framework
     add_deps_recursive:

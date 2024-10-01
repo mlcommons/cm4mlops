@@ -4,6 +4,7 @@ import os
 def preprocess(i):
 
     os_info = i['os_info']
+    env = i['env']
 
     if env.get('CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
         i['run_script_input']['script_name'] = "donotrun"
