@@ -16,7 +16,7 @@ jobs:
     env:
       CM_INDEX: "on"
       # Set WINDOWS_ADR only for windows-latest
-      WINDOWS_ADR: ${{ matrix.os == 'windows-latest' && ' --adr.loadgen.tags=_from-pip ' || '' }}
+      WINDOWS_ADR: ${{ matrix.os == 'windows-latest' && ' --adr.loadgen.tags=_from-pip --from_pip ' || '' }}
     strategy:
       fail-fast: false
       matrix:

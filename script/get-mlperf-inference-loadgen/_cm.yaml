@@ -96,7 +96,7 @@ tags:
 variations:
   from-pip:
     env:
-      CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP: 'yes'
+      CM_TMP_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP: 'yes'
     deps:
     - tags: get,generic-python-lib,_package.mlcommons-loadgen
   copy:
