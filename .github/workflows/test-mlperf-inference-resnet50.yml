@@ -40,11 +40,12 @@ jobs:
       run: |
         python3 -m pip install cmind
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-    - name: Test MLPerf Inference ResNet50
+    - name: Test MLPerf Inference ResNet50 (Windows)
       run: |
-        if [ "${{ matrix.os }}" = "windows-latest" ]; then
-          WINDOWS_FLAGS="--adr.loadgen.tags=_from-pip --pip_loadgen=yes"
-        else
-          WINDOWS_FLAGS=""
-        fi
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=default --model=resnet50 ${WINDOWS_FLAGS} --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
+        if: matrix.os == 'windows-latest'
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=default --model=resnet50 --adr.loadgen.tags=_from-pip --pip_loadgen=yes --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
+    - name: Test MLPerf Inference ResNet50 (Linux/macOS)
+      run: |
+        if: matrix.os != 'windows-latest'
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=default --model=resnet50 --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
+
