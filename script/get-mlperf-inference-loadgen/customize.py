@@ -5,8 +5,8 @@ def preprocess(i):
 
     os_info = i['os_info']
 
-#    if os_info['platform'] == 'windows':
-#        return {'return':1, 'error': 'Windows is not supported in this script yet'}
+    if env.get('CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
+        i['run_script_input']['script_name'] = "donotrun"
 
     return {'return':0}
 
@@ -14,6 +14,10 @@ def postprocess(i):
 
     os_info = i['os_info']
     env = i['env']
+
+    if env.get('CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
+        return {'return':0}
+
 
     for key in ['+PYTHONPATH', '+C_INCLUDE_PATH', '+CPLUS_INCLUDE_PATH', '+LD_LIBRARY_PATH', '+DYLD_FALLBACK_LIBRARY_PATH']:
 #        20221024: we save and restore env in the main script and can clean env here for determinism
