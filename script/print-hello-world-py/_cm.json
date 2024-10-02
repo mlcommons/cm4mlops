@@ -8,9 +8,6 @@
       "tags": "detect,os"
     },
     {
-      "tags": "get,sys-utils-cm"
-    },
-    {
       "names": [
         "python",
         "python3"

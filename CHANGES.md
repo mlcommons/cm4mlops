@@ -1,3 +1,8 @@
+### 20240927
+ * added "test dummy" script to test Docker containers
+ * added more standard Nvidia Docker configuration for PyTorch
+ * added better support to select Docker configurations via UID
+
 ### 20240916
  * fixed "cm add script"
 

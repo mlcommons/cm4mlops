@@ -139,6 +139,11 @@ cm run script \
 
 [Apache 2.0](LICENSE.md)
 
+## CM concepts
+
+* https://doi.org/10.5281/zenodo.8105339
+* https://arxiv.org/abs/2406.16791
+
 ## Authors
 
 [Grigori Fursin](https://cKnowledge.org/gfursin) and [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh)
