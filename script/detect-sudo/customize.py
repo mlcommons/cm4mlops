@@ -18,8 +18,37 @@ def preprocess(i):
 
     if prompt_sudo() == 0:
         env['CM_SUDO_USER'] = "yes"
+        if os.geteuid() == 0:
+            env['CM_SUDO'] = '' #root user does not need sudo
+    else:
+        if can_execute_sudo_without_password():
+            env['CM_SUDO_USER'] = "yes"
+            env['CM_SUDO'] = 'sudo'
+        else:
+            env['CM_SUDO_USER'] = "no"
+            env['CM_SUDO'] = ''
 
     return {'return':0}
+
+def can_execute_sudo_without_password():
+    try:
+        # Run a harmless command using sudo
+        result = subprocess.run(
+            ['sudo', '-n', 'true'],  # -n prevents sudo from prompting for a password
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+
+        # Check the return code; if it's 0, sudo executed without needing a password
+        if result.returncode == 0:
+            return True
+        else:
+            return False
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
+
+
 
 def reset_terminal():
     """Reset terminal to default settings."""
@@ -64,7 +93,7 @@ def is_user_in_sudo_group():
         return False
 
 def prompt_sudo():
-    if os.geteuid() != 0 or is_user_in_sudo_group():  # No sudo required for root user
+    if os.geteuid() != 0 or not is_user_in_sudo_group():  # No sudo required for root user
         msg = "[sudo] password for %u:"
         while True:
             try:
@@ -85,7 +114,7 @@ def prompt_sudo():
                 reset_terminal()  # Always reset terminal after error
                 return -1
 
-    return -1
+    return 0
 
 def postprocess(i):
 
