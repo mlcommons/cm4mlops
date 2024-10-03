@@ -807,13 +807,13 @@ variations:
           - ml-model
           - mixtral-model
           enable_if_env:
-            CM_MLPERF_MODEL_MIXTRAL-8X7B_DOWNLOAD_TO_HOST:
+            CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
             - 'yes'
         - tags: get,dataset-mixtral,openorca-mbxp-gsm8k-combined
           names:
           - openorca-mbxp-gsm8k-combined-preprocessed
           enable_if_env:
-            CM_MLPERF_DATASET_MIXTRAL-8X7B_DOWNLOAD_TO_HOST:
+            CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
             - 'yes'
       mounts:
         - "${{ MIXTRAL_CHECKPOINT_PATH }}:${{ MIXTRAL_CHECKPOINT_PATH }}"

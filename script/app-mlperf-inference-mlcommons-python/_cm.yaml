@@ -435,7 +435,7 @@ deps:
       CM_MLPERF_CUSTOM_MODEL_PATH:
       - "on"
     skip_if_env:
-      CM_MLPERF_MODEL_MIXTRAL-8X7B_DOWNLOAD_TO_HOST:
+      CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
       - 'yes'
 
   ## 3d-unet
@@ -559,7 +559,7 @@ deps:
       CM_MODEL:
       - mixtral-8x7b
     skip_if_env:
-      CM_MLPERF_DATASET_MIXTRAL-8X7B_DOWNLOAD_TO_HOST:
+      CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
       - 'yes'
 
   ## Kits19 for 3d-unet
