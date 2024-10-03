@@ -26,7 +26,7 @@ jobs:
         export CM_REPOS=$HOME/GH_CM
         python3 -m pip install cm4mlops
         cm pull repo
-        pip install "huggingface_hub[cli]"
+        python3 -m pip install "huggingface_hub[cli]"
         huggingface-cli login --token ${{ secrets.HF_TOKEN }} --add-to-git-credential
     - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |
