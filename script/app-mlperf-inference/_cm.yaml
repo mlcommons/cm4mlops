@@ -800,24 +800,23 @@ variations:
       tags: run,accuracy,mlperf,_openorca-gsm8k-mbxp,_int32
 
   mixtral-8x7b,reference:
-    - tags: get,ml-model,mixtral
-      names:
-      - ml-model
-      - mixtral-model
-      enable_if_env:
-        CM_MLPERF_MODEL_MIXTRAL-8X7B_DOWNLOAD_TO_HOST:
-        - 'yes'
-      docker:
-        mounts:
+    docker:
+      deps:
+        - tags: get,ml-model,mixtral
+          names:
+          - ml-model
+          - mixtral-model
+          enable_if_env:
+            CM_MLPERF_MODEL_MIXTRAL-8X7B_DOWNLOAD_TO_HOST:
+            - 'yes'
+        - tags: get,dataset-mixtral,openorca-mbxp-gsm8k-combined
+          names:
+          - openorca-mbxp-gsm8k-combined-preprocessed
+          enable_if_env:
+            CM_MLPERF_DATASET_MIXTRAL-8X7B_DOWNLOAD_TO_HOST:
+            - 'yes'
+      mounts:
         - "${{ MIXTRAL_CHECKPOINT_PATH }}:${{ MIXTRAL_CHECKPOINT_PATH }}"
-    - tags: get,dataset-mixtral,openorca-mbxp-gsm8k-combined
-      names:
-      - openorca-mbxp-gsm8k-combined-preprocessed
-      enable_if_env:
-        CM_MLPERF_DATASET_MIXTRAL-8X7B_DOWNLOAD_TO_HOST:
-        - 'yes'
-      docker:
-        mounts:
         - "${{ CM_DATASET_MIXTRAL_PREPROCESSED_PATH }}:${{ CM_DATASET_MIXTRAL_PREPROCESSED_PATH }}"
 
   rnnt:
