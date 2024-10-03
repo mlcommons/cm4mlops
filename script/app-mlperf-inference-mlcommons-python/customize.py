@@ -332,13 +332,13 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
         device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] != "gpu" else "cuda"
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " main.py " \
                 " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + \
-                " --dataset-path " + env['CM_DATASET_PREPROCESSED_PATH'] + \
+                " --dataset-path " + env['CM_DATASET_MIXTRAL_PREPROCESSED_PATH'] + \
                 " --device " + device.replace("cuda", "cuda:0") + \
                  env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
                  scenario_extra_options + mode_extra_options + \
                 " --output-log-dir " + env['CM_MLPERF_OUTPUT_DIR'] + \
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
-                " --model-path " + env['MODEL_DIR']
+                " --model-path " + env['MIXTRAL_CHECKPOINT_PATH']
         cmd = cmd.replace("--count", "--total-sample-count")
 
     elif "3d-unet" in env['CM_MODEL']:
