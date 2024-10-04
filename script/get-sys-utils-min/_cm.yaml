@@ -1,5 +1,5 @@
-alias: get-sys-utils-cm
-uid: bc90993277e84b8e
+alias: get-sys-utils-min
+uid: a9af7714d3d94779
 
 automation_alias: script
 automation_uid: 5b4e0237da074764
@@ -8,8 +8,7 @@ cache: true
 
 category: Detection or installation of tools and artifacts
 
-deps:
-- tags: detect,os
+deps: []
 
 env:
   CM_CLEAN_DIRS: bin
@@ -18,21 +17,9 @@ env:
     ; https://www.dropbox.com/scl/fi/x94qvrmac55ht03257139/xz-5.2.9-win64.zip?rlkey=adzixlsqrapncrusy9ndd2qji&st=tqobzlfo&dl=1
   CM_SUDO: sudo
 
-input_mapping:
-  skip: CM_SKIP_SYS_UTILS
-
 new_env_keys:
 - +PATH
 
 tags:
 - get
-- sys-utils-cm
-
-variations:
-  user:
-    env:
-      CM_PYTHON_PIP_USER: --user
-
-  skip_python_deps:
-    env:
-      CM_SKIP_PYTHON_DEPS: "yes"
+- sys-utils-min

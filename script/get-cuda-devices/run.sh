@@ -29,8 +29,7 @@ echo ""
 echo "Running program ..."
 echo ""
 
-cd -
-#${CM_TMP_CURRENT_PATH}
+cd ${CM_TMP_CURRENT_PATH}
 
 ${CM_TMP_CURRENT_SCRIPT_PATH}/a.out > tmp-run.out
 test $? -eq 0 || exit 1

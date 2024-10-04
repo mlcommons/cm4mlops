@@ -67,7 +67,7 @@ def preprocess(i):
             cm_mlops_repo = f"{repo_owner}@{repo_name}"
             print(f"Converted repo format from {env['CM_MLOPS_REPO']} to {cm_mlops_repo}")
     else:
-        cm_mlops_repo = "mlcommons@ck"
+        cm_mlops_repo = "mlcommons@cm4mlops"
 
     if env.get("CM_MLOPS_REPO_BRANCH", '') != '':
         cm_mlops_repo_branch_string = f" --branch {env['CM_MLOPS_REPO_BRANCH']}"
