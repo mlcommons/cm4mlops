@@ -55,4 +55,5 @@ jobs:
         EMAIL=admin@gateoverflow.com
         git config --global user.name "$USER"
         git config --global user.email "$EMAIL"
+        cm run script --tags=auth,gh,cli --env.CM_GH_AUTH_TOKEN=${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}
         cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from R50 GH action" --quiet
