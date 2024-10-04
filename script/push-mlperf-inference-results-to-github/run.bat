@@ -11,7 +11,7 @@ cd "%CM_GIT_REPO_CHECKOUT_PATH%" || (
     echo "Error: Failed to change directory to %CM_GIT_REPO_CHECKOUT_PATH%"
     exit /b 1
 )
-
+echo %cd%
 git pull
 git add *
 
@@ -25,7 +25,7 @@ REM Check if the previous command was successful
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 git commit -a -m "%CM_MLPERF_RESULTS_REPO_COMMIT_MESSAGE%"
-git push
+REM git push
 
 REM Check if the previous command was successful
 if %errorlevel% neq 0 exit /b %errorlevel%
