@@ -139,6 +139,10 @@ cm run script \
 
 [Apache 2.0](LICENSE.md)
 
+## CM concepts
+
+Check our [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339).
+
 ## Authors
 
 [Grigori Fursin](https://cKnowledge.org/gfursin) and [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh)
