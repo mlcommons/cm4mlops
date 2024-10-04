@@ -47,14 +47,17 @@ jobs:
       if: matrix.os != 'windows-latest'
       run: |
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=gh_${{ matrix.os }}_x86 --model=resnet50 --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
+    - name: Install GitHub CLI
+      if: matrix.os == 'windows-latest-off'
+      run: choco install gh  # for Chocolatey (Windows package manager)
     - name: Push Results
       if: github.repository_owner == 'gateoverflow'
       env:
           USER: "GitHub Action"
           EMAIL: "admin@gateoverflow.com"
       run: |
-        git config --global user.name "$USER"
-        git config --global user.email "$EMAIL"
+        git config --global user.name "${{ env.USER }}"
+        git config --global user.email "${{ env.EMAIL }}"
         git config --global credential.https://github.com.helper ""
         git config --global credential.https://github.com.helper "!gh auth git-credential"
         git config --global credential.https://gist.github.com.helper ""
