@@ -1,6 +1,5 @@
 ## Unified and cross-platform CM interface for DevOps, MLOps and MLPerf
 
-[![arXiv](https://img.shields.io/badge/arXiv-2406.16791-b31b1b.svg)](https://arxiv.org/abs/2406.16791)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE.md)
 [![Python Version](https://img.shields.io/badge/python-3+-blue.svg)](https://github.com/mlcommons/ck/tree/master/cm/cmind)
 [![Powered by CM](https://img.shields.io/badge/Powered_by-MLCommons%20CM-blue)](https://github.com/mlcommons/ck).
@@ -141,8 +140,7 @@ cm run script \
 
 ## CM concepts
 
-* https://doi.org/10.5281/zenodo.8105339
-* https://arxiv.org/abs/2406.16791
+Check our [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339).
 
 ## Authors
 

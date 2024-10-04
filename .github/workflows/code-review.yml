@@ -2,7 +2,7 @@ name: OpenAI Code Review
 
 on:
   pull_request_target:
-    types: [opened, synchronize]
+    types: [opened]
     paths:
       - 'automation/**'
       - 'script/**'
@@ -15,7 +15,7 @@ permissions:
 jobs:
   code_review:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'gateoverflow' && github.event.pull_request.changed_files > 0
+    if: github.repository_owner == 'gateoverflow_off' && github.event.pull_request.changed_files > 0
     steps:
       # Run code review via OpenAI 
       # Step to run the OpenAI Code Review using the GATEOverflow action
