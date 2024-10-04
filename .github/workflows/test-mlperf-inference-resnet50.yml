@@ -51,4 +51,4 @@ jobs:
     - name: Push Results
       if: github.repository_owner == 'gateoverflow'
       run: |
-        cm run script --tags=push,github,mlperf,inference,submission,_short-run --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from R50 GH action" --quiet
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from R50 GH action" --quiet
