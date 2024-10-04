@@ -6,7 +6,7 @@ rem echo Cloning MLCommons from %CM_GIT_URL% with branch %CM_GIT_CHECKOUT% %CM_G
 rem git clone %CM_GIT_RECURSE_SUBMODULES% %CM_GIT_URL% %CM_GIT_DEPTH% inference
 rem cd inference
 rem git checkout -b "%CM_GIT_CHECKOUT%"
-rem 
+rem
 
 rem Next line allows ERRORLEVEL inside if statements!
 setlocal enabledelayedexpansion
@@ -18,9 +18,10 @@ set folder=%CM_GIT_CHECKOUT_FOLDER%
 
 if not exist "%CM_TMP_GIT_PATH%" (
 
-  if exist %folder% (
-    deltree %folder%
+  if exist "%folder%" (
+    rmdir /S /Q "%folder%"  rem Use rmdir instead of deltree
   )
+  
   echo ******************************************************
   echo Current directory: %CUR_DIR%
   echo.
@@ -28,9 +29,12 @@ if not exist "%CM_TMP_GIT_PATH%" (
   echo.
   echo "%CM_GIT_CLONE_CMD%"
   echo.
+  
   %CM_GIT_CLONE_CMD%
   IF !ERRORLEVEL! NEQ 0 EXIT !ERRORLEVEL!
-  cd %folder%
+  
+  cd "%folder%"
+  
   if not "%CM_GIT_SHA%" == "" (
        echo.
        echo.
@@ -39,9 +43,7 @@ if not exist "%CM_TMP_GIT_PATH%" (
   )
 
 ) else (
-
-  cd %folder%
-
+  cd "%folder%"
 )
 
 if not "%CM_GIT_SUBMODULES%" == "" (
@@ -62,6 +64,7 @@ if "%CM_GIT_PATCH%" == "yes" (
    )
 )
 
-cd %CUR_DIR%
+cd "%CUR_DIR%"
 
 exit /b 0
+
