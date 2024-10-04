@@ -17,7 +17,7 @@ new_env_keys:
 input_mapping:
   dlrm_data_path: CM_DLRM_DATA_PATH
   criteo_day23_raw_data_path: CM_CRITEO_DAY23_RAW_DATA_PATH
-  prehook_deps:
+prehook_deps:
   - tags: get,ml-model,dlrm,_pytorch
     enable_if_env:
       CM_DLRM_MODEL_DOWNLOAD:

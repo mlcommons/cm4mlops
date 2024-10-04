@@ -2,6 +2,7 @@ from cmind import utils
 import cmind as cm
 import os
 import json
+import re
 
 def preprocess(i):
 
@@ -54,6 +55,17 @@ def preprocess(i):
 
     if env.get("CM_MLOPS_REPO", "") != "":
         cm_mlops_repo = env["CM_MLOPS_REPO"]
+        # the below pattern matches both the HTTPS and SSH git link formats
+        git_link_pattern = r'^(https?://github\.com/([^/]+)/([^/]+)\.git|git@github\.com:([^/]+)/([^/]+)\.git)$'
+        if match := re.match(git_link_pattern, cm_mlops_repo):
+            if match.group(2) and match.group(3):
+                repo_owner = match.group(2)
+                repo_name = match.group(3)
+            elif match.group(4) and match.group(5):
+                repo_owner = match.group(4)
+                repo_name = match.group(5)
+            cm_mlops_repo = f"{repo_owner}@{repo_name}"
+            print(f"Converted repo format from {env['CM_MLOPS_REPO']} to {cm_mlops_repo}")
     else:
         cm_mlops_repo = "mlcommons@ck"
 
@@ -180,8 +192,11 @@ def preprocess(i):
 
     f.write(EOL+'# Install python packages' + EOL)
     python = get_value(env, config, 'PYTHON', 'CM_DOCKERFILE_PYTHON')
-    f.write('RUN {} -m venv /home/cmuser/venv/cm'.format(python) + " " + EOL)
-    f.write('ENV PATH="/home/cmuser/venv/cm/bin:$PATH"' + EOL)
+
+    docker_use_virtual_python = env.get('CM_DOCKER_USE_VIRTUAL_PYTHON', "yes")
+    if str(docker_use_virtual_python).lower() not in [ "no", "0", "false"]:
+        f.write('RUN {} -m venv /home/cmuser/venv/cm'.format(python) + " " + EOL)
+        f.write('ENV PATH="/home/cmuser/venv/cm/bin:$PATH"' + EOL)
     #f.write('RUN . /opt/venv/cm/bin/activate' + EOL)
     f.write('RUN {} -m pip install '.format(python) + " ".join(get_value(env, config, 'python-packages')) + ' ' + pip_extra_flags + ' ' + EOL)
 
@@ -218,12 +233,19 @@ def preprocess(i):
 
     skip_extra = False
     if 'CM_DOCKER_RUN_CMD' not in env:
+        env['CM_DOCKER_RUN_CMD']=""
         if 'CM_DOCKER_RUN_SCRIPT_TAGS' not in env:
-            env['CM_DOCKER_RUN_CMD']="cm version"
+            env['CM_DOCKER_RUN_CMD']+="cm version"
             skip_extra = True
         else:
-            env['CM_DOCKER_RUN_CMD']="cm run script --tags=" + env['CM_DOCKER_RUN_SCRIPT_TAGS']+ ' --quiet'
-
+            if str(env.get('CM_DOCKER_NOT_PULL_UPDATE', 'False')).lower() not in ["yes", "1", "true"]:
+                env['CM_DOCKER_RUN_CMD'] += "cm pull repo && " 
+            env['CM_DOCKER_RUN_CMD'] += "cm run script --tags=" + env['CM_DOCKER_RUN_SCRIPT_TAGS']+ ' --quiet'
+    else:
+        if str(env.get('CM_DOCKER_NOT_PULL_UPDATE', 'False')).lower() not in ["yes", "1", "true"]:
+            env['CM_DOCKER_RUN_CMD']="cm pull repo && " + env['CM_DOCKER_RUN_CMD']
+    
+    print(env['CM_DOCKER_RUN_CMD'])
     fake_run = env.get("CM_DOCKER_FAKE_RUN_OPTION"," --fake_run") + dockerfile_env_input_string
     fake_run = fake_run + " --fake_deps" if env.get('CM_DOCKER_FAKE_DEPS') else fake_run
 

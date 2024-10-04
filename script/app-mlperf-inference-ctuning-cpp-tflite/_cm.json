@@ -120,7 +120,7 @@
     {
       "names": [
         "tensorflow",
-	"tflite"
+        "tflite"
       ],
       "tags": "get,tensorflow,lib,_tflite"
     },
