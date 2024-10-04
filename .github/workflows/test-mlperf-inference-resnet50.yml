@@ -50,10 +50,11 @@ jobs:
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=gh_${{ matrix.os }}_x86 --model=resnet50 --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
     - name: Push Results
       if: github.repository_owner == 'gateoverflow'
+      env:
+          USER: "GitHub Action"
+          EMAIL: "admin@gateoverflow.com"
       run: |
-        USER="GitHub Action"
-        EMAIL=admin@gateoverflow.com
         git config --global user.name "$USER"
         git config --global user.email "$EMAIL"
-        cm run script --tags=auth,gh,cli --with_token=${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}
+        cm run script --tags=auth,gh,cli --with_token="${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}"
         cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from R50 GH action" --quiet
