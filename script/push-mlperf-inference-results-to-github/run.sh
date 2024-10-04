@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if CM_GIT_CHECKOUT_PATH is set
+if [ -z "${CM_GIT_CHECKOUT_PATH}" ]; then
+    echo "Error: CM_GIT_CHECKOUT_PATH is not set."
+    exit 1
+fi
+
 cd "${CM_GIT_CHECKOUT_PATH}"
 git pull
 git add *
