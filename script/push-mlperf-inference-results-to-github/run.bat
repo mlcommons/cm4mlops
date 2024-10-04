@@ -5,7 +5,13 @@ if not defined CM_GIT_REPO_CHECKOUT_PATH (
     echo "Error: CM_GIT_REPO_CHECKOUT_PATH is not set."
     exit /b 1
 )
-cd %CM_GIT_REPO_CHECKOUT_PATH%
+
+REM Change directory
+cd "%CM_GIT_REPO_CHECKOUT_PATH%" || (
+    echo "Error: Failed to change directory to %CM_GIT_REPO_CHECKOUT_PATH%"
+    exit /b 1
+)
+
 git pull
 git add *
 
