@@ -2,10 +2,29 @@ from cmind import utils
 import os
 import subprocess
 
+def escape_special_chars(text, tool=None):
+    special_chars = [
+        '&', '|', '(', ')'
+    ]
+
+    for char in special_chars:
+        text = text.replace(char, f'^{char}')
+    
+    #handle URL special cases 
+    if tool != "rclone":
+        text = text.replace('%', "%%")
+        
+    return text
+
 def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
+    
+    # env to be passed to the  subprocess
+    subprocess_env = os.environ.copy()
+    subprocess_env['PATH'] += os.pathsep + os.pathsep.join(env.get('+PATH', ''))
+
     meta = i['meta']
 
     automation = i['automation']
@@ -86,16 +105,21 @@ def preprocess(i):
                 env['CM_DOWNLOAD_FILENAME'] = "index.html"
 
         if tool == "cmutil":
-            print ('')
             cmutil_require_download = 0
             if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '':
-                checksum_cmd = f"cd {q}{filepath}{q} {xsep}  md5sum -c{x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
-                checksum_result = subprocess.run(checksum_cmd, cwd=f'{q}{filepath}{q}', capture_output=True, text=True, shell=True)
+                if os_info['platform'] == 'windows':
+                    checksum_cmd = f"cd {q}{filepath}{q} {xsep}  md5sum -c{x_c} {x}{escape_special_chars(env['CM_DOWNLOAD_CHECKSUM_FILE'])}"
+                else:
+                    checksum_cmd = f"cd {q}{filepath}{q} {xsep}  md5sum -c{x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
+                checksum_result = subprocess.run(checksum_cmd, cwd=f'{q}{filepath}{q}', capture_output=True, text=True, shell=True, env=subprocess_env)
             elif env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
-                checksum_cmd = f"echo {env.get('CM_DOWNLOAD_CHECKSUM')} {x}{q}{env['CM_DOWNLOAD_FILENAME']}{q} | md5sum -c{x_c} -"
-                checksum_result = subprocess.run(checksum_cmd, capture_output=True, text=True, shell=True)
+                if os_info['platform'] == 'windows':
+                    checksum_cmd = f"echo {env.get('CM_DOWNLOAD_CHECKSUM')} {x}{escape_special_chars(env['CM_DOWNLOAD_FILENAME'])} | md5sum -c{x_c} -"
+                else:
+                    checksum_cmd = f"echo {env.get('CM_DOWNLOAD_CHECKSUM')} {x}{q}{env['CM_DOWNLOAD_FILENAME']}{q} | md5sum -c{x_c} -"
+                checksum_result = subprocess.run(checksum_cmd, capture_output=True, text=True, shell=True, env=subprocess_env)
             if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '' or env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
-                #print(checksum_result) #for debugging
+                # print(checksum_result) #for debugging
                 if "checksum did not match" in checksum_result.stderr.lower():
                     computed_checksum = subprocess.run(f"md5sum {env['CM_DOWNLOAD_FILENAME']}", capture_output=True, text=True, shell=True).stdout.split(" ")[0]
                     print(f"WARNING: File already present, mismatch between original checksum({env.get('CM_DOWNLOAD_CHECKSUM')}) and computed checksum({computed_checksum}). Deleting the already present file and downloading new.")
@@ -108,7 +132,7 @@ def preprocess(i):
                 elif "no such file" in checksum_result.stderr.lower():
                     #print(f"No file {env['CM_DOWNLOAD_FILENAME']}. Downloading through cmutil.")
                     cmutil_require_download = 1
-                elif checksum_result.returncode == 1:
+                elif checksum_result.returncode > 0:
                     return {"return":1, "error":f"Error while checking checksum: {checksum_result.stderr}"}
                 else:
                     print(f"File {env['CM_DOWNLOAD_FILENAME']} already present, original checksum and computed checksum matches! Skipping Download..")
@@ -195,19 +219,26 @@ def preprocess(i):
     if env.get('CM_DOWNLOAD_CHECKSUM_FILE', '') != '':
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = f"cd {q}{filepath}{q} {xsep}  md5sum -c {x_c} {x}{q}{env['CM_DOWNLOAD_CHECKSUM_FILE']}{q}"
     elif env.get('CM_DOWNLOAD_CHECKSUM', '') != '':
-        env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum {} -c -".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q, x_c)
+        if os_info['platform'] == 'windows':
+            env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{} | md5sum {} -c -".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, escape_special_chars(env['CM_DOWNLOAD_FILENAME']), x_c)
+        else:
+            env['CM_DOWNLOAD_CHECKSUM_CMD'] = "echo {} {}{}{}{} | md5sum {} -c -".format(env.get('CM_DOWNLOAD_CHECKSUM'), x, q, env['CM_DOWNLOAD_FILENAME'], q, x_c)
         for i in range(1,5):
             if env.get('CM_DOWNLOAD_CHECKSUM'+str(i),'') == '':
                 break
-            env['CM_DOWNLOAD_CHECKSUM_CMD'] += " || echo {} {}{}{}{} | md5sum {} -c -".format(env.get('CM_DOWNLOAD_CHECKSUM'+str(i)), x, q, env['CM_DOWNLOAD_FILENAME'], q, x_c)
+            if os_info['platform'] == 'windows':
+                env['CM_DOWNLOAD_CHECKSUM_CMD'] += " || echo {} {}{} | md5sum {} -c -".format(env.get('CM_DOWNLOAD_CHECKSUM'+str(i)), x, escape_special_chars(env['CM_DOWNLOAD_FILENAME']), x_c)
+            else:
+                env['CM_DOWNLOAD_CHECKSUM_CMD'] += " || echo {} {}{}{}{} | md5sum {} -c -".format(env.get('CM_DOWNLOAD_CHECKSUM'+str(i)), x, q, env['CM_DOWNLOAD_FILENAME'].replace("%", "%%"), q, x_c)
+        # print(env['CM_DOWNLOAD_CHECKSUM_CMD'])
     else:
         env['CM_DOWNLOAD_CHECKSUM_CMD'] = ""
 
     if not pre_clean:
         env['CM_PRE_DOWNLOAD_CMD'] = ''
 
-    if os_info['platform'] == 'windows':
-        env['CM_DOWNLOAD_CMD'] =  env['CM_DOWNLOAD_CMD'].replace('&', '^&').replace('|', '^|').replace('(', '^(').replace(')', '^)')
+    if os_info['platform'] == 'windows' and env.get('CM_DOWNLOAD_CMD', '') != '':
+        env['CM_DOWNLOAD_CMD'] = escape_special_chars(env['CM_DOWNLOAD_CMD'], tool)
         if pre_clean:
             env['CM_PRE_DOWNLOAD_CLEAN_CMD'] = "del /Q %CM_DOWNLOAD_FILENAME%"
         # Check that if empty CMD, should add ""
