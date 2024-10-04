@@ -1,18 +1,18 @@
 @echo off
 
-REM Check if CM_GIT_CHECKOUT_PATH is set
-if not defined CM_GIT_CHECKOUT_PATH (
-    echo "Error: CM_GIT_CHECKOUT_PATH is not set."
+REM Check if CM_GIT_REPO_CHECKOUT_PATH is set
+if not defined CM_GIT_REPO_CHECKOUT_PATH (
+    echo "Error: CM_GIT_REPO_CHECKOUT_PATH is not set."
     exit /b 1
 )
 
-cd "%CM_GIT_CHECKOUT_PATH%"
+cd "%CM_GIT_REPO_CHECKOUT_PATH%"
 git pull
 git add *
 
 REM Check if the CM_MLPERF_INFERENCE_SUBMISSION_DIR variable is set
 if defined CM_MLPERF_INFERENCE_SUBMISSION_DIR (
-    robocopy "%CM_MLPERF_INFERENCE_SUBMISSION_DIR%" "%CM_GIT_CHECKOUT_PATH%" /MIR
+    robocopy "%CM_MLPERF_INFERENCE_SUBMISSION_DIR%" "%CM_GIT_REPO_CHECKOUT_PATH%" /MIR
     git add *
 )
 
