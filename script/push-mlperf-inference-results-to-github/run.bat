@@ -1,5 +1,11 @@
 @echo off
 
+REM Check if CM_GIT_CHECKOUT_PATH is set
+if not defined CM_GIT_CHECKOUT_PATH (
+    echo "Error: CM_GIT_CHECKOUT_PATH is not set."
+    exit /b 1
+)
+
 cd "%CM_GIT_CHECKOUT_PATH%"
 git pull
 git add *
