@@ -1,0 +1,32 @@
+{
+    "0":{
+        "Organization":"MLCommons",
+        "Availability":"available",
+        "Division":"open",
+        "SystemType":"edge",
+        "SystemName":"gh_windows",
+        "Platform":"gh_windows-reference-cpu-onnxruntime_v1.19.2-default_config",
+        "Model":"resnet50",
+        "MlperfModel":"resnet",
+        "Scenario":"Offline",
+        "Result":17.7491,
+        "Accuracy":"acc: 76.000",
+        "number_of_nodes":1,
+        "host_processor_model_name":"undefined",
+        "host_processors_per_node":1,
+        "host_processor_core_count":1,
+        "accelerator_model_name":null,
+        "accelerators_per_node":0,
+        "Location":"open\/MLCommons\/results\/gh_windows-reference-cpu-onnxruntime_v1.19.2-default_config\/resnet50\/offline",
+        "framework":"onnxruntime v1.19.2",
+        "operating_system":"Windows-2022Server-10.0.20348-SP0",
+        "notes":"Automated by MLCommons CM v2.3.9. ",
+        "compliance":1,
+        "errors":0,
+        "version":"v4.1",
+        "inferred":0,
+        "has_power":false,
+        "Units":"Samples\/s",
+        "weight_data_types":"fp32"
+    }
+}
