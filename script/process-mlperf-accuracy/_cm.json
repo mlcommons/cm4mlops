@@ -340,6 +340,14 @@
     },
     "openorca-gsm8k-mbxp": {
       "deps": [
+	{
+          "tags": "get,generic-python-lib,_package.rouge_score",
+          "names":
+          [
+            "pip-package",
+            "rouge-score"
+          ]
+        },
         {
           "names": [
             "openorca-gsm8k-mbxp-combined"
