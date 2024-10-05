@@ -57,6 +57,7 @@ input_mapping:
   framework: CM_MLPERF_BACKEND
   gpu_name: CM_NVIDIA_GPU_NAME
   hw_name: CM_HW_NAME
+  pip_loadgen: CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP
   hw_notes_extra: CM_MLPERF_SUT_SW_NOTES_EXTRA
   imagenet_path: IMAGENET_PATH
   implementation: CM_MLPERF_IMPLEMENTATION

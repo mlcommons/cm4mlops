@@ -22,7 +22,13 @@
       "names": [
         "compiler"
       ],
-      "tags": "get,compiler"
+      "tags": "get,compiler",
+      "skip_if_env": {
+        "CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP": 
+        [
+          "yes"
+        ]
+      }
     },
     {
       "tags": "get,cuda-devices,_with-pycuda",

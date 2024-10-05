@@ -8,7 +8,7 @@ def preprocess(i):
     state = i['state']
     os_info = i['os_info']
 
-    submitter = env.get('CM_MLPERF_SUBMITTER', 'CTuning')
+    submitter = env.get('CM_MLPERF_SUBMITTER', 'MLCommons')
 
     auto_detected_hw_name = False
     if env.get('CM_HW_NAME', '') == '':
