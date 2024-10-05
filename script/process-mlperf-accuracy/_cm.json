@@ -344,12 +344,22 @@
           "names": [
             "openorca-gsm8k-mbxp-combined"
           ],
+	  "skip_if_env": {
+            "CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST": [
+              "yes"
+            ]
+          },
           "tags": "get,dataset-mixtral,openorca-mbxp-gsm8k-combined"
         },
         {
           "names": [
             "mixtral-8x7b-model"
           ],
+	  "skip_if_env": {
+            "CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST": [
+              "yes"
+            ]
+          },
           "tags": "get,ml-model,mixtral"
         }
       ],
