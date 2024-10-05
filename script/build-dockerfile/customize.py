@@ -69,11 +69,8 @@ def preprocess(i):
     else:
         cm_mlops_repo = "mlcommons@cm4mlops"
 
-    if env.get("CM_MLOPS_REPO_BRANCH", '') != '':
-        cm_mlops_repo_branch_string = f" --branch {env['CM_MLOPS_REPO_BRANCH']}"
-    else:
-        cm_mlops_repo_branch_string = ""
-
+    cm_mlops_repo_branch_string = f" --branch={env['CM_MLOPS_REPO_BRANCH']}"
+    
     if env.get('CM_DOCKERFILE_WITH_PATH', '') == '':
         env['CM_DOCKERFILE_WITH_PATH'] = os.path.join(os.getcwd(), "Dockerfile")
 
@@ -206,7 +203,7 @@ def preprocess(i):
     x = env.get('CM_DOCKER_ADD_FLAG_TO_CM_MLOPS_REPO','')
     if x!='': x=' '+x
 
-    f.write('RUN cm pull repo ' + cm_mlops_repo + x + EOL)
+    f.write('RUN cm pull repo ' + cm_mlops_repo + cm_mlops_repo_branch_string + x + EOL)
 
     # Check extra repositories
     x = env.get('CM_DOCKER_EXTRA_CM_REPOS','')

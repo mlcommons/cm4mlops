@@ -1470,6 +1470,8 @@ def dockerfile(i):
         run_cmd  = r['run_cmd_string']
 
         cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
+        cm_repo_branch = i.get('docker_cm_repo_branch', docker_settings.get('cm_repo_branch', 'mlperf-inference'))
+
         cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
@@ -1542,6 +1544,7 @@ def dockerfile(i):
                            'automation': 'script',
                            'tags': 'build,dockerfile',
                            'cm_repo': cm_repo,
+                           'cm_repo_branch': cm_repo_branch,
                            'cm_repo_flags': cm_repo_flags,
                            'docker_base_image': docker_base_image,
                            'docker_os': docker_os,
