@@ -25,7 +25,7 @@ REM Check if the previous command was successful
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 git commit -a -m "%CM_MLPERF_RESULTS_REPO_COMMIT_MESSAGE%"
-REM git push
+git push
 
 REM Check if the previous command was successful
 if %errorlevel% neq 0 exit /b %errorlevel%
