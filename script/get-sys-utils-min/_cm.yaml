@@ -9,6 +9,7 @@ cache: true
 category: Detection or installation of tools and artifacts
 
 deps:
+  - tags: detect,os
   - tags: get,generic,sys-util,_xz
     enable_if_env:
       CM_HOST_OS_TYPE:
@@ -20,6 +21,7 @@ deps:
 
 env:
   CM_CLEAN_DIRS: bin
+  CM_WINDOWS_SYS_UTILS_MIN_INSTALL: yes
   CM_PACKAGE_WIN_URL: https://zenodo.org/records/13868077/files/cm-artifact-os-windows-32.zip?download=1
   CM_SUDO: sudo
 
