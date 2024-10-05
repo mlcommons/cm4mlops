@@ -73,6 +73,16 @@
   "tags_help": "get generic-python-lib",
   "uid": "94b62a682bc44791",
   "variations": {
+    "index-url.#": {
+      "env": {
+        "CM_GENERIC_PYTHON_PIP_INDEX_URL": "#"
+      }
+    },
+    "extra-index-url.#": {
+      "env": {
+        "CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL": "#"
+      }
+    },
     "Pillow": {
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "Pillow"
