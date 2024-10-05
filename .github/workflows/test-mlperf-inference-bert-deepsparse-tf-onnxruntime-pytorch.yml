@@ -27,6 +27,7 @@ jobs:
           - backend: pytorch
           - backend: onnxruntime
           - precision: fp32
+          - os: windows-latest
 
     steps:
     - uses: actions/checkout@v3
