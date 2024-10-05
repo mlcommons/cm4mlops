@@ -78,7 +78,7 @@ def preprocess(i):
     if env.get('CM_NETWORK_LOADGEN', '') != "lon" and env.get('CM_MLPERF_INFERENCE_API_SERVER','')=='' and "llama2-70b" not in env['CM_MODEL']:
         env['MODEL_DIR'] = env.get('CM_ML_MODEL_PATH')
         if not env['MODEL_DIR']:
-            env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH')))
+            env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH', '')))
 
     RUN_CMD = ""
     state['RUN'] = {}
