@@ -7,8 +7,8 @@
 
 #${CM_PYTHON_BIN_WITH_PATH} contains the path to python binary if "get,python" is added as a dependency
 
-echo "Running: "
-echo "${CM_RUN_CMD}"
+echo "Running gh auth: " #Not printing as it can contain secret
+#echo "${CM_RUN_CMD}"
 echo ""
 
 if [[ ${CM_FAKE_RUN} != "yes" ]]; then

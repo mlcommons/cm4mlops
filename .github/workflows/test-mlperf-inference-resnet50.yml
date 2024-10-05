@@ -42,6 +42,7 @@ jobs:
     - name: Test MLPerf Inference ResNet50 (Windows)
       if: matrix.os == 'windows-latest'
       run: |
+        git config --system core.longpaths true
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=gh_windows --model=resnet50 --adr.loadgen.tags=_from-pip --pip_loadgen=yes --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
     - name: Test MLPerf Inference ResNet50 (Linux/macOS)
       if: matrix.os != 'windows-latest'
@@ -53,12 +54,12 @@ jobs:
           USER: "GitHub Action"
           EMAIL: "admin@gateoverflow.com"
       run: |
-        git config --global user.name "$USER"
-        git config --global user.email "$EMAIL"
+        git config --global user.name "${{ env.USER }}"
+        git config --global user.email "${{ env.EMAIL }}"
         git config --global credential.https://github.com.helper ""
         git config --global credential.https://github.com.helper "!gh auth git-credential"
         git config --global credential.https://gist.github.com.helper ""
         git config --global credential.https://gist.github.com.helper "!gh auth git-credential"
 
         cm run script --tags=auth,gh,cli --with_token="${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}"
-        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from R50 GH action" --quiet
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from R50 GH action on ${{ matrix.os }}" --quiet

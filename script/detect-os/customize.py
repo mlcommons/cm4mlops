@@ -55,6 +55,9 @@ def postprocess(i):
 
         env['CM_HOST_OS_MACHINE'] = state['os_uname_machine']
 
+    else:
+        env['CM_HOST_OS_PACKAGE_MANAGER'] = "choco"
+
     import platform
 
     env['CM_HOST_SYSTEM_NAME'] = platform.node()
@@ -93,6 +96,9 @@ def postprocess(i):
     elif env.get('CM_HOST_OS_PACKAGE_MANAGER', '') == "zypper":
         env['CM_HOST_OS_PACKAGE_MANAGER_INSTALL_CMD'] = "zypper install -y"
         env['CM_HOST_OS_PACKAGE_MANAGER_UPDATE_CMD'] = "zypper update -y"
+    elif env.get('CM_HOST_OS_PACKAGE_MANAGER', '') == "choco":
+        env['CM_HOST_OS_PACKAGE_MANAGER_INSTALL_CMD'] = "choco install -y"
+        env['CM_HOST_OS_PACKAGE_MANAGER_UPDATE_CMD'] = "choco upgrade -y"
 
     if os.path.exists("/.dockerenv"):
         env['CM_RUN_INSIDE_DOCKER'] = "yes"
