@@ -34,8 +34,11 @@ def preprocess(i):
         return {'return': 1, 'error': 'Please select a variation specifying the sys util name'}
 
     package = state.get(util)
+    package_name = None
+    if package and pm:
+        package_name = package.get(pm)
 
-    if os_info['platform'] == 'windows' and not package:
+    if os_info['platform'] == 'windows' and not package_name:
         print ('')
         print ('WARNING: for now skipping get-generic-sys-util on Windows ...')
         print ('')
@@ -49,7 +52,6 @@ def preprocess(i):
     if not package:
         return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
 
-    package_name = package.get(pm)
     if not package_name:
         return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
     
