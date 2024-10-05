@@ -6,13 +6,12 @@ if not defined CM_GIT_REPO_CHECKOUT_PATH (
     exit /b 1
 )
 
-echo %cd%
-echo "Doing cd"
-echo %CM_GIT_REPO_CHECKOUT_PATH%
-REM Change directory
-chdir %CM_GIT_REPO_CHECKOUT_PATH% 
-echo %cd%
-echo "%CM_GIT_REPO_CHECKOUT_PATH%"
+cd /d "%CM_GIT_REPO_CHECKOUT_PATH%"
+if %errorlevel% neq 0 (
+    echo "Error: Failed to change directory to %CM_GIT_REPO_CHECKOUT_PATH%"
+    exit /b 1
+)
+
 git pull
 git add *
 
