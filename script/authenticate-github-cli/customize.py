@@ -14,7 +14,7 @@ def preprocess(i):
     cmd = "gh auth login"
     if env.get('CM_GH_AUTH_TOKEN', '') != '':
         if os_info['platform'] == 'windows':
-            cmd = f" echo %CM_GH_AUTH_TOKEN% | {cmd} --with-token"
+            cmd = f"{cmd} --with-token < %CM_GH_AUTH_TOKEN%"
         else:
             cmd = f" echo {env['CM_GH_AUTH_TOKEN']} | {cmd} --with-token"
 
