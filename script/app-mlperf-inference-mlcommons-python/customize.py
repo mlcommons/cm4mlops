@@ -340,6 +340,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
                 " --model-path " + env['MIXTRAL_CHECKPOINT_PATH']
         cmd = cmd.replace("--count", "--total-sample-count")
+        cmd = cmd.replace("--max-batchsize", "--batch-size")
 
     elif "3d-unet" in env['CM_MODEL']:
 
