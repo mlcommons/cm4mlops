@@ -203,8 +203,7 @@
           "brew": "bzip2",
           "dnf": "libbzip2-devel",
           "yum": "libbzip2-devel",
-          "zlib-devel": "libbz2-devel",
-          "choco": "zlib"
+          "zlib-devel": "libbz2-devel"
         }
       }
     },
@@ -688,7 +687,8 @@
       },
       "state": {
         "zlib": {
-          "apt": "zlib1g"
+          "apt": "zlib1g",
+          "choco": "zlib"
         }
       }
     },
