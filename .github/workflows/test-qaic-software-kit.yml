@@ -38,4 +38,3 @@ jobs:
     - name: Test Software Kit for compilation on Ubuntu 20.04
       run: |
         cm run script --tags=get,qaic,software,kit --adr.compiler.tags=${{ matrix.compiler }} --adr.compiler.version=${{ matrix.llvm-version }} --quiet
-        cm run script --tags=get,qaic,software,kit --adr.compiler.tags=${{ matrix.compiler }} --adr.compiler.version=${{ matrix.llvm-version }} --quiet
