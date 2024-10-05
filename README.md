@@ -141,8 +141,7 @@ cm run script \
 
 ## CM concepts
 
-* https://doi.org/10.5281/zenodo.8105339
-* https://arxiv.org/abs/2406.16791
+Check our [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339).
 
 ## Authors
 
