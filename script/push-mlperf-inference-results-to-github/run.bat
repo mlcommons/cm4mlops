@@ -10,10 +10,7 @@ echo %cd%
 echo "Doing cd"
 echo %CM_GIT_REPO_CHECKOUT_PATH%
 REM Change directory
-chdir %CM_GIT_REPO_CHECKOUT_PATH% || (
-    echo "Error: Failed to change directory to %CM_GIT_REPO_CHECKOUT_PATH%"
-    exit /b 1
-)
+chdir %CM_GIT_REPO_CHECKOUT_PATH% 
 echo %cd%
 echo "%CM_GIT_REPO_CHECKOUT_PATH%"
 git pull
