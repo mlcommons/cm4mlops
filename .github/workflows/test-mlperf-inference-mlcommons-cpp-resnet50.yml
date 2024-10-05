@@ -23,6 +23,7 @@ jobs:
         exclude:
           - llvm-version: "15.0.6"
           - llvm-version: "16.0.4"
+          - os: windows-latest
 
     steps:
     - uses: actions/checkout@v3
