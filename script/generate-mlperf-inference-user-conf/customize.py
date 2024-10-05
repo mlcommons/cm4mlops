@@ -346,7 +346,7 @@ def preprocess(i):
         env['CM_MLPERF_RANGING_USER_CONF'] = os.path.join(os.path.dirname(user_conf_path), "ranging_"+key+".conf")#  ranging_user_conf_path for a shorter run
 
         if short_ranging:
-            env['CM_MLPERF_USER_CONF'] = "\${CM_MLPERF_USER_CONF}"
+            env['CM_MLPERF_USER_CONF'] = r"\${CM_MLPERF_USER_CONF}"
         else:
             env['CM_MLPERF_USER_CONF'] = os.path.join(os.path.dirname(user_conf_path), key+".conf")#  user_conf_path
     else:
