@@ -13,11 +13,11 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: [ "3.12" ]
         backend: [ "onnxruntime", "pytorch" ]
         implementation: [ "python", "cpp" ]
@@ -35,6 +35,27 @@ jobs:
       run: |
         python3 -m pip install cmind
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-    - name: Test MLPerf Inference Retinanet using ${{ matrix.backend }}
+    - name: Test MLPerf Inference Retinanet using ${{ matrix.backend }} on ${{ matrix.os }}
+      if: matrix.os == 'windows-latest'
       run: |
-        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --hw_name=default --model=retinanet --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=5 --adr.compiler.tags=gcc --quiet  -v --target_qps=1
+        git config --system core.longpaths true
+        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="MLCommons" --hw_name=gh_${{ matrix.os }} --model=retinanet --adr.loadgen.tags=_from-pip --pip_loadgen=yes --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=5 --quiet  -v --target_qps=1
+    - name: Test MLPerf Inference Retinanet using ${{ matrix.backend }} on ${{ matrix.os }}
+      if: matrix.os != 'windows-latest'
+      run: |
+        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="MLCommons" --hw_name=gh_${{ matrix.os }}_x86 --model=retinanet --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=5 --adr.compiler.tags=gcc --quiet  -v --target_qps=1
+    - name: Push Results
+      if: github.repository_owner == 'gateoverflow'
+      env:
+          USER: "GitHub Action"
+          EMAIL: "admin@gateoverflow.com"
+      run: |
+        git config --global user.name "${{ env.USER }}"
+        git config --global user.email "${{ env.EMAIL }}"
+        git config --global credential.https://github.com.helper ""
+        git config --global credential.https://github.com.helper "!gh auth git-credential"
+        git config --global credential.https://gist.github.com.helper ""
+        git config --global credential.https://gist.github.com.helper "!gh auth git-credential"
+
+        cm run script --tags=auth,gh,cli --with_token="${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}"
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from Retinanet GH action on ${{ matrix.os }}" --quiet
