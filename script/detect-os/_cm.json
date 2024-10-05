@@ -25,6 +25,11 @@
           "windows"
         ]
       },
+      "skip_if_env": {
+        "CM_WINDOWS_SYS_UTILS_MIN_INSTALL": [
+          "yes"
+        ]
+      },
       "tags": "get,sys-utils-min"
     }
   ],

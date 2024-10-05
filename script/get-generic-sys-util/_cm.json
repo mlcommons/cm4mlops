@@ -676,7 +676,8 @@
           "apt": "xz-utils",
           "brew": "xz",
           "dnf": "xz",
-          "yum": "xz"
+          "yum": "xz",
+          "choco": "xz"
         }
       }
     },
@@ -686,7 +687,8 @@
       },
       "state": {
         "zlib": {
-          "apt": "zlib1g"
+          "apt": "zlib1g",
+          "choco": "zlib"
         }
       }
     },
