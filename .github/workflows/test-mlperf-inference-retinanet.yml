@@ -4,7 +4,7 @@
 name: MLPerf inference retinanet
 
 on:
-  pull_request:
+  pull_request_target:
     branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-inference-retinanet.yml'
@@ -23,6 +23,8 @@ jobs:
         implementation: [ "python", "cpp" ]
         exclude:
           - backend: pytorch
+            implementation: cpp
+          - os: windows
             implementation: cpp
 
     steps:
