@@ -13,8 +13,7 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -22,6 +21,7 @@ jobs:
         python-version: [ "3.11" ]
         backend: [ "deepsparse", "tf", "onnxruntime", "pytorch" ]
         precision: [ "int8", "fp32" ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         exclude:
           - backend: tf
           - backend: pytorch
@@ -38,6 +38,26 @@ jobs:
       run: |
         python3 -m pip install cmind
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-    - name: Test MLPerf Inference Bert (DeepSparse, TF, ONNX, PyTorch)
+    - name: Test MLPerf Inference Bert ${{ matrix.backend }} on ${{ matrix.os }}
+      if: matrix.os == 'windows-latest'
       run: |
-        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="cTuning" --model=bert-99 --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=5 --precision=${{ matrix.precision }} --target_qps=1 -v --quiet
+        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="MLCommons" --hw_name=gh_${{ matrix.os }} --model=bert-99 --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=5 --adr.loadgen.tags=_from-pip --pip_loadgen=yes --precision=${{ matrix.precision }} --target_qps=1 -v --quiet
+    - name: Test MLPerf Inference Bert ${{ matrix.backend }} on ${{ matrix.os }}
+      if: matrix.os != 'windows-latest'
+      run: |
+        cm run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="MLCommons" --hw_name=gh_${{ matrix.os }}_x86 --model=bert-99 --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=5 --precision=${{ matrix.precision }} --target_qps=1 -v --quiet
+    - name: Push Results
+      if: github.repository_owner == 'gateoverflow'
+      env:
+          USER: "GitHub Action"
+          EMAIL: "admin@gateoverflow.com"
+      run: |
+        git config --global user.name "${{ env.USER }}"
+        git config --global user.email "${{ env.EMAIL }}"
+        git config --global credential.https://github.com.helper ""
+        git config --global credential.https://github.com.helper "!gh auth git-credential"
+        git config --global credential.https://gist.github.com.helper ""
+        git config --global credential.https://gist.github.com.helper "!gh auth git-credential"
+
+        cm run script --tags=auth,gh,cli --with_token="${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}"
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from Bert GH action on ${{ matrix.os }}" --quiet
