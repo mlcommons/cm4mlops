@@ -4,7 +4,7 @@
 name: MLPerf inference bert (deepsparse, tf, onnxruntime, pytorch)
 
 on:
-  pull_request:
+  pull_request_target:
     branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-inference-bert-deepsparse-tf-onnxruntime-pytorch.yml'
