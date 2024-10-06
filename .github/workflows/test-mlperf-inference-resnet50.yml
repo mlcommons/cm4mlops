@@ -54,6 +54,7 @@ jobs:
       env:
           USER: "GitHub Action"
           EMAIL: "admin@gateoverflow.com"
+          GITHUB_TOKEN: ${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}
       run: |
         git config --global user.name "${{ env.USER }}"
         git config --global user.email "${{ env.EMAIL }}"
