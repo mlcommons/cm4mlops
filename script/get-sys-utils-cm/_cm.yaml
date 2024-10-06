@@ -14,8 +14,6 @@ deps:
 env:
   CM_CLEAN_DIRS: bin
   CM_PACKAGE_WIN_URL: https://zenodo.org/records/13868077/files/cm-artifact-os-windows-32.zip?download=1
-    ; https://www.dropbox.com/scl/fi/cj7xmgmk4wu1r0iuoedcq/zlib123dllx64-bin.zip?rlkey=sqmldotiste2zhk6nhmijg09e&st=i5w7esjx&dl=1
-    ; https://www.dropbox.com/scl/fi/x94qvrmac55ht03257139/xz-5.2.9-win64.zip?rlkey=adzixlsqrapncrusy9ndd2qji&st=tqobzlfo&dl=1
   CM_SUDO: sudo
 
 input_mapping:
