@@ -4,7 +4,7 @@
 name: MLPerf inference MLCommons C++ ResNet50
 
 on:
-  pull_request:
+  pull_request_target:
     branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml'
