@@ -35,7 +35,6 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-        github-token: ${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}
     - name: Install dependencies
       run: |
         python3 -m pip install cmind
@@ -58,11 +57,4 @@ jobs:
       run: |
         git config --global user.name "${{ env.USER }}"
         git config --global user.email "${{ env.EMAIL }}"
-        git config --global credential.https://github.com.helper ""
-        git config --global credential.https://github.com.helper "!gh auth git-credential"
-        git config --global credential.https://gist.github.com.helper ""
-        git config --global credential.https://gist.github.com.helper "!gh auth git-credential"
-        git config --global credential.helper 'cache --timeout=3600'
-
-        cm run script --tags=auth,gh,cli --with_token="${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}"
         cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from R50 GH action on ${{ matrix.os }}" --quiet
