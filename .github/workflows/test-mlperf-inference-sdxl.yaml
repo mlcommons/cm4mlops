@@ -6,7 +6,7 @@ on:
 
 jobs:
   build_reference:
-    if: github.repository_owner == 'gateoverflow_off'
+    if: github.repository_owner == 'gateoverflow'
     runs-on: [ self-hosted, linux, x64 ]
     strategy:
       fail-fast: false
