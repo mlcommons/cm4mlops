@@ -4,7 +4,7 @@
 name: MLPerf inference MLCommons C++ ResNet50
 
 on:
-  pull_request:
+  pull_request_target:
     branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml'
@@ -13,16 +13,18 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         python-version: [ "3.12" ]
         llvm-version: [ "15.0.6", "16.0.4", "17.0.6" ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         exclude:
-        - llvm-version: "15.0.6"
-        - llvm-version: "16.0.4"
+          - llvm-version: "15.0.6"
+          - llvm-version: "16.0.4"
+          - os: windows-latest
+          - os: macos-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -36,6 +38,27 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
         cm run script --quiet --tags=get,sys-utils-cm
         cm run script --quiet --tags=install,prebuilt,llvm --version=${{ matrix.llvm-version }}
-    - name: Test MLPerf Inference MLCommons C++ ResNet50
+    - name: Test MLPerf Inference MLCommons C++ ResNet50 on ${{ matrix.os }}
+      if: matrix.os == 'windows-latest'
       run: |
-        cmr "app mlperf inference mlcommons cpp" -v --quiet
+        cmr "app mlperf inference mlcommons cpp" --submitter="MLCommons" --hw_name=gh_${{ matrix.os }} --adr.loadgen.tags=_from-pip --pip_loadgen=yes -v --quiet
+    - name: Test MLPerf Inference MLCommons C++ ResNet50 on ${{ matrix.os }}
+      if: matrix.os != 'windows-latest'
+      run: |
+        cmr "app mlperf inference mlcommons cpp" --submitter="MLCommons" --hw_name=gh_${{ matrix.os }} -v --quiet
+    - name: Push Results
+      if: github.repository_owner == 'gateoverflow'
+      env:
+          USER: "GitHub Action"
+          EMAIL: "admin@gateoverflow.com"
+          GITHUB_TOKEN: ${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}
+      run: |
+        git config --global user.name "${{ env.USER }}"
+        git config --global user.email "${{ env.EMAIL }}"
+        git config --global credential.https://github.com.helper ""
+        git config --global credential.https://github.com.helper "!gh auth git-credential"
+        git config --global credential.https://gist.github.com.helper ""
+        git config --global credential.https://gist.github.com.helper "!gh auth git-credential"
+
+        cm run script --tags=auth,gh,cli --with_token="${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}"
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from MLCommons C++ ResNet50 GH action on ${{ matrix.os }}" --quiet
