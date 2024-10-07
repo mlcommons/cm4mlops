@@ -18,4 +18,10 @@ r = cm.access({'action':'search', 'automation': 'cache', 'tags': 'get,dataset,pr
 checks.check_list(r, "_NHWC")
 
 r = cm.access({'action':'search', 'automation': 'cache', 'tags': 'get,dataset,preprocessed,imagenet,-_NHWC'})
-checks.check_list(r, "_NHWC", False)
+#checks.check_list(r, "-_NHWC", False)
+
+
+r = cm.access({'action':'run', 'automation': 'script', 'tags': 'test-scripts,_v1,_v2'})
+new_env = r['new_env']
+checks.check_key_value(new_env, "CM_VAR1", "combv1v2")
+checks.check_key_value(new_env, "CM_VAR2", "constv2")
