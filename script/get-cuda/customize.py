@@ -214,5 +214,6 @@ def postprocess(i):
         env['+ LDFLAGS'].append("-L"+x)
 
     env['CM_CUDA_VERSION_STRING'] = "cu"+env['CM_CUDA_VERSION'].replace(".", "")
+    env['CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX5'] = env['CM_CUDA_VERSION_STRING']
 
     return {'return':0, 'version': version}
