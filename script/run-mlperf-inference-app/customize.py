@@ -23,6 +23,12 @@ def preprocess(i):
     if env.get('CM_RUN_DOCKER_CONTAINER', '') == "yes": 
         return {'return':0}
 
+    if env.get('CM_DOCKER_IMAGE_NAME', '') ==  'scc24':
+        if env.get("CM_MLPERF_IMPLEMENTATION", "reference") == "reference":
+            env['CM_DOCKER_IMAGE_NAME'] = "scc24-reference"
+        elif "nvidia" in env.get("CM_MLPERF_IMPLEMENTATION", "reference"):
+            env['CM_DOCKER_IMAGE_NAME'] = "scc24-nvidia"
+
     dump_version_info = env.get('CM_DUMP_VERSION_INFO', True)
 
     system_meta = state.get('CM_SUT_META', {})
