@@ -658,6 +658,8 @@ variations:
       tags: run,accuracy,mlperf,_kits19,_int8
 
   3d-unet_,reference:
+    env:
+      CM_DOCKER_IMAGE_NAME: mlperf-inference-mlcommons-python-implementation-3d-unet
     docker:
       deps:
         - enable_if_env:
@@ -697,6 +699,8 @@ variations:
           tags: get,ml-model,sdxl,_fp16,_rclone
 
   sdxl,reference,float16:
+    env:
+      CM_DOCKER_IMAGE_NAME: mlperf-inference-mlcommons-python-implementation-sdxl-float16
     docker:
       deps:
         - enable_if_env:
@@ -705,6 +709,8 @@ variations:
           tags: get,ml-model,sdxl,_fp16,_rclone
 
   sdxl,reference,bfloat16:
+    env:
+      CM_DOCKER_IMAGE_NAME: mlperf-inference-mlcommons-python-implementation-sdxl-bfloat16
     docker:
       deps:
         - enable_if_env:
@@ -713,6 +719,8 @@ variations:
           tags: get,ml-model,sdxl,_fp16,_rclone
 
   sdxl,reference,float32:
+    env:
+      CM_DOCKER_IMAGE_NAME: mlperf-inference-mlcommons-python-implementation-sdxl-float32
     docker:
       deps:
         - enable_if_env:
@@ -764,6 +772,8 @@ variations:
         tags: _llama2-70b-99.9
 
   llama2-70b_,reference:
+    env:
+      CM_DOCKER_IMAGE_NAME: mlperf-inference-mlcommons-python-implementation-llama2-70b
     docker:
       deps:
         - enable_if_env:

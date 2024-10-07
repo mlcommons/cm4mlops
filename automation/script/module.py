@@ -838,8 +838,8 @@ class CAutomation(Automation):
         script_artifact_env = meta.get('env',{})
         env.update(script_artifact_env)
 
-
-
+        script_artifact_state = meta.get('state',{})
+        utils.merge_dicts({'dict1':state, 'dict2':script_artifact_state, 'append_lists':True, 'append_unique':True})
 
 
 
@@ -853,7 +853,7 @@ class CAutomation(Automation):
 
 
         # STEP 700: Overwrite env with keys from the script input (to allow user friendly CLI)
-        #           IT HAS THE PRIORITY OVER meta['default_env'] and meta['env']
+        #           IT HAS THE PRIORITY OVER meta['default_env'] and meta['env'] but not over the meta from versions/variations
         #           (env OVERWRITE - user enforces it from CLI)
         #           (it becomes const)
         if input_mapping:
@@ -866,7 +866,9 @@ class CAutomation(Automation):
         #    update_env_from_input_mapping(const, i, docker_input_mapping)
 
 
-
+        #Update env/state with cost
+        env.update(const)
+        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
 
 
 
@@ -952,7 +954,7 @@ class CAutomation(Automation):
 
         if version!='' and version in versions:
             versions_meta = versions[version]
-            r = update_state_from_meta(versions_meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+            r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
             if r['return']>0: return r
             adr=get_adr(versions_meta)
             if adr:
@@ -1328,7 +1330,7 @@ class CAutomation(Automation):
 
                     if default_version in versions:
                         versions_meta = versions[default_version]
-                        r = update_state_from_meta(versions_meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                        r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
                         if r['return']>0: return r
 
                         if "add_deps_recursive" in versions_meta:
@@ -1453,6 +1455,7 @@ class CAutomation(Automation):
 
             r = _update_env(env, 'CM_TMP_PIP_VERSION_STRING', pip_version_string)
             if r['return']>0: return r
+
             if pip_version_string != '':
                 logging.debug(recursion_spaces+'    # potential PIP version string (if needed): '+pip_version_string)
 
@@ -1461,10 +1464,6 @@ class CAutomation(Automation):
             if 'preprocess' in dir(customize_code) and not fake_run:
 
                 logging.debug(recursion_spaces+'  - Running preprocess ...')
-
-                # Update env and state with const
-                utils.merge_dicts({'dict1':env, 'dict2':const, 'append_lists':True, 'append_unique':True})
-                utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
 
                 run_script_input['run_state'] = run_state
 
@@ -2019,7 +2018,7 @@ class CAutomation(Automation):
                 if variation_tag_dynamic_suffix:
                     self._update_variation_meta_with_dynamic_suffix(variation_meta, variation_tag_dynamic_suffix)
 
-                r = update_state_from_meta(variation_meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                r = update_state_from_meta(variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
                 if r['return']>0: return r
 
                 if variation_meta.get('script_name', '')!='':
@@ -2050,7 +2049,7 @@ class CAutomation(Automation):
 
                         combined_variation_meta = variations[combined_variation]
 
-                        r = update_state_from_meta(combined_variation_meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                        r = update_state_from_meta(combined_variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
                         if r['return']>0: return r
 
                         adr=get_adr(combined_variation_meta)
@@ -5110,7 +5109,7 @@ def update_env_from_input_mapping(env, inp, input_mapping):
             env[input_mapping[key]] = inp[key]
 
 ##############################################################################
-def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i):
+def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i):
     """
     Internal: update env and state from meta
     """
@@ -5118,11 +5117,22 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
     default_env = meta.get('default_env',{})
     for key in default_env:
         env.setdefault(key, default_env[key])
+
     update_env = meta.get('env', {})
     env.update(update_env)
 
+    update_const = meta.get('const', {})
+    if update_const:
+        const.update(update_const)
+        env.update(const)
+
     update_state = meta.get('state', {})
     utils.merge_dicts({'dict1':state, 'dict2':update_state, 'append_lists':True, 'append_unique':True})
+
+    update_const_state = meta.get('const_state', {})
+    if const_state:
+        utils.merge_dicts({'dict1':const_state, 'dict2':update_const_state, 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
 
     new_deps = meta.get('deps', [])
     if len(new_deps)>0:
