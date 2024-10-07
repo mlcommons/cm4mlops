@@ -413,10 +413,6 @@ class CAutomation(Automation):
 
         ignore_script_error = i.get('ignore_script_error', False)
 
-        # Get constant env and state
-        const = i.get('const',{})
-        const_state = i.get('const_state',{})
-
         # Detect current path and record in env for further use in native scripts
         current_path = os.path.abspath(os.getcwd())
         r = _update_env(env, 'CM_TMP_CURRENT_PATH', current_path)
@@ -884,7 +880,7 @@ class CAutomation(Automation):
         variations = script_artifact.meta.get('variations', {})
         state['docker'] = meta.get('docker', {})
 
-        r = self._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose)
+        r = self._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose)
         if r['return'] > 0:
             return r
 
@@ -1915,7 +1911,7 @@ class CAutomation(Automation):
         return {'return': 0}
 
     ######################################################################################
-    def _update_state_from_variations(self, i, meta, variation_tags, variations, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose):
+    def _update_state_from_variations(self, i, meta, variation_tags, variations, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose):
 
         # Save current explicit variations
         import copy

@@ -14,6 +14,7 @@ def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
+    const = i.get('const', {})
 
     inp = i['input']
     state = i['state']
@@ -194,6 +195,9 @@ def preprocess(i):
             if k.startswith("docker_"):
                 docker_extra_input[k] = inp[k]
         inp = {}
+
+        if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
+            docker_extra_input['docker_image_name'] = env['CM_DOCKER_IMAGE_NAME']
     else:
         action = "run"
 
@@ -220,14 +224,16 @@ def preprocess(i):
             env['CM_MLPERF_LOADGEN_MODE'] = mode
 
             env_copy = copy.deepcopy(env)
+            const_copy = copy.deepcopy(const)
             print(f"\nRunning loadgen scenario: {scenario} and mode: {mode}")
             ii = {'action':action, 'automation':'script', 'tags': scenario_tags, 'quiet': 'true',
-                'env': env_copy, 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
+                  'env': env_copy, 'const': const_copy, 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
                 copy.deepcopy(add_deps_recursive), 'ad': ad, 'adr': copy.deepcopy(adr), 'v': verbose, 'print_env': print_env, 'print_deps': print_deps, 'dump_version_info': dump_version_info}
 
             if action == "docker":
                 for k in docker_extra_input:
                     ii[k] = docker_extra_input[k]
+
             r = cm.access(ii)
             if r['return'] > 0:
                 return r
@@ -252,7 +258,7 @@ def preprocess(i):
                 env['CM_MLPERF_LOADGEN_COMPLIANCE_TEST'] = test
                 env['CM_MLPERF_LOADGEN_MODE'] = "compliance"
                 ii = {'action':action, 'automation':'script', 'tags': scenario_tags, 'quiet': 'true',
-                    'env': copy.deepcopy(env), 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
+                      'env': copy.deepcopy(env), 'const': copy.deepcopy(const), 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
                     copy.deepcopy(add_deps_recursive), 'adr': copy.deepcopy(adr), 'ad': ad, 'v': verbose, 'print_env': print_env, 'print_deps': print_deps, 'dump_version_info': dump_version_info}
                 if action == "docker":
                     for k in docker_extra_input:
