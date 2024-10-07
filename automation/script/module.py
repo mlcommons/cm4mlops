@@ -1372,7 +1372,6 @@ class CAutomation(Automation):
                 r = update_env_with_values(env)
                 if r['return']>0: return r
 
-
             # Clean some output files
             clean_tmp_files(clean_files, recursion_spaces)
 
@@ -1448,6 +1447,9 @@ class CAutomation(Automation):
                 pip_version_string = '>='+pip_version_min
             elif pip_version_max != '':
                 pip_version_string = '<='+pip_version_max
+
+            env.update(const)
+            utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
 
             r = _update_env(env, 'CM_TMP_PIP_VERSION_STRING', pip_version_string)
             if r['return']>0: return r
@@ -3035,6 +3037,11 @@ class CAutomation(Automation):
                     r = update_env_with_values(env)
                     if r['return']>0: return r
 
+                    #Update env/state with cost
+                    env.update(const)
+                    utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+
+
         return {'return': 0}
 
     ##############################################################################
@@ -4413,7 +4420,7 @@ def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
 
         # Check cases such as --env.CM_SKIP_COMPILE
         if type(value)==bool:
-            env[key] = str(value)
+            env[key] = value
             continue
 
         tmp_values = re.findall(r'<<<(.*?)>>>', str(value))
