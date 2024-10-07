@@ -1,709 +1,472 @@
-{
-  "alias": "get-generic-sys-util",
-  "automation_alias": "script",
-  "automation_uid": "5b4e0237da074764",
-  "cache": true,
-  "category": "Detection or installation of tools and artifacts",
-  "default_env": {
-    "CM_CLEAN_DIRS": "bin",
-    "CM_SUDO": "sudo"
-  },
-  "deps": [
-    {
-      "tags": "detect,os"
-    }
-  ],
-  "new_env_keys": [
-    "+PATH"
-  ],
-  "env": {
-    "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED": "no",
-    "CM_SYS_UTIL_VERSION_CMD": ""
-  },
-  "tags": [
-    "get",
-    "sys-util",
-    "generic",
-    "generic-sys-util"
-  ],
-  "uid": "bb0393afa8404a11",
-  "variations": {
-    "detect": {
-      "group": "mode",
-      "default": true,
-      "names": [
-        "detect-sys-util"
-      ],
-      "env": {
-        "CM_GENERIC_SYS_UTIL_RUN_MODE": "detect"
-      },
-      "prehook_deps": [
-        {
-          "tags": "get,generic-sys-util,_install",
-          "inherit_variation_tags": true,
-          "names": [
-            "install-sys-util"
-          ],
-          "skip_inherit_variation_groups": [
-            "mode"
-          ],
-          "enable_if_env": {
-            "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED":
-            [
-              "yes"
-            ]
-          }
-        }
-      ]
-    },
-    "install": {
-      "group": "mode",
-      "env": {
-        "CM_GENERIC_SYS_UTIL_RUN_MODE": "install"
-      }
-    },
-    "cmake": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "cmake"
-      },
-      "state": {
-        "cmake": {
-          "apt": "cmake",
-          "brew": "cmake",
-          "dnf": "cmake",
-          "yum": "cmake"
-        }
-      }
-    },
-    "dmidecode": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "dmidecode"
-      },
-      "state": {
-        "dmidecode": {
-          "apt": "dmidecode",
-          "brew": "",
-          "dnf": "dmidecode",
-          "yum": "dmidecode"
-        }
-      }
-    },
-    "g++-11": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "g++11"
-      },
-      "state": {
-        "g++11": {
-          "apt": "g++-11",
-          "dnf": "gcc-toolset-11-gcc-c++"
-        }
-      }
-    },
-    "g++-12": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "g++12"
-      },
-      "state": {
-        "g++12": {
-          "apt": "g++-12",
-          "dnf": "gcc-toolset-12-gcc-c++"
-        }
-      }
-    },
-    "g++-9": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "g++9"
-      },
-      "state": {
-        "g++9": {
-          "apt": "g++-9",
-          "dnf": "gcc-toolset-9-gcc-c++"
-        }
-      }
-    },
-    "gcc-11": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "gcc11"
-      },
-      "state": {
-        "gcc11": {
-          "apt": "gcc-11"
-        }
-      }
-    },
-    "gcc-9": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "gcc9"
-      },
-      "state": {
-        "gcc9": {
-          "apt": "gcc-9"
-        }
-      }
-    },
-    "gflags-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "gflags-dev"
-      },
-      "state": {
-        "gflags-dev": {
-          "apt": "libgflags-dev",
-          "brew": "gflags",
-          "dnf": "gflags-devel",
-          "yum": "gflags-devel"
-        }
-      }
-    },
-    "git-lfs": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "git-lfs"
-      },
-      "state": {
-        "git-lfs": {
-          "apt": "git-lfs",
-          "brew": "git-lfs",
-          "dnf": "git-lfs",
-          "yum": "git-lfs"
-        }
-      }
-    },
-    "glog-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "glog-dev"
-      },
-      "state": {
-        "glog-dev": {
-          "apt": "libgoogle-glog-dev",
-          "brew": "glog",
-          "dnf": "glog-devel",
-          "yum": "glog-devel"
-        }
-      }
-    },
-    "libboost-all-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libboost-all-dev"
-      },
-      "state": {
-        "libboost-all-dev": {
-          "apt": "libboost-all-dev",
-          "brew": "",
-          "dnf": "boost-devel",
-          "yum": "boost-devel"
-        }
-      }
-    },
-    "libbz2-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libbz2_dev"
-      },
-      "state": {
-        "libbz2_dev": {
-          "apt": "libbz2-dev",
-          "brew": "bzip2",
-          "dnf": "libbzip2-devel",
-          "yum": "libbzip2-devel",
-          "zlib-devel": "libbz2-devel"
-        }
-      }
-    },
-    "libev-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libev_dev"
-      },
-      "state": {
-        "libev_dev": {
-          "apt": "libev-dev"
-        }
-      }
-    },
-    "libffi": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libffi"
-      },
-      "state": {
-        "libffi7": {
-          "apt": "libffi"
-        }
-      }
-    },
-    "libffi-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libffi_dev"
-      },
-      "state": {
-        "libffi_dev": {
-          "apt": "libffi-dev",
-          "brew": "libffi",
-          "dnf": "libffi-devel",
-          "yum": "libffi-devel"
-        }
-      }
-    },
-    "libffi7": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libffi7"
-      },
-      "state": {
-        "libffi7": {
-          "apt": "libffi7"
-        }
-      }
-    },
-    "libffi8": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libffi8"
-      },
-      "state": {
-        "libffi8": {
-          "apt": "libffi8"
-        }
-      }
-    },
-    "libgdbm-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libgdbm_dev"
-      },
-      "state": {
-        "libgdbm_dev": {
-          "apt": "libgdbm-dev"
-        }
-      }
-    },
-    "libgmock-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libgmock-dev"
-      },
-      "state": {
-        "libgmock-dev": {
-          "apt": "libgmock-dev",
-          "brew": "",
-          "dnf": "gmock-devel",
-          "yum": "gmock-devel"
-        }
-      }
-    },
-    "liblzma-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "liblzma_dev"
-      },
-      "state": {
-        "liblzma_dev": {
-          "apt": "liblzma-dev"
-        }
-      }
-    },
-    "libmkl-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libmkl-dev"
-      },
-      "state": {
-        "libmkl-dev": {
-          "apt": "libmkl-dev",
-          "brew": "",
-          "dnf": "",
-          "yum": ""
-        }
-      }
-    },
-    "libmpfr-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libmpfr-dev"
-      },
-      "state": {
-        "libmpfr-dev": {
-          "apt": "libmpfr-dev",
-          "brew": "",
-          "dnf": "mpfr-devel.x86_64",
-          "yum": "mpfr-devel.x86_64",
-          "zypper": "mpfr-devel"
-        }
-      }
-    },
-    "libncurses-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libncurses_dev"
-      },
-      "state": {
-        "libncurses_dev": {
-          "apt": "libncurses-dev",
-          "dnf": "libncurses-devel",
-          "yum": "libncurses-devel"
-        }
-      }
-    },
-    "libnuma-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libnuma-dev"
-      },
-      "state": {
-        "libnuma-dev": {
-          "apt": "libnuma-dev",
-          "brew": "",
-          "dnf": "numactl-libs",
-          "yum": "numactl-libs"
-        }
-      }
-    },
-    "libpci-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libpci-dev"
-      },
-      "state": {
-        "libpci-dev": {
-          "apt": "libpci-dev",
-          "brew": "",
-          "dnf": "pciutils-devel",
-          "yum": "pciutils-devel"
-        }
-      }
-    },
-    "libpng-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libpng-dev"
-      },
-      "state": {
-        "libpng-dev": {
-          "apt": "libpng-dev",
-          "brew": "",
-          "dnf": "libpng-devel",
-          "yum": "libpng-devel"
-        }
-      }
-    },
-    "libre2-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libre2-dev"
-      },
-      "state": {
-        "libre2-dev": {
-          "apt": "libre2-dev",
-          "brew": "",
-          "dnf": "libre-devel",
-          "yum": "libre-devel"
-        }
-      }
-    },
-    "libreadline-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libreadline_dev"
-      },
-      "state": {
-        "libreadline_dev": {
-          "apt": "libreadline-dev",
-          "dnf": "libreadline-devel",
-          "yum": "lireadline-devel"
-        }
-      }
-    },
-    "libsqlite3-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libsqlite3_dev"
-      },
-      "state": {
-        "libsqlite3_dev": {
-          "apt": "libsqlite3-dev"
-        }
-      }
-    },
-    "libssl-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libssl_dev"
-      },
-      "state": {
-        "libssl_dev": {
-          "apt": "libssl-dev",
-          "brew": "openssl",
-          "dnf": "libssl-devel",
-          "yum": "libssl-devel"
-        }
-      }
-    },
-    "libudev-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "libudev-dev"
-      },
-      "state": {
-        "libudev-dev": {
-          "apt": "libudev-dev",
-          "brew": "",
-          "dnf": "libudev-devl",
-          "yum": "libudev-devel"
-        }
-      }
-    },
-    "linux-tools": {
-      "deps": [
-        {
-          "tags": "detect,os"
-        }
-      ],
-      "env": {
-        "CM_SYS_UTIL_NAME": "linux-tools"
-      },
-      "state": {
-        "linux-tools": {
-          "apt": "linux-tools-<<<CM_HOST_OS_KERNEL_VERSION>>>"
-        }
-      }
-    },
-    "md5sha1sum": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "md5sha1sum"
-      },
-      "state": {
-        "md5sha1sum": {
-          "apt": "",
-          "brew": "md5sha1sum"
-        }
-      }
-    },
-    "ninja-build": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "ninja-build"
-      },
-      "state": {
-        "ninja-build": {
-          "apt": "ninja-build",
-          "brew": "ninja-build",
-          "dnf": "ninja-build",
-          "yum": "ninja-build",
-          "zypper": "ninja-build"
-        }
-      }
-    },
-    "nlohmann-json3-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "nlohmann_json3_dev"
-      },
-      "state": {
-        "nlohmann_json3_dev": {
-          "apt": "nlohmann-json3-dev",
-          "dnf": "nlohmann-json-dev"
-        }
-      }
-    },
-    "ntpdate": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "ntpdate"
-      },
-      "state": {
-        "ntpdate": {
-          "apt": "ntpdate",
-          "brew": "",
-          "dnf": "ntpdate",
-          "yum": "ntpdate"
-        }
-      }
-    },
-    "numactl": {
-      "deps": [
-        {
-          "enable_if_env": {
-            "CM_HOST_OS_FLAVOR": [
-              "rhel"
-            ],
-            "CM_HOST_OS_VERSION": [
-              "9.1",
-              "9.2",
-              "9.3"
-            ]
-          },
-          "tags": "install,numactl,from.src"
-        }
-      ],
-      "env": {
-        "CM_SYS_UTIL_NAME": "numactl"
-      },
-      "state": {
-        "numactl": {
-          "apt": "numactl",
-          "dnf": "numactl-devel",
-          "yum": "numactl-devel"
-        }
-      }
-    },
-    "nvidia-cuda-toolkit": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "nvidia-cuda-toolkit"
-      },
-      "state": {
-        "nvidia-cuda-toolkit": {
-          "apt": "nvidia-cuda-toolkit",
-          "brew": "",
-          "dnf": "nvidia-cuda-toolkit",
-          "yum": "nvidia-cuda-toolkit"
-        }
-      }
-    },
-    "psmisc": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "psmisc"
-      },
-      "state": {
-        "psmisc": {
-          "apt": "psmisc",
-          "brew": "pstree",
-          "dnf": "psmisc",
-          "yum": "psmisc"
-        }
-      }
-    },
-    "rapidjson-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "rapidjson-dev"
-      },
-      "state": {
-        "rapidjson-dev": {
-          "apt": "rapidjson-dev",
-          "brew": "",
-          "dnf": "rapidjson-devel",
-          "yum": "rapidjson-devel"
-        }
-      }
-    },
-    "rsync": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "rsync",
-        "CM_SYS_UTIL_CHECK_CMD": "rsync --version"
-      },
-      "state": {
-        "rsync": {
-          "apt": "rsync",
-          "brew": "rsync",
-          "dnf": "rsync",
-          "yum": "rsync",
-          "zypper": "rsync"
-        }
-      }
-    },
-    "screen": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "screen"
-      },
-      "state": {
-        "screen": {
-          "apt": "screen",
-          "brew": "screen",
-          "dnf": "screen",
-          "yum": "screen",
-          "zypper": "rsync"
-        }
-      }
-    },
-    "sox": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "sox"
-      },
-      "state": {
-        "sox": {
-          "apt": "sox",
-          "brew": "sox",
-          "dnf": "sox"
-        }
-      }
-    },
-    "systemd": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "systemd"
-      },
-      "state": {
-        "systemd": {
-          "apt": "systemd",
-          "brew": "",
-          "dnf": "systemd",
-          "yum": "systemd"
-        }
-      }
-    },
-    "tk-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "tk_dev"
-      },
-      "state": {
-        "tk_dev": {
-          "apt": "tk-dev"
-        }
-      }
-    },
-    "transmission": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "transmission"
-      },
-      "state": {
-        "transmission": {
-          "apt": "transmission-daemon",
-          "brew": "transmission",
-          "dnf": "transmission-daemon",
-          "yum": "transmission-daemon"
-        }
-      }
-    },
-    "wget": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "wget",
-        "CM_SYS_UTIL_VERSION_CMD": "wget --version",
-        "CM_SYS_UTIL_VERSION_RE": "Wget\\s*([\\d.]+)"
-      },
-      "state": {
-        "wget": {
-          "apt": "wget",
-          "brew": "wget"
-        }
-      },
-      "new_env_keys": [
-        "CM_WGET_VERSION"
-      ]
-    },
-    "wkhtmltopdf": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "wkhtmltopdf",
-        "CM_SYS_UTIL_CHECK_CMD": "wkhtmltopdf --version"
-      },
-      "state": {
-        "wkhtmltopdf": {
-          "apt": "wkhtmltopdf",
-          "brew": "wkhtmltopdf"
-        }
-      }
-    },
-    "xz": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "xz"
-      },
-      "state": {
-        "xz": {
-          "apt": "xz-utils",
-          "brew": "xz",
-          "dnf": "xz",
-          "yum": "xz",
-          "choco": "xz"
-        }
-      }
-    },
-    "zlib": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "zlib"
-      },
-      "state": {
-        "zlib": {
-          "apt": "zlib1g",
-          "choco": "zlib"
-        }
-      }
-    },
-    "zlib1g-dev": {
-      "env": {
-        "CM_SYS_UTIL_NAME": "zlib1g_dev"
-      },
-      "state": {
-        "zlib1g_dev": {
-          "apt": "zlib1g-dev",
-          "dnf": "zlib-devel",
-          "yum": "zlib-devel",
-          "zypper": "zlib-devel"
-        }
-      }
-    }
-  }
-}
+alias: get-generic-sys-util
+automation_alias: script
+automation_uid: 5b4e0237da074764
+cache: true
+category: Detection or installation of tools and artifacts
+default_env:
+  CM_CLEAN_DIRS: bin
+  CM_SUDO: sudo
+deps:
+- tags: detect,os
+env:
+  CM_GENERIC_SYS_UTIL_INSTALL_NEEDED: 'no'
+  CM_SYS_UTIL_VERSION_CMD: ''
+new_env_keys:
+- +PATH
+tags:
+- get
+- sys-util
+- generic
+- generic-sys-util
+uid: bb0393afa8404a11
+variations:
+  cmake:
+    env:
+      CM_SYS_UTIL_NAME: cmake
+    state:
+      cmake:
+        apt: cmake
+        brew: cmake
+        dnf: cmake
+        yum: cmake
+  detect:
+    default: true
+    env:
+      CM_GENERIC_SYS_UTIL_RUN_MODE: detect
+    group: mode
+    names:
+    - detect-sys-util
+    prehook_deps:
+    - enable_if_env:
+        CM_GENERIC_SYS_UTIL_INSTALL_NEEDED:
+        - 'yes'
+      inherit_variation_tags: true
+      names:
+      - install-sys-util
+      skip_inherit_variation_groups:
+      - mode
+      tags: get,generic-sys-util,_install
+  dmidecode:
+    env:
+      CM_SYS_UTIL_NAME: dmidecode
+    state:
+      dmidecode:
+        apt: dmidecode
+        brew: ''
+        dnf: dmidecode
+        yum: dmidecode
+  g++-11:
+    env:
+      CM_SYS_UTIL_NAME: g++11
+    state:
+      g++11:
+        apt: g++-11
+        dnf: gcc-toolset-11-gcc-c++
+  g++-12:
+    env:
+      CM_SYS_UTIL_NAME: g++12
+    state:
+      g++12:
+        apt: g++-12
+        dnf: gcc-toolset-12-gcc-c++
+  g++-9:
+    env:
+      CM_SYS_UTIL_NAME: g++9
+    state:
+      g++9:
+        apt: g++-9
+        dnf: gcc-toolset-9-gcc-c++
+  gcc-11:
+    env:
+      CM_SYS_UTIL_NAME: gcc11
+    state:
+      gcc11:
+        apt: gcc-11
+  gcc-9:
+    env:
+      CM_SYS_UTIL_NAME: gcc9
+    state:
+      gcc9:
+        apt: gcc-9
+  gflags-dev:
+    env:
+      CM_SYS_UTIL_NAME: gflags-dev
+    state:
+      gflags-dev:
+        apt: libgflags-dev
+        brew: gflags
+        dnf: gflags-devel
+        yum: gflags-devel
+  git-lfs:
+    env:
+      CM_SYS_UTIL_NAME: git-lfs
+    state:
+      git-lfs:
+        apt: git-lfs
+        brew: git-lfs
+        dnf: git-lfs
+        yum: git-lfs
+  glog-dev:
+    env:
+      CM_SYS_UTIL_NAME: glog-dev
+    state:
+      glog-dev:
+        apt: libgoogle-glog-dev
+        brew: glog
+        dnf: glog-devel
+        yum: glog-devel
+  install:
+    env:
+      CM_GENERIC_SYS_UTIL_RUN_MODE: install
+    group: mode
+  libboost-all-dev:
+    env:
+      CM_SYS_UTIL_NAME: libboost-all-dev
+    state:
+      libboost-all-dev:
+        apt: libboost-all-dev
+        brew: ''
+        dnf: boost-devel
+        yum: boost-devel
+  libbz2-dev:
+    env:
+      CM_SYS_UTIL_NAME: libbz2_dev
+    state:
+      libbz2_dev:
+        apt: libbz2-dev
+        brew: bzip2
+        dnf: libbzip2-devel
+        yum: libbzip2-devel
+        zlib-devel: libbz2-devel
+  libev-dev:
+    env:
+      CM_SYS_UTIL_NAME: libev_dev
+    state:
+      libev_dev:
+        apt: libev-dev
+  libffi:
+    env:
+      CM_SYS_UTIL_NAME: libffi
+    state:
+      libffi7:
+        apt: libffi
+  libffi-dev:
+    env:
+      CM_SYS_UTIL_NAME: libffi_dev
+    state:
+      libffi_dev:
+        apt: libffi-dev
+        brew: libffi
+        dnf: libffi-devel
+        yum: libffi-devel
+  libffi7:
+    env:
+      CM_SYS_UTIL_NAME: libffi7
+    state:
+      libffi7:
+        apt: libffi7
+  libffi8:
+    env:
+      CM_SYS_UTIL_NAME: libffi8
+    state:
+      libffi8:
+        apt: libffi8
+  libgdbm-dev:
+    env:
+      CM_SYS_UTIL_NAME: libgdbm_dev
+    state:
+      libgdbm_dev:
+        apt: libgdbm-dev
+  libgmock-dev:
+    env:
+      CM_SYS_UTIL_NAME: libgmock-dev
+    state:
+      libgmock-dev:
+        apt: libgmock-dev
+        brew: ''
+        dnf: gmock-devel
+        yum: gmock-devel
+  liblzma-dev:
+    env:
+      CM_SYS_UTIL_NAME: liblzma_dev
+    state:
+      liblzma_dev:
+        apt: liblzma-dev
+  libmkl-dev:
+    env:
+      CM_SYS_UTIL_NAME: libmkl-dev
+    state:
+      libmkl-dev:
+        apt: libmkl-dev
+        brew: ''
+        dnf: ''
+        yum: ''
+  libmpfr-dev:
+    env:
+      CM_SYS_UTIL_NAME: libmpfr-dev
+    state:
+      libmpfr-dev:
+        apt: libmpfr-dev
+        brew: ''
+        dnf: mpfr-devel.x86_64
+        yum: mpfr-devel.x86_64
+        zypper: mpfr-devel
+  libncurses-dev:
+    env:
+      CM_SYS_UTIL_NAME: libncurses_dev
+    state:
+      libncurses_dev:
+        apt: libncurses-dev
+        dnf: libncurses-devel
+        yum: libncurses-devel
+  libnuma-dev:
+    env:
+      CM_SYS_UTIL_NAME: libnuma-dev
+    state:
+      libnuma-dev:
+        apt: libnuma-dev
+        brew: ''
+        dnf: numactl-libs
+        yum: numactl-libs
+  libpci-dev:
+    env:
+      CM_SYS_UTIL_NAME: libpci-dev
+    state:
+      libpci-dev:
+        apt: libpci-dev
+        brew: ''
+        dnf: pciutils-devel
+        yum: pciutils-devel
+  libpng-dev:
+    env:
+      CM_SYS_UTIL_NAME: libpng-dev
+    state:
+      libpng-dev:
+        apt: libpng-dev
+        brew: ''
+        dnf: libpng-devel
+        yum: libpng-devel
+  libre2-dev:
+    env:
+      CM_SYS_UTIL_NAME: libre2-dev
+    state:
+      libre2-dev:
+        apt: libre2-dev
+        brew: ''
+        dnf: libre-devel
+        yum: libre-devel
+  libreadline-dev:
+    env:
+      CM_SYS_UTIL_NAME: libreadline_dev
+    state:
+      libreadline_dev:
+        apt: libreadline-dev
+        dnf: libreadline-devel
+        yum: lireadline-devel
+  libsqlite3-dev:
+    env:
+      CM_SYS_UTIL_NAME: libsqlite3_dev
+    state:
+      libsqlite3_dev:
+        apt: libsqlite3-dev
+  libssl-dev:
+    env:
+      CM_SYS_UTIL_NAME: libssl_dev
+    state:
+      libssl_dev:
+        apt: libssl-dev
+        brew: openssl
+        dnf: libssl-devel
+        yum: libssl-devel
+  libudev-dev:
+    env:
+      CM_SYS_UTIL_NAME: libudev-dev
+    state:
+      libudev-dev:
+        apt: libudev-dev
+        brew: ''
+        dnf: libudev-devl
+        yum: libudev-devel
+  linux-tools:
+    deps:
+    - tags: detect,os
+    env:
+      CM_SYS_UTIL_NAME: linux-tools
+    state:
+      linux-tools:
+        apt: linux-tools-<<<CM_HOST_OS_KERNEL_VERSION>>>
+  md5sha1sum:
+    env:
+      CM_SYS_UTIL_NAME: md5sha1sum
+    state:
+      md5sha1sum:
+        apt: ''
+        brew: md5sha1sum
+  ninja-build:
+    env:
+      CM_SYS_UTIL_NAME: ninja-build
+    state:
+      ninja-build:
+        apt: ninja-build
+        brew: ninja-build
+        dnf: ninja-build
+        yum: ninja-build
+        zypper: ninja-build
+  nlohmann-json3-dev:
+    env:
+      CM_SYS_UTIL_NAME: nlohmann_json3_dev
+    state:
+      nlohmann_json3_dev:
+        apt: nlohmann-json3-dev
+        dnf: nlohmann-json-dev
+  ntpdate:
+    env:
+      CM_SYS_UTIL_NAME: ntpdate
+    state:
+      ntpdate:
+        apt: ntpdate
+        brew: ''
+        dnf: ntpdate
+        yum: ntpdate
+  numactl:
+    deps:
+    - enable_if_env:
+        CM_HOST_OS_FLAVOR:
+        - rhel
+        CM_HOST_OS_VERSION:
+        - '9.1'
+        - '9.2'
+        - '9.3'
+      tags: install,numactl,from.src
+    env:
+      CM_SYS_UTIL_NAME: numactl
+    state:
+      numactl:
+        apt: numactl
+        dnf: numactl-devel
+        yum: numactl-devel
+  nvidia-cuda-toolkit:
+    env:
+      CM_SYS_UTIL_NAME: nvidia-cuda-toolkit
+    state:
+      nvidia-cuda-toolkit:
+        apt: nvidia-cuda-toolkit
+        brew: ''
+        dnf: nvidia-cuda-toolkit
+        yum: nvidia-cuda-toolkit
+  psmisc:
+    env:
+      CM_SYS_UTIL_NAME: psmisc
+    state:
+      psmisc:
+        apt: psmisc
+        brew: pstree
+        dnf: psmisc
+        yum: psmisc
+  rapidjson-dev:
+    env:
+      CM_SYS_UTIL_NAME: rapidjson-dev
+    state:
+      rapidjson-dev:
+        apt: rapidjson-dev
+        brew: ''
+        dnf: rapidjson-devel
+        yum: rapidjson-devel
+  rsync:
+    env:
+      CM_SYS_UTIL_CHECK_CMD: rsync --version
+      CM_SYS_UTIL_NAME: rsync
+    state:
+      rsync:
+        apt: rsync
+        brew: rsync
+        dnf: rsync
+        yum: rsync
+        zypper: rsync
+  screen:
+    env:
+      CM_SYS_UTIL_NAME: screen
+    state:
+      screen:
+        apt: screen
+        brew: screen
+        dnf: screen
+        yum: screen
+        zypper: rsync
+  sox:
+    env:
+      CM_SYS_UTIL_NAME: sox
+    state:
+      sox:
+        apt: sox
+        brew: sox
+        dnf: sox
+  systemd:
+    env:
+      CM_SYS_UTIL_NAME: systemd
+    state:
+      systemd:
+        apt: systemd
+        brew: ''
+        dnf: systemd
+        yum: systemd
+  tk-dev:
+    env:
+      CM_SYS_UTIL_NAME: tk_dev
+    state:
+      tk_dev:
+        apt: tk-dev
+  transmission:
+    env:
+      CM_SYS_UTIL_NAME: transmission
+    state:
+      transmission:
+        apt: transmission-daemon
+        brew: transmission
+        dnf: transmission-daemon
+        yum: transmission-daemon
+  wget:
+    env:
+      CM_SYS_UTIL_NAME: wget
+      CM_SYS_UTIL_VERSION_CMD: wget --version
+      CM_SYS_UTIL_VERSION_RE: Wget\s*([\d.]+)
+    new_env_keys:
+    - CM_WGET_VERSION
+    state:
+      wget:
+        apt: wget
+        brew: wget
+  wkhtmltopdf:
+    env:
+      CM_SYS_UTIL_CHECK_CMD: wkhtmltopdf --version
+      CM_SYS_UTIL_NAME: wkhtmltopdf
+    state:
+      wkhtmltopdf:
+        apt: wkhtmltopdf
+        brew: wkhtmltopdf
+  xz:
+    env:
+      CM_SYS_UTIL_NAME: xz
+    state:
+      xz:
+        apt: xz-utils
+        brew: xz
+        choco: xz
+        dnf: xz
+        yum: xz
+  zlib:
+    env:
+      CM_SYS_UTIL_NAME: zlib
+    state:
+      zlib:
+        apt: zlib1g
+        choco: zlib
+  zlib1g-dev:
+    env:
+      CM_SYS_UTIL_NAME: zlib1g_dev
+    state:
+      zlib1g_dev:
+        apt: zlib1g-dev
+        dnf: zlib-devel
+        yum: zlib-devel
+        zypper: zlib-devel

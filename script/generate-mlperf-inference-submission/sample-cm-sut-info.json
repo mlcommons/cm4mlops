@@ -1,7 +1,5 @@
-{
-    "hardware_name": "VivoBook-ASUSLaptop-X515UA-M515UA",
-    "implementation": "reference",
-    "device": "cpu",
-    "framework": "pytorch_v2.4.0",
-    "run_config": "default"
-}
+device: cpu
+framework: pytorch_v2.4.0
+hardware_name: VivoBook-ASUSLaptop-X515UA-M515UA
+implementation: reference
+run_config: default
