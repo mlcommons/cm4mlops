@@ -31,6 +31,9 @@ docker:
   use_host_group_id: 'yes'
   image_tag_extra: '-cm-dev'
 
+env:
+  CM_DETECT_USING_PYCUDA: 'no'
+
 new_env_keys:
 - CM_CUDA_DEVICE_*
 - CM_CUDA_NUM_DEVICES
@@ -46,7 +49,7 @@ print_files_if_script_error:
 variations:
   with-pycuda:
     env:
-      CM_CUDA_DEVICES_DETECT_USING_PYCUDA: 'yes'
+      CM_DETECT_USING_PYCUDA: 'yes'
     deps:
       - tags: get,python3
         names:
