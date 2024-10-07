@@ -6,7 +6,7 @@ def preprocess(i):
 
     env = i['env']
 
-    if str(env.get('CM_CUDA_DEVICES_DETECT_USING_PYCUDA', '')).lower() in [ "1", "yes", "true"]:
+    if str(env.get('CM_DETECT_USING_PYCUDA', '')).lower() in [ "1", "yes", "true"]:
         i['run_script_input']['script_name'] = 'detect'
 
     return {'return':0} 
