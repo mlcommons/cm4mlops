@@ -22,5 +22,5 @@ jobs:
         export CM_REPOS=$HOME/GH_CM
         python3 -m pip install cm4mlops
         cm pull repo
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=sdxl --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=sdxl --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --custom_system_nvidia=yes --clean
         cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/cm4mlperf-inference --repo_branch=mlperf-inference-results-scc24 --commit_message="Results from self hosted Github actions - NVIDIARTX4090" --quiet --submission_dir=$HOME/gh_action_submissions
