@@ -19,14 +19,12 @@ jobs:
         device: [ "cpu", "cuda" ]
 
     steps:
-    - name: Install dependencies
+    - name: Test MLPerf Inference MIXTRAL-8X7B reference implementation
       run: |
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
         python3 -m pip install cm4mlops
         cm pull repo
-    - name: Test MLPerf Inference MIXTRAL-8X7B reference implementation
-      run: |
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=mixtral-8x7b --implementation=reference --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --docker --quiet --test_query_count=1 --target_qps=1 --clean --env.CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST=yes --env.CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST=yes
         cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from self hosted Github actions - GO-i9" --quiet --submission_dir=$HOME/gh_action_submissions
