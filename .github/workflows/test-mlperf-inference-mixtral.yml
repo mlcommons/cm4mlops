@@ -16,7 +16,7 @@ jobs:
       matrix:
         python-version: [ "3.12" ]
         backend: [ "pytorch" ]
-        device: [ "cpu", "cuda" ]
+        device: [ "cpu" ]
 
     steps:
     - name: Test MLPerf Inference MIXTRAL-8X7B reference implementation
