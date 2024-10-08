@@ -659,6 +659,7 @@ variations:
 
   3d-unet_,reference:
     docker:
+      image_name: mlperf-inference-mlcommons-python-implementation-3d-unet
       deps:
         - enable_if_env:
             CM_MLPERF_DATASET_3DUNET_DOWNLOAD_TO_HOST:
@@ -698,6 +699,7 @@ variations:
 
   sdxl,reference,float16:
     docker:
+      image_name: mlperf-inference-mlcommons-python-implementation-sdxl-float16
       deps:
         - enable_if_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
@@ -706,6 +708,7 @@ variations:
 
   sdxl,reference,bfloat16:
     docker:
+      image_name: mlperf-inference-mlcommons-python-implementation-sdxl-bfloat16
       deps:
         - enable_if_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
@@ -714,6 +717,7 @@ variations:
 
   sdxl,reference,float32:
     docker:
+      image_name: mlperf-inference-mlcommons-python-implementation-sdxl-float32
       deps:
         - enable_if_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
@@ -765,6 +769,7 @@ variations:
 
   llama2-70b_,reference:
     docker:
+      image_name: mlperf-inference-mlcommons-python-implementation-llama2-70b
       deps:
         - enable_if_env:
             CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
