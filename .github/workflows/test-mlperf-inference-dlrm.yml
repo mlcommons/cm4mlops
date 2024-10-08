@@ -10,7 +10,7 @@ on:
 jobs:
   build_reference:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, GO-i9, linux, x64 ]
+    runs-on: [ self-hosted, GO-spr, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
@@ -19,42 +19,18 @@ jobs:
         device: [ "cpu", "cuda" ]
 
     steps:
-    - name: Install dependencies
-      run: |
-        source gh_action/bin/deactivate || python3 -m venv gh_action
-        source gh_action/bin/activate
-        export CM_REPOS=$HOME/GH_CM
-        python3 -m pip install cm4mlops
-        cm pull repo
     - name: Test MLPerf Inference DLRM-v2 reference implementation
       run: |
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=dlrm-v2-99 --implementation=reference --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
-
-  build_nvidia:
-    if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, GO-i9, linux, x64 ]
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [ "3.12" ]
-        backend: [ "tensorrt" ]
-        device: [ "cuda" ]
-        
-    steps:
-    - name: Install dependencies
-      run: |
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
         python3 -m pip install cm4mlops
         cm pull repo
-    - name: Test MLPerf Inference DLRM-v2 NVIDIA implementation
-      run: |
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=dlrm-v2-99 --implementation=nvidia --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=dlrm-v2-99 --implementation=reference --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
 
   build_intel:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, GO-i9, linux, x64 ]
+    runs-on: [ self-hosted, GO-spr, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
@@ -63,13 +39,11 @@ jobs:
         device: [ "cpu" ]
         
     steps:
-    - name: Install dependencies
+    - name: Test MLPerf Inference DLRM-v2 INTEL implementation
       run: |
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
         python3 -m pip install cm4mlops
         cm pull repo
-    - name: Test MLPerf Inference DLRM-v2 INTEL implementation
-      run: |
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=dlrm-v2-99 --implementation=intel --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
