@@ -1473,6 +1473,8 @@ variations:
     group:
       reproducibility
     add_deps_recursive:
+      inference-src:
+        version: r4.0
       nvidia-inference-common-code:
         version: r4.0
         tags: _go
@@ -1491,6 +1493,8 @@ variations:
     group:
       reproducibility
     add_deps_recursive:
+      inference-src:
+        version: r4.1
       nvidia-inference-common-code:
         version: r4.1
         tags: _go
