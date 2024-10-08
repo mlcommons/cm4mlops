@@ -25,6 +25,9 @@ def preprocess(i):
         if env.get('CM_CLEAN_ARTIFACT_NAME', '') == 'preprocessed_data':
             clean_cmd = f"""rm -rf {os.path.join(env['CM_NVIDIA_MLPERF_SCRATCH_PATH'], "preprocessed_data", "coco2014-tokenized-sdxl")} """
             cache_rm_tags  = "nvidia-harness,_preprocess_data,_sdxl"
+        if env.get('CM_CLEAN_ARTIFACT_NAME', '') == 'downloaded_model':
+            clean_cmd = f"""rm -rf {os.path.join(env['CM_NVIDIA_MLPERF_SCRATCH_PATH'], "models", "SDXL")} """
+            cache_rm_tags  = "nvidia-harness,_download_model,_sdxl"
 
     cache_rm_tags = cache_rm_tags + extra_cache_rm_tags
 
