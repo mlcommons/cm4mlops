@@ -1018,7 +1018,7 @@ variations:
     group: models
     env:
       CM_MODEL: mixtral-8x7b
-      CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://github.com/anandhu-eng/cm4mlops/blob/5f156eb891b86a4ea7f1864075ddf1f1ade66598/script/get-ml-model-mixtral/_cm.json#L66"
+      CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "mlc-inference:mlcommons-inference-wg-public/mixtral_8x7b/mixtral-8x7b-instruct-v0.1"
     deps:
       - tags: get,rust-compiler
         names:
