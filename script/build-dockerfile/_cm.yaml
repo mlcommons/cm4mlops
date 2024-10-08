@@ -18,6 +18,8 @@ default_env:
 
     '
   CM_DOCKER_OS: ubuntu
+  CM_DOCKER_NOT_PULL_UPDATE: False
+  CM_MLOPS_REPO_BRANCH: mlperf-inference
 
 input_mapping:
   build: CM_BUILD_DOCKER_IMAGE
@@ -25,6 +27,7 @@ input_mapping:
   cm_repo: CM_MLOPS_REPO
   cm_repo_flags: CM_DOCKER_ADD_FLAG_TO_CM_MLOPS_REPO
   cm_repos: CM_DOCKER_EXTRA_CM_REPOS
+  cm_repo_branch: CM_MLOPS_REPO_BRANCH
   comments: CM_DOCKER_RUN_COMMENTS
   copy_files: CM_DOCKER_COPY_FILES
   docker_base_image: CM_DOCKER_IMAGE_BASE
@@ -48,6 +51,7 @@ input_mapping:
   script_tags: CM_DOCKER_RUN_SCRIPT_TAGS
   skip_cm_sys_upgrade: CM_DOCKER_SKIP_CM_SYS_UPGRADE
   push_image: CM_DOCKER_PUSH_IMAGE
+  docker_not_pull_update: CM_DOCKER_NOT_PULL_UPDATE
 
 new_env_keys:
 - CM_DOCKERFILE_*

@@ -78,7 +78,7 @@ def preprocess(i):
     if env.get('CM_NETWORK_LOADGEN', '') != "lon" and env.get('CM_MLPERF_INFERENCE_API_SERVER','')=='' and "llama2-70b" not in env['CM_MODEL']:
         env['MODEL_DIR'] = env.get('CM_ML_MODEL_PATH')
         if not env['MODEL_DIR']:
-            env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH')))
+            env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH', '')))
 
     RUN_CMD = ""
     state['RUN'] = {}
@@ -332,14 +332,15 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
         device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] != "gpu" else "cuda"
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " main.py " \
                 " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + \
-                " --dataset-path " + env['CM_DATASET_PREPROCESSED_PATH'] + \
+                " --dataset-path " + env['CM_DATASET_MIXTRAL_PREPROCESSED_PATH'] + \
                 " --device " + device.replace("cuda", "cuda:0") + \
                  env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
                  scenario_extra_options + mode_extra_options + \
                 " --output-log-dir " + env['CM_MLPERF_OUTPUT_DIR'] + \
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
-                " --model-path " + env['MODEL_DIR']
+                " --model-path " + env['MIXTRAL_CHECKPOINT_PATH']
         cmd = cmd.replace("--count", "--total-sample-count")
+        cmd = cmd.replace("--max-batchsize", "--batch-size")
 
     elif "3d-unet" in env['CM_MODEL']:
 

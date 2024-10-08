@@ -564,7 +564,8 @@
     },
     "rsync": {
       "env": {
-        "CM_SYS_UTIL_NAME": "rsync"
+        "CM_SYS_UTIL_NAME": "rsync",
+        "CM_SYS_UTIL_CHECK_CMD": "rsync --version"
       },
       "state": {
         "rsync": {
@@ -675,7 +676,8 @@
           "apt": "xz-utils",
           "brew": "xz",
           "dnf": "xz",
-          "yum": "xz"
+          "yum": "xz",
+          "choco": "xz"
         }
       }
     },
@@ -685,7 +687,8 @@
       },
       "state": {
         "zlib": {
-          "apt": "zlib1g"
+          "apt": "zlib1g",
+          "choco": "zlib"
         }
       }
     },

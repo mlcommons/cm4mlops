@@ -340,16 +340,34 @@
     },
     "openorca-gsm8k-mbxp": {
       "deps": [
+	{
+          "tags": "get,generic-python-lib,_package.rouge_score",
+          "names":
+          [
+            "pip-package",
+            "rouge-score"
+          ]
+        },
         {
           "names": [
             "openorca-gsm8k-mbxp-combined"
           ],
+	  "skip_if_env": {
+            "CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST": [
+              "yes"
+            ]
+          },
           "tags": "get,dataset-mixtral,openorca-mbxp-gsm8k-combined"
         },
         {
           "names": [
             "mixtral-8x7b-model"
           ],
+	  "skip_if_env": {
+            "CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST": [
+              "yes"
+            ]
+          },
           "tags": "get,ml-model,mixtral"
         }
       ],
@@ -369,6 +387,15 @@
         },
         {
           "tags": "get,generic-python-lib,_package.ijson"
+        },
+        {
+          "tags": "get,generic-python-lib,_package.numpy",
+          "version_max": "1.22",
+          "version_max_usable": "1.22",
+          "names": [
+            "pip-package",
+            "numpy"
+          ]
         }
       ],
       "env": {

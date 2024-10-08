@@ -43,6 +43,7 @@ input_mapping:
   category: CM_MLPERF_SUBMISSION_SYSTEM_TYPE
   clean: CM_MLPERF_CLEAN_ALL
   compliance: CM_MLPERF_LOADGEN_COMPLIANCE
+  custom_system_nvidia: CM_CUSTOM_SYSTEM_NVIDIA
   dashboard_wb_project: CM_MLPERF_DASHBOARD_WANDB_PROJECT
   dashboard_wb_user: CM_MLPERF_DASHBOARD_WANDB_USER
   debug: CM_DEBUG_SCRIPT_BENCHMARK_PROGRAM
@@ -57,6 +58,7 @@ input_mapping:
   framework: CM_MLPERF_BACKEND
   gpu_name: CM_NVIDIA_GPU_NAME
   hw_name: CM_HW_NAME
+  pip_loadgen: CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP
   hw_notes_extra: CM_MLPERF_SUT_SW_NOTES_EXTRA
   imagenet_path: IMAGENET_PATH
   implementation: CM_MLPERF_IMPLEMENTATION
@@ -139,7 +141,8 @@ deps:
 - tags: install,pip-package,for-cmind-python,_package.tabulate
 - tags: get,mlperf,inference,utils
 
-docker:
+#We use this script as a command generator to run docker via app-mlperf-inference script
+docker_off:
   mounts:
   - ${{ INSTALL_DATA_PATH }}:/install_data
   - ${{ DATA_PATH }}:/data
@@ -247,6 +250,7 @@ variations:
     - short
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-base
+      CM_DOCKER_IMAGE_NAME: scc24
     adr:
       coco2014-preprocessed:
         tags: _size.50,_with-sample-ids
@@ -270,6 +274,7 @@ variations:
         extra_cache_tags: "scc24-main"
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-main
+      CM_DOCKER_IMAGE_NAME: scc24
     deps:
       - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
         extra_cache_rm_tags: scc24-base

@@ -27,7 +27,7 @@ def postprocess(i):
     implementation_string = env['CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX'] if env.get('CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX', '') != '' else env.get('CM_MLPERF_IMPLEMENTATION', 'default')
 
     run_config = []
-    for i in range(1,5):
+    for i in range(1,6):
         if env.get(f'CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX{i}', '') != '':
             run_config.append(env.get(f'CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX{i}'))
 

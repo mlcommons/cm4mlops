@@ -434,6 +434,9 @@ deps:
     skip_if_env:
       CM_MLPERF_CUSTOM_MODEL_PATH:
       - "on"
+    skip_if_env:
+      CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
+      - 'yes'
 
   ## 3d-unet
   - tags: get,ml-model,medical-imaging,3d-unet
@@ -555,6 +558,9 @@ deps:
     enable_if_env:
       CM_MODEL:
       - mixtral-8x7b
+    skip_if_env:
+      CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
+      - 'yes'
 
   ## Kits19 for 3d-unet
   - tags: get,dataset,kits19,preprocessed
@@ -701,11 +707,6 @@ variations:
         tags: _rocm
       torchvision:
         tags: _rocm
-
-  rocm,sdxl:
-    add_deps:
-      mlperf-implementation:
-        tags: _repo.https://github.com/gateoverflow/inference
 
   ray:
     group: framework
@@ -1130,6 +1131,7 @@ variations:
     - tags: get,generic-python-lib,_package.torchrec
     - tags: get,generic-python-lib,_package.fbgemm-gpu
     - tags: get,generic-python-lib,_package.fbgemm-gpu-cpu
+    - tags: get,generic-python-lib,_package.fvcore
     - tags: set,user,limit,_large-nofile
 
 

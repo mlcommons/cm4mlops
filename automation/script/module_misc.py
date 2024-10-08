@@ -1335,15 +1335,9 @@ def dockerfile(i):
     Args:
       (CM input dict):
 
-      (out) (str): if 'con', output to console
-
-      parsed_artifact (list): prepared in CM CLI or CM access function
-                                [ (artifact alias, artifact UID) ] or
-                                [ (artifact alias, artifact UID), (artifact repo alias, artifact repo UID) ]
-
-      (repos) (str): list of repositories to search for automations
-
-      (output_dir) (str): output directory (./ by default)
+        (out) (str): if 'con', output to console
+        (repos) (str): list of repositories to search for automations
+        (output_dir) (str): output directory (./ by default)
 
     Returns:
       (CM return dict):
@@ -1399,6 +1393,8 @@ def dockerfile(i):
 
     env=i.get('env', {})
     state = i.get('state', {})
+    const=i.get('const', {})
+    const_state = i.get('const_state', {})
     script_automation = i['self_module']
 
     dockerfile_env=i.get('dockerfile_env', {})
@@ -1426,7 +1422,7 @@ def dockerfile(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1476,6 +1472,8 @@ def dockerfile(i):
         run_cmd  = r['run_cmd_string']
 
         cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
+        cm_repo_branch = i.get('docker_cm_repo_branch', docker_settings.get('cm_repo_branch', 'mlperf-inference'))
+
         cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
@@ -1548,6 +1546,7 @@ def dockerfile(i):
                            'automation': 'script',
                            'tags': 'build,dockerfile',
                            'cm_repo': cm_repo,
+                           'cm_repo_branch': cm_repo_branch,
                            'cm_repo_flags': cm_repo_flags,
                            'docker_base_image': docker_base_image,
                            'docker_os': docker_os,
@@ -1632,15 +1631,6 @@ def docker(i):
 
       (out) (str): if 'con', output to console
 
-      (docker_skip_build) (bool): do not generate Dockerfiles and do not recreate Docker image (must exist)
-        (docker_noregenerate) (bool): do not generate Dockerfiles
-        (docker_norecreate) (bool): do not recreate Docker image
-
-      (docker_path) (str): where to create or find Dockerfile
-      (docker_gh_token) (str): GitHub token for private repositories
-      (docker_save_script) (str): if !='' name of script to save docker command
-      (docker_interactive) (bool): if True, run in interactive mode
-      (docker_cfg) (str): if True, show all available basic docker configurations, otherwise pre-select one
 
     Returns:
       (CM return dict):
@@ -1652,6 +1642,20 @@ def docker(i):
 
     import copy
     import re
+
+    from cmind import __version__ as current_cm_version
+
+    self_module = i['self_module']
+
+    if type(i.get('docker', None)) == dict:
+        # Grigori started cleaning and refactoring this code on 20240929
+        # 
+        # 1. use --docker dictionary instead of --docker_{keys}
+
+        if utils.compare_versions(current_cm_version, '2.3.8.1') >= 0:
+            docker_params = utils.convert_dictionary(i['docker'], 'docker')
+            i.update(docker_params)
+            del(i['docker'])
 
     quiet = i.get('quiet', False)
 
@@ -1670,13 +1674,12 @@ def docker(i):
 
     # Check simplified CMD: cm docker script "python app image-classification onnx"
     # If artifact has spaces, treat them as tags!
-    self_module = i['self_module']
     self_module.cmind.access({'action':'detect_tags_in_artifact', 'automation':'utils', 'input':i})
 
     # CAREFUL -> artifacts and parsed_artifacts are not supported in input (and should not be?)
     if 'artifacts' in i: del(i['artifacts'])
     if 'parsed_artifacts' in i: del(i['parsed_artifacts'])
-    
+
     # Prepare "clean" input to replicate command
     r = self_module.cmind.access({'action':'prune_input', 'automation':'utils', 'input':i, 'extra_keys_starts_with':['docker_']})
     i_run_cmd_arc = r['new_input']
@@ -1693,13 +1696,19 @@ def docker(i):
 
     # Check available configurations
     docker_cfg = i.get('docker_cfg', '')
-    if docker_cfg != '':
+    docker_cfg_uid = i.get('docker_cfg_uid', '')
+
+    if docker_cfg != '' or docker_cfg_uid != '':
         # Check if docker_cfg is turned on but not selected
         if type(docker_cfg) == bool or str(docker_cfg).lower() in ['true','yes']:
             docker_cfg= ''
-        
-        r = self_module.cmind.access({'action':'select_cfg', 'automation':'utils,dc2743f8450541e3', 
-                                      'tags':'basic,docker,configurations', 'title':'docker', 'alias':docker_cfg})
+
+        r = self_module.cmind.access({'action':'select_cfg', 
+                                      'automation':'utils,dc2743f8450541e3', 
+                                      'tags':'basic,docker,configurations', 
+                                      'title':'docker', 
+                                      'alias':docker_cfg,
+                                      'uid':docker_cfg_uid})
         if r['return'] > 0: 
             if r['return'] == 16:
                 return {'return':1, 'error':'Docker configuration {} was not found'.format(docker_cfg)}
@@ -1708,10 +1717,9 @@ def docker(i):
         selection = r['selection']
 
         docker_input_update = selection['meta']['input']
-        
+
         i.update(docker_input_update)
 
-    
     ########################################################################################
     # Run dockerfile
     if not noregenerate_docker_file:
@@ -1722,7 +1730,7 @@ def docker(i):
     cur_dir = os.getcwd()
 
     console = i.get('out') == 'con'
-    
+
     # Search for script(s)
     r = aux_search({'self_module': self_module, 'input': i})
     if r['return']>0: return r
@@ -1735,6 +1743,8 @@ def docker(i):
     env['CM_RUN_STATE_DOCKER'] = False
     script_automation = i['self_module']
     state = i.get('state', {})
+    const = i.get('const', {})
+    const_state = i.get('const_state', {})
 
     tags_split = i.get('tags', '').split(",")
     variation_tags = [ t[1:] for t in tags_split if t.startswith("_") ]
@@ -1787,7 +1797,7 @@ def docker(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
