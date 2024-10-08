@@ -43,6 +43,7 @@ input_mapping:
   category: CM_MLPERF_SUBMISSION_SYSTEM_TYPE
   clean: CM_MLPERF_CLEAN_ALL
   compliance: CM_MLPERF_LOADGEN_COMPLIANCE
+  custom_system_nvidia: CM_CUSTOM_SYSTEM_NVIDIA
   dashboard_wb_project: CM_MLPERF_DASHBOARD_WANDB_PROJECT
   dashboard_wb_user: CM_MLPERF_DASHBOARD_WANDB_USER
   debug: CM_DEBUG_SCRIPT_BENCHMARK_PROGRAM
