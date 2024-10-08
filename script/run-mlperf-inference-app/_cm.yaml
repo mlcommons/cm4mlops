@@ -140,7 +140,8 @@ deps:
 - tags: install,pip-package,for-cmind-python,_package.tabulate
 - tags: get,mlperf,inference,utils
 
-docker:
+#We use this script as a command generator to run docker via app-mlperf-inference script
+docker_off:
   mounts:
   - ${{ INSTALL_DATA_PATH }}:/install_data
   - ${{ DATA_PATH }}:/data
@@ -248,6 +249,7 @@ variations:
     - short
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-base
+      CM_DOCKER_IMAGE_NAME: scc24
     adr:
       coco2014-preprocessed:
         tags: _size.50,_with-sample-ids
@@ -271,6 +273,7 @@ variations:
         extra_cache_tags: "scc24-main"
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-main
+      CM_DOCKER_IMAGE_NAME: scc24
     deps:
       - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
         extra_cache_rm_tags: scc24-base

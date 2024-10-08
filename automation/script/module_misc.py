@@ -1393,6 +1393,8 @@ def dockerfile(i):
 
     env=i.get('env', {})
     state = i.get('state', {})
+    const=i.get('const', {})
+    const_state = i.get('const_state', {})
     script_automation = i['self_module']
 
     dockerfile_env=i.get('dockerfile_env', {})
@@ -1420,7 +1422,7 @@ def dockerfile(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1741,6 +1743,8 @@ def docker(i):
     env['CM_RUN_STATE_DOCKER'] = False
     script_automation = i['self_module']
     state = i.get('state', {})
+    const = i.get('const', {})
+    const_state = i.get('const_state', {})
 
     tags_split = i.get('tags', '').split(",")
     variation_tags = [ t[1:] for t in tags_split if t.startswith("_") ]
@@ -1793,7 +1797,7 @@ def docker(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
