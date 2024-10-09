@@ -67,6 +67,7 @@ input_mapping:
   model: CM_MLPERF_MODEL
   multistream_target_latency: CM_MLPERF_LOADGEN_MULTISTREAM_TARGET_LATENCY
   network: CM_NETWORK_LOADGEN
+  nvidia_system_name: CM_NVIDIA_SYSTEM_NAME
   offline_target_qps: CM_MLPERF_LOADGEN_OFFLINE_TARGET_QPS
   output_dir: OUTPUT_BASE_DIR
   output_summary: MLPERF_INFERENCE_SUBMISSION_SUMMARY
@@ -76,6 +77,7 @@ input_mapping:
   precision: CM_MLPERF_MODEL_PRECISION
   preprocess_submission: CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR
   push_to_github: CM_MLPERF_RESULT_PUSH_TO_GITHUB
+  pull_changes: CM_MLPERF_INFERENCE_PULL_CODE_CHANGES
   readme: CM_MLPERF_README
   regenerate_accuracy_file: CM_MLPERF_REGENERATE_ACCURACY_FILE
   regenerate_files: CM_REGENERATE_MEASURE_FILES
