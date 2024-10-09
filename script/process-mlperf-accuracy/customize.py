@@ -101,7 +101,7 @@ def preprocess(i):
             if env.get('CM_SDXL_COMPLIANCE_IMAGES_PATH', '') != '':
                 extra_options += f" --compliance-images-path '{env['CM_SDXL_COMPLIANCE_IMAGES_PATH']}' "
             else:
-                extra_options += f""" --compliance-images-path '{os.path.join(result_dir, "images")'} """
+                extra_options += f""" --compliance-images-path '{os.path.join(result_dir, "images")}' """
 
             if env.get('CM_SDXL_ACCURACY_RUN_DEVICE', '') != '':
                 extra_options += f" --device '{env['CM_SDXL_ACCURACY_RUN_DEVICE']}' "
