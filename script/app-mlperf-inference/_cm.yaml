@@ -985,11 +985,15 @@ variations:
     docker:
       deps:
         - tags: get,dlrm,data,mlperf,inference,_nvidia
+      mounts:
+        - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
 
   dlrm_,intel:
     docker:
       deps:
         - tags: get,preprocessed,dataset,criteo,_mlc
+      mounts:
+        - "${{ DLRM_DATA_PATH }}:${{ DLRM_DATA_PATH }}"
 
   dlrm_,reference:
     docker:
@@ -997,7 +1001,8 @@ variations:
         - tags: get,preprocessed,dataset,criteo,_mlc
         - tags: get,ml-model,dlrm,_pytorch,_fp32
       mounts:
-        - ${{ CM_ML_MODEL_FILE_WITH_PATH }}:${{ CM_ML_MODEL_FILE_WITH_PATH }}
+        - "${{ CM_ML_MODEL_FILE_WITH_PATH }}:${{ CM_ML_MODEL_FILE_WITH_PATH }}"
+        - "${{ DLRM_DATA_PATH }}:${{ DLRM_DATA_PATH }}"
       dockerfile_env:
         CM_ML_MODEL_FILE_WITH_PATH: "on"
 
@@ -1626,7 +1631,6 @@ docker:
    - "${{ GPTJ_CHECKPOINT_PATH }}:${{ GPTJ_CHECKPOINT_PATH }}"
    - "${{ CM_CRITEO_PREPROCESSED_PATH }}:${{ CM_CRITEO_PREPROCESSED_PATH }}"
    - "${{ LLAMA2_CHECKPOINT_PATH }}:${{ LLAMA2_CHECKPOINT_PATH }}"
-   - "${{ DLRM_DATA_PATH }}:/home/mlperf_inf_dlrmv2"
    - "${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}:${{ CM_NVIDIA_LLAMA_DATASET_FILE_PATH }}"
    - "${{ SDXL_CHECKPOINT_PATH }}:${{ SDXL_CHECKPOINT_PATH }}"
    - "${{ CM_DATASET_KITS19_PREPROCESSED_PATH }}:${{ CM_DATASET_KITS19_PREPROCESSED_PATH }}"
