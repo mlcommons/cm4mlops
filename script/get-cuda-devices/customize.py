@@ -53,8 +53,8 @@ def postprocess(i):
             key_env = 'CM_CUDA_DEVICE_PROP_'+key.upper().replace(' ','_')
             env[key_env] = val
     
-    state['cm_cuda_num_devices'] = gpu_id
-    env['CM_CUDA_NUM_DEVICES'] = gpu_id
+    state['cm_cuda_num_devices'] = gpu_id + 1
+    env['CM_CUDA_NUM_DEVICES'] = gpu_id + 1
 
     state['cm_cuda_device_prop'] = p
     state['cm_cuda_devices_prop'] = gpu

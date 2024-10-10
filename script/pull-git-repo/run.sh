@@ -7,10 +7,10 @@ path=${CM_GIT_CHECKOUT_PATH}
 echo "cd $path"
 
 cd $path
-test $? -eq 0 || exit 1
+test $? -eq 0 || exit $?
 
 echo ${CM_GIT_PULL_CMD}
 eval ${CM_GIT_PULL_CMD}
-test $? -eq 0 || exit 1
+test $? -eq 0 || exit $?
 
 cd $CUR_DIR

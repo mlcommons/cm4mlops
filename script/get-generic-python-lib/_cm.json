@@ -874,11 +874,25 @@
       "deps": [
         {
           "tags": "get,generic-python-lib,_package.networkx",
-	  "enable_if_env": {
-	    "CM_PYTHON_MINOR_VERSION": [ "7", "8" ]
-	  }
+	        "enable_if_env": {
+	          "CM_PYTHON_MINOR_VERSION": [ "7", "8" ]
+	        }
         }
       ]
+    },
+    "cxx11-abi": {
+      "env": {
+      }
+    },
+    "torch,cxx11-abi": {
+      "env": {
+        "CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL": "https://download.pytorch.org/whl/nightly/cpu-cxx11-abi"
+      }
+    },
+    "package.torch,cxx11-abi": {
+      "env": {
+        "CM_GENERIC_PYTHON_PIP_INDEX_URL": "https://download.pytorch.org/whl/nightly/cpu-cxx11-abi"
+      }
     },
     "torch,pre": {
       "default_env": {

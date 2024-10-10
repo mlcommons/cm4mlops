@@ -242,6 +242,13 @@ deps:
     names:
     - nvidia-inference-common-code
 
+  - tags: pull,git,repo
+    env:
+      CM_GIT_CHECKOUT_PATH: '<<<CM_MLPERF_INFERENCE_NVIDIA_CODE_PATH>>>'
+    enable_if_env:
+      CM_MLPERF_INFERENCE_PULL_CODE_CHANGES:
+      - 'yes'
+
   # Creates user conf for given SUT
   - tags: generate,user-conf,mlperf,inference
     names:
