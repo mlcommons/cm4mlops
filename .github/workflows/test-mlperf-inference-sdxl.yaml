@@ -2,7 +2,7 @@ name: MLPerf inference SDXL
 #off now as we have SCC24 test doing the same
 on:
   schedule:
-    - cron: "1 2 * * *"
+    - cron: "10 9 * * *"
 
 jobs:
   build_reference:
