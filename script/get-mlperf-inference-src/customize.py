@@ -45,7 +45,7 @@ def preprocess(i):
             env["CM_GIT_URL"] = "https://github.com/mlcommons/inference"
     
     if env.get("CM_MLPERF_LAST_RELEASE", '') == '':
-        env["CM_MLPERF_LAST_RELEASE"] = "v4.0"
+        env["CM_MLPERF_LAST_RELEASE"] = "v4.1"
 
     if 'CM_GIT_DEPTH' not in env:
         env['CM_GIT_DEPTH'] = ''

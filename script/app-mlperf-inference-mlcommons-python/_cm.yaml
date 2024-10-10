@@ -1018,6 +1018,7 @@ variations:
     group: models
     env:
       CM_MODEL: mixtral-8x7b
+      CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "mlc-inference:mlcommons-inference-wg-public/mixtral_8x7b/mixtral-8x7b-instruct-v0.1"
     deps:
       - tags: get,rust-compiler
         names:
