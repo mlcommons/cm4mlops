@@ -5,7 +5,7 @@ name: MLPerf inference GPT-J
 
 on:
   schedule:
-    - cron: "1 2 * * *"
+    - cron: "35 17 * * *"
 
 jobs:
   build:
