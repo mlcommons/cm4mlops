@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OUTPUT_FILE="$CM_PLATFORM_DETAILS_FILE_PATH"
-set -e
+#set -e
 #echo $OUTPUT_FILE
 echo "WARNING: sudo permission is needed for some of the below commands"
 
@@ -47,7 +47,7 @@ else
 
     echo "8. numactl --hardware" >> $OUTPUT_FILE
     eval "numactl --hardware" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    #test $? -eq 0 || exit $?
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "9. /proc/meminfo" >> $OUTPUT_FILE
@@ -82,7 +82,7 @@ else
 
     echo "15. sysctl" >> $OUTPUT_FILE
     eval "sudo sysctl -a" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    #test $? -eq 0 || exit $?
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "16. /sys/kernel/mm/transparent_hugepage" >> $OUTPUT_FILE
@@ -112,12 +112,12 @@ else
 
     echo "21. dmidecode" >> $OUTPUT_FILE
     eval "sudo dmidecode" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    #test $? -eq 0 || exit $?
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "22. BIOS" >> $OUTPUT_FILE
     eval "sudo dmidecode -t bios" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    #test $? -eq 0 || exit $?
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "System information has been saved to $PWD/$OUTPUT_FILE"
