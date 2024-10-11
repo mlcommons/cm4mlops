@@ -111,6 +111,17 @@ deps:
 
 posthook_deps:
   - tags: get,mlperf,sut,description #populate system meta information like framework
+  - tags: get,platform,details
+    enable_if_any_env:
+      CM_SUDO_USER:
+        - yes
+      CM_GET_PLATFORM_DETAILS:
+        - yes
+    skip_if_env:
+      CM_MLPERF_LOADGEN_MODE:
+      - accuracy
+    env: 
+      CM_PLATFORM_DETAILS_FILE_PATH: '<<<CM_MLPERF_OUTPUT_DIR>>>/system_info.txt'
 
 # Order of variations for documentation
 variation_groups_order:
@@ -1052,14 +1063,6 @@ variations:
       - mlperf-accuracy-script
       - imagenet-accuracy-script
       tags: run,accuracy,mlperf,_imagenet
-    - tags: get,platform,details
-      enable_if_any_env:
-        CM_SUDO_USER:
-          - yes
-        CM_GET_PLATFORM_DETAILS:
-          - yes
-      env: 
-        CM_PLATFORM_DETAILS_FILE_PATH: '<<<CM_MLPERF_OUTPUT_DIR>>>/system_info.txt'
 
   onnxruntime:
     group: backend
