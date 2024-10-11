@@ -16,18 +16,16 @@ def preprocess(i):
     if os_info['platform'] == "windows":
         return {'return':1, 'error':'get-platform-details script not yet supported in windows!'}
 
-    print(env['CM_HOST_OS_KERNEL_VERSION'])
-
     if not check_installation("numactl",os_info):
         env['CM_INSTALL_NUMACTL'] = 'True'
     
     #if not check_installation("cpupower",os_info):
     env['CM_INSTALL_CPUPOWER'] = 'True'
         
-   if env.get('CM_PLATFORM_DETAILS_FILE_PATH', '') == '':
-       env['CM_GET_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(os.getcwd(), "system_info.txt")
+    if env.get('CM_PLATFORM_DETAILS_FILE_PATH', '') == '':
+       env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(os.getcwd(), "system_info.txt")
 
-   return {'return':0}
+    return {'return':0}
 
 
 def postprocess(i):
