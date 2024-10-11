@@ -61,7 +61,13 @@ def preprocess(i):
             skip_compliance + extra_map + power_check + extra_args
 
     x_version = ' --version ' + version[1:] +' ' if version!='' else ''
-    x_submission_repository = ' --repository ' + env.get('CM_MLPERF_RESULTS_GIT_REPO_URL', f'https://github.com/mlcommons/submissions_inference_results_{version}')
+
+    if env.get('CM_MLPERF_RESULTS_GIT_REPO_NAME', '') != '':
+        x_submission_repo_name = f""" --repository {env.['CM_MLPERF_RESULTS_GIT_REPO_NAME']}"""
+    if env.get('CM_MLPERF_RESULTS_GIT_REPO_OWNER', '') != '':
+        x_submission_repo_owner = f""" --repository_owner {env['CM_MLPERF_RESULTS_GIT_REPO_OWNER']}"""
+    if env.get('CM_MLPERF_RESULTS_GIT_REPO_BRANCH', '') != '':
+        x_submission_repo_branch = f""" --repository_branch  {env['CM_MLPERF_RESULTS_GIT_REPO_BRANCH']}"""
 
     report_generator_file = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "tools", "submission",
             "generate_final_report.py")
