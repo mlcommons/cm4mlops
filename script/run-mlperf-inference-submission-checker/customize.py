@@ -63,7 +63,7 @@ def preprocess(i):
     x_version = ' --version ' + version[1:] +' ' if version!='' else ''
 
     if env.get('CM_MLPERF_RESULTS_GIT_REPO_NAME', '') != '':
-        x_submission_repo_name = f""" --repository {env.['CM_MLPERF_RESULTS_GIT_REPO_NAME']}"""
+        x_submission_repo_name = f""" --repository {env['CM_MLPERF_RESULTS_GIT_REPO_NAME']}"""
     if env.get('CM_MLPERF_RESULTS_GIT_REPO_OWNER', '') != '':
         x_submission_repo_owner = f""" --repository_owner {env['CM_MLPERF_RESULTS_GIT_REPO_OWNER']}"""
     if env.get('CM_MLPERF_RESULTS_GIT_REPO_BRANCH', '') != '':
