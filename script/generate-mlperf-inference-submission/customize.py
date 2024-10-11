@@ -239,8 +239,11 @@ def generate_submission(i):
 
         results = {}
 
+        model_platform_info_file = None
+
         for model in models:
             results[model] = {}
+            platform_info_file = None
             result_model_path = os.path.join(result_path, model)
             submission_model_path = os.path.join(submission_path, model)
             measurement_model_path = os.path.join(measurement_path, model)
@@ -386,8 +389,10 @@ def generate_submission(i):
                                 files.append(f)
                             elif f == "spl.txt":
                                 files.append(f)
-                            elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json" ] and mode == "performance":
+                            elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt" ] and mode == "performance":
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, f))
+                                if f == "system_info.txt" and not platform_info_file:
+                                    platform_info_file = os.path.join(result_mode_path, f)
                             elif f in [ "console.out" ]:
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, mode+"_"+f))
 
@@ -416,6 +421,26 @@ def generate_submission(i):
                         results[model][scenario][key] = result[key]
                     with open(readme_file, mode='a') as f:
                         f.write(result_string)
+
+            #Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
+            sys_info_file = None
+            if os.path.exists(os.path.join(result_model_path, "system_info.txt")):
+                sys_info_file = os.path.join(result_model_path, "system_info.txt")
+            elif platform_info_file:
+                sys_info_file = platform_info_file
+            if sys_info_file:
+                model_platform_info_file = sys_info_file
+                shutil.copy(sys_info_file, os.path.join(measurement_model_path, "system_info.txt"))
+
+        #Copy system_info.txt to the submission measurements folder if any model performance run has it
+        sys_info_file = None
+        if os.path.exists(os.path.join(result_path, "system_info.txt")):
+            sys_info_file = os.path.join(result_path, "system_info.txt")
+        elif model_platform_info_file:
+            sys_info_file = model_platform_info_file
+        if sys_info_file:
+            shutil.copy(sys_info_file, os.path.join(measurement_path, "system_info.txt"))
+ 
 
         with open(system_file, "w") as fp:
             json.dump(system_meta, fp, indent=2)
