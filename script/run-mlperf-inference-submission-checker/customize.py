@@ -62,6 +62,10 @@ def preprocess(i):
 
     x_version = ' --version ' + version[1:] +' ' if version!='' else ''
 
+    x_submission_repo_name = ''
+    x_submission_repo_owner = ''
+    x_submission_repo_branch = ''
+
     if env.get('CM_MLPERF_RESULTS_GIT_REPO_NAME', '') != '':
         x_submission_repo_name = f""" --repository {env['CM_MLPERF_RESULTS_GIT_REPO_NAME']}"""
     if env.get('CM_MLPERF_RESULTS_GIT_REPO_OWNER', '') != '':
@@ -75,7 +79,9 @@ def preprocess(i):
     print(CMD)
     env['CM_POST_RUN_CMD'] = env['CM_PYTHON_BIN_WITH_PATH'] +' ' + q + report_generator_file + q + ' --input summary.csv ' + \
             x_version + \
-            x_submission_repository
+            x_submission_repo_name + \
+            x_submission_repo_owner + \
+            x_submission_repo_branch
 
     return {'return':0}
 
