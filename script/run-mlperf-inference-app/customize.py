@@ -275,6 +275,11 @@ def preprocess(i):
                 if state.get('docker', {}):
                     del(state['docker'])
 
+    if env.get('CM_DOCKER_CONTAINER_ID', '') != '' and str(env.get('CM_DOCKER_CONTAINER_KEEP_ALIVE', '')).lower() not in ["yes", "1", "true"]:
+        container_id = env['CM_DOCKER_CONTAINER_ID']
+        CMD = f"docker kill {container_id}"
+        docker_out = subprocess.check_output(CMD, shell=True).decode("utf-8")
+
     if state.get("cm-mlperf-inference-results"):
         #print(state["cm-mlperf-inference-results"])
         for sut in state["cm-mlperf-inference-results"]:#only one sut will be there

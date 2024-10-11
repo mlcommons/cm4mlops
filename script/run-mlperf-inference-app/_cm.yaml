@@ -56,6 +56,7 @@ input_mapping:
   execution_mode: CM_MLPERF_RUN_STYLE
   find_performance: CM_MLPERF_FIND_PERFORMANCE_MODE
   framework: CM_MLPERF_BACKEND
+  docker_keep_alive: CM_DOCKER_CONTAINER_KEEP_ALIVE
   gpu_name: CM_NVIDIA_GPU_NAME
   hw_name: CM_HW_NAME
   pip_loadgen: CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP
