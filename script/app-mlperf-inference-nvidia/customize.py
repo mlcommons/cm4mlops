@@ -157,12 +157,10 @@ def preprocess(i):
             cmds.append(f"ln -sf {dataset_path} {target_data_path}")
 
         calibration_dataset_path=env['CM_CALIBRATION_DATASET_PATH']
-        target_data_path_dir = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'open-images-v6-mlperf','calibration', 'train')
+        target_data_path_dir = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'open-images-v6-mlperf','calibration', 'calibration')
         if not os.path.exists(target_data_path_dir):
             cmds.append(f"mkdir -p {target_data_path_dir}")
-        target_data_path = os.path.join(target_data_path_dir, 'data')
-        if not os.path.exists(target_data_path):
-            cmds.append(f"ln -sf {calibration_dataset_path} {target_data_path}")
+            cmds.append(f"cp -r {calibration_dataset_path} {target_data_path}")
 
         preprocessed_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data')
         target_model_path_dir = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'retinanet-resnext50-32x4d')
