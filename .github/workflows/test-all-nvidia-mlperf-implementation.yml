@@ -2,11 +2,11 @@ name: MLPerf inference Nvidia implementations
 
 on:
   schedule:
-    - cron: "1 3 * * *" #to be adjusted
+    - cron: "30 14 * * *" #to be adjusted
 
 build_nvidia:
-      if: github.repository_owner == 'gateoverflow'
-      runs-on: [ self-hosted, linux, x64, GO-spr]
+      if: github.repository_owner == 'anandhu-eng'
+      runs-on: [ self-hosted, linux, x64, GO-i9]
       strategy:
         fail-fast: false
         matrix:
