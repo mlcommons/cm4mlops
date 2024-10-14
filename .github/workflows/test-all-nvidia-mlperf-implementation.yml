@@ -6,14 +6,14 @@ on:
 
 build_nvidia:
       if: github.repository_owner == 'gateoverflow'
-      runs-on: [ self-hosted, linux, x64, GO-i9]
+      runs-on: [ self-hosted, linux, GO-i9]
       strategy:
         fail-fast: false
         matrix:
           python-version: [ "3.12" ]
           model: [ "resnet50", "3d-unet-99", "3d-unet-99.9", "bert-99", "bert-99.9", "retinanet" ]
       steps:
-      - name: Preprocessing step for the run
+      - name: Test MLPerf Inference NVIDIA ${{ matrix.model }}
         run: |
           if [ -f "gh_action/bin/deactivate" ]; then source gh_action/bin/deactivate; fi
           python3 -m venv gh_action
@@ -21,7 +21,5 @@ build_nvidia:
           export CM_REPOS=$HOME/GH_CM
           pip install --upgrade cm4mlops
           cm pull repo
-      - name: Test MLPerf Inference NVIDIA ${{ matrix.model }}
-        run: |
           cm run script --tags=run-mlperf,inference,_submission,_r4.1-dev,_short --submitter="MLCommons" --hw_name=gh_ubuntu_x86  --model=${{ matrix.model }}  --implementation=nvidia    --backend=tensorrt    --category=datacenter    --scenario=Offline --test_query_count=500 --target_qps=1 --docker_dt=yes --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --device=cuda --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean  --docker --quiet
           cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from ${{ matrix.model }} GH action on NVIDIARTX4090" --quiet --submission_dir=$HOME/gh_action_submissions
