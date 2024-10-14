@@ -78,6 +78,7 @@ def preprocess(i):
 
             # Check extra index URL
             extra_index_url = env.get('CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL','').strip()
+
             if extra_index_url != '':
                 # Check special cases
                 if '${CM_TORCH_CUDA}' in extra_index_url:

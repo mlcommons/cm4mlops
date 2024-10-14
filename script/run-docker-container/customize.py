@@ -64,8 +64,10 @@ def preprocess(i):
         existing_container_id = out[0]
         env['CM_DOCKER_CONTAINER_ID'] = existing_container_id
 
-
     else:
+        if env.get('CM_DOCKER_CONTAINER_ID', '') != '':
+            del(env['CM_DOCKER_CONTAINER_ID']) #not valid ID
+
         CMD = "docker images -q " +  DOCKER_CONTAINER
 
         if os_info['platform'] == 'windows':

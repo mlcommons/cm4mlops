@@ -43,6 +43,7 @@ input_mapping:
   category: CM_MLPERF_SUBMISSION_SYSTEM_TYPE
   clean: CM_MLPERF_CLEAN_ALL
   compliance: CM_MLPERF_LOADGEN_COMPLIANCE
+  custom_system_nvidia: CM_CUSTOM_SYSTEM_NVIDIA
   dashboard_wb_project: CM_MLPERF_DASHBOARD_WANDB_PROJECT
   dashboard_wb_user: CM_MLPERF_DASHBOARD_WANDB_USER
   debug: CM_DEBUG_SCRIPT_BENCHMARK_PROGRAM
@@ -55,6 +56,8 @@ input_mapping:
   execution_mode: CM_MLPERF_RUN_STYLE
   find_performance: CM_MLPERF_FIND_PERFORMANCE_MODE
   framework: CM_MLPERF_BACKEND
+  docker_keep_alive: CM_DOCKER_CONTAINER_KEEP_ALIVE
+  get_platform_details: CM_GET_PLATFORM_DETAILS
   gpu_name: CM_NVIDIA_GPU_NAME
   hw_name: CM_HW_NAME
   pip_loadgen: CM_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP
@@ -66,6 +69,7 @@ input_mapping:
   model: CM_MLPERF_MODEL
   multistream_target_latency: CM_MLPERF_LOADGEN_MULTISTREAM_TARGET_LATENCY
   network: CM_NETWORK_LOADGEN
+  nvidia_system_name: CM_NVIDIA_SYSTEM_NAME
   offline_target_qps: CM_MLPERF_LOADGEN_OFFLINE_TARGET_QPS
   output_dir: OUTPUT_BASE_DIR
   output_summary: MLPERF_INFERENCE_SUBMISSION_SUMMARY
@@ -75,6 +79,7 @@ input_mapping:
   precision: CM_MLPERF_MODEL_PRECISION
   preprocess_submission: CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR
   push_to_github: CM_MLPERF_RESULT_PUSH_TO_GITHUB
+  pull_changes: CM_MLPERF_INFERENCE_PULL_CODE_CHANGES
   readme: CM_MLPERF_README
   regenerate_accuracy_file: CM_MLPERF_REGENERATE_ACCURACY_FILE
   regenerate_files: CM_REGENERATE_MEASURE_FILES
