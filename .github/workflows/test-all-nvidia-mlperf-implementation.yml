@@ -5,7 +5,7 @@ on:
     - cron: "30 14 * * *" #to be adjusted
 
 build_nvidia:
-      if: github.repository_owner == 'anandhu-eng'
+      if: github.repository_owner == 'gateoverflow'
       runs-on: [ self-hosted, linux, x64, GO-i9]
       strategy:
         fail-fast: false
