@@ -170,6 +170,15 @@ deps:
     tags: get,dataset,preprocessed,criteo
 
   ########################################################################
+  # install retinanet model
+  - enable_if_env:
+      CM_MODEL:
+      - retinanet
+    names:
+      -retinanet-model
+    tags: get,ml-model,retinanet,_pytorch,_fp32,_weights
+    
+  ########################################################################
   # Install dlrm model
   - enable_if_env:
       CM_MODEL:
