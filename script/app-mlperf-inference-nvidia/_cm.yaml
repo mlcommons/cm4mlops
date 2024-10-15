@@ -217,14 +217,14 @@ deps:
 
   - enable_if_env:
       CM_MODEL:
-      - retinanet
+      - retinanet-disabled
     names:
       - openimages-original
     tags: get,dataset,original,openimages,_validation,_full,_custom-annotations
 
   - enable_if_env:
       CM_MODEL:
-      - retinanet
+      - retinanet-disabled
     names:
       - openimages-calibration
     tags: get,dataset,original,openimages,_calibration   
