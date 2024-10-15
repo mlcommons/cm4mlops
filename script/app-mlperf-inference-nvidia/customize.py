@@ -157,7 +157,7 @@ def preprocess(i):
             cmds.append(f"ln -sf {dataset_path} {target_data_path}")
 
         calibration_dataset_path=env['CM_CALIBRATION_DATASET_PATH']
-        target_data_path_dir = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'open-images-v6-mlperf','calibration', 'calibration')
+        target_data_path_dir = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'open-images-v6-mlperf','calibration', 'train')
         if not os.path.exists(target_data_path_dir):
             cmds.append(f"mkdir -p {target_data_path_dir}")
             cmds.append(f"cp -r {calibration_dataset_path} {target_data_path}")
