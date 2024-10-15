@@ -7,7 +7,7 @@ on:
 jobs:
   build_nvidia:
       if: github.repository_owner == 'gateoverflow'
-      runs-on: [ self-hosted, linux, x64, GO-i9]
+      runs-on: [ self-hosted, linux, x64, GO-spr ]
       strategy:
         fail-fast: false
         matrix:
