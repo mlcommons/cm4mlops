@@ -138,7 +138,7 @@ def preprocess(i):
 
     elif env['CM_MODEL'] == "retinanet":
         #print(env)
-        dataset_path = env['CM_DATASET_PATH']
+        dataset_path = env['CM_DATASET_OPENIMAGES_PATH']
         #return {'return': 1, 'error': 'error'}
 
         annotations_path = env['CM_DATASET_OPENIMAGES_VALIDATION_ANNOTATIONS_FILE_PATH']
