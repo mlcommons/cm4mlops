@@ -54,3 +54,8 @@ cmd="${CM_PYTHON_BIN_WITH_PATH} ${CM_MLPERF_AMD_LLAMA2_CODE_PATH}/mainVllmFp8_Of
     --sorting ${SORTING} \
     --enforce-eager True \
     --gpu-memory-utilization 0.99" 
+
+echo "${cmd}"
+# uncomment the below lines for testing 
+#eval "${cmd}"
+#test $? -eq 0 || exit $?
