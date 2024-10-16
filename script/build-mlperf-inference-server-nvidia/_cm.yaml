@@ -199,7 +199,7 @@ variations:
         names:
         - pytorch
         - torch
-        skip_if_any_env:
+        skip_if_env:
           CM_HOST_PLATFORM_FLAVOR: 
             - x86_64
           CM_PYTHON_MINOR_VERSION:
@@ -215,7 +215,7 @@ variations:
         names:
         - pytorchvision
         - torchvision
-        skip_if_any_env:
+        skip_if_env:
           CM_HOST_PLATFORM_FLAVOR: 
             - x86_64
           CM_PYTHON_MINOR_VERSION:
@@ -273,10 +273,32 @@ versions:
         names:
         - pytorch
         - torch
+        skip_if_env:
+          CM_HOST_PLATFORM_FLAVOR: 
+            - x86_64
+          CM_PYTHON_MINOR_VERSION:
+            - 8
+      - tags: get,generic-python-lib,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torch-2.1.0a0+git32f93b1-cp38-cp38-linux_x86_64.whl
+        enable_if_env:
+          CM_HOST_PLATFORM_FLAVOR: 
+            - x86_64
+          CM_PYTHON_MINOR_VERSION:
+            - 8
       - tags: install,torchvision,from.src,_for-nvidia-mlperf-inference-v4.0
         names:
         - pytorchvision
         - torchvision
+        skip_if_env:
+          CM_HOST_PLATFORM_FLAVOR: 
+            - x86_64
+          CM_PYTHON_MINOR_VERSION:
+            - 8
+      - tags: get,generic-python-lib,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torchvision-0.16.0a0+657027f-cp38-cp38-linux_x86_64.whl
+        enable_if_env:
+          CM_HOST_PLATFORM_FLAVOR: 
+            - x86_64
+          CM_PYTHON_MINOR_VERSION:
+            - 8
 
   r4.1-dev:
     add_deps_recursive:
@@ -293,7 +315,7 @@ versions:
         names:
         - pytorch
         - torch
-        skip_if_any_env:
+        skip_if_env:
           CM_HOST_PLATFORM_FLAVOR: 
             - x86_64
           CM_PYTHON_MINOR_VERSION:
@@ -308,7 +330,7 @@ versions:
         names:
         - pytorchvision
         - torchvision
-        skip_if_any_env:
+        skip_if_env:
           CM_HOST_PLATFORM_FLAVOR: 
             - x86_64
           CM_PYTHON_MINOR_VERSION:
