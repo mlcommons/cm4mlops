@@ -33,8 +33,8 @@ LOG_DIR=${CM_MLPERF_OUTPUT_DIR}
 
 cp $USER_CONF ${LOG_DIR}/user.conf
 
-cmd ="${CM_PYTHON_BIN_WITH_PATH} ${CM_MLPERF_AMD_LLAMA2_CODE_PATH}/mainVllmFp8_Offline.py \
-    --scenario ${CM_MLPERF_LOADGEN_SCENARIO \
+cmd="${CM_PYTHON_BIN_WITH_PATH} ${CM_MLPERF_AMD_LLAMA2_CODE_PATH}/mainVllmFp8_Offline.py \
+    --scenario ${CM_MLPERF_LOADGEN_SCENARIO} \
     --output-log-dir ${LOG_DIR} \
     --model-path $MODEL_PATH \
     --mlperf-conf $MLPERF_CONF \
@@ -54,3 +54,7 @@ cmd ="${CM_PYTHON_BIN_WITH_PATH} ${CM_MLPERF_AMD_LLAMA2_CODE_PATH}/mainVllmFp8_O
     --sorting ${SORTING} \
     --enforce-eager True \
     --gpu-memory-utilization 0.99" 
+
+echo "${cmd}"
+# uncomment the below lines for testing 
+#eval "${cmd}"
