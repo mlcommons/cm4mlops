@@ -2,7 +2,7 @@ name: MLPerf Inference Nvidia implementations
 
 on:
   schedule:
-    - cron: "40 16 * * *" #to be adjusted
+    - cron: "55 16 * * *" #to be adjusted
 
 jobs:
   build_nvidia:
@@ -22,5 +22,5 @@ jobs:
           export CM_REPOS=$HOME/GH_CM
           pip install --upgrade cm4mlops
           cm pull repo
-          cm run script --tags=run-mlperf,inference,_submission,_r4.1-dev --execution_mode=valid --offline_target_qps=90000 --server_target_qps=72000 --submitter="MLCommons" --hw_name=gh_ubuntu_x86  --model=resnet50  --implementation=nvidia    --backend=tensorrt    --category=datacenter    --scenario=Offline --test_query_count=500 --target_qps=1 --docker_dt=yes --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --device=cuda --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean  --docker --quiet
+          cm run script --tags=run-mlperf,inference,_all-scenarios,_submission,_r4.1-dev --execution_mode=valid --offline_target_qps=90000 --server_target_qps=72000 --submitter="MLCommons" --hw_name=gh_ubuntu_x86  --model=resnet50  --implementation=nvidia    --backend=tensorrt    --category=datacenter  --docker_dt=yes --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --device=cuda --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean  --docker --quiet
           cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from ${{ matrix.model }} GH action on NVIDIARTX4090" --quiet --submission_dir=$HOME/gh_action_submissions
