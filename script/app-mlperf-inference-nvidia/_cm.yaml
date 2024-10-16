@@ -233,7 +233,7 @@ deps:
       - retinanet
     skip_if_env:
       CM_USE_DATASET_FROM_HOST:
-      - 'yes`
+      - 'yes'
     names:
       - openimages-calibration
     tags: get,dataset,original,openimages,_calibration   
