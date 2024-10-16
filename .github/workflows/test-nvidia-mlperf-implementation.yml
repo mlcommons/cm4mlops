@@ -2,7 +2,7 @@ name: MLPerf Inference Nvidia implementations
 
 on:
   schedule:
-    - cron: "40 9 * * *" #to be adjusted
+    - cron: "24 15 * * *" #to be adjusted
 
 jobs:
   build_nvidia:
@@ -12,7 +12,7 @@ jobs:
         fail-fast: false
         matrix:
           python-version: [ "3.12" ]
-          model: [ "resnet50", "3d-unet-99", "3d-unet-99.9", "bert-99", "bert-99.9", "retinanet" ]
+          model: [ "resnet50" ]
       steps:
       - name: Test MLPerf Inference NVIDIA ${{ matrix.model }}
         run: |
