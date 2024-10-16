@@ -310,6 +310,7 @@ variations:
   nvidia-original,r4.1-dev_default:
     docker:
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+      image_name: mlperf-inference-nvidia-v4.1-dev-common
 
   nvidia-original,r4.1-dev_default,gptj_:
     docker:
@@ -1515,10 +1516,10 @@ variations:
     add_deps_recursive:
       nvidia-inference-common-code:
         version: r4.0
-        tags: _go
+        tags: _mlcommons
       nvidia-inference-server:
         version: r4.0
-        tags: _go
+        tags: _mlcommons
       intel-harness:
         tags: _v4.0
     default_env:

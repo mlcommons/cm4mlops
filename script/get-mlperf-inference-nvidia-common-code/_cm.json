@@ -29,7 +29,8 @@
   "uid": "26b78bf3ffdc4926",
   "variations": {
     "mlcommons": {
-      "group": "repo-owner"
+      "group": "repo-owner",
+      "default": true
     },
     "custom": {
       "group": "repo-owner"
