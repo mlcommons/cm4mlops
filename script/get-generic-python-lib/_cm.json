@@ -567,6 +567,21 @@
         "CM_PANDAS_VERSION"
       ]
     },
+    "whl-url.#": {
+      "deps": [
+        {
+          "tags": "download,file,_url.#",
+          "force_cache": "yes",
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_GENERIC_PYTHON_PIP_URL",
+            "CM_GENERIC_PYTHON_PACKAGE_NAME": "from_whl"
+          }
+        }
+      ],
+      "env": {
+        "CM_TMP_PYTHON_PACKAGE_FORCE_INSTALL": "yes"
+      }
+    },
     "path.#": {
       "env": {
         "CM_GENERIC_PYTHON_PIP_URL": "#"
