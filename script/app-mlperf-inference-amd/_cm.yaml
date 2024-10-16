@@ -255,7 +255,7 @@ variations:
       - tags: get,generic-python-lib,_package.vllm
         names:
           - vllm
-      - tags: get,git,repo,_repo.https://github.com/mlcommons/inference_results_v4.1
+      - tags: get,git,repo,_repo.https://github.com/mlcommons/inference_results_v4.1,_branch.cm-code-only
         extra_cache_tags: inference,results
         env:
            CM_GIT_CHECKOUT_PATH_ENV_NAME: CM_MLPERF_INFERENCE_RESULTS_PATH
