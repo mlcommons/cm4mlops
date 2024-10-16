@@ -227,7 +227,6 @@ variations:
         tags: _full
     env:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: full
-      CM_MLPERF_SKIP_SUBMISSION_GENERATION: 'yes'
     group: submission-generation-style
 
   performance-only:
