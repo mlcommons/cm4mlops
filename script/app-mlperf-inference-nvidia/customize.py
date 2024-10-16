@@ -138,10 +138,10 @@ def preprocess(i):
 
     elif env['CM_MODEL'] == "retinanet":
         #print(env)
-        dataset_path = env['CM_DATASET_PATH']
+        dataset_path = env['CM_DATASET_OPENIMAGES_PATH']
         #return {'return': 1, 'error': 'error'}
 
-        annotations_path = env['CM_DATASET_ANNOTATIONS_DIR_PATH']
+        annotations_path = env['CM_DATASET_OPENIMAGES_VALIDATION_ANNOTATIONS_FILE_PATH']
         target_data_path_dir = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'open-images-v6-mlperf')
         if not os.path.exists(target_data_path_dir):
             cmds.append(f"mkdir -p {target_data_path_dir}")
@@ -156,7 +156,7 @@ def preprocess(i):
         if not os.path.exists(target_data_path):
             cmds.append(f"ln -sf {dataset_path} {target_data_path}")
 
-        calibration_dataset_path=env['CM_CALIBRATION_DATASET_PATH']
+        calibration_dataset_path=env['CM_OPENIMAGES_CALIBRATION_DATASET_PATH']
         target_data_path_dir = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'open-images-v6-mlperf','calibration', 'train')
         if not os.path.exists(target_data_path_dir):
             cmds.append(f"mkdir -p {target_data_path_dir}")

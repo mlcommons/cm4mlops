@@ -119,6 +119,11 @@ deps:
   - enable_if_env:
       CM_MODEL:
       - resnet50
+    skip_if_env:
+      CM_USE_DATASET_FROM_HOST:
+      - 'yes'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - imagenet-original
     tags: get,dataset,original,imagenet,_full
@@ -218,6 +223,11 @@ deps:
   - enable_if_env:
       CM_MODEL:
       - retinanet
+    skip_if_env:
+      CM_USE_DATASET_FROM_HOST:
+      - 'yes'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - openimages-original
     tags: get,dataset,original,openimages,_validation,_full,_custom-annotations
@@ -225,6 +235,11 @@ deps:
   - enable_if_env:
       CM_MODEL:
       - retinanet
+    skip_if_env:
+      CM_USE_DATASET_FROM_HOST:
+      - 'yes'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - openimages-calibration
     tags: get,dataset,original,openimages,_calibration   
