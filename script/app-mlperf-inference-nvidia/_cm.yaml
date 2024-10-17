@@ -89,7 +89,6 @@ input_mapping:
   embedding_weights_on_gpu_part: CM_MLPERF_NVIDIA_HARNESS_EMBEDDING_WEIGHTS_ON_GPU_PART
   sdxl_batcher_time_limit: CM_MLPERF_NVIDIA_HARNESS_SDXL_SERVER_BATCHER_TIME_LIMIT
 
-
 # Dependencies on other CM scripts
 
 deps:
@@ -1106,6 +1105,14 @@ variations:
   singlestream,resnet50:
     env:
       SKIP_POLICIES: '1'
+
+  server,resnet50:
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_DEQUE_TIMEOUT_USEC: 2000
+      CM_MLPERF_NVIDIA_HARNESS_USE_DEQUE_LIMIT: True
+      CM_MLPERF_NVIDIA_HARNESS_USE_CUDA_THREAD_PER_DEVICE: True
+      CM_MLPERF_NVIDIA_HARNESS_GPU_COPY_STREAMS: 9
+      CM_MLPERF_NVIDIA_HARNESS_GPU_INFERENCE_STREAMS: 2
 
   multistream,resnet50:
     env:
