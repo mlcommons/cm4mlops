@@ -48,12 +48,11 @@ COMMON_CMD_OPTIONS="\
     --quantized-weights-path ${QUANTIZED_WEIGHTS_PATH} \
     --quantization-param-path ${QUANTIZATION_PARAM_PATH}"
 
-if [ "${CM_MLPERF_LOADGEN_MODE:-}" == "accuracy" ]; then
+if [ "${CM_MLPERF_LOADGEN_MODE}" == "accuracy" ]; then
     COMMON_CMD_OPTIONS+=" --accuracy"
 fi
 
-
-if [ "$CM_MLPERF_LOADGEN_SCENARIO" == "Offline" ]; then
+if [ "${CM_MLPERF_LOADGEN_SCENARIO}" == "Offline" ]; then
     WD=${WD:-0}
     SORTING=${SORTING:-descending} #ascending #descending #lexicographic #skip
     export VLLM_SCHED_PREFILL_KVC_FREEPCT=31.0
