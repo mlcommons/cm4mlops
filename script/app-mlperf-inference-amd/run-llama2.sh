@@ -5,8 +5,6 @@ set -xeu
 N_SAMPLES=${N_SAMPLES:-24576} #24576 #3072 #2457 #6
 TP=1
 DP=${DP:-8}
-WD=${WD:-0}
-SORTING=${SORTING:-descending} #ascending #descending #lexicographic #skip
 
 export HIP_FORCE_DEV_KERNARG=1
 export VLLM_USE_TRITON_FLASH_ATTN=0
@@ -14,7 +12,6 @@ export VLLM_FP8_PADDING=1
 export VLLM_FP8_ACT_PADDING=1
 export VLLM_FP8_WEIGHT_PADDING=1
 export VLLM_FP8_REDUCE_CONV=1
-export VLLM_SCHED_PREFILL_KVC_FREEPCT=31.0
 
 export HARNESS_DISABLE_VLLM_LOGS=1
 export VLLM_LOGGING_LEVEL=ERROR
@@ -33,7 +30,7 @@ LOG_DIR=${CM_MLPERF_OUTPUT_DIR}
 
 cp $USER_CONF ${LOG_DIR}/user.conf
 
-cmd="${CM_PYTHON_BIN_WITH_PATH} ${CM_MLPERF_AMD_LLAMA2_CODE_PATH}/mainVllmFp8_Offline.py \
+COMMON_CMD_OPTIONS="\
     --scenario ${CM_MLPERF_LOADGEN_SCENARIO} \
     --output-log-dir ${LOG_DIR} \
     --model-path $MODEL_PATH \
@@ -49,11 +46,30 @@ cmd="${CM_PYTHON_BIN_WITH_PATH} ${CM_MLPERF_AMD_LLAMA2_CODE_PATH}/mainVllmFp8_Of
     -dp ${DP} \
     --quantization fp8 \
     --quantized-weights-path ${QUANTIZED_WEIGHTS_PATH} \
-    --quantization-param-path ${QUANTIZATION_PARAM_PATH} \
+    --quantization-param-path ${QUANTIZATION_PARAM_PATH}"
+
+if [ "${CM_MLPERF_LOADGEN_MODE}" == "accuracy" ]; then
+    COMMON_CMD_OPTIONS+=" --accuracy"
+fi
+
+if [ "${CM_MLPERF_LOADGEN_SCENARIO}" == "Offline" ]; then
+    WD=${WD:-0}
+    SORTING=${SORTING:-descending} #ascending #descending #lexicographic #skip
+    export VLLM_SCHED_PREFILL_KVC_FREEPCT=31.0
+    # generate run command
+    cmd="${CM_PYTHON_BIN_WITH_PATH} ${CM_MLPERF_AMD_LLAMA2_CODE_PATH}/mainVllmFp8_Offline.py \
+    ${COMMON_CMD_OPTIONS} \
     --warmup-duration ${WD} \
     --sorting ${SORTING} \
     --enforce-eager True \
     --gpu-memory-utilization 0.99" 
+else
+    # generate run command
+    cmd="${CM_PYTHON_BIN_WITH_PATH} ${CM_MLPERF_AMD_LLAMA2_CODE_PATH}/mainVllmFp8_SyncServer.py \
+    ${COMMON_CMD_OPTIONS} \
+    --enable-warm-up \
+    --enable-batcher"
+fi
 
 echo "${cmd}"
 # uncomment the below lines for testing 
