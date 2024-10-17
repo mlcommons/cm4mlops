@@ -22,7 +22,6 @@ except ImportError:
     PackageNotFoundError = pkg_resources.DistributionNotFound
 
 
-
 class CustomInstallCommand(install):
     def run(self):
         self.get_sys_platform()
