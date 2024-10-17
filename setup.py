@@ -130,10 +130,12 @@ class CustomInstallCommand(install):
 
 with open("README.md", "r") as f:
     long_description = f.read()
+with open("VERSION", "r") as f:
+    version = f.read()
 
 setup(
     name='cm4mlops',
-    version='0.3',
+    version=version,
     long_description=long_description,
     long_description_content_type='text/markdown',
     url="https://github.com/mlcommons/cm4mlops",
