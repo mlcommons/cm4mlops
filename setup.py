@@ -136,11 +136,11 @@ def read_file(file_name, default=""):
     return default
 
 long_description = read_file("README.md", "No description available.")
-version = read_file("VERSION", "0.3.0")
+version_ = read_file("VERSION", "0.3.0")
 
 setup(
     name='cm4mlops',
-    version=version,
+    version=version_,
     long_description=long_description,
     long_description_content_type='text/markdown',
     url="https://github.com/mlcommons/cm4mlops",
