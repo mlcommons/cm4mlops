@@ -573,8 +573,7 @@
           "tags": "download,file,_url.#",
           "force_cache": "yes",
           "env": {
-            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_GENERIC_PYTHON_PIP_URL",
-            "CM_GENERIC_PYTHON_PACKAGE_NAME": "from_whl"
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_GENERIC_PYTHON_PIP_URL"
           }
         }
       ],

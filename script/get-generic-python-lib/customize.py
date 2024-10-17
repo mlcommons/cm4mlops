@@ -97,7 +97,7 @@ def preprocess(i):
             env['CM_GENERIC_PYTHON_PIP_EXTRA'] = extra
 
             package_name = env.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '').strip()
-            if package_name == '':
+            if package_name == '' and env.get('CM_GENERIC_PYTHON_PIP_URL', '') == '':
                 return automation._available_variations({'meta':meta})
 
             r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install'})
