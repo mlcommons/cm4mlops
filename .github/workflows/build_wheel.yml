@@ -80,6 +80,7 @@ jobs:
 
       # Step 7: Build the Python wheel
       - name: Build wheels
+        working-directory: ./
         run: python3 -m build
 
       # Step 8: Publish to PyPI
