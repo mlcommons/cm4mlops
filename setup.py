@@ -128,10 +128,15 @@ class CustomInstallCommand(install):
     def get_sys_platform(self):
         self.system =  platform.system() 
 
-with open("README.md", "r") as f:
-    long_description = f.read()
-with open("VERSION", "r") as f:
-    version = f.read()
+# Read long description and version
+def read_file(file_name, default=""):
+    if os.path.isfile(file_name):
+        with open(file_name, "r") as f:
+            return f.read().strip()
+    return default
+
+long_description = read_file("README.md", "No description available.")
+version = read_file("VERSION", "0.3.0")
 
 setup(
     name='cm4mlops',
