@@ -1,4 +1,5 @@
-# setup.py
+# Build a whl file for cm4mlperf-inference
+
 from setuptools import setup
 from setuptools._distutils.dist import Distribution
 from setuptools.command.install import install
@@ -22,7 +23,6 @@ except ImportError:
     PackageNotFoundError = pkg_resources.DistributionNotFound
 
 
-
 class CustomInstallCommand(install):
     def run(self):
         self.get_sys_platform()
@@ -44,6 +44,7 @@ class CustomInstallCommand(install):
         except PackageNotFoundError:
             return False
 
+    
     def install_system_packages(self):
         # List of packages to install via system package manager
         packages = []
@@ -127,12 +128,19 @@ class CustomInstallCommand(install):
     def get_sys_platform(self):
         self.system =  platform.system() 
 
-with open("README.md", "r") as f:
-    long_description = f.read()
+# Read long description and version
+def read_file(file_name, default=""):
+    if os.path.isfile(file_name):
+        with open(file_name, "r") as f:
+            return f.read().strip()
+    return default
+
+long_description = read_file("README.md", "No description available.")
+version_ = read_file("VERSION", "0.3.0")
 
 setup(
     name='cm4mlops',
-    version='0.3',
+    version=version_,
     long_description=long_description,
     long_description_content_type='text/markdown',
     url="https://github.com/mlcommons/cm4mlops",

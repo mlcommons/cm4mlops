@@ -17,7 +17,10 @@ The `mlperf-branch` of the **cm4mlops** repository contains updated CM scripts s
 
 [![Streamline your MLPerf results using CM Framework](https://img.youtube.com/vi/eI1Hoecc3ho/0.jpg)](https://youtu.be/eI1Hoecc3ho)
 
+## News
 
+* [Upcoming Changes](https://github.com/mlcommons/cm4mlops/discussions/categories/announcements)
+* [Ongoing Discussions](https://github.com/mlcommons/cm4mlops/discussions/categories/ideas)
 
 ## License
 
