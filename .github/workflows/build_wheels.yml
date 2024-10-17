@@ -43,6 +43,7 @@ jobs:
 
       # Step 4: Increment version if VERSION was not changed
       - name: Increment version if necessary
+        id: do_version_increment
         if: steps.version_changed.outputs.version_changed == 'false'
         run: |
           # Check if VERSION file exists, else initialize it
@@ -60,12 +61,14 @@ jobs:
 
       # Step 5: Commit the updated version to the repository
       - name: Commit updated version
+        if: steps.version_changed.outputs.version_changed == 'false'
         run: |
-          git config --global user.name "${{ github.actor }}"
+          # git config --global user.name "${{ github.actor }}"
           # git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "gateoverflow-admin"
           git config --global user.email "admin@gateoverflow.com"
           git add VERSION
-          git commit -m "Increment version to ${{ steps.version_changed.outputs.new_version }}"
+          git commit -m "Increment version to ${{ steps.do_version_increment.outputs.new_version }}"
           git push origin
 
       # Step 6: Install required dependencies
