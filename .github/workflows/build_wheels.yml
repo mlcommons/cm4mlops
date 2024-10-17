@@ -10,6 +10,8 @@ on:
     paths:
       - VERSION
       - setup.py
+      - .github/workflows/build_wheels.yml
+
 
 jobs:
   build_wheels:
