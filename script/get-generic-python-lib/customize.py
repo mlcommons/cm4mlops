@@ -10,8 +10,9 @@ def preprocess(i):
     automation = i['automation']
     run_script_input = i['run_script_input']
     pip_version = env.get('CM_PIP_VERSION', '').strip().split('.')
+
     package_name = env.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '').strip()
-    if package_name == '' and env.get('CM_GENERIC_PYTHON_PIP_URL', '') == '':
+    if package_name == '':
         return automation._available_variations({'meta':meta})
 
     if package_name == "onnxruntime_gpu":

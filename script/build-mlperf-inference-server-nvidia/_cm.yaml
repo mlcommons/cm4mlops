@@ -278,7 +278,7 @@ versions:
             - x86_64
           CM_PYTHON_MINOR_VERSION:
             - 8
-      - tags: get,generic-python-lib,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torch-2.1.0a0+git32f93b1-cp38-cp38-linux_x86_64.whl
+      - tags: get,generic-python-lib,_package.torch,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torch-2.1.0a0+git32f93b1-cp38-cp38-linux_x86_64.whl
         enable_if_env:
           CM_HOST_PLATFORM_FLAVOR: 
             - x86_64
@@ -293,7 +293,7 @@ versions:
             - x86_64
           CM_PYTHON_MINOR_VERSION:
             - 8
-      - tags: get,generic-python-lib,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torchvision-0.16.0a0+657027f-cp38-cp38-linux_x86_64.whl
+      - tags: get,generic-python-lib,_package.torchvision,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torchvision-0.16.0a0+657027f-cp38-cp38-linux_x86_64.whl
         enable_if_env:
           CM_HOST_PLATFORM_FLAVOR: 
             - x86_64
@@ -320,7 +320,7 @@ versions:
             - x86_64
           CM_PYTHON_MINOR_VERSION:
             - 8
-      - tags: get,generic-python-lib,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torch-2.1.0a0+git32f93b1-cp38-cp38-linux_x86_64.whl
+      - tags: get,generic-python-lib,_package.torch,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torch-2.1.0a0+git32f93b1-cp38-cp38-linux_x86_64.whl
         enable_if_env:
           CM_HOST_PLATFORM_FLAVOR: 
             - x86_64
@@ -335,7 +335,7 @@ versions:
             - x86_64
           CM_PYTHON_MINOR_VERSION:
             - 8
-      - tags: get,generic-python-lib,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torchvision-0.16.0a0+657027f-cp38-cp38-linux_x86_64.whl
+      - tags: get,generic-python-lib,_package.torchvision,_whl-url.https://github.com/mlcommons/cm4mlperf-inference/releases/download/https://github.com/mlcommons/cm4mlperf-inference/releases/download/mlperf-inference-v4.0/torchvision-0.16.0a0+657027f-cp38-cp38-linux_x86_64.whl
         enable_if_env:
           CM_HOST_PLATFORM_FLAVOR: 
             - x86_64
