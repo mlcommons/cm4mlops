@@ -62,12 +62,11 @@ jobs:
       - name: Commit updated version
         run: |
           git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          # git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.email "admin@gateoverflow.com"
           git add VERSION
           git commit -m "Increment version to ${{ steps.version_changed.outputs.new_version }}"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push origin
 
       # Step 6: Install required dependencies
       - name: Install requirements
