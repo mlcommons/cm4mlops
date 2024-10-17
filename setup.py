@@ -127,11 +127,15 @@ class CustomInstallCommand(install):
     def get_sys_platform(self):
         self.system =  platform.system() 
 
+with open("README.md", "r") as f:
+    long_description = f.read()
+
 setup(
     name='cm4mlops',
-    version='0.1',
-    long_description='CM automations and scripts for MLOps',
-    long_description_content_type='text/x-rst',
+    version='0.3',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url="https://github.com/mlcommons/cm4mlops",
     packages=[],
     install_requires=[
         "setuptools>=60",
