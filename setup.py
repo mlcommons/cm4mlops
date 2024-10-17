@@ -1,4 +1,4 @@
-# setup.py
+# Build a whl file for cm4mlperf-inference
 
 from setuptools import setup
 from setuptools._distutils.dist import Distribution
