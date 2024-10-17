@@ -11,7 +11,7 @@ def preprocess(i):
     run_script_input = i['run_script_input']
     pip_version = env.get('CM_PIP_VERSION', '').strip().split('.')
     package_name = env.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '').strip()
-    if package_name == '':
+    if package_name == '' and env.get('CM_GENERIC_PYTHON_PIP_URL', '') == '':
         return automation._available_variations({'meta':meta})
 
     if package_name == "onnxruntime_gpu":
@@ -40,7 +40,7 @@ def preprocess(i):
         r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'uninstall_deps'})
         if r['return']>0: return r
 
-    prepare_env_key = env['CM_GENERIC_PYTHON_PACKAGE_NAME']
+    prepare_env_key = env.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '')
     for x in ["-", "[", "]"]:
         prepare_env_key = prepare_env_key.replace(x,"_")
 
@@ -95,10 +95,6 @@ def preprocess(i):
             print ('')
 
             env['CM_GENERIC_PYTHON_PIP_EXTRA'] = extra
-
-            package_name = env.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '').strip()
-            if package_name == '' and env.get('CM_GENERIC_PYTHON_PIP_URL', '') == '':
-                return automation._available_variations({'meta':meta})
 
             r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install'})
 
