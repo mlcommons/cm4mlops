@@ -66,6 +66,8 @@ jobs:
           git add VERSION
           git commit -m "Increment version to ${{ steps.version_changed.outputs.new_version }}"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 6: Install required dependencies
       - name: Install requirements
