@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - main
-      - mlperf_inference
+      - mlperf-inference
     paths:
       - VERSION
       - setup.py
