@@ -1,4 +1,4 @@
-name: Build wheels and release them into PYPI
+name: Build wheel and release into PYPI
 
 on:
   release:
@@ -10,7 +10,7 @@ on:
     paths:
       - VERSION
       - setup.py
-      - .github/workflows/build_wheels.yml
+      - .github/workflows/build_wheel.yml
 
 
 jobs:
