@@ -971,7 +971,19 @@ class CAutomation(Automation):
             if state.get('docker'):
                 if str(state['docker'].get('run', True)).lower() in ['false', '0', 'no']:
                     logging.info(recursion_spaces+'  - Skipping script::{} run as we are inside docker'.format(found_script_artifact))
-                    return {'return': 0}
+
+                    # restore env and state
+                    for k in list(env.keys()):
+                        del(env[k])
+                    for k in list(state.keys()):
+                        del(state[k])
+
+                    env.update(saved_env)
+                    state.update(saved_state)
+
+                    rr = {'return':0, 'env':env, 'new_env':{}, 'state':state, 'new_state':{}, 'deps': []}
+                    return rr
+
                 elif str(state['docker'].get('real_run', True)).lower() in ['false', '0', 'no']:
                     logging.info(recursion_spaces+'  - Doing fake run for script::{} as we are inside docker'.format(found_script_artifact))
                     fake_run = True
