@@ -37,7 +37,7 @@ class CustomInstallCommand(install):
     def is_package_installed(self, package_name):
         try:
             if sys.version_info >= (3, 8):
-                spec = importlib.util.find_spec(package_name))
+                spec = importlib.util.find_spec(package_name)
                 module = importlib.util.module_from_spec(spec)
                 sys.modules[package_name] = module
                 spec.loader.exec_module(module)
