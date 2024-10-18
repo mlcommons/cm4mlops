@@ -35,6 +35,12 @@ class CustomInstallCommand(install):
         return self.custom_function()
 
     def is_package_installed(self, package_name):
+        if package_name == "venv":
+            try:
+                import venv
+                return True
+            except ImportError::
+                return False
         try:
             if sys.version_info >= (3, 8):
                 version(package_name)  # Tries to get the version of the package
