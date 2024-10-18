@@ -1976,7 +1976,7 @@ def docker(i):
 
         device = i.get('docker_device', docker_settings.get('device'))
 
-        image_name = i.get('docker_image_name', docker_settings.get('image_name'))
+        image_name = i.get('docker_image_name', docker_settings.get('image_name', ''))
 
         r = check_gh_token(i, docker_settings, quiet)
         if r['return'] >0 : return r
