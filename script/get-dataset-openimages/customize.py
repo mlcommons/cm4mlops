@@ -70,6 +70,7 @@ def postprocess(i):
         annotations_file_path = os.path.join(env['CM_DATASET_ANNOTATIONS_DIR_PATH'], "openimages-mlperf.json")
         env['CM_DATASET_VALIDATION_ANNOTATIONS_FILE_PATH'] = annotations_file_path
         env['CM_DATASET_ANNOTATIONS_FILE_PATH'] = annotations_file_path
+        env['CM_DATASET_OPENIMAGES_VALIDATION_ANNOTATIONS_FILE_PATH'] = annotations_file_path
         if env.get("CM_DATASET_OPENIMAGES_CUSTOM_ANNOTATIONS",'') == "yes":
             annotations_file_src = env['CM_DATASET_OPENIMAGES_ANNOTATIONS_FILE_PATH']
             shutil.copy(annotations_file_src, env['CM_DATASET_ANNOTATIONS_DIR_PATH'])
