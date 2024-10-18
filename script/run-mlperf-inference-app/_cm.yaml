@@ -34,6 +34,7 @@ default_env:
   CM_MLPERF_IMPLEMENTATION: reference
   CM_MLPERF_MODEL: resnet50
   CM_MLPERF_RUN_STYLE: test
+  CM_MLPERF_SKIP_SUBMISSION_GENERATION: no
 
 input_mapping:
   api_server: CM_MLPERF_INFERENCE_API_SERVER
@@ -381,9 +382,9 @@ variations:
     post_deps:
     - names:
       - submission-generator
-      enable_if_env:
+      skip_if_env:
         CM_MLPERF_SKIP_SUBMISSION_GENERATION:
-        - 'no'
+        - 'yes'
       tags: generate,mlperf,inference,submission
 
 versions:
