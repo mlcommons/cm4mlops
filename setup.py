@@ -39,7 +39,7 @@ class CustomInstallCommand(install):
             try:
                 import venv
                 return True
-            except ImportError::
+            except ImportError:
                 return False
         try:
             if sys.version_info >= (3, 8):
