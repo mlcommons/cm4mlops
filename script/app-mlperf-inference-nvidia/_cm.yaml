@@ -413,6 +413,7 @@ variations:
       CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
       CM_ML_MODEL_INPUTS_DATA_TYPE: int8
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
+      CM_MLPERF_NVIDIA_HARNESS_NUM_WARMUPS: 10
     deps:
     - tags: get,generic-python-lib,_onnx-graphsurgeon
       version: 0.3.27
