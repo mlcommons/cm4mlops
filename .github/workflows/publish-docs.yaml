@@ -11,6 +11,9 @@ on:
       - main
       - docs
       - mlperf-inference
+    paths:
+      - docs/**
+      - mkdocs.yml
 
 jobs:
 

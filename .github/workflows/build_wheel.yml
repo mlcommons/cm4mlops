@@ -81,7 +81,8 @@ jobs:
       # Step 7: Build the Python wheel
       - name: Build wheels
         working-directory: ./
-        run: python3 -m build
+        # run: python3 -m build
+        run: python3 setup.py bdist_wheel
 
       # Step 8: Publish to PyPI
       - name: Publish to PyPI
