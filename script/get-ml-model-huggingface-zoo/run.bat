@@ -1,2 +1,3 @@
-%CM_PYTHON_BIN_WITH_PATH% %CM_TMP_CURRENT_SCRIPT_PATH%\download_model.py
-IF %ERRORLEVEL% NEQ 0 EXIT %ERRORLEVEL%
+echo %CM_RUN_CMD% 
+call %CM_RUN_CMD%
+if errorlevel 1 exit /b %errorlevel%
