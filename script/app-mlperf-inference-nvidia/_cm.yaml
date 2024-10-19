@@ -1426,6 +1426,7 @@ variations:
   rtx_4090,resnet50,server,run_harness:
     default_variations:
       batch-size: batch_size.32
+      use_graphs: "True"
 
   rtx_4090,retinanet,offline,run_harness:
     default_variations:
