@@ -24,6 +24,7 @@ deps:
   - CM_GIT_CHECKOUT
   names:
   - inference-src-loadgen
+  - inference-src
   skip_if_env:
     CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD:
     - 'YES'
