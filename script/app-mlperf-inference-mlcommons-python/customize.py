@@ -72,7 +72,7 @@ def preprocess(i):
     x="" if os_info['platform'] == 'windows' else "'"
 
     inference_src_version = env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION', '')
-    inference_tuple = None
+    version_tuple = None
     if inference_src_version:
         version_tuple = tuple(map(int, inference_src_version.split('.')))
 
