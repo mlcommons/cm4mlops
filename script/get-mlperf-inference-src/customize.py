@@ -101,8 +101,8 @@ def postprocess(i):
     env['+PYTHONPATH']=[]
     env['+PYTHONPATH'].append(os.path.join(env['CM_MLPERF_INFERENCE_CLASSIFICATION_AND_DETECTION_PATH'], 'python'))
 
-    if os.path.exists(os.path.join(inference_root, "loadgen", "VERSION")):
-        with open(os.path.join(inference_root, "loadgen", "VERSION")) as f:
+    if os.path.exists(os.path.join(inference_root, "loadgen", "VERSION.txt")):
+        with open(os.path.join(inference_root, "loadgen", "VERSION.txt")) as f:
             version_info = f.read()
         env['CM_MLPERF_INFERENCE_SOURCE_VERSION'] = version_info
 
