@@ -456,6 +456,10 @@ variations:
       cnndm-accuracy-script:
         tags: _int32
 
+  amd,r4.1_default:
+    docker:
+      base_image: rocm/pytorch:rocm6.1.2_ubuntu20.04_py3.9_pytorch_staging
+
   amd:
     group:
       implementation
