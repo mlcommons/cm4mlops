@@ -459,6 +459,7 @@ variations:
   amd,r4.1_default:
     docker:
       base_image: rocm/pytorch:rocm6.1.2_ubuntu20.04_py3.9_pytorch_staging
+      extra_run_args: ' --device=/dev/kfd --device=/dev/dri --device=/dev/mem'
 
   amd:
     group:
