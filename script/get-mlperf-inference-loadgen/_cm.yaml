@@ -151,6 +151,11 @@ variations:
       CM_MLPERF_INFERENCE_LOADGEN_DOWNLOAD_URL: https://www.dropbox.com/scl/fi/gk5e9kziju5t56umxyzyx/loadgen.zip?rlkey=vsie4xnzml1inpjplm5cg7t54&dl=0
       CM_MLPERF_INFERENCE_LOADGEN_VERSION: v4.0
       CM_VERIFY_SSL: false
+  no-compilation-warning:
+    env:
+      '+ CXXFLAGS':
+        - '-Werror'
+        - '-Wno-unused-parameter'
 
 versions:
   custom:
