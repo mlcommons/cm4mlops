@@ -85,7 +85,7 @@ def postprocess(i):
     state = i['state']
 
     inference_root = env['CM_MLPERF_INFERENCE_SOURCE']
-    env['CM_MLPERF_INFERENCE_VISION_PATH'] = os.path.join(inference_root, 'inference', 'vision')
+    env['CM_MLPERF_INFERENCE_VISION_PATH'] = os.path.join(inference_root, 'vision')
     env['CM_MLPERF_INFERENCE_CLASSIFICATION_AND_DETECTION_PATH'] = os.path.join(inference_root, 'vision', 'classification_and_detection')
     env['CM_MLPERF_INFERENCE_BERT_PATH'] = os.path.join(inference_root, 'language', 'bert')
     env['CM_MLPERF_INFERENCE_GPTJ_PATH'] = os.path.join(inference_root, 'language', 'gpt-j')
