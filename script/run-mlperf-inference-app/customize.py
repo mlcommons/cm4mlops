@@ -317,7 +317,7 @@ def get_valid_scenarios(model, category, mlperf_version, mlperf_path):
 
     internal_model_name = config[mlperf_version]["model_mapping"].get(model, model)
 
-    valid_scenarios = config[mlperf_version]["required-scenarios-"+category][internal_model_name]
+    valid_scenarios = config[mlperf_version]["required-scenarios-"+category.replace(",", "-")][internal_model_name]
 
     print("Valid Scenarios for " + model + " in " + category + " category are :" +  str(valid_scenarios))
 
