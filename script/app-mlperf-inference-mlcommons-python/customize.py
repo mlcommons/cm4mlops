@@ -72,7 +72,11 @@ def preprocess(i):
     x="" if os_info['platform'] == 'windows' else "'"
 
     inference_src_version = env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION', '')
-    if inference_src_version and inference_src_version >= (4,1,1):
+    inference_tuple = None
+    if inference_src_version:
+        version_tuple = tuple(map(int, inference_src_version.split('.')))
+
+    if version_tuple and version_tuple >= (4,1,1):
         pass # mlperf_conf is automatically loaded by the loadgen
     else:
         if "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env["CM_MODEL"]:
