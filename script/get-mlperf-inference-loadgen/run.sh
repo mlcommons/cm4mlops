@@ -24,15 +24,15 @@ fi
 cmake \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
      "${CM_MLPERF_INFERENCE_SOURCE}/loadgen" \
-     -DPYTHON_EXECUTABLE:FILEPATH=${CM_PYTHON_BIN_WITH_PATH}
-if [ "${?}" != "0" ]; then exit 1; fi
+     -DPYTHON_EXECUTABLE:FILEPATH="${CM_PYTHON_BIN_WITH_PATH}" -B .
+if [ ${?} -ne 0 ]; then exit $?; fi
 
 echo "******************************************************"
 CM_MAKE_CORES=${CM_MAKE_CORES:-${CM_HOST_CPU_TOTAL_CORES}}
 CM_MAKE_CORES=${CM_MAKE_CORES:-2}
 
-cmake --build . --target install -j ${CM_MAKE_CORES}
-if [ "${?}" != "0" ]; then exit 1; fi
+cmake --build . --target install -j "${CM_MAKE_CORES}"
+if [ ${?} -ne 0 ]; then exit $?; fi
 
 # Clean build directory (too large)
 cd "${CUR_DIR}"
@@ -44,7 +44,7 @@ fi
 cd "${CM_MLPERF_INFERENCE_SOURCE}/loadgen"
 ${CM_PYTHON_BIN_WITH_PATH} -m pip install . --target="${MLPERF_INFERENCE_PYTHON_SITE_BASE}"
 
-if [ "${?}" != "0" ]; then exit 1; fi
+if [ ${?} -ne 0 ]; then exit $?; fi
 
 # Clean the built wheel
 #find . -name 'mlcommons_loadgen*.whl' | xargs rm
