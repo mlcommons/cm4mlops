@@ -668,6 +668,21 @@
         }
       }
     },
+    "vim-common": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "vim_common",
+        "CM_SYS_UTIL_CHECK_CMD": "xxd --version"
+      },
+      "state": {
+        "vim_common": {
+          "apt": "vim-common",
+          "brew": "vim",
+          "dnf": "vim-common",
+          "yum": "vim-common",
+          "choco": "vim"
+        }
+      }
+    },
     "xz": {
       "env": {
         "CM_SYS_UTIL_NAME": "xz"
