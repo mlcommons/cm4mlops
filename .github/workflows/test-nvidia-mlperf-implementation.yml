@@ -2,7 +2,7 @@ name: MLPerf Inference Nvidia implementations
 
 on:
   schedule:
-    - cron: "40 12 * * *" #to be adjusted
+    - cron: "00 10 * * *" #to be adjusted
 
 jobs:
   build_nvidia:
@@ -20,8 +20,7 @@ jobs:
           python3 -m venv gh_action
           source gh_action/bin/activate
           export CM_REPOS=$HOME/GH_CM
-          pip install --upgrade cmind
           cm rm repo mlcommons@cm4mlops -f
-          cm pull repo gateoverflow@cm4mlops
+          pip install --upgrade cm4mlops
           cm run script --tags=run-mlperf,inference,_all-scenarios,_submission,_full,_r4.1-dev --execution_mode=valid --gpu_name=rtx_4090 --offline_target_qps=85000 --server_target_qps=73000 --submitter="MLCommons" --hw_name=gh_ubuntu_x86  --model=resnet50  --implementation=nvidia    --backend=tensorrt    --category=datacenter,edge --division=closed  --docker_dt=yes --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --device=cuda --use_dataset_from_host=yes --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean  --docker --quiet
           cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_unofficial_submissions_v5.0 --repo_branch=main --commit_message="Results from ${{ matrix.model }} GH action on NVIDIARTX4090" --quiet --submission_dir=$HOME/gh_action_submissions

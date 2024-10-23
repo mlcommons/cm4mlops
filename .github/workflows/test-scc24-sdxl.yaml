@@ -24,6 +24,7 @@ jobs:
         python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
+        cm rm repo mlcommons@cm4mlops -f
         pip install --upgrade cm4mlops
         pip install tabulate
         cm pull repo
