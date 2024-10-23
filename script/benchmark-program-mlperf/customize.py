@@ -25,29 +25,34 @@ def postprocess(i):
 
             if os_info['platform'] != 'windows':
                 # Construct the shell command with proper escaping
-                env['CM_MLPERF_RUN_CMD'] = (
-                    "CM_MLPERF_RUN_COUNT=$(cat ${CM_RUN_DIR}/count.txt); "
-                    "echo ${CM_MLPERF_RUN_COUNT}; "
-                    "CM_MLPERF_RUN_COUNT=$((CM_MLPERF_RUN_COUNT+1)); "
-                    "echo ${CM_MLPERF_RUN_COUNT} > ${CM_RUN_DIR}/count.txt && "
-                    "if [ ${CM_MLPERF_RUN_COUNT} -eq 1 ]; then "
-                    "export CM_MLPERF_USER_CONF=${CM_MLPERF_RANGING_USER_CONF}; "
-                    "else "
-                    "export CM_MLPERF_USER_CONF=${CM_MLPERF_TESTING_USER_CONF}; "
-                    "fi && " + env.get('CM_RUN_CMD', '').strip()
-                )
+                env['CM_MLPERF_RUN_CMD'] = r"""
+CM_MLPERF_RUN_COUNT=\$(cat \${CM_RUN_DIR}/count.txt);
+echo \${CM_MLPERF_RUN_COUNT};
+CM_MLPERF_RUN_COUNT=\$((CM_MLPERF_RUN_COUNT+1));
+echo \${CM_MLPERF_RUN_COUNT} > \${CM_RUN_DIR}/count.txt &&
+if [ \${CM_MLPERF_RUN_COUNT} -eq 1 ]; then
+export CM_MLPERF_USER_CONF="${CM_MLPERF_RANGING_USER_CONF}";
+else
+export CM_MLPERF_USER_CONF="${CM_MLPERF_TESTING_USER_CONF}";
+fi && 
+                """ + env.get('CM_RUN_CMD', '').strip()
             else:
-                env['CM_MLPERF_RUN_CMD'] = (
-                    "set /P CM_MLPERF_RUN_COUNT=<\"%CM_RUN_DIR%\\count.txt\" & "
-                    "echo %CM_MLPERF_RUN_COUNT% & "
-                    "set /A CM_MLPERF_RUN_COUNT=!CM_MLPERF_RUN_COUNT!+1 & "
-                    "echo !CM_MLPERF_RUN_COUNT! > \"%CM_RUN_DIR%\\count.txt\" & "
-                    "if !CM_MLPERF_RUN_COUNT! EQU 1 ( "
-                    "set CM_MLPERF_USER_CONF=%CM_MLPERF_RANGING_USER_CONF% "
-                    ") else ( "
-                    "set CM_MLPERF_USER_CONF=%CM_MLPERF_TESTING_USER_CONF% "
-                    ") & " + env.get('CM_RUN_CMD', '').strip()
-                )
+                env['CM_MLPERF_RUN_CMD'] = r"""
+:: Read the current count from the file
+set /p CM_MLPERF_RUN_COUNT=<%CM_RUN_DIR%\count.txt
+echo !CM_MLPERF_RUN_COUNT!
+
+:: Increment the count
+set /a CM_MLPERF_RUN_COUNT=!CM_MLPERF_RUN_COUNT! + 1
+echo !CM_MLPERF_RUN_COUNT! > %CM_RUN_DIR%\count.txt
+
+:: Check the value and set the environment variable accordingly
+if !CM_MLPERF_RUN_COUNT! EQU 1 (
+    set CM_MLPERF_USER_CONF=%CM_MLPERF_RANGING_USER_CONF%
+) else (
+    set CM_MLPERF_USER_CONF=%CM_MLPERF_TESTING_USER_CONF%
+)
+                """ + env.get('CM_RUN_CMD', '').strip()
         else:
             # Just use the existing CM_RUN_CMD if no ranging run is needed
             env['CM_MLPERF_RUN_CMD'] = env.get('CM_RUN_CMD', '').strip()
