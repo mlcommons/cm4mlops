@@ -939,6 +939,7 @@ variations:
             - bert-99.9
             - dlrm-v2-99
             - dlrm-v2-99.9
+
       - tags: reproduce,mlperf,inference,nvidia,harness,_calibrate
         inherit_variation_tags: true
         enable_if_env:
@@ -1200,6 +1201,10 @@ variations:
     default_variations:
       batch-size: batch_size.8
 
+  gpu_memory.8,bert_,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.256
+
   gpu_memory.16,bert_,offline,run_harness:
     default_variations:
       batch-size: batch_size.256
@@ -1223,6 +1228,12 @@ variations:
   gpu_memory.80,bert_,server,run_harness:
     default_variations:
       batch-size: batch_size.64
+
+  gpu_memory.8,resnet50,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.64
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_GPU_COPY_STREAMS: "4"
 
   gpu_memory.16,resnet50,offline,run_harness:
     default_variations:
@@ -1277,6 +1288,10 @@ variations:
     default_variations:
       batch-size: batch_size.2
 
+  gpu_memory.8,retinanet,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.2
+
   gpu_memory.16,retinanet,offline,run_harness:
     default_variations:
       batch-size: batch_size.2
@@ -1311,6 +1326,10 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_GPU_COPY_STREAMS: "2"
       CM_MLPERF_NVIDIA_HARNESS_GPU_INFERENCE_STREAMS: "2"
 
+  gpu_memory.8,rnnt,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.1024
+
   gpu_memory.16,rnnt,offline,run_harness:
     default_variations:
       batch-size: batch_size.1024
@@ -1334,6 +1353,10 @@ variations:
   gpu_memory.80,rnnt,offline,run_harness:
     default_variations:
       batch-size: batch_size.2048
+
+  gpu_memory.8,3d-unet_,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.4
 
   gpu_memory.16,3d-unet_,offline,run_harness:
     default_variations:
