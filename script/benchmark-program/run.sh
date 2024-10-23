@@ -79,7 +79,12 @@ run_command() {
 }
 
 # Run CM_RUN_CMD0 if it exists, otherwise run CM_RUN_CMD
-run_command "$CM_RUN_CMD0" || run_command "$CM_RUN_CMD"
+if [[ -n "$CM_RUN_CMD0" ]]; then
+    run_command "$CM_RUN_CMD0"
+fi
+
+run_command "$CM_RUN_CMD"
+
 
 # Run post-run command if it exists
 if [[ -n "$CM_POST_RUN_CMD" ]]; then
