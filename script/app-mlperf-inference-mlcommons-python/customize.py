@@ -300,11 +300,12 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
                 " --dataset-path " + env['CM_DATASET_PATH_ROOT'] + \
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'].replace("bfloat", "bf").replace("float", "fp") + \
                 " --device " + device + \
-                " --max-batchsize " + max_batchsize + \
                  env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
                  scenario_extra_options + mode_extra_options + \
                 " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
                 " --model-path " + env['CM_ML_MODEL_PATH']
+        if "--max-batchsize" not in cmd:
+            cmd += " --max-batchsize " + max_batchsize
         if env.get('CM_COCO2014_SAMPLE_ID_PATH','') != '':
             cmd += " --ids-path " + env['CM_COCO2014_SAMPLE_ID_PATH']
 
