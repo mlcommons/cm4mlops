@@ -1,4 +1,5 @@
 import os
+import sys
 
 package_name = os.environ.get('CM_GENERIC_PYTHON_PACKAGE_NAME','')
 
@@ -18,7 +19,7 @@ if package_name != '':
     except Exception as e:
         error = format(e)
 
-    if error != '':
+    if error != '' and sys.version_info < (3, 9):
         try:
             import pkg_resources
             version = pkg_resources.get_distribution(package_name).version

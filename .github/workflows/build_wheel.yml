@@ -1,4 +1,4 @@
-name: Build wheels and release them into PYPI
+name: Build wheel and release into PYPI
 
 on:
   release:
@@ -11,13 +11,18 @@ on:
       - VERSION
       - setup.py
 
+
 jobs:
   build_wheels:
+    if: github.repository_owner == 'mlcommons'
     name: Build wheel
     runs-on: ubuntu-latest
     environment: release
+
     permissions:
       id-token: write
+      contents: write
+
     strategy:
       fail-fast: false
     steps:
@@ -43,6 +48,7 @@ jobs:
 
       # Step 4: Increment version if VERSION was not changed
       - name: Increment version if necessary
+        id: do_version_increment
         if: steps.version_changed.outputs.version_changed == 'false'
         run: |
           # Check if VERSION file exists, else initialize it
@@ -60,22 +66,22 @@ jobs:
 
       # Step 5: Commit the updated version to the repository
       - name: Commit updated version
+        if: steps.version_changed.outputs.version_changed == 'false'
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git add VERSION
-          git commit -m "Increment version to ${{ steps.version_changed.outputs.new_version }}"
+          git commit -m "Increment version to ${{ steps.do_version_increment.outputs.new_version }}"
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 6: Install required dependencies
       - name: Install requirements
-        run: python3 -m pip install setuptools wheel
+        run: python3 -m pip install setuptools wheel build
 
       # Step 7: Build the Python wheel
       - name: Build wheels
-        run: python3 setup.py bdist_wheel
+        working-directory: ./
+        run: python3 -m build && rm dist/*.whl
 
       # Step 8: Publish to PyPI
       - name: Publish to PyPI

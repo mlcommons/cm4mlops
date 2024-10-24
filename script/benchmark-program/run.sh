@@ -57,19 +57,46 @@ fi
 echo $CM_PRE_RUN_CMD
 eval ${CM_PRE_RUN_CMD}
 
-# Check CM_RUN_CMD0
-if [[ "${CM_RUN_CMD0}" != "" ]]; then
-  eval ${CM_RUN_CMD0}
-  exitstatus=$?
-else
-  echo "${CM_RUN_CMD}"
-  eval ${CM_RUN_CMD}
-  exitstatus=$?
+# Function to run command and check exit status
+run_command() {
+  local cmd="$1"
+  
+  if [[ -n "$cmd" ]]; then
+    echo "$cmd"
+    eval "$cmd"
+    exitstatus=$?
+
+    # If 'exitstatus' file exists, overwrite the exit status with its content
+    if [[ -e exitstatus ]]; then
+      exitstatus=$(cat exitstatus)
+    fi
+
+    # If exitstatus is non-zero, exit with that status
+    if [[ $exitstatus -ne 0 ]]; then
+      exit $exitstatus
+    fi
+  fi
+}
+
+# Run CM_RUN_CMD0 if it exists, otherwise run CM_RUN_CMD
+if [[ -n "$CM_RUN_CMD0" ]]; then
+    run_command "$CM_RUN_CMD0"
 fi
 
-eval ${CM_POST_RUN_CMD}
-test $? -eq 0 || exit $? 
-
-test $exitstatus -eq 0 || $exitstatus
+run_command "$CM_RUN_CMD"
 
 
+# Run post-run command if it exists
+if [[ -n "$CM_POST_RUN_CMD" ]]; then
+  eval "$CM_POST_RUN_CMD"
+  post_exitstatus=$?
+  # Exit if post-run command fails
+  if [[ $post_exitstatus -ne 0 ]]; then
+    exit $post_exitstatus
+  fi
+fi
+
+# Final check for exitstatus and exit with the appropriate code
+if [[ $exitstatus -ne 0 ]]; then
+  exit $exitstatus
+fi

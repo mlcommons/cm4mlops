@@ -45,7 +45,7 @@ def preprocess(i):
 
     if os_info['platform'] != 'windows' and str(env.get('CM_SAVE_CONSOLE_LOG', True)).lower() not in  [ "no", "false", "0"]:
         logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
-        env['CM_RUN_CMD'] += " 2>&1 ; echo \$? > exitstatus | tee " + q+ os.path.join(logs_dir, "console.out") + q
+        env['CM_RUN_CMD'] += r" 2>&1 ; echo \$? > exitstatus | tee " + q+ os.path.join(logs_dir, "console.out") + q
 
     # additional arguments and tags for measuring system informations(only if 'CM_PROFILE_NVIDIA_POWER' is 'on')
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
@@ -73,7 +73,7 @@ def preprocess(i):
         # running the script as a process in background
         pre_run_cmd = pre_run_cmd +  'cm run script --tags=runtime,system,utilisation' + env['CM_SYS_UTILISATION_SCRIPT_TAGS'] + ' --quiet  & '
         # obtain the command if of the background process
-        pre_run_cmd += ' cmd_pid=\$!' + ' && ' + 'echo CMD_PID=\$cmd_pid'
+        pre_run_cmd += r" cmd_pid=\$!  && echo CMD_PID=\$cmd_pid"
         print(f"Pre run command for recording the runtime system information: {pre_run_cmd}")
 
     env['CM_PRE_RUN_CMD'] = pre_run_cmd
@@ -81,7 +81,7 @@ def preprocess(i):
     # generate the post run cmd - for killing the process that records runtime system infos
     post_run_cmd = ""
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
-        post_run_cmd += "echo killing process \$cmd_pid && kill -TERM \${cmd_pid}"
+        post_run_cmd += r"echo killing process \$cmd_pid && kill -TERM \${cmd_pid}"
         print(f"Post run command for killing the process that measures the runtime system information: {post_run_cmd}")
 
     env['CM_POST_RUN_CMD'] = post_run_cmd

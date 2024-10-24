@@ -1393,6 +1393,8 @@ def dockerfile(i):
 
     env=i.get('env', {})
     state = i.get('state', {})
+    const=i.get('const', {})
+    const_state = i.get('const_state', {})
     script_automation = i['self_module']
 
     dockerfile_env=i.get('dockerfile_env', {})
@@ -1420,7 +1422,7 @@ def dockerfile(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1470,6 +1472,8 @@ def dockerfile(i):
         run_cmd  = r['run_cmd_string']
 
         cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
+        cm_repo_branch = i.get('docker_cm_repo_branch', docker_settings.get('cm_repo_branch', 'mlperf-inference'))
+
         cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
@@ -1542,6 +1546,7 @@ def dockerfile(i):
                            'automation': 'script',
                            'tags': 'build,dockerfile',
                            'cm_repo': cm_repo,
+                           'cm_repo_branch': cm_repo_branch,
                            'cm_repo_flags': cm_repo_flags,
                            'docker_base_image': docker_base_image,
                            'docker_os': docker_os,
@@ -1738,6 +1743,8 @@ def docker(i):
     env['CM_RUN_STATE_DOCKER'] = False
     script_automation = i['self_module']
     state = i.get('state', {})
+    const = i.get('const', {})
+    const_state = i.get('const_state', {})
 
     tags_split = i.get('tags', '').split(",")
     variation_tags = [ t[1:] for t in tags_split if t.startswith("_") ]
@@ -1790,7 +1797,7 @@ def docker(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1969,6 +1976,8 @@ def docker(i):
 
         device = i.get('docker_device', docker_settings.get('device'))
 
+        image_name = i.get('docker_image_name', docker_settings.get('image_name', ''))
+
         r = check_gh_token(i, docker_settings, quiet)
         if r['return'] >0 : return r
         gh_token = r['gh_token']
@@ -2040,7 +2049,7 @@ def docker(i):
                            'image_repo': image_repo,
                            'interactive': interactive,
                            'mounts': mounts,
-                           'image_name': i.get('docker_image_name', ''),
+                           'image_name': image_name,
 #                            'image_tag': script_alias,
                            'image_tag_extra': image_tag_extra,
                            'detached': detached,

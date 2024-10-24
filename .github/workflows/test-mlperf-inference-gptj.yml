@@ -5,7 +5,7 @@ name: MLPerf inference GPT-J
 
 on:
   schedule:
-    - cron: "1 2 * * *"
+    - cron: "15 19 * * *"
 
 jobs:
   build:
@@ -19,15 +19,13 @@ jobs:
         precision: [ "float16" ]
 
     steps:
-    - name: Install dependencies
+    - name: Test MLPerf Inference GPTJ
       run: |
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
         python3 -m pip install cm4mlops
         cm pull repo
-    - name: Test MLPerf Inference GPTJ
-      run: |
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=gptj-99 --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --beam_size=1 --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=gptj-99 --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --beam_size=1 --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --get_platform_details=yes --implementation=reference --clean
         cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from self hosted Github actions - NVIDIARTX4090" --quiet --submission_dir=$HOME/gh_action_submissions
 

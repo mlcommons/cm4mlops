@@ -1,8 +1,9 @@
 #!/bin/bash
 
-OUTPUT_FILE="system_info.txt"
-
-echo "WARNING: sudo permission is needed to some packages for measuring the platform details"
+OUTPUT_FILE="$CM_PLATFORM_DETAILS_FILE_PATH"
+#set -e
+#echo $OUTPUT_FILE
+echo "WARNING: sudo permission is needed for some of the below commands"
 
 if [[ ${CM_HOST_OS_FLAVOR} == "macos" ]]; then
     echo "WARNING: To be done for the mac os"
@@ -46,7 +47,7 @@ else
 
     echo "8. numactl --hardware" >> $OUTPUT_FILE
     eval "numactl --hardware" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    #test $? -eq 0 || exit $?
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "9. /proc/meminfo" >> $OUTPUT_FILE
@@ -81,7 +82,7 @@ else
 
     echo "15. sysctl" >> $OUTPUT_FILE
     eval "sudo sysctl -a" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    #test $? -eq 0 || exit $?
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "16. /sys/kernel/mm/transparent_hugepage" >> $OUTPUT_FILE
@@ -111,12 +112,12 @@ else
 
     echo "21. dmidecode" >> $OUTPUT_FILE
     eval "sudo dmidecode" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    #test $? -eq 0 || exit $?
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "22. BIOS" >> $OUTPUT_FILE
     eval "sudo dmidecode -t bios" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    #test $? -eq 0 || exit $?
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "System information has been saved to $PWD/$OUTPUT_FILE"

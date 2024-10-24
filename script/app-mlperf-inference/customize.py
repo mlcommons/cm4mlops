@@ -122,6 +122,18 @@ def postprocess(i):
         pass # Not giving an error now. But accuracy paths need to be done for other benchmarks which may need the non-determinism test
         #return {'return': 1, 'error': f'Accuracy paths not done for model {model}'}
     scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
+        
+    if not state.get('cm-mlperf-inference-results'):
+        state['cm-mlperf-inference-results'] = {}
+    if not state.get('cm-mlperf-inference-results-last'):
+        state['cm-mlperf-inference-results-last'] = {}
+    if not state['cm-mlperf-inference-results'].get(state['CM_SUT_CONFIG_NAME']):
+        state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']] = {}
+    if not state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']].get(model):
+        state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model] = {}
+    if not state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model].get(scenario):
+        state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario] = {}
+
 
     #if env.get("CM_MLPERF_FIND_PERFORMANCE_MODE", '') == "yes" and mode == "performance" and scenario != "Server":
     if mode == "performance" and scenario != "Server":
@@ -238,17 +250,6 @@ def postprocess(i):
             if len(power_result_split) == 2: #power and power efficiency
                 power = power_result_split[0]
                 power_efficiency = power_result_split[1]
-
-        if not state.get('cm-mlperf-inference-results'):
-            state['cm-mlperf-inference-results'] = {}
-        if not state.get('cm-mlperf-inference-results-last'):
-            state['cm-mlperf-inference-results-last'] = {}
-        if not state['cm-mlperf-inference-results'].get(state['CM_SUT_CONFIG_NAME']):
-            state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']] = {}
-        if not state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']].get(model):
-            state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model] = {}
-        if not state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model].get(scenario):
-            state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario] = {}
 
         state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario][mode] = result
         state['cm-mlperf-inference-results'][state['CM_SUT_CONFIG_NAME']][model][scenario][mode+'_valid'] = valid.get(mode, False)
