@@ -264,7 +264,11 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
         cmd = env['CM_PYTHON_BIN_WITH_PATH']+ " run.py --backend=" + env['CM_MLPERF_BACKEND'] + " --scenario="+env['CM_MLPERF_LOADGEN_SCENARIO'] + \
             env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + scenario_extra_options + mode_extra_options + dataset_options + quantization_options
         if env['CM_MLPERF_BACKEND'] == "deepsparse":
-            cmd += " --batch_size=" + env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1') + " --model_path=" + env['MODEL_FILE']
+            if "--batch-size" in cmd:
+                cmd.replace("--batch-size","--batch_size")
+            elif "--batch_size" not in cmd:
+                cmd += " --batch_size=" + env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1') 
+            cmd += " --model_path=" + env['MODEL_FILE']
 
         if env.get('CM_MLPERF_CUSTOM_MODEL_PATH', '') != '':
             env['CM_ML_MODEL_FILE_WITH_PATH'] = env['MODEL_FILE']
@@ -300,11 +304,12 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
                 " --dataset-path " + env['CM_DATASET_PATH_ROOT'] + \
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'].replace("bfloat", "bf").replace("float", "fp") + \
                 " --device " + device + \
-                " --max-batchsize " + max_batchsize + \
                  env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
                  scenario_extra_options + mode_extra_options + \
                 " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
                 " --model-path " + env['CM_ML_MODEL_PATH']
+        if "--max-batchsize" not in cmd:
+            cmd += " --max-batchsize " + max_batchsize
         if env.get('CM_COCO2014_SAMPLE_ID_PATH','') != '':
             cmd += " --ids-path " + env['CM_COCO2014_SAMPLE_ID_PATH']
 
