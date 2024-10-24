@@ -264,11 +264,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
         cmd = env['CM_PYTHON_BIN_WITH_PATH']+ " run.py --backend=" + env['CM_MLPERF_BACKEND'] + " --scenario="+env['CM_MLPERF_LOADGEN_SCENARIO'] + \
             env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + scenario_extra_options + mode_extra_options + dataset_options + quantization_options
         if env['CM_MLPERF_BACKEND'] == "deepsparse":
-            if "--batch-size" in cmd:
-                cmd.replace("--batch-size","--batch_size")
-            elif "--batch_size" not in cmd:
-                cmd += " --batch_size=" + env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1') 
-            cmd += " --model_path=" + env['MODEL_FILE']
+            cmd += " --batch_size=" + env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1') + " --model_path=" + env['MODEL_FILE']
 
         if env.get('CM_MLPERF_CUSTOM_MODEL_PATH', '') != '':
             env['CM_ML_MODEL_FILE_WITH_PATH'] = env['MODEL_FILE']
