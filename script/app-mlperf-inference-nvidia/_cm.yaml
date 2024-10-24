@@ -1106,7 +1106,7 @@ variations:
 
   singlestream,resnet50:
     env:
-      SKIP_POLICIES: '1'
+      SKIP_POLICIES: '0'
 
   server,resnet50:
     env:
