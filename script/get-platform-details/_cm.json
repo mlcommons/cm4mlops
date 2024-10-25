@@ -13,6 +13,9 @@
       "tags": "detect,os"
     },
     {
+      "tags": "detect,sudo"
+    },
+    {
       "tags": "get,sys-util,generic,_psmisc"
     },
     {

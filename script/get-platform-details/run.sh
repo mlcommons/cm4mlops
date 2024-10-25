@@ -46,8 +46,12 @@ else
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "8. numactl --hardware" >> $OUTPUT_FILE
-    eval "numactl --hardware" >> $OUTPUT_FILE
-    #test $? -eq 0 || exit $?
+    if [[ ${CM_SUDO_USER} == "yes" ]]; then
+    	eval "${CM_SUDO} numactl --hardware" >> $OUTPUT_FILE
+    	test $? -eq 0 || exit $?
+    else
+	echo "Requires SUDO permission" >> $OUTPUT_FILE
+    fi
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "9. /proc/meminfo" >> $OUTPUT_FILE
@@ -81,8 +85,12 @@ else
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "15. sysctl" >> $OUTPUT_FILE
-    eval "sudo sysctl -a" >> $OUTPUT_FILE
-    #test $? -eq 0 || exit $?
+    if [[ ${CM_SUDO_USER} == "yes" ]]; then
+        eval "${CM_SUDO} sysctl -a" >> $OUTPUT_FILE
+        test $? -eq 0 || exit $?
+    else
+        echo "Requires SUDO permission" >> $OUTPUT_FILE
+    fi
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "16. /sys/kernel/mm/transparent_hugepage" >> $OUTPUT_FILE
@@ -111,13 +119,21 @@ else
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "21. dmidecode" >> $OUTPUT_FILE
-    eval "sudo dmidecode" >> $OUTPUT_FILE
-    #test $? -eq 0 || exit $?
+    if [[ ${CM_SUDO_USER} == "yes" ]]; then
+        eval "${CM_SUDO} dmidecode" >> $OUTPUT_FILE
+        test $? -eq 0 || exit $?
+    else
+        echo "Requires SUDO permission" >> $OUTPUT_FILE
+    fi
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "22. BIOS" >> $OUTPUT_FILE
-    eval "sudo dmidecode -t bios" >> $OUTPUT_FILE
-    #test $? -eq 0 || exit $?
+    if [[ ${CM_SUDO_USER} == "yes" ]]; then
+        eval "${CM_SUDO} dmidecode -t bios" >> $OUTPUT_FILE
+        test $? -eq 0 || exit $?
+    else
+        echo "Requires SUDO permission" >> $OUTPUT_FILE
+    fi
     echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
     echo "System information has been saved to $PWD/$OUTPUT_FILE"
