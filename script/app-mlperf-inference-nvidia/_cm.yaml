@@ -762,6 +762,11 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_USE_TRITON: "yes"
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX3: "using_triton"
 
+  use_graphs:
+    group: graphs
+    env:
+     CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: "yes"
+
   prebuild:
     group: run-mode
     env:
@@ -1435,12 +1440,12 @@ variations:
   rtx_4090,sdxl,offline,run_harness:
     default_variations:
       batch-size: batch_size.2
-      use_graphs: "True"
+      graphs: use-graphs
   
   rtx_4090,sdxl,server,run_harness:
     default_variations:
       batch-size: batch_size.2
-      use_graphs: "True"
+      graphs: use-graphs
 
   rtx_4090,resnet50,offline,run_harness:
     default_variations:
@@ -1449,7 +1454,7 @@ variations:
   rtx_4090,resnet50,server,run_harness:
     default_variations:
       batch-size: batch_size.32
-      use_graphs: "True"
+      graphs: use-graphs
 
   rtx_4090,retinanet,offline,run_harness:
     default_variations:
