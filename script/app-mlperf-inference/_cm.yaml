@@ -113,6 +113,9 @@ deps:
 posthook_deps:
   - tags: get,mlperf,sut,description #populate system meta information like framework
   - tags: get,platform,details
+    enable_if_env:
+      CM_SUDO_USER:
+        - yes
     skip_if_env:
       CM_MLPERF_LOADGEN_MODE:
       - accuracy
