@@ -120,7 +120,7 @@ posthook_deps:
       CM_MLPERF_LOADGEN_MODE:
       - accuracy
     env: 
-      CM_PLATFORM_DETAILS_DIR_PATH: '<<<CM_MLPERF_OUTPUT_DIR>>>'
+      CM_PLATFORM_DETAILS_FILE_PATH: '<<<CM_MLPERF_OUTPUT_DIR>>>/system_info.txt'
 
 # Order of variations for documentation
 variation_groups_order:
