@@ -5,7 +5,8 @@
   "cache": false,
   "category": "Platform information",
   "input_mapping": {
-    "out_dir_path": "CM_PLATFORM_DETAILS_DIR_PATH"
+    "out_dir_path": "CM_PLATFORM_DETAILS_DIR_PATH",
+    "out_file_name": "CM_PLATFORM_DETAILS_FILE_NAME"
   },
   "deps": [
     {
