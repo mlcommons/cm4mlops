@@ -106,7 +106,7 @@ input_description:
 docker:
   skip_run_cmd: 'no'
   skip_cm_sys_upgrade: 'yes'
-  cm_repo_flags: '--checkout=dev'
+  cm_repo_flags: '--branch=dev'
   use_host_group_id: 'yes'
   image_tag_extra: '-cm-dev'
   input_paths:
