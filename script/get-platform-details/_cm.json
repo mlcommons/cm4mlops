@@ -4,6 +4,9 @@
   "automation_uid": "5b4e0237da074764",
   "cache": false,
   "category": "Platform information",
+  "input_mapping": {
+    "platform_details_dir": "CM_PLATFORM_DETAILS_DIR_PATH"
+  },
   "deps": [
     {
       "tags": "detect,os"
