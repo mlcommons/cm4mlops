@@ -25,6 +25,8 @@ def preprocess(i):
     if env.get('CM_PLATFORM_DETAILS_DIR_PATH', '') == '':
         env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(os.getcwd(), "system_info.txt")
     else:
+        if not os.path.exists(env['CM_PLATFORM_DETAILS_DIR_PATH']):
+            os.makedirs(env['CM_PLATFORM_DETAILS_DIR_PATH'])
         env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(env['CM_PLATFORM_DETAILS_DIR_PATH'], "system_info.txt")
         
 
