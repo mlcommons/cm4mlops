@@ -22,8 +22,11 @@ def preprocess(i):
     #if not check_installation("cpupower",os_info):
     env['CM_INSTALL_CPUPOWER'] = 'True'
         
-    if env.get('CM_PLATFORM_DETAILS_FILE_PATH', '') == '':
-       env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(os.getcwd(), "system_info.txt")
+    if env.get('CM_PLATFORM_DETAILS_DIR_PATH', '') == '':
+        env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(os.getcwd(), "system_info.txt")
+    else:
+        env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(env['CM_PLATFORM_DETAILS_DIR_PATH'], "system_info.txt")
+        
 
     return {'return':0}
 
