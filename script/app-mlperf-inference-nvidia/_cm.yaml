@@ -762,7 +762,7 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_USE_TRITON: "yes"
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX3: "using_triton"
 
-  use_graphs:
+  use-graphs:
     group: graphs
     env:
      CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: "yes"
