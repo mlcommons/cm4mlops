@@ -382,7 +382,7 @@ def preprocess(i):
         if disable_encoder_plugin and disable_encoder_plugin.lower() not in [ "no", "false", "0", "" ]:
             run_config += " --disable_encoder_plugin"
 
-        disable_beta1_smallk = True = str(env.get('CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK', ''))
+        disable_beta1_smallk = str(env.get('CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK', ''))
         if disable_beta1_smallk and disable_beta1_smallk.lower() in [ "yes", "true", "1" ]:
             run_config += " --disable_beta1_smallk"
 
