@@ -378,9 +378,13 @@ def preprocess(i):
         if audio_batch_size:
             run_config += f" --audio_batch_size={audio_batch_size}"
 
-        disable_encoder_plugin = str(env.get('CM_MLPERF_NVIDIA_HARNESS_DISABLE_ENCODER_PLUGIN'))
-        if disable_encoder_plugin and disable_encoder_plugin.lower() not in [ "no", "false" ]:
+        disable_encoder_plugin = str(env.get('CM_MLPERF_NVIDIA_HARNESS_DISABLE_ENCODER_PLUGIN', ''))
+        if disable_encoder_plugin and disable_encoder_plugin.lower() not in [ "no", "false", "0", "" ]:
             run_config += " --disable_encoder_plugin"
+
+        disable_beta1_smallk = str(env.get('CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK', ''))
+        if disable_beta1_smallk and disable_beta1_smallk.lower() in [ "yes", "true", "1" ]:
+            run_config += " --disable_beta1_smallk"
 
         workspace_size = env.get('CM_MLPERF_NVIDIA_HARNESS_WORKSPACE_SIZE')
         if workspace_size:
@@ -393,32 +397,32 @@ def preprocess(i):
         if log_dir:
             run_config += f" --log_dir={log_dir}"
 
-        use_graphs = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS'))
-        if use_graphs  and use_graphs.lower() not in [ "no", "false" ]:
+        use_graphs = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS', ''))
+        if use_graphs  and use_graphs.lower() not in [ "no", "false", "0", "" ]:
             run_config += " --use_graphs"
 
         use_deque_limit = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_DEQUE_LIMIT'))
-        if use_deque_limit  and use_deque_limit.lower() not in [ "no", "false" ]:
+        if use_deque_limit  and use_deque_limit.lower() not in [ "no", "false", "0" ]:
             run_config += " --use_deque_limit"
 
             deque_timeout_usec = env.get('CM_MLPERF_NVIDIA_HARNESS_DEQUE_TIMEOUT_USEC')
             if deque_timeout_usec:
                 run_config += f" --deque_timeout_usec={deque_timeout_usec}"
 
-        use_cuda_thread_per_device = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_CUDA_THREAD_PER_DEVICE'))
-        if use_cuda_thread_per_device  and use_cuda_thread_per_device.lower() not in [ "no", "false" ]:
+        use_cuda_thread_per_device = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_CUDA_THREAD_PER_DEVICE', ''))
+        if use_cuda_thread_per_device  and use_cuda_thread_per_device.lower() not in [ "no", "false", "0", "" ]:
             run_config += " --use_cuda_thread_per_device"
 
-        run_infer_on_copy_streams = str(env.get('CM_MLPERF_NVIDIA_HARNESS_RUN_INFER_ON_COPY_STREAMS'))
-        if run_infer_on_copy_streams  and run_infer_on_copy_streams.lower() not in [ "no", "false" ]:
+        run_infer_on_copy_streams = str(env.get('CM_MLPERF_NVIDIA_HARNESS_RUN_INFER_ON_COPY_STREAMS', ''))
+        if run_infer_on_copy_streams  and run_infer_on_copy_streams.lower() not in [ "no", "false", "0", "" ]:
             run_config += " --run_infer_on_copy_streams"
 
-        start_from_device = str(env.get('CM_MLPERF_NVIDIA_HARNESS_START_FROM_DEVICE'))
-        if start_from_device  and start_from_device.lower() not in [ "no", "false" ]:
+        start_from_device = str(env.get('CM_MLPERF_NVIDIA_HARNESS_START_FROM_DEVICE', ''))
+        if start_from_device  and start_from_device.lower() not in [ "no", "false", "0", "" ]:
             run_config += " --start_from_device"
 
-        end_on_device = str(env.get('CM_MLPERF_NVIDIA_HARNESS_END_ON_DEVICE'))
-        if end_on_device  and end_on_device.lower() not in [ "no", "false" ]:
+        end_on_device = str(env.get('CM_MLPERF_NVIDIA_HARNESS_END_ON_DEVICE', ''))
+        if end_on_device  and end_on_device.lower() not in [ "no", "false", "0", "" ]:
             run_config += " --end_on_device"
 
         max_dlas = env.get('CM_MLPERF_NVIDIA_HARNESS_MAX_DLAS')
@@ -437,16 +441,16 @@ def preprocess(i):
         if soft_drop:
             run_config += f" --soft_drop={soft_drop}"
 
-        use_small_tile_gemm_plugin = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_SMALL_TILE_GEMM_PLUGIN'))
-        if use_small_tile_gemm_plugin  and use_small_tile_gemm_plugin.lower() not in [ "no", "false" ]:
+        use_small_tile_gemm_plugin = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_SMALL_TILE_GEMM_PLUGIN', ''))
+        if use_small_tile_gemm_plugin  and use_small_tile_gemm_plugin.lower() not in [ "no", "false", "0", "" ]:
             run_config += f" --use_small_tile_gemm_plugin"
 
         audio_buffer_num_lines = env.get('CM_MLPERF_NVIDIA_HARNESS_AUDIO_BUFFER_NUM_LINES')
         if audio_buffer_num_lines:
             run_config += f" --audio_buffer_num_lines={audio_buffer_num_lines}"
 
-        use_fp8 = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_FP8'))
-        if use_fp8 and use_fp8.lower() not in [ "no", "false" ]:
+        use_fp8 = str(env.get('CM_MLPERF_NVIDIA_HARNESS_USE_FP8', ''))
+        if use_fp8 and use_fp8.lower() not in [ "no", "false", "0", "" ]:
             run_config += f" --use_fp8"
 
         if "llama2" in env["CM_MODEL"]:
@@ -454,7 +458,7 @@ def preprocess(i):
             run_config += f" --tensor_parallelism={tmp_tp_size}"
 
         enable_sort = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
-        if enable_sort and enable_sort.lower() not in [ "no", "false" ]:
+        if enable_sort and enable_sort.lower() not in [ "no", "false", "0" ]:
             run_config += f" --enable_sort"
         
         sdxl_server_batcher_time_limit = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
@@ -473,8 +477,8 @@ def preprocess(i):
         if num_warmups != '':
             run_config += f" --num_warmups={num_warmups}"
 
-        skip_postprocess = str(env.get('CM_MLPERF_NVIDIA_HARNESS_SKIP_POSTPROCESS'))
-        if skip_postprocess and skip_postprocess.lower() not in [ "no", "false" ]:
+        skip_postprocess = str(env.get('CM_MLPERF_NVIDIA_HARNESS_SKIP_POSTPROCESS', ''))
+        if skip_postprocess and skip_postprocess.lower() not in [ "no", "false", "0", "" ]:
             run_config += f" --skip_postprocess"
 
         if test_mode:

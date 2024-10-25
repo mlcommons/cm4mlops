@@ -359,8 +359,10 @@ def generate_submission(i):
                         with open(measurements_json_path, "r") as f:
                             measurements_json = json.load(f)
                             model_precision = measurements_json.get("weight_data_types", "fp32")
-                    if os.path.exists(user_conf_path):
+                    if os.path.exists(measurements_json_path):
+                        # This line can be removed once the PR in the inference repo is merged.
                         shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, sub_res+'.json'))
+                        shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, 'model-info.json'))
                     files = []
                     readme = False
 

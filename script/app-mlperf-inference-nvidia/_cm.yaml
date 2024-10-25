@@ -762,6 +762,11 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_USE_TRITON: "yes"
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX3: "using_triton"
 
+  use-graphs:
+    group: graphs
+    env:
+     CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: "yes"
+
   prebuild:
     group: run-mode
     env:
@@ -1106,7 +1111,8 @@ variations:
 
   singlestream,resnet50:
     env:
-      SKIP_POLICIES: '1'
+      CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK: yes
+      SKIP_POLICIES: '0' # skip_policies used to give better latency but is not working with 4.0 and later Nvidia codes
 
   server,resnet50:
     env:
@@ -1118,7 +1124,8 @@ variations:
 
   multistream,resnet50:
     env:
-      SKIP_POLICIES: '1'
+      CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK: yes
+      SKIP_POLICIES: '0'
 
   singlestream,run_harness:
     default_variations:
@@ -1435,12 +1442,12 @@ variations:
   rtx_4090,sdxl,offline,run_harness:
     default_variations:
       batch-size: batch_size.2
-      use_graphs: "True"
+      graphs: use-graphs
   
   rtx_4090,sdxl,server,run_harness:
     default_variations:
       batch-size: batch_size.2
-      use_graphs: "True"
+      graphs: use-graphs
 
   rtx_4090,resnet50,offline,run_harness:
     default_variations:
@@ -1449,7 +1456,7 @@ variations:
   rtx_4090,resnet50,server,run_harness:
     default_variations:
       batch-size: batch_size.32
-      use_graphs: "True"
+      graphs: use-graphs
 
   rtx_4090,retinanet,offline,run_harness:
     default_variations:
