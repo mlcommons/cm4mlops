@@ -1111,6 +1111,7 @@ variations:
 
   singlestream,resnet50:
     env:
+      CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK: yes
       SKIP_POLICIES: '0' # skip_policies used to give better latency but is not working with 4.0 and later Nvidia codes
 
   server,resnet50:
@@ -1123,6 +1124,7 @@ variations:
 
   multistream,resnet50:
     env:
+      CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK: yes
       SKIP_POLICIES: '0'
 
   singlestream,run_harness:
