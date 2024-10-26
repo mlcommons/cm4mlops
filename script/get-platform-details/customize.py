@@ -13,7 +13,9 @@ def preprocess(i):
     os_info = i['os_info']
     env = i['env']
 
-    #if os_info['platform'] == "windows":
+    if os_info['platform'] != "linux":
+        print("WARNING: get-platform-details is not yet supported for non linux systems. Skipping for now...")
+        return {return: 0}
     #    return {'return':1, 'error':'get-platform-details script not yet supported in windows!'}
 
     if not check_installation("numactl",os_info):
