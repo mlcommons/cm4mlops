@@ -131,7 +131,7 @@ def generate_submission(i):
         saved_system_meta_file_path = os.path.join(result_path, 'system_meta.json')
         # checks for json file containing system meta
         sut_info = {
-            "system_name": None,
+            "hardware_name": None,
             "implementation": None,
             "device": None,
             "framework": None,
@@ -186,7 +186,7 @@ def generate_submission(i):
                                 return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
 
         if check_dict_filled(sut_info.keys(), sut_info):              
-            system = sut_info["system_name"]
+            system = sut_info["hardware_name"]
             implementation = sut_info["implementation"]
             device = sut_info["device"]
             framework = sut_info["framework"].replace(" ","_")
