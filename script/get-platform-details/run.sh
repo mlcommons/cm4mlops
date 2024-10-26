@@ -47,6 +47,7 @@ else
 
     echo "8. numactl --hardware" >> $OUTPUT_FILE
     if [[ ${CM_SUDO_USER} == "yes" ]]; then
+    	echo "${CM_SUDO} numactl --hardware"
     	eval "${CM_SUDO} numactl --hardware" >> $OUTPUT_FILE
     	test $? -eq 0 || exit $?
     else
@@ -87,7 +88,7 @@ else
     echo "15. sysctl" >> $OUTPUT_FILE
     if [[ ${CM_SUDO_USER} == "yes" ]]; then
     	echo "${CM_SUDO} sysctl -a"
-        eval "${CM_SUDO} sysctl -a" >> $OUTPUT_FILE
+        eval "${CM_SUDO} sudo sysctl -a" >> $OUTPUT_FILE
         test $? -eq 0 || exit $?
     else
         echo "Requires SUDO permission" >> $OUTPUT_FILE
