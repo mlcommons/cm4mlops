@@ -101,7 +101,6 @@ def prompt_sudo():
             try:
                 r = subprocess.check_output(["sudo", "-p", msg, "echo", "Check sudo"],
                                             stderr=subprocess.STDOUT, timeout=20)
-                print(r)
                 print(r.decode('utf-8'))  # Decode bytes to string
                 return 0
             except subprocess.TimeoutExpired:
