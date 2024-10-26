@@ -163,26 +163,27 @@ def generate_submission(i):
         # Even the model mapping json file is present in root directory, the folders are traversed
         # and the data is updated provided not duplicated. 
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
-        for model in models:
-            result_model_path = os.path.join(result_path, model)
-            scenarios = [f for f in os.listdir(result_model_path) if not os.path.isfile(os.path.join(result_model_path, f))]
-            for scenario in scenarios:
-                result_scenario_path = os.path.join(result_model_path, scenario)
-                modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
-                for mode in modes:
-                    result_mode_path = os.path.join(result_scenario_path,mode)
-                    if mode == "performance":
-                        compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
-                        # model mapping part 
-                        tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
-                        if os.path.exists(tmp_model_mapping_file_path):
-                            with open(tmp_model_mapping_file_path, 'r') as f:
-                                new_model_mapping = json.load(f)
-                                for new_custom_model in new_model_mapping:
-                                    if new_custom_model not in model_mapping_combined:
-                                        model_mapping_combined.update({new_custom_model:new_model_mapping[new_custom_model]})
-                        else:
-                            return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
+        if division == "open":
+            for model in models:
+                result_model_path = os.path.join(result_path, model)
+                scenarios = [f for f in os.listdir(result_model_path) if not os.path.isfile(os.path.join(result_model_path, f))]
+                for scenario in scenarios:
+                    result_scenario_path = os.path.join(result_model_path, scenario)
+                    modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
+                    for mode in modes:
+                        result_mode_path = os.path.join(result_scenario_path,mode)
+                        if mode == "performance":
+                            compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
+                            # model mapping part 
+                            tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
+                            if os.path.exists(tmp_model_mapping_file_path):
+                                with open(tmp_model_mapping_file_path, 'r') as f:
+                                    new_model_mapping = json.load(f)
+                                    for new_custom_model in new_model_mapping:
+                                        if new_custom_model not in model_mapping_combined:
+                                            model_mapping_combined.update({new_custom_model:new_model_mapping[new_custom_model]})
+                            else:
+                                return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
 
         if check_dict_filled(sut_info.keys(), sut_info):              
             system = sut_info["system_name"]
