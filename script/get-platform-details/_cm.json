@@ -13,15 +13,35 @@
       "tags": "detect,os"
     },
     {
+      "skip_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "windows"
+        ]
+      },
       "tags": "detect,sudo"
     },
     {
+      "skip_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "windows"
+        ]
+      },
       "tags": "get,sys-util,generic,_psmisc"
     },
     {
+      "enable_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "linux"
+        ]
+      },
       "tags": "get,sys-util,generic,_systemd"
     },
     {
+      "enable_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "linux"
+        ]
+      },
       "tags": "get,sys-util,generic,_dmidecode"
     }
   ],
