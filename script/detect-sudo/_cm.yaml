@@ -9,7 +9,7 @@ cache: false
 category: DevOps automation
 
 new_env_keys:
-  - CM_SUDO_*
+  - CM_SUDO*
 
 tags:
 - detect
