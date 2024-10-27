@@ -15,6 +15,7 @@ category: Docker automation
 
 default_env:
   CM_DOCKER_DETACHED_MODE: 'yes'
+  CM_DOCKER_REUSE_EXISTING_CONTAINER: 'no'
 
 input_mapping:
   all_gpus: CM_DOCKER_ADD_ALL_GPUS
