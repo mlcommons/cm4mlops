@@ -45,7 +45,7 @@
         },
         {
           "tags": "get,generic-python-lib,_package.datasets",
-	        "names":
+          "names":
           [
             "pip-package",
             "datasets"
@@ -87,55 +87,55 @@
         },
         {
           "tags": "download,file,_url.https://raw.githubusercontent.com/mlcommons/inference_results_v4.0/main/closed/Intel/code/gptj-99/ITREX/evaluation.py",
-	        "enable_if_env": {
-	          "CM_MLPERF_IMPLEMENTATION":
+          "enable_if_env": {
+            "CM_MLPERF_IMPLEMENTATION":
               [
-	            "intel"
+              "intel"
               ]
-	        },
-	        "force_cache": true,
-	        "extra_cache_tags": "intel,accuracy,file,gptj,mlperf,inference",
-	        "env": {
-	          "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_MLPERF_INFERENCE_INTEL_GPTJ_ACCURACY_FILE_WITH_PATH"
-	        }
-	      },
+          },
+          "force_cache": true,
+          "extra_cache_tags": "intel,accuracy,file,gptj,mlperf,inference",
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_MLPERF_INFERENCE_INTEL_GPTJ_ACCURACY_FILE_WITH_PATH"
+          }
+        },
         {
           "tags": "download,file,_url.https://raw.githubusercontent.com/mlcommons/inference_results_v4.0/main/closed/Intel/code/gptj-99/ITREX/dataset.py",
-	        "enable_if_env": {
-	          "CM_MLPERF_IMPLEMENTATION":
+          "enable_if_env": {
+            "CM_MLPERF_IMPLEMENTATION":
               [
-	            "intel"
+              "intel"
               ]
-	        },
-	        "force_cache": true,
-	        "extra_cache_tags": "intel,dataset,file,gptj,mlperf,inference",
-	        "env": {
-	          "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_MLPERF_INFERENCE_INTEL_GPTJ_DATASET_FILE_WITH_PATH"
-	        }
-	      },
+          },
+          "force_cache": true,
+          "extra_cache_tags": "intel,dataset,file,gptj,mlperf,inference",
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_MLPERF_INFERENCE_INTEL_GPTJ_DATASET_FILE_WITH_PATH"
+          }
+        },
         {
           "tags": "download,file,_url.https://raw.githubusercontent.com/mlcommons/inference_results_v4.0/main/closed/Intel/code/gptj-99/ITREX/item.py",
-	        "enable_if_env": {
-	          "CM_MLPERF_IMPLEMENTATION":
+          "enable_if_env": {
+            "CM_MLPERF_IMPLEMENTATION":
               [
-	            "intel"
+              "intel"
               ]
-	        },
-	        "force_cache": true,
-	        "extra_cache_tags": "intel,dataset,item,file,gptj,mlperf,inference",
-	        "env": {
-	          "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_MLPERF_INFERENCE_INTEL_GPTJ_DATASET_ITEM_FILE_WITH_PATH"
-	        }
-	      },
+          },
+          "force_cache": true,
+          "extra_cache_tags": "intel,dataset,item,file,gptj,mlperf,inference",
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_MLPERF_INFERENCE_INTEL_GPTJ_DATASET_ITEM_FILE_WITH_PATH"
+          }
+        },
         {
           "tags": "get,ml-model,gptj,_fp32,_pytorch",
-	        "enable_if_env": {
-	          "CM_MLPERF_IMPLEMENTATION":
+          "enable_if_env": {
+            "CM_MLPERF_IMPLEMENTATION":
               [
-	            "intel"
+              "intel"
               ]
-	        }
-	      }
+          }
+        }
       ],
       "env": {
         "CM_DATASET": "cnndm"
@@ -285,7 +285,20 @@
           "tags": "get,dataset-aux,squad-vocab"
         },
         {
-          "tags": "get,generic-python-lib,_torch"
+          "tags": "get,generic-python-lib,_torch",
+          "skip_if_env": {
+            "CM_MLPERF_DEVICE": [
+              "cuda"
+            ]
+          }
+        },
+        {
+          "tags": "get,generic-python-lib,_torch_cuda",
+          "enable_if_env": {
+            "CM_MLPERF_DEVICE": [
+              "cuda"
+            ]
+          }
         },
         {
           "tags": "get,generic-python-lib,_tokenization"
@@ -340,7 +353,7 @@
     },
     "openorca-gsm8k-mbxp": {
       "deps": [
-	{
+        {
           "tags": "get,generic-python-lib,_package.rouge_score",
           "names":
           [
@@ -352,7 +365,7 @@
           "names": [
             "openorca-gsm8k-mbxp-combined"
           ],
-	  "skip_if_env": {
+          "skip_if_env": {
             "CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST": [
               "yes"
             ]
@@ -363,7 +376,7 @@
           "names": [
             "mixtral-8x7b-model"
           ],
-	  "skip_if_env": {
+          "skip_if_env": {
             "CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST": [
               "yes"
             ]
