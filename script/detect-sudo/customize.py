@@ -20,6 +20,8 @@ def preprocess(i):
         env['CM_SUDO_USER'] = "yes"
         if os.geteuid() == 0:
             env['CM_SUDO'] = '' #root user does not need sudo
+        else:
+            env['CM_SUDO'] = 'sudo'
     else:
         if can_execute_sudo_without_password():
             env['CM_SUDO_USER'] = "yes"
