@@ -1,1 +1,1 @@
-echo "This CM script not supported for windows yet"
+echo "WARNING: get-platform-details script is fully supported on linux systems only."
