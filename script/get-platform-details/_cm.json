@@ -50,6 +50,9 @@
       "enable_if_env": {
         "CM_INSTALL_NUMACTL": [
           "True"
+        ],
+        "CM_HOST_OS_TYPE": [
+          "linux"
         ]
       },
       "tags": "get,sys-util,generic,_numactl"
@@ -58,6 +61,9 @@
       "enable_if_env": {
         "CM_INSTALL_CPUPOWER": [
           "True"
+        ],
+        "CM_HOST_OS_TYPE": [
+          "linux"
         ]
       },
       "tags": "get,sys-util,generic,_linux-tools"
