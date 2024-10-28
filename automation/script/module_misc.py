@@ -1086,7 +1086,9 @@ def doc(i):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-def update_path_for_docker(path, mounts, force_path_target=''):
+# This function takes in a pth and returns absolute path on host and container
+# If mounts is passed, the function appends the host path and the container path to mounts in the form "host_path:container_path" 
+def update_path_for_docker(path, mounts=None, force_path_target=''):
 
     path_orig = ''
     path_target = ''
@@ -1114,14 +1116,14 @@ def update_path_for_docker(path, mounts, force_path_target=''):
             x = path_orig + ':' + path_target
 
         # CHeck if no duplicates
-        to_add = True
-        for y in mounts:
-            if y.lower()==x.lower():
-                to_add = False
-                break
-
-        if to_add:
-            mounts.append(x)
+        if mounts != None:
+            to_add = True
+            for y in mounts:
+                if y.lower()==x.lower():
+                    to_add = False
+                    break
+            if to_add:
+                mounts.append(x)
 
     
     return (path_orig, path_target)
@@ -1617,8 +1619,11 @@ def get_container_path(value):
             new_path_split1 = new_path_split + path_split[repo_entry_index:repo_entry_index+3]
             new_path_split2 = new_path_split + path_split[repo_entry_index:]
             return "/".join(new_path_split1), "/".join(new_path_split2)
+    else:
+        orig_path,target_path = update_path_for_docker(path=value)
+        return target_path, target_path
 
-    return value, value
+    # return value, value
 
 
 ############################################################
