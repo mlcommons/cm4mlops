@@ -104,7 +104,7 @@ def prompt_sudo():
                 print(r.decode('utf-8'))  # Decode bytes to string
                 return 0
             except subprocess.TimeoutExpired:
-                reset_terminal()  # Reset terminal to same state
+                reset_terminal()  # Reset terminal to sane state
                 if not prompt_retry():  # If the user chooses not to retry or times out
                     return -1
             except subprocess.CalledProcessError as e:
