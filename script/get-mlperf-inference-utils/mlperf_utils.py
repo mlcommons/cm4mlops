@@ -4,7 +4,7 @@ import submission_checker as checker
 from log_parser import MLPerfLog
 
 
-def get_result_from_log(version, model, scenario, result_path, mode):
+def get_result_from_log(version, model, scenario, result_path, mode, inference_src_version = None):
 
     config = checker.Config(
         version,
@@ -20,7 +20,14 @@ def get_result_from_log(version, model, scenario, result_path, mode):
     valid = {}
     if mode == "performance":
         has_power = os.path.exists(os.path.join(result_path, "..", "power"))
-        result_ = checker.get_performance_metric(config, mlperf_model, result_path, scenario, None, None, has_power)
+        version_tuple = None
+        if inference_src_version:
+            version_tuple = tuple(map(int, inference_src_version.split('.')))
+
+        if version_tuple and version_tuple >= (4,1,22):
+            result_ = checker.get_performance_metric(config, mlperf_model, result_path, scenario)
+        else:
+            result_ = checker.get_performance_metric(config, mlperf_model, result_path, scenario, None, None, has_power)
         mlperf_log = MLPerfLog(os.path.join(result_path, "mlperf_log_detail.txt"))
         if (
             "result_validity" not in mlperf_log.get_keys()
@@ -133,7 +140,7 @@ def get_accuracy_metric(config, model, path):
 
     return is_valid, acc_results, acc_targets, acc_limits
 
-def get_result_string(version, model, scenario, result_path, has_power, sub_res, division="open", system_json=None, model_precision="fp32"):
+def get_result_string(version, model, scenario, result_path, has_power, sub_res, division="open", system_json=None, model_precision="fp32", inference_src_version = None):
 
     config = checker.Config(
         version,
@@ -152,7 +159,6 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
     inferred = False
     result = {}
 
-    inference_src_version = os.environ.get('CM_MLPERF_INFERENCE_SOURCE_VERSION', '')
     version_tuple = None
     if inference_src_version:
         version_tuple = tuple(map(int, inference_src_version.split('.')))

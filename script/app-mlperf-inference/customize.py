@@ -242,7 +242,7 @@ def postprocess(i):
         if os.path.exists(env['CM_MLPERF_USER_CONF']):
             shutil.copy(env['CM_MLPERF_USER_CONF'], 'user.conf')
 
-        result, valid, power_result = mlperf_utils.get_result_from_log(env['CM_MLPERF_LAST_RELEASE'], model, scenario, output_dir, mode)
+        result, valid, power_result = mlperf_utils.get_result_from_log(env['CM_MLPERF_LAST_RELEASE'], model, scenario, output_dir, mode, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
         power = None
         power_efficiency = None
         if power_result:
