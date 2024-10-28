@@ -152,8 +152,15 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
     inferred = False
     result = {}
 
+    inference_src_version = os.environ.get('CM_MLPERF_INFERENCE_SOURCE_VERSION', '')
+    version_tuple = None
+    if inference_src_version:
+        version_tuple = tuple(map(int, inference_src_version.split('.')))
 
-    performance_result = checker.get_performance_metric(config, mlperf_model, performance_path, scenario, None, None, has_power)
+    if version_tuple and version_tuple >= (4,1,22):
+        performance_result = checker.get_performance_metric(config, mlperf_model, performance_path, scenario)
+    else:
+        performance_result = checker.get_performance_metric(config, mlperf_model, performance_path, scenario, None, None)
     if "stream" in scenario.lower():
         performance_result_ = performance_result / 1000000 #convert to milliseconds
     else:
