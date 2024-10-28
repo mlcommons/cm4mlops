@@ -28,6 +28,20 @@ def check_dict_filled(keys, sut_info):
             return False
     return True
 
+# The function checks whether the submitting model name belongs standard model names for MLPef Inference
+def model_in_valid_models(model, mlperf_version):
+    import submission_checker as checker
+    config = checker.MODEL_CONFIG
+    
+    if model not in config[mlperf_version]['models']:
+        internal_model_name = config[mlperf_version]["model_mapping"].get(model, '') # resnet50 -> resnet
+        if internal_model_name == '':
+            return (False, None)  # Indicate failure with no internal model name
+        else:
+            return (True, internal_model_name)  # Indicate success with internal model name
+    else:
+        return (True, model)
+
 def generate_submission(i):
 
     # Save current user directory
@@ -165,26 +179,31 @@ def generate_submission(i):
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
         if division == "open":
             for model in models:
-                result_model_path = os.path.join(result_path, model)
-                scenarios = [f for f in os.listdir(result_model_path) if not os.path.isfile(os.path.join(result_model_path, f))]
-                for scenario in scenarios:
-                    result_scenario_path = os.path.join(result_model_path, scenario)
-                    modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
-                    for mode in modes:
-                        result_mode_path = os.path.join(result_scenario_path,mode)
-                        if mode == "performance":
-                            compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
-                            # model mapping part 
-                            tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
-                            if os.path.exists(tmp_model_mapping_file_path):
-                                with open(tmp_model_mapping_file_path, 'r') as f:
-                                    new_model_mapping = json.load(f)
-                                    for new_custom_model in new_model_mapping:
-                                        if new_custom_model not in model_mapping_combined:
-                                            model_mapping_combined.update({new_custom_model:new_model_mapping[new_custom_model]})
-                            else:
-                                return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
-
+                is_valid, returned_model_name = model_in_valid_models(model, env.get('CM_MLPERF_LAST_RELEASE', 'v4.1'))
+                if not is_valid:
+                    result_model_path = os.path.join(result_path, model)
+                    scenarios = [f for f in os.listdir(result_model_path) if not os.path.isfile(os.path.join(result_model_path, f))]
+                    for scenario in scenarios:
+                        result_scenario_path = os.path.join(result_model_path, scenario)
+                        modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
+                        for mode in modes:
+                            result_mode_path = os.path.join(result_scenario_path,mode)
+                            if mode == "performance":
+                                compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
+                                # model mapping part 
+                                tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
+                                if os.path.exists(tmp_model_mapping_file_path):
+                                    with open(tmp_model_mapping_file_path, 'r') as f:
+                                        new_model_mapping = json.load(f)
+                                        for new_custom_model in new_model_mapping:
+                                            if new_custom_model not in model_mapping_combined:
+                                                model_mapping_combined.update({new_custom_model:new_model_mapping[new_custom_model]})
+                                else:
+                                    return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
+                else:
+                    if returned_model_name != model:
+                        model_mapping_combined.update({model:returned_model_name})
+        
         if check_dict_filled(sut_info.keys(), sut_info):              
             system = sut_info["hardware_name"]
             implementation = sut_info["implementation"]
