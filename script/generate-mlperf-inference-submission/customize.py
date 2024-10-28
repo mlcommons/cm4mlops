@@ -177,7 +177,7 @@ def generate_submission(i):
         # Even the model mapping json file is present in root directory, the folders are traversed
         # and the data is updated provided not duplicated. 
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
-        if division == "open":
+        if division == "open" and len(model_mapping_combined) == 0:
             for model in models:
                 is_valid, returned_model_name = model_in_valid_models(model, env.get('CM_MLPERF_LAST_RELEASE', 'v4.1'))
                 if not is_valid:
