@@ -995,6 +995,9 @@ variations:
       - tags: get,generic-python-lib,_package.more-itertools
         names:
           - more-itertools
+      - tags: get,generic-python-lib,_package.compressed_tensors
+        names:
+          - compressed_tensors
 
   llama2-70b-99:
     group: models
