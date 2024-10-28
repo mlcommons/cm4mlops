@@ -13,9 +13,6 @@ def preprocess(i):
     os_info = i['os_info']
     env = i['env']
 
-    if os_info['platform'] == "darwin":
-        i['run_script_input']['script_name'] = "run-macos"
-
     if not check_installation("numactl",os_info):
         env['CM_INSTALL_NUMACTL'] = 'True'
     
