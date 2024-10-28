@@ -201,6 +201,8 @@ def preprocess(i):
             if k.startswith("docker_"):
                 docker_extra_input[k] = inp[k]
         inp = {}
+        if str(docker_dt).lower() in ["yes", "true", "1"]:
+            env['CM_DOCKER_REUSE_EXISTING_CONTAINER'] = 'yes'
 
         if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
             docker_extra_input['docker_image_name'] = env['CM_DOCKER_IMAGE_NAME']
