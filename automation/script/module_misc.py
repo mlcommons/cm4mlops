@@ -1086,7 +1086,7 @@ def doc(i):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# This function takes in a pth and returns absolute path on host and container
+# This function takes in a host path and returns the absolute path on host and the container
 # If mounts is passed, the function appends the host path and the container path to mounts in the form "host_path:container_path" 
 def update_path_for_docker(path, mounts=None, force_path_target=''):
 
