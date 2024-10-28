@@ -59,7 +59,7 @@ def preprocess(i):
         return {'return':1, 'error':'Docker is either not installed or not started:\n{}'.format(e)}
 
     output_split = docker_container.split("\n")
-    if len(output_split) > 1: #container exists
+    if len(output_split) > 1 and str(env.get('CM_DOCKER_REUSE_EXISTING_CONTAINER', '')).lower() in [ "1", "true", "yes" ]: #container exists
         out = output_split[1].split(" ")
         existing_container_id = out[0]
         env['CM_DOCKER_CONTAINER_ID'] = existing_container_id

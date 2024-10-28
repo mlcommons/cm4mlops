@@ -103,7 +103,7 @@ def postprocess(i):
 
     if os.path.exists(os.path.join(inference_root, "loadgen", "VERSION.txt")):
         with open(os.path.join(inference_root, "loadgen", "VERSION.txt")) as f:
-            version_info = f.read()
+            version_info = f.read().strip()
         env['CM_MLPERF_INFERENCE_SOURCE_VERSION'] = version_info
 
     if env.get('CM_GET_MLPERF_IMPLEMENTATION_ONLY', '') == "yes":

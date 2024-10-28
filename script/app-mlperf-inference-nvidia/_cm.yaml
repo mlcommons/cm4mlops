@@ -430,8 +430,6 @@ variations:
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
     deps:
     - tags: get,generic-python-lib,_Pillow
-    - tags: get,generic-python-lib,_torch
-    - tags: get,generic-python-lib,_torchvision
     - tags: get,generic-python-lib,_opencv-python
     - tags: get,generic-python-lib,_numpy
     - tags: get,generic-python-lib,_pycocotools
@@ -527,6 +525,7 @@ variations:
     - tags: get,generic-python-lib,_transformers
     - tags: get,generic-python-lib,_safetensors
     - tags: get,generic-python-lib,_onnx
+    - tags: get,generic-python-lib,_package.sympy
     - tags: get,generic-python-lib,_onnx-graphsurgeon
 
   bert-99:
@@ -594,10 +593,10 @@ variations:
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: fp16
     deps:
     - tags: get,generic-python-lib,_toml
-    - tags: get,generic-python-lib,_torchvision
+    - tags: get,generic-python-lib,_torchvision_cuda
       names:
       - torchvision
-    - tags: get,generic-python-lib,_torch
+    - tags: get,generic-python-lib,_torch_cuda
     - tags: get,generic-python-lib,_nvidia-apex
     - tags: get,generic-python-lib,_unidecode
     - tags: get,generic-python-lib,_inflect
@@ -613,7 +612,6 @@ variations:
       - CM_DLRM_V2_AGGREGATION_TRACE_FILE_PATH
     deps:
     - tags: get,dlrm,data,mlperf,inference,_nvidia
-    - tags: get,generic-python-lib,_torch
     - tags: get,generic-python-lib,_package.torchsnapshot
     - tags: get,generic-python-lib,_package.torchrec
       version: 0.3.2
