@@ -509,7 +509,7 @@ While MLPerf inference has a common benchmarking engine called [loadgen](https:/
 setting up a given platform, installing all tools, downloading and preprocessing all models and data sets, 
 updating paths and environment variables, figuring out default parameters for various scenarios, preparing a loadgen command line,
 keeping track of continuous updates in MLPerf rules, running multiple experiments and submitting results
-is a major challenge for old and new submitters (see [MLPerf inference v4.0 submitter orientation for automation](https://doi.org/10.5281/zenodo.10605079).
+is a major challenge for old and new submitters (see [MLPerf inference v4.0 submitter orientation for automation](https://doi.org/10.5281/zenodo.10605079)).
 
 We created several CM scripts to prepare and run different implementations of MLPerf inference (reference, Nvidia, Intel, Qualcomm, Deep Sparse, etc)
 with a master CM script to run them all out-of-the-box natively or inside automatically-generated containers 
@@ -521,6 +521,6 @@ and help the community automate more than 95% of all performance and power submi
 across more than 120 system configurations (models, frameworks, hardware) 
 while reducing development and maintenance costs.
 
-Please check this [documentation](mlperf/inference) for more details.
+Please check this [documentation](https://docs.mlcommons.org/inference/) for more details.
 
 
