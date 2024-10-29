@@ -20,6 +20,7 @@ theme:
     - toc.follow
 nav:
   - HOME: index.md
+  - Getting Started: getting-started.md
   - CM Scripts:
     - scripts/index.md
     - Python-automation: scripts/Python-automation/index.md
