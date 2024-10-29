@@ -126,7 +126,7 @@ Furthermore, it is possible to reuse large cached files in other projects that c
 You can see cache entries and find a specific one as follows:
 
 ```bash
-cmr "get ml-model resnet50 _onnx" -j
+cm run script --tags=get,ml-model,resnet50,_onnx -j
 
 cm show cache
 cm show cache "get ml-model resnet50 _onnx" 
