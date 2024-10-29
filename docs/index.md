@@ -4,7 +4,7 @@ Please check the [CM documentation](https://docs.mlcommons.org/ck) for more deta
 
 See the [automatically generated catalog](scripts/index.md) of all CM scripts from MLCommons.
 
-## Getting started with CM scripts
+## Understanding CM scripts
 
 * A CM script is identified by a set of tags and by unique ID. 
 * Further each CM script can have multiple variations and they are identified by variation tags which are treated in the same way as tags and identified by a `_` prefix.
@@ -69,8 +69,8 @@ Sometimes it is difficult to add all variations needed for a script like say `ba
 * By using `--new` input, a new cache entry can be forced even when an old one exist. 
 * By default no depndencies are run for a cached entry unless `dynamic` key is set for it. 
 
-### Updating ENV from inside the run script
-* [TBD]
+
+Please see [here](getting-started.md) for trying CM scripts.
 
 
 
