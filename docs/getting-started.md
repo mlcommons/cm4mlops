@@ -90,8 +90,8 @@ in a [`script` directory](https://github.com/mlcommons/cm4mlops/tree/mlperf-infe
 CM will then try to match all your tags without `_` prefix (`_` in tags mark 
 the so-called CM script variations that customize a give script behavior 
 and will be described later)  with a `tags` list in the CM meta-description dictionary.
-In our case, it will match the corresponding [`_cm.yaml`](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/_cm.yaml#L9) 
-in `$HOME/CM/repos/mlcommons@cm4mlops/script/app-image-classification-onnx-py/_cm.yaml` - 
+In our case, it will match the corresponding [`_cm.yaml`](https://github.com/mlcommons/cm4mlops/blob/2592e2bccf09e4234070e38299d9d8d697f76eda/script/run-mlperf-inference-app/_cm.yaml#L19) 
+in `$HOME/CM/repos/mlcommons@cm4mlops/script/run-mlperf-inference-app/_cm.yaml` - 
 a wrapper for a given CM automation recipe.
 
 *Note that if you use unique ID instead of tags to identify automation (such as `3d5e908e472b417e`), 
