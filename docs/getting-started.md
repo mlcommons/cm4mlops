@@ -96,3 +96,21 @@ a wrapper for a given CM automation recipe.
 
 *Note that if you use unique ID instead of tags to identify automation (such as `3d5e908e472b417e`), 
  CM will try to match `uid` string in the CM meta descriptions instead of tags.*
+
+## How CM runs automation recipes?
+
+Whenever CM finds a directory with a requested automation recipe, 
+it performs the following steps:
+* run `preprocess` function in `customize.py` if exists
+* run `run.sh` (Linux) or `run.bat` (Windows) if exists
+* run `postprocess` function in `customize.py` if exists
+
+Such organization makes it possible to use either Python or native OS scripts or
+both to implement CM automation recipes while minimizing the learning curve
+for CM understanding, development and debugging as requested by CM users.
+
+Furthermore, CM scripts can keep the source code of implementations example - 
+image classification (as shown [here](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/app-image-classification-onnx-py/src))
+that we can easily move around
+between projects without hardwiring paths and names.
+
