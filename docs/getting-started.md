@@ -249,8 +249,8 @@ detect or install Python and PIP packages, download and preprocess data sets and
 CM script automation manages the creation and execution of CM scripts. It closely relates to CM cache automation as the output of any CM script can be cached.
 It also has extensions:
 
-1. Docker: allows CM script to be run inside a docker container
-2. Docs: used to automatically generate the README file for a CM script
+1. **Docker**: allows CM script to be run inside a docker container
+2. **Docs**: used to automatically generate the README file for a CM script
 
 More theoretical explanation on CM Script and it's workflows could be found [here](https://github.com/mlcommons/cm4mlops/blob/anandhu-eng-patch-1/docs/index.md)
 
