@@ -327,5 +327,57 @@ and will turn on a specific CM script in `deps` to install ONNX for CUDA:
 cmr "python app image-classification onnx _cuda" --input=computer_mouse.jpg
 ```
 
+## How to cache and reuse CM scripts' output?
+
+By default, CM scripts run in the current directory and record all new files there.
+
+For example, the following universal download script will download 
+computer mouse image to the current directory:
+
+<sup>
+
+```bash
+cm run script "download file _wget" --url=https://cKnowledge.org/ai/data/computer_mouse.jpg --verify=no --env.CM_DOWNLOAD_CHECKSUM=45ae5c940233892c2f860efdf0b66e7e
+```
+
+</sup>
+
+In some cases, we want to cache and reuse the output of automation recipes (such as downloading models, preprocessing data sets or building some applications)
+rather than just downloading it to the current directory.
+
+Following the feedback from our users, we implemented a `cache` automation in CM similar to `script`.
+Whenever CM encounters `"cache":true` in a meta description of a given script, it will create
+a `cache` directory in `$HOME/CM/repos/local` with some unique ID and the same tags as `script`,
+and will execute that script there to record all the data in cache. 
+
+Whenever the same CM script is executed and CM finds an associated cache entry, 
+it will skip execution and will reuse files from that entry.
+
+Furthermore, it is possible to reuse large cached files in other projects that call the same CM scripts!
+
+You can see cache entries and find a specific one as follows:
+
+```bash
+cmr "get ml-model resnet50 _onnx" -j
+
+cm show cache
+cm show cache "get ml-model resnet50 _onnx" 
+cm find cache "download file ml-model resnet50 _onnx" 
+cm info cache "download file ml-model resnet50 _onnx" 
+```
+
+You can clean some cache entries as follows:
+```bash
+cm rm cache --tags=ml-model,resnet50
+```
+
+You can also clean all CM `cache` entries and start from scratch as follows:
+```bash
+cm rm cache -f
+```
+
+In fact, you can remove `$HOME/CM` to reset CM framework completely
+and remove all downloaded repositories and cached entries.
+
 
 
