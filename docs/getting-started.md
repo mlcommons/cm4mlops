@@ -94,7 +94,7 @@ In our case, it will match the corresponding [`_cm.yaml`](https://github.com/mlc
 in `$HOME/CM/repos/mlcommons@cm4mlops/script/run-mlperf-inference-app/_cm.yaml` - 
 a wrapper for a given CM automation recipe.
 
-*Note that if you use unique ID instead of tags to identify automation (such as `3d5e908e472b417e`), 
+*Note that if you use unique ID instead of tags to identify automation (such as `4a5d5b13fd7e4ac8`), 
  CM will try to match `uid` string in the CM meta descriptions instead of tags.*
 
 ## How CM runs automation recipes?
