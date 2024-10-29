@@ -1692,7 +1692,7 @@ def docker(i):
     env=i.get('env', {})
 
     noregenerate_docker_file = i.get('docker_noregenerate', False)
-    norecreate_docker_image = i.get('docker_norecreate', False)
+    norecreate_docker_image = i.get('docker_norecreate', True)
 
     if i.get('docker_skip_build', False):
         noregenerate_docker_file = True
