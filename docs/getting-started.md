@@ -305,5 +305,27 @@ cm copy script <source_script> .:<target_script>
 The `source_script` contains the name of the script that you want to make a copy and `target_script` contains the name of the new script that will be created as a copy of the `source_script`.
 The existing script names in `cm4mlops` repo could be found [here](https://github.com/mlcommons/cm4mlops/tree/mlperf-inference/script).
 
+## How to customize CM scripts using variations?
+
+Sometimes we need to set multiple environment variables or run a set of extra CM scripts
+for a specific purpose (different hardware target or model or dataset).
+
+We introduced special tags with `_`, called *variations* or *variation tags*, 
+that allow you to update a set of environment variables and add extra scripts
+to the chain of dependencies.
+
+Such variations are defined using [`variations` dictionary](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/_cm.yaml#L69) 
+in the meta description of a given CM script.
+
+For example, our script has 2 variations `_cuda` and `_cpu`.
+
+If you want to use CUDA implementation of the image classification example, 
+you can add this variation to the tags that will set `USE_CUDA` environment to `yes`
+and will turn on a specific CM script in `deps` to install ONNX for CUDA:
+
+```bash
+cmr "python app image-classification onnx _cuda" --input=computer_mouse.jpg
+```
+
 
 
