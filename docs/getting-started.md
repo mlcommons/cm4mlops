@@ -202,7 +202,7 @@ To run a given script in an automatically-generated container, you can simply su
 with `cm docker script` or `cmr` with `cmrd`:
 
 ```bash
-cm docker script --tags=python,app,image-classification,onnx,_cpu"
+cm docker script --tags=python,app,image-classification,onnx,_cpu
 ```
 
 CM will automatically generate a Dockerfile with Ubuntu 22.04 in the `dockerfiles` 
