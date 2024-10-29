@@ -202,7 +202,7 @@ def preprocess(i):
                 docker_extra_input[k] = inp[k]
         inp = {}
         if str(docker_dt).lower() in ["yes", "true", "1"]:
-            env['CM_DOCKER_REUSE_EXISTING_CONTAINER'] = 'yes'
+            env['CM_DOCKER_REUSE_EXISTING_CONTAINER'] = 'no' # turning it off for the first run and after that we turn it on
 
         if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
             docker_extra_input['docker_image_name'] = env['CM_DOCKER_IMAGE_NAME']
@@ -256,6 +256,7 @@ def preprocess(i):
                     print(f"\nStop Running loadgen scenario: {scenario} and mode: {mode}")
                     return {'return': 0} # We run commands interactively inside the docker container
                 else:
+                    env['CM_DOCKER_REUSE_EXISTING_CONTAINER'] = 'yes'
                     container_id = env_copy['CM_DOCKER_CONTAINER_ID']
                     env['CM_DOCKER_CONTAINER_ID'] = container_id
             if state.get('docker', {}):
