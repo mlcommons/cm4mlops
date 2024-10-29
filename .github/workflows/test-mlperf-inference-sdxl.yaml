@@ -19,7 +19,6 @@ jobs:
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
-        cm rm repo mlcommons@cm4mlops -f
         python3 -m pip install cm4mlops
         cm pull repo
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=sdxl --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions  --env.CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST=yes --clean
