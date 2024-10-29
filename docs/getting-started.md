@@ -268,22 +268,22 @@ cm add script hello-world --tags=hello-world,display,test
 
 This creates a bare cm script inside the local repo. The new folder structure would look something like this:
 ```
-├── CM
-│   ├── index.json
-│   ├── repos
-│   │   ├── local
-│   │   │   ├── cfg
-│   │   │   ├── cache
-│   │   │   ├── cmr.yaml
-│   │   │   └── script
-│   │   │   	├── hello-world
-│   │   │       	├── _cm.yaml
-│   │   │       	├── customize.py
-│   │   │       	├── README-extra.md
-│   │   │       	├── run.bat
-│   │   │       	└── run.sh
-│   │   └── mlcommons@cm4mlops
-│   └── repos.json
+└── CM
+    ├── index.json
+    ├── repos
+    │   ├── local
+    │   │   ├── cfg
+    │   │   ├── cache
+    │   │   ├── cmr.yaml
+    │   │   └── script
+    │   │   	└── hello-world
+    │   │       	├── _cm.yaml
+    │   │       	├── customize.py
+    │   │       	├── README-extra.md
+    │   │       	├── run.bat
+    │   │       	└── run.sh
+    │   └── mlcommons@cm4mlops
+    └── repos.json
 ```
 
 You can also run it from python as follows:
