@@ -114,3 +114,25 @@ image classification (as shown [here](https://github.com/mlcommons/ck/tree/maste
 that we can easily move around
 between projects without hardwiring paths and names.
 
+## How CM unifies inputs, outputs and environment variables?
+
+CM allows you to pass environment variables to `customize.py`
+and native scripts using `--env.ENV=VALUE`. 
+
+When you use some flags such as `--model` in previouslyu mentioned MLPerf Inference GPT-J
+example, it will be also converted into an environment variable
+using [`input_mapping` dictionary](https://github.com/anandhu-eng/cm4mlops/blob/a7abc554cfee99f7de4eb508c34f8abbe4cdd663/script/run-mlperf-inference-app/_cm.yaml#L69) 
+in the CM meta description of this script.
+
+All environment variables are aggregated in `env` dictionary inside CM
+and then passed to `preprocess` function in `customize.py` where you can modify
+it programmatically. 
+
+They are then passed to the `run` script. 
+
+**Note:**
+
+Since new environment variables
+are not preserved after `run` script, one can pass new environment variables
+back to CM using `tmp-run-env.out` with ENV=KEY strings as shown [here](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/run.sh#L37)
+or using `tmp-run-state.json` as shown [here](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/src/onnx_classify.py#L171).
