@@ -157,8 +157,8 @@ virtual environments transparently to users while avoiding messing up native use
 We created the following CM automation recipe to create virtual environments:
 
 ```bash
-cmr "install python-venv" --name=mlperf
-cm show cache "python-venv name-mlperf"
+cm run script --tags=install,python-venv --name=mlperf
+cm show cache --tags=python-venv,name-mlperf
 export CM_SCRIPT_EXTRA_CMD="--adr.python.name=mlperf"
 ```
 
@@ -180,7 +180,7 @@ while having a full and native access to change environment and run the final co
 You can try it as follows on Linux, MacOS, Windows or other operating system as follows:
 
 ```bash
-cmr "python app image-classification onnx _cpu" --input=computer_mouse.jpg --debug
+cm run script --tags=python,app,image-classification,onnx,_cpu --input=computer_mouse.jpg --debug
 
 ```
 
