@@ -27,6 +27,7 @@ default_env:
   CM_MLPERF_RUN_STYLE: test
   CM_TEST_QUERY_COUNT: '10'
   CM_MLPERF_QUANTIZATION: off
+  CM_GET_PLATFORM_DETAILS: yes
 
 env:
   CM_MLPERF_PRINT_SUMMARY: "no"
@@ -114,8 +115,6 @@ posthook_deps:
   - tags: get,mlperf,sut,description #populate system meta information like framework
   - tags: get,platform,details
     enable_if_any_env:
-      CM_SUDO_USER:
-        - yes
       CM_GET_PLATFORM_DETAILS:
         - yes
     skip_if_env:
