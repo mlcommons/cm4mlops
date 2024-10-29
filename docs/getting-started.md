@@ -136,3 +136,112 @@ Since new environment variables
 are not preserved after `run` script, one can pass new environment variables
 back to CM using `tmp-run-env.out` with ENV=KEY strings as shown [here](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/run.sh#L37)
 or using `tmp-run-state.json` as shown [here](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/src/onnx_classify.py#L171).
+
+## How CM chains automation recipes into portable workflows?
+
+CM scripts provide a technology-agnostic wrapper with simple tags, CLI and Python API to prepare and run 
+user code snippets and native scripts/tools while unifying their inputs and outputs, paths and environment variables.
+
+Such architecture makes it possible to easily chain existing user scripts and tools into portable, technology-agnostic and powerful workflows
+instead of substituting or rewriting them.
+
+It is possible to chain CM scripts using simple 
+[`deps` list](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/_cm.yaml#L23) 
+in a meta description of a given script:
+
+<sup>
+
+```yaml
+deps:
+- tags: detect,os
+- tags: get,sys-utils-cm
+- names:
+  - python
+  - python3
+  tags: get,python3
+
+- tags: get,cuda
+  names:
+  - cuda
+  enable_if_env:
+    USE_CUDA:
+    - yes
+- tags: get,cudnn
+  names:
+  - cudnn
+  enable_if_env:
+    USE_CUDA:
+    - yes
+
+- tags: get,dataset,imagenet,image-classification,original
+- tags: get,dataset-aux,imagenet-aux,image-classification
+- tags: get,ml-model,resnet50,_onnx,image-classification
+  names:
+  - ml-model
+
+- tags: get,generic-python-lib,_package.Pillow
+- tags: get,generic-python-lib,_package.numpy
+- tags: get,generic-python-lib,_package.opencv-python
+
+
+- tags: get,generic-python-lib,_onnxruntime
+  names:
+  - onnxruntime
+  skip_if_env:
+    USE_CUDA:
+    - yes
+- tags: get,generic-python-lib,_onnxruntime_gpu
+  names:
+  - onnxruntime
+  enable_if_env:
+    USE_CUDA:
+    - yes
+
+```
+
+</sup>
+
+Each entry in this list is a dictionary that specifies which CM script to run using `tags`.
+Internally, CM will be updating `env` dictionary (flat environment) and `state` dictionary 
+(to let scripts exchange complex data structures besides environment variables).
+
+If you run CM via command line, you can see internal `env` and `state` dictionaries by adding `-j` flag:
+
+```bash
+cmr "python app image-classification onnx _cpu" --input=computer_mouse.jpg -j
+```
+
+*Note that we use similar approach for updating environment variables similar 
+ to calling native scripts - by default, they do not alter environment
+ variables at the host. However, CM allows you to do that 
+ by explicitly specifying which environment variables and state keys
+ will be updated at the host using `new_env_keys` and `new_state_keys`
+ in the meta of a given script as shown [here](https://github.com/mlcommons/ck/blob/master/cm-mlops/script/app-image-classification-onnx-py/_cm.yaml#L88).
+ This helped us make behavior of complex CM workflows more deterministic
+ and reproducible.*
+
+Each sub-dependency can be turned on or off using environment variables
+using `enable_if_env` dictionary or `disable_if_env` dictionary.
+
+You can also specify `version_min`, `version_max` and `version` in these
+dependencies. You can also give them some specific names such as `python`
+and pass versions and environment variables only to a specific script in a pipeline as follows:
+```bash
+cmr "python app image-classification onnx _cpu" --input=computer_mouse.jpg --adr.python.version_min=3.9
+```
+
+This functionality is usually implemented inside ad-hoc bash or shell scripts 
+with many hardwired paths and names - CM simply makes such scripts and tools 
+portable and reusable while enabling technology-agnostic automation workflows 
+with a unified interface that can adapt to any operating system and are easy 
+to understand.
+
+We can now assemble complex automation workflows by reusing all portable
+scripts from [the community](https://access.cknowledge.org/playground/?action=scripts).
+
+In our example, we reused CM scripts to [detect OS features](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/detect-os), 
+install system dependencies on [any supported OS](https://github.com/mlcommons/ck/tree/master/cm-mlops/script/get-sys-utils-cm) 
+(Ubuntu, MacOS, RHEL, Arch, Debian, SLES, Windows, etc),
+detect or install Python and PIP packages, download and preprocess data sets and models, etc.
+
+
