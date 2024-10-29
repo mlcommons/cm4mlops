@@ -501,5 +501,26 @@ CM pre run commands
 It is now possible to download large data sets and models to the host from CM containers
 or pass host scratch pads and data to CM containers transparently to a user!
 
+## How to run MLPerf benchmarks via CM?
+
+CM was originally designed to make it easier to run [MLPerf inference benchmarks](https://arxiv.org/abs/1911.02549).
+
+While MLPerf inference has a common benchmarking engine called [loadgen](https://github.com/mlcommons/inference/tree/master/loadgen),
+setting up a given platform, installing all tools, downloading and preprocessing all models and data sets, 
+updating paths and environment variables, figuring out default parameters for various scenarios, preparing a loadgen command line,
+keeping track of continuous updates in MLPerf rules, running multiple experiments and submitting results
+is a major challenge for old and new submitters (see [MLPerf inference v4.0 submitter orientation for automation](https://doi.org/10.5281/zenodo.10605079).
+
+We created several CM scripts to prepare and run different implementations of MLPerf inference (reference, Nvidia, Intel, Qualcomm, Deep Sparse, etc)
+with a master CM script to run them all out-of-the-box natively or inside automatically-generated containers 
+[run-mlperf-inference-app](https://github.com/mlcommons/cm4mlops/tree/mlperf-inference/script/run-mlperf-inference-app).
+CM helped us to implement it as a simple pipeline with a common and human-friendly interface while reusing all existing automation recipes.
+
+This script was successfully validated to [modularize MLPerf inference benchmarks](https://github.com/mlcommons/ck/blob/master/docs/mlperf/inference/README.md) 
+and help the community automate more than 95% of all performance and power submissions in the v3.1 round
+across more than 120 system configurations (models, frameworks, hardware) 
+while reducing development and maintenance costs.
+
+Please check this [documentation](mlperf/inference) for more details.
 
 
