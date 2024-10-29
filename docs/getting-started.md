@@ -380,4 +380,126 @@ In fact, you can remove `$HOME/CM` to reset CM framework completely
 and remove all downloaded repositories and cached entries.
 
 
+## How to use CM with Python virtual environments?
+
+
+Using CM `cache` makes it possible to run CM automations for multiple virtual environments
+installed inside CM `cache` entries. It is possible to run CM automations with different Python
+virtual environments transparently to users while avoiding messing up native user environment.
+
+We created the following CM automation recipe to create virtual environments:
+
+```bash
+cmr "install python-venv" --name=mlperf
+cm show cache "python-venv name-mlperf"
+export CM_SCRIPT_EXTRA_CMD="--adr.python.name=mlperf"
+```
+
+If you now run our image classification automation recipe, 
+it will reuse model and dataset from the cache, but will
+use the newly created virtual environment `mlperf` for running the script.
+
+
+## How to debug CM scripts?
+
+One of the requirements from CM users was to avoid new and/or complex ways to debug CM automations.
+Using native scripts and Python code makes it possible to apply standard techniques and tools to debug CM automations.
+
+We were also asked to add `--debug` flag to open a shell after the last native script is executed - 
+this allows users to rerun the last command line with all environment variables and paths assembled by CM
+while having a full and native access to change environment and run the final command 
+(such as pinning threads, changing batch sizes, modifying files, etc).
+
+You can try it as follows on Linux, MacOS, Windows or other operating system as follows:
+
+```bash
+cmr "python app image-classification onnx _cpu" --input=computer_mouse.jpg --debug
+
+```
+
+You can also use GDB via environment variable `--env.CM_RUN_PREFIX="gdb --args "`
+to run the final command via GDB.
+
+## How to use CM with containers?
+
+One of the key requirements for CM was to run automation natively or inside containers in the same way.
+
+We want CM scripts to adapt to the current/latest environment natively or run in the
+container automatically generated on the fly when requested by user for more stability and determinism.
+
+In such case, we can get rid of separate development of native scripts/workflows and Dockerfile 
+and use the same CM commands instead.
+
+To run a given script in an automatically-generated container, you can simply substitute `cm run script` 
+with `cm docker script` or `cmr` with `cmrd`:
+
+```bash
+cm docker script "python app image-classification onnx _cpu"
+```
+
+CM will automatically generate a Dockerfile with Ubuntu 22.04 in the `dockerfiles` 
+directory of a given script, will build container with the same CM command
+and will run it inside container.
+
+* If you want to stay in the container, you can add flag `--docker_it`.
+* You can change OS inside container using `--docker_base_image`, `--docker_os` and `--docker_os_version`.
+
+The tricky part is when we want to use host files and directories with a given CM script inside container. 
+To make it easier for users, we have implemented automatic detection and mounting of files and directories 
+in CM script.
+
+Developers of a CM script just need to specify which flags and environment variables are local files or directories
+using `input_paths` in `docker` dictionary of the meta-description of this script:
+
+```yaml
+docker:
+  skip_run_cmd: 'no'
+  all_gpus: 'yes'
+  input_paths:
+    - input
+    - env.CM_IMAGE
+    - output
+  skip_input_for_fake_run:
+    - input
+    - env.CM_IMAGE
+    - output
+    - j
+  pre_run_cmds:
+    - echo \"CM pre run commands\"
+```
+
+When you run the same script via container with the local computer_mouse.jpg file as an input,
+CM will automatically mount current directory and will update the input to the CM script
+inside container with the internal path:
+
+<sup>
+
+```bash
+cm docker script "python app image-classification onnx _cpu" --input=computer_mouse.jpg
+
+...
+
+docker build  -f D:\Work1\CM\ck\cm-mlops\script\app-image-classification-onnx-py\dockerfiles\ubuntu_22.04.Dockerfile \
+              -t cknowledge/cm-script-app-image-classification-onnx-py:ubuntu-22.04-latest .
+
+...
+
+Container launch command:
+docker run  --entrypoint ""  --gpus=all -v D:\Work1\CM\ck\docs\computer_mouse.jpg:/cm-mount/Work1/CM/ck/docs/computer_mouse.jpg 
+                            cknowledge/cm-script-app-image-classification-onnx-py:ubuntu-22.04-latest 
+                            bash -c "echo \"CM pre run commands\" && 
+                            cm run script --tags=python,app,image-classification,onnx,_cpu 
+                            --input=/cm-mount/Work1/CM/ck/docs/computer_mouse.jpg "
+
+CM pre run commands
+
+
+```
+
+</sup>
+
+It is now possible to download large data sets and models to the host from CM containers
+or pass host scratch pads and data to CM containers transparently to a user!
+
+
 
