@@ -104,7 +104,8 @@ computer mouse image to the current directory:
 <sup>
 
 ```bash
-cm run script --tags=download,file,_wget --url=https://cKnowledge.org/ai/data/computer_mouse.jpg --verify=no --env.CM_DOWNLOAD_CHECKSUM=45ae5c940233892c2f860efdf0b66e7e
+cm run script --tags=download,file,_wget --url=https://cKnowledge.org/ai/data/computer_mouse.jpg \
+--verify=no --env.CM_DOWNLOAD_CHECKSUM=45ae5c940233892c2f860efdf0b66e7e
 ```
 
 </sup>
