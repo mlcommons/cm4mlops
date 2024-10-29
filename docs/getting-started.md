@@ -252,21 +252,38 @@ It also has extensions:
 1. Docker: allows CM script to be run inside a docker container
 2. Docs: used to automatically generate the README file for a CM script
 
-## How to add new CM scripts?
+More theoretical explanation on CM Script and it's workflows could be found [here](https://github.com/mlcommons/cm4mlops/blob/anandhu-eng-patch-1/docs/index.md)
+
+### How to add new CM scripts?
 
 One of the main requirement for CM was to provide a very light-weight connectors 
 between existing automation scripts and tools rather than substituting them.
 
 You can add your own scripts and tools to CM using the following command
-that will create a ready-to-use dummy CM script:
+that will create a ready-to-use dummy CM script named `hello-world`:
 
 ```bash
-cm add script my-script --tags=my,script
+cm add script hello-world --tags=hello-world,display,test
 ```
 
-You can already run this dummy script and plug it into other CM workflows:
-```bash
-cmr "my script"
+This creates a bare cm script inside the local repo. The new folder structure would look something like this:
+```
+├── CM
+│   ├── index.json
+│   ├── repos
+│   │   ├── local
+│   │   │   ├── cfg
+│   │   │   ├── cache
+│   │   │   ├── cmr.yaml
+│   │   │   └── script
+│   │   │   	├── hello-world
+│   │   │       	├── _cm.yaml
+│   │   │       	├── customize.py
+│   │   │       	├── README-extra.md
+│   │   │       	├── run.bat
+│   │   │       	└── run.sh
+│   │   └── mlcommons@cm4mlops
+│   └── repos.json
 ```
 
 You can also run it from python as follows:
@@ -274,8 +291,19 @@ You can also run it from python as follows:
 import cmind
 output=cmind.access({'action':'run', 
                      'automation':'script', 
-                     'tags':'my,script})
+                     'tags':'hello-world,display,test`})
 if output['return']==0: print (output)
 ```
+
+If you find that the script you are newly creating is similar to any existing scripts in any cm repository, 
+you could create a new script by copying another script entirely using the following command:
+
+```
+cm copy script <source_script> .:<target_script>
+```
+
+The `source_script` contains the name of the script that you want to make a copy and `target_script` contains the name of the new script that will be created as a copy of the `source_script`.
+The existing script names in `cm4mlops` repo could be found [here](https://github.com/mlcommons/cm4mlops/tree/mlperf-inference/script).
+
 
 
