@@ -62,6 +62,7 @@ def preprocess(i):
     if len(output_split) > 1 and str(env.get('CM_DOCKER_REUSE_EXISTING_CONTAINER', '')).lower() in [ "1", "true", "yes" ]: #container exists
         out = output_split[1].split(" ")
         existing_container_id = out[0]
+        print(f"Reusing existing container {existing_container_id}")
         env['CM_DOCKER_CONTAINER_ID'] = existing_container_id
 
     else:
