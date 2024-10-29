@@ -244,4 +244,38 @@ install system dependencies on [any supported OS](https://github.com/mlcommons/c
 (Ubuntu, MacOS, RHEL, Arch, Debian, SLES, Windows, etc),
 detect or install Python and PIP packages, download and preprocess data sets and models, etc.
 
+## CM Script Automation
+
+CM script automation manages the creation and execution of CM scripts. It closely relates to CM cache automation as the output of any CM script can be cached.
+It also has extensions:
+
+1. Docker: allows CM script to be run inside a docker container
+2. Docs: used to automatically generate the README file for a CM script
+
+## How to add new CM scripts?
+
+One of the main requirement for CM was to provide a very light-weight connectors 
+between existing automation scripts and tools rather than substituting them.
+
+You can add your own scripts and tools to CM using the following command
+that will create a ready-to-use dummy CM script:
+
+```bash
+cm add script my-script --tags=my,script
+```
+
+You can already run this dummy script and plug it into other CM workflows:
+```bash
+cmr "my script"
+```
+
+You can also run it from python as follows:
+```bash
+import cmind
+output=cmind.access({'action':'run', 
+                     'automation':'script', 
+                     'tags':'my,script})
+if output['return']==0: print (output)
+```
+
 
