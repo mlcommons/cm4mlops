@@ -79,7 +79,7 @@ echo "------------------------------------------------------------" >> $OUTPUT_F
 
 echo "14. cpupower frequency-info" >> $OUTPUT_FILE
 eval "cpupower frequency-info" >> $OUTPUT_FILE
-test $? -eq 0 || exit $?
+test $? -eq 0 || echo "FAILED: cpupower frequency-info" >> $OUTPUT_FILE
 echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
 echo "15. sysctl" >> $OUTPUT_FILE
