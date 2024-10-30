@@ -40,6 +40,9 @@
       "prehook_deps": [
         {
           "tags": "get,generic-sys-util,_install",
+          "force_env_keys": [
+            "CM_TMP_FAIL_SAFE"
+          ],
           "inherit_variation_tags": true,
           "names": [
             "install-sys-util"
@@ -726,7 +729,10 @@
     "test-all-variations": "yes",
     "use_docker": "yes",
     "docker_images": [
-      "ubuntu-22.04"
+      "ubuntu:20.04",
+      "ubuntu:22.04",
+      "ubuntu:24.04",
+      "registry.access.redhat.com/ubi9"
     ]
   }
 }

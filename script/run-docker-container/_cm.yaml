@@ -26,6 +26,7 @@ input_mapping:
   detached: CM_DOCKER_DETACHED_MODE
   device: CM_DOCKER_ADD_DEVICE
   docker_image_base: CM_DOCKER_IMAGE_BASE
+  docker_base_image: CM_DOCKER_IMAGE_BASE
   keep_detached: CM_KEEP_DETACHED_CONTAINER
   docker_os: CM_DOCKER_OS
   docker_os_version: CM_DOCKER_OS_VERSION

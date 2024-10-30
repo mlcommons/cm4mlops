@@ -2439,18 +2439,20 @@ class CAutomation(Automation):
                         for variation in individual_variations:
                             run_tags = f"{tags_string},_{variation}"
                             if use_docker:
-                                docker_images = test_config.get('docker_images', [ "ubuntu-22.04" ])
+                                docker_images = i.get("docker_images", test_config.get('docker_images', [ "ubuntu-22.04" ]))
                                 for docker_image in docker_images:
                                     ii = {'action':'docker',
                                             'automation':'script',
                                             'tags': run_tags,
                                             'quiet': i.get('quiet'),
-                                            'docker_image': docker_image,
+                                            'docker_base_image': docker_image,
                                             'docker_image_name': alias
                                         }
-                                    if i.get('docker_cm_repo', '') != '':
+                                    docker_cm_repo = i.get('docker_cm_repo', test_config.get('docker_cm_repo', ''))
+                                    docker_cm_repo_branch = i.get('docker_cm_repo_branch', test_config.get('docker_cm_repo_branch', ''))
+                                    if docker_cm_repo != '':
                                         ii['docker_cm_repo'] = i['docker_cm_repo']
-                                    if i.get('docker_cm_repo_branch', '') != '':
+                                    if docker_cm_repo_branch != '':
                                         ii['docker_cm_repo_branch'] = i['docker_cm_repo_branch']
 
                                     r = self.cmind.access(ii)
