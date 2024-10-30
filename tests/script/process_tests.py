@@ -27,9 +27,9 @@ for file in files:
             'action':'test', 'automation':'script', 'artifact': uid, 'quiet': 'yes', 'out': 'con'
             }
     if os.environ.get('DOCKER_CM_REPO', '') != '':
-        ii['docker_cm_repo'] = env['DOCKER_CM_REPO']
+        ii['docker_cm_repo'] = os.environ['DOCKER_CM_REPO']
     if os.environ.get('DOCKER_CM_REPO_BRANCH', '') != '':
-        ii['docker_cm_repo_branch'] = env['DOCKER_CM_REPO_BRANCH']
+        ii['docker_cm_repo_branch'] = os.environ['DOCKER_CM_REPO_BRANCH']
     print(ii)
     r = cm.access(ii)
 
