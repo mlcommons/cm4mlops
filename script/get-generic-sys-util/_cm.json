@@ -21,7 +21,8 @@
     "CM_SYS_UTIL_VERSION_CMD": ""
   },
   "input_mapping": {
-    "ignore_missing": "CM_GENERIC_SYS_UTIL_IGNORE_MISSING_PACKAGE"
+    "ignore_missing": "CM_GENERIC_SYS_UTIL_IGNORE_MISSING_PACKAGE",
+    "fail_safe": "CM_TMP_FAIL_SAFE"
   },
   "tags": [
     "get",
@@ -745,21 +746,24 @@
         "docker_os": "ubuntu",
         "docker_os_version": "20.04",
         "test-all-variations": "yes",
-        "ignore_missing": "yes"
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
       },
       {
         "docker": "yes",
         "docker_os": "ubuntu",
         "docker_os_version": "22.04",
         "test-all-variations": "yes",
-        "ignore_missing": "yes"
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
       },
       {
         "docker": "yes",
         "docker_os": "ubuntu",
         "docker_os_version": "24.04",
         "test-all-variations": "yes",
-        "ignore_missing": "yes"
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
       }
     ]
   }
