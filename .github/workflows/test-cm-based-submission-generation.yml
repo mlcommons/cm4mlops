@@ -36,10 +36,10 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Pull repo where test cases are uploaded
       run: |
-        cm pull repo anandhu-eng@inference --checkout=submission-generation-tests
+        git clone -b submission-generation-tests https://github.com/anandhu-eng/inference.git submission_generation_tests
     - name: Submission generation(model_mapping.json not present but model name is matching with the official one in submission checker) - ${{ matrix.category }} ${{ matrix.division }}
       run: |
-        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$HOME/CM/repos/anandhu-eng@inference/case-3/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
+        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=submission_generation_tests/case-3/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
   Case-7:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -66,7 +66,7 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Pull repo where test cases are uploaded
       run: |
-        cm pull repo anandhu-eng@inference --checkout=submission-generation-tests
+        git clone -b submission-generation-tests https://github.com/anandhu-eng/inference.git submission_generation_tests
     - name: Submission generation(sut_info.json is not completely filled but the SUT folder name is in required format(hardware_name-implementation-device-framework-run_config)) - ${{ matrix.category }} ${{ matrix.division }}
       run: |
-        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$HOME/CM/repos/anandhu-eng@inference/case-7/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
+        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=submission_generation_tests/case-7/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
