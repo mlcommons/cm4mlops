@@ -229,7 +229,7 @@
         "CM_SYS_UTIL_NAME": "libffi"
       },
       "state": {
-        "libffi7": {
+        "libffi": {
           "apt": "libffi"
         }
       }
