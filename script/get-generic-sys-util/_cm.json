@@ -721,5 +721,12 @@
         }
       }
     }
+  },
+  "tests": {
+    "test-all-variations": "yes",
+    "use_docker": "yes",
+    "docker_images": [
+      "ubuntu-22.04"
+    ]
   }
 }

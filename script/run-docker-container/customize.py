@@ -303,7 +303,7 @@ def update_docker_info(env):
     if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
         docker_image_name = env['CM_DOCKER_IMAGE_NAME']
     else:
-        docker_image_name = 'cm-script-'+env['CM_DOCKER_RUN_SCRIPT_TAGS'].replace(',', '-').replace('_','-')
+        docker_image_name = 'cm-script-'+env['CM_DOCKER_RUN_SCRIPT_TAGS'].replace(',', '-').replace('_','-').replace('+','plus')
         env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 
     docker_image_tag_extra = env.get('CM_DOCKER_IMAGE_TAG_EXTRA', '-latest')
