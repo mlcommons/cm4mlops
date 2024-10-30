@@ -40,3 +40,33 @@ jobs:
     - name: Submission generation(model_mapping.json not present but model name is matching with the official one in submission checker) - ${{ matrix.category }} ${{ matrix.division }}
       run: |
         cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$HOME/CM/repos/anandhu-eng@inference/case-3/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
+  Case-7:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [ "3.12" ]
+        division: ["closed", "open"]
+        category: ["datacenter", "edge"]
+        exclude:
+          - os: macos-latest
+          - os: windows-latest
+          - division: "open"
+          - category: "edge"
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install cmind
+        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+    - name: Pull repo where test cases are uploaded
+      run: |
+        cm pull repo anandhu-eng@inference --checkout=submission-generation-tests
+    - name: Submission generation(model_mapping.json not present but model name is matching with the official one in submission checker) - ${{ matrix.category }} ${{ matrix.division }}
+      run: |
+        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$HOME/CM/repos/anandhu-eng@inference/case-7/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
