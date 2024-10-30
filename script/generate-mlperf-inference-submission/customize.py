@@ -15,7 +15,7 @@ def fill_from_json(file_path, keys, sut_info):
     with open(file_path, 'r') as f:
         data = json.load(f)
         for key in keys:
-            if key in data and sut_info[key] is None:
+            if key in data and (sut_info[key] is None or sut_info[key] == "default"):
                 sut_info[key] = data[key]
             elif key in data and sut_info[key] != data[key]:
                 return -1 # error saying there is a mismatch in the value of a key
@@ -149,7 +149,8 @@ def generate_submission(i):
             "implementation": None,
             "device": None,
             "framework": None,
-            "run_config": None
+            "framework_version": "default",
+            "run_config": "default"
         } # variable to store the system meta 
 
         model_mapping_combined = {} # to store all the model mapping related to an SUT
@@ -209,6 +210,7 @@ def generate_submission(i):
             implementation = sut_info["implementation"]
             device = sut_info["device"]
             framework = sut_info["framework"].replace(" ","_")
+            framework_version = sut_info["framework_version"]
             run_config = sut_info["run_config"]
             new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
         else:
@@ -234,7 +236,7 @@ def generate_submission(i):
                 system_meta_default['framework'] = framework + " " + framework_version
             else:
                 print(parts)
-                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.system_name\n2.implementation\n3.framework\n4.run_config\nInclude a cm-sut-info.json file with the above content in {result_path}"}
+                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.hardware_name\n2.implementation\n3.Device\n4.framework\n5.framework_version\n6.run_config\nInclude a cm-sut-info.json or sut-info.json file with the above content in {result_path}"}
             
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
