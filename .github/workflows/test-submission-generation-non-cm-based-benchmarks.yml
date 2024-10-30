@@ -35,4 +35,4 @@ jobs:
         cm pull repo anandhu-eng@externalSubmissionPOC
     - name: Submission generation - datacenter open
       run: |
-        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$HOME/CM/repo/anandhu-eng@externalSubmissionPOC/case-3/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=closed --category=datacenter --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
+        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$HOME/CM/repoS/anandhu-eng@externalSubmissionPOC/case-3/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=closed --category=datacenter --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
