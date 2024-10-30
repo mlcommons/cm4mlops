@@ -3,7 +3,7 @@
 name: CM based Submission Generation
 
 on:
-  pull_request_target:
+  pull_request:
     branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-submission-generation-non-cm-based-benchmarks.yml'
