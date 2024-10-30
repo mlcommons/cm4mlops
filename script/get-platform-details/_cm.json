@@ -66,7 +66,10 @@
           "linux"
         ]
       },
-      "tags": "get,sys-util,generic,_linux-tools"
+      "tags": "get,sys-util,generic,_linux-tools",
+      "env": {
+        "CM_TMP_FAIL_SAFE": "yes"
+      }
     }
   ],
   "tags": [
