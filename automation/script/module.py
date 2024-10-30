@@ -2433,12 +2433,12 @@ class CAutomation(Automation):
                     variations = meta.get("variations")
                     tags_string = ",".join(meta.get("tags"))
                     run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
-                    ii = {'action': 'run',
+                    for run_input in run_inputs:
+                        ii = {'action': 'run',
                               'automation':'script',
                                         'quiet': i.get('quiet'),
                                         'env': i.get('env')
                             }
-                    for run_input in run_inputs:
                         test_all_variations = run_input.get('test-all-variations', False)
                         if test_all_variations:
                             run_variations = [ f"_{v}" for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
