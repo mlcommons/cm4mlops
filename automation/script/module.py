@@ -2442,7 +2442,6 @@ class CAutomation(Automation):
                                         'quiet': i.get('quiet'),
                                         'env': i.get('env')
                             }
-                        i_env = i.get('env')
                         for run_input in run_inputs:
                             for key in run_input:#override meta with any user inputs like for docker_cm_repo
                                 if i.get(key, '') != '':
@@ -2451,6 +2450,7 @@ class CAutomation(Automation):
                                     else:
                                         run_input[key] = i[key]
                             ii = {**ii, **run_input}
+                            i_env = ii.get('env')
                             if use_docker:
                                 ii['action'] = "docker"
                                 for key in i:
@@ -2466,6 +2466,7 @@ class CAutomation(Automation):
                                 if i_env:
                                     import copy
                                     ii['env'] = copy.deepcopy(i_env)
+                                logging.info(ii)
                                 r = self.cmind.access(ii)
                                 if r['return'] > 0:
                                     return r
