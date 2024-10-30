@@ -2431,18 +2431,38 @@ class CAutomation(Automation):
                 if test_config:
                     logging.info(test_config)
                     test_all_variations = test_config.get('test-all-variations', False)
+                    use_docker = test_config.get('use_docker', False)
                     if test_all_variations:
                         variations = meta.get("variations")
                         individual_variations = [ v for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
                         tags_string = ",".join(meta.get("tags"))
                         for variation in individual_variations:
                             run_tags = f"{tags_string},_{variation}"
-                            r = self.cmind.access({'action':'run',
-                                'automation':'script',
-                                'tags': run_tags,
-                                'quiet': i.get('quiet') })
-                            if r['return'] > 0:
-                                return r
+                            if use_docker:
+                                docker_images = test_config.get('docker_images', [ "ubuntu-22.04" ])
+                                for docker_image in docker_images:
+                                    ii = {'action':'docker',
+                                            'automation':'script',
+                                            'tags': run_tags,
+                                            'quiet': i.get('quiet'),
+                                            'docker_image': docker_image,
+                                            'docker_image_name': alias
+                                        }
+                                    if i.get('docker_cm_repo', '') != '':
+                                        ii['docker_cm_repo'] = i['docker_cm_repo']
+                                    if i.get('docker_cm_repo_branch', '') != '':
+                                        ii['docker_cm_repo_branch'] = i['docker_cm_repo_branch']
+
+                                    r = self.cmind.access(ii)
+                                    if r['return'] > 0:
+                                        return r
+                            else:
+                                r = self.cmind.access({'action':'run',
+                                    'automation':'script',
+                                    'tags': run_tags,
+                                    'quiet': i.get('quiet') })
+                                if r['return'] > 0:
+                                    return r
 
                 logging.info('  Test: WIP')
 
