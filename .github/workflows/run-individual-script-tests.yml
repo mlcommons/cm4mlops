@@ -21,7 +21,7 @@ jobs:
       run: |
         git remote add upstream ${{ github.event.pull_request.base.repo.clone_url }}
         git fetch upstream
-        echo "files=$(git diff upstream ${{ github.event.pull_request.base.ref }} --name-only | xargs)" >> $GITHUB_OUTPUT
+        echo "files=$(git diff upstream/${{ github.event.pull_request.base.ref }} --name-only | xargs)" >> $GITHUB_OUTPUT
     - name: RUN Script Tests
       run: |
         echo ${{ steps.getfile.outputs.files }}
