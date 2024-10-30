@@ -209,6 +209,7 @@ def generate_submission(i):
             implementation = sut_info["implementation"]
             device = sut_info["device"]
             framework = sut_info["framework"].replace(" ","_")
+            framework_version = sut_info["framework_version"]
             run_config = sut_info["run_config"]
             new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
         else:
@@ -234,7 +235,7 @@ def generate_submission(i):
                 system_meta_default['framework'] = framework + " " + framework_version
             else:
                 print(parts)
-                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.system_name\n2.implementation\n3.framework\n4.run_config\nInclude a cm-sut-info.json file with the above content in {result_path}"}
+                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.hardware_name\n2.implementation\n3.Device\n4.framework\n5.framework_version\n6.run_config\nInclude a cm-sut-info.json or sut-info.json file with the above content in {result_path}"}
             
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
