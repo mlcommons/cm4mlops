@@ -2431,62 +2431,59 @@ class CAutomation(Automation):
                 if test_config:
                     logging.info(test_config)
                     variations = meta.get("variations")
-                    if test_all_variations:
-                        tags_string = ",".join(meta.get("tags"))
-                        run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
-                        ii = {'action': 'run',
+                    tags_string = ",".join(meta.get("tags"))
+                    run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
+                    ii = {'action': 'run',
                               'automation':'script',
                                         'quiet': i.get('quiet'),
                                         'env': i.get('env')
                             }
-                        for run_input in run_inputs:
-                            test_all_variations = run_input.get('test-all-variations', False)
-                            if test_all_variations:
-                                run_variations = [ f"_{v}" for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
+                    for run_input in run_inputs:
+                        test_all_variations = run_input.get('test-all-variations', False)
+                        if test_all_variations:
+                            run_variations = [ f"_{v}" for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
+                        else:
+                            given_variations = run_input.get('variations_list', [])
+                            if given_variations:
+                                v_split = []
+                                run_variations = []
+                                for i, v in enumerate(given_variations):
+                                    v_split = v.split(",")
+                                    for t in v_split:
+                                        if not t.startswith("_"):
+                                            given_variations[i] = f"_{t}" #variations must begin with _. We support both with and without _ in the meta
+                                    if v_split:
+                                        run_variations.append(",".join(v_split))
                             else:
-                                given_variations = run_input.get('variations_list', [])
-                                if given_variations:
-                                    v_split = []
-                                    run_variations = []
-                                    for i, v in enumerate(given_variations):
-                                        v_split = v.split(",")
-                                        for t in v_split:
-                                            if not t.startswith("_"):
-                                                given_variations[i] = f"_{t}" #variations must begin with _. We support both with and without _ in the meta
-                                        if v_split:
-                                            run_variations.append(",".join(v_split))
+                                run_variations = [ "" ] #run the test without any variations
+                        use_docker = run_input.get('docker', False)
+                        for key in run_input:#override meta with any user inputs like for docker_cm_repo
+                            if i.get(key, '') != '':
+                                if type(run_input[key]) == dict:
+                                    utils.merge_dicts({'dict1': run_input[key] , 'dict2':i[key], 'append_lists':True, 'append_unique':True})
                                 else:
-                                    run_variations = [ "" ] #run the test without any variations
-                            use_docker = run_input.get('docker', False)
-                            for key in run_input:#override meta with any user inputs like for docker_cm_repo
-                                if i.get(key, '') != '':
-                                    if type(run_input[key]) == dict:
-                                        utils.merge_dicts({'dict1': run_input[key] , 'dict2':i[key], 'append_lists':True, 'append_unique':True})
-                                    else:
-                                        run_input[key] = i[key]
-                            ii = {**ii, **run_input}
-                            i_env = ii.get('env')
-                            if use_docker:
-                                ii['action'] = "docker"
-                                for key in i:
-                                    if key.startswith("docker_"):
-                                        ii[key] = i[key]
+                                    run_input[key] = i[key]
+                        ii = {**ii, **run_input}
+                        i_env = ii.get('env')
+                        if use_docker:
+                            ii['action'] = "docker"
+                            for key in i:
+                                if key.startswith("docker_"):
+                                    ii[key] = i[key]
 
-                                if ii.get('docker_image_name', '') == '':
-                                    ii['docker_image_name'] = alias
+                            if ii.get('docker_image_name', '') == '':
+                                ii['docker_image_name'] = alias
 
-                            for variation_tags in run_variations:
-                                run_tags = f"{tags_string},{variation_tags}"
-                                ii['tags'] = run_tags
-                                if i_env:
-                                    import copy
-                                    ii['env'] = copy.deepcopy(i_env)
-                                logging.info(ii)
-                                r = self.cmind.access(ii)
-                                if r['return'] > 0:
-                                    return r
-
-                logging.info('  Test: WIP')
+                        for variation_tags in run_variations:
+                            run_tags = f"{tags_string},{variation_tags}"
+                            ii['tags'] = run_tags
+                            if i_env:
+                                import copy
+                                ii['env'] = copy.deepcopy(i_env)
+                            logging.info(ii)
+                            r = self.cmind.access(ii)
+                            if r['return'] > 0:
+                                return r
 
 
         return {'return':0, 'list': lst}
