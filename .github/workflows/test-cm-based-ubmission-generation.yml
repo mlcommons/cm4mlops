@@ -1,4 +1,4 @@
-# This workflow will test the submission generation capability of CM for non-CM based benchmarks
+# This workflow will test the submission generation capability of CM f
 
 name: CM based Submission Generation
 
@@ -36,7 +36,7 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Pull repo where test cases are uploaded
       run: |
-        cm pull repo anandhu-eng@externalSubmissionPOC
-    - name: Submission generation - ${{ matrix.category }} ${{ matrix.division }}
+        cm pull repo anandhu-eng@inference --checkout=submission-generation-tests
+    - name: Submission generation(model_mapping.json not present but model name is matching with the official one in submission checker) - ${{ matrix.category }} ${{ matrix.division }}
       run: |
-        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$HOME/CM/repos/anandhu-eng@externalSubmissionPOC/case-3/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
+        cm run script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$HOME/CM/repos/anandhu-eng@inference/case-3/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
