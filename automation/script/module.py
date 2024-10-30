@@ -2425,12 +2425,11 @@ class CAutomation(Automation):
 
             alias = meta.get('alias','')
             uid = meta.get('uid','')
-
             if console:
                 logging.info(path)
                 test_config = meta.get('tests', '')
                 if test_config:
-                    log.info(test_config)
+                    logging.info(test_config)
                     test_all_variations = test_config.get('test-all-variations', False)
                     if test_all_variations:
                         variations = meta.get("variations")

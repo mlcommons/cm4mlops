@@ -8,6 +8,7 @@ import yaml
 files=sys.argv[1:]
 
 for file in files:
+    print(file)
     if not os.path.isfile(file):
         continue
     if not file.endswith("_cm.json") and not file.endswith("_cm.yaml"):
@@ -20,5 +21,5 @@ for file in files:
         data = yaml.safe_load(f)
     uid = data['uid']
 
-    r = cm.access({'action':'test', 'automation':'script', 'artifact': uid, 'quiet': 'yes'})
+    r = cm.access({'action':'test', 'automation':'script', 'artifact': uid, 'quiet': 'yes', 'out': 'con'})
     checks.check_return(r)
