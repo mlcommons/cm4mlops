@@ -1,14 +1,14 @@
 # This workflow will test the submission generation capability of CM for non-CM based benchmarks
 
-name: Submission generation tests for non-CM based MLPerf Inference Benchmarks
+name: CM based Submission Generation
 
 on:
   pull_request_target:
     branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-submission-generation-non-cm-based-benchmarks.yml'
-      - '**'  # kept on for all the path instead of submission generation CM script so that this could help in trapping any bugs in any recent submission checker modification also
-      - '!**.md'
+      # - '**'  # kept on for all the path instead of submission generation CM script so that this could help in trapping any bugs in any recent submission checker modification also
+      # - '!**.md'
 jobs:
   Case-3:
     runs-on: ${{ matrix.os }}
