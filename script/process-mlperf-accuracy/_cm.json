@@ -288,7 +288,8 @@
           "tags": "get,generic-python-lib,_torch",
           "skip_if_env": {
             "CM_MLPERF_DEVICE": [
-              "cuda"
+              "cuda",
+              "gpu"
             ]
           }
         },
@@ -296,7 +297,8 @@
           "tags": "get,generic-python-lib,_torch_cuda",
           "enable_if_env": {
             "CM_MLPERF_DEVICE": [
-              "cuda"
+              "cuda",
+              "gpu"
             ]
           }
         },
