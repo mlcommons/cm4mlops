@@ -1,5 +1,5 @@
-# This workflow will add/update the README.md files for any updated CM scripts
-name: Readme update for CM scripts
+# This workflow will run configured tests for any updated CM scripts
+name: Individual CM script Tests
 
 on:
   pull_request:
