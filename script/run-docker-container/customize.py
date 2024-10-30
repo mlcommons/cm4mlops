@@ -220,8 +220,8 @@ def postprocess(i):
 
         print ('')
         docker_out = subprocess.check_output(CMD, shell=True).decode("utf-8")
-        if docker_out != 0:
-            return {'return': docker_out, 'error': 'docker run failed'}
+        #if docker_out != 0:
+        #    return {'return': docker_out, 'error': 'docker run failed'}
 
         lines = docker_out.split("\n")
 
