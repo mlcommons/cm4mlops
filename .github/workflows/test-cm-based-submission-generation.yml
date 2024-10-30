@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main", "dev", "mlperf-inference" ]
     paths:
-      - '.github/workflows/test-submission-generation-non-cm-based-benchmarks.yml'
+      - '.github/workflows/test-cm-based-submission-generation.yml'
       # - '**'  # kept on for all the path instead of submission generation CM script so that this could help in trapping any bugs in any recent submission checker modification also
       # - '!**.md'
 jobs:
