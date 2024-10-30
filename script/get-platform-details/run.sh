@@ -120,7 +120,7 @@ echo "------------------------------------------------------------" >> $OUTPUT_F
 echo "21. dmidecode" >> $OUTPUT_FILE
 if [[ ${CM_SUDO_USER} == "yes" ]]; then
     eval "${CM_SUDO} dmidecode" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    test $? -eq 0 || echo "FAILED: dmidecode" >> $OUTPUT_FILE
 else
     echo "Requires SUDO permission" >> $OUTPUT_FILE
 fi
@@ -129,7 +129,7 @@ echo "------------------------------------------------------------" >> $OUTPUT_F
 echo "22. BIOS" >> $OUTPUT_FILE
 if [[ ${CM_SUDO_USER} == "yes" ]]; then
     eval "${CM_SUDO} dmidecode -t bios" >> $OUTPUT_FILE
-    test $? -eq 0 || exit $?
+    test $? -eq 0 || echo "FAILED: dmidecode -t bios" >> $OUTPUT_FILE
 else
     echo "Requires SUDO permission" >> $OUTPUT_FILE
 fi
