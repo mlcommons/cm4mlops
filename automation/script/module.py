@@ -2428,7 +2428,24 @@ class CAutomation(Automation):
 
             if console:
                 logging.info(path)
-                logging.info('  Test: TBD')
+                test_config = meta.get('tests', '')
+                if test_config:
+                    log.info(test_config)
+                    test_all_variations = test_config.get('test-all-variations', False)
+                    if test_all_variations:
+                        variations = meta.get("variations")
+                        individual_variations = [ v for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
+                        tags_string = ",".join(meta.get("tags"))
+                        for variation in individual_variations:
+                            run_tags = f"{tags_string},_{variation}"
+                            r = self.cmind.access({'action':'run',
+                                'automation':'script',
+                                'tags': run_tags,
+                                'quiet': i.get('quiet') })
+                            if r['return'] > 0:
+                                return r
+
+                logging.info('  Test: WIP')
 
 
         return {'return':0, 'list': lst}

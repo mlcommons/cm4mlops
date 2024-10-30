@@ -721,5 +721,8 @@
         }
       }
     }
+  },
+  "tests": {
+    "test-all-variations": "yes"
   }
 }
