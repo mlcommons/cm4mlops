@@ -1,5 +1,5 @@
-# This workflow will add/update the README.md files for any updated CM scripts
-name: Readme update for CM scripts
+# This workflow will run configured tests for any updated CM scripts
+name: Individual CM script Tests
 
 on:
   pull_request:
@@ -19,7 +19,9 @@ jobs:
     - name: Get changed files
       id: getfile
       run: |
-        echo "files=$(git diff --name-only ${{ github.event.before }} | xargs)" >> $GITHUB_OUTPUT
+        git remote add upstream ${{ github.event.pull_request.base.repo.clone_url }}
+        git fetch upstream
+        echo "files=$(git diff \"upstream\" \"${{ github.event.pull_request.base.ref }}\" --name-only | xargs)" >> $GITHUB_OUTPUT
     - name: RUN Script Tests
       run: |
         echo ${{ steps.getfile.outputs.files }}
