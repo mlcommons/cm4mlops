@@ -1,0 +1,31 @@
+# This workflow will add/update the README.md files for any updated CM scripts
+name: Readme update for CM scripts
+
+on:
+  pull_request:
+    branches: [ "main", "mlperf-inference", "dev" ]
+    paths:
+      - 'script/**_cm.json'
+      - 'script/**_cm.yml'
+
+jobs:
+  run-script-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout'
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 2
+    - name: Get changed files
+      id: getfile
+      run: |
+        echo "files=$(git diff --name-only ${{ github.event.before }} | xargs)" >> $GITHUB_OUTPUT
+    - name: RUN Script Tests
+      run: |
+        echo ${{ steps.getfile.outputs.files }}
+        for file in ${{ steps.getfile.outputs.files }}; do
+          echo $file
+        done
+        python3 -m pip install cmind
+        cm pull repo --url=https://github.com/${{ github.repository }} --checkout=${{ github.ref_name }}
+        python3 tests/script/process_tests.py ${{ steps.getfile.outputs.files }}
