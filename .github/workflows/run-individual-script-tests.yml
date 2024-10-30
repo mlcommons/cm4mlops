@@ -19,7 +19,9 @@ jobs:
     - name: Get changed files
       id: getfile
       run: |
-        echo "files=$(git diff --name-only ${{ github.event.before }} | xargs)" >> $GITHUB_OUTPUT
+        git remote add upstream ${{ github.event.pull_request.base.repo.clone_url }}
+        git fetch upstream
+        echo "files=$(git diff \"upstream\" \"${{ github.event.pull_request.base.ref }}\" --name-only | xargs)" >> $GITHUB_OUTPUT
     - name: RUN Script Tests
       run: |
         echo ${{ steps.getfile.outputs.files }}
