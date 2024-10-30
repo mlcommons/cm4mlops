@@ -28,8 +28,7 @@ else:
 
         model_filenames = model_filename.split(',') if ',' in model_filename else [model_filename]
 
-        # First must be model
-        base_model_filename = model_filenames[0]
+        base_model_filepath = None
 
         files = []
         if full_subfolder!='':
@@ -93,15 +92,17 @@ else:
             xrevision = None if revision == '' else revision
             xsubfolder = None if subfolder == '' else subfolder
 
-            hf_hub_download(repo_id=model_stub,
+            downloaded_path = hf_hub_download(repo_id=model_stub,
                        subfolder=xsubfolder,
                        filename=model_filename,
-                       force_filename=model_filename,
                        revision=xrevision,
                        cache_dir=os.getcwd())
+            print(downloaded_path)
+            if not base_model_filepath:
+                base_model_filepath = downloaded_path 
         
 
         print ('')
         
         with open('tmp-run-env.out', 'w') as f:
-            f.write(f"CM_ML_MODEL_FILE_WITH_PATH={os.path.join(os.getcwd(),base_model_filename)}")
+            f.write(f"CM_ML_MODEL_FILE_WITH_PATH={base_model_filepath}")

@@ -62,6 +62,7 @@ def preprocess(i):
     if len(output_split) > 1 and str(env.get('CM_DOCKER_REUSE_EXISTING_CONTAINER', '')).lower() in [ "1", "true", "yes" ]: #container exists
         out = output_split[1].split(" ")
         existing_container_id = out[0]
+        print(f"Reusing existing container {existing_container_id}")
         env['CM_DOCKER_CONTAINER_ID'] = existing_container_id
 
     else:
@@ -302,7 +303,7 @@ def update_docker_info(env):
     if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
         docker_image_name = env['CM_DOCKER_IMAGE_NAME']
     else:
-        docker_image_name = 'cm-script-'+env['CM_DOCKER_RUN_SCRIPT_TAGS'].replace(',', '-').replace('_','-')
+        docker_image_name = 'cm-script-'+env['CM_DOCKER_RUN_SCRIPT_TAGS'].replace(',', '-').replace('_','-').replace('+','plus')
         env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 
     docker_image_tag_extra = env.get('CM_DOCKER_IMAGE_TAG_EXTRA', '-latest')

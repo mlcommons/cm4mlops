@@ -870,5 +870,12 @@
       },
       "new_env_keys": ["CM_ZLIB1G_DEV_VERSION"]
     }
+  },
+  "tests": {
+    "test-all-variations": "yes",
+    "use_docker": "yes",
+    "docker_images": [
+      "ubuntu-22.04"
+    ]
   }
 }
