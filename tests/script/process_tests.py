@@ -9,7 +9,7 @@ files=sys.argv[1:]
 
 for file in files:
     print(file)
-    if not os.path.isfile(file):
+    if not os.path.isfile(file) or not "script" in file:
         continue
     if not file.endswith("_cm.json") and not file.endswith("_cm.yaml"):
         continue
