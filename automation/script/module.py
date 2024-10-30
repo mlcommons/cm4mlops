@@ -2430,11 +2430,8 @@ class CAutomation(Automation):
                 test_config = meta.get('tests', '')
                 if test_config:
                     logging.info(test_config)
-                    test_all_variations = test_config.get('test-all-variations', False)
-                    use_docker = test_config.get('use_docker', False)
+                    variations = meta.get("variations")
                     if test_all_variations:
-                        variations = meta.get("variations")
-                        individual_variations = [ v for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
                         tags_string = ",".join(meta.get("tags"))
                         run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
                         ii = {'action': 'run',
@@ -2443,6 +2440,24 @@ class CAutomation(Automation):
                                         'env': i.get('env')
                             }
                         for run_input in run_inputs:
+                            test_all_variations = run_input.get('test-all-variations', False)
+                            if test_all_variations:
+                                run_variations = [ f"_{v}" for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
+                            else:
+                                given_variations = run_input.get('variations_list', [])
+                                if given_variations:
+                                    v_split = []
+                                    run_variations = []
+                                    for i, v in enumerate(given_variations):
+                                        v_split = v.split(",")
+                                        for t in v_split:
+                                            if not t.startswith("_"):
+                                                given_variations[i] = f"_{t}" #variations must begin with _. We support both with and without _ in the meta
+                                        if v_split:
+                                            run_variations.append(",".join(v_split))
+                                else:
+                                    run_variations = [ "" ] #run the test without any variations
+                            use_docker = run_input.get('docker', False)
                             for key in run_input:#override meta with any user inputs like for docker_cm_repo
                                 if i.get(key, '') != '':
                                     if type(run_input[key]) == dict:
@@ -2460,8 +2475,8 @@ class CAutomation(Automation):
                                 if ii.get('docker_image_name', '') == '':
                                     ii['docker_image_name'] = alias
 
-                            for variation in individual_variations:
-                                run_tags = f"{tags_string},_{variation}"
+                            for variation_tags in run_variations:
+                                run_tags = f"{tags_string},{variation_tags}"
                                 ii['tags'] = run_tags
                                 if i_env:
                                     import copy

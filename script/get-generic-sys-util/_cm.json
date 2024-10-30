@@ -20,6 +20,9 @@
     "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED": "no",
     "CM_SYS_UTIL_VERSION_CMD": ""
   },
+  "input_mapping": {
+    "ignore_missing": "CM_GENERIC_SYS_UTIL_IGNORE_MISSING_PACKAGE"
+  },
   "tags": [
     "get",
     "sys-util",
@@ -726,27 +729,37 @@
     }
   },
   "tests": {
-    "test-all-variations": "yes",
-    "use_docker": "yes",
     "run_inputs": [
       {
+        "docker": "yes",
         "docker_os": "rhel",
         "docker_os_version": "9",
+        "test-all-variations": "yes",
         "env": {
           "CM_TMP_FAIL_SAFE": "yes"
-        }
+        },
+        "ignore_missing": "yes"
       },
       {
+        "docker": "yes",
         "docker_os": "ubuntu",
-        "docker_os_version": "20.04"
+        "docker_os_version": "20.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes"
       },
       {
+        "docker": "yes",
         "docker_os": "ubuntu",
-        "docker_os_version": "22.04"
+        "docker_os_version": "22.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes"
       },
       {
+        "docker": "yes",
         "docker_os": "ubuntu",
-        "docker_os_version": "24.04"
+        "docker_os_version": "24.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes"
       }
     ]
   }

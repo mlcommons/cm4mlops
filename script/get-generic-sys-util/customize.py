@@ -53,7 +53,11 @@ def preprocess(i):
         return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
 
     if not package_name:
-        return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
+        if str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_MISSING_PACKAGE', '').lower() in ["1", "true", "yes"]:
+            print(f"WARNING: No package name specified for {pm} and util name {util}. Ignoring it...")
+            return {'return': 0}
+        else:
+            return {'return': 1, 'error': f'No package name specified for {pm} and util name {util}'}
     
     if util == "libffi":
         if env.get("CM_HOST_OS_FLAVOR", "") == "ubuntu":
