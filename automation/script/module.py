@@ -2436,33 +2436,37 @@ class CAutomation(Automation):
                         variations = meta.get("variations")
                         individual_variations = [ v for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
                         tags_string = ",".join(meta.get("tags"))
-                        for variation in individual_variations:
-                            run_tags = f"{tags_string},_{variation}"
+                        run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
+                        ii = {'action': 'run',
+                              'automation':'script',
+                                        'quiet': i.get('quiet'),
+                                        'env': i.get('env')
+                            }
+                        i_env = i.get('env')
+                        for run_input in run_inputs:
+                            for key in run_input:#override meta with any user inputs like for docker_cm_repo
+                                if i.get(key, '') != '':
+                                    if type(run_input[key]) == dict:
+                                        utils.merge_dicts({'dict1': run_input[key] , 'dict2':i[key], 'append_lists':True, 'append_unique':True})
+                                    else:
+                                        run_input[key] = i[key]
+                            ii = {**ii, **run_input}
                             if use_docker:
-                                docker_images = i.get("docker_images", test_config.get('docker_images', [ "ubuntu-22.04" ]))
-                                for docker_image in docker_images:
-                                    ii = {'action':'docker',
-                                            'automation':'script',
-                                            'tags': run_tags,
-                                            'quiet': i.get('quiet'),
-                                            'docker_base_image': docker_image,
-                                            'docker_image_name': alias
-                                        }
-                                    docker_cm_repo = i.get('docker_cm_repo', test_config.get('docker_cm_repo', ''))
-                                    docker_cm_repo_branch = i.get('docker_cm_repo_branch', test_config.get('docker_cm_repo_branch', ''))
-                                    if docker_cm_repo != '':
-                                        ii['docker_cm_repo'] = i['docker_cm_repo']
-                                    if docker_cm_repo_branch != '':
-                                        ii['docker_cm_repo_branch'] = i['docker_cm_repo_branch']
+                                ii['action'] = "docker"
+                                for key in i:
+                                    if key.startswith("docker_"):
+                                        ii[key] = i[key]
 
-                                    r = self.cmind.access(ii)
-                                    if r['return'] > 0:
-                                        return r
-                            else:
-                                r = self.cmind.access({'action':'run',
-                                    'automation':'script',
-                                    'tags': run_tags,
-                                    'quiet': i.get('quiet') })
+                                if ii.get('docker_image_name', '') == '':
+                                    ii['docker_image_name'] = alias
+
+                            for variation in individual_variations:
+                                run_tags = f"{tags_string},_{variation}"
+                                ii['tags'] = run_tags
+                                if i_env:
+                                    import copy
+                                    ii['env'] = copy.deepcopy(i_env)
+                                r = self.cmind.access(ii)
                                 if r['return'] > 0:
                                     return r
 

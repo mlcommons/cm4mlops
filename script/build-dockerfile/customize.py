@@ -10,7 +10,7 @@ def preprocess(i):
     env = i['env']
     
     if env["CM_DOCKER_OS"] not in [ "ubuntu", "rhel", "arch" ]:
-        return {'return': 1, 'error': "Currently only ubuntu, rhel and arch are supported in CM docker"}
+        return {'return': 1, 'error': f"Specified docker OS: {env['CM_DOCKER_OS']}. Currently only ubuntu, rhel and arch are supported in CM docker"}
 
     path = i['run_script_input']['path']
 

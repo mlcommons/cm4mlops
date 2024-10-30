@@ -220,6 +220,8 @@ def postprocess(i):
 
         print ('')
         docker_out = subprocess.check_output(CMD, shell=True).decode("utf-8")
+        if docker_out != 0:
+            return {'return': docker_out, 'error': 'docker run failed'}
 
         lines = docker_out.split("\n")
 
@@ -256,6 +258,8 @@ def postprocess(i):
 
         print ('')
         docker_out = os.system(CMD)
+        if docker_out != 0:
+            return {'return': docker_out, 'error': 'docker run failed'}
 
     return {'return':0}
 
@@ -308,7 +312,7 @@ def update_docker_info(env):
 
     docker_image_tag_extra = env.get('CM_DOCKER_IMAGE_TAG_EXTRA', '-latest')
     
-    docker_image_tag = env.get('CM_DOCKER_IMAGE_TAG', docker_image_base.replace(':','-').replace('_','') + docker_image_tag_extra)
+    docker_image_tag = env.get('CM_DOCKER_IMAGE_TAG', docker_image_base.replace(':','-').replace('_','').replace("/","-") + docker_image_tag_extra)
     env['CM_DOCKER_IMAGE_TAG'] = docker_image_tag
 
     return

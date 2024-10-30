@@ -728,11 +728,26 @@
   "tests": {
     "test-all-variations": "yes",
     "use_docker": "yes",
-    "docker_images": [
-      "ubuntu:20.04",
-      "ubuntu:22.04",
-      "ubuntu:24.04",
-      "registry.access.redhat.com/ubi9"
+    "run_inputs": [
+      {
+        "docker_os": "rhel",
+        "docker_os_version": "9",
+        "env": {
+          "CM_TMP_FAIL_SAFE": "yes"
+        }
+      },
+      {
+        "docker_os": "ubuntu",
+        "docker_os_version": "20.04"
+      },
+      {
+        "docker_os": "ubuntu",
+        "docker_os_version": "22.04"
+      },
+      {
+        "docker_os": "ubuntu",
+        "docker_os_version": "24.04"
+      }
     ]
   }
 }
