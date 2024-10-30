@@ -2436,8 +2436,7 @@ class CAutomation(Automation):
                     for run_input in run_inputs:
                         ii = {'action': 'run',
                               'automation':'script',
-                                        'quiet': i.get('quiet'),
-                                        'env': i.get('env')
+                              'quiet': i.get('quiet'),
                             }
                         test_all_variations = run_input.get('test-all-variations', False)
                         if test_all_variations:
@@ -2464,7 +2463,7 @@ class CAutomation(Automation):
                                 else:
                                     run_input[key] = i[key]
                         ii = {**ii, **run_input}
-                        i_env = ii.get('env')
+                        i_env = ii.get('env', i.get('env', {}))
                         if use_docker:
                             ii['action'] = "docker"
                             for key in i:
