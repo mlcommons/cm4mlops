@@ -124,6 +124,7 @@
   "docker": {
     "use_host_group_id": true,
     "use_host_user_id": true,
+    "real_run": false,
     "deps": [
       {
         "tags": "get,mlperf,inference,results,dir,local",
