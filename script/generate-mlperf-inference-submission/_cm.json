@@ -130,7 +130,7 @@
         "tags": "get,mlperf,inference,results,dir,local",
         "names": "get-mlperf-inference-results-dir",
         "skip_if_env": {
-          "OUTPUT_BASE_DIR": [
+          "CM_MLPERF_INFERENCE_RESULTS_DIR_": [
             "on"
           ]
         }
