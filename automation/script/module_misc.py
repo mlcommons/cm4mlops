@@ -1917,10 +1917,11 @@ def docker(i):
             if host_env_key:
                 container_env_string += " --env.{}={} ".format(host_env_key, container_env_key)
                 # check if the below lines are needed when inputs are mapped to container paths
-                '''for v in docker_input_mapping:
+        
+                for v in docker_input_mapping:
                     if docker_input_mapping[v] == host_env_key:
-                        i[v] = container_env_key
-                ''' 
+                        i[v] = container_env_key 
+        
         mounts = list(filter(lambda item: item is not None, mounts))
 
         mount_string = "" if len(mounts)==0 else ",".join(mounts)
