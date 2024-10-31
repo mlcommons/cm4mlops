@@ -89,7 +89,7 @@
       "env": {
         "CM_SYS_UTIL_NAME": "dmidecode",
         "CM_SYS_UTIL_VERSION_CMD": "dmidecode --version",
-        "CM_SYS_UTIL_VERSION_RE": "version\\s+([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
       },
       "state": {
         "dmidecode": {
@@ -411,8 +411,8 @@
     "libnuma-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libnuma-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion numa",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma-dev",
+        "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
       },
       "state": {
         "libnuma-dev": {
@@ -629,8 +629,8 @@
       ],
       "env": {
         "CM_SYS_UTIL_NAME": "numactl",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion numa",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma-dev",
+        "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
       },
       "state": {
         "numactl": {
@@ -661,7 +661,7 @@
       "env": {
         "CM_SYS_UTIL_NAME": "psmisc",
         "CM_SYS_UTIL_VERSION_CMD": "pstree --version",
-        "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
+        "CM_SYS_UTIL_VERSION_RE": "pstree \\(PSmisc\\) (\\d+\\.\\d+(?:\\.\\d+)?)"
       },
       "state": {
         "psmisc": {
