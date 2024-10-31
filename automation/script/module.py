@@ -2430,41 +2430,85 @@ class CAutomation(Automation):
                 test_config = meta.get('tests', '')
                 if test_config:
                     logging.info(test_config)
-                    test_all_variations = test_config.get('test-all-variations', False)
-                    use_docker = test_config.get('use_docker', False)
-                    if test_all_variations:
-                        variations = meta.get("variations")
-                        individual_variations = [ v for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
-                        tags_string = ",".join(meta.get("tags"))
-                        for variation in individual_variations:
-                            run_tags = f"{tags_string},_{variation}"
-                            if use_docker:
-                                docker_images = test_config.get('docker_images', [ "ubuntu-22.04" ])
-                                for docker_image in docker_images:
-                                    ii = {'action':'docker',
-                                            'automation':'script',
-                                            'tags': run_tags,
-                                            'quiet': i.get('quiet'),
-                                            'docker_image': docker_image,
-                                            'docker_image_name': alias
-                                        }
-                                    if i.get('docker_cm_repo', '') != '':
-                                        ii['docker_cm_repo'] = i['docker_cm_repo']
-                                    if i.get('docker_cm_repo_branch', '') != '':
-                                        ii['docker_cm_repo_branch'] = i['docker_cm_repo_branch']
-
-                                    r = self.cmind.access(ii)
-                                    if r['return'] > 0:
-                                        return r
+                    variations = meta.get("variations")
+                    tags_string = ",".join(meta.get("tags"))
+                    test_input_index = i.get('test_input_index')
+                    test_input_id = i.get('test_input_id')
+                    run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
+                    if test_input_index:
+                        index_plus = False
+                        try:
+                            if test_input_index.endswith("+"):
+                                input_index = int(test_input_index[:-1])
+                                index_plus = True
                             else:
-                                r = self.cmind.access({'action':'run',
-                                    'automation':'script',
-                                    'tags': run_tags,
-                                    'quiet': i.get('quiet') })
-                                if r['return'] > 0:
-                                    return r
+                                input_index = int(test_input_index)
+                        except ValueError as e:
+                            print(e)
+                            return {'return': 1, 'error': f'Invalid test_input_index: {test_input_index}. Must be an integer or an integer followed by a +'}
+                        if input_index > len(run_inputs):
+                            run_inputs = []
+                        else:
+                            if index_plus:
+                                run_inputs = run_inputs[index_index-1:]
+                            else:
+                                run_inputs = [ run_inputs[input_index - 1] ]
+                    
+                    for run_input in run_inputs:
+                        if test_input_id:
+                            if run_input.get('id', '') != test_input_id:
+                                continue
 
-                logging.info('  Test: WIP')
+
+                        ii = {'action': 'run',
+                              'automation':'script',
+                              'quiet': i.get('quiet'),
+                            }
+                        test_all_variations = run_input.get('test-all-variations', False)
+                        if test_all_variations:
+                            run_variations = [ f"_{v}" for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
+                        else:
+                            given_variations = run_input.get('variations_list', [])
+                            if given_variations:
+                                v_split = []
+                                run_variations = []
+                                for i, v in enumerate(given_variations):
+                                    v_split = v.split(",")
+                                    for t in v_split:
+                                        if not t.startswith("_"):
+                                            given_variations[i] = f"_{t}" #variations must begin with _. We support both with and without _ in the meta
+                                    if v_split:
+                                        run_variations.append(",".join(v_split))
+                            else:
+                                run_variations = [ "" ] #run the test without any variations
+                        use_docker = run_input.get('docker', False)
+                        for key in run_input:#override meta with any user inputs like for docker_cm_repo
+                            if i.get(key, '') != '':
+                                if type(run_input[key]) == dict:
+                                    utils.merge_dicts({'dict1': run_input[key] , 'dict2':i[key], 'append_lists':True, 'append_unique':True})
+                                else:
+                                    run_input[key] = i[key]
+                        ii = {**ii, **run_input}
+                        i_env = ii.get('env', i.get('env', {}))
+                        if use_docker:
+                            ii['action'] = "docker"
+                            for key in i:
+                                if key.startswith("docker_"):
+                                    ii[key] = i[key]
+
+                            if ii.get('docker_image_name', '') == '':
+                                ii['docker_image_name'] = alias
+
+                        for variation_tags in run_variations:
+                            run_tags = f"{tags_string},{variation_tags}"
+                            ii['tags'] = run_tags
+                            if i_env:
+                                import copy
+                                ii['env'] = copy.deepcopy(i_env)
+                            logging.info(ii)
+                            r = self.cmind.access(ii)
+                            if r['return'] > 0:
+                                return r
 
 
         return {'return':0, 'list': lst}

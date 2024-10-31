@@ -11,6 +11,10 @@ on:
 jobs:
   run-script-tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        test-input-index: [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11+" ]
     steps:
     - name: 'Checkout'
       uses: actions/checkout@v4
@@ -30,4 +34,4 @@ jobs:
         done
         python3 -m pip install cmind
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-        python3 tests/script/process_tests.py ${{ steps.getfile.outputs.files }}
+        DOCKER_CM_REPO=${{ github.event.pull_request.head.repo.html_url }} DOCKER_CM_REPO_BRANCH=${{ github.event.pull_request.head.ref }} TEST_INPUT_INDEX=${{ matrix.test-input-index }} python3 tests/script/process_tests.py ${{ steps.getfile.outputs.files }}

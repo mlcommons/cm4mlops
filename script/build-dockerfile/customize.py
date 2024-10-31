@@ -10,7 +10,7 @@ def preprocess(i):
     env = i['env']
     
     if env["CM_DOCKER_OS"] not in [ "ubuntu", "rhel", "arch" ]:
-        return {'return': 1, 'error': "Currently only ubuntu, rhel and arch are supported in CM docker"}
+        return {'return': 1, 'error': f"Specified docker OS: {env['CM_DOCKER_OS']}. Currently only ubuntu, rhel and arch are supported in CM docker"}
 
     path = i['run_script_input']['path']
 
@@ -56,7 +56,7 @@ def preprocess(i):
     if env.get("CM_MLOPS_REPO", "") != "":
         cm_mlops_repo = env["CM_MLOPS_REPO"]
         # the below pattern matches both the HTTPS and SSH git link formats
-        git_link_pattern = r'^(https?://github\.com/([^/]+)/([^/]+)\.git|git@github\.com:([^/]+)/([^/]+)\.git)$'
+        git_link_pattern = r'^(https?://github\.com/([^/]+)/([^/]+)(?:\.git)?|git@github\.com:([^/]+)/([^/]+)(?:\.git)?)$'
         if match := re.match(git_link_pattern, cm_mlops_repo):
             if match.group(2) and match.group(3):
                 repo_owner = match.group(2)
