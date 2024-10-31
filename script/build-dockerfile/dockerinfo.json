@@ -1,6 +1,6 @@
 {
   "python-packages": [
-    "cmind", "requests", "giturlparse", "tabulate"
+    "wheel", "cmind", "requests", "giturlparse", "tabulate"
   ],
   "ARGS": [
     "CM_GH_TOKEN"

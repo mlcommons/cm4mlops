@@ -1,3 +1,4 @@
+#!/bin/bash
 # Safe execution of a command stored in a variable
 cmd="${CM_SYS_UTIL_INSTALL_CMD}"
 echo "$cmd"

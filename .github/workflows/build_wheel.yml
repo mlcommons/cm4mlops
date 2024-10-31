@@ -27,7 +27,10 @@ jobs:
       fail-fast: false
     steps:
       # Step 1: Checkout the code
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
       # Step 2: Set up Python
       - uses: actions/setup-python@v3

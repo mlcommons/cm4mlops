@@ -20,6 +20,10 @@
     "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED": "no",
     "CM_SYS_UTIL_VERSION_CMD": ""
   },
+  "input_mapping": {
+    "ignore_missing": "CM_GENERIC_SYS_UTIL_IGNORE_MISSING_PACKAGE",
+    "fail_safe": "CM_TMP_FAIL_SAFE"
+  },
   "tags": [
     "get",
     "sys-util",
@@ -40,6 +44,9 @@
       "prehook_deps": [
         {
           "tags": "get,generic-sys-util,_install",
+          "force_env_keys": [
+            "CM_TMP_FAIL_SAFE"
+          ],
           "inherit_variation_tags": true,
           "names": [
             "install-sys-util"
@@ -223,7 +230,7 @@
         "CM_SYS_UTIL_NAME": "libffi"
       },
       "state": {
-        "libffi7": {
+        "libffi": {
           "apt": "libffi"
         }
       }
@@ -723,10 +730,41 @@
     }
   },
   "tests": {
-    "test-all-variations": "yes",
-    "use_docker": "yes",
-    "docker_images": [
-      "ubuntu-22.04"
+    "run_inputs": [
+      {
+        "docker": "yes",
+        "docker_os": "rhel",
+        "docker_os_version": "9",
+        "test-all-variations": "yes",
+        "env": {
+          "CM_TMP_FAIL_SAFE": "yes"
+        },
+        "ignore_missing": "yes"
+      },
+      {
+        "docker": "yes",
+        "docker_os": "ubuntu",
+        "docker_os_version": "20.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
+      },
+      {
+        "docker": "yes",
+        "docker_os": "ubuntu",
+        "docker_os_version": "22.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
+      },
+      {
+        "docker": "yes",
+        "docker_os": "ubuntu",
+        "docker_os_version": "24.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
+      }
     ]
   }
 }
