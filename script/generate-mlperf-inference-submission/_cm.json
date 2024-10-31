@@ -156,6 +156,10 @@
     "os": "ubuntu",
     "cm_repo": "mlcommons@cm4mlops",
     "cm_repo_branch": "mlperf-inference",
-    "os_version": "22.04"
+    "os_version": "22.04",
+    "docker_input_mapping": {
+      "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
+      "results_dir": "CM_MLPERF_INFERENCE_RESULTS_DIR_"
+    }
   }
 }
