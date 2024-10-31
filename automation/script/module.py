@@ -2432,8 +2432,34 @@ class CAutomation(Automation):
                     logging.info(test_config)
                     variations = meta.get("variations")
                     tags_string = ",".join(meta.get("tags"))
+                    test_input_index = i.get('test_input_index')
+                    test_input_id = i.get('test_input_id')
                     run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
+                    if test_input_index:
+                        index_plus = False
+                        try:
+                            if test_input_index.endswith("+"):
+                                input_index = int(test_input_index[:-1])
+                                index_plus = True
+                            else:
+                                input_index = int(test_input_index)
+                        except ValueError as e:
+                            print(e)
+                            return {'return': 1, 'error': f'Invalid test_input_index: {test_input_index}. Must be an integer or an integer followed by a +'}
+                        if input_index > len(run_inputs):
+                            run_inputs = []
+                        else:
+                            if index_plus:
+                                run_inputs = run_inputs[index_index-1:]
+                            else:
+                                run_inputs = [ run_inputs[input_index - 1] ]
+                    
                     for run_input in run_inputs:
+                        if test_input_id:
+                            if run_input.get('id', '') != test_input_id:
+                                continue
+
+
                         ii = {'action': 'run',
                               'automation':'script',
                               'quiet': i.get('quiet'),
