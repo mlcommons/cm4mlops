@@ -120,5 +120,40 @@
     "mlperf-inference-submission",
     "mlcommons-inference-submission"
   ],
-  "uid": "5f8ab2d0b5874d53"
+  "uid": "5f8ab2d0b5874d53",
+  "docker": {
+    "use_host_group_id": true,
+    "use_host_user_id": true,
+    "deps": [
+      {
+        "tags": "get,mlperf,inference,results,dir,local",
+        "names": "get-mlperf-inference-results-dir",
+        "skip_if_env": {
+          "OUTPUT_BASE_DIR": [
+            "on"
+          ]
+        }
+      },
+      {
+        "tags": "get,mlperf,inference,submission,dir,local",
+        "names": "get-mlperf-inference-submission-dir",
+        "skip_if_env": {
+          "CM_MLPERF_INFERENCE_SUBMISSION_DIR": [
+            "on"
+          ]
+        }
+      }
+    ],
+    "pre_run_cmds": [
+      "cm pull repo"
+    ],
+    "mounts": [
+      "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}",
+      "${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}"
+    ],
+    "os": "ubuntu",
+    "cm_repo": "mlcommons@cm4mlops",
+    "cm_repo_branch": "mlperf-inference",
+    "os_version": "22.04"
+  }
 }
