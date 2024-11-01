@@ -1941,10 +1941,12 @@ def docker(i):
         docker_use_host_group_id = i.get('docker_use_host_group_id', docker_settings.get('use_host_group_id'))
         if str(docker_use_host_group_id).lower() not in ['false', 'no', '0'] and os.name != 'nt':
             env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('GID', '\\" $(id -g $USER) \\"'))
+            env['+ CM_DOCKER_RUN_ARGS'].append("{}={}".format('GID', '\\" $(id -g $USER) \\"'))
 
         docker_use_host_user_id = i.get('docker_use_host_user_id', docker_settings.get('use_host_user_id'))
         if str(docker_use_host_user_id).lower() not in ['false', 'no', '0'] and os.name != 'nt':
             env['+ CM_DOCKER_BUILD_ARGS'].append("{}={}".format('UID', '\\" $(id -u $USER) \\"'))
+            env['+ CM_DOCKER_RUN_ARGS'].append("{}={}".format('UID', '\\" $(id -u $USER) \\"'))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
         docker_os = i.get('docker_os', docker_settings.get('os', 'ubuntu'))
