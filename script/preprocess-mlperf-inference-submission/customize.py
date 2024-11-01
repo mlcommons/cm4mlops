@@ -53,6 +53,6 @@ def postprocess(i):
         if os.path.isdir(source):
             shutil.copytree(source, destination)  # Copy entire directory
         else:
-            shutil.copy2(source, destination)     # Copy individual files
+            shutil.copy(source, destination)     # Copy individual files
             
     return {'return':0}
