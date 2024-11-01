@@ -71,7 +71,7 @@ def generate_submission(i):
         print ('Cleaning {} ...'.format(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']))
         if os.path.exists(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']):
             # delete the content keeping the main folder intact
-            for items in os.listdir(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']):
+            for item in os.listdir(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']):
                 item_path = os.path.join(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'], item)
                 if os.path.isdir(item_path):
                     shutil.rmtree(item_path)
