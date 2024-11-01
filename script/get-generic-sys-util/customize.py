@@ -115,7 +115,7 @@ def detect_version(i):
             'match_text': version_check_re,
             'group_number': 1,             
             'env_key': version_env_key,
-            'which_env': env,
+            'which_env': env, #'debug': 1
         })
 
         if r['return'] > 0:

@@ -235,9 +235,10 @@
     },
     "libbz2-dev": {
       "env": {
+	"CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
         "CM_SYS_UTIL_NAME": "libbz2_dev",
         "CM_SYS_UTIL_VERSION_CMD": "bzcat --version",
-        "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d:]+\\.[\\d\\.-]+)"
       },
       "state": {
         "libbz2_dev": {
@@ -351,7 +352,7 @@
       "env": {
         "CM_SYS_UTIL_NAME": "liblzma_dev",
         "CM_SYS_UTIL_VERSION_CMD": "xz --version",
-        "CM_SYS_UTIL_VERSION_RE": "[A-Za-z]+\\s\\d\\.\\d\\.\\d"
+        "CM_SYS_UTIL_VERSION_RE": "(\\d(\\.\\d)+)"
       },
       "state": {
         "liblzma_dev": {
@@ -475,8 +476,8 @@
     "libreadline-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libreadline_dev",
-        "CM_SYS_UTIL_VERSION_CMD": "readline --version",
-        "CM_SYS_UTIL_VERSION_RE": "readline, version ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion readline",
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
       },
       "state": {
         "libreadline_dev": {
@@ -490,7 +491,7 @@
     "libsqlite3-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libsqlite3_dev",
-        "CM_SYS_UTIL_VERSION_CMD": "sqlite3 --version",
+        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion sqlite3",
         "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
       },
       "state": {
@@ -659,6 +660,7 @@
     },
     "psmisc": {
       "env": {
+	"CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
         "CM_SYS_UTIL_NAME": "psmisc",
         "CM_SYS_UTIL_VERSION_CMD": "pstree --version",
         "CM_SYS_UTIL_VERSION_RE": "pstree \\(PSmisc\\) (\\d+\\.\\d+(?:\\.\\d+)?)"
