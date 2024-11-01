@@ -457,8 +457,12 @@
     },
     "md5sha1sum": {
       "env": {
-        "CM_SYS_UTIL_NAME": "md5sha1sum"
+        "CM_SYS_UTIL_NAME": "md5sha1sum",
+        "CM_SYS_UTIL_VERSION_CMD": "md5sum --version | grep sha1sum",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
+      "new_env_keys": ["CM_MD5SHA1SUM_VERSION"],
       "state": {
         "md5sha1sum": {
           "apt": "",
