@@ -56,6 +56,7 @@ def preprocess(i):
     if not package_name:
         if str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_MISSING_PACKAGE', '')).lower() in [ "1", "true", "yes" ]:
             print(f"WARNING: No package name specified for {pm} and util name {util}. Ignoring it...")
+            env['CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED'] = 'yes'
             return {'return': 0}
         else:
             return {'return': 1, 'error': f'No package name specified for {pm} and util name {util}'}
@@ -127,7 +128,7 @@ def postprocess(i):
 
     version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
 
-    if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" or env.get(version_env_key, '') == '') :
+    if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" or env.get(version_env_key, '') == '') and str(env.get('CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED', '')).lower() not in ["yes", "1", "true"]:
         automation = i['automation']
         r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
         if r['return'] > 0 and str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in [ "1", "yes", "true" ] and str(env.get('CM_TMP_FAIL_SAFE', '')).lower() not in [ "1", "yes", "true" ]:
