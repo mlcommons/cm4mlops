@@ -72,7 +72,8 @@
   },
   "default_env": {
     "CM_RUN_MLPERF_ACCURACY": "on",
-    "CM_MLPERF_RUN_STYLE": "valid"
+    "CM_MLPERF_RUN_STYLE": "valid",
+    "CM_MLPERF_INFERENCE_SUBMISSION_PROCESSED_DIR": "<<<CM_MLPERF_INFERENCE_SUBMISSION_DIR>>>_processed"
   },
   "post_deps": [
     {
@@ -150,7 +151,8 @@
     ],
     "mounts": [
       "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}",
-      "${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}"
+      "${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}",
+      "${{ CM_MLPERF_INFERENCE_SUBMISSION_PROCESSED_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_PROCESSED_DIR }}"
     ],
     "extra_run_args": " --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined",
     "os": "ubuntu",
