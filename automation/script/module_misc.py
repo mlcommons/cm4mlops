@@ -1932,6 +1932,9 @@ def docker(i):
         if env.get('+ CM_DOCKER_BUILD_ARGS', []) == []:
             env['+ CM_DOCKER_BUILD_ARGS'] = []
 
+        if env.get('+ CM_DOCKER_RUN_ARGS', []) == []:
+            env['+ CM_DOCKER_RUN_ARGS'] = []
+
         for key in proxy_keys:
             if os.environ.get(key, '') != '':
                 value = os.environ[key]
