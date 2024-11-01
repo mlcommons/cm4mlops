@@ -37,7 +37,22 @@ def postprocess(i):
 
     submission_processed = submission_dir + "_processed"
     shutil.copytree(submission_dir, submission_backup)
-    shutil.rmtree(submission_dir)
-    os.rename(submission_processed, submission_dir)
-
+    
+    # clean the submission directory
+    for item in os.listdir(submission_dir):
+        item_path = os.path.join(submission_dir, item)
+        if os.path.isdir(item_path):
+            shutil.rmtree(item_path)
+        else:
+            os.remove(item_path)
+            
+    # copy the files from submission processed directory to submission directory
+    for item in os.listdir(submission_processed):
+        source = os.path.join(submission_processed, item)
+        destination = os.path.join(submission_dir, item)
+        if os.path.isdir(source):
+            shutil.copytree(source, destination)  # Copy entire directory
+        else:
+            shutil.copy2(source, destination)     # Copy individual files
+            
     return {'return':0}
