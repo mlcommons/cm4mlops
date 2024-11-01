@@ -460,7 +460,8 @@
         "CM_SYS_UTIL_NAME": "md5sha1sum",
         "CM_SYS_UTIL_VERSION_CMD": "md5sum --version",
         "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0,
+        "CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes"
       },
       "new_env_keys": ["CM_MD5SHA1SUM_VERSION"],
       "state": {
