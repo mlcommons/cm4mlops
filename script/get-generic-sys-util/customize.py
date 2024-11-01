@@ -130,7 +130,7 @@ def postprocess(i):
     if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" or env.get(version_env_key, '') == '') :
         automation = i['automation']
         r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
-        if r['return'] > 0 and str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in [ "1", "yes", "true" ]:
+        if r['return'] > 0 and str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in [ "1", "yes", "true" ] and str(env.get('CM_TMP_FAIL_SAFE', '').lower() not in [ "1", "yes", "true" ]:
             return {'return': 1, 'error': 'Version detection failed after installation. Please check the provided version command or use env.CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE=yes to ignore the error.'}
 
         r = detect_version(i)
