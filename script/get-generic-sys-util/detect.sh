@@ -8,7 +8,12 @@ if [[ -n "${CM_SYS_UTIL_VERSION_CMD}" ]]; then
     cmd="${CM_SYS_UTIL_VERSION_CMD}  > tmp-ver.out"
   fi
   echo $cmd
-  eval $cmd
-  test $? -eq 0 || exit $?
+  if [[ "${CM_SYS_UTIL_VERSION_CMD_IGNORE_ERROR}" == "yes" ]]; then
+    eval $cmd
+    exit 0
+  else
+    eval $cmd
+    test $? -eq 0 || exit $?
+  fi
 fi
 
