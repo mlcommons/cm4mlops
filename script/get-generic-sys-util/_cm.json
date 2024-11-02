@@ -414,7 +414,7 @@
         "CM_SYS_UTIL_NAME": "libnuma-dev",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma",
         "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
-	"CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+	      "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libnuma-dev": {
@@ -559,7 +559,6 @@
         "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
         "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
-      "new_env_keys": ["CM_MD5SHA1SUM_VERSION"],
       "state": {
         "md5sha1sum": {
           "apt": "",
@@ -663,10 +662,10 @@
     },
     "psmisc": {
       "env": {
-	"CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
+	      "CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
         "CM_SYS_UTIL_NAME": "psmisc",
         "CM_SYS_UTIL_VERSION_CMD": "pstree --version",
-        "CM_SYS_UTIL_VERSION_RE": "pstree \\(PSmisc\\) (\\d+\\.\\d+(?:\\.\\d+)?)"
+        "CM_SYS_UTIL_VERSION_RE": "\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
       },
       "state": {
         "psmisc": {
