@@ -412,7 +412,7 @@
     "libnuma-dev": {
       "env": {
         "CM_SYS_UTIL_NAME": "libnuma-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma-dev",
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma",
         "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
       },
       "state": {
@@ -632,7 +632,7 @@
       ],
       "env": {
         "CM_SYS_UTIL_NAME": "numactl",
-        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma-dev",
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma",
         "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
       },
       "state": {
