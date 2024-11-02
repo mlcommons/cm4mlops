@@ -3984,7 +3984,11 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             print(f"Regex Pattern: {match_text}")
             print(f"Matched String: {string}")
             print(f"Match Groups: {match.groups()}")
-        version = r['match'].group(group_number)
+        
+        if r['match'].lastindex and r['match'].lastindex >= group_number:
+            version = r['match'].group(group_number)
+        else:
+            return {'return':1, 'error': 'Invalid version detection group number. Version was not detected. Last index of match = {}. Given group number = {}'.format(r['match'].lastindex, group_number)}
 
         which_env[env_key] = version
         which_env['CM_DETECTED_VERSION'] = version # to be recorded in the cache meta
