@@ -108,7 +108,8 @@
         "CM_SYS_UTIL_NAME": "g++11",
         "CM_SYS_UTIL_VERSION_CMD": "g++-11 --version",
         "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0,
+        "CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE": "yes"
       },
       "state": {
         "g++11": {
