@@ -75,7 +75,10 @@
       "group": "mode",
       "env": {
         "CM_GENERIC_SYS_UTIL_RUN_MODE": "install"
-      }
+      },
+      "new_env_keys": [
+        "CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED"
+      ]
     },
     "cmake": {
       "env": {
@@ -332,10 +335,7 @@
     },
     "libffi8": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libffi8",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libffi8",
-        "CM_SYS_UTIL_VERSION_RE": "\\d\\.\\d\\.\\d-\\d",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libffi8"
       },
       "state": {
         "libffi8": {
