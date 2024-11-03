@@ -11,6 +11,14 @@
   "deps": [
     {
       "tags": "detect,os"
+    },
+    {
+      "tags": "get,generic-sys-util,_package.pkg-config",
+      "skip_if_env": {
+        "CM_SYS_UTIL_NAME": [
+          "pkg-config"
+        ]
+      }
     }
   ],
   "new_env_keys": [
@@ -545,6 +553,19 @@
           "brew": "",
           "dnf": "nvidia-cuda-toolkit",
           "yum": "nvidia-cuda-toolkit"
+        }
+      }
+    },
+    "pkg-config": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "pkg_config"
+      },
+      "state": {
+        "pkg_config": {
+          "apt": "pkg-config",
+          "brew": "pkg-config",
+          "dnf": "pkg-config",
+          "yum": "pkg-config"
         }
       }
     },
