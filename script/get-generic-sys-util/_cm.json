@@ -558,7 +558,9 @@
     },
     "pkg-config": {
       "env": {
-        "CM_SYS_UTIL_NAME": "pkg_config"
+        "CM_SYS_UTIL_NAME": "pkg_config",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "pkg_config": {
