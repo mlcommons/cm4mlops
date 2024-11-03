@@ -668,7 +668,7 @@
       "env": {
         "CM_SYS_UTIL_NAME": "numactl",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma",
-        "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
         "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
@@ -699,10 +699,10 @@
     },
     "psmisc": {
       "env": {
-	      "CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
+	"CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
         "CM_SYS_UTIL_NAME": "psmisc",
         "CM_SYS_UTIL_VERSION_CMD": "pstree --version",
-        "CM_SYS_UTIL_VERSION_RE": "\b\\d+\\.\\d+(?:\\.\\d+)?\\b",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
         "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
@@ -737,7 +737,7 @@
         "CM_SYS_UTIL_NAME": "rsync",
         "CM_SYS_UTIL_VERSION_CMD": "rsync --version",
         "CM_SYS_UTIL_VERSION_RE": "rsync\\s+version\\s+([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "rsync": {
@@ -755,7 +755,7 @@
         "CM_SYS_UTIL_NAME": "screen",
         "CM_SYS_UTIL_VERSION_CMD": "screen --version",
         "CM_SYS_UTIL_VERSION_RE": "Screen version ([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "screen": {
@@ -773,7 +773,7 @@
         "CM_SYS_UTIL_NAME": "sox",
         "CM_SYS_UTIL_VERSION_CMD": "sox --version",
         "CM_SYS_UTIL_VERSION_RE": "sox:\\s+SoX\\s+v([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "sox": {
@@ -789,7 +789,7 @@
         "CM_SYS_UTIL_NAME": "systemd",
         "CM_SYS_UTIL_VERSION_CMD": "systemctl --version",
         "CM_SYS_UTIL_VERSION_RE": "systemd ([\\d]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "systemd": {
@@ -806,7 +806,7 @@
         "CM_SYS_UTIL_NAME": "tk_dev",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -s tk-dev | grep Version",
         "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "tk_dev": {
@@ -820,7 +820,7 @@
         "CM_SYS_UTIL_NAME": "transmission",
         "CM_SYS_UTIL_VERSION_CMD": "transmission-daemon --version",
         "CM_SYS_UTIL_VERSION_RE": "transmission-daemon ([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "transmission": {
@@ -837,7 +837,7 @@
         "CM_SYS_UTIL_NAME": "wget",
         "CM_SYS_UTIL_VERSION_CMD": "wget --version",
         "CM_SYS_UTIL_VERSION_RE": "Wget\\s*([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "wget": {
@@ -854,7 +854,7 @@
         "CM_SYS_UTIL_NAME": "wkhtmltopdf",
         "CM_SYS_UTIL_VERSION_CMD": "wkhtmltopdf --version",
         "CM_SYS_UTIL_VERSION_RE": "wkhtmltopdf ([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "wkhtmltopdf": {
@@ -869,7 +869,7 @@
         "CM_SYS_UTIL_NAME": "vim_common",
         "CM_SYS_UTIL_VERSION_CMD": "vim --version",
         "CM_SYS_UTIL_VERSION_RE": "VIM - Vi IMproved ([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "vim_common": {
