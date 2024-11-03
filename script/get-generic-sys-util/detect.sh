@@ -1,6 +1,9 @@
 #!/bin/bash
+
 if [[ -n "${CM_SYS_UTIL_VERSION_CMD_OVERRIDE}" ]]; then
-  eval "${CM_SYS_UTIL_VERSION_CMD_OVERRIDE}"
+  cmd="${CM_SYS_UTIL_VERSION_CMD_OVERRIDE}"
+  echo $cmd
+  eval $cmd
   test $? -eq 0 || exit $?
 else
   if [[ -n "${CM_SYS_UTIL_VERSION_CMD}" ]]; then
