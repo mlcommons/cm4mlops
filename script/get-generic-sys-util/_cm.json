@@ -16,7 +16,7 @@
       "tags": "get,generic-sys-util,_pkg-config",
       "skip_if_env": {
         "CM_SYS_UTIL_NAME": [
-          "pkg-config"
+          "pkg_config"
         ]
       }
     }
