@@ -11,7 +11,8 @@ def preprocess(i):
     automation = i['automation']
 
     if env['CM_SYS_UTIL_NAME'] == "psmisc" and env.get('CM_HOST_OS_PACKAGE_MANAGER', '') == "brew":
-        env['CM_SYS_UTIL_VERSION_CMD_OVERRIDE'] = "brew info pstree > tmp-run.out 2>&1 | grep pstree"
+        env['CM_SYS_UTIL_VERSION_CMD_OVERRIDE'] = "brew info pstree > tmp-run.out 2>&1 | grep pstree:"
+        env['CM_SYS_UTIL_VERSION_RE'] = r"\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b"
     #Use VERSION_CMD and CHECK_CMD if no CHECK_CMD is set
     if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and env.get('CM_SYS_UTIL_CHECK_CMD', '') == '':
         env['CM_SYS_UTIL_CHECK_CMD'] = env['CM_SYS_UTIL_VERSION_CMD']
