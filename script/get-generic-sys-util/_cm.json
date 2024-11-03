@@ -11,6 +11,14 @@
   "deps": [
     {
       "tags": "detect,os"
+    },
+    {
+      "tags": "get,generic-sys-util,_pkg-config,_detect",
+      "skip_if_env": {
+        "CM_SYS_UTIL_NAME": [
+          "pkg_config"
+        ]
+      }
     }
   ],
   "new_env_keys": [
@@ -696,6 +704,21 @@
         }
       },
       "new_env_keys": ["CM_NVIDIA_CUDA_TOOLKIT_VERSION"]
+    },
+    "pkg-config": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "pkg_config",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+      },
+      "state": {
+        "pkg_config": {
+          "apt": "pkg-config",
+          "brew": "pkg-config",
+          "dnf": "pkg-config",
+          "yum": "pkg-config"
+        }
+      }
     },
     "psmisc": {
       "env": {

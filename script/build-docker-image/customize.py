@@ -54,7 +54,7 @@ def preprocess(i):
     image_name = get_image_name(env)
 
     if build_dockerfile:
-        dockerfile_path = "\${CM_DOCKERFILE_WITH_PATH}"
+        dockerfile_path = r"\${CM_DOCKERFILE_WITH_PATH}"
 
     # Write .dockerignore
     with open('.dockerignore', 'w') as f:
