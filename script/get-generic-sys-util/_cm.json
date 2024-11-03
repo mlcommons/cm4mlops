@@ -107,8 +107,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "g++11",
         "CM_SYS_UTIL_VERSION_CMD": "g++-11 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "g++11": {
@@ -122,8 +122,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "g++12",
         "CM_SYS_UTIL_VERSION_CMD": "g++-12 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "g++12": {
@@ -137,8 +137,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "g++9",
         "CM_SYS_UTIL_VERSION_CMD": "g++-9 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "g++9": {
@@ -152,8 +152,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "gcc11",
         "CM_SYS_UTIL_VERSION_CMD": "gcc-11 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "gcc11": {
@@ -166,7 +166,7 @@
       "env": {
         "CM_SYS_UTIL_NAME": "gcc9",
         "CM_SYS_UTIL_VERSION_CMD": "gcc-9 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
         "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
