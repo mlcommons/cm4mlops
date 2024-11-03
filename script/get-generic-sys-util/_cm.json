@@ -108,7 +108,7 @@
         "CM_SYS_UTIL_NAME": "g++11",
         "CM_SYS_UTIL_VERSION_CMD": "g++-11 --version",
         "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "g++11": {
@@ -123,7 +123,7 @@
         "CM_SYS_UTIL_NAME": "g++12",
         "CM_SYS_UTIL_VERSION_CMD": "g++-12 --version",
         "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "g++12": {
@@ -138,7 +138,7 @@
         "CM_SYS_UTIL_NAME": "g++9",
         "CM_SYS_UTIL_VERSION_CMD": "g++-9 --version",
         "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "g++9": {
@@ -153,7 +153,7 @@
         "CM_SYS_UTIL_NAME": "gcc11",
         "CM_SYS_UTIL_VERSION_CMD": "gcc-11 --version",
         "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "gcc11": {
@@ -199,7 +199,7 @@
         "CM_SYS_UTIL_NAME": "git-lfs",
         "CM_SYS_UTIL_VERSION_CMD": "git-lfs --version",
         "CM_SYS_UTIL_VERSION_RE": "git-lfs\\/([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "git-lfs": {
@@ -233,7 +233,7 @@
         "CM_SYS_UTIL_NAME": "libboost-all-dev",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -s libboost-dev | grep 'Version'",
         "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "libboost-all-dev": {
@@ -249,7 +249,7 @@
       "env": {
 	"CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
         "CM_SYS_UTIL_NAME": "libbz2_dev",
-        "CM_SYS_UTIL_VERSION_CMD": "bzcat --version",
+        "CM_SYS_UTIL_VERSION_CMD": "bzcat --version | grep Version",
         "CM_SYS_UTIL_VERSION_RE": "([\\d:]+\\.[\\d\\.-]+)",
         "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
