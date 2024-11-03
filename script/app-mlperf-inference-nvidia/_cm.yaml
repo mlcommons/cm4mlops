@@ -435,7 +435,7 @@ variations:
     - tags: get,generic-python-lib,_pycocotools
     - tags: get,generic-python-lib,_onnx-graphsurgeon
     - tags: get,generic-python-lib,_package.onnx
-      version: 1.13.1
+      version: 1.14.1
     - tags: get,generic-python-lib,_package.sympy
 
   sdxl:
