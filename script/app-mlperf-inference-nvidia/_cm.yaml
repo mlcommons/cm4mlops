@@ -436,6 +436,7 @@ variations:
     - tags: get,generic-python-lib,_onnx-graphsurgeon
     - tags: get,generic-python-lib,_package.onnx
       version: 1.13.1
+    - tags: get,generic-python-lib,_package.sympy
 
   sdxl:
     new_env_keys:                                                                      
