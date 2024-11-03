@@ -8,6 +8,7 @@ if ! eval "$cmd"; then
     echo "Command failed with status $?"
     if [[ "${CM_TMP_FAIL_SAFE}" == 'yes' ]]; then
         # Exit safely if fail-safe is enabled
+        echo "CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED=yes" > tmp-run.out
         echo "Fail-safe is enabled, exiting with status 0"
         exit 0
     else
