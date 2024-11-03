@@ -73,7 +73,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "cmake",
         "CM_SYS_UTIL_VERSION_CMD": "cmake --version",
-        "CM_SYS_UTIL_VERSION_RE": "cmake version ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "cmake version ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "cmake": {
@@ -89,7 +90,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "dmidecode",
         "CM_SYS_UTIL_VERSION_CMD": "dmidecode --version",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "dmidecode": {
@@ -105,7 +107,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "g++11",
         "CM_SYS_UTIL_VERSION_CMD": "g++-11 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*"
+        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "g++11": {
@@ -119,7 +122,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "g++12",
         "CM_SYS_UTIL_VERSION_CMD": "g++-12 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*"
+        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "g++12": {
@@ -133,7 +137,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "g++9",
         "CM_SYS_UTIL_VERSION_CMD": "g++-9 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*"
+        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "g++9": {
@@ -147,7 +152,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "gcc11",
         "CM_SYS_UTIL_VERSION_CMD": "gcc-11 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*"
+        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "gcc11": {
@@ -160,7 +166,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "gcc9",
         "CM_SYS_UTIL_VERSION_CMD": "gcc-9 --version",
-        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*"
+        "CM_SYS_UTIL_VERSION_RE": "^.*([0-9]+(\\.[0-9]+)+).*",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "gcc9": {
@@ -173,7 +180,9 @@
       "env": {
         "CM_SYS_UTIL_NAME": "gflags-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion gflags",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        
       },
       "state": {
         "gflags-dev": {
@@ -189,7 +198,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "git-lfs",
         "CM_SYS_UTIL_VERSION_CMD": "git-lfs --version",
-        "CM_SYS_UTIL_VERSION_RE": "git-lfs\\/([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "git-lfs\\/([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "git-lfs": {
@@ -205,7 +215,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "glog-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libglog",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "glog-dev": {
@@ -221,7 +232,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libboost-all-dev",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -s libboost-dev | grep 'Version'",
-        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)"
+        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libboost-all-dev": {
@@ -238,7 +250,8 @@
 	"CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
         "CM_SYS_UTIL_NAME": "libbz2_dev",
         "CM_SYS_UTIL_VERSION_CMD": "bzcat --version",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d:]+\\.[\\d\\.-]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d:]+\\.[\\d\\.-]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libbz2_dev": {
@@ -255,7 +268,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libev_dev",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -s libev-dev | grep 'Version'",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d:]+\\.[\\d\\.-]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d:]+\\.[\\d\\.-]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libev_dev": {
@@ -268,7 +282,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libffi",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libffi",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libffi": {
@@ -281,7 +296,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libffi_dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libffi",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libffi_dev": {
@@ -297,7 +313,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libffi7",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -l libffi7 2>/dev/null | grep '^ii' | awk '{print $3}' || rpm -q libffi7 2>/dev/null || pacman -Q libffi7 2>/dev/null",
-        "CM_SYS_UTIL_VERSION_RE": "\\d\\.\\d-[0-9]+"
+        "CM_SYS_UTIL_VERSION_RE": "\\d\\.\\d-[0-9]+",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libffi7": {
@@ -310,7 +327,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libffi8",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libffi8",
-        "CM_SYS_UTIL_VERSION_RE": "\\d\\.\\d\\.\\d-\\d"
+        "CM_SYS_UTIL_VERSION_RE": "\\d\\.\\d\\.\\d-\\d",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libffi8": {
@@ -323,7 +341,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libgdbm_dev",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -s libgdbm-dev | grep 'Version'",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d]+\\.[\\d\\.-]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d]+\\.[\\d\\.-]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libgdbm_dev": {
@@ -336,7 +355,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libgmock-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion gmock",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libgmock-dev": {
@@ -352,7 +372,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "liblzma_dev",
         "CM_SYS_UTIL_VERSION_CMD": "xz --version",
-        "CM_SYS_UTIL_VERSION_RE": "(\\d(\\.\\d)+)"
+        "CM_SYS_UTIL_VERSION_RE": "(\\d(\\.\\d)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "liblzma_dev": {
@@ -365,7 +386,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libmkl-dev",
         "CM_SYS_UTIL_VERSION_CMD": "ldconfig -p | grep libmkl",
-        "CM_SYS_UTIL_VERSION_RE": "libmkl[^ ]+ => /[^ ]+/libmkl[^ ]+\\.so\\.([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "libmkl[^ ]+ => /[^ ]+/libmkl[^ ]+\\.so\\.([\\d.]+)", 
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1 
       },
       "state": {
         "libmkl-dev": {
@@ -381,7 +403,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libmpfr-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion mpfr",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libmpfr-dev": {
@@ -398,7 +421,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libncurses_dev",
         "CM_SYS_UTIL_VERSION_CMD": "ncurses5-config --version",
-        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)"
+        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libncurses_dev": {
@@ -430,7 +454,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libpci-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libpci",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libpci-dev": {
@@ -446,7 +471,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libpng-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libpng",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libpng-dev": {
@@ -462,7 +488,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libre2-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion re2",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libre2-dev": {
@@ -478,7 +505,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libreadline_dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion readline",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libreadline_dev": {
@@ -493,7 +521,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libsqlite3_dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion sqlite3",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libsqlite3_dev": {
@@ -506,7 +535,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libssl_dev",
         "CM_SYS_UTIL_VERSION_CMD": "openssl version",
-        "CM_SYS_UTIL_VERSION_RE": "OpenSSL\\s+([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "OpenSSL\\s+([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "libssl_dev": {
@@ -522,7 +552,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "libudev-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libudev",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libudev-dev": {
@@ -543,7 +574,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "linux-tools",
         "CM_SYS_UTIL_VERSION_CMD": "linux-tools --version",
-        "CM_SYS_UTIL_VERSION_RE": "Linux Tools version ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "Linux Tools version ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "linux-tools": {
@@ -571,7 +603,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "ninja-build",
         "CM_SYS_UTIL_VERSION_CMD": "ninja --version",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "ninja-build": {
@@ -588,7 +621,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "nlohmann_json3_dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion nlohmann_json",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "nlohmann_json3_dev": {
@@ -602,7 +636,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "ntpdate",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -l ntpdate 2>/dev/null | grep ^ii | awk '{print $3}'",
-        "CM_SYS_UTIL_VERSION_RE": "([A-Za-z0-9]+(\\.[A-Za-z0-9]+)+)"
+        "CM_SYS_UTIL_VERSION_RE": "([A-Za-z0-9]+(\\.[A-Za-z0-9]+)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "ntpdate": {
@@ -633,7 +668,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "numactl",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma",
-        "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
+        "CM_SYS_UTIL_VERSION_RE": "\\b\\d+\\.\\d+(?:\\.\\d+)?\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "numactl": {
@@ -648,7 +684,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "nvidia-cuda-toolkit",
         "CM_SYS_UTIL_VERSION_CMD": "nvcc --version",
-        "CM_SYS_UTIL_VERSION_RE": "release ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "release ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "nvidia-cuda-toolkit": {
@@ -665,7 +702,8 @@
 	      "CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes",
         "CM_SYS_UTIL_NAME": "psmisc",
         "CM_SYS_UTIL_VERSION_CMD": "pstree --version",
-        "CM_SYS_UTIL_VERSION_RE": "\b\\d+\\.\\d+(?:\\.\\d+)?\\b"
+        "CM_SYS_UTIL_VERSION_RE": "\b\\d+\\.\\d+(?:\\.\\d+)?\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "psmisc": {
@@ -681,7 +719,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "rapidjson-dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion RapidJSON",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "rapidjson-dev": {
@@ -697,7 +736,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "rsync",
         "CM_SYS_UTIL_VERSION_CMD": "rsync --version",
-        "CM_SYS_UTIL_VERSION_RE": "rsync\\s+version\\s+([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "rsync\\s+version\\s+([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "rsync": {
@@ -714,7 +754,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "screen",
         "CM_SYS_UTIL_VERSION_CMD": "screen --version",
-        "CM_SYS_UTIL_VERSION_RE": "Screen version ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "Screen version ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "screen": {
@@ -731,7 +772,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "sox",
         "CM_SYS_UTIL_VERSION_CMD": "sox --version",
-        "CM_SYS_UTIL_VERSION_RE": "sox:\\s+SoX\\s+v([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "sox:\\s+SoX\\s+v([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "sox": {
@@ -746,7 +788,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "systemd",
         "CM_SYS_UTIL_VERSION_CMD": "systemctl --version",
-        "CM_SYS_UTIL_VERSION_RE": "systemd ([\\d]+)"
+        "CM_SYS_UTIL_VERSION_RE": "systemd ([\\d]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "systemd": {
@@ -762,7 +805,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "tk_dev",
         "CM_SYS_UTIL_VERSION_CMD": "dpkg -s tk-dev | grep Version",
-        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)"
+        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "tk_dev": {
@@ -775,7 +819,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "transmission",
         "CM_SYS_UTIL_VERSION_CMD": "transmission-daemon --version",
-        "CM_SYS_UTIL_VERSION_RE": "transmission-daemon ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "transmission-daemon ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "transmission": {
@@ -791,7 +836,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "wget",
         "CM_SYS_UTIL_VERSION_CMD": "wget --version",
-        "CM_SYS_UTIL_VERSION_RE": "Wget\\s*([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "Wget\\s*([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "wget": {
@@ -807,7 +853,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "wkhtmltopdf",
         "CM_SYS_UTIL_VERSION_CMD": "wkhtmltopdf --version",
-        "CM_SYS_UTIL_VERSION_RE": "wkhtmltopdf ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "wkhtmltopdf ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "wkhtmltopdf": {
@@ -821,7 +868,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "vim_common",
         "CM_SYS_UTIL_VERSION_CMD": "vim --version",
-        "CM_SYS_UTIL_VERSION_RE": "VIM - Vi IMproved ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "VIM - Vi IMproved ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "vim_common": {
@@ -838,7 +886,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "xz",
         "CM_SYS_UTIL_VERSION_CMD": "xz --version",
-        "CM_SYS_UTIL_VERSION_RE": "xz \\(XZ Utils\\) ([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "xz \\(XZ Utils\\) ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "xz": {
@@ -855,7 +904,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "zlib",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion zlib",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "zlib": {
@@ -869,7 +919,8 @@
       "env": {
         "CM_SYS_UTIL_NAME": "zlib1g_dev",
         "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion zlib",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "zlib1g_dev": {
