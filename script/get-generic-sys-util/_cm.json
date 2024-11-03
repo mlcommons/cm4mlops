@@ -388,10 +388,7 @@
     },
     "libmkl-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libmkl-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "ldconfig -p | grep libmkl",
-        "CM_SYS_UTIL_VERSION_RE": "libmkl[^ ]+ => /[^ ]+/libmkl[^ ]+\\.so\\.([\\d.]+)", 
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1 
+        "CM_SYS_UTIL_NAME": "libmkl-dev"
       },
       "state": {
         "libmkl-dev": {
@@ -439,10 +436,7 @@
     },
     "libnuma-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libnuma-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l | grep libnuma",
-        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
-	      "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libnuma-dev"
       },
       "state": {
         "libnuma-dev": {
