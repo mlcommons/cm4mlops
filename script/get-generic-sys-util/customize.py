@@ -13,12 +13,13 @@ def preprocess(i):
     if env['CM_SYS_UTIL_NAME'] == "psmisc" and env.get('CM_HOST_OS_PACKAGE_MANAGER', '') == "brew":
         env['CM_SYS_UTIL_VERSION_CMD_OVERRIDE'] = "brew info pstree > tmp-run.out 2>&1 | grep pstree:"
         env['CM_SYS_UTIL_VERSION_RE'] = r"\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b"
+
     #Use VERSION_CMD and CHECK_CMD if no CHECK_CMD is set
     if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and env.get('CM_SYS_UTIL_CHECK_CMD', '') == '':
         env['CM_SYS_UTIL_CHECK_CMD'] = env['CM_SYS_UTIL_VERSION_CMD']
 
     if env.get('CM_GENERIC_SYS_UTIL_RUN_MODE', '') == "detect":
-        if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '':
+        if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' or env.get('CM_SYS_UTIL_VERSION_CMD_OVERRIDE', '') != '':
             r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
             if r['return'] != 0: #detection failed, do install via prehook_deps
                 print("detection failed, going for installation")
@@ -131,7 +132,7 @@ def postprocess(i):
 
     version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
 
-    if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" or env.get(version_env_key, '') == '') and str(env.get('CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED', '')).lower() not in ["yes", "1", "true"]:
+    if (env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' or env.get('CM_SYS_UTIL_VERSION_CMD_OVERRIDE', '') != '')  and (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" or env.get(version_env_key, '') == '') and str(env.get('CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED', '')).lower() not in ["yes", "1", "true"]:
         automation = i['automation']
         r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
         if r['return'] > 0 and str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in [ "1", "yes", "true" ] and str(env.get('CM_TMP_FAIL_SAFE', '')).lower() not in [ "1", "yes", "true" ]:
