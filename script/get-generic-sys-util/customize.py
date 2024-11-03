@@ -144,16 +144,17 @@ def postprocess(i):
         if r['return'] > 0 and str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in [ "1", "yes", "true" ]:
             return {'return': 1, 'error': 'Version detection failed after installation. Please check the provided version command or use env.CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE=yes to ignore the error.'}
 
-        r = detect_version(i)
+        elif r['return'] == 0:
+            r = detect_version(i)
 
-        if r['return'] >0: return r
+            if r['return'] >0: return r
 
-        version = r['version']
+            version = r['version']
 
-        env[version_env_key] = version
+            env[version_env_key] = version
 
-        #Not used now
-        env['CM_GENERIC_SYS_UTIL_'+env['CM_SYS_UTIL_NAME'].upper()+'_CACHE_TAGS'] = 'version-'+version
+            #Not used now
+            env['CM_GENERIC_SYS_UTIL_'+env['CM_SYS_UTIL_NAME'].upper()+'_CACHE_TAGS'] = 'version-'+version
 
     if env.get(version_env_key, '') == '':
         env[version_env_key] = "undetected"
