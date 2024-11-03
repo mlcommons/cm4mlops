@@ -1,4 +1,5 @@
 #!/bin/bash
+
 if [[ -n "${CM_SYS_UTIL_VERSION_CMD_OVERRIDE}" ]]; then
   cmd="${CM_SYS_UTIL_VERSION_CMD_OVERRIDE}"
   echo $cmd
