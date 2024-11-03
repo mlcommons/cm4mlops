@@ -13,7 +13,7 @@
       "tags": "detect,os"
     },
     {
-      "tags": "get,generic-sys-util,_pkg-config",
+      "tags": "get,generic-sys-util,_pkg-config,_detect",
       "skip_if_env": {
         "CM_SYS_UTIL_NAME": [
           "pkg_config"
