@@ -11,13 +11,16 @@ def preprocess(i):
     automation = i['automation']
 
     if env['CM_SYS_UTIL_NAME'] == "psmisc" and env.get('CM_HOST_OS_PACKAGE_MANAGER', '') == "brew":
-        env['CM_SYS_UTIL_VERSION_CMD_OVERRIDE'] = "brew info pstree > tmp-ver.out 2>&1"
-        env['CM_SYS_UTIL_VERSION_RE'] = r"\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b"
-        env['CM_TMP_VERSION_DETECT_GROUP_NUMBER'] = 0
+        env['CM_SYS_UTIL_VERSION_CMD_OVERRIDE'] = "brew info pstree | grep pstree: > tmp-ver.out 2>&1"
+        env['CM_SYS_UTIL_VERSION_RE'] = r"(?:stable\s+)(\d+\.\d+(?:\.\d+)?)"
+        env['CM_TMP_VERSION_DETECT_GROUP_NUMBER'] = 1
 
     #Use VERSION_CMD and CHECK_CMD if no CHECK_CMD is set
     if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and env.get('CM_SYS_UTIL_CHECK_CMD', '') == '':
         env['CM_SYS_UTIL_CHECK_CMD'] = env['CM_SYS_UTIL_VERSION_CMD']
+
+    if env.get('CM_GENERIC_SYS_UTIL_RUN_MODE', '') == "install":
+        i['run_script_input']['name'] = "install"
 
     if env.get('CM_GENERIC_SYS_UTIL_RUN_MODE', '') == "detect":
         if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' or env.get('CM_SYS_UTIL_VERSION_CMD_OVERRIDE', '') != '':
@@ -27,9 +30,11 @@ def preprocess(i):
                 env['CM_GENERIC_SYS_UTIL_INSTALL_NEEDED'] = "yes"
                 return {'return': 0}
             else: #detection is successful, no need to install
+                #print("detection success")
                 env['CM_SYS_UTIL_INSTALL_CMD'] = ""
                 return {'return': 0}
         else: #No detction command available, just install
+            #print("No detection possible, going for installation")
             env['CM_GENERIC_SYS_UTIL_INSTALL_NEEDED'] = "yes"
             return {'return': 0}
 
@@ -121,6 +126,7 @@ def detect_version(i):
                                        'group_number': group_number,
                                        'env_key': version_env_key,
                                        'which_env': env})
+
         if r['return'] >0: return r
 
         version = r['version']
@@ -133,11 +139,13 @@ def postprocess(i):
 
     version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
 
-    if (env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' or env.get('CM_SYS_UTIL_VERSION_CMD_OVERRIDE', '') != '')  and (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" and env.get(version_env_key, '') == '') and str(env.get('CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED', '')).lower() not in ["yes", "1", "true"] and env.get('CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED', '') != 'yes':
+    if (env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' or env.get('CM_SYS_UTIL_VERSION_CMD_OVERRIDE', '') != '') and str(env.get('CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED', '')).lower() not in ["yes", "1", "true"] and env.get('CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED', '') != 'yes':
         automation = i['automation']
-        r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
-        if r['return'] > 0 and str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in [ "1", "yes", "true" ]:
-            return {'return': 1, 'error': 'Version detection failed after installation. Please check the provided version command or use env.CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE=yes to ignore the error.'}
+
+        if (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" and env.get(version_env_key, '') == ''):
+            r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
+            if r['return'] > 0 and str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in [ "1", "yes", "true" ]:
+                return {'return': 1, 'error': 'Version detection failed after installation. Please check the provided version command or use env.CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE=yes to ignore the error.'}
 
         r = detect_version(i)
 
