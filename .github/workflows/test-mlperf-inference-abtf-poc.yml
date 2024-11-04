@@ -66,7 +66,7 @@ jobs:
 
         # Loop until Docker daemon is up or max attempts reached
         attempt=1
-        while ! docker system info > /dev/null 2>&1; do
+        while ! docker --version > /dev/null 2>&1; do
           echo "Attempt $attempt: Waiting for Docker to start..."
           sleep $WAIT_TIME
           attempt=$((attempt + 1))
