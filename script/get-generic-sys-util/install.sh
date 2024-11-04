@@ -10,7 +10,7 @@ delay_in_retry=3
 
 for ((i=1; i<=max_retries; i++)); do
     echo "Attempt $i of $max_retries..."
-    output=$(eval "$command" 2>&1)
+    output=$(eval "$cmd" 2>&1)
     echo "$output"
     exit_status=$?
 
