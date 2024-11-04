@@ -15,7 +15,7 @@ for ((i=1; i<=max_retries; i++)); do
     exit_status=$?
 
     if [[ $exit_status -eq 0 ]]; then
-        # echo "Command succeeded."
+        echo "Successfully installed ${CM_SYS_UTIL_NAME}."
         exit 0
     fi
 
