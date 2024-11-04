@@ -181,11 +181,7 @@
     },
     "gflags-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "gflags-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion gflags",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
-        
+        "CM_SYS_UTIL_NAME": "gflags-dev"
       },
       "state": {
         "gflags-dev": {
@@ -216,10 +212,7 @@
     },
     "glog-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "glog-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libglog",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "glog-dev"
       },
       "state": {
         "glog-dev": {
@@ -293,10 +286,7 @@
     },
     "libffi-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libffi_dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libffi",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libffi_dev"
       },
       "state": {
         "libffi_dev": {
@@ -349,10 +339,7 @@
     },
     "libgmock-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libgmock-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion gmock",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libgmock-dev"
       },
       "state": {
         "libgmock-dev": {
@@ -394,10 +381,7 @@
     },
     "libmpfr-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libmpfr-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion mpfr",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libmpfr-dev"
       },
       "state": {
         "libmpfr-dev": {
@@ -443,10 +427,7 @@
     },
     "libpci-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libpci-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libpci",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libpci-dev"
       },
       "state": {
         "libpci-dev": {
@@ -460,10 +441,7 @@
     },
     "libpng-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libpng-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libpng",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libpng-dev"
       },
       "state": {
         "libpng-dev": {
@@ -477,10 +455,7 @@
     },
     "libre2-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libre2-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion re2",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libre2-dev"
       },
       "state": {
         "libre2-dev": {
@@ -494,10 +469,7 @@
     },
     "libreadline-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libreadline_dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion readline",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libreadline_dev"
       },
       "state": {
         "libreadline_dev": {
@@ -510,10 +482,7 @@
     },
     "libsqlite3-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libsqlite3_dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion sqlite3",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libsqlite3_dev"
       },
       "state": {
         "libsqlite3_dev": {
@@ -541,10 +510,7 @@
     },
     "libudev-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libudev-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion libudev",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "libudev-dev"
       },
       "state": {
         "libudev-dev": {
