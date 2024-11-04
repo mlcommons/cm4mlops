@@ -11,14 +11,6 @@
   "deps": [
     {
       "tags": "detect,os"
-    },
-    {
-      "tags": "get,generic-sys-util,_pkg-config,_detect",
-      "skip_if_env": {
-        "CM_SYS_UTIL_NAME": [
-          "pkg_config"
-        ]
-      }
     }
   ],
   "new_env_keys": [
@@ -615,10 +607,7 @@
     },
     "nlohmann-json3-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "nlohmann_json3_dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion nlohmann_json",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "nlohmann_json3_dev"
       },
       "state": {
         "nlohmann_json3_dev": {
@@ -719,10 +708,7 @@
     },
     "rapidjson-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "rapidjson-dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion RapidJSON",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "rapidjson-dev"
       },
       "state": {
         "rapidjson-dev": {
@@ -904,10 +890,7 @@
     },
     "zlib": {
       "env": {
-        "CM_SYS_UTIL_NAME": "zlib",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion zlib",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "zlib"
       },
       "state": {
         "zlib": {
@@ -919,10 +902,7 @@
     },
     "zlib1g-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "zlib1g_dev",
-        "CM_SYS_UTIL_VERSION_CMD": "pkg-config --modversion zlib",
-        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "zlib1g_dev"
       },
       "state": {
         "zlib1g_dev": {
