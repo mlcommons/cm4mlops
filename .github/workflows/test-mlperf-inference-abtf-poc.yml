@@ -21,7 +21,7 @@ jobs:
         backend: [ "pytorch" ]
         implementation: [ "python" ]
         docker: [ "", " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes" ]
-        extra-args: [ "--adr.compiler.tags=gcc" ]
+        extra-args: [ "--adr.compiler.tags=gcc", "--env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off" ]
         exclude:
         - os: ubuntu-24.04
           python-version: "3.8"
@@ -35,7 +35,6 @@ jobs:
           python-version: "3.8"
         include:
           - os: windows-latest
-            docker: ""
             extra-args: "--env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off"
 
     steps:
