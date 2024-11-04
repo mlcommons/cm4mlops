@@ -26,6 +26,7 @@ jobs:
           python-version: "3.8"
         - os: windows-latest
           python-version: "3.8"
+        - os: windows-latest
           extra-args: "--adr.compiler.tags=gcc" 
         - os: macos-latest
           python-version: "3.8"
