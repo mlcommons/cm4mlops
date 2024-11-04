@@ -36,6 +36,8 @@ jobs:
         include:
           - os: windows-latest
             extra-args: "--env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off"
+            docker: ""
+            # windows docker image is not supported in CM yet
 
     steps:
     - uses: actions/checkout@v3
@@ -59,11 +61,26 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         open /Applications/Docker.app
-        # Wait until Docker daemon is running
+        echo "Starting Docker, this may take a while..."
+
+        # Set max attempts and initial wait time
+        MAX_ATTEMPTS=20
+        WAIT_TIME=5
+
+        # Loop until Docker daemon is up or max attempts reached
+        attempt=1
         while ! docker system info > /dev/null 2>&1; do
-          echo "Waiting for Docker to start..."
-          sleep 5
+          echo "Attempt $attempt: Waiting for Docker to start..."
+          sleep $WAIT_TIME
+          attempt=$((attempt + 1))
+          WAIT_TIME=$((WAIT_TIME * 2))  # Exponential backoff
+
+          if [ $attempt -gt $MAX_ATTEMPTS ]; then
+            echo "Docker failed to start within the timeout period"
+            exit 1
+          fi
         done
+
         echo "Docker is up and running"
 
     - name: Install Docker Desktop on Windows
