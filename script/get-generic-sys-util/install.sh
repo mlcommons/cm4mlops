@@ -9,7 +9,7 @@ delay_in_retry=3
 
 
 for ((i=1; i<=max_retries; i++)); do
-    echo "Attempt $i of $max_retries..."
+    echo "Attempting to install ${CM_SYS_UTIL_NAME} - $i of $max_retries..."
     output=$(eval "$cmd" 2>&1)
     echo "$output"
     exit_status=$?
