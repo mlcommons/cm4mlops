@@ -629,10 +629,7 @@
     },
     "ntpdate": {
       "env": {
-        "CM_SYS_UTIL_NAME": "ntpdate",
-        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l ntpdate 2>/dev/null | grep ^ii | awk '{print $3}'",
-        "CM_SYS_UTIL_VERSION_RE": "([A-Za-z0-9]+(\\.[A-Za-z0-9]+)+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_SYS_UTIL_NAME": "ntpdate"
       },
       "state": {
         "ntpdate": {
