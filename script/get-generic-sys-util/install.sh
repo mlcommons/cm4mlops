@@ -14,27 +14,26 @@ for ((i=1; i<=max_retries; i++)); do
     echo "$output"
     exit_status=$?
 
-    if [[ $exit_status -eq 0 ]]; then
+    if [[ $exit_status -ne 0 || "$output" == *"Temporary failure resolving"* || "$output" == *"Unable to fetch some archives"* ]]; then
+        # Check for network-related errors in the output
+        if echo "$output" | grep -q -E "Could not resolve|Temporary failure resolving"; then
+            echo "Network issue detected, retrying in $delay_in_retry seconds..."
+            sleep $delay_in_retry
+        else
+            # If it's a non-network error, handle based on fail-safe setting
+            if [[ "${CM_TMP_FAIL_SAFE}" == 'yes' ]]; then
+                echo "CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED=yes" > tmp-run-env.out
+                echo "Fail-safe is enabled, exiting with status 0."
+                exit 0
+            else
+                echo "Fail-safe is not enabled, exiting with error status $exit_status."
+                exit $exit_status
+            fi
+        fi
+    else
+        # If the command succeeded
         echo "Successfully installed ${CM_SYS_UTIL_NAME}."
         exit 0
-    fi
-
-    # Check for network-related errors in the output
-    if echo "$output" | grep -q -E "Could not resolve|Temporary failure resolving"; then
-        echo "Network issue detected, retrying in $retry_delay seconds..."
-        sleep $retry_delay
-    else
-        # If it's a non-network error, handle based on fail-safe setting
-        echo "Command failed with status $exit_status: $output"
-        if [[ "${CM_TMP_FAIL_SAFE}" == 'yes' ]]; then
-            # Exit safely if fail-safe is enabled
-            echo "CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED=yes" > tmp-run-env.out
-            echo "Fail-safe is enabled, exiting with status 0."
-            exit 0
-        else
-            echo "Fail-safe is not enabled, exiting with error status $exit_status."
-            exit $exit_status
-        fi
     fi
 
     # If this was the last retry, print a final failure message
