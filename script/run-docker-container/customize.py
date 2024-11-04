@@ -120,8 +120,6 @@ def postprocess(i):
     port_map_cmds = []
     run_opts = ''
 
-    CM_DOCKER_RUN_ARGS = env.get('+ CM_DOCKER_RUN_ARGS', [])
-
     if env.get('CM_DOCKER_PRE_RUN_COMMANDS', []):
         for pre_run_cmd in env['CM_DOCKER_PRE_RUN_COMMANDS']:
             run_cmds.append(pre_run_cmd)
@@ -248,7 +246,7 @@ def postprocess(i):
             x2 = " && bash ) || bash"
 
 
-        CONTAINER="docker run " + x1 + " --entrypoint " + x + x + " " + CM_DOCKER_RUN_ARGS + " " + run_opts + " " + docker_image_repo + "/" + docker_image_name + ":" + docker_image_tag
+        CONTAINER="docker run " + x1 + " --entrypoint " + x + x + " " + run_opts + " " + docker_image_repo + "/" + docker_image_name + ":" + docker_image_tag
         CMD =  CONTAINER + " bash -c " + x + run_cmd_prefix + run_cmd + x2 + x
 
         print ('')
