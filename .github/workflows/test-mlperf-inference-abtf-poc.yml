@@ -28,16 +28,13 @@ jobs:
         - os: windows-latest
           python-version: "3.8"
         - os: windows-latest
-          extra-args: "--adr.compiler.tags=gcc" 
+          extra-args: "--adr.compiler.tags=gcc"
+          docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
+          # windows docker image is not supported in CM yet
         - os: macos-latest
           python-version: "3.8"
         - os: macos-13
           python-version: "3.8"
-        include:
-          - os: windows-latest
-            extra-args: "--env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off"
-            docker: ""
-            # windows docker image is not supported in CM yet
 
     steps:
     - uses: actions/checkout@v3
