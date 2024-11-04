@@ -774,7 +774,8 @@
         "CM_SYS_UTIL_NAME": "transmission",
         "CM_SYS_UTIL_VERSION_CMD": "transmission-daemon --version",
         "CM_SYS_UTIL_VERSION_RE": "transmission-daemon ([\\d.]+)",
-        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0,
+	"CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes"
       },
       "state": {
         "transmission": {
