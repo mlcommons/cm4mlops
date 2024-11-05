@@ -244,8 +244,10 @@ variations:
   llama2-70b_:
     deps:
       - tags: get,preprocessed,dataset,openorca,_mlc,_validation
-      - tags: get,ml-model,llama2,_fp32,_pytorch
       - tags: get,ml-model,llama2,_amd,_pytorch
+        skip_if_env:
+          CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+          - 'yes'
       - tags: get,preprocessed,dataset,openorca,_mlc,_validation
       - tags: download,file,_url.https://github.com/vllm-project/vllm/blob/38c4b7e863570a045308af814c72f4504297222e/tests/fp8_kv/llama2-70b-fp8-kv/kv_cache_scales.json
         extra_cache_tags: llama2-scales,kv-cache
