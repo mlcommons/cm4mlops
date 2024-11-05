@@ -53,7 +53,7 @@
     "run_style": "CM_MLPERF_RUN_STYLE",
     "skip_truncation": "CM_SKIP_TRUNCATE_ACCURACY",
     "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
-    "submission_base_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
+    "submission_base_dir": "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR",
     "clean": "CM_MLPERF_CLEAN_SUBMISSION_DIR",
     "hw_name": "CM_HW_NAME",
     "sw_notes_extra": "CM_MLPERF_SUT_SW_NOTES_EXTRA",
@@ -140,7 +140,7 @@
         "tags": "get,mlperf,inference,submission,dir,local",
         "names": "get-mlperf-inference-submission-dir",
         "skip_if_env": {
-          "CM_MLPERF_INFERENCE_SUBMISSION_DIR": [
+          "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR": [
             "on"
           ]
         }
