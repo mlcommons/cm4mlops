@@ -53,6 +53,7 @@
     "run_style": "CM_MLPERF_RUN_STYLE",
     "skip_truncation": "CM_SKIP_TRUNCATE_ACCURACY",
     "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
+    "submission_base_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
     "clean": "CM_MLPERF_CLEAN_SUBMISSION_DIR",
     "hw_name": "CM_HW_NAME",
     "sw_notes_extra": "CM_MLPERF_SUT_SW_NOTES_EXTRA",
@@ -72,8 +73,7 @@
   },
   "default_env": {
     "CM_RUN_MLPERF_ACCURACY": "on",
-    "CM_MLPERF_RUN_STYLE": "valid",
-    "CM_MLPERF_INFERENCE_SUBMISSION_PROCESSED_DIR": "<<<CM_MLPERF_INFERENCE_SUBMISSION_DIR>>>_processed"
+    "CM_MLPERF_RUN_STYLE": "valid"
   },
   "post_deps": [
     {
@@ -150,9 +150,8 @@
       "cm pull repo"
     ],
     "mounts": [
-      "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}",
-      "${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}",
-      "${{ CM_MLPERF_INFERENCE_SUBMISSION_PROCESSED_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_PROCESSED_DIR }}"
+      "${{ CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR }}",
+      "${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}"
     ],
     "extra_run_args": " --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined",
     "os": "ubuntu",
