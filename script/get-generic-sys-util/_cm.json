@@ -11,6 +11,14 @@
   "deps": [
     {
       "tags": "detect,os"
+    },
+    {
+      "tags": "get,generic-sys-util,_pkg-config,_detect",
+      "skip_if_env": {
+        "CM_SYS_UTIL_NAME": [
+          "pkg_config"
+        ]
+      }
     }
   ],
   "new_env_keys": [
@@ -35,9 +43,6 @@
     "detect": {
       "group": "mode",
       "default": true,
-      "names": [
-        "detect-sys-util"
-      ],
       "env": {
         "CM_GENERIC_SYS_UTIL_RUN_MODE": "detect"
       },
@@ -67,7 +72,10 @@
       "group": "mode",
       "env": {
         "CM_GENERIC_SYS_UTIL_RUN_MODE": "install"
-      }
+      },
+      "new_env_keys": [
+        "CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED"
+      ]
     },
     "cmake": {
       "env": {
@@ -97,7 +105,11 @@
     },
     "g++-11": {
       "env": {
-        "CM_SYS_UTIL_NAME": "g++11"
+        "CM_SYS_UTIL_NAME": "g++11",
+        "CM_SYS_UTIL_VERSION_CMD": "g++-11 --version",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0,
+        "CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE": "yes"
       },
       "state": {
         "g++11": {
@@ -457,8 +469,12 @@
     },
     "md5sha1sum": {
       "env": {
-        "CM_SYS_UTIL_NAME": "md5sha1sum"
+        "CM_SYS_UTIL_NAME": "md5sha1sum",
+        "CM_SYS_UTIL_VERSION_CMD": "md5sum --version | grep sha1sum",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
+      "new_env_keys": ["CM_MD5SHA1SUM_VERSION"],
       "state": {
         "md5sha1sum": {
           "apt": "",
@@ -541,6 +557,21 @@
           "brew": "",
           "dnf": "nvidia-cuda-toolkit",
           "yum": "nvidia-cuda-toolkit"
+        }
+      }
+    },
+    "pkg-config": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "pkg_config",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+      },
+      "state": {
+        "pkg_config": {
+          "apt": "pkg-config",
+          "brew": "pkg-config",
+          "dnf": "pkg-config",
+          "yum": "pkg-config"
         }
       }
     },

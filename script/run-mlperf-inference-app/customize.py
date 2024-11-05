@@ -203,6 +203,7 @@ def preprocess(i):
         inp = {}
         if str(docker_dt).lower() in ["yes", "true", "1"]:
             env['CM_DOCKER_REUSE_EXISTING_CONTAINER'] = 'no' # turning it off for the first run and after that we turn it on
+            env['CM_DOCKER_DETACHED_MODE'] = 'yes'
 
         if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
             docker_extra_input['docker_image_name'] = env['CM_DOCKER_IMAGE_NAME']
