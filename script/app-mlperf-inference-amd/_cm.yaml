@@ -243,6 +243,9 @@ variations:
 
   llama2-70b_:
     deps:
+      - tags: get,generic-python-lib,_package.compressed_tensors
+        names:
+          - compressed_tensors
       - tags: get,preprocessed,dataset,openorca,_mlc,_validation
       - tags: get,ml-model,llama2,_amd,_pytorch
         skip_if_env:
