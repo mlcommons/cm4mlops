@@ -11,7 +11,7 @@ def preprocess(i):
     input_dir = env.get("CM_TAR_INPUT_DIR", "")
     if input_dir == "":
         return {'return': 1, 'error': 'Please set CM_TAR_INPUT_DIR'}
-    output_dir = env.get("CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR", env.get("CM_TAR_OUTPUT_DIR", ""))
+    output_dir = env.get("CM_TAR_OUTPUT_DIR", "")
     if output_dir == "":
         output_dir = os.getcwd()
     output_file = env.get("CM_TAR_OUTFILE", "")
