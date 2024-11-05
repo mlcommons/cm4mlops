@@ -68,9 +68,6 @@
           "yes"
         ]
       },
-      "env": {
-        "CM_TAR_OUTPUT_DIR": "<<<CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR>>>"
-      },
       "tags": "run,tar"
     }
   ],
