@@ -4,14 +4,6 @@ import os
 from os.path import exists
 import shutil
 
-def clean_dir(dir_name):
-    for item in os.listdir(dir_name):
-        item_path = os.path.join(dir_name, item)
-        if os.path.isdir(item_path):
-            shutil.rmtree(item_path)
-        else:
-            os.remove(item_path)
-
 def preprocess(i):
 
     os_info = i['os_info']
@@ -26,7 +18,7 @@ def preprocess(i):
     submission_processed = submission_dir + "_processed"
 
     if os.path.exists(submission_processed):
-        clean_dir(submission_processed)
+        shutil.rmtree(submission_processed)
 
     os.system("rm -rf " + submission_dir + "_processed")
 
@@ -45,16 +37,7 @@ def postprocess(i):
 
     submission_processed = submission_dir + "_processed"
     shutil.copytree(submission_dir, submission_backup)
-
-    clean_dir(submission_dir)
-            
-    # copy the files from submission processed directory to submission directory
-    for item in os.listdir(submission_processed):
-        source = os.path.join(submission_processed, item)
-        destination = os.path.join(submission_dir, item)
-        if os.path.isdir(source):
-            shutil.copytree(source, destination)  # Copy entire directory
-        else:
-            shutil.copy(source, destination)     # Copy individual files
+    shutil.rmtree(submission_dir)
+    os.rename(submission_processed, submission_dir)
             
     return {'return':0}
