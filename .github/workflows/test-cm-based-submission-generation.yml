@@ -7,8 +7,8 @@ on:
     branches: [ "main", "dev", "mlperf-inference" ]
     paths:
       - '.github/workflows/test-cm-based-submission-generation.yml'
-      # - '**'  # kept on for all the path instead of submission generation CM script so that this could help in trapping any bugs in any recent submission checker modification also
-      # - '!**.md'
+      - '**'  
+      - '!**.md'
 jobs:
   submission_generation:
     runs-on: ${{ matrix.os }}
