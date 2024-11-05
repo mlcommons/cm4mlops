@@ -142,9 +142,6 @@
         "skip_if_any_env": {
           "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR": [
             "on"
-          ],
-          "CM_MLPERF_INFERENCE_SUBMISSION_DIR": [
-            "on"
           ]
         }
       }
