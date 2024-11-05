@@ -95,6 +95,9 @@ def postprocess(i):
     if x!='':
         env['CM_TAR_OUTFILE']=x
 
+    if env.get('CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR', '') != '':
+        env['CM_TAR_OUTPUT_DIR'] = env['CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR']
+
     x=env.get('MLPERF_INFERENCE_SUBMISSION_SUMMARY','')
     if x!='':
         for y in ['.csv', '.json', '.xlsx']:

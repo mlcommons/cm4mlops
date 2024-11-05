@@ -4012,6 +4012,19 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         return {'return':0}
 
     ##############################################################################
+    def update_state_from_meta(self, meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i):
+        """
+        Updates state and env from meta
+        Args:
+        """
+
+        r = update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i)
+        if r['return']>0:
+            return r
+
+        return {'return':0}
+
+    ##############################################################################
     def get_default_path_list(self, i):
         default_path_env_key = i.get('default_path_env_key', '')
         os_info = i['os_info']
@@ -5260,9 +5273,17 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
         r4 = update_deps(posthook_deps, add_deps_info, True, env)
         if r1['return']>0 and r2['return']>0 and r3['return'] > 0 and r4['return'] > 0: return r1
 
+    # i would have 'input' when called through cm.access
+    input_update_env = i.get('input', i)
+
     input_mapping = meta.get('input_mapping', {})
     if input_mapping:
-        update_env_from_input_mapping(env, i['input'], input_mapping)
+        update_env_from_input_mapping(env, input_update_env, input_mapping)
+
+    # handle dynamic env values
+    r = update_env_with_values(env)
+    if r['return']>0:
+        return r
 
     # Possibly restrict this to within docker environment
     add_deps_info = meta.get('ad', i.get('ad', {})) #we need to see input here
