@@ -150,17 +150,15 @@
       "cm pull repo"
     ],
     "mounts": [
-      "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}",
       "${{ CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR }}",
       "${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}"
     ],
-    "extra_run_args": " --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined",
+    "extra_run_args": " --cap-add SYS_ADMIN",
     "os": "ubuntu",
     "cm_repo": "mlcommons@cm4mlops",
     "cm_repo_branch": "mlperf-inference",
     "os_version": "22.04",
     "docker_input_mapping": {
-      "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
       "submission_base_dir": "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR",
       "results_dir": "CM_MLPERF_INFERENCE_RESULTS_DIR_"
     }
