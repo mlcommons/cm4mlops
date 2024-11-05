@@ -191,7 +191,7 @@
           "tags": "get,generic-python-lib,_torch"
         },
         {
-          "tags": "get,generic-python-lib,_compressed_tensors"
+          "tags": "get,generic-python-lib,_package.compressed_tensors"
         }
       ]
     },
