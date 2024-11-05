@@ -163,7 +163,7 @@
     "cm_repo_branch": "mlperf-inference",
     "os_version": "22.04",
     "docker_input_mapping": {
-      "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR",
+      "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
       "submission_base_dir": "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR",
       "results_dir": "CM_MLPERF_INFERENCE_RESULTS_DIR_"
     }
