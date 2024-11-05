@@ -814,6 +814,8 @@ variations:
   llama2-70b_,amd:
     docker:
       image_name: mlperf-inference-amd-python-implementation-llama2-70b
+      mounts:
+        - "${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }}:${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }"
       deps:
         - enable_if_env:
             CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
