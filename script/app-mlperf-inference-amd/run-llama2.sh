@@ -16,7 +16,7 @@ export VLLM_FP8_REDUCE_CONV=1
 export HARNESS_DISABLE_VLLM_LOGS=1
 export VLLM_LOGGING_LEVEL=ERROR
 
-MODEL_PATH=${CM_ML_MODEL_LLAMA2_FILE_WITH_PATH:-/data/llm/llama2-70b-chat/}
+MODEL_PATH=${LLAMA2_CHECKPOINT_PATH:-/data/llm/llama2-70b-chat/}
 DATASET_PATH=${CM_DATASET_OPENORCA_PREPROCESSED_PATH:-/data/open_orca/open_orca_gpt4_tokenized_llama.sampled_24576.pkl.gz}
 QUANTIZED_WEIGHTS_PATH=${CM_LLAMA2_FINAL_SAFE_TENSORS_PATH:-quantized/quark_share/modelzoo/llama2_70b_wfp8_afp8_ofp8_nomerge/json-safetensors/llama.safetensors}
 QUANTIZATION_PARAM_PATH=${QUANTIZATION_PARAM_PATH:-/app/kv_cache_scales.json}
