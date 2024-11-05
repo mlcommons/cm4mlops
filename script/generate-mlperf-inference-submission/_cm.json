@@ -139,8 +139,11 @@
       {
         "tags": "get,mlperf,inference,submission,dir,local",
         "names": "get-mlperf-inference-submission-dir",
-        "skip_if_env": {
+        "skip_if_any_env": {
           "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR": [
+            "on"
+          ],
+          "CM_MLPERF_INFERENCE_SUBMISSION_DIR": [
             "on"
           ]
         }
@@ -150,6 +153,7 @@
       "cm pull repo"
     ],
     "mounts": [
+      "${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_DIR }}",
       "${{ CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR }}",
       "${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}"
     ],
@@ -160,6 +164,7 @@
     "os_version": "22.04",
     "docker_input_mapping": {
       "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR",
+      "submission_base_dir": "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR",
       "results_dir": "CM_MLPERF_INFERENCE_RESULTS_DIR_"
     }
   }
