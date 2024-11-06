@@ -8,7 +8,6 @@
 # TBD: when we have bandwidth and resources, we should refactor it
 # and make it cleaner and simpler while keeping full backwards compatibility.
 #
-import re
 import os
 import logging
 
@@ -3979,11 +3978,6 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
            return r
 
         string = r['string']
-        match = re.search(match_text, string)
-        if debug:
-            print(f"Regex Pattern: {match_text}")
-            print(f"Matched String: {string}")
-            print(f"Match Groups: {match.groups()}")
         
         if r['match'].lastindex and r['match'].lastindex >= group_number:
             version = r['match'].group(group_number)
