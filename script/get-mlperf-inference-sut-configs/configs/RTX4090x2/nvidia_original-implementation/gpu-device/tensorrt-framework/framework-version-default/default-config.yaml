@@ -12,9 +12,13 @@
   bert-99:
     Offline:
       target_qps: 8000
+    Server:
+      target_qps: 6000
   bert-99.9:
     Offline:
-      target_qps: 8000
+      target_qps: 3500
+    Server:
+      target_qps: 3000
   3d-unet-99:
     Offline:
       target_qps: 8.0

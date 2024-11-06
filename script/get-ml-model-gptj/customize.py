@@ -24,6 +24,8 @@ def preprocess(i):
 
     elif env.get('CM_TMP_ML_MODEL_PROVIDER', '') == 'nvidia':
         i['run_script_input']['script_name'] = 'run-nvidia'
+        if str(env.get('CM_DOCKER_DETACHED_MODE','')).lower() in ['yes', 'true', "1"]:
+            env['DOCKER_RUN_OPTS'] = "--rm -dt --ipc=host --ulimit memlock=-1 --ulimit stack=67108864"
         gpu_arch = int(float(env['CM_CUDA_DEVICE_PROP_GPU_COMPUTE_CAPABILITY']) * 10)
         env['CM_GPU_ARCH'] = gpu_arch
         env['CM_TMP_REQUIRE_DOWNLOAD'] = 'no'
