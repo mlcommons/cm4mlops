@@ -53,6 +53,7 @@
     "run_style": "CM_MLPERF_RUN_STYLE",
     "skip_truncation": "CM_SKIP_TRUNCATE_ACCURACY",
     "submission_dir": "CM_MLPERF_INFERENCE_SUBMISSION_DIR",
+    "submission_base_dir": "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR",
     "clean": "CM_MLPERF_CLEAN_SUBMISSION_DIR",
     "hw_name": "CM_HW_NAME",
     "sw_notes_extra": "CM_MLPERF_SUT_SW_NOTES_EXTRA",
@@ -120,5 +121,46 @@
     "mlperf-inference-submission",
     "mlcommons-inference-submission"
   ],
-  "uid": "5f8ab2d0b5874d53"
+  "uid": "5f8ab2d0b5874d53",
+  "docker": {
+    "use_host_group_id": true,
+    "use_host_user_id": true,
+    "real_run": false,
+    "deps": [
+      {
+        "tags": "get,mlperf,inference,results,dir,local",
+        "names": "get-mlperf-inference-results-dir",
+        "skip_if_env": {
+          "CM_MLPERF_INFERENCE_RESULTS_DIR_": [
+            "on"
+          ]
+        }
+      },
+      {
+        "tags": "get,mlperf,inference,submission,dir,local",
+        "names": "get-mlperf-inference-submission-dir",
+        "skip_if_any_env": {
+          "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR": [
+            "on"
+          ]
+        }
+      }
+    ],
+    "pre_run_cmds": [
+      "cm pull repo"
+    ],
+    "mounts": [
+      "${{ CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR }}:${{ CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR }}",
+      "${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}:${{ CM_MLPERF_INFERENCE_RESULTS_DIR_ }}"
+    ],
+    "extra_run_args": " --cap-add SYS_ADMIN",
+    "os": "ubuntu",
+    "cm_repo": "mlcommons@cm4mlops",
+    "cm_repo_branch": "mlperf-inference",
+    "os_version": "22.04",
+    "docker_input_mapping": {
+      "submission_base_dir": "CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR",
+      "results_dir": "CM_MLPERF_INFERENCE_RESULTS_DIR_"
+    }
+  }
 }

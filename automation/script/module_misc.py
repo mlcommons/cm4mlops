@@ -1802,6 +1802,10 @@ def docker(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
+        r = script_automation.update_state_from_meta(meta, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys = [], new_state_keys = [], i = i)
+        if r['return'] > 0:
+            return r
+
         r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
@@ -1916,11 +1920,12 @@ def docker(i):
             mounts[index] = new_host_mount+":"+new_container_mount
             if host_env_key:
                 container_env_string += " --env.{}={} ".format(host_env_key, container_env_key)
-                # check if the below lines are needed when inputs are mapped to container paths
-                '''for v in docker_input_mapping:
+        
+                for v in docker_input_mapping:
                     if docker_input_mapping[v] == host_env_key:
-                        i[v] = container_env_key
-                ''' 
+                        i[v] = container_env_key 
+                        i_run_cmd[v] = container_env_key
+        
         mounts = list(filter(lambda item: item is not None, mounts))
 
         mount_string = "" if len(mounts)==0 else ",".join(mounts)

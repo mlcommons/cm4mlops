@@ -65,12 +65,19 @@ def generate_submission(i):
         env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'] = os.path.join(user_home, "mlperf_submission")
 
     submission_dir = env.get('CM_MLPERF_INFERENCE_SUBMISSION_DIR', '')
+    if submission_dir == '':
+        submission_base_dir = env.get('CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR', '')
+        if submission_base_dir == '':
+            return {'return':1, 'error':f"Both CM_MLPERF_INFERENCE_SUBMISSION_DIR and CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR can not be empty!"}
+        else:
+            submission_dir = os.path.join(submission_base_dir, "mlperf_inference_submission")
+            env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'] = submission_dir
 
     if env.get('CM_MLPERF_CLEAN_SUBMISSION_DIR','')!='':
         print ('=================================================')
         print ('Cleaning {} ...'.format(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']))
-        if os.path.exists(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']):
-            shutil.rmtree(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'])
+        if os.path.exists(submission_dir):
+            shutil.rmtree(submission_dir)
         print ('=================================================')
 
     if not os.path.isdir(submission_dir):

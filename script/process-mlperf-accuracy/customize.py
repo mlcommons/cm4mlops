@@ -92,7 +92,7 @@ def preprocess(i):
 
 
         elif dataset == "coco2014":
-            env['+PYTHONPATH'] = [ os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools") ]
+            env['+PYTHONPATH'] = [ os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools") , os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools", "fid") ]
             extra_options = ""
 
             if env.get('CM_SDXL_STATISTICS_FILE_PATH', '') != '':
