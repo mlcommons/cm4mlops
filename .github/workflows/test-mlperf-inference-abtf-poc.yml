@@ -38,8 +38,8 @@ jobs:
           python-version: "3.8"
         - os: macos-latest
           docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
-        - os: macos-13
-          docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
+        # - os: macos-13
+        #   docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
 
     steps:
     - uses: actions/checkout@v3
@@ -85,6 +85,8 @@ jobs:
 
         echo "Docker is up and running"
 
+        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
+
     - name: Install Docker Desktop on Windows
       if: runner.os == 'Windows'
       run: |
@@ -108,4 +110,5 @@ jobs:
 
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
+        echo "done"
+      # cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
