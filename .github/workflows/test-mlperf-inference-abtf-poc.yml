@@ -38,8 +38,8 @@ jobs:
           python-version: "3.8"
         - os: macos-latest
           docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
-        # - os: macos-13
-        #   docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
+        - os: macos-13
+          docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
 
     steps:
     - uses: actions/checkout@v3
@@ -54,13 +54,13 @@ jobs:
         cm pull repo mlcommons@cm4abtf --branch=poc
   
     - name: Install Docker on macos
-      if: runner.os == 'macOS'
+      if: runner.os == 'macOS-deactivated'
       run: |
         brew update
         brew install --cask docker
 
     - name: Start Docker Daemon on macos
-      if: runner.os == 'macOS'
+      if: runner.os == 'macOS-deactivated'
       run: |
         open /Applications/Docker.app
         echo "Starting Docker, this may take a while..."
@@ -71,7 +71,6 @@ jobs:
 
         # Loop until Docker daemon is up or max attempts reached
         attempt=1
-        docker --version
         while ! docker info > /dev/null 2>&1; do
           echo "Attempt $attempt: Waiting for Docker to start..."
           sleep $WAIT_TIME
@@ -85,16 +84,14 @@ jobs:
         done
 
         echo "Docker is up and running"
-
-        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
-
+        
     - name: Install Docker Desktop on Windows
-      if: runner.os == 'Windows'
+      if: runner.os == 'Windows-deactivated'
       run: |
         choco install docker-desktop --no-progress -y
 
     - name: Start Docker Desktop on Windows
-      if: runner.os == 'Windows'
+      if: runner.os == 'Windows-deactivated'
       run: |
         Start-Process 'C:\Program Files\Docker\Docker\Docker Desktop.exe'
         # Wait until Docker daemon is running
@@ -112,4 +109,4 @@ jobs:
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
       run: |
         echo "done"
-      # cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
+        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
