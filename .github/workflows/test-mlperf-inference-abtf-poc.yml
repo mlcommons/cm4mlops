@@ -73,7 +73,7 @@ jobs:
         attempt=1
         docker --version
         docker info
-        while ! docker --version > /dev/null 2>&1; do
+        while ! docker info > /dev/null 2>&1; do
           echo "Attempt $attempt: Waiting for Docker to start..."
           sleep $WAIT_TIME
           attempt=$((attempt + 1))
