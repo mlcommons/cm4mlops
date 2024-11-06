@@ -3,6 +3,7 @@ import cmind as cm
 import os
 import json
 import re
+import shutil
 
 def preprocess(i):
 
@@ -53,21 +54,64 @@ def preprocess(i):
     if not docker_image_base:
         return {'return': 1, 'error': f"Version \"{env['CM_DOCKER_OS_VERSION']}\" is not supported yet for \"{env['CM_DOCKER_OS']}\" "}
 
-    if env.get("CM_MLOPS_REPO", "") != "":
-        cm_mlops_repo = env["CM_MLOPS_REPO"]
-        # the below pattern matches both the HTTPS and SSH git link formats
-        git_link_pattern = r'^(https?://github\.com/([^/]+)/([^/]+)(?:\.git)?|git@github\.com:([^/]+)/([^/]+)(?:\.git)?)$'
-        if match := re.match(git_link_pattern, cm_mlops_repo):
-            if match.group(2) and match.group(3):
-                repo_owner = match.group(2)
-                repo_name = match.group(3)
-            elif match.group(4) and match.group(5):
-                repo_owner = match.group(4)
-                repo_name = match.group(5)
-            cm_mlops_repo = f"{repo_owner}@{repo_name}"
-            print(f"Converted repo format from {env['CM_MLOPS_REPO']} to {cm_mlops_repo}")
+    # Handle cm_mlops Repository
+    if env.get("CM_REPO_PATH", "") != "":
+        use_copy_repo = True
+        cm_repo_path = os.path.abspath(env["CM_REPO_PATH"])
+        
+        if not os.path.exists(cm_repo_path):
+            return {'return': 1, 'error': f"Specified CM_REPO_PATH does not exist: {cm_repo_path}"}
+        
+        cmr_yml_path = os.path.join(cm_repo_path, "cmr.yaml")
+        if not os.path.isfile(cmr_yml_path):
+            return {'return': 1, 'error': f"cmr.yaml not found in CM_REPO_PATH: {cm_repo_path}"}
+        
+        # Define the build context directory (where the Dockerfile will be)
+        build_context_dir = os.path.dirname(env.get('CM_DOCKERFILE_WITH_PATH', os.path.join(os.getcwd(), "Dockerfile")))
+        os.makedirs(build_context_dir, exist_ok=True)
+        
+        # Create cm_repo directory relative to the build context
+        repo_build_context_path = os.path.join(build_context_dir, "cm_repo")
+        
+        # Remove existing directory if it exists
+        if os.path.exists(repo_build_context_path):
+            shutil.rmtree(repo_build_context_path)
+            
+        try:
+            print(f"Copying repository from {cm_repo_path} to {repo_build_context_path}")
+            shutil.copytree(cm_repo_path, repo_build_context_path)
+        except Exception as e:
+            return {'return': 1, 'error': f"Failed to copy repository to build context: {str(e)}"}
+            
+        if not os.path.isdir(repo_build_context_path):
+            return {'return': 1, 'error': f"Repository was not successfully copied to {repo_build_context_path}"}
+        
+        # (Optional) Verify the copy
+        if not os.path.isdir(repo_build_context_path):
+            return {'return': 1, 'error': f"cm_repo was not successfully copied to the build context at {repo_build_context_path}"}
+        else:
+            print(f"cm_repo is present in the build context at {repo_build_context_path}")
+
+        relative_repo_path = os.path.relpath(repo_build_context_path, build_context_dir)
     else:
-        cm_mlops_repo = "mlcommons@cm4mlops"
+        # CM_REPO_PATH is not set; use cm pull repo as before
+        use_copy_repo = False
+        
+        if env.get("CM_MLOPS_REPO", "") != "":
+            cm_mlops_repo = env["CM_MLOPS_REPO"]
+            # the below pattern matches both the HTTPS and SSH git link formats
+            git_link_pattern = r'^(https?://github\.com/([^/]+)/([^/]+)(?:\.git)?|git@github\.com:([^/]+)/([^/]+)(?:\.git)?)$'
+            if match := re.match(git_link_pattern, cm_mlops_repo):
+                if match.group(2) and match.group(3):
+                    repo_owner = match.group(2)
+                    repo_name = match.group(3)
+                elif match.group(4) and match.group(5):
+                    repo_owner = match.group(4)
+                    repo_name = match.group(5)
+                cm_mlops_repo = f"{repo_owner}@{repo_name}"
+                print(f"Converted repo format from {env['CM_MLOPS_REPO']} to {cm_mlops_repo}")
+        else:
+            cm_mlops_repo = "mlcommons@cm4mlops"
 
     cm_mlops_repo_branch_string = f" --branch={env['CM_MLOPS_REPO_BRANCH']}"
     
@@ -125,7 +169,6 @@ def preprocess(i):
     f.write(EOL)
     copy_cmds = []
     if 'CM_DOCKER_COPY_FILES' in env:
-        import shutil
         for copy_file in env['CM_DOCKER_COPY_FILES']:
             copy_split = copy_file.split(":")
             if len(copy_split) != 2:
@@ -199,11 +242,21 @@ def preprocess(i):
 
     f.write(EOL+'# Download CM repo for scripts' + EOL)
 
-    # Add possibility to force rebuild with some extra flag for the repository
-    x = env.get('CM_DOCKER_ADD_FLAG_TO_CM_MLOPS_REPO','')
-    if x!='': x=' '+x
-
-    f.write('RUN cm pull repo ' + cm_mlops_repo + cm_mlops_repo_branch_string + x + EOL)
+    if use_copy_repo:
+        docker_repo_dest = "/home/cmuser/CM/repos/mlcommons@cm4mlops"
+        f.write(f'COPY --chown=cmuser:cm {relative_repo_path} {docker_repo_dest}' + EOL)
+        
+        f.write(EOL + '# Register CM repository' + EOL)
+        f.write('RUN cm pull repo --url={} --quiet'.format(docker_repo_dest) + EOL)
+        f.write(EOL)
+    
+        
+    else:
+        # Use cm pull repo as before
+        x = env.get('CM_DOCKER_ADD_FLAG_TO_CM_MLOPS_REPO','')
+        if x!='': x=' '+x
+        
+        f.write('RUN cm pull repo ' + cm_mlops_repo + cm_mlops_repo_branch_string + x + EOL)
 
     # Check extra repositories
     x = env.get('CM_DOCKER_EXTRA_CM_REPOS','')
