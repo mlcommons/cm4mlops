@@ -139,7 +139,7 @@ def read_file(file_name, default=""):
     return default
 
 long_description = read_file("README.md", "No description available.")
-version_ = read_file("VERSION", "0.3.0")
+version_ = read_file("VERSION", "0.3.1")
 
 setup(
     name='cm4mlops',
