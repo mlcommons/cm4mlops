@@ -20,7 +20,7 @@ jobs:
         division: ["closed", "open"]
         category: ["datacenter", "edge"]
         case: ["case-3", "case-7"]
-        action: ["script", "docker"]
+        action: ["run", "docker"]
         exclude:
           - os: macos-latest
           - os: windows-latest
