@@ -61,6 +61,12 @@
         "CM_CONDA_PKG_NAME": "#"
       }
     },
+    "source.intel": {
+      "group": "package-source",
+      "env": {
+        "CM_CONDA_PKG_SRC": "https://software.repos.intel.com/python/conda/"
+      }
+    },
     "source.#": {
       "group": "package-source",
       "env": {
