@@ -108,5 +108,4 @@ jobs:
 
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
       run: |
-        echo "done"
         cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
