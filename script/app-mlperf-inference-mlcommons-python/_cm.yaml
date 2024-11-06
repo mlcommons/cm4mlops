@@ -394,6 +394,7 @@ deps:
     names:
     - ml-model
     - sdxl-model
+    - ml-model-float16
     enable_if_env:
       CM_MODEL:
       - stable-diffusion-xl
