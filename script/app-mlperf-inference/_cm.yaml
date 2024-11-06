@@ -103,7 +103,12 @@ deps:
   - tags: get,mlcommons,inference,src
     names:
     - inference-src
-
+  - tags: pull,git,repo
+    env:
+      CM_GIT_CHECKOUT_PATH: '<<<CM_MLPERF_INFERENCE_SOURCE>>>'
+    enable_if_env:
+      CM_MLPERF_INFERENCE_PULL_SRC_CHANGES:
+      - 'yes'
   - tags: get,mlperf,inference,utils
 
   - tags: install,pip-package,for-cmind-python,_package.pandas
