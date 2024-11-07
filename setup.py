@@ -8,6 +8,7 @@ import sys
 import importlib.util
 import platform
 import os
+import shutil
 
 # Try to use importlib.metadata for Python 3.8+ 
 try:
@@ -76,8 +77,15 @@ class CustomInstallCommand(install):
                 manager, details = self.get_package_manager_details()
                 if manager:
                     if manager == "apt-get":
-                        subprocess.check_call(['sudo', 'apt-get', 'update'])
-                        subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                        # Check if 'sudo' is available
+                        if shutil.which('sudo'):
+                            try:
+                                subprocess.check_call(['sudo', 'apt-get', 'update'])
+                                subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                            except subprocess.CalledProcessError:
+                                print("Sudo command failed, trying without sudo.")
+                                subprocess.check_call(['apt-get', 'update'])
+                                subprocess.check_call(['apt-get', 'install', '-y'] + packages)
             elif self.system == 'Windows':
                 print(f"Please install the following packages manually: {packages}")
 
