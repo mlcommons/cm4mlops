@@ -18,6 +18,8 @@ if [ ! -e "${CM_TMP_GIT_PATH}" ]; then
   echo ""
 
   ${CM_GIT_CLONE_CMD}
+  rcode=$?
+
   if [ ! $rcode -eq 0 ]; then #try once more
     rm -rf $folder
     ${CM_GIT_CLONE_CMD}
