@@ -14,7 +14,7 @@ def preprocess(i):
         print("Please set CM_MLPERF_INFERENCE_SUBMISSION_DIR")
         return {'return': 1, 'error':'CM_MLPERF_INFERENCE_SUBMISSION_DIR is not specified'}
 
-    submitter = env.get("CM_MLPERF_SUBMITTER", "cTuning")
+    submitter = env.get("CM_MLPERF_SUBMITTER", "MLCommons")
     submission_processed = submission_dir + "_processed"
 
     if os.path.exists(submission_processed):
