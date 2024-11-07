@@ -24,9 +24,10 @@ jobs:
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
-        python3 -m pip install cm4mlops
+        pip install cm4mlops
+        pip install tabulate 
         cm pull repo
-        python3 -m pip install "huggingface_hub[cli]"
+        pip install "huggingface_hub[cli]"
         huggingface-cli login --token ${{ secrets.HF_TOKEN }} --add-to-git-credential
     - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |
