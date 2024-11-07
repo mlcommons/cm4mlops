@@ -11,16 +11,20 @@ def preprocess(i):
     submission_dir = env.get("CM_MLPERF_INFERENCE_SUBMISSION_DIR", "")
 
     if submission_dir == "":
-        print("Please set CM_MLPERF_INFERENCE_SUBMISSION_DIR")
+        print("Please set --env.CM_MLPERF_INFERENCE_SUBMISSION_DIR")
         return {'return': 1, 'error':'CM_MLPERF_INFERENCE_SUBMISSION_DIR is not specified'}
 
+    if not os.path.exists(submission_dir):
+        print("Please set --env.CM_MLPERF_INFERENCE_SUBMISSION_DIR to a valid submission directory")
+        return {'return': 1, 'error':'CM_MLPERF_INFERENCE_SUBMISSION_DIR is not existing'}
+
+    submission_dir = submission_dir.rstrip(os.path.sep)
     submitter = env.get("CM_MLPERF_SUBMITTER", "MLCommons")
-    submission_processed = submission_dir + "_processed"
+    submission_processed = f"{submission_dir}_processed"
 
     if os.path.exists(submission_processed):
+        print(f"Cleaning {submission_processed}")
         shutil.rmtree(submission_processed)
-
-    os.system("rm -rf " + submission_dir + "_processed")
 
     CMD = env['CM_PYTHON_BIN'] + " '" + os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "tools", "submission",
             "preprocess_submission.py") + "' --input '" + submission_dir + "' --submitter '" + submitter + "' --output '" + submission_processed + "'"

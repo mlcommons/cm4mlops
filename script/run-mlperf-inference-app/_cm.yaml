@@ -264,6 +264,8 @@ variations:
         tags: _size.50,_with-sample-ids
       nvidia-preprocess-data:
         extra_cache_tags: "scc24-base"
+      inference-src:
+        tags: _branch.dev
     deps:
       - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
         extra_cache_rm_tags: scc24-main
@@ -278,6 +280,8 @@ variations:
         tags: _size.500,_with-sample-ids
       nvidia-preprocess-data:
         extra_cache_tags: "scc24-main"
+      inference-src:
+        tags: _branch.dev
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-main
       CM_DOCKER_IMAGE_NAME: scc24
