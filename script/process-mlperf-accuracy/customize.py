@@ -103,6 +103,9 @@ def preprocess(i):
             else:
                 extra_options += f""" --compliance-images-path '{os.path.join(result_dir, "images")}' """
 
+            if env.get('CM_COCO2014_SAMPLE_ID_PATH','') != '':
+                extra_options += f" --ids-path '{env['CM_COCO2014_SAMPLE_ID_PATH']}' "
+
             if env.get('CM_SDXL_ACCURACY_RUN_DEVICE', '') != '':
                 extra_options += f" --device '{env['CM_SDXL_ACCURACY_RUN_DEVICE']}' "
 

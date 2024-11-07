@@ -146,6 +146,12 @@ variations:
       CM_MLPERF_DEVICE: gpu
       CM_MLPERF_DEVICE_LIB_NAMESPEC: cudart
 
+  rocm:
+    group: device
+    env:
+      CM_MLPERF_DEVICE: rocm
+      CM_MLPERF_DEVICE_LIB_NAMESPEC: rocm
+
   openshift:
     group: backend
     default: true
@@ -160,6 +166,10 @@ variations:
   pytorch,cuda:
     deps:
       - tags: get,generic-python-lib,_torch_cuda
+
+  pytorch,rocm:
+    deps:
+      - tags: get,generic-python-lib,_torch,_rocm
 
   pytorch,cpu:
     deps:
