@@ -5,12 +5,12 @@ name: MLPerf inference MIXTRAL-8x7B
 
 on:
   schedule:
-    - cron: "30 20 * * *"   # 30th minute and 20th hour => 20:30 UTC => 2 AM IST 
+    - cron: "30 03 * * *"   # 30th minute and 20th hour => 20:30 UTC => 2 AM IST 
 
 jobs:
   build_reference:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, GO-i9, linux, x64 ]
+    runs-on: [ self-hosted, GO-spr, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
