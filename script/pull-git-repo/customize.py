@@ -15,7 +15,7 @@ def preprocess(i):
     if 'CM_GIT_CHECKOUT_PATH' not in env:
         return {'return':1, 'error': 'CM_GIT_CHECKOUT_PATH is not set'}
 
-    env['CM_GIT_PULL_CMD'] = "git pull --rebase"
+    env['CM_GIT_PULL_CMD'] = "git stash && git pull --rebase && git stash apply"
 
     return {'return':0}
 
