@@ -135,4 +135,4 @@ else
 fi
 echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
-echo "System information has been saved to $PWD/$OUTPUT_FILE"
+echo "System information has been saved to $OUTPUT_FILE"
