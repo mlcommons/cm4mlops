@@ -929,6 +929,7 @@ variations:
     adr:
       mlperf-implementation:
         tags: _branch.dev
+        version: custom
     deps:
       - tags: get,generic-python-lib,_package.diffusers
         names:
