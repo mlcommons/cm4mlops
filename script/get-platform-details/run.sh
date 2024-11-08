@@ -19,7 +19,7 @@ test $? -eq 0 || exit $?
 echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
 echo "3. Username" >> $OUTPUT_FILE
-echo "From environment variable \$USER: $USER" >> $OUTPUT_FILE
+eval "whoami" >> $OUTPUT_FILE
 echo "------------------------------------------------------------" >> $OUTPUT_FILE
 
 echo "4. ulimit -a" >> $OUTPUT_FILE
