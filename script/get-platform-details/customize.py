@@ -23,7 +23,7 @@ def preprocess(i):
         if env.get('CM_PLATFORM_DETAILS_DIR_PATH', '') == '':
             env['CM_PLATFORM_DETAILS_DIR_PATH'] = os.getcwd()
         if env.get('CM_PLATFORM_DETAILS_FILE_NAME', '') == '':
-            env['CM_PLATFORM_DETAILS_FILE_NAME'] = "system_info.txt"
+            env['CM_PLATFORM_DETAILS_FILE_NAME'] = "system-info.txt"
         env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(env['CM_PLATFORM_DETAILS_DIR_PATH'], env['CM_PLATFORM_DETAILS_FILE_NAME'])        
 
     return {'return':0}

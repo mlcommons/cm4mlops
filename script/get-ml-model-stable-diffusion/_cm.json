@@ -106,6 +106,7 @@
     "pytorch": {
       "default": true,
       "env": {
+        "CM_ML_MODEL_STARTING_WEIGHTS_FILENAME": "https://github.com/mlcommons/inference/tree/master/text_to_image#download-model",
         "CM_ML_MODEL_FRAMEWORK": "pytorch"
       },
       "group": "framework"
@@ -115,7 +116,6 @@
     },
     "pytorch,fp32": {
       "env": {
-        "CM_ML_MODEL_STARTING_WEIGHTS_FILENAME": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0"
       },
       "required_disk_space": 13000
     },

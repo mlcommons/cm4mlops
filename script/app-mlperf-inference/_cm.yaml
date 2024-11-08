@@ -103,7 +103,12 @@ deps:
   - tags: get,mlcommons,inference,src
     names:
     - inference-src
-
+  - tags: pull,git,repo
+    env:
+      CM_GIT_CHECKOUT_PATH: '<<<CM_MLPERF_INFERENCE_SOURCE>>>'
+    enable_if_env:
+      CM_MLPERF_INFERENCE_PULL_SRC_CHANGES:
+      - 'yes'
   - tags: get,mlperf,inference,utils
 
   - tags: install,pip-package,for-cmind-python,_package.pandas
@@ -810,6 +815,17 @@ variations:
             CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
             - 'yes'
           tags: get,ml-model,llama2
+
+  llama2-70b_,amd:
+    docker:
+      image_name: mlperf-inference-amd-python-implementation-llama2-70b
+      mounts:
+        - "${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }}:${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }"
+      deps:
+        - enable_if_env:
+            CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,ml-model,llama2,_amd,_pytorch
   
   mixtral-8x7b:
     group:

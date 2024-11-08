@@ -25,7 +25,7 @@ jobs:
         export CM_REPOS=$HOME/GH_CM
         python3 -m pip install cm4mlops
         cm pull repo
-        cm run script --tags=run-mlperf,inference,_performance-only --submitter="MLCommons" --model=dlrm-v2-99 --implementation=reference --backend=pytorch --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --clean
+        cm run script --tags=run-mlperf,inference,_performance-only --adr.mlperf-implementation.tags=_branch.dev --adr.mlperf-implementation.version=custom --submitter="MLCommons" --model=dlrm-v2-99 --implementation=reference --backend=pytorch --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --clean
 
   build_intel:
     if: github.repository_owner == 'gateoverflow_off'

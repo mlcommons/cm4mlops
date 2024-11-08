@@ -11,6 +11,7 @@ test $? -eq 0 || exit $?
 
 echo ${CM_GIT_PULL_CMD}
 eval ${CM_GIT_PULL_CMD}
-test $? -eq 0 || exit $?
+#don't fail if there are local changes
+#test $? -eq 0 || exit $?
 
 cd $CUR_DIR
