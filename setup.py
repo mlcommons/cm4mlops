@@ -79,16 +79,15 @@ class CustomInstallCommand(install):
                     if manager == "apt-get":
                         # Check if 'sudo' is available
                         if shutil.which('sudo'):
+                            subprocess.check_call(['sudo', 'apt-get', 'update'])
+                            subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                        else:
+                            print("sudo not found, trying without sudo.")
                             try:
-                                subprocess.check_call(['sudo', 'apt-get', 'update'])
-                                subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                                subprocess.check_call(['apt-get', 'update'])
+                                subprocess.check_call(['apt-get', 'install', '-y'] + packages)
                             except subprocess.CalledProcessError:
-                                print("Sudo command failed, trying without sudo.")
-                                try:
-                                    subprocess.check_call(['apt-get', 'update'])
-                                    subprocess.check_call(['apt-get', 'install', '-y'] + packages)
-                                except subprocess.CalledProcessError:
-                                    print(f"Installation of {packages} without sudo failed. Please install these packages manually to continue!")
+                                print(f"Installation of {packages} without sudo failed. Please install these packages manually to continue!")
             elif self.system == 'Windows':
                 print(f"Please install the following packages manually: {packages}")
 
