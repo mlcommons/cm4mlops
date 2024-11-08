@@ -95,7 +95,7 @@ def is_user_in_sudo_group():
         return False
 
 def prompt_sudo():
-    if os.geteuid() != 0 or not is_user_in_sudo_group():  # No sudo required for root user
+    if os.geteuid() != 0 and not is_user_in_sudo_group():  # No sudo required for root user
         msg = "[sudo] password for %u:"
         while True:
             try:
