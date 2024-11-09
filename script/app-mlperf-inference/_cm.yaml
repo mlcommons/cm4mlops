@@ -638,7 +638,6 @@ variations:
       - openimages-accuracy-script
       tags: run,accuracy,mlperf,_openimages
 
-  retinanet,nvidia-original:
     docker:
       deps:
       - names:
