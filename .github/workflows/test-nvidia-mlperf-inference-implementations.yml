@@ -5,7 +5,7 @@ on:
     - cron: "49 19 * * *" #to be adjusted
 
 jobs:
-  build_nvidia:
+  run_nvidia:
       if: github.repository_owner == 'gateoverflow'
       runs-on: [ self-hosted, linux, x64, GO-spr ]
       strategy:
