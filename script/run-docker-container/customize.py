@@ -134,6 +134,9 @@ def postprocess(i):
     if env.get('CM_DOCKER_ADD_DEVICE', '') != '':
         run_opts += " --device="+env['CM_DOCKER_ADD_DEVICE']
 
+    if env.get('CM_DOCKER_PRIVILEGED_MODE', '') == 'yes':
+        run_opts += " --privileged "
+
     if env.get('CM_DOCKER_ADD_NUM_GPUS', '') != '':
         run_opts += " --gpus={}".format(env['CM_DOCKER_ADD_NUM_GPUS'])
     elif env.get('CM_DOCKER_ADD_ALL_GPUS', '') != '':
