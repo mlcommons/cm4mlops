@@ -7,9 +7,6 @@
   "category_sort":8500,
   "deps": [
     {
-      "tags": "get,sys-utils-cm"
-    },
-    {
       "tags": "get,python3",
       "names": [
         "python",

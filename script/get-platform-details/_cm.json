@@ -21,10 +21,14 @@
       "tags": "detect,sudo"
     },
     {
-      "skip_if_env": {
+      "skip_if_any_env": {
         "CM_HOST_OS_TYPE": [
           "windows"
         ]
+      },
+      "skip_if_env": {
+        "CM_SUDO_USER": "no",
+        "CM_SUDO": ""
       },
       "tags": "get,sys-util,generic,_psmisc"
     },
@@ -34,6 +38,10 @@
           "linux"
         ]
       },
+      "skip_if_env": {
+        "CM_SUDO_USER": "no",
+        "CM_SUDO": ""
+      },
       "tags": "get,sys-util,generic,_systemd"
     },
     {
@@ -41,6 +49,10 @@
         "CM_HOST_OS_TYPE": [
           "linux"
         ]
+      },
+      "skip_if_env": {
+        "CM_SUDO_USER": "no",
+        "CM_SUDO": ""
       },
       "tags": "get,sys-util,generic,_dmidecode"
     }
@@ -55,6 +67,10 @@
           "linux"
         ]
       },
+      "skip_if_env": {
+        "CM_SUDO_USER": "no",
+        "CM_SUDO": ""
+      },
       "tags": "get,sys-util,generic,_numactl"
     },
     {
@@ -65,6 +81,10 @@
         "CM_HOST_OS_TYPE": [
           "linux"
         ]
+      },
+      "skip_if_env": {
+        "CM_SUDO_USER": "no",
+        "CM_SUDO": ""
       },
       "tags": "get,sys-util,generic,_linux-tools",
       "env": {
