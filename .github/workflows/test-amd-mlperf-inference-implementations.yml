@@ -16,9 +16,9 @@ jobs:
       steps:
       - name: Test MLPerf Inference AMD (build only) ${{ matrix.model }}
         run: |
-          if [ -f "gh_action_conda/bin/deactivate" ]; then source gh_action_conda/bin/deactivate; fi
-          python3 -m venv gh_action_conda
-          source gh_action_conda/bin/activate
+          if [ -f "gh_action/bin/deactivate" ]; then source gh_action/bin/deactivate; fi
+          python3 -m venv gh_action
+          source gh_action/bin/activate
           export CM_REPOS=$HOME/GH_CM
           pip install --upgrade cm4mlops
           pip install tabulate
