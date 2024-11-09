@@ -12,7 +12,9 @@
   "docker_input_mapping": {},
   "input_description": {},
   "input_mapping": {},
-  "new_env_keys": [],
+  "new_env_keys": [
+    "CM_DOCKER_VERSION"
+  ],
   "new_state_keys": [],
   "post_deps": [],
   "posthook_deps": [],
