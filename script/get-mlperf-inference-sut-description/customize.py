@@ -86,6 +86,9 @@ def preprocess(i):
 
         if env.get('CM_DOCKER_VERSION', '') != '':
             state['CM_SUT_META']['other_software_stack'] += " Docker version:" + env['CM_DOCKER_VERSION']
+        else:
+            if os.path.exists('/.dockerenv'):
+                state['CM_SUT_META']['other_software_stack'] += ", Using Docker "
 
         if state['CM_SUT_META'].get('system_name','') == '':
             system_name = env.get('CM_MLPERF_SYSTEM_NAME')
