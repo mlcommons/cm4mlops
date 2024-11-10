@@ -1086,7 +1086,9 @@ def doc(i):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-def update_path_for_docker(path, mounts, force_path_target=''):
+# This function takes in a host path and returns the absolute path on host and the container
+# If mounts is passed, the function appends the host path and the container path to mounts in the form "host_path:container_path" 
+def update_path_for_docker(path, mounts=None, force_path_target=''):
 
     path_orig = ''
     path_target = ''
@@ -1114,14 +1116,14 @@ def update_path_for_docker(path, mounts, force_path_target=''):
             x = path_orig + ':' + path_target
 
         # CHeck if no duplicates
-        to_add = True
-        for y in mounts:
-            if y.lower()==x.lower():
-                to_add = False
-                break
-
-        if to_add:
-            mounts.append(x)
+        if mounts != None:
+            to_add = True
+            for y in mounts:
+                if y.lower()==x.lower():
+                    to_add = False
+                    break
+            if to_add:
+                mounts.append(x)
 
     
     return (path_orig, path_target)
@@ -1393,6 +1395,8 @@ def dockerfile(i):
 
     env=i.get('env', {})
     state = i.get('state', {})
+    const=i.get('const', {})
+    const_state = i.get('const_state', {})
     script_automation = i['self_module']
 
     dockerfile_env=i.get('dockerfile_env', {})
@@ -1420,7 +1424,7 @@ def dockerfile(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1470,6 +1474,8 @@ def dockerfile(i):
         run_cmd  = r['run_cmd_string']
 
         cm_repo = i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
+        cm_repo_branch = i.get('docker_cm_repo_branch', docker_settings.get('cm_repo_branch', 'mlperf-inference'))
+
         cm_repo_flags = i.get('docker_cm_repo_flags', docker_settings.get('cm_repo_flags', ''))
 
         docker_base_image = i.get('docker_base_image', docker_settings.get('base_image'))
@@ -1542,6 +1548,7 @@ def dockerfile(i):
                            'automation': 'script',
                            'tags': 'build,dockerfile',
                            'cm_repo': cm_repo,
+                           'cm_repo_branch': cm_repo_branch,
                            'cm_repo_flags': cm_repo_flags,
                            'docker_base_image': docker_base_image,
                            'docker_os': docker_os,
@@ -1612,8 +1619,11 @@ def get_container_path(value):
             new_path_split1 = new_path_split + path_split[repo_entry_index:repo_entry_index+3]
             new_path_split2 = new_path_split + path_split[repo_entry_index:]
             return "/".join(new_path_split1), "/".join(new_path_split2)
+    else:
+        orig_path,target_path = update_path_for_docker(path=value)
+        return target_path, target_path
 
-    return value, value
+    # return value, value
 
 
 ############################################################
@@ -1682,7 +1692,7 @@ def docker(i):
     env=i.get('env', {})
 
     noregenerate_docker_file = i.get('docker_noregenerate', False)
-    norecreate_docker_image = i.get('docker_norecreate', False)
+    norecreate_docker_image = i.get('docker_norecreate', True)
 
     if i.get('docker_skip_build', False):
         noregenerate_docker_file = True
@@ -1738,6 +1748,8 @@ def docker(i):
     env['CM_RUN_STATE_DOCKER'] = False
     script_automation = i['self_module']
     state = i.get('state', {})
+    const = i.get('const', {})
+    const_state = i.get('const_state', {})
 
     tags_split = i.get('tags', '').split(",")
     variation_tags = [ t[1:] for t in tags_split if t.startswith("_") ]
@@ -1790,7 +1802,11 @@ def docker(i):
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation.update_state_from_meta(meta, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys = [], new_state_keys = [], i = i)
+        if r['return'] > 0:
+            return r
+
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1904,11 +1920,12 @@ def docker(i):
             mounts[index] = new_host_mount+":"+new_container_mount
             if host_env_key:
                 container_env_string += " --env.{}={} ".format(host_env_key, container_env_key)
-                # check if the below lines are needed when inputs are mapped to container paths
-                '''for v in docker_input_mapping:
+        
+                for v in docker_input_mapping:
                     if docker_input_mapping[v] == host_env_key:
-                        i[v] = container_env_key
-                ''' 
+                        i[v] = container_env_key 
+                        i_run_cmd[v] = container_env_key
+        
         mounts = list(filter(lambda item: item is not None, mounts))
 
         mount_string = "" if len(mounts)==0 else ",".join(mounts)
@@ -1968,6 +1985,8 @@ def docker(i):
         num_gpus = i.get('docker_num_gpus', docker_settings.get('num_gpus'))
 
         device = i.get('docker_device', docker_settings.get('device'))
+
+        image_name = i.get('docker_image_name', docker_settings.get('image_name', ''))
 
         r = check_gh_token(i, docker_settings, quiet)
         if r['return'] >0 : return r
@@ -2040,7 +2059,7 @@ def docker(i):
                            'image_repo': image_repo,
                            'interactive': interactive,
                            'mounts': mounts,
-                           'image_name': i.get('docker_image_name', ''),
+                           'image_name': image_name,
 #                            'image_tag': script_alias,
                            'image_tag_extra': image_tag_extra,
                            'detached': detached,

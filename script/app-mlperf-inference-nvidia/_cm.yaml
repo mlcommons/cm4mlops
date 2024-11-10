@@ -89,7 +89,6 @@ input_mapping:
   embedding_weights_on_gpu_part: CM_MLPERF_NVIDIA_HARNESS_EMBEDDING_WEIGHTS_ON_GPU_PART
   sdxl_batcher_time_limit: CM_MLPERF_NVIDIA_HARNESS_SDXL_SERVER_BATCHER_TIME_LIMIT
 
-
 # Dependencies on other CM scripts
 
 deps:
@@ -119,6 +118,11 @@ deps:
   - enable_if_env:
       CM_MODEL:
       - resnet50
+    skip_if_env:
+      CM_USE_DATASET_FROM_HOST:
+      - 'yes'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - imagenet-original
     tags: get,dataset,original,imagenet,_full
@@ -218,6 +222,11 @@ deps:
   - enable_if_env:
       CM_MODEL:
       - retinanet
+    skip_if_env:
+      CM_USE_DATASET_FROM_HOST:
+      - 'yes'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - openimages-original
     tags: get,dataset,original,openimages,_validation,_full,_custom-annotations
@@ -225,6 +234,11 @@ deps:
   - enable_if_env:
       CM_MODEL:
       - retinanet
+    skip_if_env:
+      CM_USE_DATASET_FROM_HOST:
+      - 'yes'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
     names:
       - openimages-calibration
     tags: get,dataset,original,openimages,_calibration   
@@ -241,6 +255,13 @@ deps:
   - tags: get,nvidia,mlperf,inference,common-code
     names:
     - nvidia-inference-common-code
+
+  - tags: pull,git,repo
+    env:
+      CM_GIT_CHECKOUT_PATH: '<<<CM_MLPERF_INFERENCE_NVIDIA_CODE_PATH>>>'
+    enable_if_env:
+      CM_MLPERF_INFERENCE_PULL_CODE_CHANGES:
+      - 'yes'
 
   # Creates user conf for given SUT
   - tags: generate,user-conf,mlperf,inference
@@ -392,6 +413,7 @@ variations:
       CM_ML_MODEL_WEIGHT_TRANSFORMATIONS: quantization, affine fusion
       CM_ML_MODEL_INPUTS_DATA_TYPE: int8
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
+      CM_MLPERF_NVIDIA_HARNESS_NUM_WARMUPS: 10
     deps:
     - tags: get,generic-python-lib,_onnx-graphsurgeon
       version: 0.3.27
@@ -408,14 +430,13 @@ variations:
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: int8
     deps:
     - tags: get,generic-python-lib,_Pillow
-    - tags: get,generic-python-lib,_torch
-    - tags: get,generic-python-lib,_torchvision
     - tags: get,generic-python-lib,_opencv-python
     - tags: get,generic-python-lib,_numpy
     - tags: get,generic-python-lib,_pycocotools
     - tags: get,generic-python-lib,_onnx-graphsurgeon
     - tags: get,generic-python-lib,_package.onnx
-      version: 1.13.1
+      version: 1.14.1
+    - tags: get,generic-python-lib,_package.sympy
 
   sdxl:
     new_env_keys:                                                                      
@@ -505,6 +526,7 @@ variations:
     - tags: get,generic-python-lib,_transformers
     - tags: get,generic-python-lib,_safetensors
     - tags: get,generic-python-lib,_onnx
+    - tags: get,generic-python-lib,_package.sympy
     - tags: get,generic-python-lib,_onnx-graphsurgeon
 
   bert-99:
@@ -572,10 +594,10 @@ variations:
       CM_ML_MODEL_WEIGHTS_DATA_TYPE: fp16
     deps:
     - tags: get,generic-python-lib,_toml
-    - tags: get,generic-python-lib,_torchvision
+    - tags: get,generic-python-lib,_torchvision_cuda
       names:
       - torchvision
-    - tags: get,generic-python-lib,_torch
+    - tags: get,generic-python-lib,_torch_cuda
     - tags: get,generic-python-lib,_nvidia-apex
     - tags: get,generic-python-lib,_unidecode
     - tags: get,generic-python-lib,_inflect
@@ -591,7 +613,6 @@ variations:
       - CM_DLRM_V2_AGGREGATION_TRACE_FILE_PATH
     deps:
     - tags: get,dlrm,data,mlperf,inference,_nvidia
-    - tags: get,generic-python-lib,_torch
     - tags: get,generic-python-lib,_package.torchsnapshot
     - tags: get,generic-python-lib,_package.torchrec
       version: 0.3.2
@@ -739,6 +760,11 @@ variations:
     env:
       CM_MLPERF_NVIDIA_HARNESS_USE_TRITON: "yes"
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX3: "using_triton"
+
+  use-graphs:
+    group: graphs
+    env:
+     CM_MLPERF_NVIDIA_HARNESS_USE_GRAPHS: "yes"
 
   prebuild:
     group: run-mode
@@ -917,6 +943,7 @@ variations:
             - bert-99.9
             - dlrm-v2-99
             - dlrm-v2-99.9
+
       - tags: reproduce,mlperf,inference,nvidia,harness,_calibrate
         inherit_variation_tags: true
         enable_if_env:
@@ -1083,11 +1110,21 @@ variations:
 
   singlestream,resnet50:
     env:
-      SKIP_POLICIES: '1'
+      CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK: yes
+      SKIP_POLICIES: '0' # skip_policies used to give better latency but is not working with 4.0 and later Nvidia codes
+
+  server,resnet50:
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_DEQUE_TIMEOUT_USEC: 2000
+      CM_MLPERF_NVIDIA_HARNESS_USE_DEQUE_LIMIT: True
+      CM_MLPERF_NVIDIA_HARNESS_USE_CUDA_THREAD_PER_DEVICE: True
+      CM_MLPERF_NVIDIA_HARNESS_GPU_COPY_STREAMS: 9
+      CM_MLPERF_NVIDIA_HARNESS_GPU_INFERENCE_STREAMS: 2
 
   multistream,resnet50:
     env:
-      SKIP_POLICIES: '1'
+      CM_MLPERF_NVIDIA_HARNESS_DISABLE_BETA1_SMALLK: yes
+      SKIP_POLICIES: '0'
 
   singlestream,run_harness:
     default_variations:
@@ -1170,6 +1207,10 @@ variations:
     default_variations:
       batch-size: batch_size.8
 
+  gpu_memory.8,bert_,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.256
+
   gpu_memory.16,bert_,offline,run_harness:
     default_variations:
       batch-size: batch_size.256
@@ -1193,6 +1234,12 @@ variations:
   gpu_memory.80,bert_,server,run_harness:
     default_variations:
       batch-size: batch_size.64
+
+  gpu_memory.8,resnet50,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.64
+    env:
+      CM_MLPERF_NVIDIA_HARNESS_GPU_COPY_STREAMS: "4"
 
   gpu_memory.16,resnet50,offline,run_harness:
     default_variations:
@@ -1247,6 +1294,10 @@ variations:
     default_variations:
       batch-size: batch_size.2
 
+  gpu_memory.8,retinanet,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.2
+
   gpu_memory.16,retinanet,offline,run_harness:
     default_variations:
       batch-size: batch_size.2
@@ -1281,6 +1332,10 @@ variations:
       CM_MLPERF_NVIDIA_HARNESS_GPU_COPY_STREAMS: "2"
       CM_MLPERF_NVIDIA_HARNESS_GPU_INFERENCE_STREAMS: "2"
 
+  gpu_memory.8,rnnt,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.1024
+
   gpu_memory.16,rnnt,offline,run_harness:
     default_variations:
       batch-size: batch_size.1024
@@ -1304,6 +1359,10 @@ variations:
   gpu_memory.80,rnnt,offline,run_harness:
     default_variations:
       batch-size: batch_size.2048
+
+  gpu_memory.8,3d-unet_,offline,run_harness:
+    default_variations:
+      batch-size: batch_size.4
 
   gpu_memory.16,3d-unet_,offline,run_harness:
     default_variations:
@@ -1382,12 +1441,12 @@ variations:
   rtx_4090,sdxl,offline,run_harness:
     default_variations:
       batch-size: batch_size.2
-      use_graphs: "True"
+      graphs: use-graphs
   
   rtx_4090,sdxl,server,run_harness:
     default_variations:
       batch-size: batch_size.2
-      use_graphs: "True"
+      graphs: use-graphs
 
   rtx_4090,resnet50,offline,run_harness:
     default_variations:
@@ -1396,6 +1455,7 @@ variations:
   rtx_4090,resnet50,server,run_harness:
     default_variations:
       batch-size: batch_size.32
+      graphs: use-graphs
 
   rtx_4090,retinanet,offline,run_harness:
     default_variations:

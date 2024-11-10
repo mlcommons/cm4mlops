@@ -21,7 +21,7 @@ checks.check_return(r)
 r = cm.access({'action':'run', 'automation':'script', 'tags': 'install,python-venv', 'version': '3.10.8', 'name': 'mlperf' })
 checks.check_return(r)
 
-r = cm.access({'action':'run', 'automation':'script', 'tags': 'run,mlperf,inference,generate-run-cmds,_submission,_short,_dashboard', 'adr': \
+r = cm.access({'action':'run', 'automation':'script', 'tags': 'run,mlperf,inference,generate-run-cmds,_submission,_short', 'adr': \
         {'python': {'name': 'mlperf', 'version_min': '3.8'}, 'compiler': {'tags': "gcc"}, 'openimages-preprocessed': {'tags': '_50'}}, 'submitter': 'Community', \
         'implementation': 'cpp', 'hw_name': 'default', 'model': 'retinanet', 'backend': 'onnxruntime', 'device': 'cpu', 'scenario': 'Offline', \
         'test_query_count': '10', 'clean': 'true', 'quiet': 'yes'})

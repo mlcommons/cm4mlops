@@ -15,7 +15,7 @@ def fill_from_json(file_path, keys, sut_info):
     with open(file_path, 'r') as f:
         data = json.load(f)
         for key in keys:
-            if key in data and sut_info[key] is None:
+            if key in data and (sut_info[key] is None or sut_info[key] == "default"):
                 sut_info[key] = data[key]
             elif key in data and sut_info[key] != data[key]:
                 return -1 # error saying there is a mismatch in the value of a key
@@ -27,6 +27,20 @@ def check_dict_filled(keys, sut_info):
         if key in sut_info and sut_info[key] is None:
             return False
     return True
+
+# The function checks whether the submitting model name belongs standard model names for MLPef Inference
+def model_in_valid_models(model, mlperf_version):
+    import submission_checker as checker
+    config = checker.MODEL_CONFIG
+    
+    if model not in config[mlperf_version]['models']:
+        internal_model_name = config[mlperf_version]["model_mapping"].get(model, '') # resnet50 -> resnet
+        if internal_model_name == '':
+            return (False, None)  # Indicate failure with no internal model name
+        else:
+            return (True, internal_model_name)  # Indicate success with internal model name
+    else:
+        return (True, model)
 
 def generate_submission(i):
 
@@ -51,12 +65,19 @@ def generate_submission(i):
         env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'] = os.path.join(user_home, "mlperf_submission")
 
     submission_dir = env.get('CM_MLPERF_INFERENCE_SUBMISSION_DIR', '')
+    if submission_dir == '':
+        submission_base_dir = env.get('CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR', '')
+        if submission_base_dir == '':
+            return {'return':1, 'error':f"Both CM_MLPERF_INFERENCE_SUBMISSION_DIR and CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR can not be empty!"}
+        else:
+            submission_dir = os.path.join(submission_base_dir, "mlperf_inference_submission")
+            env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'] = submission_dir
 
     if env.get('CM_MLPERF_CLEAN_SUBMISSION_DIR','')!='':
         print ('=================================================')
         print ('Cleaning {} ...'.format(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']))
-        if os.path.exists(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']):
-            shutil.rmtree(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'])
+        if os.path.exists(submission_dir):
+            shutil.rmtree(submission_dir)
         print ('=================================================')
 
     if not os.path.isdir(submission_dir):
@@ -131,11 +152,12 @@ def generate_submission(i):
         saved_system_meta_file_path = os.path.join(result_path, 'system_meta.json')
         # checks for json file containing system meta
         sut_info = {
-            "system_name": None,
+            "hardware_name": None,
             "implementation": None,
             "device": None,
             "framework": None,
-            "run_config": None
+            "framework_version": "default",
+            "run_config": "default"
         } # variable to store the system meta 
 
         model_mapping_combined = {} # to store all the model mapping related to an SUT
@@ -163,32 +185,39 @@ def generate_submission(i):
         # Even the model mapping json file is present in root directory, the folders are traversed
         # and the data is updated provided not duplicated. 
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
-        for model in models:
-            result_model_path = os.path.join(result_path, model)
-            scenarios = [f for f in os.listdir(result_model_path) if not os.path.isfile(os.path.join(result_model_path, f))]
-            for scenario in scenarios:
-                result_scenario_path = os.path.join(result_model_path, scenario)
-                modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
-                for mode in modes:
-                    result_mode_path = os.path.join(result_scenario_path,mode)
-                    if mode == "performance":
-                        compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
-                        # model mapping part 
-                        tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
-                        if os.path.exists(tmp_model_mapping_file_path):
-                            with open(tmp_model_mapping_file_path, 'r') as f:
-                                new_model_mapping = json.load(f)
-                                for new_custom_model in new_model_mapping:
-                                    if new_custom_model not in model_mapping_combined:
-                                        model_mapping_combined.update({new_custom_model:new_model_mapping[new_custom_model]})
-                        else:
-                            return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
-
+        if division == "open" and len(model_mapping_combined) == 0:
+            for model in models:
+                is_valid, returned_model_name = model_in_valid_models(model, env.get('CM_MLPERF_LAST_RELEASE', 'v4.1'))
+                if not is_valid:
+                    result_model_path = os.path.join(result_path, model)
+                    scenarios = [f for f in os.listdir(result_model_path) if not os.path.isfile(os.path.join(result_model_path, f))]
+                    for scenario in scenarios:
+                        result_scenario_path = os.path.join(result_model_path, scenario)
+                        modes = [f for f in os.listdir(result_scenario_path) if not os.path.isfile(os.path.join(result_scenario_path, f))]
+                        for mode in modes:
+                            result_mode_path = os.path.join(result_scenario_path,mode)
+                            if mode == "performance":
+                                compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
+                                # model mapping part 
+                                tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
+                                if os.path.exists(tmp_model_mapping_file_path):
+                                    with open(tmp_model_mapping_file_path, 'r') as f:
+                                        new_model_mapping = json.load(f)
+                                        for new_custom_model in new_model_mapping:
+                                            if new_custom_model not in model_mapping_combined:
+                                                model_mapping_combined.update({new_custom_model:new_model_mapping[new_custom_model]})
+                                else:
+                                    return {"return":1, "error":f"model_mapping.json not found in {compliance_performance_run_path}"}
+                else:
+                    if returned_model_name != model:
+                        model_mapping_combined.update({model:returned_model_name})
+        
         if check_dict_filled(sut_info.keys(), sut_info):              
-            system = sut_info["system_name"]
+            system = sut_info["hardware_name"]
             implementation = sut_info["implementation"]
             device = sut_info["device"]
             framework = sut_info["framework"].replace(" ","_")
+            framework_version = sut_info["framework_version"]
             run_config = sut_info["run_config"]
             new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
         else:
@@ -214,7 +243,7 @@ def generate_submission(i):
                 system_meta_default['framework'] = framework + " " + framework_version
             else:
                 print(parts)
-                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.system_name\n2.implementation\n3.framework\n4.run_config\nInclude a cm-sut-info.json file with the above content in {result_path}"}
+                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.hardware_name\n2.implementation\n3.Device\n4.framework\n5.framework_version\n6.run_config\nInclude a cm-sut-info.json or sut-info.json file with the above content in {result_path}"}
             
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
@@ -239,8 +268,11 @@ def generate_submission(i):
 
         results = {}
 
+        model_platform_info_file = None
+
         for model in models:
             results[model] = {}
+            platform_info_file = None
             result_model_path = os.path.join(result_path, model)
             submission_model_path = os.path.join(submission_path, model)
             measurement_model_path = os.path.join(measurement_path, model)
@@ -356,8 +388,10 @@ def generate_submission(i):
                         with open(measurements_json_path, "r") as f:
                             measurements_json = json.load(f)
                             model_precision = measurements_json.get("weight_data_types", "fp32")
-                    if os.path.exists(user_conf_path):
+                    if os.path.exists(measurements_json_path):
+                        # This line can be removed once the PR in the inference repo is merged.
                         shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, sub_res+'.json'))
+                        shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, 'model-info.json'))
                     files = []
                     readme = False
 
@@ -386,8 +420,10 @@ def generate_submission(i):
                                 files.append(f)
                             elif f == "spl.txt":
                                 files.append(f)
-                            elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json" ] and mode == "performance":
+                            elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt" ] and mode == "performance":
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, f))
+                                if f == "system_info.txt" and not platform_info_file:
+                                    platform_info_file = os.path.join(result_mode_path, f)
                             elif f in [ "console.out" ]:
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, mode+"_"+f))
 
@@ -410,12 +446,32 @@ def generate_submission(i):
                         f.write("TBD") #create an empty README
                 else:
                     readme_suffix = ""
-                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision)
+                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
 
                     for key in result:
                         results[model][scenario][key] = result[key]
                     with open(readme_file, mode='a') as f:
                         f.write(result_string)
+
+            #Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
+            sys_info_file = None
+            if os.path.exists(os.path.join(result_model_path, "system_info.txt")):
+                sys_info_file = os.path.join(result_model_path, "system_info.txt")
+            elif platform_info_file:
+                sys_info_file = platform_info_file
+            if sys_info_file:
+                model_platform_info_file = sys_info_file
+                shutil.copy(sys_info_file, os.path.join(measurement_model_path, "system_info.txt"))
+
+        #Copy system_info.txt to the submission measurements folder if any model performance run has it
+        sys_info_file = None
+        if os.path.exists(os.path.join(result_path, "system_info.txt")):
+            sys_info_file = os.path.join(result_path, "system_info.txt")
+        elif model_platform_info_file:
+            sys_info_file = model_platform_info_file
+        if sys_info_file:
+            shutil.copy(sys_info_file, os.path.join(measurement_path, "system_info.txt"))
+ 
 
         with open(system_file, "w") as fp:
             json.dump(system_meta, fp, indent=2)

@@ -20,6 +20,10 @@
     "CM_GENERIC_SYS_UTIL_INSTALL_NEEDED": "no",
     "CM_SYS_UTIL_VERSION_CMD": ""
   },
+  "input_mapping": {
+    "ignore_missing": "CM_GENERIC_SYS_UTIL_IGNORE_MISSING_PACKAGE",
+    "fail_safe": "CM_TMP_FAIL_SAFE"
+  },
   "tags": [
     "get",
     "sys-util",
@@ -31,15 +35,15 @@
     "detect": {
       "group": "mode",
       "default": true,
-      "names": [
-        "detect-sys-util"
-      ],
       "env": {
         "CM_GENERIC_SYS_UTIL_RUN_MODE": "detect"
       },
       "prehook_deps": [
         {
           "tags": "get,generic-sys-util,_install",
+          "force_env_keys": [
+            "CM_TMP_FAIL_SAFE"
+          ],
           "inherit_variation_tags": true,
           "names": [
             "install-sys-util"
@@ -60,11 +64,18 @@
       "group": "mode",
       "env": {
         "CM_GENERIC_SYS_UTIL_RUN_MODE": "install"
-      }
+      },
+      "new_env_keys": [
+        "CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED",
+        "CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED"
+      ]
     },
     "cmake": {
       "env": {
-        "CM_SYS_UTIL_NAME": "cmake"
+        "CM_SYS_UTIL_NAME": "cmake",
+        "CM_SYS_UTIL_VERSION_CMD": "cmake --version",
+        "CM_SYS_UTIL_VERSION_RE": "cmake version ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "cmake": {
@@ -73,11 +84,15 @@
           "dnf": "cmake",
           "yum": "cmake"
         }
-      }
+      },
+      "new_env_keys": ["CM_CMAKE_VERSION"]
     },
     "dmidecode": {
       "env": {
-        "CM_SYS_UTIL_NAME": "dmidecode"
+        "CM_SYS_UTIL_NAME": "dmidecode",
+        "CM_SYS_UTIL_VERSION_CMD": "dmidecode --version",
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "dmidecode": {
@@ -86,60 +101,83 @@
           "dnf": "dmidecode",
           "yum": "dmidecode"
         }
-      }
+      },
+      "new_env_keys": ["CM_DMIDECODE_VERSION"]
     },
     "g++-11": {
       "env": {
-        "CM_SYS_UTIL_NAME": "g++11"
+        "CM_SYS_UTIL_NAME": "g++11",
+        "CM_SYS_UTIL_VERSION_CMD": "g++-11 --version",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0,
+        "CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE": "yes"
       },
       "state": {
         "g++11": {
           "apt": "g++-11",
           "dnf": "gcc-toolset-11-gcc-c++"
         }
-      }
+      },
+      "new_env_keys": ["CM_GPP11_VERSION"]
     },
     "g++-12": {
       "env": {
-        "CM_SYS_UTIL_NAME": "g++12"
+        "CM_SYS_UTIL_NAME": "g++12",
+        "CM_SYS_UTIL_VERSION_CMD": "g++-12 --version",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0,
+	"CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE": "yes"
       },
       "state": {
         "g++12": {
           "apt": "g++-12",
           "dnf": "gcc-toolset-12-gcc-c++"
         }
-      }
+      },
+      "new_env_keys": ["CM_GPP12_VERSION"]
     },
     "g++-9": {
       "env": {
-        "CM_SYS_UTIL_NAME": "g++9"
+        "CM_SYS_UTIL_NAME": "g++9",
+        "CM_SYS_UTIL_VERSION_CMD": "g++-9 --version",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "g++9": {
           "apt": "g++-9",
           "dnf": "gcc-toolset-9-gcc-c++"
         }
-      }
+      },
+      "new_env_keys": ["CM_GPP9_VERSION"]
     },
     "gcc-11": {
       "env": {
-        "CM_SYS_UTIL_NAME": "gcc11"
+        "CM_SYS_UTIL_NAME": "gcc11",
+        "CM_SYS_UTIL_VERSION_CMD": "gcc-11 --version",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "gcc11": {
           "apt": "gcc-11"
         }
-      }
+      },
+      "new_env_keys": ["CM_GCC11_VERSION"]
     },
     "gcc-9": {
       "env": {
-        "CM_SYS_UTIL_NAME": "gcc9"
+        "CM_SYS_UTIL_NAME": "gcc9",
+        "CM_SYS_UTIL_VERSION_CMD": "gcc-9 --version",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "gcc9": {
           "apt": "gcc-9"
         }
-      }
+      },
+      "new_env_keys": ["CM_GCC9_VERSION"]
     },
     "gflags-dev": {
       "env": {
@@ -152,11 +190,15 @@
           "dnf": "gflags-devel",
           "yum": "gflags-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_GFLAGS_DEV_VERSION"]
     },
     "git-lfs": {
       "env": {
-        "CM_SYS_UTIL_NAME": "git-lfs"
+        "CM_SYS_UTIL_NAME": "git-lfs",
+        "CM_SYS_UTIL_VERSION_CMD": "git-lfs --version",
+        "CM_SYS_UTIL_VERSION_RE": "git-lfs\\/([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "git-lfs": {
@@ -165,7 +207,8 @@
           "dnf": "git-lfs",
           "yum": "git-lfs"
         }
-      }
+      },
+      "new_env_keys": ["CM_GIT_LFS_VERSION"]
     },
     "glog-dev": {
       "env": {
@@ -178,11 +221,15 @@
           "dnf": "glog-devel",
           "yum": "glog-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_GLOG_DEV_VERSION"]
     },
     "libboost-all-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libboost-all-dev"
+        "CM_SYS_UTIL_NAME": "libboost-all-dev",
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -s libboost-dev | grep 'Version'",
+        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "libboost-all-dev": {
@@ -191,11 +238,15 @@
           "dnf": "boost-devel",
           "yum": "boost-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBBOOST_ALL_DEV_VERSION"]
     },
     "libbz2-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libbz2_dev"
+        "CM_SYS_UTIL_NAME": "libbz2_dev",
+	"CM_SYS_UTIL_VERSION_CMD_OVERRIDE": "bzcat --version 2>&1 | grep bzip > tmp-ver.out",
+        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "libbz2_dev": {
@@ -205,27 +256,33 @@
           "yum": "libbzip2-devel",
           "zlib-devel": "libbz2-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBBZ2_DEV_VERSION"]
     },
     "libev-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libev_dev"
+        "CM_SYS_UTIL_NAME": "libev_dev",
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -s libev-dev | grep 'Version'",
+        "CM_SYS_UTIL_VERSION_RE": "([\\d:]+\\.[\\d\\.-]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libev_dev": {
           "apt": "libev-dev"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBEV_DEV_VERSION"]
     },
     "libffi": {
       "env": {
         "CM_SYS_UTIL_NAME": "libffi"
       },
       "state": {
-        "libffi7": {
+        "libffi": {
           "apt": "libffi"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBFFI_VERSION"]
     },
     "libffi-dev": {
       "env": {
@@ -238,17 +295,22 @@
           "dnf": "libffi-devel",
           "yum": "libffi-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBFFI_DEV_VERSION"]
     },
     "libffi7": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libffi7"
+        "CM_SYS_UTIL_NAME": "libffi7",
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -l libffi7 2>/dev/null | grep '^ii' | awk '{print $3}' || rpm -q libffi7 2>/dev/null || pacman -Q libffi7 2>/dev/null",
+        "CM_SYS_UTIL_VERSION_RE": "\\d\\.\\d-[0-9]+",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libffi7": {
           "apt": "libffi7"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBFFI7_VERSION"]
     },
     "libffi8": {
       "env": {
@@ -258,17 +320,22 @@
         "libffi8": {
           "apt": "libffi8"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBFFI8_VERSION"]
     },
     "libgdbm-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libgdbm_dev"
+        "CM_SYS_UTIL_NAME": "libgdbm_dev",
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -s libgdbm-dev | grep 'Version'",
+        "CM_SYS_UTIL_VERSION_RE": "([\\d]+\\.[\\d\\.-]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "libgdbm_dev": {
           "apt": "libgdbm-dev"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBGDBM_DEV_VERSION"]
     },
     "libgmock-dev": {
       "env": {
@@ -281,17 +348,22 @@
           "dnf": "gmock-devel",
           "yum": "gmock-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBGMOCK_DEV_VERSION"]
     },
     "liblzma-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "liblzma_dev"
+        "CM_SYS_UTIL_NAME": "liblzma_dev",
+        "CM_SYS_UTIL_VERSION_CMD": "xz --version",
+        "CM_SYS_UTIL_VERSION_RE": "(\\d(\\.\\d)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "liblzma_dev": {
           "apt": "liblzma-dev"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBLZMA_DEV_VERSION"]
     },
     "libmkl-dev": {
       "env": {
@@ -304,7 +376,8 @@
           "dnf": "",
           "yum": ""
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBMKL_DEV_VERSION"]
     },
     "libmpfr-dev": {
       "env": {
@@ -318,11 +391,16 @@
           "yum": "mpfr-devel.x86_64",
           "zypper": "mpfr-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBMPFR_DEV_VERSION"]
     },
     "libncurses-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libncurses_dev"
+        "CM_SYS_UTIL_NAME": "libncurses_dev",
+        "CM_SYS_UTIL_VERSION_CMD": "ncurses5-config --version",
+        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1,
+	"CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE": "yes"
       },
       "state": {
         "libncurses_dev": {
@@ -330,7 +408,8 @@
           "dnf": "libncurses-devel",
           "yum": "libncurses-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBNCURSES_DEV_VERSION"]
     },
     "libnuma-dev": {
       "env": {
@@ -343,7 +422,8 @@
           "dnf": "numactl-libs",
           "yum": "numactl-libs"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBNUMA_DEV_VERSION"]
     },
     "libpci-dev": {
       "env": {
@@ -356,7 +436,8 @@
           "dnf": "pciutils-devel",
           "yum": "pciutils-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBPCI_DEV_VERSION"]
     },
     "libpng-dev": {
       "env": {
@@ -369,7 +450,8 @@
           "dnf": "libpng-devel",
           "yum": "libpng-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBPNG_DEV_VERSION"]
     },
     "libre2-dev": {
       "env": {
@@ -382,7 +464,8 @@
           "dnf": "libre-devel",
           "yum": "libre-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBRE2_DEV_VERSION"]
     },
     "libreadline-dev": {
       "env": {
@@ -392,9 +475,10 @@
         "libreadline_dev": {
           "apt": "libreadline-dev",
           "dnf": "libreadline-devel",
-          "yum": "lireadline-devel"
+          "yum": "readline-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBREADLINE_DEV_VERSION"]
     },
     "libsqlite3-dev": {
       "env": {
@@ -404,11 +488,15 @@
         "libsqlite3_dev": {
           "apt": "libsqlite3-dev"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBSQLITE3_DEV_VERSION"]
     },
     "libssl-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "libssl_dev"
+        "CM_SYS_UTIL_NAME": "libssl_dev",
+        "CM_SYS_UTIL_VERSION_CMD": "openssl version",
+        "CM_SYS_UTIL_VERSION_RE": "OpenSSL\\s+([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "libssl_dev": {
@@ -417,7 +505,8 @@
           "dnf": "libssl-devel",
           "yum": "libssl-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBSSL_DEV_VERSION"]
     },
     "libudev-dev": {
       "env": {
@@ -430,7 +519,8 @@
           "dnf": "libudev-devl",
           "yum": "libudev-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_LIBUDEV_DEV_VERSION"]
     },
     "linux-tools": {
       "deps": [
@@ -445,22 +535,30 @@
         "linux-tools": {
           "apt": "linux-tools-<<<CM_HOST_OS_KERNEL_VERSION>>>"
         }
-      }
+      },
+      "new_env_keys": ["CM_LINUX_TOOLS_VERSION"]
     },
     "md5sha1sum": {
       "env": {
-        "CM_SYS_UTIL_NAME": "md5sha1sum"
+        "CM_SYS_UTIL_NAME": "md5sha1sum",
+        "CM_SYS_UTIL_VERSION_CMD": "md5sum --version | grep sha1sum",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "md5sha1sum": {
           "apt": "",
           "brew": "md5sha1sum"
         }
-      }
+      },
+      "new_env_keys": ["CM_MD5SHA1SUM_VERSION"]
     },
     "ninja-build": {
       "env": {
-        "CM_SYS_UTIL_NAME": "ninja-build"
+        "CM_SYS_UTIL_NAME": "ninja-build",
+        "CM_SYS_UTIL_VERSION_CMD": "ninja --version",
+        "CM_SYS_UTIL_VERSION_RE": "([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "ninja-build": {
@@ -470,7 +568,8 @@
           "yum": "ninja-build",
           "zypper": "ninja-build"
         }
-      }
+      },
+      "new_env_keys": ["CM_NINJA_BUILD_VERSION"]
     },
     "nlohmann-json3-dev": {
       "env": {
@@ -479,9 +578,10 @@
       "state": {
         "nlohmann_json3_dev": {
           "apt": "nlohmann-json3-dev",
-          "dnf": "nlohmann-json-dev"
+          "dnf": "nlohmann-json-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_NLOHMANN_JSON3_DEV_VERSION"]
     },
     "ntpdate": {
       "env": {
@@ -494,7 +594,8 @@
           "dnf": "ntpdate",
           "yum": "ntpdate"
         }
-      }
+      },
+      "new_env_keys": ["CM_NTPDATE_VERSION"]
     },
     "numactl": {
       "deps": [
@@ -513,7 +614,8 @@
         }
       ],
       "env": {
-        "CM_SYS_UTIL_NAME": "numactl"
+        "CM_SYS_UTIL_NAME": "numactl",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "numactl": {
@@ -521,11 +623,15 @@
           "dnf": "numactl-devel",
           "yum": "numactl-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_NUMACTL_VERSION"]
     },
     "nvidia-cuda-toolkit": {
       "env": {
-        "CM_SYS_UTIL_NAME": "nvidia-cuda-toolkit"
+        "CM_SYS_UTIL_NAME": "nvidia-cuda-toolkit",
+        "CM_SYS_UTIL_VERSION_CMD": "nvcc --version",
+        "CM_SYS_UTIL_VERSION_RE": "release ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "nvidia-cuda-toolkit": {
@@ -533,6 +639,22 @@
           "brew": "",
           "dnf": "nvidia-cuda-toolkit",
           "yum": "nvidia-cuda-toolkit"
+        }
+      },
+      "new_env_keys": ["CM_NVIDIA_CUDA_TOOLKIT_VERSION"]
+    },
+    "pkg-config": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "pkg_config",
+        "CM_SYS_UTIL_VERSION_RE": "\\b(\\d+\\.\\d+(?:\\.\\d+)?)\\b",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+      },
+      "state": {
+        "pkg_config": {
+          "apt": "pkg-config",
+          "brew": "pkg-config",
+          "dnf": "pkg-config",
+          "yum": "pkg-config"
         }
       }
     },
@@ -547,7 +669,8 @@
           "dnf": "psmisc",
           "yum": "psmisc"
         }
-      }
+      },
+      "new_env_keys": ["CM_PSMISC_VERSION"]
     },
     "rapidjson-dev": {
       "env": {
@@ -560,12 +683,15 @@
           "dnf": "rapidjson-devel",
           "yum": "rapidjson-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_RAPIDJSON_DEV_VERSION"]
     },
     "rsync": {
       "env": {
         "CM_SYS_UTIL_NAME": "rsync",
-        "CM_SYS_UTIL_CHECK_CMD": "rsync --version"
+        "CM_SYS_UTIL_VERSION_CMD": "rsync --version",
+        "CM_SYS_UTIL_VERSION_RE": "rsync\\s+version\\s+([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "rsync": {
@@ -575,11 +701,15 @@
           "yum": "rsync",
           "zypper": "rsync"
         }
-      }
+      },
+      "new_env_keys": ["CM_RSYNC_VERSION"]
     },
     "screen": {
       "env": {
-        "CM_SYS_UTIL_NAME": "screen"
+        "CM_SYS_UTIL_NAME": "screen",
+        "CM_SYS_UTIL_VERSION_CMD": "screen --version",
+        "CM_SYS_UTIL_VERSION_RE": "Screen version ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "screen": {
@@ -589,11 +719,15 @@
           "yum": "screen",
           "zypper": "rsync"
         }
-      }
+      },
+      "new_env_keys": ["CM_SCREEN_VERSION"]
     },
     "sox": {
       "env": {
-        "CM_SYS_UTIL_NAME": "sox"
+        "CM_SYS_UTIL_NAME": "sox",
+        "CM_SYS_UTIL_VERSION_CMD": "sox --version",
+        "CM_SYS_UTIL_VERSION_RE": "sox:\\s+SoX\\s+v([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "sox": {
@@ -601,11 +735,15 @@
           "brew": "sox",
           "dnf": "sox"
         }
-      }
+      },
+      "new_env_keys": ["CM_SOX_VERSION"]
     },
     "systemd": {
       "env": {
-        "CM_SYS_UTIL_NAME": "systemd"
+        "CM_SYS_UTIL_NAME": "systemd",
+        "CM_SYS_UTIL_VERSION_CMD": "systemctl --version",
+        "CM_SYS_UTIL_VERSION_RE": "systemd ([\\d]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "systemd": {
@@ -614,21 +752,30 @@
           "dnf": "systemd",
           "yum": "systemd"
         }
-      }
+      },
+      "new_env_keys": ["CM_SYSTEMD_VERSION"]
     },
     "tk-dev": {
       "env": {
-        "CM_SYS_UTIL_NAME": "tk_dev"
+        "CM_SYS_UTIL_NAME": "tk_dev",
+        "CM_SYS_UTIL_VERSION_CMD": "dpkg -s tk-dev | grep Version",
+        "CM_SYS_UTIL_VERSION_RE": "([0-9]+(\\.[0-9]+)+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "tk_dev": {
           "apt": "tk-dev"
         }
-      }
+      },
+      "new_env_keys": ["CM_TK_DEV_VERSION"]
     },
     "transmission": {
       "env": {
-        "CM_SYS_UTIL_NAME": "transmission"
+        "CM_SYS_UTIL_NAME": "transmission",
+        "CM_SYS_UTIL_VERSION_CMD": "transmission-daemon --version",
+        "CM_SYS_UTIL_VERSION_RE": "transmission-daemon ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0,
+	"CM_SYS_UTIL_VERSION_CMD_USE_ERROR_STREAM": "yes"
       },
       "state": {
         "transmission": {
@@ -637,13 +784,15 @@
           "dnf": "transmission-daemon",
           "yum": "transmission-daemon"
         }
-      }
+      },
+      "new_env_keys": ["CM_TRANSMISSION_VERSION"]
     },
     "wget": {
       "env": {
         "CM_SYS_UTIL_NAME": "wget",
         "CM_SYS_UTIL_VERSION_CMD": "wget --version",
-        "CM_SYS_UTIL_VERSION_RE": "Wget\\s*([\\d.]+)"
+        "CM_SYS_UTIL_VERSION_RE": "Wget\\s*([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "wget": {
@@ -658,27 +807,53 @@
     "wkhtmltopdf": {
       "env": {
         "CM_SYS_UTIL_NAME": "wkhtmltopdf",
-        "CM_SYS_UTIL_CHECK_CMD": "wkhtmltopdf --version"
+        "CM_SYS_UTIL_VERSION_CMD": "wkhtmltopdf --version",
+        "CM_SYS_UTIL_VERSION_RE": "wkhtmltopdf ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
       },
       "state": {
         "wkhtmltopdf": {
           "apt": "wkhtmltopdf",
           "brew": "wkhtmltopdf"
         }
-      }
+      },
+      "new_env_keys": ["CM_WKHTMLTOPDF_VERSION"]
+    },
+    "vim-common": {
+      "env": {
+        "CM_SYS_UTIL_NAME": "vim_common",
+        "CM_SYS_UTIL_VERSION_CMD": "vim --version",
+        "CM_SYS_UTIL_VERSION_RE": "VIM - Vi IMproved ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 0
+      },
+      "state": {
+        "vim_common": {
+          "apt": "vim-common",
+          "brew": "vim",
+          "dnf": "vim-common",
+          "yum": "vim-common",
+          "choco": "vim"
+        }
+      },
+      "new_env_keys": ["CM_VIM_COMMON_VERSION"]
     },
     "xz": {
       "env": {
-        "CM_SYS_UTIL_NAME": "xz"
+        "CM_SYS_UTIL_NAME": "xz",
+        "CM_SYS_UTIL_VERSION_CMD": "xz --version",
+        "CM_SYS_UTIL_VERSION_RE": "xz \\(XZ Utils\\) ([\\d.]+)",
+        "CM_TMP_VERSION_DETECT_GROUP_NUMBER": 1
       },
       "state": {
         "xz": {
           "apt": "xz-utils",
           "brew": "xz",
           "dnf": "xz",
-          "yum": "xz"
+          "yum": "xz",
+          "choco": "xz"
         }
-      }
+      },
+      "new_env_keys": ["CM_XZ_VERSION"]
     },
     "zlib": {
       "env": {
@@ -686,9 +861,11 @@
       },
       "state": {
         "zlib": {
-          "apt": "zlib1g"
+          "apt": "zlib1g",
+          "choco": "zlib"
         }
-      }
+      },
+      "new_env_keys": ["CM_ZLIB_VERSION"]
     },
     "zlib1g-dev": {
       "env": {
@@ -701,7 +878,46 @@
           "yum": "zlib-devel",
           "zypper": "zlib-devel"
         }
-      }
+      },
+      "new_env_keys": ["CM_ZLIB1G_DEV_VERSION"]
     }
+  },
+  "tests": {
+    "run_inputs": [
+      {
+        "docker": "yes",
+        "docker_os": "rhel",
+        "docker_os_version": "9",
+        "test-all-variations": "yes",
+        "env": {
+          "CM_TMP_FAIL_SAFE": "yes"
+        },
+        "ignore_missing": "yes"
+      },
+      {
+        "docker": "yes",
+        "docker_os": "ubuntu",
+        "docker_os_version": "20.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
+      },
+      {
+        "docker": "yes",
+        "docker_os": "ubuntu",
+        "docker_os_version": "22.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
+      },
+      {
+        "docker": "yes",
+        "docker_os": "ubuntu",
+        "docker_os_version": "24.04",
+        "test-all-variations": "yes",
+        "ignore_missing": "yes",
+        "fail_safe": "yes"
+      }
+    ]
   }
 }

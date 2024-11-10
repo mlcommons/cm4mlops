@@ -59,13 +59,16 @@ def preprocess(i):
         return {'return':1, 'error':'Docker is either not installed or not started:\n{}'.format(e)}
 
     output_split = docker_container.split("\n")
-    if len(output_split) > 1: #container exists
+    if len(output_split) > 1 and str(env.get('CM_DOCKER_REUSE_EXISTING_CONTAINER', '')).lower() in [ "1", "true", "yes" ]: #container exists
         out = output_split[1].split(" ")
         existing_container_id = out[0]
+        print(f"Reusing existing container {existing_container_id}")
         env['CM_DOCKER_CONTAINER_ID'] = existing_container_id
 
-
     else:
+        if env.get('CM_DOCKER_CONTAINER_ID', '') != '':
+            del(env['CM_DOCKER_CONTAINER_ID']) #not valid ID
+
         CMD = "docker images -q " +  DOCKER_CONTAINER
 
         if os_info['platform'] == 'windows':
@@ -217,6 +220,8 @@ def postprocess(i):
 
         print ('')
         docker_out = subprocess.check_output(CMD, shell=True).decode("utf-8")
+        #if docker_out != 0:
+        #    return {'return': docker_out, 'error': 'docker run failed'}
 
         lines = docker_out.split("\n")
 
@@ -253,6 +258,8 @@ def postprocess(i):
 
         print ('')
         docker_out = os.system(CMD)
+        if docker_out != 0:
+            return {'return': docker_out, 'error': 'docker run failed'}
 
     return {'return':0}
 
@@ -300,12 +307,12 @@ def update_docker_info(env):
     if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
         docker_image_name = env['CM_DOCKER_IMAGE_NAME']
     else:
-        docker_image_name = 'cm-script-'+env['CM_DOCKER_RUN_SCRIPT_TAGS'].replace(',', '-').replace('_','-')
+        docker_image_name = 'cm-script-'+env['CM_DOCKER_RUN_SCRIPT_TAGS'].replace(',', '-').replace('_','-').replace('+','plus')
         env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 
     docker_image_tag_extra = env.get('CM_DOCKER_IMAGE_TAG_EXTRA', '-latest')
     
-    docker_image_tag = env.get('CM_DOCKER_IMAGE_TAG', docker_image_base.replace(':','-').replace('_','') + docker_image_tag_extra)
+    docker_image_tag = env.get('CM_DOCKER_IMAGE_TAG', docker_image_base.replace(':','-').replace('_','').replace("/","-") + docker_image_tag_extra)
     env['CM_DOCKER_IMAGE_TAG'] = docker_image_tag
 
     return

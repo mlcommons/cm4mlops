@@ -87,12 +87,12 @@ def preprocess(i):
         elif dataset == "openorca-gsm8k-mbxp-combined":
             accuracy_checker_file = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "mixtral-8x7b",
                 "evaluate-accuracy.py")
-            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + accuracy_checker_file + "' --checkpoint-path '" + env['CM_ML_MODEL_MIXTRAL_FILE_WITH_PATH'] + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
-                "' --dataset-file '" + env['CM_DATASET_PREPROCESSED_PATH'] + "'"+ " --dtype " + env.get('CM_ACCURACY_DTYPE', "float32")  +" > '" + out_file + "'"
+            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + accuracy_checker_file + "' --checkpoint-path '" + env['MIXTRAL_CHECKPOINT_PATH'] + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
+                "' --dataset-file '" + env['CM_DATASET_MIXTRAL_PREPROCESSED_PATH'] + "'"+ " --dtype " + env.get('CM_ACCURACY_DTYPE', "float32")  +" > '" + out_file + "'"
 
 
         elif dataset == "coco2014":
-            env['+PYTHONPATH'] = [ os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools") ]
+            env['+PYTHONPATH'] = [ os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools") , os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools", "fid") ]
             extra_options = ""
 
             if env.get('CM_SDXL_STATISTICS_FILE_PATH', '') != '':
@@ -101,7 +101,10 @@ def preprocess(i):
             if env.get('CM_SDXL_COMPLIANCE_IMAGES_PATH', '') != '':
                 extra_options += f" --compliance-images-path '{env['CM_SDXL_COMPLIANCE_IMAGES_PATH']}' "
             else:
-                extra_options += f" --compliance-images-path {os.path.join(result_dir, 'images')} "
+                extra_options += f""" --compliance-images-path '{os.path.join(result_dir, "images")}' """
+
+            if env.get('CM_COCO2014_SAMPLE_ID_PATH','') != '':
+                extra_options += f" --ids-path '{env['CM_COCO2014_SAMPLE_ID_PATH']}' "
 
             if env.get('CM_SDXL_ACCURACY_RUN_DEVICE', '') != '':
                 extra_options += f" --device '{env['CM_SDXL_ACCURACY_RUN_DEVICE']}' "

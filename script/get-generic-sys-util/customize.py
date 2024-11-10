@@ -14,23 +14,37 @@ def preprocess(i):
     if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and env.get('CM_SYS_UTIL_CHECK_CMD', '') == '':
         env['CM_SYS_UTIL_CHECK_CMD'] = env['CM_SYS_UTIL_VERSION_CMD']
 
+    if env.get('CM_GENERIC_SYS_UTIL_RUN_MODE', '') == "install":
+        i['run_script_input']['script_name'] = "install"
+
     if env.get('CM_GENERIC_SYS_UTIL_RUN_MODE', '') == "detect":
-        if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '':
+        if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' or env.get('CM_SYS_UTIL_VERSION_CMD_OVERRIDE', '') != '':
             r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
-            if r['return'] > 0: #detection failed, do install via prehook_deps
+            if r['return'] != 0: #detection failed, do install via prehook_deps
+                print("detection failed, going for installation")
                 env['CM_GENERIC_SYS_UTIL_INSTALL_NEEDED'] = "yes"
                 return {'return': 0}
             else: #detection is successful, no need to install
+                #print("detection success")
                 env['CM_SYS_UTIL_INSTALL_CMD'] = ""
                 return {'return': 0}
         else: #No detction command available, just install
+            #print("No detection possible, going for installation")
             env['CM_GENERIC_SYS_UTIL_INSTALL_NEEDED'] = "yes"
             return {'return': 0}
 
     # Only "install" mode reaches here
     pm = env.get('CM_HOST_OS_PACKAGE_MANAGER')
+    util = env.get('CM_SYS_UTIL_NAME', '')
+    if util == '':
+        return {'return': 1, 'error': 'Please select a variation specifying the sys util name'}
 
-    if os_info['platform'] == 'windows':
+    package = state.get(util)
+    package_name = None
+    if package and pm:
+        package_name = package.get(pm)
+
+    if os_info['platform'] == 'windows' and not package_name:
         print ('')
         print ('WARNING: for now skipping get-generic-sys-util on Windows ...')
         print ('')
@@ -40,19 +54,17 @@ def preprocess(i):
     if not pm:
         return {'return': 1, 'error': 'Package manager not detected for the given OS'}
 
-    util = env.get('CM_SYS_UTIL_NAME', '')
-    if util == '':
-        return {'return': 1, 'error': 'Please select a variation specifying the sys util name'}
-
-
-    package = state.get(util)
 
     if not package:
-        return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
+        return {'return': 1, 'error': f'No package name specified for {util} in the meta'}
 
-    package_name = package.get(pm)
     if not package_name:
-        return {'return': 1, 'error': 'No package name specified for {} and util name {}'.format(pm, util)}
+        if str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_MISSING_PACKAGE', '')).lower() in [ "1", "true", "yes" ]:
+            print(f"WARNING: No package name specified for {pm} and util name {util}. Ignoring it...")
+            env['CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED'] = 'yes'
+            return {'return': 0}
+        else:
+            return {'return': 1, 'error': f'No package name specified for {pm} and util name {util}'}
     
     if util == "libffi":
         if env.get("CM_HOST_OS_FLAVOR", "") == "ubuntu":
@@ -95,47 +107,54 @@ def preprocess(i):
     return {'return':0}
 
 
+
+
 def detect_version(i):
     env = i['env']
     version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
     version_check_re = env.get('CM_SYS_UTIL_VERSION_RE', '')
+    group_number = env.get('CM_TMP_VERSION_DETECT_GROUP_NUMBER', 1)
 
+    # Confirm that the regex pattern and file are present
     if version_check_re == '' or not os.path.exists("tmp-ver.out"):
         version = "undetected"
-
     else:
         r = i['automation'].parse_version({'match_text': version_check_re,
-                                       'group_number': 1,
+                                       'group_number': group_number,
                                        'env_key': version_env_key,
                                        'which_env': env})
+
         if r['return'] >0: return r
 
         version = r['version']
+        print(i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
-        print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
-    return {'return':0, 'version':version}
+    return {'return': 0, 'version': version}
+
 
 def postprocess(i):
     env = i['env']
 
     version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
 
-    if env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' and (env['CM_GENERIC_SYS_UTIL_RUN_MODE'] == "install" or env.get(version_env_key, '') == '') :
+    if (env.get('CM_SYS_UTIL_VERSION_CMD', '') != '' or env.get('CM_SYS_UTIL_VERSION_CMD_OVERRIDE', '') != '') and env.get(version_env_key, '') == '' and str(env.get('CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED', '')).lower() not in ["yes", "1", "true"] and env.get('CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED', '') != 'yes':
         automation = i['automation']
+
         r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':'detect'})
-        if r['return'] > 0:
-            return r
+        if r['return'] > 0 and str(env.get('CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in [ "1", "yes", "true" ]:
+            return {'return': 1, 'error': 'Version detection failed after installation. Please check the provided version command or use env.CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE=yes to ignore the error.'}
 
-        r = detect_version(i)
+        elif r['return'] == 0:
+            r = detect_version(i)
 
-        if r['return'] >0: return r
+            if r['return'] >0: return r
 
-        version = r['version']
+            version = r['version']
 
-        env[version_env_key] = version
+            env[version_env_key] = version
 
-        #Not used now
-        env['CM_GENERIC_SYS_UTIL_'+env['CM_SYS_UTIL_NAME'].upper()+'_CACHE_TAGS'] = 'version-'+version
+            #Not used now
+            env['CM_GENERIC_SYS_UTIL_'+env['CM_SYS_UTIL_NAME'].upper()+'_CACHE_TAGS'] = 'version-'+version
 
     if env.get(version_env_key, '') == '':
         env[version_env_key] = "undetected"

@@ -13,7 +13,12 @@ def preprocess(i):
 
     cmd = "gh auth login"
     if env.get('CM_GH_AUTH_TOKEN', '') != '':
-        cmd = f" echo {env['CM_GH_AUTH_TOKEN']} | {cmd} --with-token"
+        if os_info['platform'] == 'windows':
+            with open("token", "w") as f:
+                f.write(env['CM_GH_AUTH_TOKEN'])
+            cmd = f"{cmd} --with-token < token"
+        else:
+            cmd = f" echo {env['CM_GH_AUTH_TOKEN']} | {cmd} --with-token"
 
     env['CM_RUN_CMD'] = cmd
     quiet = (env.get('CM_QUIET', False) == 'yes')

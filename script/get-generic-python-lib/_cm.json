@@ -567,6 +567,20 @@
         "CM_PANDAS_VERSION"
       ]
     },
+    "whl-url.#": {
+      "deps": [
+        {
+          "tags": "download,file,_url.#",
+          "force_cache": "yes",
+          "env": {
+            "CM_DOWNLOAD_FINAL_ENV_NAME": "CM_GENERIC_PYTHON_PIP_URL"
+          }
+        }
+      ],
+      "env": {
+        "CM_TMP_PYTHON_PACKAGE_FORCE_INSTALL": "yes"
+      }
+    },
     "path.#": {
       "env": {
         "CM_GENERIC_PYTHON_PIP_URL": "#"
@@ -874,11 +888,25 @@
       "deps": [
         {
           "tags": "get,generic-python-lib,_package.networkx",
-	  "enable_if_env": {
-	    "CM_PYTHON_MINOR_VERSION": [ "7", "8" ]
-	  }
+	        "enable_if_env": {
+	          "CM_PYTHON_MINOR_VERSION": [ "7", "8" ]
+	        }
         }
       ]
+    },
+    "cxx11-abi": {
+      "env": {
+      }
+    },
+    "torch,cxx11-abi": {
+      "env": {
+        "CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL": "https://download.pytorch.org/whl/nightly/cpu-cxx11-abi"
+      }
+    },
+    "package.torch,cxx11-abi": {
+      "env": {
+        "CM_GENERIC_PYTHON_PIP_INDEX_URL": "https://download.pytorch.org/whl/nightly/cpu-cxx11-abi"
+      }
     },
     "torch,pre": {
       "default_env": {
@@ -914,7 +942,6 @@
     },
     "torch_cuda": {
       "default_env": {
-        "CM_GENERIC_PYTHON_PIP_UNINSTALL_DEPS1": "torch"
       },
       "deps": [
         {
@@ -926,7 +953,6 @@
       ],
       "env": {
         "CM_GENERIC_PYTHON_PACKAGE_NAME": "torch",
-        "CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL1": "https://download.pytorch.org/whl/<<<CM_CUDA_VERSION_STRING>>>",
         "CM_TORCH_VERSION_EXTRA": "CUDA"
       },
       "new_env_keys": [

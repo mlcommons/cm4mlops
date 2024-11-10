@@ -63,6 +63,7 @@
     "install",
     "get",
     "src",
+    "from-src",
     "from.src",
     "pytorch",
     "src-pytorch"
@@ -406,6 +407,22 @@
       "base": [
         "sha.b5021ba9",
         "cuda"
+      ],
+      "deps": [
+        {
+          "tags": "get,cmake",
+          "version_min": "3.25.0"
+	      }
+      ],
+      "ad": {
+        "pytorch-src-repo": {
+          "tags": "_no-recurse-submodules,_full-history"
+        }
+      }
+    },
+    "for-intel-mlperf-inference-v3.1-dlrm-v2": {
+      "base": [
+        "sha.927dc662386af052018212c7d01309a506fc94cd"
       ],
       "deps": [
         {

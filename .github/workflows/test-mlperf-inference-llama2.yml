@@ -5,12 +5,12 @@ name: MLPerf inference LLAMA 2 70B
 
 on:
   schedule:
-    - cron: "30 19 * * 4"
+    - cron: "30 2 * * 4"
 
 jobs:
   build_reference:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, GO-i9, linux, x64 ]
+    runs-on: [ self-hosted, GO-spr, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
@@ -24,9 +24,10 @@ jobs:
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
-        python3 -m pip install cm4mlops
+        pip install cm4mlops
+        pip install tabulate 
         cm pull repo
-        python3 -m pip install "huggingface_hub[cli]"
+        pip install "huggingface_hub[cli]"
         huggingface-cli login --token ${{ secrets.HF_TOKEN }} --add-to-git-credential
     - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |

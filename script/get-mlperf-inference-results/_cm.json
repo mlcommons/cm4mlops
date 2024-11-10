@@ -9,7 +9,7 @@
     "CM_GIT_DEPTH": "--depth 1",
     "CM_GIT_PATCH": "no"
   },
-  "default_version": "v3.1",
+  "default_version": "v4.0",
   "prehook_deps": [
     {
       "tags": "get,git,repo",
@@ -72,11 +72,6 @@
       "env": {
         "CM_MLPERF_INFERENCE_RESULTS_VERSION_NAME": "v4.1",
         "CM_GIT_URL": "https://github.com/<<<GITHUB_REPO_OWNER>>>/inference_results_v4.1.git"
-      },
-      "adr": {
-        "inference-results-repo": {
-          "tags": "_branch.cm-fixes"
-        }
       }
     }
   },
@@ -111,6 +106,14 @@
       "group": "source-repo",
       "env": {
         "GITHUB_REPO_OWNER": "GATEOverflow"
+      }
+    },
+    "code-only": {
+      "group": "repo-branch",
+      "adr": {
+        "inference-results-repo": {
+          "tags": "_branch.cm-code-only"
+        }
       }
     }
   }

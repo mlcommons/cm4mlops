@@ -10,6 +10,7 @@ def preprocess(i):
     automation = i['automation']
     run_script_input = i['run_script_input']
     pip_version = env.get('CM_PIP_VERSION', '').strip().split('.')
+
     package_name = env.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '').strip()
     if package_name == '':
         return automation._available_variations({'meta':meta})
@@ -40,7 +41,7 @@ def preprocess(i):
         r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'uninstall_deps'})
         if r['return']>0: return r
 
-    prepare_env_key = env['CM_GENERIC_PYTHON_PACKAGE_NAME']
+    prepare_env_key = env.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '')
     for x in ["-", "[", "]"]:
         prepare_env_key = prepare_env_key.replace(x,"_")
 
@@ -78,6 +79,7 @@ def preprocess(i):
 
             # Check extra index URL
             extra_index_url = env.get('CM_GENERIC_PYTHON_PIP_EXTRA_INDEX_URL','').strip()
+
             if extra_index_url != '':
                 # Check special cases
                 if '${CM_TORCH_CUDA}' in extra_index_url:
@@ -94,10 +96,6 @@ def preprocess(i):
             print ('')
 
             env['CM_GENERIC_PYTHON_PIP_EXTRA'] = extra
-
-            package_name = env.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '').strip()
-            if package_name == '':
-                return automation._available_variations({'meta':meta})
 
             r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install'})
 

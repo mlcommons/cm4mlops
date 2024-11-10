@@ -14,6 +14,7 @@ def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
+    const = i.get('const', {})
 
     inp = i['input']
     state = i['state']
@@ -21,6 +22,12 @@ def preprocess(i):
 
     if env.get('CM_RUN_DOCKER_CONTAINER', '') == "yes": 
         return {'return':0}
+
+    if env.get('CM_DOCKER_IMAGE_NAME', '') ==  'scc24':
+        if env.get("CM_MLPERF_IMPLEMENTATION", "reference") == "reference":
+            env['CM_DOCKER_IMAGE_NAME'] = "scc24-reference"
+        elif "nvidia" in env.get("CM_MLPERF_IMPLEMENTATION", "reference"):
+            env['CM_DOCKER_IMAGE_NAME'] = "scc24-nvidia"
 
     dump_version_info = env.get('CM_DUMP_VERSION_INFO', True)
 
@@ -194,6 +201,12 @@ def preprocess(i):
             if k.startswith("docker_"):
                 docker_extra_input[k] = inp[k]
         inp = {}
+        if str(docker_dt).lower() in ["yes", "true", "1"]:
+            env['CM_DOCKER_REUSE_EXISTING_CONTAINER'] = 'no' # turning it off for the first run and after that we turn it on
+            env['CM_DOCKER_DETACHED_MODE'] = 'yes'
+
+        if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
+            docker_extra_input['docker_image_name'] = env['CM_DOCKER_IMAGE_NAME']
     else:
         action = "run"
 
@@ -220,14 +233,16 @@ def preprocess(i):
             env['CM_MLPERF_LOADGEN_MODE'] = mode
 
             env_copy = copy.deepcopy(env)
+            const_copy = copy.deepcopy(const)
             print(f"\nRunning loadgen scenario: {scenario} and mode: {mode}")
             ii = {'action':action, 'automation':'script', 'tags': scenario_tags, 'quiet': 'true',
-                'env': env_copy, 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
+                  'env': env_copy, 'const': const_copy, 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
                 copy.deepcopy(add_deps_recursive), 'ad': ad, 'adr': copy.deepcopy(adr), 'v': verbose, 'print_env': print_env, 'print_deps': print_deps, 'dump_version_info': dump_version_info}
 
             if action == "docker":
                 for k in docker_extra_input:
                     ii[k] = docker_extra_input[k]
+
             r = cm.access(ii)
             if r['return'] > 0:
                 return r
@@ -242,6 +257,7 @@ def preprocess(i):
                     print(f"\nStop Running loadgen scenario: {scenario} and mode: {mode}")
                     return {'return': 0} # We run commands interactively inside the docker container
                 else:
+                    env['CM_DOCKER_REUSE_EXISTING_CONTAINER'] = 'yes'
                     container_id = env_copy['CM_DOCKER_CONTAINER_ID']
                     env['CM_DOCKER_CONTAINER_ID'] = container_id
             if state.get('docker', {}):
@@ -252,7 +268,7 @@ def preprocess(i):
                 env['CM_MLPERF_LOADGEN_COMPLIANCE_TEST'] = test
                 env['CM_MLPERF_LOADGEN_MODE'] = "compliance"
                 ii = {'action':action, 'automation':'script', 'tags': scenario_tags, 'quiet': 'true',
-                    'env': copy.deepcopy(env), 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
+                      'env': copy.deepcopy(env), 'const': copy.deepcopy(const), 'input': inp, 'state': state, 'add_deps': copy.deepcopy(add_deps), 'add_deps_recursive':
                     copy.deepcopy(add_deps_recursive), 'adr': copy.deepcopy(adr), 'ad': ad, 'v': verbose, 'print_env': print_env, 'print_deps': print_deps, 'dump_version_info': dump_version_info}
                 if action == "docker":
                     for k in docker_extra_input:
@@ -262,6 +278,11 @@ def preprocess(i):
                     return r
                 if state.get('docker', {}):
                     del(state['docker'])
+
+    if env.get('CM_DOCKER_CONTAINER_ID', '') != '' and str(env.get('CM_DOCKER_CONTAINER_KEEP_ALIVE', '')).lower() not in ["yes", "1", "true"]:
+        container_id = env['CM_DOCKER_CONTAINER_ID']
+        CMD = f"docker kill {container_id}"
+        docker_out = subprocess.check_output(CMD, shell=True).decode("utf-8")
 
     if state.get("cm-mlperf-inference-results"):
         #print(state["cm-mlperf-inference-results"])
@@ -300,7 +321,7 @@ def get_valid_scenarios(model, category, mlperf_version, mlperf_path):
 
     internal_model_name = config[mlperf_version]["model_mapping"].get(model, model)
 
-    valid_scenarios = config[mlperf_version]["required-scenarios-"+category][internal_model_name]
+    valid_scenarios = config[mlperf_version]["required-scenarios-"+category.replace(",", "-")][internal_model_name]
 
     print("Valid Scenarios for " + model + " in " + category + " category are :" +  str(valid_scenarios))
 

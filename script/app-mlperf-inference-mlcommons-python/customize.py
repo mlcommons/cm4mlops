@@ -70,15 +70,24 @@ def preprocess(i):
 
 
     x="" if os_info['platform'] == 'windows' else "'"
-    if "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env["CM_MODEL"]:
-        env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] +=  " --mlperf-conf " + x+ env['CM_MLPERF_CONF'] + x
+
+    inference_src_version = env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION', '')
+    version_tuple = None
+    if inference_src_version:
+        version_tuple = tuple(map(int, inference_src_version.split('.')))
+
+    if version_tuple and version_tuple >= (4,1,1):
+        pass # mlperf_conf is automatically loaded by the loadgen
     else:
-        env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] +=  " --mlperf_conf "+ x + env['CM_MLPERF_CONF'] + x
+        if "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env["CM_MODEL"]:
+            env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] +=  " --mlperf-conf " + x+ env['CM_MLPERF_CONF'] + x
+        else:
+            env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] +=  " --mlperf_conf "+ x + env['CM_MLPERF_CONF'] + x
 
     if env.get('CM_NETWORK_LOADGEN', '') != "lon" and env.get('CM_MLPERF_INFERENCE_API_SERVER','')=='' and "llama2-70b" not in env['CM_MODEL']:
         env['MODEL_DIR'] = env.get('CM_ML_MODEL_PATH')
         if not env['MODEL_DIR']:
-            env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH')))
+            env['MODEL_DIR'] = os.path.dirname(env.get('CM_MLPERF_CUSTOM_MODEL_PATH', env.get('CM_ML_MODEL_FILE_WITH_PATH', '')))
 
     RUN_CMD = ""
     state['RUN'] = {}
@@ -281,6 +290,10 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
 
     elif "stable-diffusion-xl" in env['CM_MODEL']:
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image")
+        if env.get('+PYTHONPATH', '') == '':
+            env['+PYTHONPATH'] = []
+        env['+PYTHONPATH'].append(os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools", "fid"))
+
         backend = env['CM_MLPERF_BACKEND']
         device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] not in [ "gpu", "rocm" ] else "cuda"
         max_batchsize = env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1')
@@ -291,11 +304,12 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
                 " --dataset-path " + env['CM_DATASET_PATH_ROOT'] + \
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'].replace("bfloat", "bf").replace("float", "fp") + \
                 " --device " + device + \
-                " --max-batchsize " + max_batchsize + \
                  env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
                  scenario_extra_options + mode_extra_options + \
                 " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
                 " --model-path " + env['CM_ML_MODEL_PATH']
+        if "--max-batchsize" not in cmd:
+            cmd += " --max-batchsize " + max_batchsize
         if env.get('CM_COCO2014_SAMPLE_ID_PATH','') != '':
             cmd += " --ids-path " + env['CM_COCO2014_SAMPLE_ID_PATH']
 
@@ -332,14 +346,15 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
         device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] != "gpu" else "cuda"
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " main.py " \
                 " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + \
-                " --dataset-path " + env['CM_DATASET_PREPROCESSED_PATH'] + \
+                " --dataset-path " + env['CM_DATASET_MIXTRAL_PREPROCESSED_PATH'] + \
                 " --device " + device.replace("cuda", "cuda:0") + \
                  env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
                  scenario_extra_options + mode_extra_options + \
                 " --output-log-dir " + env['CM_MLPERF_OUTPUT_DIR'] + \
                 ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
-                " --model-path " + env['MODEL_DIR']
+                " --model-path " + env['MIXTRAL_CHECKPOINT_PATH']
         cmd = cmd.replace("--count", "--total-sample-count")
+        cmd = cmd.replace("--max-batchsize", "--batch-size")
 
     elif "3d-unet" in env['CM_MODEL']:
 

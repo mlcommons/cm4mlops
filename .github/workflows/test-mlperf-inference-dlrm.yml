@@ -1,0 +1,48 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: MLPerf inference DLRM-v2
+
+on:
+  schedule:
+    - cron: "30 1 * * *"
+
+jobs:
+  build_reference:
+    if: github.repository_owner == 'gateoverflow'
+    runs-on: [ self-hosted, GO-spr, linux, x64 ]
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        device: [ "cpu" ]
+
+    steps:
+    - name: Test MLPerf Inference DLRM-v2 reference implementation
+      run: |
+        source gh_action/bin/deactivate || python3 -m venv gh_action
+        source gh_action/bin/activate
+        export CM_REPOS=$HOME/GH_CM
+        python3 -m pip install cm4mlops
+        cm pull repo
+        cm run script --tags=run-mlperf,inference,_performance-only --adr.mlperf-implementation.tags=_branch.dev --adr.mlperf-implementation.version=custom --submitter="MLCommons" --model=dlrm-v2-99 --implementation=reference --backend=pytorch --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --clean
+
+  build_intel:
+    if: github.repository_owner == 'gateoverflow_off'
+    runs-on: [ self-hosted, GO-spr, linux, x64 ]
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        backend: [ "pytorch" ]
+        device: [ "cpu" ]
+        
+    steps:
+    - name: Test MLPerf Inference DLRM-v2 INTEL implementation
+      run: |
+        source gh_action/bin/deactivate || python3 -m venv gh_action
+        source gh_action/bin/activate
+        export CM_REPOS=$HOME/GH_CM
+        python3 -m pip install cm4mlops
+        cm pull repo
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=dlrm-v2-99 --implementation=intel --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean

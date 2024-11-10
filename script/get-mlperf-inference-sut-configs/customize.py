@@ -27,7 +27,7 @@ def postprocess(i):
     implementation_string = env['CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX'] if env.get('CM_MLPERF_SUT_NAME_IMPLEMENTATION_PREFIX', '') != '' else env.get('CM_MLPERF_IMPLEMENTATION', 'default')
 
     run_config = []
-    for i in range(1,5):
+    for i in range(1,6):
         if env.get(f'CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX{i}', '') != '':
             run_config.append(env.get(f'CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX{i}'))
 
@@ -51,11 +51,24 @@ def postprocess(i):
         if os.path.exists(config_path_default):
             shutil.copy(config_path_default, config_path)
         else:
-            print(f"Config file missing for given hw_name: '{env['CM_HW_NAME']}', implementation: '{implementation_string}', device: '{device},  backend: '{backend}', copying from default")
-            src_config = os.path.join(env['CM_TMP_CURRENT_SCRIPT_PATH'], "configs", "default", "config.yaml")
-            shutil.copy(src_config, config_path)
-            os.makedirs(os.path.dirname(config_path_default), exist_ok=True)
-            shutil.copy(src_config, config_path_default)
+            src_config_full = os.path.join(env['CM_TMP_CURRENT_SCRIPT_PATH'], "configs", env['CM_HW_NAME'], implementation_string+"-implementation", device+"-device", backend+"-framework", "framework-version-"+backend_version, run_config_string + "-config.yaml")
+            src_config_partial1 = os.path.join(env['CM_TMP_CURRENT_SCRIPT_PATH'], "configs", env['CM_HW_NAME'], implementation_string+"-implementation", device+"-device", backend+"-framework", "framework-version-"+backend_version, "default-config.yaml")
+            src_config_partial2 = os.path.join(env['CM_TMP_CURRENT_SCRIPT_PATH'], "configs", env['CM_HW_NAME'], implementation_string+"-implementation", device+"-device", backend+"-framework", "framework-version-default", "default-config.yaml")
+            src_config_partial3 = os.path.join(env['CM_TMP_CURRENT_SCRIPT_PATH'], "configs", env['CM_HW_NAME'], implementation_string+"-implementation", device+"-device", backend+"-framework", "default-config.yaml")
+            if os.path.exists(src_config_full):
+                shutil.copy(src_config_full, config_path)
+            elif os.path.exists(src_config_partial1):
+                shutil.copy(src_config_partial1, config_path)
+            elif os.path.exists(src_config_partial2):
+                shutil.copy(src_config_partial2, config_path)
+            elif os.path.exists(src_config_partial3):
+                shutil.copy(src_config_partial3, config_path)
+            else:
+                print(f"Config file missing for given hw_name: '{env['CM_HW_NAME']}', implementation: '{implementation_string}', device: '{device},  backend: '{backend}', copying from default")
+                src_config = os.path.join(env['CM_TMP_CURRENT_SCRIPT_PATH'], "configs", "default", "config.yaml")
+                shutil.copy(src_config, config_path)
+                os.makedirs(os.path.dirname(config_path_default), exist_ok=True)
+                shutil.copy(src_config, config_path_default)
 
     state['CM_SUT_CONFIG'][env['CM_SUT_NAME']] = yaml.load(open(config_path), Loader=yaml.SafeLoader)
     state['CM_SUT_CONFIG_NAME'] = env['CM_SUT_NAME']

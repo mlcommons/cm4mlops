@@ -1,12 +1,11 @@
 name: MLPerf inference SDXL
-#off now as we have SCC24 test doing the same
 on:
   schedule:
-    - cron: "1 2 * * *"
+    - cron: "30 2 * * *"
 
 jobs:
   build_reference:
-    if: github.repository_owner == 'gateoverflow_off'
+    if: github.repository_owner == 'gateoverflow'
     runs-on: [ self-hosted, linux, x64 ]
     strategy:
       fail-fast: false
@@ -22,23 +21,5 @@ jobs:
         export CM_REPOS=$HOME/GH_CM
         python3 -m pip install cm4mlops
         cm pull repo
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=sdxl --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
-
-  build_nvidia:
-      if: github.repository_owner == 'gateoverflow_off'
-      runs-on: [ self-hosted, linux, x64 ]
-      strategy:
-        fail-fast: false
-        matrix:
-          python-version: [ "3.12" ]
-          backend: [ "tensorrt" ]
-          precision: [ "float16" ]
-          implementation: [ "nvidia" ]
-      steps:
-      - name: Test MLPerf Inference SDXL Nvidia
-        run: |
-          source gh_action/bin/deactivate || python3 -m venv gh_action
-          source gh_action/bin/activate
-          export CM_REPOS=$HOME/GH_CM
-          cm pull repo
-          cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=sdxl --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --clean
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --docker --model=sdxl --backend=${{ matrix.backend }} --device=cuda --scenario=Offline --test_query_count=1 --precision=${{ matrix.precision }} --target_qps=1 --quiet --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions  --env.CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST=yes --clean
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from self hosted Github actions - NVIDIARTX4090" --quiet --submission_dir=$HOME/gh_action_submissions

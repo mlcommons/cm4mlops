@@ -15,6 +15,7 @@ category: Docker automation
 
 default_env:
   CM_DOCKER_DETACHED_MODE: 'yes'
+  CM_DOCKER_REUSE_EXISTING_CONTAINER: 'no'
 
 input_mapping:
   all_gpus: CM_DOCKER_ADD_ALL_GPUS
@@ -25,6 +26,7 @@ input_mapping:
   detached: CM_DOCKER_DETACHED_MODE
   device: CM_DOCKER_ADD_DEVICE
   docker_image_base: CM_DOCKER_IMAGE_BASE
+  docker_base_image: CM_DOCKER_IMAGE_BASE
   keep_detached: CM_KEEP_DETACHED_CONTAINER
   docker_os: CM_DOCKER_OS
   docker_os_version: CM_DOCKER_OS_VERSION

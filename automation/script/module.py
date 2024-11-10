@@ -8,7 +8,6 @@
 # TBD: when we have bandwidth and resources, we should refactor it
 # and make it cleaner and simpler while keeping full backwards compatibility.
 #
-
 import os
 import logging
 
@@ -412,10 +411,6 @@ class CAutomation(Automation):
         detected_versions = i.get('detected_versions', {})
 
         ignore_script_error = i.get('ignore_script_error', False)
-
-        # Get constant env and state
-        const = i.get('const',{})
-        const_state = i.get('const_state',{})
 
         # Detect current path and record in env for further use in native scripts
         current_path = os.path.abspath(os.getcwd())
@@ -838,8 +833,8 @@ class CAutomation(Automation):
         script_artifact_env = meta.get('env',{})
         env.update(script_artifact_env)
 
-
-
+        script_artifact_state = meta.get('state',{})
+        utils.merge_dicts({'dict1':state, 'dict2':script_artifact_state, 'append_lists':True, 'append_unique':True})
 
 
 
@@ -853,7 +848,7 @@ class CAutomation(Automation):
 
 
         # STEP 700: Overwrite env with keys from the script input (to allow user friendly CLI)
-        #           IT HAS THE PRIORITY OVER meta['default_env'] and meta['env']
+        #           IT HAS THE PRIORITY OVER meta['default_env'] and meta['env'] but not over the meta from versions/variations
         #           (env OVERWRITE - user enforces it from CLI)
         #           (it becomes const)
         if input_mapping:
@@ -866,7 +861,9 @@ class CAutomation(Automation):
         #    update_env_from_input_mapping(const, i, docker_input_mapping)
 
 
-
+        #Update env/state with cost
+        env.update(const)
+        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
 
 
 
@@ -882,7 +879,7 @@ class CAutomation(Automation):
         variations = script_artifact.meta.get('variations', {})
         state['docker'] = meta.get('docker', {})
 
-        r = self._update_state_from_variations(i, meta, variation_tags, variations, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose)
+        r = self._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose)
         if r['return'] > 0:
             return r
 
@@ -952,7 +949,7 @@ class CAutomation(Automation):
 
         if version!='' and version in versions:
             versions_meta = versions[version]
-            r = update_state_from_meta(versions_meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+            r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
             if r['return']>0: return r
             adr=get_adr(versions_meta)
             if adr:
@@ -973,7 +970,19 @@ class CAutomation(Automation):
             if state.get('docker'):
                 if str(state['docker'].get('run', True)).lower() in ['false', '0', 'no']:
                     logging.info(recursion_spaces+'  - Skipping script::{} run as we are inside docker'.format(found_script_artifact))
-                    return {'return': 0}
+
+                    # restore env and state
+                    for k in list(env.keys()):
+                        del(env[k])
+                    for k in list(state.keys()):
+                        del(state[k])
+
+                    env.update(saved_env)
+                    state.update(saved_state)
+
+                    rr = {'return':0, 'env':env, 'new_env':{}, 'state':state, 'new_state':{}, 'deps': []}
+                    return rr
+
                 elif str(state['docker'].get('real_run', True)).lower() in ['false', '0', 'no']:
                     logging.info(recursion_spaces+'  - Doing fake run for script::{} as we are inside docker'.format(found_script_artifact))
                     fake_run = True
@@ -1328,7 +1337,7 @@ class CAutomation(Automation):
 
                     if default_version in versions:
                         versions_meta = versions[default_version]
-                        r = update_state_from_meta(versions_meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                        r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
                         if r['return']>0: return r
 
                         if "add_deps_recursive" in versions_meta:
@@ -1373,7 +1382,6 @@ class CAutomation(Automation):
 
                 r = update_env_with_values(env)
                 if r['return']>0: return r
-
 
             # Clean some output files
             clean_tmp_files(clean_files, recursion_spaces)
@@ -1451,8 +1459,12 @@ class CAutomation(Automation):
             elif pip_version_max != '':
                 pip_version_string = '<='+pip_version_max
 
+            env.update(const)
+            utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+
             r = _update_env(env, 'CM_TMP_PIP_VERSION_STRING', pip_version_string)
             if r['return']>0: return r
+
             if pip_version_string != '':
                 logging.debug(recursion_spaces+'    # potential PIP version string (if needed): '+pip_version_string)
 
@@ -1461,10 +1473,6 @@ class CAutomation(Automation):
             if 'preprocess' in dir(customize_code) and not fake_run:
 
                 logging.debug(recursion_spaces+'  - Running preprocess ...')
-
-                # Update env and state with const
-                utils.merge_dicts({'dict1':env, 'dict2':const, 'append_lists':True, 'append_unique':True})
-                utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
 
                 run_script_input['run_state'] = run_state
 
@@ -1916,7 +1924,7 @@ class CAutomation(Automation):
         return {'return': 0}
 
     ######################################################################################
-    def _update_state_from_variations(self, i, meta, variation_tags, variations, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose):
+    def _update_state_from_variations(self, i, meta, variation_tags, variations, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose):
 
         # Save current explicit variations
         import copy
@@ -2019,7 +2027,7 @@ class CAutomation(Automation):
                 if variation_tag_dynamic_suffix:
                     self._update_variation_meta_with_dynamic_suffix(variation_meta, variation_tag_dynamic_suffix)
 
-                r = update_state_from_meta(variation_meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                r = update_state_from_meta(variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
                 if r['return']>0: return r
 
                 if variation_meta.get('script_name', '')!='':
@@ -2050,7 +2058,7 @@ class CAutomation(Automation):
 
                         combined_variation_meta = variations[combined_variation]
 
-                        r = update_state_from_meta(combined_variation_meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                        r = update_state_from_meta(combined_variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
                         if r['return']>0: return r
 
                         adr=get_adr(combined_variation_meta)
@@ -2416,10 +2424,90 @@ class CAutomation(Automation):
 
             alias = meta.get('alias','')
             uid = meta.get('uid','')
-
             if console:
                 logging.info(path)
-                logging.info('  Test: TBD')
+                test_config = meta.get('tests', '')
+                if test_config:
+                    logging.info(test_config)
+                    variations = meta.get("variations")
+                    tags_string = ",".join(meta.get("tags"))
+                    test_input_index = i.get('test_input_index')
+                    test_input_id = i.get('test_input_id')
+                    run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
+                    if test_input_index:
+                        index_plus = False
+                        try:
+                            if test_input_index.endswith("+"):
+                                input_index = int(test_input_index[:-1])
+                                index_plus = True
+                            else:
+                                input_index = int(test_input_index)
+                        except ValueError as e:
+                            print(e)
+                            return {'return': 1, 'error': f'Invalid test_input_index: {test_input_index}. Must be an integer or an integer followed by a +'}
+                        if input_index > len(run_inputs):
+                            run_inputs = []
+                        else:
+                            if index_plus:
+                                run_inputs = run_inputs[index_index-1:]
+                            else:
+                                run_inputs = [ run_inputs[input_index - 1] ]
+                    
+                    for run_input in run_inputs:
+                        if test_input_id:
+                            if run_input.get('id', '') != test_input_id:
+                                continue
+
+
+                        ii = {'action': 'run',
+                              'automation':'script',
+                              'quiet': i.get('quiet'),
+                            }
+                        test_all_variations = run_input.get('test-all-variations', False)
+                        if test_all_variations:
+                            run_variations = [ f"_{v}" for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
+                        else:
+                            given_variations = run_input.get('variations_list', [])
+                            if given_variations:
+                                v_split = []
+                                run_variations = []
+                                for i, v in enumerate(given_variations):
+                                    v_split = v.split(",")
+                                    for t in v_split:
+                                        if not t.startswith("_"):
+                                            given_variations[i] = f"_{t}" #variations must begin with _. We support both with and without _ in the meta
+                                    if v_split:
+                                        run_variations.append(",".join(v_split))
+                            else:
+                                run_variations = [ "" ] #run the test without any variations
+                        use_docker = run_input.get('docker', False)
+                        for key in run_input:#override meta with any user inputs like for docker_cm_repo
+                            if i.get(key, '') != '':
+                                if type(run_input[key]) == dict:
+                                    utils.merge_dicts({'dict1': run_input[key] , 'dict2':i[key], 'append_lists':True, 'append_unique':True})
+                                else:
+                                    run_input[key] = i[key]
+                        ii = {**ii, **run_input}
+                        i_env = ii.get('env', i.get('env', {}))
+                        if use_docker:
+                            ii['action'] = "docker"
+                            for key in i:
+                                if key.startswith("docker_"):
+                                    ii[key] = i[key]
+
+                            if ii.get('docker_image_name', '') == '':
+                                ii['docker_image_name'] = alias
+
+                        for variation_tags in run_variations:
+                            run_tags = f"{tags_string},{variation_tags}"
+                            ii['tags'] = run_tags
+                            if i_env:
+                                import copy
+                                ii['env'] = copy.deepcopy(i_env)
+                            logging.info(ii)
+                            r = self.cmind.access(ii)
+                            if r['return'] > 0:
+                                return r
 
 
         return {'return':0, 'list': lst}
@@ -3012,8 +3100,8 @@ class CAutomation(Automation):
                             'remembered_selections': remembered_selections,
                             'env':env,
                             'state':state,
-                            'const':const,
-                            'const_state':const_state,
+                            'const':copy.deepcopy(const),
+                            'const_state':copy.deepcopy(const_state),
                             'add_deps_recursive':add_deps_recursive,
                             'debug_script_tags':debug_script_tags,
                             'verbose':verbose,
@@ -3039,6 +3127,11 @@ class CAutomation(Automation):
                     env.update(tmp_env)
                     r = update_env_with_values(env)
                     if r['return']>0: return r
+
+                    #Update env/state with cost
+                    env.update(const)
+                    utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+
 
         return {'return': 0}
 
@@ -3885,8 +3978,11 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
            return r
 
         string = r['string']
-
-        version = r['match'].group(group_number)
+        
+        if r['match'].lastindex and r['match'].lastindex >= group_number:
+            version = r['match'].group(group_number)
+        else:
+            return {'return':1, 'error': 'Invalid version detection group number. Version was not detected. Last index of match = {}. Given group number = {}'.format(r['match'].lastindex, group_number)}
 
         which_env[env_key] = version
         which_env['CM_DETECTED_VERSION'] = version # to be recorded in the cache meta
@@ -3911,6 +4007,19 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         add_deps = i['update_deps']
         env = i.get('env', {})
         update_deps(deps, add_deps, False, env)
+
+        return {'return':0}
+
+    ##############################################################################
+    def update_state_from_meta(self, meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i):
+        """
+        Updates state and env from meta
+        Args:
+        """
+
+        r = update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i)
+        if r['return']>0:
+            return r
 
         return {'return':0}
 
@@ -4418,7 +4527,7 @@ def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
 
         # Check cases such as --env.CM_SKIP_COMPILE
         if type(value)==bool:
-            env[key] = str(value)
+            env[key] = value
             continue
 
         tmp_values = re.findall(r'<<<(.*?)>>>', str(value))
@@ -5110,7 +5219,7 @@ def update_env_from_input_mapping(env, inp, input_mapping):
             env[input_mapping[key]] = inp[key]
 
 ##############################################################################
-def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i):
+def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i):
     """
     Internal: update env and state from meta
     """
@@ -5118,11 +5227,22 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
     default_env = meta.get('default_env',{})
     for key in default_env:
         env.setdefault(key, default_env[key])
+
     update_env = meta.get('env', {})
     env.update(update_env)
 
+    update_const = meta.get('const', {})
+    if update_const:
+        const.update(update_const)
+        env.update(const)
+
     update_state = meta.get('state', {})
     utils.merge_dicts({'dict1':state, 'dict2':update_state, 'append_lists':True, 'append_unique':True})
+
+    update_const_state = meta.get('const_state', {})
+    if const_state:
+        utils.merge_dicts({'dict1':const_state, 'dict2':update_const_state, 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
 
     new_deps = meta.get('deps', [])
     if len(new_deps)>0:
@@ -5152,9 +5272,17 @@ def update_state_from_meta(meta, env, state, deps, post_deps, prehook_deps, post
         r4 = update_deps(posthook_deps, add_deps_info, True, env)
         if r1['return']>0 and r2['return']>0 and r3['return'] > 0 and r4['return'] > 0: return r1
 
+    # i would have 'input' when called through cm.access
+    input_update_env = i.get('input', i)
+
     input_mapping = meta.get('input_mapping', {})
     if input_mapping:
-        update_env_from_input_mapping(env, i['input'], input_mapping)
+        update_env_from_input_mapping(env, input_update_env, input_mapping)
+
+    # handle dynamic env values
+    r = update_env_with_values(env)
+    if r['return']>0:
+        return r
 
     # Possibly restrict this to within docker environment
     add_deps_info = meta.get('ad', i.get('ad', {})) #we need to see input here

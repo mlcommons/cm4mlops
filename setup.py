@@ -1,4 +1,5 @@
-# setup.py
+# Build a whl file for cm4mlperf-inference
+
 from setuptools import setup
 from setuptools._distutils.dist import Distribution
 from setuptools.command.install import install
@@ -7,6 +8,7 @@ import sys
 import importlib.util
 import platform
 import os
+import shutil
 
 # Try to use importlib.metadata for Python 3.8+ 
 try:
@@ -20,7 +22,6 @@ except ImportError:
     # If importlib.metadata is unavailable, fall back to pkg_resources
     import pkg_resources
     PackageNotFoundError = pkg_resources.DistributionNotFound
-
 
 
 class CustomInstallCommand(install):
@@ -37,13 +38,17 @@ class CustomInstallCommand(install):
     def is_package_installed(self, package_name):
         try:
             if sys.version_info >= (3, 8):
-                version(package_name)  # Tries to get the version of the package
+                spec = importlib.util.find_spec(package_name)
+                module = importlib.util.module_from_spec(spec)
+                sys.modules[package_name] = module
+                spec.loader.exec_module(module)
             else:
                 pkg_resources.get_distribution(package_name)  # Fallback for < 3.8
             return True
         except PackageNotFoundError:
             return False
 
+    
     def install_system_packages(self):
         # List of packages to install via system package manager
         packages = []
@@ -72,8 +77,17 @@ class CustomInstallCommand(install):
                 manager, details = self.get_package_manager_details()
                 if manager:
                     if manager == "apt-get":
-                        subprocess.check_call(['sudo', 'apt-get', 'update'])
-                        subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                        # Check if 'sudo' is available
+                        if shutil.which('sudo'):
+                            subprocess.check_call(['sudo', 'apt-get', 'update'])
+                            subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                        else:
+                            print("sudo not found, trying without sudo.")
+                            try:
+                                subprocess.check_call(['apt-get', 'update'])
+                                subprocess.check_call(['apt-get', 'install', '-y'] + packages)
+                            except subprocess.CalledProcessError:
+                                print(f"Installation of {packages} without sudo failed. Please install these packages manually to continue!")
             elif self.system == 'Windows':
                 print(f"Please install the following packages manually: {packages}")
 
@@ -127,11 +141,22 @@ class CustomInstallCommand(install):
     def get_sys_platform(self):
         self.system =  platform.system() 
 
+# Read long description and version
+def read_file(file_name, default=""):
+    if os.path.isfile(file_name):
+        with open(file_name, "r") as f:
+            return f.read().strip()
+    return default
+
+long_description = read_file("README.md", "No description available.")
+version_ = read_file("VERSION", "0.3.1")
+
 setup(
     name='cm4mlops',
-    version='0.1',
-    long_description='CM automations and scripts for MLOps',
-    long_description_content_type='text/x-rst',
+    version=version_,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url="https://github.com/mlcommons/cm4mlops",
     packages=[],
     install_requires=[
         "setuptools>=60",

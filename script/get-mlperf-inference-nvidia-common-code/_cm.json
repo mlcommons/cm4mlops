@@ -11,7 +11,7 @@
       "names": [
         "mlperf-inference-results"
       ],
-      "tags": "get,mlperf,inference,results,official",
+      "tags": "get,mlperf,inference,results,official,_code-only",
       "inherit_variation_tags": true
     }
   ],
@@ -29,7 +29,8 @@
   "uid": "26b78bf3ffdc4926",
   "variations": {
     "mlcommons": {
-      "group": "repo-owner"
+      "group": "repo-owner",
+      "default": true
     },
     "custom": {
       "group": "repo-owner"

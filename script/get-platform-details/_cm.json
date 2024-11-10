@@ -4,17 +4,44 @@
   "automation_uid": "5b4e0237da074764",
   "cache": false,
   "category": "Platform information",
+  "input_mapping": {
+    "out_dir_path": "CM_PLATFORM_DETAILS_DIR_PATH",
+    "out_file_name": "CM_PLATFORM_DETAILS_FILE_NAME"
+  },
   "deps": [
     {
       "tags": "detect,os"
     },
     {
+      "skip_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "windows"
+        ]
+      },
+      "tags": "detect,sudo"
+    },
+    {
+      "skip_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "windows"
+        ]
+      },
       "tags": "get,sys-util,generic,_psmisc"
     },
     {
+      "enable_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "linux"
+        ]
+      },
       "tags": "get,sys-util,generic,_systemd"
     },
     {
+      "enable_if_env": {
+        "CM_HOST_OS_TYPE": [
+          "linux"
+        ]
+      },
       "tags": "get,sys-util,generic,_dmidecode"
     }
   ],
@@ -23,6 +50,9 @@
       "enable_if_env": {
         "CM_INSTALL_NUMACTL": [
           "True"
+        ],
+        "CM_HOST_OS_TYPE": [
+          "linux"
         ]
       },
       "tags": "get,sys-util,generic,_numactl"
@@ -31,9 +61,15 @@
       "enable_if_env": {
         "CM_INSTALL_CPUPOWER": [
           "True"
+        ],
+        "CM_HOST_OS_TYPE": [
+          "linux"
         ]
       },
-      "tags": "get,sys-util,generic,_linux-tools"
+      "tags": "get,sys-util,generic,_linux-tools",
+      "env": {
+        "CM_TMP_FAIL_SAFE": "yes"
+      }
     }
   ],
   "tags": [
