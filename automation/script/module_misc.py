@@ -1800,13 +1800,17 @@ def docker(i):
         variations = meta.get('variations', {})
         docker_settings = meta.get('docker', {})
         state['docker'] = docker_settings
+        # Todo: Support state, const and add_deps_recursive
+        run_state = {'deps':[], 'fake_deps':[], 'parent': None}
+        run_state['script_id'] = script_alias + "," + script_uid
+        run_state['script_variation_tags'] = variation_tags
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation.update_state_from_meta(meta, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys = [], new_state_keys = [], i = i)
+        r = script_automation.update_state_from_meta(meta, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys = [], new_state_keys = [], run_state=run_state, i = i)
         if r['return'] > 0:
             return r
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = run_state, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1840,13 +1844,14 @@ def docker(i):
 
         deps = docker_settings.get('deps', [])
         if deps:
-            # Todo: Support state, const and add_deps_recursive
-            run_state = {'deps':[], 'fake_deps':[], 'parent': None}
-            run_state['script_id'] = script_alias + "," + script_uid
-            run_state['script_variation_tags'] = variation_tags
             r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', [], '', False, '', verbose, show_time, ' ', run_state)
             if r['return'] > 0:
                 return r
+
+        #For updating meta from update_meta_if_env
+        r = script_automation.update_state_from_meta(meta, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys = [], new_state_keys = [], run_state=run_state, i = i)
+        if r['return'] > 0:
+            return r
 
         for key in docker_settings.get('mounts', []):
             mounts.append(key)
