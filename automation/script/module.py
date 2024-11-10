@@ -957,6 +957,8 @@ class CAutomation(Automation):
                 #Processing them again using updated deps for add_deps_recursive
                 r = update_adr_from_meta(deps, post_deps, prehook_deps, posthook_deps, add_deps_recursive, env)
 
+        default_version = meta.get('default_version', '') #not used if version is given
+        run_state['default_version'] = default_version
 
         # STEP 1100: Update deps from input
         r = update_deps_from_input(deps, post_deps, prehook_deps, posthook_deps, i)
@@ -1301,7 +1303,7 @@ class CAutomation(Automation):
 
             # Update default version meta if version is not set
             if version == '':
-                default_version = meta.get('default_version', '')
+                default_version = run_state.get('default_version', '')
                 if default_version != '':
                     version = default_version
 
@@ -2033,6 +2035,9 @@ class CAutomation(Automation):
                 if variation_meta.get('script_name', '')!='':
                     meta['script_name'] = variation_meta['script_name']
 
+                if variation_meta.get('default_version', '')!='':
+                    run_state['default_version'] = variation_meta['default_version']
+
                 if variation_meta.get('required_disk_space', 0) > 0 and variation_tag not in required_disk_space:
                     required_disk_space[variation_tag] = variation_meta['required_disk_space']
 
@@ -2067,6 +2072,9 @@ class CAutomation(Automation):
 
                         if combined_variation_meta.get('script_name', '')!='':
                             meta['script_name'] = combined_variation_meta['script_name']
+
+                        if variation_meta.get('default_version', '')!='':
+                            run_state['default_version'] = variation_meta['default_version']
 
                         if combined_variation_meta.get('required_disk_space', 0) > 0 and combined_variation not in required_disk_space:
                             required_disk_space[combined_variation] = combined_variation_meta['required_disk_space']
