@@ -99,7 +99,12 @@ def prompt_sudo():
 
         # Prompt for the password
         import getpass
-        password = getpass.getpass("Enter password (-1 to skip): ")
+
+        if not os.isatty(sys.stdin.fileno()):
+            print("Skipping password prompt - non-interactive terminal detected!")
+            password = None
+        else:
+            password = getpass.getpass("Enter password (-1 to skip): ")
 
         # Check if the input is -1
         if password == "-1":
@@ -108,13 +113,21 @@ def prompt_sudo():
 
         # Run the command with sudo, passing the password
         try:
-            r = subprocess.check_output(
-                ['sudo', '-S', 'echo'] ,
-                input=password+ "\n",  # Pass the password to stdin
-                text=True,
-                stderr=subprocess.STDOUT,
-                timeout=15      # Capture the command output
-            )
+            if password == None:
+                r = subprocess.check_output(
+                    ['sudo', '-S', 'echo'] ,
+                    text=True,
+                    stderr=subprocess.STDOUT,
+                    timeout=15      # Capture the command output
+                )   
+            else:
+                r = subprocess.check_output(
+                    ['sudo', '-S', 'echo'] ,
+                    input=password+ "\n",  # Pass the password to stdin
+                    text=True,
+                    stderr=subprocess.STDOUT,
+                    timeout=15      # Capture the command output
+                )
             return 0
         except subprocess.TimeoutExpired:
             print("Timedout")
