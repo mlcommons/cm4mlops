@@ -5239,6 +5239,13 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
     update_env = meta.get('env', {})
     env.update(update_env)
 
+    update_env_if_env = meta.get('update_env_if_env', {})
+    if update_env_if_env:
+        if not is_dep_tobe_skipped(update_env_if_env, env):
+            c_env = update_env_if_env.get('env', {})
+            if c_env:
+                env.update(c_env)
+
     update_const = meta.get('const', {})
     if update_const:
         const.update(update_const)
