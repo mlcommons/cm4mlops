@@ -27,8 +27,9 @@
         ]
       },
       "skip_if_env": {
-        "CM_SUDO_USER": "no",
-        "CM_SUDO": ""
+        "CM_SUDO_USER": [
+          "no"
+        ]
       },
       "tags": "get,sys-util,generic,_psmisc"
     },
@@ -39,8 +40,9 @@
         ]
       },
       "skip_if_env": {
-        "CM_SUDO_USER": "no",
-        "CM_SUDO": ""
+        "CM_SUDO_USER": [
+          "no"
+        ]
       },
       "tags": "get,sys-util,generic,_systemd"
     },
@@ -51,8 +53,9 @@
         ]
       },
       "skip_if_env": {
-        "CM_SUDO_USER": "no",
-        "CM_SUDO": ""
+        "CM_SUDO_USER": [
+          "no"
+        ]
       },
       "tags": "get,sys-util,generic,_dmidecode"
     }
@@ -68,8 +71,9 @@
         ]
       },
       "skip_if_env": {
-        "CM_SUDO_USER": "no",
-        "CM_SUDO": ""
+        "CM_SUDO_USER": [
+          "no"
+        ]
       },
       "tags": "get,sys-util,generic,_numactl"
     },
@@ -83,8 +87,9 @@
         ]
       },
       "skip_if_env": {
-        "CM_SUDO_USER": "no",
-        "CM_SUDO": ""
+        "CM_SUDO_USER": [
+          "no"
+        ]
       },
       "tags": "get,sys-util,generic,_linux-tools",
       "env": {
