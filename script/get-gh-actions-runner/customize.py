@@ -18,7 +18,7 @@ def preprocess(i):
     if cmd == "config":
         run_cmd = f"cd {env['CM_GH_ACTIONS_RUNNER_CODE_PATH']} && ./config.sh --url {env['CM_GH_ACTIONS_RUNNER_URL']} --token {env['CM_GH_ACTIONS_RUNNER_TOKEN']}"
     elif cmd == "remove":
-        run_cmd = f"cd {env['CM_GH_ACTIONS_RUNNER_CODE_PATH']} && ./config.sh remove"
+        run_cmd = f"cd {env['CM_GH_ACTIONS_RUNNER_CODE_PATH']} && ./config.sh remove --token {env['CM_GH_ACTIONS_RUNNER_TOKEN']}"
     elif cmd == "install":
         run_cmd = f"cd {env['CM_GH_ACTIONS_RUNNER_CODE_PATH']} && sudo ./svc.sh install"
     elif cmd == "uninstall":
