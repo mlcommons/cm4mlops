@@ -693,9 +693,10 @@ variations:
         tags: _3d-unet-99.9
 
   3d-unet_:
+    default_env:
+      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
-      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     posthook_deps:
     - enable_if_env:
         CM_MLPERF_LOADGEN_MODE:
@@ -779,9 +780,10 @@ variations:
           tags: get,ml-model,sdxl,_fp32,_rclone
 
   llama2-70b_:
+    default_env:
+      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
-      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     posthook_deps:
     - enable_if_env:
         CM_MLPERF_LOADGEN_MODE:
