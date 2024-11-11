@@ -1400,7 +1400,6 @@ def dockerfile(i):
     script_automation = i['self_module']
 
     dockerfile_env=i.get('dockerfile_env', {})
-    dockerfile_env['CM_RUN_STATE_DOCKER'] = True
 
     tags_split = i.get('tags', '').split(",")
     variation_tags = [ t[1:] for t in tags_split if t.startswith("_") ]
@@ -1430,6 +1429,7 @@ def dockerfile(i):
 
         docker_settings = state['docker']
         dockerfile_env = docker_settings['dockerfile_env']
+        dockerfile_env['CM_RUN_STATE_DOCKER'] = True
 
         if not docker_settings.get('run', True) and not i.get('docker_run_override', False):
             print("docker.run set to False in _cm.json")
