@@ -368,7 +368,7 @@ def generate_submission(i):
                                             del(saved_system_meta[key])
                                     system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
                             else:
-                                print("NOTE: system_meta.json was not found in the required directory inside the results folder. CM is automatically creating one..." 
+                                print("NOTE: system_meta.json was not found in the required directory inside the results folder. CM is automatically creating one...")
                             system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
 
                     if not os.path.isdir(submission_results_path):
