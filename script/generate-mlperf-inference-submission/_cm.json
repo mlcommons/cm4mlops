@@ -22,6 +22,14 @@
       "tags": "get,sut,system-description"
     },
     {
+      "enable_if_env": {
+        "CM_MLPERF_DEVICE": [
+          "cuda"
+        ]
+      },
+      "tags": "get,cuda"
+    },
+    {
       "tags": "install,pip-package,for-cmind-python,_package.tabulate"
     },
     {
