@@ -926,10 +926,6 @@ variations:
     env:
       CM_MODEL: stable-diffusion-xl
       CM_NUM_THREADS: "1"
-    adr:
-      mlperf-implementation:
-        tags: _branch.dev
-        version: custom
     deps:
       - tags: get,generic-python-lib,_package.diffusers
         names:

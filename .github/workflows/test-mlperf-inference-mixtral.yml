@@ -5,7 +5,7 @@ name: MLPerf inference MIXTRAL-8x7B
 
 on:
   schedule:
-    - cron: "45 10 * * *"   # 30th minute and 20th hour => 20:30 UTC => 2 AM IST 
+    - cron: "45 4 * * 5"   # 30th minute and 20th hour => 20:30 UTC => 2 AM IST 
 
 jobs:
   build_reference:
@@ -26,6 +26,7 @@ jobs:
         export CM_REPOS=$HOME/GH_CM
         pip install cm4mlops
         pip install "huggingface_hub[cli]"
+        git config --global credential.helper store
         huggingface-cli login --token ${{ secrets.HF_TOKEN }} --add-to-git-credential
         cm pull repo
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=mixtral-8x7b --implementation=reference --batch_size=1 --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --docker --quiet --test_query_count=1 --target_qps=1 --clean --env.CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST=yes --env.CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST=yes

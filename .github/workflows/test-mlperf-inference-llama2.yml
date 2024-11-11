@@ -5,7 +5,7 @@ name: MLPerf inference LLAMA 2 70B
 
 on:
   schedule:
-    - cron: "30 2 * * 4"
+    - cron: "14 14 * * 5"
 
 jobs:
   build_reference:
@@ -19,7 +19,7 @@ jobs:
         device: [ "cpu" ]
 
     steps:
-    - name: Install dependencies
+    - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
@@ -28,7 +28,6 @@ jobs:
         pip install tabulate 
         cm pull repo
         pip install "huggingface_hub[cli]"
+        git config --global credential.helper store
         huggingface-cli login --token ${{ secrets.HF_TOKEN }} --add-to-git-credential
-    - name: Test MLPerf Inference LLAMA 2 70B reference implementation
-      run: |
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --env.CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST=yes --adr.inference-src.tags=_repo.https://github.com/anandhu-eng/inference.git --clean
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --env.CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST=yes  --clean

@@ -96,25 +96,52 @@ def is_user_in_sudo_group():
 
 def prompt_sudo():
     if os.geteuid() != 0 and not is_user_in_sudo_group():  # No sudo required for root user
-        msg = "[sudo] password for %u:"
-        while True:
-            try:
-                r = subprocess.check_output(["sudo", "-p", msg, "echo", "Check sudo"],
-                                            stderr=subprocess.STDOUT, timeout=20)
-                print(r.decode('utf-8'))  # Decode bytes to string
-                return 0
-            except subprocess.TimeoutExpired:
-                reset_terminal()  # Reset terminal to sane state
-                if not prompt_retry():  # If the user chooses not to retry or times out
-                    return -1
-            except subprocess.CalledProcessError as e:
-                print(f"Command failed: {e.output.decode('utf-8')}")
-                reset_terminal()  # Reset terminal in case of failure
+
+        # Prompt for the password
+        import getpass
+
+        if not os.isatty(sys.stdin.fileno()):
+            print("Skipping password prompt - non-interactive terminal detected!")
+            password = None
+        else:
+            password = getpass.getpass("Enter password (-1 to skip): ")
+
+        # Check if the input is -1
+        if password == "-1":
+            print("Skipping sudo command.")
+            return -1
+
+        # Run the command with sudo, passing the password
+        try:
+            if password == None:
+                r = subprocess.check_output(
+                    ['sudo', '-S', 'echo'] ,
+                    text=True,
+                    stderr=subprocess.STDOUT,
+                    timeout=15      # Capture the command output
+                )   
+            else:
+                r = subprocess.check_output(
+                    ['sudo', '-S', 'echo'] ,
+                    input=password+ "\n",  # Pass the password to stdin
+                    text=True,
+                    stderr=subprocess.STDOUT,
+                    timeout=15      # Capture the command output
+                )
+            return 0
+        except subprocess.TimeoutExpired:
+            print("Timedout")
+            reset_terminal()  # Reset terminal to sane state
+            if not prompt_retry():  # If the user chooses not to retry or times out
                 return -1
-            except Exception as e:
-                print(f"An error occurred: {str(e)}")
-                reset_terminal()  # Always reset terminal after error
-                return -1
+        except subprocess.CalledProcessError as e:
+            print(f"Command failed: {e.output.decode('utf-8')}")
+            reset_terminal()  # Reset terminal in case of failure
+            return -1
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+            reset_terminal()  # Always reset terminal after error
+            return -1
 
     return 0
 
