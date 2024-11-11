@@ -1417,13 +1417,23 @@ def dockerfile(i):
         script_uid = meta.get('uid', '')
 
 
+        verbose = i.get('v', False)
+        show_time = i.get('show_time', False)
+
+        run_state = {'deps':[], 'fake_deps':[], 'parent': None}
+        run_state['script_id'] = script_alias + "," + script_uid
+        run_state['script_variation_tags'] = variation_tags
         variations = meta.get('variations', {})
         docker_settings = meta.get('docker', {})
         docker_settings['dockerfile_env'] = dockerfile_env
         state['docker'] = docker_settings
         add_deps_recursive = i.get('add_deps_recursive', {})
 
-        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = {}, recursion_spaces='', verbose = False)
+        r = script_automation.update_state_from_meta(meta, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys = [], new_state_keys = [], run_state=run_state, i = i)
+        if r['return'] > 0:
+            return r
+
+        r = script_automation._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys_from_meta = [], new_state_keys_from_meta = [], add_deps_recursive = add_deps_recursive, run_state = run_state, recursion_spaces='', verbose = False)
         if r['return'] > 0:
             return r
 
@@ -1446,6 +1456,17 @@ def dockerfile(i):
             print("Run config is not configured for docker run in {}".format(run_config_path))
             continue
         '''
+
+        deps = docker_settings.get('build_deps', [])
+        if deps:
+            r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', [], '', False, '', verbose, show_time, ' ', run_state)
+            if r['return'] > 0:
+                return r
+        #For updating meta from update_meta_if_env
+        r = script_automation.update_state_from_meta(meta, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys = [], new_state_keys = [], run_state=run_state, i = i)
+        if r['return'] > 0:
+            return r
+        docker_settings = state['docker']
 
         d_env = i_run_cmd_arc.get('env', {})
         for key in list(d_env.keys()):
@@ -1842,7 +1863,9 @@ def docker(i):
         _os = i.get('docker_os', docker_settings.get('os', 'ubuntu'))
         version = i.get('docker_os_version', docker_settings.get('os_version', '22.04'))
 
+        build_deps = docker_settings.get('deps', [])
         deps = docker_settings.get('deps', [])
+        deps = build_deps + deps
         if deps:
             r = script_automation._run_deps(deps, [], env, {}, {}, {}, {}, '', [], '', False, '', verbose, show_time, ' ', run_state)
             if r['return'] > 0:
@@ -1852,6 +1875,8 @@ def docker(i):
         r = script_automation.update_state_from_meta(meta, env, state, const, const_state, deps = [], post_deps = [], prehook_deps = [], posthook_deps = [], new_env_keys = [], new_state_keys = [], run_state=run_state, i = i)
         if r['return'] > 0:
             return r
+
+        docker_settings = state['docker']
 
         for key in docker_settings.get('mounts', []):
             mounts.append(key)

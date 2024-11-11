@@ -313,7 +313,7 @@ variations:
 
   nvidia-original,r4.1-dev_default:
     docker:
-      deps:
+      build_deps:
         - tags: detect,os
       image_name: mlperf-inference-nvidia-v4.1-dev-common
     update_meta_if_env:
