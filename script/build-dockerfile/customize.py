@@ -221,7 +221,7 @@ def preprocess(i):
         f.write('RUN echo "' + docker_user + ' ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers' + EOL)
         f.write('USER ' + docker_user + ":" + docker_group + EOL)
 
-    dockerfile_env = i['input'].get('dockerfile_env', {})
+    dockerfile_env = env.get('CM_DOCKERFILE_ENV', {})
     dockerfile_env_input_string = ""
     for docker_env_key in dockerfile_env:
         dockerfile_env_input_string = dockerfile_env_input_string + " --env."+docker_env_key+"="+str(dockerfile_env[docker_env_key])
