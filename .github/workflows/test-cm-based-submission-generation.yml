@@ -19,7 +19,7 @@ jobs:
         python-version: [ "3.12" ]
         division: ["closed", "open"]
         category: ["datacenter", "edge"]
-        case: ["case-3", "case-7"]
+        case: ["case-3", "case-7", "case-8"]
         action: ["run", "docker"]
         exclude:
           - os: macos-latest
@@ -47,6 +47,9 @@ jobs:
         elif [ "${{ matrix.case }}" == "case-7" ]; then
           #results_dir="submission_generation_tests/case-7/"
           description="Submission generation (sut_info.json incomplete, SUT folder name in required format)"
+        elif [ "${{ matrix.case }}" == "case-8" ]; then
+          #results_dir="submission_generation_tests/case-8/"
+          description="Submission generation (system_meta.json not found in results folder)"
         fi
         # Dynamically set the log group to simulate a dynamic step name
         echo "::group::$description"
