@@ -2,15 +2,21 @@ name: MLPerf Inference Nvidia implementations
 
 on:
   schedule:
-    - cron: "49 1 * * *" #to be adjusted
+    - cron: "34 12 * * *" #to be adjusted
 
 jobs:
   run_nvidia:
       if: github.repository_owner == 'gateoverflow'
-      runs-on: [ self-hosted, linux, x64, GO-spr ]
+      runs-on:
+       - self-hosted
+       - linux
+       - x64
+       - cuda
+       - ${{ matrix.system }}
       strategy:
         fail-fast: false
         matrix:
+          system: [ "GO-spr", "phoenix" ] 
           python-version: [ "3.12" ]
           model: [ "resnet50",  "retinanet",  "bert-99", "bert-99.9", "gptj-99.9", "3d-unet-99.9" ]
       steps:
