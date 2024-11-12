@@ -2,7 +2,7 @@ name: MLPerf Inference Nvidia implementations
 
 on:
   schedule:
-    - cron: "23 00 * * *" #to be adjusted
+    - cron: "03 01 * * *" #to be adjusted
 
 jobs:
   run_nvidia:
