@@ -151,7 +151,7 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
     mlperf_model = config.get_mlperf_model(model)
     performance_path = os.path.join(result_path, "performance", "run_1")
     accuracy_path = os.path.join(result_path, "accuracy")
-    scenario = checker.SCENARIO_MAPPING[scenario]
+    scenario = checker.SCENARIO_MAPPING[scenario.lower()]
 
     fname = os.path.join(performance_path, "mlperf_log_detail.txt")
     mlperf_log = MLPerfLog(fname)
