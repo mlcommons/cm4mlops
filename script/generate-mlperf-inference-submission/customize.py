@@ -446,14 +446,14 @@ def generate_submission(i):
                 if not os.path.exists(readme_file):
                     with open(readme_file, mode='w') as f:
                         f.write("TBD") #create an empty README
-                else:
-                    readme_suffix = ""
-                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
 
-                    for key in result:
-                        results[model][scenario][key] = result[key]
-                    with open(readme_file, mode='a') as f:
-                        f.write(result_string)
+                readme_suffix = ""
+                result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
+
+                for key in result:
+                    results[model][scenario][key] = result[key]
+                with open(readme_file, mode='a') as f:
+                    f.write(result_string)
 
             #Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
             sys_info_file = None
@@ -478,9 +478,11 @@ def generate_submission(i):
         with open(system_file, "w") as fp:
             json.dump(system_meta, fp, indent=2)
 
+ 
         result_table, headers = mlperf_utils.get_result_table(results)
 
         print(tabulate(result_table, headers = headers, tablefmt="pretty"))
+
         sut_readme_file = os.path.join(measurement_path, "README.md")
         with open(sut_readme_file, mode='w') as f:
             f.write(tabulate(result_table, headers = headers, tablefmt="github"))
