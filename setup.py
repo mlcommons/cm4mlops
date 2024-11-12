@@ -164,6 +164,7 @@ setup(
         "cmind",
         "giturlparse",
         "requests",
+        "tabulate",
         "pyyaml"
         ],
     cmdclass={
