@@ -261,8 +261,9 @@ def generate_submission(i):
         system_file = os.path.join(submission_system_path, sub_res+".json")
 
         # Save the model mapping json file
-        with open(os.path.join(path_submission,"model_mapping.json"), "w") as fp:
-            json.dump(model_mapping_combined, fp, indent=2)
+        if model_mapping_combined:
+            with open(os.path.join(path_submission,"model_mapping.json"), "w") as fp:
+                json.dump(model_mapping_combined, fp, indent=2)
 
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
 
