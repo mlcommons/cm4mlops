@@ -1675,6 +1675,7 @@ gui:
 docker:
   use_host_group_id: True
   use_host_user_id: True
+  pass_user_group: True #useful if docker is run by a different user fromt he one who built it and under the same group
   deps:
     - tags: get,mlperf,inference,results,dir,local
       names:
