@@ -24,7 +24,6 @@ jobs:
         exclude:
           - os: macos-latest
           - os: windows-latest
-          - division: "open"
           - category: "edge"
     steps:
     - uses: actions/checkout@v4
