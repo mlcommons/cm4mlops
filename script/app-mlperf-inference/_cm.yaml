@@ -873,6 +873,7 @@ variations:
 
   mixtral-8x7b,reference:
     docker:
+      image_name: mlperf-inference-mlcommons-python-implementation-mixtral-8x7b
       deps:
         - tags: get,ml-model,mixtral
           names:
