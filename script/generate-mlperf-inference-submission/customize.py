@@ -88,6 +88,11 @@ def generate_submission(i):
     results = [f for f in os.listdir(results_dir) if not os.path.isfile(os.path.join(results_dir, f))]
 
     system_meta_default = state['CM_SUT_META']
+
+    # set pytorch as the default framework
+    if system_meta_default['framework'] == '':
+        system_meta_default['framework'] = "pytorch"
+    
     system_meta = {}
     if 'CM_MLPERF_SUBMISSION_SYSTEM_TYPE' in env:
         system_meta['system_type'] = env['CM_MLPERF_SUBMISSION_SYSTEM_TYPE']
