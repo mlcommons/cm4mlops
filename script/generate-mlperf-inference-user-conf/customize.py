@@ -22,7 +22,7 @@ def preprocess(i):
     submission_checker_dir = os.path.join(mlperf_path, "tools", "submission")
     sys.path.append(submission_checker_dir)
 
-    version = env.get('CM_MLPERF_INFERENCE_VERSION', "4.0")
+    version = env.get('CM_MLPERF_INFERENCE_VERSION', "4.1")
 
     required_files = []
     required_files = get_checker_files()
