@@ -355,6 +355,9 @@ def preprocess(i):
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+    if str(env.get('CM_MLPERF_RESULTS_DIR_SHARED', '')).lower() in [ "yes", "true", "1" ]:
+        os.chmod(OUTPUT_DIR, 0o2775)
+
     return {'return':0}
 
 def run_files_exist(mode, OUTPUT_DIR, run_files, env):
