@@ -84,7 +84,7 @@ def generate_submission(i):
         os.makedirs(submission_dir)
 
     if str(env.get('CM_MLPERF_SUBMISSION_DIR_SHARED', '')).lower() in [ "yes", "true", "1" ]:
-        os.chmod(OUTPUT_DIR, 0o2775)
+        os.chmod(submission_dir, 0o2775)
 
     print('* MLPerf inference submission dir: {}'.format(submission_dir))
     print('* MLPerf inference results dir: {}'.format(results_dir))
