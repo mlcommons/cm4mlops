@@ -42,7 +42,7 @@ def model_in_valid_models(model, mlperf_version):
     else:
         return (True, model)
 
-def generate_submission(env, state, input, submission_division):
+def generate_submission(env, state, inp, submission_division):
 
     # Save current user directory
     cur_dir=os.getcwd()
