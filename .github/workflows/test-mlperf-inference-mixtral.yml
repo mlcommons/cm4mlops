@@ -5,19 +5,19 @@ name: MLPerf inference MIXTRAL-8x7B
 
 on:
   schedule:
-    - cron: "45 4 * * 5"   # 30th minute and 20th hour => 20:30 UTC => 2 AM IST 
+    - cron: "1 1 * * *"   # 30th minute and 20th hour => 20:30 UTC => 2 AM IST 
 
 jobs:
   build_reference:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, GO-spr, linux, x64 ]
+    runs-on: [ self-hosted, phoenix, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
         python-version: [ "3.12" ]
         backend: [ "pytorch" ]
         device: [ "cpu" ]
-        precision: [ "bfloat16" ]
+        precision: [ "float16" ]
 
     steps:
     - name: Test MLPerf Inference MIXTRAL-8X7B reference implementation
@@ -31,4 +31,4 @@ jobs:
         huggingface-cli login --token ${{ secrets.HF_TOKEN }} --add-to-git-credential
         cm pull repo
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=mixtral-8x7b --implementation=reference --batch_size=1 --precision=${{ matrix.precision }} --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }} --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --docker --quiet --test_query_count=1 --target_qps=0.001 --clean --env.CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST=yes --env.CM_MLPERF_DATASET_MIXTRAL_8X7B_DOWNLOAD_TO_HOST=yes
-        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from self hosted Github actions - GO-i9" --quiet --submission_dir=$HOME/gh_action_submissions
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from self hosted Github actions - GO-phoenix" --quiet --submission_dir=$HOME/gh_action_submissions
