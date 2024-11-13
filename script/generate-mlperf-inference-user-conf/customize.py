@@ -22,7 +22,7 @@ def preprocess(i):
     submission_checker_dir = os.path.join(mlperf_path, "tools", "submission")
     sys.path.append(submission_checker_dir)
 
-    version = env.get('CM_MLPERF_INFERENCE_VERSION', "4.0")
+    version = env.get('CM_MLPERF_INFERENCE_VERSION', "4.1")
 
     required_files = []
     required_files = get_checker_files()
@@ -354,6 +354,9 @@ def preprocess(i):
         env['CM_MLPERF_USER_CONF'] = ''
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    if str(env.get('CM_MLPERF_RESULTS_DIR_SHARED', '')).lower() in [ "yes", "true", "1" ]:
+        os.chmod(OUTPUT_DIR, 0o2775)
 
     return {'return':0}
 

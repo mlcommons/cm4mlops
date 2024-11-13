@@ -2027,6 +2027,9 @@ def docker(i):
 
         shm_size = i.get('docker_shm_size', docker_settings.get('shm_size', ''))
 
+        pass_user_id = i.get('docker_pass_user_id', docker_settings.get('pass_user_id', ''))
+        pass_user_group = i.get('docker_pass_user_group', docker_settings.get('pass_user_group', ''))
+
         extra_run_args = i.get('docker_extra_run_args', docker_settings.get('extra_run_args', ''))
 
         if detached == '':
@@ -2123,6 +2126,13 @@ def docker(i):
 
         if shm_size != '':
             cm_docker_input['shm_size'] = shm_size
+
+        if pass_user_id != '':
+            cm_docker_input['pass_user_id'] = pass_user_id
+
+        if pass_user_group != '':
+            cm_docker_input['pass_user_group'] = pass_user_group
+
 
         if extra_run_args != '':
             cm_docker_input['extra_run_args'] = extra_run_args
