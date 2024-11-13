@@ -5,7 +5,7 @@ name: MLPerf inference MIXTRAL-8x7B
 
 on:
   schedule:
-    - cron: "1 1 * * *"   # 30th minute and 20th hour => 20:30 UTC => 2 AM IST 
+    - cron: "32 22 * * *"   # 30th minute and 20th hour => 20:30 UTC => 2 AM IST 
 
 jobs:
   build_reference:
