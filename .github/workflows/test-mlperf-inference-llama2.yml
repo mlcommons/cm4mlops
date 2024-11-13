@@ -5,12 +5,12 @@ name: MLPerf inference LLAMA 2 70B
 
 on:
   schedule:
-    - cron: "14 14 * * 5"
+    - cron: "59 16 * * *"
 
 jobs:
   build_reference:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, GO-spr, linux, x64 ]
+    runs-on: [ self-hosted, i9, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
