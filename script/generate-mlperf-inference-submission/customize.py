@@ -389,6 +389,12 @@ def generate_submission(i):
                             print("WARNING: system_meta.json was not found in the SUT root directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
                         system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
 
+                        # check if framework version is there in system_meta, if not try to fill it from sut_info
+                        if system_meta['framework'] == "":
+                            system_meta['framework'] = sut_info.get('framework', '') + sut_info.get('framework_version', '')
+                            if system_meta['framework'] == "":
+                                print("WARNING: framework field could not be filled from system_meta.json or sut_info.json. This will trigger error in submission checker"
+
                     if not os.path.isdir(submission_results_path):
                         os.makedirs(submission_results_path)
 
