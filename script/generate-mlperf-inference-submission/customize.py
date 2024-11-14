@@ -316,6 +316,22 @@ def generate_submission(i):
                 if not all([os.path.exists(os.path.join(result_scenario_path, "performance", "run_1", f)) for f in files_to_check]):
                     continue
 
+                user_conf_path = os.path.join(result_scenario_path, "user.conf")
+                if os.path.exists(user_conf_path):
+                    shutil.copy(user_conf_path, os.path.join(measurement_scenario_path, 'user.conf'))
+
+                measurements_json_path = os.path.join(result_scenario_path, "measurements.json")
+                # get model precision
+                model_precision = "fp32"
+                if os.path.exists(measurements_json_path):
+                    with open(measurements_json_path, "r") as f:
+                        measurements_json = json.load(f)
+                        model_precision = measurements_json.get("weight_data_types", "fp32")
+                if os.path.exists(measurements_json_path):
+                    # This line can be removed once the PR in the inference repo is merged.
+                    shutil.copy(measurements_json_path, os.path.join(measurement_scenario_path, sub_res+'.json'))
+                    shutil.copy(measurements_json_path, os.path.join(measurement_scenario_path, 'model-info.json'))
+
                 for mode in modes:
                     result_mode_path = os.path.join(result_scenario_path, mode)
                     submission_mode_path = os.path.join(submission_scenario_path, mode)
@@ -384,20 +400,7 @@ def generate_submission(i):
                     mlperf_inference_conf_path = os.path.join(result_mode_path, "mlperf.conf")
                     if os.path.exists(mlperf_inference_conf_path):
                         shutil.copy(mlperf_inference_conf_path, os.path.join(submission_measurement_path, 'mlperf.conf'))
-                    user_conf_path = os.path.join(result_mode_path, "user.conf")
-                    if os.path.exists(user_conf_path):
-                        shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
-                    measurements_json_path = os.path.join(result_mode_path, "measurements.json")
-                    # get model precision
-                    model_precision = "fp32"
-                    if os.path.exists(measurements_json_path):
-                        with open(measurements_json_path, "r") as f:
-                            measurements_json = json.load(f)
-                            model_precision = measurements_json.get("weight_data_types", "fp32")
-                    if os.path.exists(measurements_json_path):
-                        # This line can be removed once the PR in the inference repo is merged.
-                        shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, sub_res+'.json'))
-                        shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, 'model-info.json'))
+                    
                     files = []
                     readme = False
 
