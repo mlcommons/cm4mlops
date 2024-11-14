@@ -322,6 +322,9 @@ def generate_submission(i):
                 user_conf_path = os.path.join(result_scenario_path, "user.conf")
                 if os.path.exists(user_conf_path):
                     shutil.copy(user_conf_path, os.path.join(measurement_scenario_path, 'user.conf'))
+                else:
+                    return {"return":1, "error":f"user.conf missing in path {result_scenario_path}"}
+                    
 
                 measurements_json_path = os.path.join(result_scenario_path, "measurements.json")
                 # get model precision
@@ -334,6 +337,8 @@ def generate_submission(i):
                     # This line can be removed once the PR in the inference repo is merged.
                     shutil.copy(measurements_json_path, os.path.join(measurement_scenario_path, sub_res+'.json'))
                     shutil.copy(measurements_json_path, os.path.join(measurement_scenario_path, 'model-info.json'))
+                else:
+                    return {"return":1, "error":f"measurements.json missing in path {result_scenario_path}"}
 
                 for mode in modes:
                     result_mode_path = os.path.join(result_scenario_path, mode)
