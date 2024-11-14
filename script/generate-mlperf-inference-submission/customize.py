@@ -378,18 +378,16 @@ def generate_submission(i):
                         result_mode_path=os.path.join(result_mode_path, 'run_1')
                         submission_results_path=os.path.join(submission_mode_path, 'run_1')
 
-                        if not os.path.exists(saved_system_meta_file_path):
-                            saved_system_meta_file_path = os.path.join(result_mode_path, "system_meta.json")
-                            if os.path.exists(saved_system_meta_file_path):
-                                with open(saved_system_meta_file_path, "r") as f:
-                                    saved_system_meta = json.load(f)
-                                    for key in list(saved_system_meta):
-                                        if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
-                                            del(saved_system_meta[key])
-                                    system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
-                            else:
-                                print("WARNING: system_meta.json was not found in the performance run directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
-                            system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
+                        if os.path.exists(saved_system_meta_file_path):
+                            with open(saved_system_meta_file_path, "r") as f:
+                                saved_system_meta = json.load(f)
+                                for key in list(saved_system_meta):
+                                    if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
+                                        del(saved_system_meta[key])
+                                system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
+                        else:
+                            print("WARNING: system_meta.json was not found in the SUT root directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
+                        system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
 
                     if not os.path.isdir(submission_results_path):
                         os.makedirs(submission_results_path)
