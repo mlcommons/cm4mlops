@@ -93,7 +93,8 @@
       "env": {
         "CM_GIT_CHECKOUT": "#"
       },
-      "group": "checkout"
+      "group": "checkout",
+      "default_version": "custom"
     },
     "deeplearningexamples": {
       "env": {
