@@ -393,7 +393,7 @@ def generate_submission(i):
                         if system_meta['framework'] == "":
                             system_meta['framework'] = sut_info.get('framework', '') + sut_info.get('framework_version', '')
                             if system_meta['framework'] == "":
-                                print("WARNING: framework field could not be filled from system_meta.json or sut_info.json. This will trigger error in submission checker"
+                                print("WARNING: framework field could not be filled from system_meta.json or sut_info.json. This will trigger error in submission checker")
 
                     if not os.path.isdir(submission_results_path):
                         os.makedirs(submission_results_path)
