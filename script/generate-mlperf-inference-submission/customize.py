@@ -396,10 +396,6 @@ def generate_submission(i):
 
                     #if division == "closed" and not os.path.isdir(submission_compliance_path):
                     #    os.makedirs(submission_compliance_path)
-
-                    mlperf_inference_conf_path = os.path.join(result_mode_path, "mlperf.conf")
-                    if os.path.exists(mlperf_inference_conf_path):
-                        shutil.copy(mlperf_inference_conf_path, os.path.join(submission_measurement_path, 'mlperf.conf'))
                     
                     files = []
                     readme = False
