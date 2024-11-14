@@ -190,6 +190,9 @@ def postprocess(i):
 
         os.chdir(output_dir)
 
+        # the measurements.json and user.conf should be in the scenario folder
+        parent_depth = 2 if mode == "performance" else 1
+
         if not os.path.exists("mlperf_log_summary.txt"):
             return {'return': 0}
 
@@ -208,8 +211,8 @@ def postprocess(i):
         if env.get("CM_MLPERF_PRINT_SUMMARY", "").lower() not in [ "no", "0", "false"]:
             print("\n")
             print(mlperf_log_summary)
-
-        with open ("measurements.json", "w") as fp:
+        
+        with open (os.path.join(*[".."] * parent_depth, "measurements.json"), "w") as fp:
             json.dump(measurements, fp, indent=2)
 
         cm_sut_info = {}
@@ -222,7 +225,8 @@ def postprocess(i):
             json.dump(cm_sut_info, fp, indent=2)
 
         system_meta = state['CM_SUT_META']
-        with open("system_meta.json", "w") as fp:
+        # system meta should be saved to the SUT root folder
+        with open(os.path.join(env.get('CM_MLPERF_INFERENCE_RESULTS_SUT_PATH',''),"system_meta.json"), "w") as fp:
             json.dump(system_meta, fp, indent=2)
 
         # map the custom model for inference result to the official model
@@ -236,12 +240,10 @@ def postprocess(i):
         # Add to the state
         state['app_mlperf_inference_measurements'] = copy.deepcopy(measurements)
 
-        if os.path.exists(env['CM_MLPERF_CONF']):
-            shutil.copy(env['CM_MLPERF_CONF'], 'mlperf.conf')
-
+        # paste the user conf under the scenario folder
         if os.path.exists(env['CM_MLPERF_USER_CONF']):
-            shutil.copy(env['CM_MLPERF_USER_CONF'], 'user.conf')
-
+            shutil.copy(env['CM_MLPERF_USER_CONF'], os.path.join("..", "..", "user.conf"))
+    
         result, valid, power_result = mlperf_utils.get_result_from_log(env['CM_MLPERF_LAST_RELEASE'], model, scenario, output_dir, mode, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
         power = None
         power_efficiency = None
