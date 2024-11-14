@@ -316,6 +316,9 @@ def generate_submission(i):
                 if not all([os.path.exists(os.path.join(result_scenario_path, "performance", "run_1", f)) for f in files_to_check]):
                     continue
 
+                if not os.path.isdir(measurement_scenario_path):
+                        os.makedirs(measurement_scenario_path)
+                    
                 user_conf_path = os.path.join(result_scenario_path, "user.conf")
                 if os.path.exists(user_conf_path):
                     shutil.copy(user_conf_path, os.path.join(measurement_scenario_path, 'user.conf'))
@@ -343,9 +346,6 @@ def generate_submission(i):
                         submission_results_path = submission_mode_path
                     if os.path.exists(submission_results_path):
                         shutil.rmtree(submission_results_path)
-
-                    if not os.path.isdir(submission_measurement_path):
-                        os.makedirs(submission_measurement_path)
 
                     if mode=='performance':
 
