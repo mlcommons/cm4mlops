@@ -25,17 +25,5 @@ docker:
   use_host_group_id: 'yes'
   image_tag_extra: '-cm-dev'
 
-env:
-  CM_DETECT_USING_PYCUDA: 'no'
-
-new_env_keys:
-- CM_CUDA_DEVICE_*
-- CM_CUDA_NUM_DEVICES
-
-new_state_keys:
-- cm_cuda_device_prop
-- cm_cuda_devices_prop
-- cm_cuda_num_devices
-
 print_files_if_script_error:
 - tmp-run.out
