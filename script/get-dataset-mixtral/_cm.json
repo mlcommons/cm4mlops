@@ -41,9 +41,14 @@
         "CM_DATASET_MIXTRAL_TEST_DATA_SIZE": "#",
         "CM_DATASET_MIXTRAL_GENERATE_TEST_DATA": "yes"
       },
-      "deps": {
-        "tags": "get,generic-python-lib,_package.pandas"
-      }
+      "deps": [
+        {
+          "tags": "get,generic-python-lib,_package.pandas"
+        },
+        {
+          "tags": "get,python3"
+        }
+      ]
     }
   }
 }
