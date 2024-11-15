@@ -36,7 +36,10 @@
       },
       "group": "download-source"
     },
-    "mlcommons-storage,generate-test-data.#":{
+    "generate-test-data.#":{
+      "base": [
+        "mlcommons-storage"
+      ],
       "env":{
         "CM_DATASET_MIXTRAL_TEST_DATA_SIZE": "#",
         "CM_DATASET_MIXTRAL_GENERATE_TEST_DATA": "yes"
