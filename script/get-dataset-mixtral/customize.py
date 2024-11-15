@@ -7,6 +7,9 @@ def preprocess(i):
 
     env = i['env']
 
+    if env.get('CM_DATASET_MIXTRAL_GENERATE_TEST_DATA', '') == "yes":
+        env['CM_DATASET_MIXTRAL_TEST_DATA_GENERATED_PATH'] = os.getcwd()
+
     return {'return':0}
 
 
