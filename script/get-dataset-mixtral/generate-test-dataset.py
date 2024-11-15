@@ -5,7 +5,7 @@ def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Sample test dataset from the original dataset.")
     parser.add_argument('--dataset-path', required=True, help="Path to the input dataset (pickle file).")
-    parser.add_argument('--output-path', default=os.getcwd(), help="Path to save the output dataset (pickle file).")
+    parser.add_argument('--output-path', default=os.path.join(os.getcwd(),"mixtral-test-dataset.pkl"), help="Path to save the output dataset (pickle file).")
     parser.add_argument('--samples', default=2, help="Number of entries to be extracted from each group.")
     
     args = parser.parse_args()
