@@ -8,8 +8,8 @@ def preprocess(i):
     env = i['env']
 
     if env.get('CM_DATASET_MIXTRAL_GENERATE_TEST_DATA', '') == "yes":
-        env['CM_DATASET_MIXTRAL_TEST_DATA_GENERATED_PATH'] = os.getcwd()
-
+        env['CM_DATASET_MIXTRAL_TEST_DATA_GENERATED_PATH'] = os.path.join(os.getcwd(), "mixtral-test-dataset.pkl")
+        
     return {'return':0}
 
 
