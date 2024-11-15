@@ -18,4 +18,7 @@ def postprocess(i):
     
     env['CM_DATASET_MIXTRAL_PREPROCESSED_PATH'] = env['CM_DATASET_PREPROCESSED_PATH']
 
+    if env.get('CM_DATASET_MIXTRAL_GENERATE_TEST_DATA', '') == "yes":
+        env['CM_DATASET_MIXTRAL_PREPROCESSED_PATH'] = env['CM_DATASET_MIXTRAL_TEST_DATA_GENERATED_PATH']
+
     return {'return':0}
