@@ -42,6 +42,12 @@
       "skip_if_env": {
         "CM_MLPERF_INFERENCE_SUBMISSION_DIR": [ "on" ]
       }
+    },
+    {
+      "tags": "preprocess,mlperf,inference,submission",
+      "enable_if_env": {
+        "CM_TMP_MLPERF_INFERENCE_PREPROCESS_SUBMISSION": [ "on" ]
+      }
     }
   ],
   "post_deps": [
@@ -80,6 +86,8 @@
     "repo_name": "CM_MLPERF_RESULTS_GIT_REPO_NAME",
     "repo_owner": "CM_MLPERF_RESULTS_GIT_REPO_OWNER",
     "repo_branch": "CM_MLPERF_RESULTS_GIT_REPO_BRANCH",
+    "preprocess": "CM_TMP_MLPERF_INFERENCE_PREPROCESS_SUBMISSION",
+    "preprocess_submission": "CM_TMP_MLPERF_INFERENCE_PREPROCESS_SUBMISSION",
     "push_to_github": "CM_MLPERF_RESULT_PUSH_TO_GITHUB",
     "extra_model_benchmark_map": "CM_MLPERF_EXTRA_MODEL_MAPPING",
     "power": "CM_MLPERF_POWER",
