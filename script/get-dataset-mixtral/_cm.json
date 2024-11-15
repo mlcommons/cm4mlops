@@ -36,7 +36,7 @@
       },
       "group": "download-source"
     },
-    "generate-test-data.#":{
+    "size.#":{
       "base": [
         "mlcommons-storage"
       ],
