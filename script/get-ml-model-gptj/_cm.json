@@ -253,6 +253,9 @@
             "python",
             "python3"
           ]
+        },
+        {
+          "tags": "get,generic-python-lib,_package.safetensors"
         }
       ]
     },

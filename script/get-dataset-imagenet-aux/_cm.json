@@ -39,6 +39,7 @@
     },
     "from.berkeleyvision": {
       "group": "download-source",
+      "default": true,
       "base": [
         "2012"
       ],
@@ -51,7 +52,6 @@
     },
     "from.dropbox": {
       "group": "download-source",
-      "default": true,
       "base": [
         "2012"
       ],

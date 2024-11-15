@@ -92,7 +92,7 @@ def preprocess(i):
 
 
         elif dataset == "coco2014":
-            env['+PYTHONPATH'] = [ os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools") ]
+            env['+PYTHONPATH'] = [ os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools") , os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools", "fid") ]
             extra_options = ""
 
             if env.get('CM_SDXL_STATISTICS_FILE_PATH', '') != '':
@@ -102,6 +102,9 @@ def preprocess(i):
                 extra_options += f" --compliance-images-path '{env['CM_SDXL_COMPLIANCE_IMAGES_PATH']}' "
             else:
                 extra_options += f""" --compliance-images-path '{os.path.join(result_dir, "images")}' """
+
+            if env.get('CM_COCO2014_SAMPLE_ID_PATH','') != '':
+                extra_options += f" --ids-path '{env['CM_COCO2014_SAMPLE_ID_PATH']}' "
 
             if env.get('CM_SDXL_ACCURACY_RUN_DEVICE', '') != '':
                 extra_options += f" --device '{env['CM_SDXL_ACCURACY_RUN_DEVICE']}' "

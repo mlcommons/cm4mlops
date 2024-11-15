@@ -394,6 +394,7 @@ deps:
     names:
     - ml-model
     - sdxl-model
+    - ml-model-float16
     enable_if_env:
       CM_MODEL:
       - stable-diffusion-xl
@@ -925,6 +926,10 @@ variations:
     env:
       CM_MODEL: stable-diffusion-xl
       CM_NUM_THREADS: "1"
+    adr:
+      mlperf-implementation:
+        tags: _branch.dev
+        version: custom
     deps:
       - tags: get,generic-python-lib,_package.diffusers
         names:
