@@ -1692,6 +1692,7 @@ docker:
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
+    - cm rm cache --tags=inference,src -f
   mounts:
    - "${{ CM_DATASET_IMAGENET_PATH }}:${{ CM_DATASET_IMAGENET_PATH }}"
    - "${{ CM_DATASET_OPENIMAGES_PATH }}:${{ CM_DATASET_OPENIMAGES_PATH }}"
