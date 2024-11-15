@@ -35,6 +35,12 @@
         "CM_DOWNLOAD_CHECKSUM": "78823c13e0e73e518872105c4b09628b"
       },
       "group": "download-source"
+    },
+    "mlcommons-storage,generate-test-data.#":{
+      "env":{
+        "CM_DATASET_MIXTRAL_TEST_DATA_SIZE": "#",
+        "CM_DATASET_MIXTRAL_GENERATE_TEST_DATA": "yes"
+      }
     }
   }
 }
