@@ -261,11 +261,13 @@ def preprocess(i):
         max_duration_test_s = int(env.get('CM_MLPERF_MAX_DURATION_TEST', 30))
         max_duration_test = str(max_duration_test_s * 1000) # in milliseconds
         query_count = env.get('CM_TEST_QUERY_COUNT', "5")
-        user_conf += ml_model_name + "." + scenario + ".max_query_count = " + query_count + "\n"
-        user_conf += ml_model_name + "." + scenario + ".min_query_count = " + query_count + "\n"
+        min_query_count = env.get('CM_MLPERF_INFERENCE_MIN_QUERY_COUNT', query_count)
+        max_query_count = max(min_query_count, env.get('CM_MLPERF_INFERENCE_MAX_QUERY_COUNT', query_count))
+        user_conf += ml_model_name + "." + scenario + ".max_query_count = " + max_query_count + "\n"
+        user_conf += ml_model_name + "." + scenario + ".min_query_count = " + min_query_count + "\n"
         user_conf += ml_model_name + "." + scenario + ".min_duration = 0" + "\n"
         user_conf += ml_model_name + "." + scenario + ".sample_concatenate_permutation = 0" + "\n"
-        env['CM_MLPERF_MAX_QUERY_COUNT'] = query_count
+        env['CM_MLPERF_MAX_QUERY_COUNT'] = max_query_count
 
         # max_duration is effective for all scenarios except the Offline
         if env.get('CM_MLPERF_USE_MAX_DURATION', 'yes').lower() not in [ "no", "false", "0"]:
