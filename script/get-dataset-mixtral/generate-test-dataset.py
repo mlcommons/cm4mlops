@@ -25,7 +25,7 @@ def main():
 
         # Sample 2 entries from each group
         print(f"Sampling {no_of_samples} entries from each group...")
-        sampled_df = df.groupby('group').apply(lambda x: x.sample(n=no_of_samples)).reset_index(drop=True)
+        sampled_df = df.groupby('dataset').apply(lambda x: x.sample(n=no_of_samples)).reset_index(drop=True)
 
         # Save the sampled dataset to the specified output path
         print(f"Saving the sampled dataset to {output_path}...")
