@@ -45,7 +45,7 @@ def preprocess(i):
 
     if os_info['platform'] != 'windows' and str(env.get('CM_SAVE_CONSOLE_LOG', True)).lower() not in  [ "no", "false", "0"]:
         logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
-        env['CM_RUN_CMD'] += r" 2>&1 ; echo \$? > exitstatus | tee " + q+ os.path.join(logs_dir, "console.out") + q
+        env['CM_RUN_CMD'] += r" 2>&1 | tee " + q+ os.path.join(logs_dir, "console.out") + q +  r" echo \${PIPESTATUS[0]} > exitstatus"
 
     # additional arguments and tags for measuring system informations(only if 'CM_PROFILE_NVIDIA_POWER' is 'on')
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
