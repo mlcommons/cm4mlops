@@ -2,12 +2,12 @@
   Offline:
     target_qps: 4.0
   SingleStream:
-    target_latency: 10
+    target_latency: 400
 3d-unet-99.9:
   Offline:
     target_qps: 4.0
   SingleStream:
-    target_latency: 10
+    target_latency: 400
 bert-99:
   Offline:
     target_qps: 4000.0
