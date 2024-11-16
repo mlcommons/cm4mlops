@@ -333,6 +333,7 @@ variations:
 
   nvidia-original,r4.1-dev_default,gptj_:
     docker:
+      image_name: mlperf-inference-nvidia-v4.1-dev-llm
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
@@ -356,6 +357,7 @@ variations:
   
   nvidia-original,r4.1-dev_default,llama2-70b_:
     docker:
+      image_name: mlperf-inference-nvidia-v4.1-dev-llm
       deps:
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
