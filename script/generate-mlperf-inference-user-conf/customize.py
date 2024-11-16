@@ -54,13 +54,6 @@ def preprocess(i):
 
     RUN_CMD = ""
     state['RUN'] = {}
-    test_list = ["TEST01", "TEST04", "TEST05"]
-    if env['CM_MODEL'] in ["rnnt", "bert-99", "bert-99.9", "dlrm-v2-99", "dlrm-v2-99.9", "3d-unet-99", "3d-unet-99.9"]:
-        test_list.remove("TEST04")
-    if "gpt-" in env['CM_MODEL']:
-        test_list.remove("TEST05")
-        test_list.remove("TEST04")
-        test_list.remove("TEST01")
 
     scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
     state['RUN'][scenario] = {}
@@ -189,8 +182,8 @@ def preprocess(i):
             test = env.get("CM_MLPERF_LOADGEN_COMPLIANCE_TEST", "TEST01")
             if test == "TEST01":
                 metric_value = str(float(metric_value) * float(env.get("CM_MLPERF_TEST01_SERVER_ADJUST_FACTOR", 0.96)))
-            if test == "TEST05":
-                metric_value = str(float(metric_value) * float(env.get("CM_MLPERF_TEST05_SERVER_ADJUST_FACTOR", 0.97)))
+            #if test == "TEST05":
+            #    metric_value = str(float(metric_value) * float(env.get("CM_MLPERF_TEST05_SERVER_ADJUST_FACTOR", 0.97)))
             if test == "TEST04":
                 metric_value = str(float(metric_value) * float(env.get("CM_MLPERF_TEST04_SERVER_ADJUST_FACTOR", 0.97)))
 

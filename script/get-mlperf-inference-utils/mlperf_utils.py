@@ -189,7 +189,7 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
         result['power'] = power_result
         result['power_efficiency'] = power_efficiency_result
 
-    compliance_list = [ "TEST01", "TEST05", "TEST04", "TEST06" ]
+    compliance_list = [ "TEST01", "TEST04", "TEST06" ]
     if division == "closed":
         for test in compliance_list:
             test_path = os.path.join(result_path, test)
@@ -244,7 +244,7 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
 def get_result_table(results):
    
     
-    headers = ["Model", "Scenario", "Accuracy", "Throughput", "Latency (in ms)", "Power Efficiency (in samples/J)", "TEST01", "TEST05", "TEST04"]
+    headers = ["Model", "Scenario", "Accuracy", "Throughput", "Latency (in ms)", "Power Efficiency (in samples/J)", "TEST01", "TEST04"]
     table = []
     for model in results:
         for scenario in results[model]:
@@ -286,7 +286,7 @@ def get_result_table(results):
                     row.append("-")
 
             val1 = results[model][scenario].get('TEST01')
-            val2 = results[model][scenario].get('TEST05')
+            #val2 = results[model][scenario].get('TEST05')
             val3 = results[model][scenario].get('TEST04')
 
             #if results[model][scenario].get('power','') != '':
@@ -296,27 +296,16 @@ def get_result_table(results):
                 if not results[model][scenario].get('power_valid', True):
                     val = "X "+val
                 row.append(val)
-            elif val1 or val2 or val3: #Don't output unless there are any further column data
+            elif val1 or val3: #Don't output unless there are any further column data
                 row.append(None)
 
             if val1:
                 row.append(val1)
-                if val2:
-                    row.append(val2)
-                    if val3:
-                        row.append(val3)
-                elif val3:
-                    row.append("missing")
+                if val3:
                     row.append(val3)
 
             else:
-                if val2:
-                    row.append("missing")
-                    row.append(val2)
-                    if val3:
-                        row.append(val3)
-                elif val3:
-                    row.append("missing")
+                if val3:
                     row.append("missing")
                     row.append(val3)
 
