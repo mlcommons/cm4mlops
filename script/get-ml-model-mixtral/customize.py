@@ -17,8 +17,10 @@ def postprocess(i):
 
     env = i['env']
 
-    env['MIXTRAL_CHECKPOINT_PATH'] = env['CM_ML_MODEL_PATH']
-    env['CM_ML_MODEL_PATH'] = env['MIXTRAL_CHECKPOINT_PATH']
+    if env.get('MIXTRAL_CHECKPOINT_PATH', '') == '':
+        env['MIXTRAL_CHECKPOINT_PATH'] = env['CM_ML_MODEL_PATH']
+    else:
+        env['CM_ML_MODEL_PATH'] = env['MIXTRAL_CHECKPOINT_PATH']
     env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_ML_MODEL_PATH']
 
     return {'return':0}
