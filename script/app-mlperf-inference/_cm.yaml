@@ -103,7 +103,12 @@ deps:
   - tags: get,mlcommons,inference,src
     names:
     - inference-src
-
+  - tags: pull,git,repo
+    env:
+      CM_GIT_CHECKOUT_PATH: '<<<CM_MLPERF_INFERENCE_SOURCE>>>'
+    enable_if_env:
+      CM_MLPERF_INFERENCE_PULL_SRC_CHANGES:
+      - 'yes'
   - tags: get,mlperf,inference,utils
 
   - tags: install,pip-package,for-cmind-python,_package.pandas
@@ -308,8 +313,23 @@ variations:
 
   nvidia-original,r4.1-dev_default:
     docker:
-      base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+      build_deps:
+        - tags: detect,os
       image_name: mlperf-inference-nvidia-v4.1-dev-common
+    update_meta_if_env:
+      - enable_if_env:
+          CM_HOST_PLATFORM_FLAVOR:
+            - x86_64
+        docker:
+          base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.0-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-public
+
+      - skip_if_env:
+          CM_HOST_PLATFORM_FLAVOR:
+            - x86_64
+        docker:
+          base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v4.1-cuda12.4-pytorch24.04-ubuntu22.04-aarch64-GraceHopper-release
+
+
 
   nvidia-original,r4.1-dev_default,gptj_:
     docker:
@@ -633,7 +653,6 @@ variations:
       - openimages-accuracy-script
       tags: run,accuracy,mlperf,_openimages
 
-  retinanet,nvidia-original:
     docker:
       deps:
       - names:
@@ -674,9 +693,10 @@ variations:
         tags: _3d-unet-99.9
 
   3d-unet_:
+    default_env:
+      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
-      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     posthook_deps:
     - enable_if_env:
         CM_MLPERF_LOADGEN_MODE:
@@ -760,9 +780,10 @@ variations:
           tags: get,ml-model,sdxl,_fp32,_rclone
 
   llama2-70b_:
+    default_env:
+      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     env:
       CM_MLPERF_MODEL_EQUAL_ISSUE_MODE: 'yes'
-      CM_MLPERF_INFERENCE_TEST_QPS: "0.01"
     posthook_deps:
     - enable_if_env:
         CM_MLPERF_LOADGEN_MODE:
@@ -810,6 +831,17 @@ variations:
             CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
             - 'yes'
           tags: get,ml-model,llama2
+
+  llama2-70b_,amd:
+    docker:
+      image_name: mlperf-inference-amd-python-implementation-llama2-70b
+      mounts:
+        - "${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }}:${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }"
+      deps:
+        - enable_if_env:
+            CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+            - 'yes'
+          tags: get,ml-model,llama2,_amd,_pytorch
   
   mixtral-8x7b:
     group:
@@ -841,6 +873,7 @@ variations:
 
   mixtral-8x7b,reference:
     docker:
+      image_name: mlperf-inference-mlcommons-python-implementation-mixtral-8x7b
       deps:
         - tags: get,ml-model,mixtral
           names:
@@ -1643,6 +1676,7 @@ gui:
 docker:
   use_host_group_id: True
   use_host_user_id: True
+  pass_user_group: True #useful if docker is run by a different user fromt he one who built it and under the same group
   deps:
     - tags: get,mlperf,inference,results,dir,local
       names:
@@ -1658,6 +1692,7 @@ docker:
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
+    - cm rm cache --tags=inference,src -f
   mounts:
    - "${{ CM_DATASET_IMAGENET_PATH }}:${{ CM_DATASET_IMAGENET_PATH }}"
    - "${{ CM_DATASET_OPENIMAGES_PATH }}:${{ CM_DATASET_OPENIMAGES_PATH }}"
@@ -1675,7 +1710,7 @@ docker:
   skip_run_cmd: 'no'
   shm_size: '32gb'
   interactive: True
-  extra_run_args: ' --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
+  extra_run_args: ' --dns 8.8.8.8 --dns 8.8.4.4 --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
   os: ubuntu
   cm_repo: mlcommons@cm4mlops
   cm_repo_branch: mlperf-inference

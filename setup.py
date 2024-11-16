@@ -8,6 +8,7 @@ import sys
 import importlib.util
 import platform
 import os
+import shutil
 
 # Try to use importlib.metadata for Python 3.8+ 
 try:
@@ -76,8 +77,17 @@ class CustomInstallCommand(install):
                 manager, details = self.get_package_manager_details()
                 if manager:
                     if manager == "apt-get":
-                        subprocess.check_call(['sudo', 'apt-get', 'update'])
-                        subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                        # Check if 'sudo' is available
+                        if shutil.which('sudo'):
+                            subprocess.check_call(['sudo', 'apt-get', 'update'])
+                            subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                        else:
+                            print("sudo not found, trying without sudo.")
+                            try:
+                                subprocess.check_call(['apt-get', 'update'])
+                                subprocess.check_call(['apt-get', 'install', '-y'] + packages)
+                            except subprocess.CalledProcessError:
+                                print(f"Installation of {packages} without sudo failed. Please install these packages manually to continue!")
             elif self.system == 'Windows':
                 print(f"Please install the following packages manually: {packages}")
 
@@ -139,7 +149,7 @@ def read_file(file_name, default=""):
     return default
 
 long_description = read_file("README.md", "No description available.")
-version_ = read_file("VERSION", "0.3.0")
+version_ = read_file("VERSION", "0.3.1")
 
 setup(
     name='cm4mlops',
@@ -154,6 +164,7 @@ setup(
         "cmind",
         "giturlparse",
         "requests",
+        "tabulate",
         "pyyaml"
         ],
     cmdclass={

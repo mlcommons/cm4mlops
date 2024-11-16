@@ -5,29 +5,31 @@ name: MLPerf inference LLAMA 2 70B
 
 on:
   schedule:
-    - cron: "30 19 * * 4"
+    - cron: "59 04 * * *"
 
 jobs:
   build_reference:
     if: github.repository_owner == 'gateoverflow'
-    runs-on: [ self-hosted, GO-i9, linux, x64 ]
+    runs-on: [ self-hosted, GO-spr, linux, x64 ]
     strategy:
       fail-fast: false
       matrix:
         python-version: [ "3.12" ]
         backend: [ "pytorch" ]
         device: [ "cpu" ]
+        precision: [ "bfloat16" ]
 
     steps:
-    - name: Install dependencies
+    - name: Test MLPerf Inference LLAMA 2 70B reference implementation
       run: |
         source gh_action/bin/deactivate || python3 -m venv gh_action
         source gh_action/bin/activate
         export CM_REPOS=$HOME/GH_CM
-        python3 -m pip install cm4mlops
+        pip install cm4mlops
+        pip install tabulate 
         cm pull repo
-        python3 -m pip install "huggingface_hub[cli]"
+        pip install "huggingface_hub[cli]"
+        git config --global credential.helper store
         huggingface-cli login --token ${{ secrets.HF_TOKEN }} --add-to-git-credential
-    - name: Test MLPerf Inference LLAMA 2 70B reference implementation
-      run: |
-        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=1 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --env.CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST=yes --adr.inference-src.tags=_repo.https://github.com/anandhu-eng/inference.git --clean
+        cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --model=llama2-70b-99 --implementation=reference --backend=${{ matrix.backend }} --precision=${{  matrix.precision }} --category=datacenter --scenario=Offline --execution_mode=test --device=${{ matrix.device }}  --docker --quiet --test_query_count=1 --target_qps=0.001 --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --adr.compiler.tags=gcc --hw_name=gh_action --docker_dt=yes  --results_dir=$HOME/gh_action_results --submission_dir=$HOME/gh_action_submissions --env.CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST=yes  --clean
+        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from self hosted Github actions" --quiet --submission_dir=$HOME/gh_action_submissions

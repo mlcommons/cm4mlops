@@ -6,7 +6,9 @@ SCRIPT_DIR=${CM_TMP_CURRENT_SCRIPT_PATH}
 
 folder=${CM_GIT_CHECKOUT_FOLDER}
 if [ ! -e "${CM_TMP_GIT_PATH}" ]; then
-  rm -rf ${folder}
+  cmd="rm -rf ${folder}"
+  echo $cmd
+  eval $cmd
   echo "******************************************************"
   echo "Current directory: ${CUR_DIR}"
   echo ""
@@ -16,7 +18,13 @@ if [ ! -e "${CM_TMP_GIT_PATH}" ]; then
   echo ""
 
   ${CM_GIT_CLONE_CMD}
-  test $? -eq 0 || exit $?
+  rcode=$?
+
+  if [ ! $rcode -eq 0 ]; then #try once more
+    rm -rf $folder
+    ${CM_GIT_CLONE_CMD}
+    test $? -eq 0 || exit $?
+  fi
 
   cd ${folder}
 

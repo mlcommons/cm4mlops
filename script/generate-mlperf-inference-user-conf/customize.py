@@ -22,7 +22,7 @@ def preprocess(i):
     submission_checker_dir = os.path.join(mlperf_path, "tools", "submission")
     sys.path.append(submission_checker_dir)
 
-    version = env.get('CM_MLPERF_INFERENCE_VERSION', "4.0")
+    version = env.get('CM_MLPERF_INFERENCE_VERSION', "4.1")
 
     required_files = []
     required_files = get_checker_files()
@@ -261,11 +261,13 @@ def preprocess(i):
         max_duration_test_s = int(env.get('CM_MLPERF_MAX_DURATION_TEST', 30))
         max_duration_test = str(max_duration_test_s * 1000) # in milliseconds
         query_count = env.get('CM_TEST_QUERY_COUNT', "5")
-        user_conf += ml_model_name + "." + scenario + ".max_query_count = " + query_count + "\n"
-        user_conf += ml_model_name + "." + scenario + ".min_query_count = " + query_count + "\n"
+        min_query_count = env.get('CM_MLPERF_INFERENCE_MIN_QUERY_COUNT', query_count)
+        max_query_count = max(min_query_count, env.get('CM_MLPERF_INFERENCE_MAX_QUERY_COUNT', query_count))
+        user_conf += ml_model_name + "." + scenario + ".max_query_count = " + max_query_count + "\n"
+        user_conf += ml_model_name + "." + scenario + ".min_query_count = " + min_query_count + "\n"
         user_conf += ml_model_name + "." + scenario + ".min_duration = 0" + "\n"
         user_conf += ml_model_name + "." + scenario + ".sample_concatenate_permutation = 0" + "\n"
-        env['CM_MLPERF_MAX_QUERY_COUNT'] = query_count
+        env['CM_MLPERF_MAX_QUERY_COUNT'] = max_query_count
 
         # max_duration is effective for all scenarios except the Offline
         if env.get('CM_MLPERF_USE_MAX_DURATION', 'yes').lower() not in [ "no", "false", "0"]:
@@ -354,6 +356,9 @@ def preprocess(i):
         env['CM_MLPERF_USER_CONF'] = ''
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    if str(env.get('CM_MLPERF_RESULTS_DIR_SHARED', '')).lower() in [ "yes", "true", "1" ]:
+        os.chmod(OUTPUT_DIR, 0o2775)
 
     return {'return':0}
 

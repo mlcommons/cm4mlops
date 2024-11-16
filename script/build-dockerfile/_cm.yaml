@@ -33,6 +33,7 @@ input_mapping:
   docker_base_image: CM_DOCKER_IMAGE_BASE
   docker_os: CM_DOCKER_OS
   docker_os_version: CM_DOCKER_OS_VERSION
+  dockerfile_env: CM_DOCKERFILE_ENV
   extra_sys_deps: CM_DOCKER_EXTRA_SYS_DEPS
   fake_docker_deps: CM_DOCKER_FAKE_DEPS
   fake_run_option: CM_DOCKER_FAKE_RUN_OPTION

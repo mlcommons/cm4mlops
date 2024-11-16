@@ -8,7 +8,6 @@
 # TBD: when we have bandwidth and resources, we should refactor it
 # and make it cleaner and simpler while keeping full backwards compatibility.
 #
-
 import os
 import logging
 
@@ -837,6 +836,10 @@ class CAutomation(Automation):
         script_artifact_state = meta.get('state',{})
         utils.merge_dicts({'dict1':state, 'dict2':script_artifact_state, 'append_lists':True, 'append_unique':True})
 
+        # Store the default_version in run_state -> may be overridden by variations
+        default_version = meta.get('default_version', '') #not used if version is given
+        run_state['default_version'] = default_version
+
 
 
 
@@ -950,14 +953,13 @@ class CAutomation(Automation):
 
         if version!='' and version in versions:
             versions_meta = versions[version]
-            r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+            r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, run_state, i)
             if r['return']>0: return r
             adr=get_adr(versions_meta)
             if adr:
                 self._merge_dicts_with_tags(add_deps_recursive, adr)
                 #Processing them again using updated deps for add_deps_recursive
                 r = update_adr_from_meta(deps, post_deps, prehook_deps, posthook_deps, add_deps_recursive, env)
-
 
         # STEP 1100: Update deps from input
         r = update_deps_from_input(deps, post_deps, prehook_deps, posthook_deps, i)
@@ -1302,7 +1304,7 @@ class CAutomation(Automation):
 
             # Update default version meta if version is not set
             if version == '':
-                default_version = meta.get('default_version', '')
+                default_version = run_state.get('default_version', '')
                 if default_version != '':
                     version = default_version
 
@@ -1338,7 +1340,7 @@ class CAutomation(Automation):
 
                     if default_version in versions:
                         versions_meta = versions[default_version]
-                        r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                        r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, run_state, i)
                         if r['return']>0: return r
 
                         if "add_deps_recursive" in versions_meta:
@@ -2028,11 +2030,14 @@ class CAutomation(Automation):
                 if variation_tag_dynamic_suffix:
                     self._update_variation_meta_with_dynamic_suffix(variation_meta, variation_tag_dynamic_suffix)
 
-                r = update_state_from_meta(variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                r = update_state_from_meta(variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, run_state, i)
                 if r['return']>0: return r
 
                 if variation_meta.get('script_name', '')!='':
                     meta['script_name'] = variation_meta['script_name']
+
+                if variation_meta.get('default_version', '')!='':
+                    run_state['default_version'] = variation_meta['default_version']
 
                 if variation_meta.get('required_disk_space', 0) > 0 and variation_tag not in required_disk_space:
                     required_disk_space[variation_tag] = variation_meta['required_disk_space']
@@ -2059,7 +2064,7 @@ class CAutomation(Automation):
 
                         combined_variation_meta = variations[combined_variation]
 
-                        r = update_state_from_meta(combined_variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, i)
+                        r = update_state_from_meta(combined_variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, run_state, i)
                         if r['return']>0: return r
 
                         adr=get_adr(combined_variation_meta)
@@ -2068,6 +2073,9 @@ class CAutomation(Automation):
 
                         if combined_variation_meta.get('script_name', '')!='':
                             meta['script_name'] = combined_variation_meta['script_name']
+
+                        if variation_meta.get('default_version', '')!='':
+                            run_state['default_version'] = variation_meta['default_version']
 
                         if combined_variation_meta.get('required_disk_space', 0) > 0 and combined_variation not in required_disk_space:
                             required_disk_space[combined_variation] = combined_variation_meta['required_disk_space']
@@ -3979,7 +3987,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
            return r
 
         string = r['string']
-
+        
         if r['match'].lastindex and r['match'].lastindex >= group_number:
             version = r['match'].group(group_number)
         else:
@@ -4008,6 +4016,19 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         add_deps = i['update_deps']
         env = i.get('env', {})
         update_deps(deps, add_deps, False, env)
+
+        return {'return':0}
+
+    ##############################################################################
+    def update_state_from_meta(self, meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, run_state, i):
+        """
+        Updates state and env from meta
+        Args:
+        """
+
+        r = update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, run_state, i)
+        if r['return']>0:
+            return r
 
         return {'return':0}
 
@@ -4500,6 +4521,7 @@ def _update_env(env, key=None, value=None):
     if r['return']>0: return r
 
     return {'return': 0}
+
 
 ############################################################################################################
 def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
@@ -5207,7 +5229,7 @@ def update_env_from_input_mapping(env, inp, input_mapping):
             env[input_mapping[key]] = inp[key]
 
 ##############################################################################
-def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, i):
+def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, run_state, i):
     """
     Internal: update env and state from meta
     """
@@ -5218,6 +5240,20 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
 
     update_env = meta.get('env', {})
     env.update(update_env)
+
+    update_meta_if_env = meta.get('update_meta_if_env', [])
+    update_meta_if_env_from_state = run_state.get('update_meta_if_env', [])
+    run_state['update_meta_if_env'] = update_meta_if_env + update_meta_if_env_from_state
+
+    for c_meta in run_state['update_meta_if_env']:
+        if is_dep_tobe_skipped(c_meta, env):
+            continue
+        utils.merge_dicts({'dict1':env, 'dict2':c_meta.get('env', {}), 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1':state, 'dict2':c_meta.get('state', {}), 'append_lists':True, 'append_unique':True})
+        if c_meta.get('docker', {}):
+            if not state.get('docker', {}):
+                state['docker'] = {}
+            utils.merge_dicts({'dict1':state['docker'], 'dict2':c_meta['docker'], 'append_lists':True, 'append_unique':True})
 
     update_const = meta.get('const', {})
     if update_const:
@@ -5260,9 +5296,17 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
         r4 = update_deps(posthook_deps, add_deps_info, True, env)
         if r1['return']>0 and r2['return']>0 and r3['return'] > 0 and r4['return'] > 0: return r1
 
+    # i would have 'input' when called through cm.access
+    input_update_env = i.get('input', i)
+
     input_mapping = meta.get('input_mapping', {})
     if input_mapping:
-        update_env_from_input_mapping(env, i['input'], input_mapping)
+        update_env_from_input_mapping(env, input_update_env, input_mapping)
+
+    # handle dynamic env values
+    r = update_env_with_values(env)
+    if r['return']>0:
+        return r
 
     # Possibly restrict this to within docker environment
     add_deps_info = meta.get('ad', i.get('ad', {})) #we need to see input here

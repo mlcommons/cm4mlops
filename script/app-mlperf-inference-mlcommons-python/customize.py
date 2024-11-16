@@ -60,7 +60,7 @@ def preprocess(i):
     if env.get('CM_MLPERF_LOADGEN_BATCH_SIZE','') != '':
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] += " --batch-size " + str(env['CM_MLPERF_LOADGEN_BATCH_SIZE'])
 
-    if env.get('CM_MLPERF_LOADGEN_QUERY_COUNT','') != '' and not env.get('CM_TMP_IGNORE_MLPERF_QUERY_COUNT', False) and (env['CM_MLPERF_LOADGEN_MODE'] == 'accuracy' or 'gptj' in env['CM_MODEL']) and env.get('CM_MLPERF_RUN_STYLE','') != "valid":
+    if env.get('CM_MLPERF_LOADGEN_QUERY_COUNT','') != '' and not env.get('CM_TMP_IGNORE_MLPERF_QUERY_COUNT', False) and (env['CM_MLPERF_LOADGEN_MODE'] == 'accuracy' or 'gptj' in env['CM_MODEL'] or 'llama2' in env['CM_MODEL'] or 'mixtral' in env['CM_MODEL']) and env.get('CM_MLPERF_RUN_STYLE','') != "valid":
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] += " --count " + env['CM_MLPERF_LOADGEN_QUERY_COUNT']
 
     print("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
@@ -290,6 +290,10 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
 
     elif "stable-diffusion-xl" in env['CM_MODEL']:
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image")
+        if env.get('+PYTHONPATH', '') == '':
+            env['+PYTHONPATH'] = []
+        env['+PYTHONPATH'].append(os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "text_to_image", "tools", "fid"))
+
         backend = env['CM_MLPERF_BACKEND']
         device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] not in [ "gpu", "rocm" ] else "cuda"
         max_batchsize = env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1')

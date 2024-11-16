@@ -120,6 +120,16 @@ def postprocess(i):
     port_map_cmds = []
     run_opts = ''
 
+    #not completed as su command breaks the execution sequence
+    #
+    #if env.get('CM_DOCKER_PASS_USER_ID', '') != '':
+    #    run_opts += " --user 0 "
+    #    run_cmds.append(f"(usermod -u {os.getuid()} cmuser || echo pass)")
+    #    run_cmds.append(f"(chown -R {os.getuid()}:{os.getuid()} /home/cmuser  || echo pass)")
+    #    run_cmds.append(" ( su cmuser )")
+    #    run_cmds.append('export PATH="/home/cmuser/venv/cm/bin:$PATH"')
+
+
     if env.get('CM_DOCKER_PRE_RUN_COMMANDS', []):
         for pre_run_cmd in env['CM_DOCKER_PRE_RUN_COMMANDS']:
             run_cmds.append(pre_run_cmd)
@@ -133,6 +143,9 @@ def postprocess(i):
 
     if env.get('CM_DOCKER_ADD_DEVICE', '') != '':
         run_opts += " --device="+env['CM_DOCKER_ADD_DEVICE']
+
+    if env.get('CM_DOCKER_PRIVILEGED_MODE', '') == 'yes':
+        run_opts += " --privileged "
 
     if env.get('CM_DOCKER_ADD_NUM_GPUS', '') != '':
         run_opts += " --gpus={}".format(env['CM_DOCKER_ADD_NUM_GPUS'])

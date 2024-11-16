@@ -107,15 +107,17 @@ def preprocess(i):
     return {'return':0}
 
 
+
+
 def detect_version(i):
     env = i['env']
     version_env_key = f"CM_{env['CM_SYS_UTIL_NAME'].upper()}_VERSION"
     version_check_re = env.get('CM_SYS_UTIL_VERSION_RE', '')
     group_number = env.get('CM_TMP_VERSION_DETECT_GROUP_NUMBER', 1)
 
+    # Confirm that the regex pattern and file are present
     if version_check_re == '' or not os.path.exists("tmp-ver.out"):
         version = "undetected"
-
     else:
         r = i['automation'].parse_version({'match_text': version_check_re,
                                        'group_number': group_number,
@@ -125,9 +127,10 @@ def detect_version(i):
         if r['return'] >0: return r
 
         version = r['version']
+        print(i['recursion_spaces'] + '    Detected version: {}'.format(version))
 
-        print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
-    return {'return':0, 'version':version}
+    return {'return': 0, 'version': version}
+
 
 def postprocess(i):
     env = i['env']

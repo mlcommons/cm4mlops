@@ -37,6 +37,7 @@ env:
 new_env_keys:
 - CM_CUDA_DEVICE_*
 - CM_CUDA_NUM_DEVICES
+- CM_CUDA_VERSION
 
 new_state_keys:
 - cm_cuda_device_prop

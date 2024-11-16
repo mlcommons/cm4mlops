@@ -65,16 +65,26 @@ def generate_submission(i):
         env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'] = os.path.join(user_home, "mlperf_submission")
 
     submission_dir = env.get('CM_MLPERF_INFERENCE_SUBMISSION_DIR', '')
+    if submission_dir == '':
+        submission_base_dir = env.get('CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR', '')
+        if submission_base_dir == '':
+            return {'return':1, 'error':f"Both CM_MLPERF_INFERENCE_SUBMISSION_DIR and CM_MLPERF_INFERENCE_SUBMISSION_BASE_DIR can not be empty!"}
+        else:
+            submission_dir = os.path.join(submission_base_dir, "mlperf_inference_submission")
+            env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'] = submission_dir
 
     if env.get('CM_MLPERF_CLEAN_SUBMISSION_DIR','')!='':
         print ('=================================================')
         print ('Cleaning {} ...'.format(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']))
-        if os.path.exists(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']):
-            shutil.rmtree(env['CM_MLPERF_INFERENCE_SUBMISSION_DIR'])
+        if os.path.exists(submission_dir):
+            shutil.rmtree(submission_dir)
         print ('=================================================')
 
     if not os.path.isdir(submission_dir):
         os.makedirs(submission_dir)
+
+    if str(env.get('CM_MLPERF_SUBMISSION_DIR_SHARED', '')).lower() in [ "yes", "true", "1" ]:
+        os.chmod(submission_dir, 0o2775)
 
     print('* MLPerf inference submission dir: {}'.format(submission_dir))
     print('* MLPerf inference results dir: {}'.format(results_dir))
@@ -254,8 +264,9 @@ def generate_submission(i):
         system_file = os.path.join(submission_system_path, sub_res+".json")
 
         # Save the model mapping json file
-        with open(os.path.join(path_submission,"model_mapping.json"), "w") as fp:
-            json.dump(model_mapping_combined, fp, indent=2)
+        if model_mapping_combined:
+            with open(os.path.join(path_submission,"model_mapping.json"), "w") as fp:
+                json.dump(model_mapping_combined, fp, indent=2)
 
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
 
@@ -360,7 +371,9 @@ def generate_submission(i):
                                         if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
                                             del(saved_system_meta[key])
                                     system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
-                                system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults
+                            else:
+                                print("WARNING: system_meta.json was not found in the performance run directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
+                            system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
 
                     if not os.path.isdir(submission_results_path):
                         os.makedirs(submission_results_path)
@@ -437,14 +450,14 @@ def generate_submission(i):
                 if not os.path.exists(readme_file):
                     with open(readme_file, mode='w') as f:
                         f.write("TBD") #create an empty README
-                else:
-                    readme_suffix = ""
-                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
 
-                    for key in result:
-                        results[model][scenario][key] = result[key]
-                    with open(readme_file, mode='a') as f:
-                        f.write(result_string)
+                readme_suffix = ""
+                result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
+
+                for key in result:
+                    results[model][scenario][key] = result[key]
+                with open(readme_file, mode='a') as f:
+                    f.write(result_string)
 
             #Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
             sys_info_file = None
@@ -469,9 +482,11 @@ def generate_submission(i):
         with open(system_file, "w") as fp:
             json.dump(system_meta, fp, indent=2)
 
+ 
         result_table, headers = mlperf_utils.get_result_table(results)
 
         print(tabulate(result_table, headers = headers, tablefmt="pretty"))
+
         sut_readme_file = os.path.join(measurement_path, "README.md")
         with open(sut_readme_file, mode='w') as f:
             f.write(tabulate(result_table, headers = headers, tablefmt="github"))

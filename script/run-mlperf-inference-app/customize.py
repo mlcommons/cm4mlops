@@ -108,12 +108,12 @@ def preprocess(i):
         env['OUTPUT_BASE_DIR'] = env.get('CM_MLPERF_INFERENCE_RESULTS_DIR', os.getcwd())
 
     
-    test_list = ["TEST01",  "TEST05"]
+    test_list = ["TEST01"]
     if env['CM_MODEL']  in ["resnet50"]:
         test_list.append("TEST04")
     if "gpt" in env['CM_MODEL'] or "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env['CM_MODEL']:
         test_list.remove("TEST01")
-        test_list.remove("TEST05")
+        #test_list.remove("TEST05")
 
     if "llama2" in env['CM_MODEL'].lower() or "mixtral-8x7b" in env['CM_MODEL']:
         test_list.append("TEST06")
@@ -203,6 +203,7 @@ def preprocess(i):
         inp = {}
         if str(docker_dt).lower() in ["yes", "true", "1"]:
             env['CM_DOCKER_REUSE_EXISTING_CONTAINER'] = 'no' # turning it off for the first run and after that we turn it on
+            env['CM_DOCKER_DETACHED_MODE'] = 'yes'
 
         if env.get('CM_DOCKER_IMAGE_NAME', '') != '':
             docker_extra_input['docker_image_name'] = env['CM_DOCKER_IMAGE_NAME']

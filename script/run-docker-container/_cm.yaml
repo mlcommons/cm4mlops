@@ -16,6 +16,7 @@ category: Docker automation
 default_env:
   CM_DOCKER_DETACHED_MODE: 'yes'
   CM_DOCKER_REUSE_EXISTING_CONTAINER: 'no'
+  CM_DOCKER_PRIVILEGED_MODE: 'no'
 
 input_mapping:
   all_gpus: CM_DOCKER_ADD_ALL_GPUS
@@ -40,6 +41,7 @@ input_mapping:
   interactive: CM_DOCKER_INTERACTIVE_MODE
   it: CM_DOCKER_INTERACTIVE
   mounts: CM_DOCKER_VOLUME_MOUNTS
+  pass_user_id: CM_DOCKER_PASS_USER_ID
   pass_user_group: CM_DOCKER_PASS_USER_GROUP
   port_maps: CM_DOCKER_PORT_MAPS
   post_run_cmds: CM_DOCKER_POST_RUN_COMMANDS

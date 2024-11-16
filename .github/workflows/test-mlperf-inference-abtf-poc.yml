@@ -16,13 +16,30 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, ubuntu-20.04, ubuntu-24.04]
+        os: [ubuntu-22.04, ubuntu-20.04, ubuntu-24.04, macos-latest, macos-13, windows-latest]
         python-version: [ "3.8", "3.12" ]
         backend: [ "pytorch" ]
         implementation: [ "python" ]
+        docker: [ "", " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes" ]
+        extra-args: [ "--adr.compiler.tags=gcc", "--env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off" ]
         exclude:
         - os: ubuntu-24.04
           python-version: "3.8"
+        - os: windows-latest
+          python-version: "3.8"
+        - os: windows-latest
+          extra-args: "--adr.compiler.tags=gcc"
+        - os: windows-latest 
+          docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
+          # windows docker image is not supported in CM yet
+        - os: macos-latest
+          python-version: "3.8"
+        - os: macos-13
+          python-version: "3.8"
+        - os: macos-latest
+          docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
+        - os: macos-13
+          docker: " --docker --docker_it=no --docker_cm_repo=gateoverflow@cm4mlops --docker_dt=yes"
 
     steps:
     - uses: actions/checkout@v3
@@ -35,58 +52,60 @@ jobs:
         pip install cmind
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
         cm pull repo mlcommons@cm4abtf --branch=poc
-    - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on docker
+  
+    - name: Install Docker on macos
+      if: runner.os == 'macOS-deactivated'
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.compiler.tags=gcc --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet  -v
+        brew update
+        brew install --cask docker
 
-  build2:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, macos-13]
-        python-version: [ "3.12" ]
-        backend: [ "pytorch" ]
-        implementation: [ "python" ]
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Start Docker Daemon on macos
+      if: runner.os == 'macOS-deactivated'
       run: |
-        python3 -m pip install cmind
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-        cm pull repo mlcommons@cm4abtf --branch=poc
+        open /Applications/Docker.app
+        echo "Starting Docker, this may take a while..."
+
+        # Set max attempts and initial wait time
+        MAX_ATTEMPTS=20
+        WAIT_TIME=5
+
+        # Loop until Docker daemon is up or max attempts reached
+        attempt=1
+        while ! docker info > /dev/null 2>&1; do
+          echo "Attempt $attempt: Waiting for Docker to start..."
+          sleep $WAIT_TIME
+          attempt=$((attempt + 1))
+          WAIT_TIME=$((WAIT_TIME * 2))  # Exponential backoff
+
+          if [ $attempt -gt $MAX_ATTEMPTS ]; then
+            echo "Docker failed to start within the timeout period"
+            exit 1
+          fi
+        done
+
+        echo "Docker is up and running"
+        
+    - name: Install Docker Desktop on Windows
+      if: runner.os == 'Windows-deactivated'
+      run: |
+        choco install docker-desktop --no-progress -y
+
+    - name: Start Docker Desktop on Windows
+      if: runner.os == 'Windows-deactivated'
+      run: |
+        Start-Process 'C:\Program Files\Docker\Docker\Docker Desktop.exe'
+        # Wait until Docker daemon is running
+        $retryCount = 0
+        while (!(docker info) -and ($retryCount -lt 10)) {
+          Write-Output "Waiting for Docker to start..."
+          Start-Sleep -Seconds 10
+          $retryCount++
+        }
+        if ($retryCount -ge 10) {
+          throw "Docker failed to start"
+        }
+        Write-Output "Docker is up and running"
+
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.compiler.tags=gcc --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet  -v
-    
-  build3:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [windows-latest]
-        python-version: [ "3.12" ]
-        backend: [ "pytorch" ]
-        implementation: [ "python" ]
-        exclude:
-        - python-version: "3.8"
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python3 -m pip install cmind
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-        cm pull repo mlcommons@cm4abtf --branch=poc
-    - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
-      run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --quiet --env.CM_MLPERF_LOADGEN_BUILD_FROM_SRC=off --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7  -v
+        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
