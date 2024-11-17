@@ -6,9 +6,9 @@
       target_qps: 73000.0
   retinanet:
     Offline:
-      target_qps: 1300.0
+      target_qps: 1700.0
     Server:
-      target_qps: 1200
+      target_qps: 1400
   bert-99:
     Offline:
       target_qps: 8000
