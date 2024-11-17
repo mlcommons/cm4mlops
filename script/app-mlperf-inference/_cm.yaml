@@ -331,6 +331,18 @@ variations:
 
 
 
+  nvidia-original,gptj_:
+    env:
+      BUILD_TRTLLM: 1
+
+  nvidia-original,llama2-70b_:
+    env:
+      BUILD_TRTLLM: 1
+
+  nvidia-original,mixtral-8x7b:
+    env:
+      BUILD_TRTLLM: 1
+
   nvidia-original,r4.1-dev_default,gptj_:
     docker:
       image_name: mlperf-inference-nvidia-v4.1-dev-llm
@@ -352,8 +364,6 @@ variations:
             _tp-size.:
               - CM_NVIDIA_TP_SIZE
         
-    env:
-      BUILD_TRTLLM: 1
   
   nvidia-original,r4.1-dev_default,llama2-70b_:
     docker:

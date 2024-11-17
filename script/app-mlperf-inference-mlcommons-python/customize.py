@@ -91,9 +91,6 @@ def preprocess(i):
 
     RUN_CMD = ""
     state['RUN'] = {}
-    test_list = ["TEST01", "TEST04", "TEST05"]
-    if env['CM_MODEL'] in ["rnnt", "bert-99", "bert-99.9", "dlrm-99", "dlrm-99.9", "3d-unet-99", "3d-unet-99.9"]:
-        test_list.remove("TEST04")
 
     scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
     state['RUN'][scenario] = {}
