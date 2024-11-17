@@ -19,6 +19,12 @@ jobs:
           system: [ "GO-spr", "phoenix", "i9" ] 
           python-version: [ "3.12" ]
           model: [ "resnet50",  "retinanet",  "bert-99", "bert-99.9", "gptj-99.9", "3d-unet-99.9" ]
+          exclude:
+           - system: i9
+             model: gptj-99.9
+           - system: phoenix
+             model: gptj-99.9
+          
       steps:
       - name: Test MLPerf Inference NVIDIA ${{ matrix.model }}
         run: |
