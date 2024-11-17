@@ -7,7 +7,7 @@ on:
 jobs:
   run_amd:
       if: github.repository_owner == 'gateoverflow'
-      runs-on: [ self-hosted, linux, x64, GO-spr ]
+      runs-on: [ self-hosted, linux, x64, GO-spr-off ]
       strategy:
         fail-fast: false
         matrix:
