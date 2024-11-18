@@ -1,0 +1,46 @@
+alias: get-dataset-mlperf-inference-gnn
+automation_alias: script
+automation_uid: 5b4e0237da074764
+cache: true
+tags:
+- get
+- dataset
+- mlperf
+- gnn
+- icbh
+- inference
+uid: 824e61316c074253
+# new_env_keys:
+input_mapping:
+  out_path: CM_IGBH_DATASET_OUT_PATH
+deps:
+  - tags: mlperf,inference,source
+    names:
+      - inference-src
+  - tags: get,python
+    names:
+      - get-python
+variations:
+  debug:
+    default: true
+    group: dataset-type
+    env:
+      CM_IGBH_DATASET_TYPE: debug
+      CM_IGBH_DATASET_SIZE: tiny
+  full:
+    group: dataset-type
+    env:
+      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_SIZE: full
+  glt:
+    env:
+      CM_IGBH_GRAPH_COMPRESS: yes
+  csc:
+    group: compressed-layout
+    default: true
+    env:
+      CM_IGBH_GRAPH_COMPRESS_LAYOUT: csc
+  csr:
+    group: compressed-layout
+    env:
+      CM_IGBH_GRAPH_COMPRESS_LAYOUT: csr
