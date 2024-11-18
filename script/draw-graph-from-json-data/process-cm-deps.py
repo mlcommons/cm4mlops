@@ -12,6 +12,24 @@ def parse_json_to_edges(json_data):
                 edges.append((node_details["parent"], node_key))
     return edges
 
+def generate_mermaid_output(json_data, mermaid_file="graph.mmd"):
+    edges = parse_json_to_edges(json_data)
+
+    # Start the Mermaid graph definition
+    mermaid_lines = ["graph TD"]  # Use "TD" for top-down; "LR" for left-right
+
+    # Add each edge in Mermaid syntax
+    for parent, child in edges:
+        mermaid_lines.append(f"""    {parent.replace(" ", "_")} --> {child.replace(" ", "_")}""")
+
+    # Write to a Mermaid file
+    with open(mermaid_file, "w") as f:
+        f.write("\n".join(mermaid_lines))
+
+    print(f"Mermaid syntax saved to {mermaid_file}")
+
+
+
 # Function to generate and visualize the graph
 def generate_graph_from_nested_json(json_data, output_image="graph.png"):
     # Parse the JSON to extract edges
@@ -58,6 +76,7 @@ def main():
     parser = argparse.ArgumentParser(description="Generate a graph from nested JSON input.")
     parser.add_argument("json_file", type=str, help="Path to the JSON input file.")
     parser.add_argument("--output_image", type=str, default="graph.png", help="Output image file for the graph visualization.")
+    parser.add_argument("--output_mermaid", type=str, default="graph.mmd", help="Output mermaid file for the graph data.")
     parser.add_argument("--output_graphml", type=str, default="graph.graphml", help="Output GraphML file for the graph data.")
 
     args = parser.parse_args()
@@ -68,6 +87,8 @@ def main():
 
     # Generate the graph
     G = generate_graph_from_nested_json(json_data, output_image=args.output_image)
+
+    generate_mermaid_output(json_data, mermaid_file="graph.mmd")
 
     # Export the graph data
     export_graph_data(G, filename=args.output_graphml)

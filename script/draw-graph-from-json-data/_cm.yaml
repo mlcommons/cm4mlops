@@ -11,6 +11,7 @@ uid: 2ed1ebcb6be548fd
 input_mapping:
   input: CM_JSON_INPUT_FILE
   json_input_file: CM_JSON_INPUT_FILE
+  output_image_path: CM_OUTPUT_IMAGE_PATH
 deps:
   - tags: get,python3
     names:

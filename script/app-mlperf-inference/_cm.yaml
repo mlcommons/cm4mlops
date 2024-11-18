@@ -128,6 +128,16 @@ posthook_deps:
     env: 
       CM_PLATFORM_DETAILS_FILE_PATH: '<<<CM_MLPERF_OUTPUT_DIR>>>/system_info.txt'
 
+post_deps:
+  - tags: draw,graph,from-json
+    enable_if_env:
+      CM_MLPERF_RUN_JSON_VERSION_INFO_FILE:
+        - on
+    env:
+      CM_JSON_INPUT_FILE: <<<CM_MLPERF_RUN_JSON_VERSION_INFO_FILE>>>
+      CM_OUTPUT_IMAGE_PATH: <<<CM_MLPERF_RUN_DEPS_GRAPH>>>
+      CM_OUTPUT_MERMAID_PATH: <<<CM_MLPERF_RUN_DEPS_MERMAID>>>
+
 # Order of variations for documentation
 variation_groups_order:
   - implementation
