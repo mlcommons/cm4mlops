@@ -303,7 +303,7 @@ def preprocess(i):
                 ranging_user_conf += ml_model_name + "." + scenario + ".min_query_count = 0 \n"
 
     if query_count:
-        env['CM_MAX_EXAMPLES'] = query_count #needed for squad accuracy checker
+        env['CM_MAX_EXAMPLES'] = str(query_count) #needed for squad accuracy checker
 
 
     import uuid
@@ -321,7 +321,7 @@ def preprocess(i):
 
 
     if (env.get('CM_MLPERF_LOADGEN_QUERY_COUNT','') == '')  and query_count and ((mode != "accuracy") or (env['CM_MLPERF_RUN_STYLE'] != "valid")):
-        env['CM_MLPERF_LOADGEN_QUERY_COUNT'] = query_count
+        env['CM_MLPERF_LOADGEN_QUERY_COUNT'] = str(query_count)
 
     if not run_exists or rerun:
 
