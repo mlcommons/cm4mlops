@@ -381,7 +381,7 @@ def generate_submission(env, state, inp, submission_division):
                             shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
                         else:
                             if not mode.startswith("TEST"):
-                                return {"return":1, "error":f"user.conf missing in both paths: {user_conf_path} and {os.path.join(result_scenario_path, "user.conf")}"}
+                                return {"return":1, "error":f"user.conf missing in both paths: {user_conf_path} and {os.path.join(result_scenario_path, 'user.conf')}"}
 
                     measurements_json_path = os.path.join(result_scenario_path, "measurements.json")
                     target_measurement_json_path = measurement_scenario_path
@@ -398,7 +398,7 @@ def generate_submission(env, state, inp, submission_division):
                         shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, 'model-info.json'))
                     else:
                         if not mode.startswith("TEST"):
-                            return {"return":1, "error":f"measurements.json missing in both paths: {measurements_json_path} and {os.path.join(result_scenario_path, "user.conf")}"}
+                            return {"return":1, "error":f"measurements.json missing in both paths: {measurements_json_path} and {os.path.join(result_scenario_path, 'user.conf')}"}
                             
                     files = []
                     readme = False
