@@ -390,6 +390,7 @@ def generate_submission(env, state, inp, submission_division):
                         with open(measurements_json_path, "r") as f:
                             measurements_json = json.load(f)
                             model_precision = measurements_json.get("weight_data_types", "fp32")
+                        shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, sub_res+'.json'))
                         shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, 'model-info.json'))
                     else:
                         if mode.lower() == "performance":
