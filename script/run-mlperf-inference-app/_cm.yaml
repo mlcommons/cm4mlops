@@ -358,12 +358,10 @@ variations:
     add_deps_recursive:
       submission-checker:
         tags: _short-run
+    default: 'true'
     env:
       CM_MLPERF_SUBMISSION_DIVISION: open
       CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR: off
-
-    default: 'true'
-    env:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: short
     group: submission-generation-style
 
