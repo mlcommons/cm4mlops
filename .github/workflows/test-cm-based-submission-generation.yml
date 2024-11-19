@@ -19,7 +19,7 @@ jobs:
         python-version: [ "3.12" ]
         division: ["closed", "open", "closed-open"]
         category: ["datacenter", "edge"]
-        case: ["case-3", "case-7", "case-8"]
+        case: ["case-3", "case-7", "case-8", "closed"]
         action: ["run", "docker"]
         exclude:
           - os: macos-latest
