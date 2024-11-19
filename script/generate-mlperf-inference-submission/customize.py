@@ -399,7 +399,7 @@ def generate_submission(i):
                                         del(saved_system_meta[key])
                                 system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
                         else:
-                            print("WARNING: system_meta.json was not found in the SUT root directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
+                            print("WARNING: system_meta.json was not found in the SUT root or mode directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
                         system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
 
                         # check if framework version is there in system_meta, if not try to fill it from sut_info
