@@ -374,7 +374,7 @@ def generate_submission(i):
                             result_ranging_path=os.path.join(result_mode_path, 'ranging')
                             submission_ranging_path=os.path.join(submission_mode_path, 'ranging')
                             os.makedirs(submission_ranging_path)
-                            ranging_files = []
+                            ranging_files = []https://github.com/mlcommons/cm4mlops/pull/535
                             for f in os.listdir(result_ranging_path):
                                 ranging_files.append(f) #Todo add required check from submission_checker
                             for f in ranging_files:
@@ -384,6 +384,14 @@ def generate_submission(i):
                         submission_results_path=os.path.join(submission_mode_path, 'run_1')
 
                         if os.path.exists(saved_system_meta_file_path):
+                            with open(saved_system_meta_file_path, "r") as f:
+                                saved_system_meta = json.load(f)
+                                for key in list(saved_system_meta):
+                                    if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
+                                        del(saved_system_meta[key])
+                                system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
+                        elif os.path.exists(os.path.join(result_mode_path, "system_meta.json")):
+                            saved_system_meta_file_path = os.path.join(result_mode_path, "system_meta.json")
                             with open(saved_system_meta_file_path, "r") as f:
                                 saved_system_meta = json.load(f)
                                 for key in list(saved_system_meta):
