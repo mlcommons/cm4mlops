@@ -374,7 +374,7 @@ def generate_submission(i):
                             result_ranging_path=os.path.join(result_mode_path, 'ranging')
                             submission_ranging_path=os.path.join(submission_mode_path, 'ranging')
                             os.makedirs(submission_ranging_path)
-                            ranging_files = []https://github.com/mlcommons/cm4mlops/pull/535
+                            ranging_files = []
                             for f in os.listdir(result_ranging_path):
                                 ranging_files.append(f) #Todo add required check from submission_checker
                             for f in ranging_files:
