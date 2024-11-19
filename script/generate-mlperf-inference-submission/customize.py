@@ -88,6 +88,11 @@ def generate_submission(env, state, inp, submission_division):
     results = [f for f in os.listdir(results_dir) if not os.path.isfile(os.path.join(results_dir, f))]
 
     system_meta_default = state['CM_SUT_META']
+
+    # set pytorch as the default framework
+    if system_meta_default['framework'] == '':
+        system_meta_default['framework'] = "pytorch"
+    
     system_meta = {}
     if 'CM_MLPERF_SUBMISSION_SYSTEM_TYPE' in env:
         system_meta['system_type'] = env['CM_MLPERF_SUBMISSION_SYSTEM_TYPE']
@@ -218,29 +223,9 @@ def generate_submission(env, state, inp, submission_division):
             run_config = sut_info["run_config"]
             new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
         else:
-            parts = res.split("-")
-            if len(parts) > 5: #result folder structure used by CM script
-                system = parts[0] if system == 'default' else system
-                implementation = parts[1]
-                device = parts[2]
-                framework = parts[3]
-                framework_version = parts[4]
-                run_config = parts[5]
+            new_res = res
 
-                print('* System: {}'.format(system))
-                print('* Implementation: {}'.format(implementation))
-                print('* Device: {}'.format(device))
-                print('* Framework: {}'.format(framework))
-                print('* Framework Version: {}'.format(framework_version))
-                print('* Run Config: {}'.format(run_config))
-
-                new_res = system + "-" + "-".join(parts[1:])
-
-                # Override framework and framework versions from the folder name
-                system_meta_default['framework'] = framework + " " + framework_version
-            else:
-                print(parts)
-                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.hardware_name\n2.implementation\n3.Device\n4.framework\n5.framework_version\n6.run_config\nInclude a cm-sut-info.json or sut-info.json file with the above content in {result_path}"}
+        print(f"The SUT folder name for submission generation is: {new_res}")
             
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
