@@ -58,7 +58,7 @@ jobs:
           description="Test submission - contains closed-power edge and datacenter results"
         elif [ "${{ matrix.case }}" == "closed-failed-power-logs" ]; then
           extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
-          description="Test submission - contains closed-power edge and datacenter results"
+          description="Test submission - contains closed-power edge and datacenter results with failed power logs"
         fi
         # Dynamically set the log group to simulate a dynamic step name
         echo "::group::$description"
