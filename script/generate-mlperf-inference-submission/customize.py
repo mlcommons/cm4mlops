@@ -341,23 +341,20 @@ def generate_submission(env, state, inp, submission_division):
                         result_mode_path=os.path.join(result_mode_path, 'run_1')
                         submission_results_path=os.path.join(submission_mode_path, 'run_1')
 
-                        if os.path.exists(saved_system_meta_file_path):
+                        if not os.path.exists(saved_system_meta_file_path):
+                            if os.path.exists(os.path.join(result_mode_path, "system_meta.json")):
+                                saved_system_meta_file_path = os.path.join(result_mode_path, "system_meta.json")
+                            else:
+                                print("WARNING: system_meta.json was not found in the SUT root or mode directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
+                        if not os.path.exists(saved_system_meta_file_path):
                             with open(saved_system_meta_file_path, "r") as f:
                                 saved_system_meta = json.load(f)
                                 for key in list(saved_system_meta):
                                     if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
                                         del(saved_system_meta[key])
+                                if saved_system_meta["division"] != "" and submission_division == "":
+                                    system_meta["division"] = saved_system_meta["division"]
                                 system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
-                        elif os.path.exists(os.path.join(result_mode_path, "system_meta.json")):
-                            saved_system_meta_file_path = os.path.join(result_mode_path, "system_meta.json")
-                            with open(saved_system_meta_file_path, "r") as f:
-                                saved_system_meta = json.load(f)
-                                for key in list(saved_system_meta):
-                                    if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
-                                        del(saved_system_meta[key])
-                                system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
-                        else:
-                            print("WARNING: system_meta.json was not found in the SUT root or mode directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
                         system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
 
                         # check if framework version is there in system_meta, if not try to fill it from sut_info
@@ -380,7 +377,7 @@ def generate_submission(env, state, inp, submission_division):
                         if os.path.exists(user_conf_path):
                             shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
                         else:
-                            if not mode.startswith("TEST"):
+                            if mode.lower() == "performance":
                                 return {"return":1, "error":f"user.conf missing in both paths: {user_conf_path} and {os.path.join(result_scenario_path, 'user.conf')}"}
 
                     measurements_json_path = os.path.join(result_scenario_path, "measurements.json")
@@ -393,11 +390,9 @@ def generate_submission(env, state, inp, submission_division):
                         with open(measurements_json_path, "r") as f:
                             measurements_json = json.load(f)
                             model_precision = measurements_json.get("weight_data_types", "fp32")
-                        # This line can be removed once the PR in the inference repo is merged.
-                        shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, sub_res+'.json'))
                         shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, 'model-info.json'))
                     else:
-                        if not mode.startswith("TEST"):
+                        if mode.lower() == "performance":
                             return {"return":1, "error":f"measurements.json missing in both paths: {measurements_json_path} and {os.path.join(result_scenario_path, 'user.conf')}"}
                             
                     files = []
