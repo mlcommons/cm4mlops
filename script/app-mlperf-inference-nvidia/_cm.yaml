@@ -455,6 +455,8 @@ variations:
       - tags: get,generic-python-lib,_package.diffusers
         names:
           - diffusers
+        version_max: "0.30.3"
+        version_max_usable: "0.30.3"
       - tags: get,generic-python-lib,_package.transformers
         names:
           - transformers
