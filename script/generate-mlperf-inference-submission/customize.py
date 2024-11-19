@@ -93,18 +93,18 @@ def generate_submission(env, state, inp, submission_division):
     if system_meta_default['framework'] == '':
         system_meta_default['framework'] = "pytorch"
     
-    system_meta = {}
+    system_meta_tmp = {}
     if 'CM_MLPERF_SUBMISSION_SYSTEM_TYPE' in env:
-        system_meta['system_type'] = env['CM_MLPERF_SUBMISSION_SYSTEM_TYPE']
+        system_meta_tmp['system_type'] = env['CM_MLPERF_SUBMISSION_SYSTEM_TYPE']
 
     if submission_division != "":
-        system_meta['division'] = submission_division 
+        system_meta_tmp['division'] = submission_division 
         division = submission_division
     else:
         division = system_meta_default['division']
 
     if 'CM_MLPERF_SUBMISSION_CATEGORY' in env:
-        system_meta['system_type'] = env['CM_MLPERF_SUBMISSION_CATEGORY'].replace("-", ",")
+        system_meta_tmp['system_type'] = env['CM_MLPERF_SUBMISSION_CATEGORY'].replace("-", ",")
 
     duplicate= (env.get('CM_MLPERF_DUPLICATE_SCENARIO_RESULTS', 'no') in ["yes", "True"])
 
@@ -121,7 +121,7 @@ def generate_submission(env, state, inp, submission_division):
     # Check submitter
     if env.get('CM_MLPERF_SUBMITTER'):
         submitter = env['CM_MLPERF_SUBMITTER']
-        system_meta['submitter'] = submitter
+        system_meta_tmp['submitter'] = submitter
     else:
         submitter = system_meta_default['submitter']
         env['CM_MLPERF_SUBMITTER'] = submitter
@@ -129,15 +129,15 @@ def generate_submission(env, state, inp, submission_division):
     print('* MLPerf inference submitter: {}'.format(submitter))
 
     if 'Collective' not in system_meta_default.get('sw_notes'):
-        system_meta['sw_notes'] =  "Automated by MLCommons CM v{}. ".format(cmind.__version__) + system_meta_default['sw_notes']
+        system_meta_tmp['sw_notes'] =  "Automated by MLCommons CM v{}. ".format(cmind.__version__) + system_meta_default['sw_notes']
 
     if env.get('CM_MLPERF_SUT_SW_NOTES_EXTRA','') != '':
-        sw_notes = f"{system_meta['sw_notes']} {env['CM_MLPERF_SUT_SW_NOTES_EXTRA']}"
-        system_meta['sw_notes'] = sw_notes
+        sw_notes = f"{system_meta_tmp['sw_notes']} {env['CM_MLPERF_SUT_SW_NOTES_EXTRA']}"
+        system_meta_tmp['sw_notes'] = sw_notes
 
     if env.get('CM_MLPERF_SUT_HW_NOTES_EXTRA','') != '':
-        hw_notes = f"{system_meta['hw_notes']} {env['CM_MLPERF_SUT_HW_NOTES_EXTRA']}"
-        system_meta['hw_notes'] = hw_notes
+        hw_notes = f"{system_meta_tmp['hw_notes']} {env['CM_MLPERF_SUT_HW_NOTES_EXTRA']}"
+        system_meta_tmp['hw_notes'] = hw_notes
 
     path_submission=os.path.join(path_submission_division, submitter)
     if not os.path.isdir(path_submission):
@@ -149,6 +149,8 @@ def generate_submission(env, state, inp, submission_division):
     code_path = os.path.join(path_submission, "code")
 
     for res in results:
+        system_meta = {}
+        system_meta.update(system_meta_tmp)
         result_path = os.path.join(results_dir, res)
         # variable to check whether the sut_meta.json is present in the root folder
         saved_system_meta_file_path = os.path.join(result_path, 'system_meta.json')
@@ -356,7 +358,7 @@ def generate_submission(env, state, inp, submission_division):
                                     system_meta["division"] = saved_system_meta["division"]
                                 system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
                         system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
-
+                        print(system_meta)
                         # check if framework version is there in system_meta, if not try to fill it from sut_info
                         if system_meta['framework'] == "":
                             system_meta['framework'] = sut_info.get('framework', '') + sut_info.get('framework_version', '')
