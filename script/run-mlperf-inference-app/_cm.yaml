@@ -35,6 +35,7 @@ default_env:
   CM_MLPERF_MODEL: resnet50
   CM_MLPERF_RUN_STYLE: test
   CM_MLPERF_SKIP_SUBMISSION_GENERATION: no
+  CM_DOCKER_PRIVILEGED_MODE: yes
 
 input_mapping:
   api_server: CM_MLPERF_INFERENCE_API_SERVER
@@ -66,6 +67,8 @@ input_mapping:
   imagenet_path: IMAGENET_PATH
   implementation: CM_MLPERF_IMPLEMENTATION
   lang: CM_MLPERF_IMPLEMENTATION
+  min_query_count: CM_MLPERF_INFERENCE_MIN_QUERY_COUNT
+  max_query_count: CM_MLPERF_INFERENCE_MAX_QUERY_COUNT
   mode: CM_MLPERF_LOADGEN_MODE
   model: CM_MLPERF_MODEL
   multistream_target_latency: CM_MLPERF_LOADGEN_MULTISTREAM_TARGET_LATENCY
@@ -257,6 +260,7 @@ variations:
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-base
       CM_DOCKER_IMAGE_NAME: scc24
+      CM_MLPERF_INFERENCE_MIN_QUERY_COUNT: 50 
     adr:
       coco2014-preprocessed:
         tags: _size.50,_with-sample-ids
@@ -264,9 +268,6 @@ variations:
         tags: _size.50,_with-sample-ids
       nvidia-preprocess-data:
         extra_cache_tags: "scc24-base"
-      inference-src:
-        tags: _branch.dev
-        version: custom
     deps:
       - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
         extra_cache_rm_tags: scc24-main
@@ -281,12 +282,10 @@ variations:
         tags: _size.500,_with-sample-ids
       nvidia-preprocess-data:
         extra_cache_tags: "scc24-main"
-      inference-src:
-        tags: _branch.dev
-        version: custom
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-main
       CM_DOCKER_IMAGE_NAME: scc24
+      CM_MLPERF_INFERENCE_MIN_QUERY_COUNT: 500 
     deps:
       - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
         extra_cache_rm_tags: scc24-base

@@ -221,11 +221,10 @@ def preprocess(i):
         f.write('RUN echo "' + docker_user + ' ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers' + EOL)
         f.write('USER ' + docker_user + ":" + docker_group + EOL)
 
-    dockerfile_env = i['input'].get('dockerfile_env', {})
+    dockerfile_env = env.get('CM_DOCKERFILE_ENV', {})
     dockerfile_env_input_string = ""
     for docker_env_key in dockerfile_env:
         dockerfile_env_input_string = dockerfile_env_input_string + " --env."+docker_env_key+"="+str(dockerfile_env[docker_env_key])
-
     workdir = get_value(env, config, 'WORKDIR', 'CM_DOCKER_WORKDIR')
     if workdir:
         f.write('WORKDIR ' + workdir + EOL)
@@ -320,6 +319,7 @@ def preprocess(i):
         x+=EOL
         
         f.write(x)
+
 
     if 'CM_DOCKER_POST_RUN_COMMANDS' in env:
         for post_run_cmd in env['CM_DOCKER_POST_RUN_COMMANDS']:

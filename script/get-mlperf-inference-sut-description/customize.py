@@ -18,7 +18,7 @@ def preprocess(i):
 
     hw_name = env['CM_HW_NAME']
 
-    backend = env.get('CM_MLPERF_BACKEND', '')
+    backend = env.get('CM_MLPERF_BACKEND', '') 
     backend_version = env.get('CM_MLPERF_BACKEND_VERSION', '')
     sut_suffix = ''
     backend_name = ''
@@ -96,6 +96,12 @@ def preprocess(i):
             state['CM_SUT_META']['system_name'] = system_name
 
         # Add GPU info
+
+        if env.get('CM_MLPERF_DEVICE','') == "gpu" or env.get('CM_MLPERF_DEVICE','') == "cuda":
+            if env.get('CM_CUDA_VERSION','') != '':
+                cuda_version = " , CUDA " +  env['CM_CUDA_VERSION']
+                state['CM_SUT_META']['other_software_stack'] += cuda_version 
+                
         if 'cm_cuda_device_prop' in state:
             state['CM_SUT_META']['accelerator_frequency'] = state['cm_cuda_device_prop']['Max clock rate']
             state['CM_SUT_META']['accelerator_memory_capacity'] = str(int(state['cm_cuda_device_prop']['Global memory'])/(1024*1024.0*1024)) + " GB"

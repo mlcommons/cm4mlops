@@ -3,3 +3,4 @@ pyyaml
 requests
 setuptools
 giturlparse
+tabulate

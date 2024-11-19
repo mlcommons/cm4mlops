@@ -42,13 +42,10 @@ def model_in_valid_models(model, mlperf_version):
     else:
         return (True, model)
 
-def generate_submission(i):
+def generate_submission(env, state, inp, submission_division):
 
     # Save current user directory
     cur_dir=os.getcwd()
-    env = i['env']
-    state = i['state']
-    inp=i['input']
 
     if env.get('CM_MLPERF_INFERENCE_RESULTS_DIR_', '') == '':
         results_dir = os.path.join(env['CM_MLPERF_INFERENCE_RESULTS_DIR'], f"{env['CM_MLPERF_RUN_STYLE']}_results")
@@ -83,28 +80,33 @@ def generate_submission(i):
     if not os.path.isdir(submission_dir):
         os.makedirs(submission_dir)
 
+    if str(env.get('CM_MLPERF_SUBMISSION_DIR_SHARED', '')).lower() in [ "yes", "true", "1" ]:
+        os.chmod(submission_dir, 0o2775)
+
     print('* MLPerf inference submission dir: {}'.format(submission_dir))
     print('* MLPerf inference results dir: {}'.format(results_dir))
     results = [f for f in os.listdir(results_dir) if not os.path.isfile(os.path.join(results_dir, f))]
 
     system_meta_default = state['CM_SUT_META']
+
+    # set pytorch as the default framework
+    if system_meta_default['framework'] == '':
+        system_meta_default['framework'] = "pytorch"
+    
     system_meta = {}
     if 'CM_MLPERF_SUBMISSION_SYSTEM_TYPE' in env:
         system_meta['system_type'] = env['CM_MLPERF_SUBMISSION_SYSTEM_TYPE']
 
-    if 'CM_MLPERF_SUBMISSION_DIVISION' in env:
-        system_meta['division'] = env['CM_MLPERF_SUBMISSION_DIVISION']
+    if submission_division != "":
+        system_meta['division'] = submission_division 
+        division = submission_division
+    else:
+        division = system_meta_default['division']
 
     if 'CM_MLPERF_SUBMISSION_CATEGORY' in env:
         system_meta['system_type'] = env['CM_MLPERF_SUBMISSION_CATEGORY'].replace("-", ",")
 
     duplicate= (env.get('CM_MLPERF_DUPLICATE_SCENARIO_RESULTS', 'no') in ["yes", "True"])
-
-    if env.get('CM_MLPERF_SUBMISSION_DIVISION', '') != '':
-        division = env['CM_MLPERF_SUBMISSION_DIVISION']
-        system_meta['division'] = division
-    else:
-        division = system_meta_default['division']
 
     if division not in ['open','closed']:
         return {'return':1, 'error':'"division" must be "open" or "closed"'}
@@ -221,29 +223,9 @@ def generate_submission(i):
             run_config = sut_info["run_config"]
             new_res = f"{system}-{implementation}-{device}-{framework}-{run_config}"
         else:
-            parts = res.split("-")
-            if len(parts) > 5: #result folder structure used by CM script
-                system = parts[0] if system == 'default' else system
-                implementation = parts[1]
-                device = parts[2]
-                framework = parts[3]
-                framework_version = parts[4]
-                run_config = parts[5]
+            new_res = res
 
-                print('* System: {}'.format(system))
-                print('* Implementation: {}'.format(implementation))
-                print('* Device: {}'.format(device))
-                print('* Framework: {}'.format(framework))
-                print('* Framework Version: {}'.format(framework_version))
-                print('* Run Config: {}'.format(run_config))
-
-                new_res = system + "-" + "-".join(parts[1:])
-
-                # Override framework and framework versions from the folder name
-                system_meta_default['framework'] = framework + " " + framework_version
-            else:
-                print(parts)
-                return {'return': 1, 'error': f"The required details for generating the inference submission:\n1.hardware_name\n2.implementation\n3.Device\n4.framework\n5.framework_version\n6.run_config\nInclude a cm-sut-info.json or sut-info.json file with the above content in {result_path}"}
+        print(f"The SUT folder name for submission generation is: {new_res}")
             
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
@@ -261,8 +243,9 @@ def generate_submission(i):
         system_file = os.path.join(submission_system_path, sub_res+".json")
 
         # Save the model mapping json file
-        with open(os.path.join(path_submission,"model_mapping.json"), "w") as fp:
-            json.dump(model_mapping_combined, fp, indent=2)
+        if model_mapping_combined:
+            with open(os.path.join(path_submission,"model_mapping.json"), "w") as fp:
+                json.dump(model_mapping_combined, fp, indent=2)
 
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
 
@@ -367,7 +350,9 @@ def generate_submission(i):
                                         if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
                                             del(saved_system_meta[key])
                                     system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
-                                system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults
+                            else:
+                                print("WARNING: system_meta.json was not found in the performance run directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
+                            system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
 
                     if not os.path.isdir(submission_results_path):
                         os.makedirs(submission_results_path)
@@ -444,14 +429,14 @@ def generate_submission(i):
                 if not os.path.exists(readme_file):
                     with open(readme_file, mode='w') as f:
                         f.write("TBD") #create an empty README
-                else:
-                    readme_suffix = ""
-                    result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
 
-                    for key in result:
-                        results[model][scenario][key] = result[key]
-                    with open(readme_file, mode='a') as f:
-                        f.write(result_string)
+                readme_suffix = ""
+                result_string, result = mlperf_utils.get_result_string(env['CM_MLPERF_LAST_RELEASE'], model, scenario, result_scenario_path, power_run, sub_res, division, system_file, model_precision, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
+
+                for key in result:
+                    results[model][scenario][key] = result[key]
+                with open(readme_file, mode='a') as f:
+                    f.write(result_string)
 
             #Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
             sys_info_file = None
@@ -476,9 +461,11 @@ def generate_submission(i):
         with open(system_file, "w") as fp:
             json.dump(system_meta, fp, indent=2)
 
+ 
         result_table, headers = mlperf_utils.get_result_table(results)
 
         print(tabulate(result_table, headers = headers, tablefmt="pretty"))
+
         sut_readme_file = os.path.join(measurement_path, "README.md")
         with open(sut_readme_file, mode='w') as f:
             f.write(tabulate(result_table, headers = headers, tablefmt="github"))
@@ -487,9 +474,23 @@ def generate_submission(i):
     return {'return':0}
 
 def postprocess(i):
+    env = i['env']
+    state = i['state']
+    inp=i['input']
 
-    r = generate_submission(i)
-    if r['return'] > 0:
-        return r
+    submission_divisions = [] 
+    
+    if env.get('CM_MLPERF_SUBMISSION_DIVISION', '') in ["open-closed", "closed-open"]:
+        submission_divisions = ["open", "closed"]
+    elif env.get('CM_MLPERF_SUBMISSION_DIVISION', '') != '':
+        submission_divisions.append(env['CM_MLPERF_SUBMISSION_DIVISION'])
+    
+    if env.get('CM_MLPERF_SUBMISSION_DIVISION', '') == '':    #if submission division is not assigned, default value would be taken in submission_generation function
+        r = generate_submission(env, state, inp, submission_division="")
+    else:
+        for submission_division in submission_divisions:
+            r = generate_submission(env, state, inp, submission_division)
+            if r['return'] > 0:
+                return r
 
     return {'return':0}

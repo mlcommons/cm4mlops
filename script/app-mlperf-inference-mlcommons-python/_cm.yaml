@@ -421,8 +421,11 @@ deps:
         - "on"
       CM_MLPERF_INFERENCE_API_SERVER:
         - "on"
+    skip_if_env:
       CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
         - 'yes'
+      CM_RUN_STATE_DOCKER:
+      - 'yes'
 
   ## mixtral-8x7b
   - tags: get,ml-model,mixtral
@@ -432,11 +435,13 @@ deps:
     enable_if_env:
       CM_MODEL:
       - mixtral-8x7b
-    skip_if_env:
+    skip_if_any_env:
       CM_MLPERF_CUSTOM_MODEL_PATH:
       - "on"
     skip_if_env:
       CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
+      - 'yes'
+      CM_RUN_STATE_DOCKER:
       - 'yes'
 
   ## 3d-unet
@@ -926,10 +931,6 @@ variations:
     env:
       CM_MODEL: stable-diffusion-xl
       CM_NUM_THREADS: "1"
-    adr:
-      mlperf-implementation:
-        tags: _branch.dev
-        version: custom
     deps:
       - tags: get,generic-python-lib,_package.diffusers
         names:

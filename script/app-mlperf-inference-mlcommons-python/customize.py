@@ -60,7 +60,7 @@ def preprocess(i):
     if env.get('CM_MLPERF_LOADGEN_BATCH_SIZE','') != '':
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] += " --batch-size " + str(env['CM_MLPERF_LOADGEN_BATCH_SIZE'])
 
-    if env.get('CM_MLPERF_LOADGEN_QUERY_COUNT','') != '' and not env.get('CM_TMP_IGNORE_MLPERF_QUERY_COUNT', False) and (env['CM_MLPERF_LOADGEN_MODE'] == 'accuracy' or 'gptj' in env['CM_MODEL']) and env.get('CM_MLPERF_RUN_STYLE','') != "valid":
+    if env.get('CM_MLPERF_LOADGEN_QUERY_COUNT','') != '' and not env.get('CM_TMP_IGNORE_MLPERF_QUERY_COUNT', False) and (env['CM_MLPERF_LOADGEN_MODE'] == 'accuracy' or 'gptj' in env['CM_MODEL'] or 'llama2' in env['CM_MODEL'] or 'mixtral' in env['CM_MODEL']) and env.get('CM_MLPERF_RUN_STYLE','') != "valid":
         env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] += " --count " + env['CM_MLPERF_LOADGEN_QUERY_COUNT']
 
     print("Using MLCommons Inference source from '" + env['CM_MLPERF_INFERENCE_SOURCE'] +"'")
@@ -91,9 +91,6 @@ def preprocess(i):
 
     RUN_CMD = ""
     state['RUN'] = {}
-    test_list = ["TEST01", "TEST04", "TEST05"]
-    if env['CM_MODEL'] in ["rnnt", "bert-99", "bert-99.9", "dlrm-99", "dlrm-99.9", "3d-unet-99", "3d-unet-99.9"]:
-        test_list.remove("TEST04")
 
     scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
     state['RUN'][scenario] = {}
