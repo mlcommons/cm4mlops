@@ -317,20 +317,7 @@ def generate_submission(i):
                     continue
 
                 if not os.path.isdir(measurement_scenario_path):
-                        os.makedirs(measurement_scenario_path)
-                    
-                user_conf_path = os.path.join(result_scenario_path, "user.conf")                   
-
-                measurements_json_path = os.path.join(result_scenario_path, "measurements.json")
-                # get model precision
-                model_precision = "fp32"
-                if os.path.exists(measurements_json_path):
-                    with open(measurements_json_path, "r") as f:
-                        measurements_json = json.load(f)
-                        model_precision = measurements_json.get("weight_data_types", "fp32")
-                    # This line can be removed once the PR in the inference repo is merged.
-                    shutil.copy(measurements_json_path, os.path.join(measurement_scenario_path, sub_res+'.json'))
-                    shutil.copy(measurements_json_path, os.path.join(measurement_scenario_path, 'model-info.json'))
+                        os.makedirs(measurement_scenario_path)                
 
                 for mode in modes:
                     result_mode_path = os.path.join(result_scenario_path, mode)
@@ -406,6 +393,7 @@ def generate_submission(i):
                     #if division == "closed" and not os.path.isdir(submission_compliance_path):
                     #    os.makedirs(submission_compliance_path)
 
+                    user_conf_path = os.path.join(result_scenario_path, "user.conf")   
                     if os.path.exists(user_conf_path):
                         shutil.copy(user_conf_path, os.path.join(measurement_scenario_path, 'user.conf'))
                     else:
@@ -415,17 +403,21 @@ def generate_submission(i):
                         else:
                             return {"return":1, "error":f"user.conf missing in both paths: {user_conf_path} and {os.path.join(result_scenario_path, "user.conf")}"}
 
+                    measurements_json_path = os.path.join(result_scenario_path, "measurements.json")
+                    target_measurement_json_path = measurement_scenario_path
                     if not os.path.exists(measurements_json_path):
                         measurements_json_path = os.path.join(result_mode_path, "measurements.json")
-                        if os.path.exists(measurements_json_path):
-                            with open(measurements_json_path, "r") as f:
-                                measurements_json = json.load(f)
-                                model_precision = measurements_json.get("weight_data_types", "fp32")
-                            # This line can be removed once the PR in the inference repo is merged.
-                            shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, sub_res+'.json'))
-                            shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, 'model-info.json'))
-                        else:
-                            return {"return":1, "error":f"measurements.json missing in both paths: {measurements_json_path} and {os.path.join(result_scenario_path, "user.conf")}"}
+                        target_measurement_json_path = submission_measurement_path
+                    
+                    if os.path.exists(measurements_json_path):
+                        with open(measurements_json_path, "r") as f:
+                            measurements_json = json.load(f)
+                            model_precision = measurements_json.get("weight_data_types", "fp32")
+                        # This line can be removed once the PR in the inference repo is merged.
+                        shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, sub_res+'.json'))
+                        shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, 'model-info.json'))
+                    else:
+                        return {"return":1, "error":f"measurements.json missing in both paths: {measurements_json_path} and {os.path.join(result_scenario_path, "user.conf")}"}
                             
                     files = []
                     readme = False
