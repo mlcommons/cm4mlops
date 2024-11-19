@@ -346,7 +346,7 @@ def generate_submission(env, state, inp, submission_division):
                                 saved_system_meta_file_path = os.path.join(result_mode_path, "system_meta.json")
                             else:
                                 print("WARNING: system_meta.json was not found in the SUT root or mode directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
-                        if not os.path.exists(saved_system_meta_file_path):
+                        if os.path.exists(saved_system_meta_file_path):
                             with open(saved_system_meta_file_path, "r") as f:
                                 saved_system_meta = json.load(f)
                                 for key in list(saved_system_meta):
