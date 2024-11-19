@@ -19,7 +19,7 @@ jobs:
         python-version: [ "3.12" ]
         division: ["closed", "open", "closed-open"]
         category: ["datacenter", "edge"]
-        case: ["case-3", "case-7", "case-8", "closed"]
+        case: ["case-3", "case-7", "case-8", "closed", "closed-no-compliance", "closed-power", "closed-failed-power-logs"]
         action: ["run", "docker"]
         exclude:
           - os: macos-latest
@@ -50,6 +50,15 @@ jobs:
         elif [ "${{ matrix.case }}" == "closed" ]; then
           extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
           description="Test submission - contains closed edge and datacenter"
+        elif [ "${{ matrix.case }}" == "closed-no-compliance" ]; then
+          extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
+          description="Test submission - contains closed edge and datacenter with no compliance tests"
+        elif [ "${{ matrix.case }}" == "closed-power" ]; then
+          extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
+          description="Test submission - contains closed-power edge and datacenter results"
+        elif [ "${{ matrix.case }}" == "closed-failed-power-logs" ]; then
+          extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
+          description="Test submission - contains closed-power edge and datacenter results"
         fi
         # Dynamically set the log group to simulate a dynamic step name
         echo "::group::$description"
