@@ -100,7 +100,7 @@ def preprocess(i):
     my_tar.close()
 
     import re
-    version_match = re.match(r'TensorRT-(\d+.\d+.\d+.\d+)', folder_name)
+    version_match = re.match(r'TensorRT-(\d+\.\d+\.\d+\.\d+)', folder_name)
     if not version_match:
         return {'return': 1, 'error': 'Extracted TensorRT folder does not seem proper - Version information missing'}
     version = version_match.group(1)
