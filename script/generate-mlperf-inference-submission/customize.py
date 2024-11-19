@@ -417,7 +417,19 @@ def generate_submission(i):
                             shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
                         else:
                             return {"return":1, "error":f"user.conf missing in both paths: {user_conf_path} and {os.path.join(result_scenario_path, "user.conf")}"}
-                    
+
+                    if not os.path.exists(measurements_json_path):
+                        measurements_json_path = os.path.join(result_mode_path, "measurements.json")
+                        if os.path.exists(measurements_json_path):
+                            with open(measurements_json_path, "r") as f:
+                                measurements_json = json.load(f)
+                                model_precision = measurements_json.get("weight_data_types", "fp32")
+                            # This line can be removed once the PR in the inference repo is merged.
+                            shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, sub_res+'.json'))
+                            shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, 'model-info.json'))
+                        else:
+                            return {"return":1, "error":f"measurements.json missing in both paths: {measurements_json_path} and {os.path.join(result_scenario_path, "user.conf")}"}
+                            
                     files = []
                     readme = False
 
