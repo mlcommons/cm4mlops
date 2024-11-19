@@ -16,16 +16,14 @@ def preprocess(i):
 
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
-    if prompt_sudo() == 0:
+    if os.geteuid() == 0:
+        env['CM_SUDO'] = '' #root user does not need sudo
         env['CM_SUDO_USER'] = "yes"
-        if os.geteuid() == 0:
-            env['CM_SUDO'] = '' #root user does not need sudo
-        else:
-            env['CM_SUDO'] = 'sudo'
     else:
-        if can_execute_sudo_without_password():
+        if can_execute_sudo_without_password() or prompt_sudo() == 0:
             env['CM_SUDO_USER'] = "yes"
             env['CM_SUDO'] = 'sudo'
+
         else:
             env['CM_SUDO_USER'] = "no"
             env['CM_SUDO'] = ''

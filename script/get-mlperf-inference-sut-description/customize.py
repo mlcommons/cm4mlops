@@ -18,7 +18,7 @@ def preprocess(i):
 
     hw_name = env['CM_HW_NAME']
 
-    backend = env.get('CM_MLPERF_BACKEND', '')
+    backend = env.get('CM_MLPERF_BACKEND', '') 
     backend_version = env.get('CM_MLPERF_BACKEND_VERSION', '')
     sut_suffix = ''
     backend_name = ''

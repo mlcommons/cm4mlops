@@ -455,6 +455,8 @@ variations:
       - tags: get,generic-python-lib,_package.diffusers
         names:
           - diffusers
+        version_max: "0.30.3"
+        version_max_usable: "0.30.3"
       - tags: get,generic-python-lib,_package.transformers
         names:
           - transformers
@@ -702,6 +704,7 @@ variations:
     - tags: get,generic-python-lib,_onnx
     - tags: get,generic-python-lib,_transformers
     - tags: get,generic-python-lib,_onnx-graphsurgeon
+    - tags: get,generic-python-lib,_package.sympy
     env:
       CM_ML_MODEL_STARTING_WEIGHTS_FILENAME: "https://cloud.mlcommons.org/index.php/s/QAZ2oM94MkFtbQx/download"
   

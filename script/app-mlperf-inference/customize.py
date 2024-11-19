@@ -181,12 +181,17 @@ def postprocess(i):
 
 
     if mode in [ "performance", "accuracy" ]:
-        measurements = {}
-        measurements['starting_weights_filename'] = env.get('CM_ML_MODEL_STARTING_WEIGHTS_FILENAME', env.get('CM_ML_MODEL_FILE', ''))
-        measurements['retraining'] = env.get('CM_ML_MODEL_RETRAINING','no')
-        measurements['input_data_types'] = env.get('CM_ML_MODEL_INPUTS_DATA_TYPE', 'fp32')
-        measurements['weight_data_types'] = env.get('CM_ML_MODEL_WEIGHTS_DATA_TYPE', 'fp32')
-        measurements['weight_transformations'] = env.get('CM_ML_MODEL_WEIGHT_TRANSFORMATIONS', 'none')
+        #if measurements file exist read it
+        if os.path.exists("measurements.json"):
+            with open("measurements.json", "r") as file:
+                measurements = json.load(file)  # Load JSON data from the file
+        else:
+            measurements = {}
+        measurements['starting_weights_filename'] = env.get('CM_ML_MODEL_STARTING_WEIGHTS_FILENAME', env.get('CM_ML_MODEL_FILE', measurements.get('starting_weights_filename', '')))
+        measurements['retraining'] = env.get('CM_ML_MODEL_RETRAINING', measurements.get('retraining', 'no'))
+        measurements['input_data_types'] = env.get('CM_ML_MODEL_INPUTS_DATA_TYPE', measurements.get('input_data_types', 'fp32'))
+        measurements['weight_data_types'] = env.get('CM_ML_MODEL_WEIGHTS_DATA_TYPE', measurements.get('weight_data_types', 'fp32'))
+        measurements['weight_transformations'] = env.get('CM_ML_MODEL_WEIGHT_TRANSFORMATIONS', measurements.get('weight_transformations', 'none'))
 
         os.chdir(output_dir)
 
@@ -484,6 +489,9 @@ def postprocess(i):
         print("\n")
 
     if state.get('mlperf-inference-implementation') and state['mlperf-inference-implementation'].get('version_info'):
+        env['CM_MLPERF_RUN_JSON_VERSION_INFO_FILE'] = os.path.join(output_dir, "cm-version-info.json")
+        env['CM_MLPERF_RUN_DEPS_GRAPH'] = os.path.join(output_dir, "cm-deps.png")
+        env['CM_MLPERF_RUN_DEPS_MERMAID'] = os.path.join(output_dir, "cm-deps.mmd")
         with open(os.path.join(output_dir, "cm-version-info.json"), "w") as f:
             f.write(json.dumps(state['mlperf-inference-implementation']['version_info'], indent=2))
 

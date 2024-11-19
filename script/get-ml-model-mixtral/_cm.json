@@ -69,6 +69,7 @@
       "default": true,
       "env": {
         "CM_GIT_CHECKOUT_FOLDER": "Mixtral-8x7B-Instruct-v0.1",
+        "CM_ML_MODEL_STARTING_WEIGHTS_FILENAME": "https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1",
         "CM_MODEL_ZOO_ENV_KEY": "MIXTRAL"
       },
       "group": "huggingface-stub"

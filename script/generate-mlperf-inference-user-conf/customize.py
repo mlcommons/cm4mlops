@@ -54,13 +54,6 @@ def preprocess(i):
 
     RUN_CMD = ""
     state['RUN'] = {}
-    test_list = ["TEST01", "TEST04", "TEST05"]
-    if env['CM_MODEL'] in ["rnnt", "bert-99", "bert-99.9", "dlrm-v2-99", "dlrm-v2-99.9", "3d-unet-99", "3d-unet-99.9"]:
-        test_list.remove("TEST04")
-    if "gpt-" in env['CM_MODEL']:
-        test_list.remove("TEST05")
-        test_list.remove("TEST04")
-        test_list.remove("TEST01")
 
     scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
     state['RUN'][scenario] = {}
@@ -189,8 +182,8 @@ def preprocess(i):
             test = env.get("CM_MLPERF_LOADGEN_COMPLIANCE_TEST", "TEST01")
             if test == "TEST01":
                 metric_value = str(float(metric_value) * float(env.get("CM_MLPERF_TEST01_SERVER_ADJUST_FACTOR", 0.96)))
-            if test == "TEST05":
-                metric_value = str(float(metric_value) * float(env.get("CM_MLPERF_TEST05_SERVER_ADJUST_FACTOR", 0.97)))
+            #if test == "TEST05":
+            #    metric_value = str(float(metric_value) * float(env.get("CM_MLPERF_TEST05_SERVER_ADJUST_FACTOR", 0.97)))
             if test == "TEST04":
                 metric_value = str(float(metric_value) * float(env.get("CM_MLPERF_TEST04_SERVER_ADJUST_FACTOR", 0.97)))
 
@@ -260,12 +253,14 @@ def preprocess(i):
     if env['CM_MLPERF_RUN_STYLE'] == "test":
         max_duration_test_s = int(env.get('CM_MLPERF_MAX_DURATION_TEST', 30))
         max_duration_test = str(max_duration_test_s * 1000) # in milliseconds
-        query_count = env.get('CM_TEST_QUERY_COUNT', "5")
-        user_conf += ml_model_name + "." + scenario + ".max_query_count = " + query_count + "\n"
-        user_conf += ml_model_name + "." + scenario + ".min_query_count = " + query_count + "\n"
+        query_count = int(env.get('CM_TEST_QUERY_COUNT', 5))
+        min_query_count = int(env.get('CM_MLPERF_INFERENCE_MIN_QUERY_COUNT', query_count))
+        max_query_count = max(min_query_count, int(env.get('CM_MLPERF_INFERENCE_MAX_QUERY_COUNT', query_count)))
+        user_conf += ml_model_name + "." + scenario + ".max_query_count = " + str(max_query_count) + "\n"
+        user_conf += ml_model_name + "." + scenario + ".min_query_count = " + str(min_query_count) + "\n"
         user_conf += ml_model_name + "." + scenario + ".min_duration = 0" + "\n"
         user_conf += ml_model_name + "." + scenario + ".sample_concatenate_permutation = 0" + "\n"
-        env['CM_MLPERF_MAX_QUERY_COUNT'] = query_count
+        env['CM_MLPERF_MAX_QUERY_COUNT'] = max_query_count
 
         # max_duration is effective for all scenarios except the Offline
         if env.get('CM_MLPERF_USE_MAX_DURATION', 'yes').lower() not in [ "no", "false", "0"]:
@@ -308,7 +303,7 @@ def preprocess(i):
                 ranging_user_conf += ml_model_name + "." + scenario + ".min_query_count = 0 \n"
 
     if query_count:
-        env['CM_MAX_EXAMPLES'] = query_count #needed for squad accuracy checker
+        env['CM_MAX_EXAMPLES'] = str(query_count) #needed for squad accuracy checker
 
 
     import uuid
@@ -326,7 +321,7 @@ def preprocess(i):
 
 
     if (env.get('CM_MLPERF_LOADGEN_QUERY_COUNT','') == '')  and query_count and ((mode != "accuracy") or (env['CM_MLPERF_RUN_STYLE'] != "valid")):
-        env['CM_MLPERF_LOADGEN_QUERY_COUNT'] = query_count
+        env['CM_MLPERF_LOADGEN_QUERY_COUNT'] = str(query_count)
 
     if not run_exists or rerun:
 
