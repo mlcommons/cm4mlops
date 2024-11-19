@@ -62,7 +62,7 @@ def generate_graph_from_nested_json(json_data, output_image="graph.png"):
     # Save the visualization
     plt.savefig(output_image, format="png", dpi=300)
     print(f"Graph visualization saved as {output_image}")
-    plt.show()
+    #plt.show()
 
     return G
 
