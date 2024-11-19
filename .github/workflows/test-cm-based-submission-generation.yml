@@ -41,15 +41,15 @@ jobs:
     - name: Run Submission Generation - ${{ matrix.case }} ${{ matrix.action }} ${{ matrix.category }} ${{ matrix.division }} 
       run: |
         if [ "${{ matrix.case }}" == "case-3" ]; then
-          #results_dir="submission_generation_tests/case-3/"
           description="Submission generation (model_mapping.json not present but model name matches with official one)"
         elif [ "${{ matrix.case }}" == "case-7" ]; then
-          #results_dir="submission_generation_tests/case-7/"
           description="Submission generation (sut_info.json incomplete, SUT folder name in required format)"
         elif [ "${{ matrix.case }}" == "case-8" ]; then
-          #results_dir="submission_generation_tests/case-8/"
           extra_run_args=" --category=datacenter"
           description="Submission generation (system_meta.json not found in results folder)"
+        elif [ "${{ matrix.case }}" == "closed" ]; then
+          extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
+          description="Test submission - contains closed edge and datacenter"
         fi
         # Dynamically set the log group to simulate a dynamic step name
         echo "::group::$description"
