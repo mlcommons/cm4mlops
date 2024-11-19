@@ -489,6 +489,9 @@ def postprocess(i):
         print("\n")
 
     if state.get('mlperf-inference-implementation') and state['mlperf-inference-implementation'].get('version_info'):
+        env['CM_MLPERF_RUN_JSON_VERSION_INFO_FILE'] = os.path.join(output_dir, "cm-version-info.json")
+        env['CM_MLPERF_RUN_DEPS_GRAPH'] = os.path.join(output_dir, "cm-deps.png")
+        env['CM_MLPERF_RUN_DEPS_MERMAID'] = os.path.join(output_dir, "cm-deps.mmd")
         with open(os.path.join(output_dir, "cm-version-info.json"), "w") as f:
             f.write(json.dumps(state['mlperf-inference-implementation']['version_info'], indent=2))
 
