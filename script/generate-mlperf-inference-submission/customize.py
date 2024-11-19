@@ -83,6 +83,9 @@ def generate_submission(i):
     if not os.path.isdir(submission_dir):
         os.makedirs(submission_dir)
 
+    if str(env.get('CM_MLPERF_SUBMISSION_DIR_SHARED', '')).lower() in [ "yes", "true", "1" ]:
+        os.chmod(submission_dir, 0o2775)
+
     print('* MLPerf inference submission dir: {}'.format(submission_dir))
     print('* MLPerf inference results dir: {}'.format(results_dir))
     results = [f for f in os.listdir(results_dir) if not os.path.isfile(os.path.join(results_dir, f))]

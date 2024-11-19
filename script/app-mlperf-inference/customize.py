@@ -181,12 +181,17 @@ def postprocess(i):
 
 
     if mode in [ "performance", "accuracy" ]:
-        measurements = {}
-        measurements['starting_weights_filename'] = env.get('CM_ML_MODEL_STARTING_WEIGHTS_FILENAME', env.get('CM_ML_MODEL_FILE', ''))
-        measurements['retraining'] = env.get('CM_ML_MODEL_RETRAINING','no')
-        measurements['input_data_types'] = env.get('CM_ML_MODEL_INPUTS_DATA_TYPE', 'fp32')
-        measurements['weight_data_types'] = env.get('CM_ML_MODEL_WEIGHTS_DATA_TYPE', 'fp32')
-        measurements['weight_transformations'] = env.get('CM_ML_MODEL_WEIGHT_TRANSFORMATIONS', 'none')
+        #if measurements file exist read it
+        if os.path.exists("measurements.json"):
+            with open("measurements.json", "r") as file:
+                measurements = json.load(file)  # Load JSON data from the file
+        else:
+            measurements = {}
+        measurements['starting_weights_filename'] = env.get('CM_ML_MODEL_STARTING_WEIGHTS_FILENAME', env.get('CM_ML_MODEL_FILE', measurements.get('starting_weights_filename', '')))
+        measurements['retraining'] = env.get('CM_ML_MODEL_RETRAINING', measurements.get('retraining', 'no'))
+        measurements['input_data_types'] = env.get('CM_ML_MODEL_INPUTS_DATA_TYPE', measurements.get('input_data_types', 'fp32'))
+        measurements['weight_data_types'] = env.get('CM_ML_MODEL_WEIGHTS_DATA_TYPE', measurements.get('weight_data_types', 'fp32'))
+        measurements['weight_transformations'] = env.get('CM_ML_MODEL_WEIGHT_TRANSFORMATIONS', measurements.get('weight_transformations', 'none'))
 
         os.chdir(output_dir)
 

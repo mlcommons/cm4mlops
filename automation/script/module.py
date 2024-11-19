@@ -836,6 +836,10 @@ class CAutomation(Automation):
         script_artifact_state = meta.get('state',{})
         utils.merge_dicts({'dict1':state, 'dict2':script_artifact_state, 'append_lists':True, 'append_unique':True})
 
+        # Store the default_version in run_state -> may be overridden by variations
+        default_version = meta.get('default_version', '') #not used if version is given
+        run_state['default_version'] = default_version
+
 
 
 
@@ -956,9 +960,6 @@ class CAutomation(Automation):
                 self._merge_dicts_with_tags(add_deps_recursive, adr)
                 #Processing them again using updated deps for add_deps_recursive
                 r = update_adr_from_meta(deps, post_deps, prehook_deps, posthook_deps, add_deps_recursive, env)
-
-        default_version = meta.get('default_version', '') #not used if version is given
-        run_state['default_version'] = default_version
 
         # STEP 1100: Update deps from input
         r = update_deps_from_input(deps, post_deps, prehook_deps, posthook_deps, i)

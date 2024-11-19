@@ -331,8 +331,21 @@ variations:
 
 
 
+  nvidia-original,gptj_:
+    env:
+      BUILD_TRTLLM: 1
+
+  nvidia-original,llama2-70b_:
+    env:
+      BUILD_TRTLLM: 1
+
+  nvidia-original,mixtral-8x7b:
+    env:
+      BUILD_TRTLLM: 1
+
   nvidia-original,r4.1-dev_default,gptj_:
     docker:
+      image_name: mlperf-inference-nvidia-v4.1-dev-llm
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
@@ -351,11 +364,10 @@ variations:
             _tp-size.:
               - CM_NVIDIA_TP_SIZE
         
-    env:
-      BUILD_TRTLLM: 1
   
   nvidia-original,r4.1-dev_default,llama2-70b_:
     docker:
+      image_name: mlperf-inference-nvidia-v4.1-dev-llm
       deps:
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
@@ -873,6 +885,7 @@ variations:
 
   mixtral-8x7b,reference:
     docker:
+      image_name: mlperf-inference-mlcommons-python-implementation-mixtral-8x7b
       deps:
         - tags: get,ml-model,mixtral
           names:
@@ -1675,6 +1688,7 @@ gui:
 docker:
   use_host_group_id: True
   use_host_user_id: True
+  pass_user_group: True #useful if docker is run by a different user fromt he one who built it and under the same group
   deps:
     - tags: get,mlperf,inference,results,dir,local
       names:
@@ -1690,6 +1704,7 @@ docker:
   pre_run_cmds:
     #- cm pull repo && cm run script --tags=get,git,repo,_repo.https://github.com/GATEOverflow/inference_results_v4.0.git --update
     - cm pull repo
+    - cm rm cache --tags=inference,src -f
   mounts:
    - "${{ CM_DATASET_IMAGENET_PATH }}:${{ CM_DATASET_IMAGENET_PATH }}"
    - "${{ CM_DATASET_OPENIMAGES_PATH }}:${{ CM_DATASET_OPENIMAGES_PATH }}"
