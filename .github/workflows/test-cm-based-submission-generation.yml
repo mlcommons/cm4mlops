@@ -17,7 +17,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: [ "3.12" ]
-        division: ["closed", "open", "open-closed"]
+        division: ["closed", "open", "closed-open"]
         category: ["datacenter", "edge"]
         case: ["case-3", "case-7", "case-8"]
         action: ["run", "docker"]
