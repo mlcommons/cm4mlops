@@ -322,9 +322,10 @@ def generate_submission(i):
                 user_conf_path = os.path.join(result_scenario_path, "user.conf")
                 if os.path.exists(user_conf_path):
                     shutil.copy(user_conf_path, os.path.join(measurement_scenario_path, 'user.conf'))
+                    user_conf_copied = True
                 else:
-                    return {"return":1, "error":f"user.conf missing in path {result_scenario_path}"}
-                    
+                    user_conf_copied = False
+                    print(f"WARNING: user.conf missing in path {result_scenario_path}, CM will search for it under the peformance run directory. If not found, the script will trigger error.")                    
 
                 measurements_json_path = os.path.join(result_scenario_path, "measurements.json")
                 # get model precision
@@ -413,6 +414,13 @@ def generate_submission(i):
 
                     #if division == "closed" and not os.path.isdir(submission_compliance_path):
                     #    os.makedirs(submission_compliance_path)
+
+                    if not user_conf_copied:
+                        user_conf_path = os.path.join(result_mode_path, "user.conf")
+                        if os.path.exists(user_conf_path):
+                            shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
+                        else:
+                            return {"return":1, "error":f"user.conf missing in both paths: {user_conf_path} and {os.path.join(result_scenario_path, "user.conf")}"}
                     
                     files = []
                     readme = False
