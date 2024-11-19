@@ -492,7 +492,7 @@ def postprocess(i):
 
     submission_divisions = [] 
     
-    if env.get('CM_MLPERF_SUBMISSION_DIVISION', '') == "open-closed":
+    if env.get('CM_MLPERF_SUBMISSION_DIVISION', '') in ["open-closed", "closed-open"]:
         submission_divisions = ["open", "closed"]
     elif env.get('CM_MLPERF_SUBMISSION_DIVISION', '') != '':
         submission_divisions.append(env['CM_MLPERF_SUBMISSION_DIVISION'])
