@@ -238,6 +238,20 @@ def generate_submission(env, state, inp, submission_division):
         compliance_path = os.path.join(path_submission, "compliance", sub_res)
         system_path = os.path.join(path_submission, "systems")
         submission_system_path = system_path
+
+        if env.get('CM_GET_PLATFORM_DETAILS', '') == "yes":
+            cm_input = {'action': 'run',
+                        'automation': 'script',
+                        'tags': 'get,platform,details',
+                        'adr': '',
+                        'print_deps': True,
+                        'env': {'CM_PLATFORM_DETAILS_FILE_PATH':f"{measurement_path}/system_info.txt"},
+                        'quiet': True
+                        }
+            r = cm.access(cm_input)
+            if r['return'] > 0:
+                return r
+        
         if not os.path.isdir(submission_system_path):
             os.makedirs(submission_system_path)
         system_file = os.path.join(submission_system_path, sub_res+".json")
