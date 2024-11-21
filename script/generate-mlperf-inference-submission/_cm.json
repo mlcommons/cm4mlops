@@ -69,6 +69,7 @@
     "submitter": "CM_MLPERF_SUBMITTER",
     "preprocess": "CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR",
     "preprocess_submission": "CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR",
+    "get_platform_details": "CM_GET_PLATFORM_DETAILS",
     "tar": "CM_TAR_SUBMISSION_DIR"
   },
   "default_env": {
