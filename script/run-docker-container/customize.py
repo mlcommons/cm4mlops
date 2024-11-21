@@ -186,10 +186,14 @@ def postprocess(i):
 #                return {'return': 1, 'error': 'Invalid mount {} specified'.format(mount_parts)}
 
             host_mount = mount_parts[0]
+
             if not os.path.exists(host_mount):
                 os.makedirs(host_mount)
-            if " " in host_mount and not host_mount.startswith('"'):
-                mount_cmds[i] = f"\"{host_mount}\":{mount_parts[1]}"
+
+            abs_host_mount = os.path.abspath(mount_parts[0])
+
+            if abs_host_mount != host_mount or " " in abs_host_mount and not host_mount.startswith('"'):
+                mount_cmds[i] = f"\"{abs_host_mount}\":{mount_parts[1]}"
 
         mount_cmd_string = " -v " + " -v ".join(mount_cmds)
     else:
