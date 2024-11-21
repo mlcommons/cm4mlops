@@ -19,7 +19,7 @@ jobs:
         python-version: [ "3.12" ]
         division: ["closed", "open", "closed-open"]
         category: ["datacenter", "edge"]
-        case: ["case-3", "case-7", "case-8", "closed", "closed-no-compliance", "closed-power", "closed-failed-power-logs"]
+        case: ["closed", "closed-no-compliance", "closed-power", "closed-failed-power-logs", "case-3", "case-7", "case-8"]
         action: ["run", "docker"]
         exclude:
           - os: macos-latest
@@ -62,6 +62,6 @@ jobs:
         fi
         # Dynamically set the log group to simulate a dynamic step name
         echo "::group::$description"
-        cm ${{ matrix.action }} script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=$PWD/submission_generation_tests/${{ matrix.case }}/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet $extra_run_args
+        cm ${{ matrix.action }} script --tags=generate,inference,submission --adr.submission-checker-src.tags=_branch.dev --clean --preprocess_submission=yes --results_dir=$PWD/submission_generation_tests/${{ matrix.case }}/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet $extra_run_args
         echo "::endgroup::"
   
