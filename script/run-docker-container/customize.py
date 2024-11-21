@@ -214,8 +214,8 @@ def postprocess(i):
         if existing_container_id:
             CMD = f"ID={existing_container_id} && docker exec $ID bash -c '" + run_cmd + "'"
         else:
-            CONTAINER="docker run -dt "+ run_opts + " --rm " + docker_image_repo + "/" + docker_image_name + ":" + docker_image_tag + " bash"
-            CMD = "ID=`" + CONTAINER + "` && docker exec $ID bash -c '" + run_cmd + "'"
+            CONTAINER=f"docker run -dt {run_opts} --rm  {docker_image_repo}/{docker_image_name}:{docker_image_tag} bash"
+            CMD = f"ID=`{CONTAINER}` && docker exec $ID bash -c '{run_cmd}'"
 
             if False and str(env.get('CM_KEEP_DETACHED_CONTAINER', '')).lower() not in [ 'yes', "1", 'true' ]:
                 CMD +=  " && docker kill $ID >/dev/null"
@@ -232,7 +232,18 @@ def postprocess(i):
         record_script({'cmd':CMD, 'env': env})
 
         print ('')
-        docker_out = subprocess.check_output(CMD, shell=True).decode("utf-8")
+        # Execute the command
+        try:
+            result = subprocess.run(CMD, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            print("Command Output:", result.stdout)
+        except subprocess.CalledProcessError as e:
+            print("Error Occurred!")
+            print(f"Command: {e.cmd}")
+            print(f"Return Code: {e.returncode}")
+            print(f"Error Output: {e.stderr}")
+            return {'return': 1, 'error': e.stderr}
+
+        docker_out = result.stdout
         #if docker_out != 0:
         #    return {'return': docker_out, 'error': 'docker run failed'}
 
