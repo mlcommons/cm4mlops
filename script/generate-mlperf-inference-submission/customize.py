@@ -405,7 +405,7 @@ def generate_submission(env, state, inp, submission_division):
                                 files.append(f)
                             elif f == "spl.txt":
                                 files.append(f)
-                            elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt" ] and mode == "performance":
+                            elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt", "cm-deps.png", "cm-deps.mmd" ] and mode == "performance":
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, f))
                                 if f == "system_info.txt" and not platform_info_file:
                                     platform_info_file = os.path.join(result_mode_path, f)
