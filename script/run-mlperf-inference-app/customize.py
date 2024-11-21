@@ -109,7 +109,7 @@ def preprocess(i):
 
     
     test_list = ["TEST01"]
-    if env['CM_MODEL']  in ["resnet50"]:
+    if env['CM_MODEL']  in ["resnet50", "sdxl"]:
         test_list.append("TEST04")
     if "gpt" in env['CM_MODEL'] or "llama2-70b" in env['CM_MODEL'] or "mixtral-8x7b" in env['CM_MODEL']:
         test_list.remove("TEST01")
