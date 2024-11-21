@@ -9,7 +9,7 @@
   "accelerator_on-chip_memories": "",
   "accelerators_per_node": "0",
   "cooling": "air",
-  "division": "open",
+  "division": "closed",
   "host_memory_configuration": "undefined",
   "host_networking": "Gig Ethernet",
   "host_network_card_count": "1",
