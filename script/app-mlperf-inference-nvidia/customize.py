@@ -235,6 +235,11 @@ def preprocess(i):
                     env['CM_REQUIRE_SDXL_MODEL_DOWNLOAD'] = 'yes'
                     cmds.append(f"make download_model BENCHMARKS='{model_name}'")
                     break
+            if scenario.lower() == "singlestream":
+                ammo_model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'SDXL', 'ammo_models', 'unetxl.int8', 'unet.onnx')
+                if not os.path.exists(ammo_model_path):
+                    env['CM_REQUIRE_SDXL_MODEL_DOWNLOAD'] = 'yes'
+                    cmds.append(f"make download_model BENCHMARKS='{model_name}'")
         else:
             return {'return':0}
 
@@ -252,7 +257,7 @@ def preprocess(i):
             cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
     
     else:
-        scenario=env['CM_MLPERF_LOADGEN_SCENARIO'].lower()
+        scenario=scenario.lower()
 
         if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy":
             test_mode = "AccuracyOnly"
