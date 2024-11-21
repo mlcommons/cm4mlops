@@ -2,7 +2,7 @@ from cmind import utils
 import os
 import json
 import shutil
-import cmind
+import cmind 
 import sys
 from tabulate import tabulate
 import mlperf_utils
@@ -248,7 +248,7 @@ def generate_submission(env, state, inp, submission_division):
                         'env': {'CM_PLATFORM_DETAILS_FILE_PATH':f"{measurement_path}/system_info.txt"},
                         'quiet': True
                         }
-            r = cm.access(cm_input)
+            r = cmind.access(cm_input)
             if r['return'] > 0:
                 return r
         
