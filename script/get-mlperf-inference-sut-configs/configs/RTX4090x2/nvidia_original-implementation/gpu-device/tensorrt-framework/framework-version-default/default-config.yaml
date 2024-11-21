@@ -37,6 +37,6 @@
       target_qps: 7
   sdxl:
     Offline:
-      target_qps: 2
+      target_qps: 1.3
     Server:
-      target_qps: 1
+      target_qps: 0.6
