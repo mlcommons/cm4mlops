@@ -28,6 +28,9 @@ deps:
 
 - tags: get,generic-python-lib,_package.tqdm
 - tags: get,generic-python-lib,_package.pandas
+- tags: get,generic-python-lib,_package.numpy
+  version_max: 1.22
+  version_max_usable: 1.22
 
 - force_env_keys:
   - CM_GIT_*
