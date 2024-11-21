@@ -239,6 +239,9 @@ def generate_submission(env, state, inp, submission_division):
         system_path = os.path.join(path_submission, "systems")
         submission_system_path = system_path
 
+        if not os.path.isdir(measurement_path):
+            os.makedirs(measurement_path)
+
         if env.get('CM_GET_PLATFORM_DETAILS', '') == "yes":
             cm_input = {'action': 'run',
                         'automation': 'script',
