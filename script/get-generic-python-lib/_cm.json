@@ -68,6 +68,7 @@
     "get",
     "install",
     "generic",
+    "pip-package",
     "generic-python-lib"
   ],
   "tags_help": "get generic-python-lib",
