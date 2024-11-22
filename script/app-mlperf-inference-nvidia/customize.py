@@ -72,8 +72,15 @@ def preprocess(i):
 
     elif "stable-diffusion" in env["CM_MODEL"]:
         target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'coco', 'SDXL')
-        if not os.path.exists(target_data_path):
-            os.makedirs(target_data_path)
+        tsv_file = os.path.join(target_data_path, "captions_5k_final.tsv")
+        if os.path.exists(tsv_file):
+            with open(tsv_file, "r") as file:
+                line_count = sum(1 for line in file)
+            if env.get('CM_MLPERF_SUBMISSION_GENERATION_STYLE', '') == 'full':
+                if line_count < 5000:
+                    shutil.rmtree(target_data_path)
+        if not os.path.exists(tsv_file):
+            os.makedirs(target_data_path, exist_ok=True)
             #cmds.append("make download_data BENCHMARKS='stable-diffusion-xl'")
             env['CM_REQUIRE_COCO2014_DOWNLOAD'] = 'yes'
             cmds.append(f"cp -r \$CM_DATASET_PATH_ROOT/captions/captions.tsv {target_data_path}/captions_5k_final.tsv" )
