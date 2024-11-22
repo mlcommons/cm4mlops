@@ -94,7 +94,7 @@ def preprocess(i):
             env['CM_MLPERF_LOADGEN_SCENARIO'] = "Offline"
 
     if env.get('CM_MLPERF_LOADGEN_ALL_SCENARIOS', '') == "yes":
-        env['CM_MLPERF_LOADGEN_SCENARIOS'] = get_valid_scenarios(env['CM_MODEL'], system_meta['system_type'], env['CM_MLPERF_LAST_RELEASE'], env['CM_MLPERF_INFERENCE_SOURCE'])
+        env['CM_MLPERF_LOADGEN_SCENARIOS'] = get_valid_scenarios(env['CM_MODEL'], system_meta.get('system_type', 'edge'), env['CM_MLPERF_LAST_RELEASE'], env['CM_MLPERF_INFERENCE_SOURCE'])
     else:
         system_meta = {}
         env['CM_MLPERF_LOADGEN_SCENARIOS'] = [ env['CM_MLPERF_LOADGEN_SCENARIO'] ]
