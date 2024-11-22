@@ -72,6 +72,12 @@ def preprocess(i):
 
     elif "stable-diffusion" in env["CM_MODEL"]:
         target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'coco', 'SDXL')
+        if os.path.exists(target_data_path):
+            with open(target_data_path, "r") as file:
+                line_count = sum(1 for line in file)
+            if env.get('CM_MLPERF_SUBMISSION_GENERATION_STYLE', '') == 'full':
+                if line_count < 5000:
+                    shutil.rmtree(target_data_path)
         if not os.path.exists(target_data_path):
             os.makedirs(target_data_path)
             #cmds.append("make download_data BENCHMARKS='stable-diffusion-xl'")
