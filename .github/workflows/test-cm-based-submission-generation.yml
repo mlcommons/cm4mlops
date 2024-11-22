@@ -81,7 +81,7 @@ jobs:
         echo "::group::$description"
         cm ${{ matrix.action }} script --tags=generate,inference,submission --adr.submission-checker-src.tags=_branch.dev --clean --preprocess_submission=yes --results_dir=$PWD/submission_generation_tests/${{ matrix.case }}/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet $extra_run_args
         
-        if [[ "${{ matrix.case }}" -eq 5 || "${{ matrix.case }}" -eq 6 ]]; then
+        if [[ "${{ matrix.case }}" == "case-5" || "${{ matrix.case }}" == "case-6" ]]; then
           # For cases 5 and 6, exit status should be 0 if cm command fails, 1 if it succeeds
           if [[ $exit_status -ne 0 ]]; then
             exit 0
