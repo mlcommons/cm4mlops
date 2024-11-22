@@ -240,6 +240,7 @@ def generate_submission(env, state, inp, submission_division):
         compliance_path = os.path.join(path_submission, "compliance", sub_res)
         system_path = os.path.join(path_submission, "systems")
         submission_system_path = system_path
+
         if not os.path.isdir(submission_system_path):
             os.makedirs(submission_system_path)
         system_file = os.path.join(submission_system_path, sub_res+".json")
@@ -273,6 +274,8 @@ def generate_submission(env, state, inp, submission_division):
 
             print('* MLPerf inference model: {}'.format(model))
             for scenario in scenarios:
+                # the system_info.txt is copied from the mode directory if found, else it would be looked under scenario directory
+                system_info_from_mode = False
                 results[model][scenario] = {}
                 result_scenario_path = os.path.join(result_model_path, scenario)
                 submission_scenario_path = os.path.join(submission_model_path, scenario)
@@ -429,6 +432,8 @@ def generate_submission(env, state, inp, submission_division):
                             elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt", "cm-deps.png", "cm-deps.mmd" ] and mode == "performance":
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, f))
                                 if f == "system_info.txt" and not platform_info_file:
+                                    # the first found system_info.txt will be taken as platform info file for a specific model to be placed in 
+                                    # measurements-model folder when generating the final submission 
                                     platform_info_file = os.path.join(result_mode_path, f)
                             elif f in [ "console.out" ]:
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, mode+"_"+f))
@@ -445,6 +450,9 @@ def generate_submission(env, state, inp, submission_division):
                         p_target = os.path.join(submission_results_path, f)
                         shutil.copy(os.path.join(result_mode_path, f), p_target)
 
+                if os.path.exists(os.path.join(result_scenario_path, "system_info.txt")):
+                    shutil.copy(os.path.join(result_scenario_path, "system_info.txt"), os.path.join(submission_measurement_path, f))
+                    platform_info_file = os.path.join(result_scenario_path, "system_info.txt")
 
                 readme_file = os.path.join(submission_measurement_path, "README.md")
                 if not os.path.exists(readme_file):
@@ -459,24 +467,39 @@ def generate_submission(env, state, inp, submission_division):
                 with open(readme_file, mode='a') as f:
                     f.write(result_string)
 
-            #Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
+            # Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
             sys_info_file = None
+    
             if os.path.exists(os.path.join(result_model_path, "system_info.txt")):
                 sys_info_file = os.path.join(result_model_path, "system_info.txt")
             elif platform_info_file:
                 sys_info_file = platform_info_file
+
             if sys_info_file:
                 model_platform_info_file = sys_info_file
                 shutil.copy(sys_info_file, os.path.join(measurement_model_path, "system_info.txt"))
 
         #Copy system_info.txt to the submission measurements folder if any model performance run has it
         sys_info_file = None
+    
         if os.path.exists(os.path.join(result_path, "system_info.txt")):
             sys_info_file = os.path.join(result_path, "system_info.txt")
         elif model_platform_info_file:
             sys_info_file = model_platform_info_file
+
         if sys_info_file:
             shutil.copy(sys_info_file, os.path.join(measurement_path, "system_info.txt"))
+        else:
+            if env.get('CM_GET_PLATFORM_DETAILS', '') == "yes":
+                cm_input = {'action': 'run',
+                            'automation': 'script',
+                            'tags': 'get,platform,details',
+                            'env': {'CM_PLATFORM_DETAILS_FILE_PATH': os.path.join(measurement_path, "system_info.txt")},
+                            'quiet': True
+                            }
+                r = cmind.access(cm_input)
+                if r['return'] > 0:
+                    return r
  
 
         with open(system_file, "w") as fp:
