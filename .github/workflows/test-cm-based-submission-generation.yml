@@ -19,12 +19,22 @@ jobs:
         python-version: [ "3.12" ]
         division: ["closed", "open", "closed-open"]
         category: ["datacenter", "edge"]
-        case: ["closed", "closed-no-compliance", "closed-power", "closed-failed-power-logs", "case-3", "case-7", "case-8"]
+        case: ["closed", "closed-no-compliance", "closed-power", "closed-failed-power-logs", "case-1", "case-2", "case-3", "case-7", "case-8"]
         action: ["run", "docker"]
         exclude:
           - os: macos-latest
           - os: windows-latest
           - category: "edge"
+          - case: case-1
+            division: closed
+          - case: case-1
+            division: closed-open
+          - case: case-2
+            division: closed
+          - case: case-2
+            division: closed-open
+            
+          
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
