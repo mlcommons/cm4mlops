@@ -769,8 +769,10 @@ variations:
   sdxl,nvidia-original:
     docker:
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,sdxl,_fp16,_rclone
 
@@ -778,8 +780,10 @@ variations:
     docker:
       image_name: mlperf-inference-mlcommons-python-implementation-sdxl-float16
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,sdxl,_fp16,_rclone
 
@@ -787,8 +791,10 @@ variations:
     docker:
       image_name: mlperf-inference-mlcommons-python-implementation-sdxl-bfloat16
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,sdxl,_fp16,_rclone
 
@@ -796,8 +802,10 @@ variations:
     docker:
       image_name: mlperf-inference-mlcommons-python-implementation-sdxl-float32
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,sdxl,_fp32,_rclone
 
@@ -849,8 +857,10 @@ variations:
     docker:
       image_name: mlperf-inference-mlcommons-python-implementation-llama2-70b
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,llama2
 
@@ -860,8 +870,10 @@ variations:
       mounts:
         - "${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }}:${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }"
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,llama2,_amd,_pytorch
   
@@ -901,8 +913,10 @@ variations:
           names:
           - ml-model
           - mixtral-model
-          enable_if_env:
+          enable_if_any_env:
             CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
         - tags: get,dataset-mixtral,openorca-mbxp-gsm8k-combined
           names:

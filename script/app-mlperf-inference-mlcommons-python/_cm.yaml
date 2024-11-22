@@ -959,7 +959,6 @@ variations:
       - tags: get,generic-python-lib,_package.scipy
         names:
           - scipy
-        version: 1.10.1
 
   llama2-70b_:
     env:

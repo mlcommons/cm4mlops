@@ -213,7 +213,7 @@ def postprocess(i):
         if env.get("CM_MLPERF_PRINT_SUMMARY", "").lower() not in [ "no", "0", "false"]:
             print("\n")
             print(mlperf_log_summary)
-
+        
         with open ("measurements.json", "w") as fp:
             json.dump(measurements, fp, indent=2)
 
@@ -243,10 +243,10 @@ def postprocess(i):
 
         if os.path.exists(env['CM_MLPERF_CONF']):
             shutil.copy(env['CM_MLPERF_CONF'], 'mlperf.conf')
-
+            
         if os.path.exists(env['CM_MLPERF_USER_CONF']):
             shutil.copy(env['CM_MLPERF_USER_CONF'], 'user.conf')
-
+    
         result, valid, power_result = mlperf_utils.get_result_from_log(env['CM_MLPERF_LAST_RELEASE'], model, scenario, output_dir, mode, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
         power = None
         power_efficiency = None
