@@ -231,6 +231,8 @@ variations:
         tags: _full
       openorca-preprocessed:
         tags: _full
+      coco2014-dataset:
+        tags: _full
     env:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: full
     group: submission-generation-style
