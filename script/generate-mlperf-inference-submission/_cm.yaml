@@ -83,6 +83,7 @@ input_mapping:
   submitter: CM_MLPERF_SUBMITTER
   sw_notes_extra: CM_MLPERF_SUT_SW_NOTES_EXTRA
   tar: CM_TAR_SUBMISSION_DIR
+  get_platform_details: CM_GET_PLATFORM_DETAILS
 post_deps:
 - enable_if_env:
     CM_RUN_MLPERF_ACCURACY:
