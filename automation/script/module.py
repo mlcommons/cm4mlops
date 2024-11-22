@@ -64,6 +64,8 @@ class CAutomation(Automation):
 
         self.input_flags_converted_to_env = ['input',
                                              'output',
+                                             'outdirname',
+                                             'outbasename',
                                              'name',
                                              'extra_cache_tags',
                                              'skip_compile',
