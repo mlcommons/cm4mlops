@@ -93,18 +93,18 @@ def generate_submission(env, state, inp, submission_division):
     if system_meta_default['framework'] == '':
         system_meta_default['framework'] = "pytorch"
     
-    system_meta = {}
+    system_meta_tmp = {}
     if 'CM_MLPERF_SUBMISSION_SYSTEM_TYPE' in env:
-        system_meta['system_type'] = env['CM_MLPERF_SUBMISSION_SYSTEM_TYPE']
+        system_meta_tmp['system_type'] = env['CM_MLPERF_SUBMISSION_SYSTEM_TYPE']
 
     if submission_division != "":
-        system_meta['division'] = submission_division 
+        system_meta_tmp['division'] = submission_division 
         division = submission_division
     else:
         division = system_meta_default['division']
 
     if 'CM_MLPERF_SUBMISSION_CATEGORY' in env:
-        system_meta['system_type'] = env['CM_MLPERF_SUBMISSION_CATEGORY'].replace("-", ",")
+        system_meta_tmp['system_type'] = env['CM_MLPERF_SUBMISSION_CATEGORY'].replace("-", ",")
 
     duplicate= (env.get('CM_MLPERF_DUPLICATE_SCENARIO_RESULTS', 'no') in ["yes", "True"])
 
@@ -121,7 +121,7 @@ def generate_submission(env, state, inp, submission_division):
     # Check submitter
     if env.get('CM_MLPERF_SUBMITTER'):
         submitter = env['CM_MLPERF_SUBMITTER']
-        system_meta['submitter'] = submitter
+        system_meta_tmp['submitter'] = submitter
     else:
         submitter = system_meta_default['submitter']
         env['CM_MLPERF_SUBMITTER'] = submitter
@@ -129,15 +129,15 @@ def generate_submission(env, state, inp, submission_division):
     print('* MLPerf inference submitter: {}'.format(submitter))
 
     if 'Collective' not in system_meta_default.get('sw_notes'):
-        system_meta['sw_notes'] =  "Automated by MLCommons CM v{}. ".format(cmind.__version__) + system_meta_default['sw_notes']
+        system_meta_tmp['sw_notes'] =  "Automated by MLCommons CM v{}. ".format(cmind.__version__) + system_meta_default['sw_notes']
 
     if env.get('CM_MLPERF_SUT_SW_NOTES_EXTRA','') != '':
-        sw_notes = f"{system_meta['sw_notes']} {env['CM_MLPERF_SUT_SW_NOTES_EXTRA']}"
-        system_meta['sw_notes'] = sw_notes
+        sw_notes = f"{system_meta_tmp['sw_notes']} {env['CM_MLPERF_SUT_SW_NOTES_EXTRA']}"
+        system_meta_tmp['sw_notes'] = sw_notes
 
     if env.get('CM_MLPERF_SUT_HW_NOTES_EXTRA','') != '':
-        hw_notes = f"{system_meta['hw_notes']} {env['CM_MLPERF_SUT_HW_NOTES_EXTRA']}"
-        system_meta['hw_notes'] = hw_notes
+        hw_notes = f"{system_meta_tmp['hw_notes']} {env['CM_MLPERF_SUT_HW_NOTES_EXTRA']}"
+        system_meta_tmp['hw_notes'] = hw_notes
 
     path_submission=os.path.join(path_submission_division, submitter)
     if not os.path.isdir(path_submission):
@@ -149,6 +149,8 @@ def generate_submission(env, state, inp, submission_division):
     code_path = os.path.join(path_submission, "code")
 
     for res in results:
+        system_meta = {}
+        system_meta.update(system_meta_tmp)
         result_path = os.path.join(results_dir, res)
         # variable to check whether the sut_meta.json is present in the root folder
         saved_system_meta_file_path = os.path.join(result_path, 'system_meta.json')
@@ -298,6 +300,9 @@ def generate_submission(env, state, inp, submission_division):
                 if not all([os.path.exists(os.path.join(result_scenario_path, "performance", "run_1", f)) for f in files_to_check]):
                     continue
 
+                if not os.path.isdir(measurement_scenario_path):
+                        os.makedirs(measurement_scenario_path)                
+
                 for mode in modes:
                     result_mode_path = os.path.join(result_scenario_path, mode)
                     submission_mode_path = os.path.join(submission_scenario_path, mode)
@@ -309,9 +314,6 @@ def generate_submission(env, state, inp, submission_division):
                         submission_results_path = submission_mode_path
                     if os.path.exists(submission_results_path):
                         shutil.rmtree(submission_results_path)
-
-                    if not os.path.isdir(submission_measurement_path):
-                        os.makedirs(submission_measurement_path)
 
                     if mode=='performance':
 
@@ -345,17 +347,26 @@ def generate_submission(env, state, inp, submission_division):
                         submission_results_path=os.path.join(submission_mode_path, 'run_1')
 
                         if not os.path.exists(saved_system_meta_file_path):
-                            saved_system_meta_file_path = os.path.join(result_mode_path, "system_meta.json")
-                            if os.path.exists(saved_system_meta_file_path):
-                                with open(saved_system_meta_file_path, "r") as f:
-                                    saved_system_meta = json.load(f)
-                                    for key in list(saved_system_meta):
-                                        if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
-                                            del(saved_system_meta[key])
-                                    system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
+                            if os.path.exists(os.path.join(result_mode_path, "system_meta.json")):
+                                saved_system_meta_file_path = os.path.join(result_mode_path, "system_meta.json")
                             else:
-                                print("WARNING: system_meta.json was not found in the performance run directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
-                            system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
+                                print("WARNING: system_meta.json was not found in the SUT root or mode directory inside the results folder. CM is automatically creating one using the system defaults. Please modify them as required.")
+                        if os.path.exists(saved_system_meta_file_path):
+                            with open(saved_system_meta_file_path, "r") as f:
+                                saved_system_meta = json.load(f)
+                                for key in list(saved_system_meta):
+                                    if saved_system_meta[key]==None or str(saved_system_meta[key]).strip() == '':
+                                        del(saved_system_meta[key])
+                                if saved_system_meta["division"] != "" and submission_division == "":
+                                    system_meta["division"] = saved_system_meta["division"]
+                                system_meta = {**saved_system_meta, **system_meta} #override the saved meta with the user inputs
+                        system_meta = {**system_meta_default, **system_meta} #add any missing fields from the defaults, if system_meta.json is not detected, default one will be written
+                        print(system_meta)
+                        # check if framework version is there in system_meta, if not try to fill it from sut_info
+                        if system_meta['framework'] == "":
+                            system_meta['framework'] = sut_info.get('framework', '') + sut_info.get('framework_version', '')
+                            if system_meta['framework'] == "":
+                                print("WARNING: framework field could not be filled from system_meta.json or sut_info.json. This will trigger error in submission checker")
 
                     if not os.path.isdir(submission_results_path):
                         os.makedirs(submission_results_path)
@@ -363,23 +374,33 @@ def generate_submission(env, state, inp, submission_division):
                     #if division == "closed" and not os.path.isdir(submission_compliance_path):
                     #    os.makedirs(submission_compliance_path)
 
-                    mlperf_inference_conf_path = os.path.join(result_mode_path, "mlperf.conf")
-                    if os.path.exists(mlperf_inference_conf_path):
-                        shutil.copy(mlperf_inference_conf_path, os.path.join(submission_measurement_path, 'mlperf.conf'))
-                    user_conf_path = os.path.join(result_mode_path, "user.conf")
+                    user_conf_path = os.path.join(result_scenario_path, "user.conf")   
                     if os.path.exists(user_conf_path):
-                        shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
-                    measurements_json_path = os.path.join(result_mode_path, "measurements.json")
-                    # get model precision
-                    model_precision = "fp32"
+                        shutil.copy(user_conf_path, os.path.join(measurement_scenario_path, 'user.conf'))
+                    else:
+                        user_conf_path = os.path.join(result_mode_path, "user.conf")
+                        if os.path.exists(user_conf_path):
+                            shutil.copy(user_conf_path, os.path.join(submission_measurement_path, 'user.conf'))
+                        else:
+                            if mode.lower() == "performance":
+                                return {"return":1, "error":f"user.conf missing in both paths: {user_conf_path} and {os.path.join(result_scenario_path, 'user.conf')}"}
+
+                    measurements_json_path = os.path.join(result_scenario_path, "measurements.json")
+                    target_measurement_json_path = measurement_scenario_path
+                    if not os.path.exists(measurements_json_path):
+                        measurements_json_path = os.path.join(result_mode_path, "measurements.json")
+                        target_measurement_json_path = submission_measurement_path
+                    
                     if os.path.exists(measurements_json_path):
                         with open(measurements_json_path, "r") as f:
                             measurements_json = json.load(f)
                             model_precision = measurements_json.get("weight_data_types", "fp32")
-                    if os.path.exists(measurements_json_path):
-                        # This line can be removed once the PR in the inference repo is merged.
-                        shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, sub_res+'.json'))
-                        shutil.copy(measurements_json_path, os.path.join(submission_measurement_path, 'model-info.json'))
+                        shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, sub_res+'.json'))
+                        shutil.copy(measurements_json_path, os.path.join(target_measurement_json_path, 'model-info.json'))
+                    else:
+                        if mode.lower() == "performance":
+                            return {"return":1, "error":f"measurements.json missing in both paths: {measurements_json_path} and {os.path.join(result_scenario_path, 'user.conf')}"}
+                            
                     files = []
                     readme = False
 
@@ -408,7 +429,7 @@ def generate_submission(env, state, inp, submission_division):
                                 files.append(f)
                             elif f == "spl.txt":
                                 files.append(f)
-                            elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt" ] and mode == "performance":
+                            elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt", "cm-deps.png", "cm-deps.mmd" ] and mode == "performance":
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, f))
                                 if f == "system_info.txt":
                                     system_info_from_mode = True
