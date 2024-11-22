@@ -431,8 +431,6 @@ def generate_submission(env, state, inp, submission_division):
                                 files.append(f)
                             elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt", "cm-deps.png", "cm-deps.mmd" ] and mode == "performance":
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, f))
-                                if f == "system_info.txt":
-                                    system_info_from_mode = True
                                 if f == "system_info.txt" and not platform_info_file:
                                     # the first system_info.txt would be taken as platform info file for a specific model to be placed in 
                                     # measurements-model folder when generating the final submission 
@@ -452,10 +450,9 @@ def generate_submission(env, state, inp, submission_division):
                         p_target = os.path.join(submission_results_path, f)
                         shutil.copy(os.path.join(result_mode_path, f), p_target)
 
-                if os.path.exists(os.path.join(result_scenario_path, "system_info.txt")) and not system_info_from_mode:
+                if os.path.exists(os.path.join(result_scenario_path, "system_info.txt")):
                     shutil.copy(os.path.join(result_scenario_path, "system_info.txt"), os.path.join(submission_measurement_path, f))
-                    if not platform_info_file:
-                        platform_info_file = os.path.join(result_scenario_path, "system_info.txt")
+                    platform_info_file = os.path.join(result_scenario_path, "system_info.txt")
 
                 readme_file = os.path.join(submission_measurement_path, "README.md")
                 if not os.path.exists(readme_file):
@@ -472,10 +469,11 @@ def generate_submission(env, state, inp, submission_division):
 
             # Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
             sys_info_file = None
-            if platform_info_file:
-                sys_info_file = platform_info_file
-            elif os.path.exists(os.path.join(result_model_path, "system_info.txt")):
+    
+            if os.path.exists(os.path.join(result_model_path, "system_info.txt")):
                 sys_info_file = os.path.join(result_model_path, "system_info.txt")
+            elif platform_info_file:
+                sys_info_file = platform_info_file
 
             if sys_info_file:
                 # The first system_info file found would also be taken as the one for copying to SUT folder
@@ -485,10 +483,11 @@ def generate_submission(env, state, inp, submission_division):
 
         #Copy system_info.txt to the submission measurements folder if any model performance run has it
         sys_info_file = None
-        if model_platform_info_file:
-            sys_info_file = model_platform_info_file
-        elif os.path.exists(os.path.join(result_path, "system_info.txt")):
+    
+        if os.path.exists(os.path.join(result_path, "system_info.txt")):
             sys_info_file = os.path.join(result_path, "system_info.txt")
+        elif model_platform_info_file:
+            sys_info_file = model_platform_info_file
 
         if sys_info_file:
             shutil.copy(sys_info_file, os.path.join(measurement_path, "system_info.txt"))
