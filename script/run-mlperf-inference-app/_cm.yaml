@@ -233,12 +233,6 @@ variations:
         tags: _full
       coco2014-dataset:
         tags: _full
-    deps:
-      - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
-        extra_cache_rm_tags: -_full
-        enable_if_env:
-          CM_MLPERF_IMPLEMENTATION:
-            - nvidia
     env:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: full
     group: submission-generation-style
