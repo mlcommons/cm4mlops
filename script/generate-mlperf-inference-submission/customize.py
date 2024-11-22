@@ -432,7 +432,7 @@ def generate_submission(env, state, inp, submission_division):
                             elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt", "cm-deps.png", "cm-deps.mmd" ] and mode == "performance":
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, f))
                                 if f == "system_info.txt" and not platform_info_file:
-                                    # the first found system_info.txt would be taken as platform info file for a specific model to be placed in 
+                                    # the first found system_info.txt will be taken as platform info file for a specific model to be placed in 
                                     # measurements-model folder when generating the final submission 
                                     platform_info_file = os.path.join(result_mode_path, f)
                             elif f in [ "console.out" ]:
