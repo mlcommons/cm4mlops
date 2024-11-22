@@ -12,7 +12,6 @@ on:
 jobs:
   submission_generation:
     runs-on: ${{ matrix.os }}
-    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
@@ -57,6 +56,7 @@ jobs:
       run: |
         git clone -b submission-generation-tests https://github.com/mlcommons/inference.git submission_generation_tests
     - name: Run Submission Generation - ${{ matrix.case }} ${{ matrix.action }} ${{ matrix.category }} ${{ matrix.division }} 
+      continue-on-error: true
       run: |
         case=${{ matrix.case }}
         if [ "${{ matrix.case }}" == "case-3" ]; then
