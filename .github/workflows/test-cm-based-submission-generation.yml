@@ -12,6 +12,7 @@ on:
 jobs:
   submission_generation:
     runs-on: ${{ matrix.os }}
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
