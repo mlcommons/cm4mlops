@@ -1755,7 +1755,6 @@ class CAutomation(Automation):
                             x for x in cached_tags if not x.startswith('version-')]
                         cached_tags.append('version-' + r['version'])
 
-
                     if len(r.get('add_extra_cache_tags', [])) > 0:
                         for t in r['add_extra_cache_tags']:
                             if t not in cached_tags:
@@ -2130,7 +2129,6 @@ class CAutomation(Automation):
 
         # Check if save json to file
         if repro_prefix != '':
-
 
             with open(repro_prefix + '-README-cm.md', 'w', encoding='utf-8') as f:
                 f.write(readme)
@@ -5428,7 +5426,6 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
                             logging.info("")
                             logging.info(r['string'])
                             logging.info("")
-
 
             # Check where to report errors and failures
             repo_to_report = run_state.get(
