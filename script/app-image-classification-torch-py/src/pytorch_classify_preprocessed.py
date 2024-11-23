@@ -84,7 +84,7 @@ def main():
 
         normalize_data_bool=True
         subtract_mean_bool=False
-        
+
         from PIL import Image
 
         def load_and_resize_image(image_filepath, height, width):
@@ -115,13 +115,13 @@ def main():
                 return nchw_data
 
         BATCH_COUNT=1
-    
-    
+
+
     for batch_index in range(BATCH_COUNT):
         batch_number = batch_index+1
         if FULL_REPORT or (batch_number % 10 == 0):
             print("\nBatch {} of {}".format(batch_number, BATCH_COUNT))
-      
+
         begin_time = time.time()
 
         if image_path=='':
@@ -172,10 +172,10 @@ def main():
             for class_idx in top5_indices:
                 print("\t{}\t{}\t{}".format(class_idx, softmax_vector[class_idx], labels[class_idx]))
             print("")
-                    
+
 
     test_time = time.time() - test_time_begin
- 
+
     if BATCH_COUNT > 1:
         avg_classification_time = (total_classification_time - first_classification_time) / (images_loaded - BATCH_SIZE)
     else:

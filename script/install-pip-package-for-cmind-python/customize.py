@@ -17,7 +17,7 @@ def install(package):
     run_cmd = [sys.executable, "-m", "pip", "install", package]
     run_cmd += additional_install_options
     r = subprocess.run(run_cmd, check=True)
- 
+
     return {'return':0}
 
 def preprocess(i):

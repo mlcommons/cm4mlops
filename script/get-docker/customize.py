@@ -23,7 +23,7 @@ def preprocess(i):
                                        'env_path_key':'CM_DOCKER_BIN_WITH_PATH',
                                        'run_script_input':i['run_script_input'],
                                        'recursion_spaces':recursion_spaces})
-        if r['return'] >0 : 
+        if r['return'] >0 :
             if r['return'] == 16:
                 run_file_name = "install"
                 r = automation.run_native_script({'run_script_input':i['run_script_input'], 'env':env, 'script_name':run_file_name})

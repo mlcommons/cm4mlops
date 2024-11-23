@@ -79,14 +79,14 @@ def get_all_deps_tags(i):
                 all_deps_tags.append(v)
 
         elif type(v) == dict:
-           r = get_all_deps_tags({'meta':v, 'all_deps_tags':all_deps_tags})
-           all_deps_tags = r['all_deps_tags']
+            r = get_all_deps_tags({'meta':v, 'all_deps_tags':all_deps_tags})
+            all_deps_tags = r['all_deps_tags']
 
         elif type(v) == list:
-           for vv in v:
-               if type(vv) == dict:
-                   r = get_all_deps_tags({'meta':vv, 'all_deps_tags':all_deps_tags})
-                   all_deps_tags = r['all_deps_tags']
+            for vv in v:
+                if type(vv) == dict:
+                    r = get_all_deps_tags({'meta':vv, 'all_deps_tags':all_deps_tags})
+                    all_deps_tags = r['all_deps_tags']
 
     return {'return':0, 'all_deps_tags':all_deps_tags}
 
@@ -119,7 +119,7 @@ def make_selector(i):
             value2 = force
             if not hide:
                 st.markdown('**{}:** {}'.format(desc, str(force)))
-        
+
         else:
             if boolean:
                 v = default
@@ -173,25 +173,25 @@ def make_selector(i):
 def make_selection(st, selection, param_key, text, x_uid, force_index=0):
 
     x_meta = {}
-    
+
     if len(selection)>0:
-         selection = sorted(selection, key = lambda v: v['name'])
+        selection = sorted(selection, key = lambda v: v['name'])
 
-         if x_uid != '':
-             x_meta = selection[0]
-             st.markdown('**Selected {}:** {}'.format(text, x_meta['name']))
-         else:
-             x_selection = [{'name':''}]
-             x_selection += selection
-             
-             x_id = st.selectbox('Select {}:'.format(text),
-                                 range(len(x_selection)), 
-                                 format_func=lambda x: x_selection[x]['name'],
-                                 index = force_index,
-                                 key = param_key)
+        if x_uid != '':
+            x_meta = selection[0]
+            st.markdown('**Selected {}:** {}'.format(text, x_meta['name']))
+        else:
+            x_selection = [{'name':''}]
+            x_selection += selection
 
-             if x_id>0:
-                 x_meta = x_selection[x_id]
+            x_id = st.selectbox('Select {}:'.format(text),
+                                range(len(x_selection)),
+                                format_func=lambda x: x_selection[x]['name'],
+                                index = force_index,
+                                key = param_key)
+
+            if x_id>0:
+                x_meta = x_selection[x_id]
 
     return {'return':0, 'meta':x_meta}
 
@@ -207,7 +207,7 @@ def get_with_complex_key_safe(meta, key):
 def get_with_complex_key(meta, key):
 
     j = key.find('.')
-    
+
     if j<0:
         return meta.get(key)
 
@@ -217,4 +217,3 @@ def get_with_complex_key(meta, key):
         return None
 
     return get_with_complex_key(meta[key0], key[j+1:])
-

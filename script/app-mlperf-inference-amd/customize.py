@@ -29,7 +29,7 @@ def preprocess(i):
         env['CM_RUN_CMD'] = "bash run-llama2.sh "
     else:
         return {'return':1, 'error':'Model {} not supported'.format(env['CM_MODEL'])}
-    
+
 
     return {'return':0}
     #return {'return':1, 'error': 'Run command needs to be tested'}

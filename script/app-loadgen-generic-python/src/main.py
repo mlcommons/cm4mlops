@@ -37,9 +37,9 @@ def main(
     loadgen_expected_qps: float,
     loadgen_duration_sec: float
 ):
-    
+
     print ('=====================================================================')
-    
+
     if backend == 'onnxruntime':
         from backend_onnxruntime import XModelFactory
         from backend_onnxruntime import XModelInputSampler
@@ -56,7 +56,7 @@ def main(
 
         with open(model_cfg) as mc:
             model_cfg_dict = json.load(mc)
-    
+
     model_factory = XModelFactory(
          model_path,
          execution_provider,
@@ -67,9 +67,9 @@ def main(
          model_cfg_dict,
          model_sample_pickle
     )
-    
+
     model_dataset = XModelInputSampler(model_factory)
-    
+
     runner: ModelRunner = None
     if runner_name == "inline":
         runner = ModelRunnerInline(model_factory)
@@ -164,7 +164,7 @@ def main(
 
 if __name__ == "__main__":
     print ('')
-    
+
     logging.basicConfig(
         level=logging.DEBUG,
         format="%(asctime)s %(levelname)s %(threadName)s - %(name)s %(funcName)s: %(message)s",

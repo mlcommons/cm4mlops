@@ -101,6 +101,3 @@ for model in variation_strings:
             if r['return'] > 0:
                 print(r)
                 #exit(1)
-
-
-

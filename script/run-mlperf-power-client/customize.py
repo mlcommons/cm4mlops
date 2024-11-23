@@ -32,8 +32,8 @@ def preprocess(i):
             timestamp
 
     if 'CM_MLPERF_POWER_MAX_AMPS' in env and 'CM_MLPERF_POWER_MAX_VOLTS' in env:
-           cmd = cmd + " --max-amps " + env['CM_MLPERF_POWER_MAX_AMPS'] + \
-                " --max-volts " + env['CM_MLPERF_POWER_MAX_VOLTS']
+        cmd = cmd + " --max-amps " + env['CM_MLPERF_POWER_MAX_AMPS'] + \
+             " --max-volts " + env['CM_MLPERF_POWER_MAX_VOLTS']
 
     env['CM_MLPERF_POWER_RUN_CMD'] = cmd
 

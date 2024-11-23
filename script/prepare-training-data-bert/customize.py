@@ -19,7 +19,7 @@ def preprocess(i):
     env['CM_BERT_CONFIG_DOWNLOAD_DIR'] = os.path.join(datadir, "phase1")
     env['CM_BERT_VOCAB_DOWNLOAD_DIR'] = os.path.join(datadir, "phase1")
     env['CM_BERT_DATA_DOWNLOAD_DIR'] = os.path.join(datadir, "download")
-    
+
     env['CM_BERT_CHECKPOINT_DOWNLOAD_DIR'] = os.path.join(datadir, "phase1")
 
     if env.get("CM_TMP_VARIATION", "") == "nvidia":

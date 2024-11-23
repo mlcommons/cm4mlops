@@ -34,5 +34,5 @@ def postprocess(i):
         print(f"JSON configuration file for {network} created at {json_location}")
     else:
         return {'return':1, 'error': "JSON configuration file generation failed"}
-        
+
     return {'return':0}

@@ -20,17 +20,17 @@ def preprocess(i):
                                        'env_path_key':'CM_GITHUBCLI_BIN_WITH_PATH',
                                        'run_script_input':i['run_script_input'],
                                        'recursion_spaces':recursion_spaces})
-    if r['return'] >0 : 
-       if r['return'] == 16:
-           if env.get('CM_TMP_FAIL_IF_NOT_FOUND','').lower() == 'yes':
-               return r
+    if r['return'] >0 :
+        if r['return'] == 16:
+            if env.get('CM_TMP_FAIL_IF_NOT_FOUND','').lower() == 'yes':
+                return r
 
-           print (recursion_spaces+'    # {}'.format(r['error']))
+            print (recursion_spaces+'    # {}'.format(r['error']))
 
-           # Attempt to run installer
-           r = {'return':0, 'skip':True, 'script':{'tags':'install,github-cli'}}
+            # Attempt to run installer
+            r = {'return':0, 'skip':True, 'script':{'tags':'install,github-cli'}}
 
-       return r
+        return r
 
     found_path = r['found_path']
 

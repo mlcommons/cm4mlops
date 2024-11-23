@@ -41,7 +41,7 @@ node_name = 'efficientNMS'
 # (PluginField("score_activation", nullptr, PluginFieldType::kINT32, 1));
 # (PluginField("box_coding", nullptr, PluginFieldType::kINT32, 1));
 
-node_attrs = { 
+node_attrs = {
     "background_class": -1,
     "score_threshold" : 0.05,
     "iou_threshold" :  0.5,

@@ -20,9 +20,9 @@ def postprocess(i):
 
     env = i['env']
     if '+C_INCLUDE_PATH' not in env:
-      env['+C_INCLUDE_PATH'] = []
+        env['+C_INCLUDE_PATH'] = []
     if '+LD_LIBRARY_PATH' not in env:
-      env['+LD_LIBRARY_PATH'] = []
+        env['+LD_LIBRARY_PATH'] = []
 
     gtest_install_path = os.path.join(os.getcwd(), "install")
     env['CM_GOOGLE_TEST_SRC_PATH'] = env['CM_GIT_REPO_CHECKOUT_PATH']

@@ -34,7 +34,7 @@ def preprocess(i):
     if '+CPLUS_INCLUDE_PATH' not in env:
         env['+CPLUS_INCLUDE_PATH']  = []
 
-    env['+CPLUS_INCLUDE_PATH'].append(os.path.join(script_path, "inc")) 
+    env['+CPLUS_INCLUDE_PATH'].append(os.path.join(script_path, "inc"))
     env['+C_INCLUDE_PATH'].append(os.path.join(script_path, "inc"))
 
     # TODO: get cuda path ugly fix

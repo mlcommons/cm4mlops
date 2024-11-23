@@ -122,8 +122,8 @@ def page(st, params):
                     challenges.append({'prefix':prefix, 'name':name, 'uid':l.meta['uid']})
 
 
-            
-            
+
+
             # Show ongoing if open
             if len(ongoing)>0:
 
@@ -132,19 +132,19 @@ def page(st, params):
                 ongoing_without_hot = []
 
                 for row in ongoing:
-                     if row.get('hot', False):
-                         hot.append(row)
-                     else:
-                         ongoing_without_hot.append(row)
-                
+                    if row.get('hot', False):
+                        hot.append(row)
+                    else:
+                        ongoing_without_hot.append(row)
+
                 # Some info
                 x = '''
                      <i>
                      <small>
                      Collaborative benchmarking and optimization of AI applications and systems
-                     (latency, throughput, power consumption, accuracy, costs ...) 
+                     (latency, throughput, power consumption, accuracy, costs ...)
                      is organized by <a href="https://github.com/mlcommons/ck/blob/master/docs/taskforce.md">MLCommons</a>,
-                     <a href="https://cKnowledge.org">cKnowledge</a> 
+                     <a href="https://cKnowledge.org">cKnowledge</a>
                      and the <a href="https://cTuning.org">cTuning foundation</a>
                      and powered by <a href="{}">Collective Mind automation recipes</a>.
                      We deeply thank all our <a href="{}">participants and contributors</a>!
@@ -161,42 +161,42 @@ def page(st, params):
                     st.markdown('#### Hot challenges')
 
                     md_tmp = ''
-                    
+
                     for row in sorted(hot, key=lambda row: (int(row.get('orig_date_close', 9999999999)),
                                                                 row.get('sort', 0),
                                                                 row.get('name', ''),
                                                                 row.get('under_preparation', False)
                                                                 )):
-                         x = row['name']
-                         x = x[0].upper() + x[1:]
+                        x = row['name']
+                        x = x[0].upper() + x[1:]
 
-                         url = url_prefix + '?action=challenges&name={}'.format(row['uid'])
+                        url = url_prefix + '?action=challenges&name={}'.format(row['uid'])
 
 
-                         date_close = row.get('date_close','').strip()
-                         y = ' (Closing date: **{}**)'.format(date_close) if date_close !='' else ''
+                        date_close = row.get('date_close','').strip()
+                        y = ' (Closing date: **{}**)'.format(date_close) if date_close !='' else ''
 
-                         md_tmp += '* [{}]({}){}\n'.format(x, url, y)
-                         
+                        md_tmp += '* [{}]({}){}\n'.format(x, url, y)
+
                     st.markdown(md_tmp)
 
                     st.markdown('#### On-going challenges')
 
-                
+
                 # Continue all
                 ind = 1
 
                 data = []
-                
+
                 for row in sorted(ongoing_without_hot, key=lambda row: (int(row.get('orig_date_close', 9999999999)),
                                                             row.get('sort', 0),
                                                             row.get('name', ''),
                                                             row.get('under_preparation', False)
                                                             )):
                     if row.get('skip',False): continue
-                    
+
                     xrow = []
-                    
+
                     md = ''
                     up = row.get('under_preparation', False)
 
@@ -246,7 +246,7 @@ def page(st, params):
 #                    xrow.append(y)
 
 
-                    
+
                     awards = ''
 
                     trophies = row.get('trophies',False)
@@ -264,7 +264,7 @@ def page(st, params):
 #                    xrow.append(awards)
 
 
-                    if x!='':    
+                    if x!='':
                         md += '&nbsp;&nbsp;&nbsp;&nbsp; '+x
 
 #                    st.markdown(md)
@@ -276,27 +276,27 @@ def page(st, params):
 
                 import pandas as pd
                 import numpy as np
-                
+
                 df = pd.DataFrame(data,
                                   columns=['Challenge', 'Closing&nbsp;date', 'Extension'])
-                 
+
                 df.index+=1
 
 #                st.table(df)
                 st.write(df.to_html(escape=False, justify='left'), unsafe_allow_html=True)
 
         # Show selector for all
-#        challenge = st.selectbox('View past benchmarking, optimization, reproducibility and replicability challenges:', 
-#                                 range(len(challenges)), 
+#        challenge = st.selectbox('View past benchmarking, optimization, reproducibility and replicability challenges:',
+#                                 range(len(challenges)),
 #                                 format_func=lambda x: challenges[x],
 #                                 index=0, key='challenge')
 #
 #        if challenge>0:
 #            artifact = artifacts[challenge]
-        
-        
-        
-        
+
+
+
+
         # Process 1 challenge
         if artifact is None:
 #            st.markdown('#### Past or future challenges:')
@@ -319,7 +319,7 @@ def page(st, params):
                     '''.format(str(ind), prefix, url, name)
 
                 st.write(x, unsafe_allow_html = True)
-                
+
                 ind+=1
 
 
@@ -390,7 +390,7 @@ def page(st, params):
 
             if meta.get('trophies', False):
                 z+='* **MLCommons Collective Knowledge Contributor award:** Yes\n'
-            
+
             prize_short = meta.get('prize_short','')
             if prize_short!='':
                 z+='* **Prizes:** {}\n'.format(prize_short)
@@ -430,13 +430,13 @@ def page(st, params):
                     if tags!='':
                         md+='  * '+misc.make_url(tags, action='experiments', key='tags')+'\n'
                     elif name!='':
-                       md+='  * '+misc.make_url(name, action='experiments')+'\n'
+                        md+='  * '+misc.make_url(name, action='experiments')+'\n'
 
                 z+=md+'\n'
 
             st.markdown(z)
-            
-            
+
+
             # Check if has text
             path = artifact.path
 
@@ -496,7 +496,7 @@ def page(st, params):
 
 
 
-    
-    
-    
+
+
+
     return {'return':0, 'end_html':end_html}

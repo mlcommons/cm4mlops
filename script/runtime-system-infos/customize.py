@@ -3,7 +3,7 @@ import os
 import shutil
 import psutil       # used to measure the system infos(have not tested for obtaining gpu info)
 import csv         # used to write the measurements to csv format as txt file
-from datetime import datetime, timezone        
+from datetime import datetime, timezone
 import time
 import signal
 import sys
@@ -34,7 +34,7 @@ def preprocess(i):
 
     if env.get("CM_RUN_DIR", "") == "":
         env['CM_RUN_DIR'] = os.getcwd()
-    
+
     logs_dir = env.get('CM_LOGS_DIR', env['CM_RUN_DIR'])
 
     log_json_file_path = os.path.join(logs_dir, 'sys_utilisation_info.txt')
@@ -50,7 +50,7 @@ def preprocess(i):
     csv_headers = ['timestamp', 'cpu_utilisation', 'total_memory_gb', 'used_memory_gb']
 
     # done to be made available to signal_handler function in case of kill signals
-    # as of now handles for only SIGTERM  
+    # as of now handles for only SIGTERM
     global f
     while True:
         with open(log_json_file_path, 'a', newline='') as f:

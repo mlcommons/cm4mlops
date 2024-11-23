@@ -88,7 +88,7 @@ def visualize(st, query_params, action = ''):
     if len(q_result_uid)>0:
         if q_result_uid[0]!='':
             result_uid = q_result_uid[0]
-    
+
     v_experiment_name = os.environ.get('CM_GUI_GRAPH_EXPERIMENT_NAME','')
     q_experiment_name = query_params.get('name',[''])
     if len(q_experiment_name)>0:
@@ -107,15 +107,15 @@ def visualize(st, query_params, action = ''):
         # Check default
 #        if v_experiment_tags == '' and v_experiment_name == '':
 #            v_experiment_tags = 'mlperf-inference v4.0'
-        
+
         v_experiment_tags = st.text_input('Select CM experiment tags separated by space:', value=v_experiment_tags, key='v_experiment_tags').strip()
         v_experiment_tags = v_experiment_tags.replace(',',' ')
 
     # Get all experiment names
-    ii = {'action':'find', 
+    ii = {'action':'find',
           'automation':'experiment,a0a2d123ef064bcb'}
 
-    # If name is given, do not use tags 
+    # If name is given, do not use tags
     if v_experiment_name!='':
         ii['artifact']=v_experiment_name
     elif v_experiment_tags!='':
@@ -135,7 +135,7 @@ def visualize(st, query_params, action = ''):
                                             x.meta.get('alias',''),
                                             x.meta['uid']
                                            )):
-    
+
         meta = l.meta
 
         if v_experiment_name!='' and (v_experiment_name == meta['alias'] or v_experiment_name == meta['uid']):
@@ -149,15 +149,15 @@ def visualize(st, query_params, action = ''):
         experiments.append(name)
 
         index+=1
-    
+
     if len(lst_all) == 1:
         selection = 1
 
     # Show experiment artifacts
-    experiment = st.selectbox('Select experiment from {} found:'.format(len(experiments)-1), 
-                              range(len(experiments)), 
+    experiment = st.selectbox('Select experiment from {} found:'.format(len(experiments)-1),
+                              range(len(experiments)),
                               format_func=lambda x: experiments[x],
-                              index=selection, 
+                              index=selection,
                               key='experiment')
 
 
@@ -173,7 +173,7 @@ def visualize(st, query_params, action = ''):
     results_with_password = []
     passwords = []
     results_meta = {}
-    
+
     for experiment in lst:
         path = experiment.path
 
@@ -184,7 +184,7 @@ def visualize(st, query_params, action = ''):
 
                 if os.path.isfile(path_to_result):
                     emeta = experiment.meta
-                    
+
                     desc = {'path':path_to_result,
                             'experiment_dir': d,
                             'experiment_uid':emeta['uid'],
@@ -205,7 +205,7 @@ def visualize(st, query_params, action = ''):
                                     add = True
                                     break
 
-                    if add:                
+                    if add:
                         pwd = experiment.meta.get('password_hash','')
                         if pwd=='':
                             results.append(desc)
@@ -214,7 +214,7 @@ def visualize(st, query_params, action = ''):
 
                             if pwd not in passwords:
                                 passwords.append(pwd)
-                        
+
                             results_with_password.append(desc)
 
     # Check if password
@@ -232,7 +232,7 @@ def visualize(st, query_params, action = ''):
             for result in results_with_password:
                 if result['password_hash'] == password_hash2:
                     results.append(result)
-    
+
     # How to visualize selection
     if len(results)==0:
         st.markdown('No results found!')
@@ -240,12 +240,12 @@ def visualize(st, query_params, action = ''):
 
 
     if st.session_state.get('tmp_cm_results','')=='':
-        st.session_state['tmp_cm_results']=len(results)    
+        st.session_state['tmp_cm_results']=len(results)
     elif int(st.session_state['tmp_cm_results'])!=len(results):
         st.session_state['tmp_cm_results']=len(results)
         st.session_state['how']=0
 
-    
+
     how = ''
 
     if result_uid=='':
@@ -263,13 +263,13 @@ def visualize(st, query_params, action = ''):
 
         how_selection = ['', '2d-static', '2d', 'bar']
         how_selection_desc = ['', 'Scatter plot (static)', 'Scatter plot (interactive, slow - to be improved)', 'Bar plot (static)']
-        
+
         how_index = 0
         if v_how!='' and v_how in how_selection:
             how_index = how_selection.index(v_how)
 
         how2 = st.selectbox('Select how to visualize {} CM experiment set(s):'.format(len(results)),
-                           range(len(how_selection_desc)), 
+                           range(len(how_selection_desc)),
                            format_func=lambda x: how_selection_desc[x],
                            index = how_index,
                            key = 'how')
@@ -278,7 +278,7 @@ def visualize(st, query_params, action = ''):
         if how2 == '' or how2 == 0:
             return {'return':0}
 
-        how = how_selection[how2]    
+        how = how_selection[how2]
 
     how = how.strip()
 
@@ -286,17 +286,17 @@ def visualize(st, query_params, action = ''):
     all_values = []
     keys = []
     all_data = []
-    
+
 
     derived_metrics_value = query_params.get('derived_metrics',[''])[0].strip()
-    derived_metrics_value = st.text_input("Optional: add derived metrics in Python. Example: result['Accuracy2'] = result['Accuracy']*2", 
+    derived_metrics_value = st.text_input("Optional: add derived metrics in Python. Example: result['Accuracy2'] = result['Accuracy']*2",
                                           value = derived_metrics_value).strip()
 
     for x in security:
         if x in derived_metrics_value:
             derived_metrics_value=''
             break
-    
+
     error_shown2 = False
     for desc in results:
         path_to_result = desc['path']
@@ -317,11 +317,11 @@ def visualize(st, query_params, action = ''):
 
             if derived_metrics_value!='':
                 try:
-                   exec(derived_metrics_value)
+                    exec(derived_metrics_value)
                 except Exception as e:
-                   if not error_shown2:
-                       st.markdown('*Syntax error in derived metrics: {}*'.format(e))
-                       error_shown2 = True
+                    if not error_shown2:
+                        st.markdown('*Syntax error in derived metrics: {}*'.format(e))
+                        error_shown2 = True
 
             all_values.append(result)
 
@@ -349,12 +349,12 @@ def visualize(st, query_params, action = ''):
 
         if filter_value!='':
             try:
-               if not eval(filter_value):
-                   continue
+                if not eval(filter_value):
+                    continue
             except Exception as e:
-               if not error_shown:
-                   st.markdown('*Syntax error in filter: {}*'.format(e))
-                   error_shown = True
+                if not error_shown:
+                    st.markdown('*Syntax error in filter: {}*'.format(e))
+                    error_shown = True
 
         # Check if 1 result UID is selected
         if result_uid!='' and result.get('uid','')!=result_uid:
@@ -406,8 +406,8 @@ def visualize(st, query_params, action = ''):
 
         if x!='':
             st.write('<center>\n'+x+'\n</center>\n', unsafe_allow_html = True)
-        
-        
+
+
         x = ''
         for k in sorted_keys:
             x+='* **{}**: {}\n'.format(k,str(result[k]))
@@ -457,8 +457,8 @@ def visualize(st, query_params, action = ''):
          '''.format(misc.make_url(experiment_alias_or_uid, action=action, md=False), result_uid)
 
         st.write(end_html, unsafe_allow_html=True)
-                
-        
+
+
         return {'return':0}
 
 
@@ -479,7 +479,7 @@ def visualize(st, query_params, action = ''):
         q_axis_key_x = query_params.get('x',[''])
         if len(q_axis_key_x)>0:
             if q_axis_key_x[0]!='':
-               axis_key_x = q_axis_key_x[0]
+                axis_key_x = q_axis_key_x[0]
         i_axis_key_x = 0
         if axis_key_x != '' and axis_key_x in keys: i_axis_key_x = keys.index(axis_key_x)
         if axis_key_x == '' and 'Result' in keys: i_axis_key_x = keys.index('Result')
@@ -554,7 +554,7 @@ def visualize(st, query_params, action = ''):
 
         unique_style_values = {}
 #        unique_styles = ['o','v','^','<','>','1','2','3','4','8','s','p','P','*','+','D']
-        unique_styles = ['circle', 'square', 'diamond', 'cross', 'x', 'triangle', 'pentagon', 'hexagram', 
+        unique_styles = ['circle', 'square', 'diamond', 'cross', 'x', 'triangle', 'pentagon', 'hexagram',
                          'star', 'hourglass', 'bowtie', 'asterisk', 'hash']
         i_unique_style_values = 0
 
@@ -570,12 +570,12 @@ def visualize(st, query_params, action = ''):
         for result in values:
             if filter_value!='':
                 try:
-                   if not eval(filter_value):
-                       continue
+                    if not eval(filter_value):
+                        continue
                 except Exception as e:
-                   if not error_shown:
-                       st.markdown('*Syntax error in filter: {}*'.format(e))
-                       error_shown = True
+                    if not error_shown:
+                        st.markdown('*Syntax error in filter: {}*'.format(e))
+                        error_shown = True
 
             values2.append(result)
 
@@ -597,7 +597,7 @@ def visualize(st, query_params, action = ''):
             cc = []
             ss = []
             io = []
-            
+
             t = 0
             for result in values2:
                 v = result
@@ -661,14 +661,14 @@ def visualize(st, query_params, action = ''):
                 fig = px.scatter(df, x=axis_key_x, y=axis_key_y, color=axis_key_c, symbol=axis_key_s, hover_name='info', height=1000)
 
                 st.plotly_chart(fig, theme="streamlit", use_container_width=True)
-                  
-        
+
+
 
         elif how == '2d':
             #####################################################################
             # 2D interactive graph - very slow - need to be updated
             width = 1
-            
+
             t = 0
             for result in values2:
                 v = result
@@ -720,7 +720,7 @@ def visualize(st, query_params, action = ''):
                 experiment_uid = v.get('experiment_uid','')
                 if experiment_uid!='' and experiment_uid not in experiment_uids:
                     experiment_uids.append(experiment_uid)
-                
+
                 uid = v.get('uid','')
                 if uid!='':
                     xaction = 'action={}&'.format(action) if action!='' else ''
@@ -728,7 +728,7 @@ def visualize(st, query_params, action = ''):
 
                 if url!='':
                     targets = [url]
-                    plugins.connect(fig, OpenBrowserOnClick(graph, targets = targets)) 
+                    plugins.connect(fig, OpenBrowserOnClick(graph, targets = targets))
 
             # Render graph
             fig_html = mpld3.fig_to_html(fig)
@@ -772,7 +772,7 @@ def visualize(st, query_params, action = ''):
 if __name__ == "__main__":
     r = main()
 
-    if r['return']>0: 
-       
+    if r['return']>0:
+
         st.markdown("""---""")
         st.markdown('**Error detected by CM:** {}'.format(r['error']))

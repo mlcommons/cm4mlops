@@ -102,7 +102,7 @@ def postprocess(i):
     found_path_root = os.path.dirname(found_path)
 
     if from_virtual:
-        # Clean PATH (it will be in activate script) 
+        # Clean PATH (it will be in activate script)
         # but keep LD_LIBRARY_PATH and C_INCLUDE_PATH from the native python
         for k in ['+PATH']:
             if k in env:

@@ -2,7 +2,7 @@ from cmind import utils
 import os
 
 def preprocess(i):
-    
+
     os_info = i['os_info']
     platform = os_info['platform']
 
@@ -56,13 +56,13 @@ def preprocess(i):
         new_path = os.path.join(android_home, 'cmdline-tools')
         if not os.path.isdir(new_path):
             os.makedirs(new_path)
-        
+
         os.chdir(new_path)
-        
+
         cmdline_tools_version=env.get('CM_ANDROID_CMDLINE_TOOLS_VERSION','')
 
         env['CM_ANDROID_CMDLINE_TOOLS_VERSION'] = cmdline_tools_version
-        
+
         package_url = env['CM_ANDROID_CMDLINE_TOOLS_URL']
         package_url = package_url.replace('${CM_ANDROID_CMDLINE_TOOLS_OS}', host_os_for_android)
         package_url = package_url.replace('${CM_ANDROID_CMDLINE_TOOLS_VERSION}', cmdline_tools_version)
@@ -74,8 +74,8 @@ def preprocess(i):
 
         cm = automation.cmind
 
-        r = cm.access({'action':'download_file', 
-                       'automation':'utils,dc2743f8450541e3', 
+        r = cm.access({'action':'download_file',
+                       'automation':'utils,dc2743f8450541e3',
                        'url':package_url})
         if r['return']>0: return r
 
@@ -83,8 +83,8 @@ def preprocess(i):
 
         print ('Unzipping file {}'.format(filename))
 
-        r = cm.access({'action':'unzip_file', 
-                       'automation':'utils,dc2743f8450541e3', 
+        r = cm.access({'action':'unzip_file',
+                       'automation':'utils,dc2743f8450541e3',
                        'filename':filename,
                        'strip_folders':0})
         if r['return']>0: return r
@@ -98,9 +98,9 @@ def preprocess(i):
         os.chdir(cur_dir)
 
         sdk_manager_path = os.path.join(android_home, 'cmdline-tools', 'tools', 'bin', sdk_manager_file)
-    
+
     sdk_manager_dir = os.path.dirname(sdk_manager_path)
-    
+
     env['CM_ANDROID_SDK_MANAGER_BIN'] = sdk_manager_file
     env['CM_ANDROID_SDK_MANAGER_BIN_WITH_PATH'] = sdk_manager_path
 
@@ -147,16 +147,16 @@ def preprocess(i):
     path_tools = os.path.join(android_home, 'tools')
     env['CM_ANDROID_TOOLS_PATH']=path_tools
     paths.append(path_tools)
-    
+
     android_ndk_version=env['CM_ANDROID_NDK_VERSION']
 
     # Check Android NDK
     path_ndk = os.path.join(android_home, 'ndk', android_ndk_version)
     env['CM_ANDROID_NDK_PATH']=path_ndk
     env['ANDROID_NDK_HOME']=path_ndk
-    
 
-    
+
+
     path_ndk_compiler = os.path.join(path_ndk, 'toolchains', 'llvm', 'prebuilt', host_os_for_ndk, 'bin')
     env['CM_ANDROID_LLVM_PATH']=path_ndk_compiler
     env['CM_ANDROID_LLVM_CLANG_BIN_WITH_PATH']=os.path.join(path_ndk_compiler, 'clang.exe')

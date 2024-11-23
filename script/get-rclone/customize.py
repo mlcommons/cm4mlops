@@ -53,18 +53,18 @@ def preprocess(i):
                 cur_dir = os.getcwd()
                 path_bin = os.path.join(cur_dir, file_name)
                 env['CM_RCLONE_BIN_WITH_PATH'] = path_bin
-                
-                if not env.get('+PATH', []):
-                    env['+PATH'] = []
-                env['+PATH'].append(cur_dir)
 
                 if not env.get('+PATH', []):
                     env['+PATH'] = []
                 env['+PATH'].append(cur_dir)
 
+                if not env.get('+PATH', []):
+                    env['+PATH'] = []
+                env['+PATH'].append(cur_dir)
 
-            r = automation.run_native_script({'run_script_input':run_script_input, 
-                                              'env':env, 
+
+            r = automation.run_native_script({'run_script_input':run_script_input,
+                                              'env':env,
                                               'script_name':install_script})
             if r['return']>0: return r
         else:
@@ -106,7 +106,7 @@ def postprocess(i):
         for section in config.sections():
             if section not in default_config.sections():
                 default_config[section] = config[section]
-    
+
         with open(default_config_path, 'w') as configfile:
             default_config.write(configfile)
         print({section: dict(default_config[section]) for section in default_config.sections()})
@@ -128,5 +128,5 @@ def postprocess(i):
             # Was downloaded and extracted by CM
             env['CM_RCLONE_BIN_WITH_PATH'] = path_bin
             env['+PATH']=[cur_dir]
-    
+
     return {'return':0, 'version': version}

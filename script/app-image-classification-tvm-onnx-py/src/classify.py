@@ -44,24 +44,24 @@ def resize_with_aspectratio(img, out_height, out_width, scale=87.5, inter_pol=cv
 
 # returns list of pairs (prob, class_index)
 def get_top5(all_probs):
-  probs_with_classes = []
+    probs_with_classes = []
 
-  for class_index in range(len(all_probs)):
-    prob = all_probs[class_index]
-    probs_with_classes.append((prob, class_index))
+    for class_index in range(len(all_probs)):
+        prob = all_probs[class_index]
+        probs_with_classes.append((prob, class_index))
 
-  sorted_probs = sorted(probs_with_classes, key = lambda pair: pair[0], reverse=True)
-  return sorted_probs[0:5]
+    sorted_probs = sorted(probs_with_classes, key = lambda pair: pair[0], reverse=True)
+    return sorted_probs[0:5]
 
 def run_case(dtype, image, target):
-    # Check image
+        # Check image
     import os
     import json
     import sys
 
     STAT_REPEAT=os.environ.get('STAT_REPEAT','')
     if STAT_REPEAT=='' or STAT_REPEAT==None:
-       STAT_REPEAT=10
+        STAT_REPEAT=10
     STAT_REPEAT=int(STAT_REPEAT)
 
     # FGG: set model files via CM env
@@ -137,10 +137,10 @@ def run_case(dtype, image, target):
         # Init TVM
         # TBD: add tvm platform selector
         if os.environ.get('USE_CUDA','')=='yes':
-           # TVM package must be built with CUDA enabled
-           ctx = tvm.cuda(0)
+            # TVM package must be built with CUDA enabled
+            ctx = tvm.cuda(0)
         else:
-           ctx = tvm.cpu(0)
+            ctx = tvm.cpu(0)
         tvm_ctx = ctx
 
         build_conf = {'relay.backend.use_auto_scheduler': False}
@@ -236,8 +236,8 @@ def run_case(dtype, image, target):
 
 
     else:
-       inp={inputs[0]:np.array([img], dtype=np.float32)}
-       output=sess.run(outputs, inp)
+        inp={inputs[0]:np.array([img], dtype=np.float32)}
+        output=sess.run(outputs, inp)
 
 
 
@@ -262,7 +262,7 @@ def run_case(dtype, image, target):
     }
 
     with open('tmp-ck-timer.json', 'w') as ck_results_file:
-       json.dump(ck_results, ck_results_file, indent=2, sort_keys=True)
+        json.dump(ck_results, ck_results_file, indent=2, sort_keys=True)
 
     return
 
@@ -287,6 +287,6 @@ if __name__ == '__main__':
 
     dtype='float32'
     if os.environ.get('CM_TVM_DTYPE','')!='':
-       dtype=os.environ['CM_TVM_DTYPE']
+        dtype=os.environ['CM_TVM_DTYPE']
 
     run_case(dtype, args.image, args.target)

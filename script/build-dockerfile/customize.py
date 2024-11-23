@@ -9,7 +9,7 @@ def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
-    
+
     if env["CM_DOCKER_OS"] not in [ "ubuntu", "rhel", "arch" ]:
         return {'return': 1, 'error': f"Specified docker OS: {env['CM_DOCKER_OS']}. Currently only ubuntu, rhel and arch are supported in CM docker"}
 
@@ -46,7 +46,7 @@ def preprocess(i):
                 arg=arg+"="+str(default_env[env_])
                 #build_args.append(arg)
                 #input_args.append("--"+input_+"="+"$"+env_)
- 
+
     if "CM_DOCKER_OS_VERSION" not in env:
         env["CM_DOCKER_OS_VERSION"] = "20.04"
 
@@ -58,34 +58,34 @@ def preprocess(i):
     if env.get("CM_REPO_PATH", "") != "":
         use_copy_repo = True
         cm_repo_path = os.path.abspath(env["CM_REPO_PATH"])
-        
+
         if not os.path.exists(cm_repo_path):
             return {'return': 1, 'error': f"Specified CM_REPO_PATH does not exist: {cm_repo_path}"}
-        
+
         cmr_yml_path = os.path.join(cm_repo_path, "cmr.yaml")
         if not os.path.isfile(cmr_yml_path):
             return {'return': 1, 'error': f"cmr.yaml not found in CM_REPO_PATH: {cm_repo_path}"}
-        
+
         # Define the build context directory (where the Dockerfile will be)
         build_context_dir = os.path.dirname(env.get('CM_DOCKERFILE_WITH_PATH', os.path.join(os.getcwd(), "Dockerfile")))
         os.makedirs(build_context_dir, exist_ok=True)
-        
+
         # Create cm_repo directory relative to the build context
         repo_build_context_path = os.path.join(build_context_dir, "cm_repo")
-        
+
         # Remove existing directory if it exists
         if os.path.exists(repo_build_context_path):
             shutil.rmtree(repo_build_context_path)
-            
+
         try:
             print(f"Copying repository from {cm_repo_path} to {repo_build_context_path}")
             shutil.copytree(cm_repo_path, repo_build_context_path)
         except Exception as e:
             return {'return': 1, 'error': f"Failed to copy repository to build context: {str(e)}"}
-            
+
         if not os.path.isdir(repo_build_context_path):
             return {'return': 1, 'error': f"Repository was not successfully copied to {repo_build_context_path}"}
-        
+
         # (Optional) Verify the copy
         if not os.path.isdir(repo_build_context_path):
             return {'return': 1, 'error': f"cm_repo was not successfully copied to the build context at {repo_build_context_path}"}
@@ -96,7 +96,7 @@ def preprocess(i):
     else:
         # CM_REPO_PATH is not set; use cm pull repo as before
         use_copy_repo = False
-        
+
         if env.get("CM_MLOPS_REPO", "") != "":
             cm_mlops_repo = env["CM_MLOPS_REPO"]
             # the below pattern matches both the HTTPS and SSH git link formats
@@ -114,7 +114,7 @@ def preprocess(i):
             cm_mlops_repo = "mlcommons@cm4mlops"
 
     cm_mlops_repo_branch_string = f" --branch={env['CM_MLOPS_REPO_BRANCH']}"
-    
+
     if env.get('CM_DOCKERFILE_WITH_PATH', '') == '':
         env['CM_DOCKERFILE_WITH_PATH'] = os.path.join(os.getcwd(), "Dockerfile")
 
@@ -189,7 +189,7 @@ def preprocess(i):
     if env['CM_DOCKER_OS'] == "ubuntu":
         if int(env['CM_DOCKER_OS_VERSION'].split('.')[0]) >= 23:
             if "--break-system-packages" not in env.get('CM_DOCKER_PIP_INSTALL_EXTRA_FLAGS', ''):
-              env['CM_DOCKER_PIP_INSTALL_EXTRA_FLAGS'] = " --break-system-packages"
+                env['CM_DOCKER_PIP_INSTALL_EXTRA_FLAGS'] = " --break-system-packages"
     pip_extra_flags = env.get('CM_DOCKER_PIP_INSTALL_EXTRA_FLAGS', '')
 
 
@@ -244,17 +244,17 @@ def preprocess(i):
     if use_copy_repo:
         docker_repo_dest = "/home/cmuser/CM/repos/mlcommons@cm4mlops"
         f.write(f'COPY --chown=cmuser:cm {relative_repo_path} {docker_repo_dest}' + EOL)
-        
+
         f.write(EOL + '# Register CM repository' + EOL)
         f.write('RUN cm pull repo --url={} --quiet'.format(docker_repo_dest) + EOL)
         f.write(EOL)
-    
-        
+
+
     else:
         # Use cm pull repo as before
         x = env.get('CM_DOCKER_ADD_FLAG_TO_CM_MLOPS_REPO','')
         if x!='': x=' '+x
-        
+
         f.write('RUN cm pull repo ' + cm_mlops_repo + cm_mlops_repo_branch_string + x + EOL)
 
     # Check extra repositories
@@ -288,12 +288,12 @@ def preprocess(i):
             skip_extra = True
         else:
             if str(env.get('CM_DOCKER_NOT_PULL_UPDATE', 'False')).lower() not in ["yes", "1", "true"]:
-                env['CM_DOCKER_RUN_CMD'] += "cm pull repo && " 
+                env['CM_DOCKER_RUN_CMD'] += "cm pull repo && "
             env['CM_DOCKER_RUN_CMD'] += "cm run script --tags=" + env['CM_DOCKER_RUN_SCRIPT_TAGS']+ ' --quiet'
     else:
         if str(env.get('CM_DOCKER_NOT_PULL_UPDATE', 'False')).lower() not in ["yes", "1", "true"]:
             env['CM_DOCKER_RUN_CMD']="cm pull repo && " + env['CM_DOCKER_RUN_CMD']
-    
+
     print(env['CM_DOCKER_RUN_CMD'])
     fake_run = env.get("CM_DOCKER_FAKE_RUN_OPTION"," --fake_run") + dockerfile_env_input_string
     fake_run = fake_run + " --fake_deps" if env.get('CM_DOCKER_FAKE_DEPS') else fake_run
@@ -317,7 +317,7 @@ def preprocess(i):
         if '--quiet' not in x:
             x+=' --quiet '
         x+=EOL
-        
+
         f.write(x)
 
 

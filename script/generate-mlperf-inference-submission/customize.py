@@ -20,7 +20,7 @@ def fill_from_json(file_path, keys, sut_info):
             elif key in data and sut_info[key] != data[key]:
                 return -1 # error saying there is a mismatch in the value of a key
         return sut_info
-    
+
 # Helper function to check whether all the keys(sut information) are assigned
 def check_dict_filled(keys, sut_info):
     for key in keys:
@@ -32,7 +32,7 @@ def check_dict_filled(keys, sut_info):
 def model_in_valid_models(model, mlperf_version):
     import submission_checker as checker
     config = checker.MODEL_CONFIG
-    
+
     if model not in config[mlperf_version]['models']:
         internal_model_name = config[mlperf_version]["model_mapping"].get(model, '') # resnet50 -> resnet
         if internal_model_name == '':
@@ -92,13 +92,13 @@ def generate_submission(env, state, inp, submission_division):
     # set pytorch as the default framework
     if system_meta_default['framework'] == '':
         system_meta_default['framework'] = "pytorch"
-    
+
     system_meta_tmp = {}
     if 'CM_MLPERF_SUBMISSION_SYSTEM_TYPE' in env:
         system_meta_tmp['system_type'] = env['CM_MLPERF_SUBMISSION_SYSTEM_TYPE']
 
     if submission_division != "":
-        system_meta_tmp['division'] = submission_division 
+        system_meta_tmp['division'] = submission_division
         division = submission_division
     else:
         division = system_meta_default['division']
@@ -162,7 +162,7 @@ def generate_submission(env, state, inp, submission_division):
             "framework": None,
             "framework_version": "default",
             "run_config": "default"
-        } # variable to store the system meta 
+        } # variable to store the system meta
 
         model_mapping_combined = {} # to store all the model mapping related to an SUT
 
@@ -187,7 +187,7 @@ def generate_submission(env, state, inp, submission_division):
 
         # Preprocessing part.
         # Even the model mapping json file is present in root directory, the folders are traversed
-        # and the data is updated provided not duplicated. 
+        # and the data is updated provided not duplicated.
         models = [f for f in os.listdir(result_path) if not os.path.isfile(os.path.join(result_path, f))]
         if division == "open" and len(model_mapping_combined) == 0:
             for model in models:
@@ -202,7 +202,7 @@ def generate_submission(env, state, inp, submission_division):
                             result_mode_path = os.path.join(result_scenario_path,mode)
                             if mode == "performance":
                                 compliance_performance_run_path = os.path.join(result_mode_path, "run_1")
-                                # model mapping part 
+                                # model mapping part
                                 tmp_model_mapping_file_path = os.path.join(compliance_performance_run_path, "model_mapping.json")
                                 if os.path.exists(tmp_model_mapping_file_path):
                                     with open(tmp_model_mapping_file_path, 'r') as f:
@@ -215,8 +215,8 @@ def generate_submission(env, state, inp, submission_division):
                 else:
                     if returned_model_name != model:
                         model_mapping_combined.update({model:returned_model_name})
-        
-        if check_dict_filled(sut_info.keys(), sut_info):              
+
+        if check_dict_filled(sut_info.keys(), sut_info):
             system = sut_info["hardware_name"]
             implementation = sut_info["implementation"]
             device = sut_info["device"]
@@ -228,7 +228,7 @@ def generate_submission(env, state, inp, submission_division):
             new_res = res
 
         print(f"The SUT folder name for submission generation is: {new_res}")
-            
+
         platform_prefix = inp.get('platform_prefix', '')
         if platform_prefix:
             sub_res = platform_prefix + "-" + new_res
@@ -301,7 +301,7 @@ def generate_submission(env, state, inp, submission_division):
                     continue
 
                 if not os.path.isdir(measurement_scenario_path):
-                        os.makedirs(measurement_scenario_path)                
+                    os.makedirs(measurement_scenario_path)
 
                 for mode in modes:
                     result_mode_path = os.path.join(result_scenario_path, mode)
@@ -374,7 +374,7 @@ def generate_submission(env, state, inp, submission_division):
                     #if division == "closed" and not os.path.isdir(submission_compliance_path):
                     #    os.makedirs(submission_compliance_path)
 
-                    user_conf_path = os.path.join(result_scenario_path, "user.conf")   
+                    user_conf_path = os.path.join(result_scenario_path, "user.conf")
                     if os.path.exists(user_conf_path):
                         shutil.copy(user_conf_path, os.path.join(measurement_scenario_path, 'user.conf'))
                     else:
@@ -390,7 +390,7 @@ def generate_submission(env, state, inp, submission_division):
                     if not os.path.exists(measurements_json_path):
                         measurements_json_path = os.path.join(result_mode_path, "measurements.json")
                         target_measurement_json_path = submission_measurement_path
-                    
+
                     if os.path.exists(measurements_json_path):
                         with open(measurements_json_path, "r") as f:
                             measurements_json = json.load(f)
@@ -400,7 +400,7 @@ def generate_submission(env, state, inp, submission_division):
                     else:
                         if mode.lower() == "performance":
                             return {"return":1, "error":f"measurements.json missing in both paths: {measurements_json_path} and {os.path.join(result_scenario_path, 'user.conf')}"}
-                            
+
                     files = []
                     readme = False
 
@@ -432,8 +432,8 @@ def generate_submission(env, state, inp, submission_division):
                             elif f in [ "README.md", "README-extra.md", "cm-version-info.json", "os_info.json", "cpu_info.json", "pip_freeze.json", "system_info.txt", "cm-deps.png", "cm-deps.mmd" ] and mode == "performance":
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, f))
                                 if f == "system_info.txt" and not platform_info_file:
-                                    # the first found system_info.txt will be taken as platform info file for a specific model to be placed in 
-                                    # measurements-model folder when generating the final submission 
+                                    # the first found system_info.txt will be taken as platform info file for a specific model to be placed in
+                                    # measurements-model folder when generating the final submission
                                     platform_info_file = os.path.join(result_mode_path, f)
                             elif f in [ "console.out" ]:
                                 shutil.copy(os.path.join(result_mode_path, f), os.path.join(submission_measurement_path, mode+"_"+f))
@@ -469,7 +469,7 @@ def generate_submission(env, state, inp, submission_division):
 
             # Copy system_info.txt to the submission measurements model folder if any scenario performance run has it
             sys_info_file = None
-    
+
             if os.path.exists(os.path.join(result_model_path, "system_info.txt")):
                 sys_info_file = os.path.join(result_model_path, "system_info.txt")
             elif platform_info_file:
@@ -481,7 +481,7 @@ def generate_submission(env, state, inp, submission_division):
 
         #Copy system_info.txt to the submission measurements folder if any model performance run has it
         sys_info_file = None
-    
+
         if os.path.exists(os.path.join(result_path, "system_info.txt")):
             sys_info_file = os.path.join(result_path, "system_info.txt")
         elif model_platform_info_file:
@@ -500,12 +500,12 @@ def generate_submission(env, state, inp, submission_division):
                 r = cmind.access(cm_input)
                 if r['return'] > 0:
                     return r
- 
+
 
         with open(system_file, "w") as fp:
             json.dump(system_meta, fp, indent=2)
 
- 
+
         result_table, headers = mlperf_utils.get_result_table(results)
 
         print(tabulate(result_table, headers = headers, tablefmt="pretty"))
@@ -522,13 +522,13 @@ def postprocess(i):
     state = i['state']
     inp=i['input']
 
-    submission_divisions = [] 
-    
+    submission_divisions = []
+
     if env.get('CM_MLPERF_SUBMISSION_DIVISION', '') in ["open-closed", "closed-open"]:
         submission_divisions = ["open", "closed"]
     elif env.get('CM_MLPERF_SUBMISSION_DIVISION', '') != '':
         submission_divisions.append(env['CM_MLPERF_SUBMISSION_DIVISION'])
-    
+
     if env.get('CM_MLPERF_SUBMISSION_DIVISION', '') == '':    #if submission division is not assigned, default value would be taken in submission_generation function
         r = generate_submission(env, state, inp, submission_division="")
     else:

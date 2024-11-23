@@ -1,6 +1,6 @@
 import os
 from cmind import utils
-    
+
 # Meta deps
 def process_deps(self_module, meta, meta_url, md_script_readme, key, extra_space='', skip_from_meta=False, skip_if_empty=False):
 
@@ -32,7 +32,7 @@ def process_deps(self_module, meta, meta_url, md_script_readme, key, extra_space
                     y.append(extra_space+'       * {}:<br>\n`{}`'.format(k2, str(conditions)))
 
             if len(names)>0:
-               y.append(extra_space+'       * CM names: `--adr.'+str(names)+'...`')
+                y.append(extra_space+'       * CM names: `--adr.'+str(names)+'...`')
 
 
             # Attempt to find related CM scripts
@@ -79,7 +79,7 @@ def doc(i):
     Add CM automation.
 
     Args:
-      (CM input dict): 
+      (CM input dict):
 
       (out) (str): if 'con', output to console
 
@@ -130,7 +130,7 @@ def doc(i):
 
     # Search for automations in repos
     lst = []
-    
+
     for repo in list_of_repos:
         parsed_artifact[1] = ('',repo) if utils.is_cm_uid(repo) else (repo,'')
         ii['parsed_artifact'] = parsed_artifact
@@ -229,12 +229,12 @@ def doc(i):
         readme_about = ''
         if os.path.isfile(path_readme_about):
             r = utils.load_txt(path_readme_about, split = True)
-            if r['return']>0: return 
-        
+            if r['return']>0: return
+
             s = r['string']
             readme_about = r['list']
 
-        
+
         #######################################################################
         # Start automatically generated README
         md_script_readme = [
@@ -243,7 +243,7 @@ def doc(i):
 #                            '{{CM_README_TOC}}',
 #                            '</details>',
 #                            '',
-                            'Automatically generated README for this automation recipe: **{}**'.format(meta['alias']), 
+                            'Automatically generated README for this automation recipe: **{}**'.format(meta['alias']),
                             ]
 
 
@@ -268,19 +268,19 @@ def doc(i):
 
 #            md_script_readme.append('*'+name+'*')
 #            md_script_readme.append('')
-        
-        
-            
+
+
+
         if os.path.isfile(path_readme):
             r = utils.load_txt(path_readme, split = True)
-            if r['return']>0: return 
-        
+            if r['return']>0: return
+
             s = r['string']
             readme = r['list']
 
             if not 'automatically generated' in s.lower():
                 found_path_readme_extra = True
-                
+
                 # Attempt to rename to README-extra.md
                 if os.path.isfile(path_readme_extra):
                     return {'return':1, 'error':'README.md is not auto-generated and README-extra.md already exists - can\'t rename'}
@@ -291,17 +291,17 @@ def doc(i):
                 os.chdir(path)
                 os.system('git add README-extra.md')
                 os.chdir(cur_dir)
-        
+
 
 
         if category!='':
             md_script_readme.append('')
             md_script_readme.append('Category: **{}**'.format(category))
-                            
+
         md_script_readme.append('')
         md_script_readme.append('License: **Apache 2.0**')
 
-        
+
         md_script_readme.append('')
 
         if developers == '':
@@ -312,9 +312,9 @@ def doc(i):
         x = '* [{}]({})'.format(alias, url)
         if name !='': x+=' *('+name+')*'
         toc.append(x)
-        
 
-        
+
+
         cm_readme_extra = '[ [Online info and GUI to run this CM script](https://access.cknowledge.org/playground/?action=scripts&name={},{}) ] '.format(alias, uid)
 
         if os.path.isfile(path_readme_extra):
@@ -346,7 +346,7 @@ def doc(i):
                             ]
         toc_readme.append(x)
 
-        
+
 #        if category != '':
 #            x = 'Category'
 #            md_script_readme.append('___')
@@ -369,7 +369,7 @@ def doc(i):
         md_script.append(x)
         md_script_readme.append(x)
 
-        
+
         x = '* GitHub directory for this script: *[GitHub]({})*'.format(url)
         md_script.append(x)
         md_script_readme.append(x)
@@ -402,7 +402,7 @@ def doc(i):
             input_mapping_pointer="[--input_flags]"
         else:
             input_mapping_pointer=''
-        
+
         cli_all_tags = '`cm run script --tags={}`'.format(','.join(tags))
         cli_all_tags3 = '`cm run script --tags={}{} {}`'.format(','.join(tags), variation_pointer, input_mapping_pointer)
         x = '* CM CLI with all tags: {}*'.format(cli_all_tags)
@@ -444,7 +444,7 @@ def doc(i):
 
 
 
- 
+
         md_script.append('')
 #        md_script_readme.append('')
 
@@ -473,8 +473,8 @@ def doc(i):
 #                             '</details>'
                              ]
 
-        
-        
+
+
         # Add usage
         x1 = 'Reuse this script in your project'
         x1a = 'Install MLCommons CM automation meta-framework'
@@ -517,7 +517,7 @@ def doc(i):
 #                             '3. {}'.format(cli_uid),
                              '']
 
-        
+
         x = ' and check the [Gettings Started Guide](https://github.com/mlcommons/ck/blob/dev/docs/getting-started.md) for more details.'
         if len(variation_keys)>0:
             md_script_readme += ['* *See the list of `variations` [here](#variations)'+x+'*',
@@ -558,10 +558,10 @@ def doc(i):
             x = '```python\nr=cm.access({... , "'+key0+'":...}\n```'
             md_script_readme.append(x)
 
-        
-        
-        
-        
+
+
+
+
         md_script_readme += ['#### '+x3,
                              '',
                              '<details>',
@@ -607,16 +607,16 @@ def doc(i):
         toc_readme.append(' '+x3)
         toc_readme.append(' '+x3a)
         toc_readme.append(' '+x4)
-                   
+
         x = 'Customization'
         md_script_readme.append('___')
         md_script_readme.append('### '+x)
         md_script_readme.append('')
         toc_readme.append(x)
 
-        
-        
-        
+
+
+
         if len(variation_keys)>0:
 #            x = 'Variation groups'
 #            md_script_readme.append('___')
@@ -630,7 +630,7 @@ def doc(i):
 
             # Normally should not use anymore. Should use default:true inside individual variations.
             default_variation = meta.get('default_variation','')
-            
+
             for variation_key in sorted(variation_keys):
                 variation = variations[variation_key]
 
@@ -638,7 +638,7 @@ def doc(i):
 
                 if alias!='':
                     aliases = variation_alias.get(alias, [])
-                    if variation_key not in aliases: 
+                    if variation_key not in aliases:
                         aliases.append(variation_key)
                     variation_alias[alias]=aliases
 
@@ -651,7 +651,7 @@ def doc(i):
                     # Check outdated
                     if default_variation == variation_key:
                         default = True
-                
+
                 extra1 = ''
                 extra2 = ''
                 if default:
@@ -662,7 +662,7 @@ def doc(i):
 
 
                 md_var = []
-                
+
                 md_var.append('* {}`_{}`{}'.format(extra1, variation_key, extra2))
 
                 variation_md[variation_key] = md_var
@@ -681,7 +681,7 @@ def doc(i):
 
                 variation_groups[group].append(variation_key)
 
-               
+
             x = 'Variations'
             md_script_readme.append('')
             md_script_readme.append('#### '+x)
@@ -691,7 +691,7 @@ def doc(i):
             for variation in sorted(variation_groups):
                 if variation not in variation_groups_order:
                     variation_groups_order.append(variation)
-            
+
             for group_key in variation_groups_order:
                 md_script_readme.append('')
 
@@ -714,7 +714,7 @@ def doc(i):
 
                     aliases = variation_alias.get(variation_key,[])
                     aliases2 = ['_'+v for v in aliases]
-                    
+
                     if len(aliases)>0:
                         xmd.append('  - Aliases: `{}`'.format(','.join(aliases2)))
 
@@ -726,8 +726,8 @@ def doc(i):
                     xmd.append('  - Workflow:')
 
                     for dep in ['deps', 'prehook_deps', 'posthook_deps', 'post_deps']:
-                         process_deps(self_module, variation, meta_url, xmd, dep, '  ', True, True)
-                
+                        process_deps(self_module, variation, meta_url, xmd, dep, '  ', True, True)
+
                     for x in xmd:
                         md_script_readme.append('    '+x)
 
@@ -745,7 +745,7 @@ def doc(i):
                 md_script_readme.append('')
                 md_script_readme.append('')
                 toc_readme.append(' '+x)
-                
+
                 for v in vvc:
                     vv = ['_'+x for x in v]
                     md_script_readme.append('* `'+','.join(vv)+'`')
@@ -760,7 +760,7 @@ def doc(i):
 
                 md_script_readme.append('`{}`'.format(','.join(dv)))
 
-        
+
         # Check if has valid_variation_combinations
         vvc = meta.get('valid_variation_combinations', [])
         if len(vvc)>0:
@@ -771,15 +771,15 @@ def doc(i):
             md_script_readme.append('')
             md_script_readme.append('')
             toc_readme.append(' '+x)
-            
+
             for v in vvc:
                 vv = ['_'+x for x in v]
                 md_script_readme.append('* `'+','.join(vv)+'`')
 
 
 
-        
-        
+
+
         # Check input flags
         if input_mapping and len(input_mapping)>0:
             x = 'Script flags mapped to environment'
@@ -807,8 +807,8 @@ def doc(i):
             md_script_readme.append('')
             md_script_readme.append('</details>')
             md_script_readme.append('')
-        
-        
+
+
         # Default environment
         default_env = meta.get('default_env',{})
 
@@ -831,13 +831,13 @@ def doc(i):
         md_script_readme.append('')
         md_script_readme.append('</details>')
         md_script_readme.append('')
-        
-        
-                
 
 
 
-        
+
+
+
+
         if len(version_keys)>0 or default_version!='':
             x = 'Versions'
 #            md_script_readme.append('___')
@@ -853,7 +853,7 @@ def doc(i):
                     md_script_readme.append('* `{}`'.format(version))
 
 
-        
+
         # Add workflow
         x = 'Dependencies on other CM scripts'
         md_script_readme += ['___',
@@ -878,7 +878,7 @@ def doc(i):
 
             r = utils.load_txt(path_customize, split=True)
             if r['return']>0: return r
-            
+
             customize  = r['string']
             customize_l = r['list']
 
@@ -895,18 +895,18 @@ def doc(i):
 #                    if 'def postprocess' in l:
 #                        found_postprocess = True
 #                else:
-                 j = l.find(' env[')
-                 if j>=0:
-                     j1 = l.find(']', j+4)
-                     if j1>=0:
-                         j2 = l.find('=',j1+1)
-                         if j2>=0:
-                             key2 = l[j+5:j1].strip()
-                             key=key2[1:-1]
+                j = l.find(' env[')
+                if j>=0:
+                    j1 = l.find(']', j+4)
+                    if j1>=0:
+                        j2 = l.find('=',j1+1)
+                        if j2>=0:
+                            key2 = l[j+5:j1].strip()
+                            key=key2[1:-1]
 
-                             if key.startswith('CM_') and 'TMP' not in key and key not in found_output_env:
-                                 found_output_env.append(key)
-                             
+                            if key.startswith('CM_') and 'TMP' not in key and key not in found_output_env:
+                                found_output_env.append(key)
+
         process_deps(self_module, meta, meta_url, md_script_readme, 'deps')
 
         x = ''
@@ -917,7 +917,7 @@ def doc(i):
         md_script_readme.append(('  1. '+x+'Run "preprocess" function from {}'+x).format(y))
 
         process_deps(self_module, meta, meta_url, md_script_readme, 'prehook_deps')
-        
+
         # Check scripts
         files = os.listdir(path)
         x = ''
@@ -930,7 +930,7 @@ def doc(i):
 
         md_script_readme.append(('  1. '+x+'Run native script if exists'+x).format(y))
         md_script_readme += y
-        
+
         process_deps(self_module, meta, meta_url, md_script_readme, 'posthook_deps')
 
         x = ''
@@ -943,7 +943,7 @@ def doc(i):
         process_deps(self_module, meta, meta_url, md_script_readme, 'post_deps')
  #       md_script_readme.append('</details>')
         md_script_readme.append('')
-                    
+
         # New environment
         new_env_keys = meta.get('new_env_keys',[])
 
@@ -977,7 +977,7 @@ def doc(i):
 
             if add:
                 found_output_env_filtered.append(key)
-                
+
         x = 'New environment keys auto-detected from customize'
         md_script_readme.append('#### '+x)
         toc_readme.append(x)
@@ -1017,7 +1017,7 @@ def doc(i):
         s = s.replace('{{CM_README_EXTRA}}', cm_readme_extra)
 #        s = s.replace('{{CM_SEE_README_EXTRA}}', cm_see_readme_extra)
         s = s.replace('{{CM_README_TOC}}', toc_readme_string)
-        
+
         r = utils.save_txt(path_readme, s)
         if r['return']>0: return r
 
@@ -1054,7 +1054,7 @@ def doc(i):
         category_link = category.lower().replace(' ','-').replace('/','')
         toc_category_string += '* [{}](#{})\n'.format(category, category_link)
 
-    
+
     # Load template
     r = utils.load_txt(os.path.join(self_module.path, template_file))
     if r['return']>0: return r
@@ -1087,12 +1087,12 @@ def doc(i):
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This function takes in a host path and returns the absolute path on host and the container
-# If mounts is passed, the function appends the host path and the container path to mounts in the form "host_path:container_path" 
+# If mounts is passed, the function appends the host path and the container path to mounts in the form "host_path:container_path"
 def update_path_for_docker(path, mounts=None, force_path_target=''):
 
     path_orig = ''
     path_target = ''
-    
+
     if path!='': # and (os.path.isfile(path) or os.path.isdir(path)):
         path = os.path.abspath(path)
 
@@ -1101,7 +1101,7 @@ def update_path_for_docker(path, mounts=None, force_path_target=''):
 
         if os.name == 'nt':
             from pathlib import PureWindowsPath, PurePosixPath
-    
+
             x = PureWindowsPath(path_orig)
             path_target = str(PurePosixPath('/', *x.parts[1:]))
 
@@ -1125,22 +1125,22 @@ def update_path_for_docker(path, mounts=None, force_path_target=''):
             if to_add:
                 mounts.append(x)
 
-    
+
     return (path_orig, path_target)
 
 ############################################################
 def process_inputs(i):
 
     import copy
-    
+
     i_run_cmd_arc = i['run_cmd_arc']
     docker_settings = i['docker_settings']
     mounts = i['mounts']
-    
+
     # Check if need to update/map/mount inputs and env
     i_run_cmd = copy.deepcopy(i_run_cmd_arc)
 
-            
+
     def get_value_using_key_with_dots(d, k):
         v = None
         j = k.find('.')
@@ -1167,7 +1167,7 @@ def process_inputs(i):
                 v = d.get(k)
 
         return v, d, k
-    
+
     docker_input_paths = docker_settings.get('input_paths',[])
     if len(i_run_cmd)>0:
         for k in docker_input_paths:
@@ -1180,7 +1180,7 @@ def process_inputs(i):
 
                 if path_target!='':
                     i_run_cmd2[k2] = path_target
-    
+
     return {'return':0, 'run_cmd':i_run_cmd}
 
 
@@ -1240,7 +1240,7 @@ def regenerate_script_cmd(i):
 
     skip_input_for_fake_run = docker_settings.get('skip_input_for_fake_run', [])
     add_quotes_to_keys = docker_settings.get('add_quotes_to_keys', [])
-    
+
 
     def rebuild_flags(i_run_cmd, fake_run, skip_input_for_fake_run, add_quotes_to_keys, key_prefix):
 
@@ -1253,7 +1253,7 @@ def regenerate_script_cmd(i):
             tags_position = keys.index('tags')
             del(keys[tags_position])
             keys = ['tags']+keys
-        
+
         for k in keys:
             # Assemble long key if dictionary
             long_key = key_prefix
@@ -1261,12 +1261,12 @@ def regenerate_script_cmd(i):
             long_key+=k
 
             if fake_run and long_key in skip_input_for_fake_run:
-                continue    
+                continue
 
             v = i_run_cmd[k]
-            
+
             q = '\\"' if long_key in add_quotes_to_keys else ''
-            
+
             if type(v)==dict:
                 run_cmd += rebuild_flags(v, fake_run, skip_input_for_fake_run, add_quotes_to_keys, long_key)
             elif type(v)==list:
@@ -1296,10 +1296,10 @@ def aux_search(i):
     inp = i['input']
 
     repos = inp.get('repos','')
-# Grigori Fursin remarked on 20240412 because this line prevents 
+# Grigori Fursin remarked on 20240412 because this line prevents
 # from searching for scripts in other public or private repositories.
 # Not sure why we enforce just 2 repositories
-# 
+#
 #    if repos == '': repos='internal,a4705959af8e447a'
 
     parsed_artifact = inp.get('parsed_artifact',[])
@@ -1537,7 +1537,7 @@ def dockerfile(i):
         env['CM_DOCKER_PRE_RUN_COMMANDS'] = docker_run_final_cmds
 
         docker_path = i.get('docker_path', '').strip()
-        if docker_path == '': 
+        if docker_path == '':
             docker_path = script_path
 
         dockerfile_path = os.path.join(docker_path, 'dockerfiles', dockerfilename_suffix +'.Dockerfile')
@@ -1675,7 +1675,7 @@ def docker(i):
 
     if type(i.get('docker', None)) == dict:
         # Grigori started cleaning and refactoring this code on 20240929
-        # 
+        #
         # 1. use --docker dictionary instead of --docker_{keys}
 
         if utils.compare_versions(current_cm_version, '2.3.8.1') >= 0:
@@ -1729,13 +1729,13 @@ def docker(i):
         if type(docker_cfg) == bool or str(docker_cfg).lower() in ['true','yes']:
             docker_cfg= ''
 
-        r = self_module.cmind.access({'action':'select_cfg', 
-                                      'automation':'utils,dc2743f8450541e3', 
-                                      'tags':'basic,docker,configurations', 
-                                      'title':'docker', 
+        r = self_module.cmind.access({'action':'select_cfg',
+                                      'automation':'utils,dc2743f8450541e3',
+                                      'tags':'basic,docker,configurations',
+                                      'title':'docker',
                                       'alias':docker_cfg,
                                       'uid':docker_cfg_uid})
-        if r['return'] > 0: 
+        if r['return'] > 0:
             if r['return'] == 16:
                 return {'return':1, 'error':'Docker configuration {} was not found'.format(docker_cfg)}
             return r
@@ -1924,7 +1924,7 @@ def docker(i):
                 for tmp_value in tmp_values:
                     if tmp_value in env:
                         host_env_key = tmp_value
-                        new_host_mount = get_host_path(env[tmp_value]) 
+                        new_host_mount = get_host_path(env[tmp_value])
                     else:# we skip those mounts
                         mounts[index] = None
                         skip = True
@@ -1950,12 +1950,12 @@ def docker(i):
             mounts[index] = new_host_mount+":"+new_container_mount
             if host_env_key:
                 container_env_string += " --env.{}={} ".format(host_env_key, container_env_key)
-        
+
                 for v in docker_input_mapping:
                     if docker_input_mapping[v] == host_env_key:
-                        i[v] = container_env_key 
+                        i[v] = container_env_key
                         i_run_cmd[v] = container_env_key
-        
+
         mounts = list(filter(lambda item: item is not None, mounts))
 
         mount_string = "" if len(mounts)==0 else ",".join(mounts)
@@ -1998,13 +1998,13 @@ def docker(i):
         cm_repo=i.get('docker_cm_repo', docker_settings.get('cm_repo', 'mlcommons@cm4mlops'))
 
         docker_path = i.get('docker_path', '').strip()
-        if docker_path == '': 
+        if docker_path == '':
             docker_path = script_path
 
         dockerfile_path = os.path.join(docker_path, 'dockerfiles', dockerfilename_suffix +'.Dockerfile')
 
         # Skips docker run cmd and gives an interactive shell to the user
-        docker_skip_run_cmd = i.get('docker_skip_run_cmd', docker_settings.get('skip_run_cmd', False)) 
+        docker_skip_run_cmd = i.get('docker_skip_run_cmd', docker_settings.get('skip_run_cmd', False))
 
         docker_pre_run_cmds = i.get('docker_pre_run_cmds', []) +  docker_settings.get('pre_run_cmds', [])
 

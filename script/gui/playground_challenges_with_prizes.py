@@ -116,8 +116,8 @@ def page(st, params):
                     challenges.append({'prefix':prefix, 'name':name, 'uid':l.meta['uid']})
 
 
-            
-            
+
+
             # Show ongoing if open
             if len(ongoing)>0:
                 ind = 1
@@ -136,16 +136,16 @@ def page(st, params):
                 st.write(x, unsafe_allow_html = True)
 
                 data = []
-                
+
                 for row in sorted(ongoing, key=lambda row: (int(row.get('orig_date_close', 9999999999)),
                                                             row.get('sort', 0),
                                                             row.get('name', ''),
                                                             row.get('under_preparation', False)
                                                             )):
                     if row.get('skip',False): continue
-                    
+
                     xrow = []
-                    
+
                     md = ''
                     up = row.get('under_preparation', False)
 
@@ -195,7 +195,7 @@ def page(st, params):
 #                    xrow.append(y)
 
 
-                    
+
                     awards = ''
 
                     trophies = row.get('trophies',False)
@@ -213,7 +213,7 @@ def page(st, params):
                     xrow.append(awards)
 
 
-                    if x!='':    
+                    if x!='':
                         md += '&nbsp;&nbsp;&nbsp;&nbsp; '+x
 
 #                    st.markdown(md)
@@ -225,27 +225,27 @@ def page(st, params):
 
                 import pandas as pd
                 import numpy as np
-                
+
                 df = pd.DataFrame(data,
                                   columns=['Challenge', 'Closing&nbsp;date', 'Extension', 'Contributor&nbsp;award and prizes from <a href="https://mlcommons.org">MLCommons&nbsp;organizations</a>, <a href="https://cTuning.org">cTuning foundation</a> and <a href="https://cKnowledge.org">cKnowledge.org</a>'])
-                 
+
                 df.index+=1
 
 #                st.table(df)
                 st.write(df.to_html(escape=False, justify='left'), unsafe_allow_html=True)
 
         # Show selector for all
-#        challenge = st.selectbox('View past benchmarking, optimization, reproducibility and replicability challenges:', 
-#                                 range(len(challenges)), 
+#        challenge = st.selectbox('View past benchmarking, optimization, reproducibility and replicability challenges:',
+#                                 range(len(challenges)),
 #                                 format_func=lambda x: challenges[x],
 #                                 index=0, key='challenge')
 #
 #        if challenge>0:
 #            artifact = artifacts[challenge]
-        
-        
-        
-        
+
+
+
+
         # Process 1 challenge
         if artifact is None:
 #            st.markdown('#### Past or future challenges:')
@@ -273,7 +273,7 @@ def page(st, params):
                     '''.format(str(ind), prefix, url, name)
 
                 st.write(x, unsafe_allow_html = True)
-                
+
                 ind+=1
 
 
@@ -344,7 +344,7 @@ def page(st, params):
 
             if meta.get('trophies', False):
                 z+='* **MLCommons Collective Knowledge Contributor award:** Yes\n'
-            
+
             prize_short = meta.get('prize_short','')
             if prize_short!='':
                 z+='* **Prizes:** {}\n'.format(prize_short)
@@ -384,13 +384,13 @@ def page(st, params):
                     if tags!='':
                         md+='  * '+misc.make_url(tags, action='experiments', key='tags')
                     elif name!='':
-                       md+='  * '+misc.make_url(name, action='experiments')
+                        md+='  * '+misc.make_url(name, action='experiments')
 
                 z+=md+'\n'
 
             st.markdown(z)
-            
-            
+
+
             # Check if has text
             path = artifact.path
 
@@ -450,7 +450,7 @@ def page(st, params):
 
 
 
-    
-    
-    
+
+
+
     return {'return':0, 'end_html':end_html}

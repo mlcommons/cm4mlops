@@ -100,7 +100,7 @@ def preprocess_files(selected_filenames, source_dir, destination_dir, crop_perce
         # NHWC -> NCHW.
         if data_layout == 'nchw':
             image_data = image_data[:,:,0:3].transpose(2, 0, 1)
-        
+
         # Value 1 for quantization to int8
         if quantize == 1:
             image_data = quantize_to_int8(image_data, quant_scale, quant_offset)

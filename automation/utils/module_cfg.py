@@ -33,25 +33,25 @@ def load_cfg(i):
     prune_meta_key_uid = prune.get('meta_key_uid', '')
     prune_uid = prune.get('uid', '')
     prune_list = prune.get('list',[])
-    
+
     # Checking individual files inside CM entry
     selection = []
- 
+
     if i.get('skip_files', False):
         for l in lst:
-             meta = l.meta
-             full_path = l.path
+            meta = l.meta
+            full_path = l.path
 
-             meta['full_path']=full_path
+            meta['full_path']=full_path
 
-             add = True
-             
-             if prune_key!='' and prune_key_uid!='':
-                 if prune_key_uid not in meta.get(prune_key, []):
-                     add = False
-             
-             if add:
-                 selection.append(meta)
+            add = True
+
+            if prune_key!='' and prune_key_uid!='':
+                if prune_key_uid not in meta.get(prune_key, []):
+                    add = False
+
+            if add:
+                selection.append(meta)
     else:
         for l in lst:
             path = l.path
@@ -59,14 +59,14 @@ def load_cfg(i):
             main_meta = l.meta
 
             skip = False
-            
+
             if prune_meta_key!='' and prune_meta_key_uid!='':
                 if prune_meta_key_uid not in main_meta.get(prune_meta_key, []):
                     skip = True
-            
+
             if skip:
                 continue
-            
+
             all_tags = main_meta.get('tags',[])
 
             files = os.listdir(path)
@@ -101,7 +101,7 @@ def load_cfg(i):
                     r = process_base(meta, full_path)
                     if r['return']>0: return r
                     meta = r['meta']
-                    
+
                     uid = meta['uid']
 
                     # Check pruning
@@ -110,7 +110,7 @@ def load_cfg(i):
                     if len(prune)>0:
                         if prune_uid!='' and uid != prune_uid:
                             add = False
-                            
+
                         if add and len(prune_list)>0 and uid not in prune_list:
                             add = False
 
@@ -121,7 +121,7 @@ def load_cfg(i):
                         meta['full_path']=full_path
 
                         add_all_tags = copy.deepcopy(all_tags)
-                        
+
                         name = meta.get('name','')
                         if name=='':
                             name = ' '.join(meta.get('tags',[]))
@@ -134,7 +134,7 @@ def load_cfg(i):
                                 add_all_tags += [v.lower() for v in name.split(' ')]
                         else:
                             add_all_tags += file_tags.split(',')
-                            
+
                         meta['all_tags']=add_all_tags
 
                         meta['main_meta']=main_meta
@@ -154,17 +154,17 @@ def process_base(meta, full_path):
 
         filename = _base
         full_path_base = os.path.dirname(full_path)
- 
+
         if not filename.endswith('.yaml') and not filename.endswith('.json'):
             return {'return':1, 'error':'_base file {} in {} must be .yaml or .json'.format(filename, full_path)}
-        
+
         if ':' in _base:
             x = _base.split(':')
             name = x[0]
 
             full_path_base = base_path.get(name, '')
             if full_path_base == '':
-                
+
                 # Find artifact
                 r = cmind.access({'action':'find',
                                   'automation':'cfg',
@@ -174,21 +174,21 @@ def process_base(meta, full_path):
                 lst = r['list']
 
                 if len(lst)==0:
-                    if not os.path.isfile(path): 
+                    if not os.path.isfile(path):
                         return {'return':1, 'error':'_base artifact {} not found in {}'.format(name, full_path)}
 
                 full_path_base = lst[0].path
-            
+
                 base_path[name] = full_path_base
-            
+
             filename = x[1]
-       
+
         # Load base
         path = os.path.join(full_path_base, filename)
 
-        if not os.path.isfile(path): 
+        if not os.path.isfile(path):
             return {'return':1, 'error':'_base file {} not found in {}'.format(filename, full_path)}
-            
+
         if path in base_path_meta:
             base = copy.deepcopy(base_path_meta[path])
         else:
@@ -233,7 +233,7 @@ def select_cfg(i):
     uid = i.get('uid', '')
     title = i.get('title', '')
 
-    # Check if alias is not provided 
+    # Check if alias is not provided
     r = self_module.cmind.access({'action':'find', 'automation':'cfg', 'tags':'basic,docker,configurations'})
     if r['return'] > 0: return r
 

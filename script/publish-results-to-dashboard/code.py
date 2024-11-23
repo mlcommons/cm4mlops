@@ -82,10 +82,10 @@ def main():
         for k in x:
             env_key = x[k]
             if os.environ.get(env_key,'')!='':
-               result['cm_misc_input_'+k]=os.environ[env_key]
+                result['cm_misc_input_'+k]=os.environ[env_key]
 
-        wandb.init(entity = dashboard_user, 
-                   project = dashboard_project, 
+        wandb.init(entity = dashboard_user,
+                   project = dashboard_project,
                    name = label)
 
         wandb.log(result)

@@ -109,8 +109,8 @@ def preprocess(i):
             print ('Repo path:    {}'.format(path))
             print ('Repo version: {}'.format(version))
 
-            r = automation.run_native_script({'run_script_input':run_script_input, 
-                                              'env':env, 
+            r = automation.run_native_script({'run_script_input':run_script_input,
+                                              'env':env,
                                               'script_name':'run_mlperf_logger'})
             if r['return']>0:
                 return r
@@ -158,12 +158,12 @@ def convert_summary_csv_to_experiment(path, version, env):
                         v=True
                     else:
                         try:
-                           v=float(v)
+                            v=float(v)
 
-                           if v==int(v):
-                              v=int(v)
+                            if v==int(v):
+                                v=int(v)
                         except ValueError:
-                           pass
+                            pass
 
                     result[k] = v
 

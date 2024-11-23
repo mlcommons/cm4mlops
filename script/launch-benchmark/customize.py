@@ -53,25 +53,25 @@ def load_cfg(i):
     prune_key_uid = prune.get('key_uid', '')
     prune_uid = prune.get('uid', '')
     prune_list = prune.get('list',[])
-    
+
     # Checking individual files inside CM entry
     selection = []
- 
+
     if i.get('skip_files', False):
         for l in lst:
-             meta = l.meta
-             full_path = l.path
+            meta = l.meta
+            full_path = l.path
 
-             meta['full_path']=full_path
+            meta['full_path']=full_path
 
-             add = True
-             
-             if prune_key!='' and prune_key_uid!='':
-                 if prune_key_uid not in meta.get(prune_key, []):
-                     add = False
-             
-             if add:
-                 selection.append(meta)
+            add = True
+
+            if prune_key!='' and prune_key_uid!='':
+                if prune_key_uid not in meta.get(prune_key, []):
+                    add = False
+
+            if add:
+                selection.append(meta)
     else:
         for l in lst:
             path = l.path
@@ -102,7 +102,7 @@ def load_cfg(i):
                     r = process_base(meta, full_path)
                     if r['return']>0: return r
                     meta = r['meta']
-                    
+
                     uid = meta['uid']
 
                     # Check pruning
@@ -111,7 +111,7 @@ def load_cfg(i):
                     if len(prune)>0:
                         if prune_uid!='' and uid != prune_uid:
                             add = False
-                            
+
                         if add and len(prune_list)>0 and uid not in prune_list:
                             add = False
 
@@ -122,7 +122,7 @@ def load_cfg(i):
                         meta['full_path']=full_path
 
                         add_all_tags = copy.deepcopy(all_tags)
-                        
+
                         name = meta.get('name','')
                         if name=='':
                             name = ' '.join(meta.get('tags',[]))
@@ -135,7 +135,7 @@ def load_cfg(i):
                                 add_all_tags += [v.lower() for v in name.split(' ')]
                         else:
                             add_all_tags += file_tags.split(',')
-                            
+
                         meta['all_tags']=add_all_tags
 
                         meta['main_meta']=main_meta
@@ -155,17 +155,17 @@ def process_base(meta, full_path):
 
         filename = _base
         full_path_base = os.path.dirname(full_path)
- 
+
         if not filename.endswith('.yaml') and not filename.endswith('.json'):
             return {'return':1, 'error':'_base file {} in {} must be .yaml or .json'.format(filename, full_path)}
-        
+
         if ':' in _base:
             x = _base.split(':')
             name = x[0]
 
             full_path_base = base_path.get(name, '')
             if full_path_base == '':
-                
+
                 # Find artifact
                 r = cmind.access({'action':'find',
                                   'automation':'cfg',
@@ -175,21 +175,21 @@ def process_base(meta, full_path):
                 lst = r['list']
 
                 if len(lst)==0:
-                    if not os.path.isfile(path): 
+                    if not os.path.isfile(path):
                         return {'return':1, 'error':'_base artifact {} not found in {}'.format(name, full_path)}
 
                 full_path_base = lst[0].path
-            
+
                 base_path[name] = full_path_base
-            
+
             filename = x[1]
-       
+
         # Load base
         path = os.path.join(full_path_base, filename)
 
-        if not os.path.isfile(path): 
+        if not os.path.isfile(path):
             return {'return':1, 'error':'_base file {} not found in {}'.format(filename, full_path)}
-            
+
         if path in base_path_meta:
             base = copy.deepcopy(base_path_meta[path])
         else:
@@ -232,7 +232,7 @@ def process_base(meta, full_path):
 def get_with_complex_key(meta, key):
 
     j = key.find('.')
-    
+
     if j<0:
         return meta.get(key)
 
@@ -272,7 +272,7 @@ def prepare_table(i):
 
     dimension_values = {}
     dimension_keys = []
-                  
+
     if len(dimensions) == 0:
         keys = [('test', 'CM test', 400, 'leftAligned')]
     else:
@@ -295,7 +295,7 @@ def prepare_table(i):
 #
 #                if value!=None and value!='' and value not in dimension_values[key]:
 #                    dimension_values.append(value)
-                    
+
         # If dimensions, sort by dimensions
         for d in list(reversed(dimension_keys)):
             selection = sorted(selection, key = lambda x: get_with_complex_key_safe(selection, d))
@@ -314,9 +314,9 @@ def prepare_table(i):
                 'reproduced':'https://cTuning.org/images/results_reproduced_v1_1_small.png'}
 
 
-    
-    
-    
+
+
+
 
     for s in selection:
         row = {}
@@ -356,10 +356,10 @@ def prepare_table(i):
         if s.get('reproduced', False):
             x = '<center><a href="{}" target="_blank"><img src="{}" height="32"></a></center>'.format(url, badges_url['reproduced'])
         row['reproduced'] = x
-        
+
         # Check misc notes
         row['notes']=s.get('notes','')
-        
+
         # Finish row
         all_data.append(row)
 
@@ -407,9 +407,9 @@ def gui(i):
         st.markdown('### {}'.format(title))
 
 
-    
-    
-    
+
+
+
     # Check if test uid is specified
     uid = ''
     x = params.get('uid',[''])
@@ -422,10 +422,10 @@ def gui(i):
     compute_uid = ''
     x = params.get('compute_uid',[''])
     if len(x)>0 and x[0]!='': compute_uid = x[0].strip()
-        
 
-    
-    
+
+
+
     ##############################################################
     # Check the first level of benchmarks
     ii = {'tags':'benchmark,run', 'skip_files':True, 'prune':{}}
@@ -440,14 +440,14 @@ def gui(i):
         ii['prune']['key_uid']=compute_uid
 
     r=load_cfg(ii)
-    if r['return']>0: return r            
+    if r['return']>0: return r
 
     lst = r['selection']
 
     if len(lst)==0:
         st.markdown('Warning: no benchmarks found!')
         return {'return':0}
-    
+
     test_meta = {}
 
     bench_id = 0
@@ -467,8 +467,8 @@ def gui(i):
         bench_id = 1
         compute_uid = test_meta['compute_uid']
         bench_supported_compute = [compute_uid]
-    
-    
+
+
     if uid == '':
         selection = sorted(lst, key = lambda v: v['name'])
         bench_selection = [{'name':''}] + selection
@@ -488,14 +488,14 @@ def gui(i):
                     break
                 j+=1
 
-        
+
         bench_id = st.selectbox('Select benchmark:',
-                                 range(len(bench_selection)), 
+                                 range(len(bench_selection)),
                                  format_func=lambda x: bench_selection[x]['name'],
                                  index = bench_id_index,
                                  key = 'bench')
 
-    
+
         bench_supported_compute = []
         bench_meta = {}
         if bench_id>0:
@@ -513,7 +513,7 @@ def gui(i):
                 x+='\n'
 
                 st.markdown(x)
-    
+
     ###########################################################################################################
     if True==True:
         ##############################################################
@@ -528,27 +528,27 @@ def gui(i):
                 if len(x) == 0:
                     st.markdown('Warning: no supported compute selected!')
                     return {'return':0}
-            
+
             ii['prune']={'list':x}
 
         r=load_cfg(ii)
-        if r['return']>0: return r            
+        if r['return']>0: return r
 
         selection = sorted(r['selection'], key = lambda v: v['name'])
 
         if len(selection) == 0 :
             st.markdown('Warning: no supported compute found!')
             return {'return':0}
-        
+
         compute_selection = [{'name':''}]
         if len(selection)>0:
-             compute_selection += selection
+            compute_selection += selection
 
         compute_id_index = 0 if compute_uid == '' else 1
-        
+
         if uid == '':
             compute_id = st.selectbox('Select target hardware to benchmark:',
-                                       range(len(compute_selection)), 
+                                       range(len(compute_selection)),
                                        format_func=lambda x: compute_selection[x]['name'],
                                        index = compute_id_index,
                                        key = 'compute')
@@ -557,7 +557,7 @@ def gui(i):
             if compute_id>0:
                 compute = compute_selection[compute_id]
                 compute_uid = compute['uid']
-            
+
         compute_meta = {}
         for c in compute_selection:
             if c.get('uid','')!='':
@@ -577,14 +577,14 @@ def gui(i):
             ii['prune']={'key':'compute_uid', 'key_uid':compute_uid}
 
         r=load_cfg(ii)
-        if r['return']>0: return r            
+        if r['return']>0: return r
 
         selection = sorted(r['selection'], key = lambda v: v['name'])
 
         # Check how many and prune
         if len(selection) == 0:
-             st.markdown('No CM tests found')
-             return {'return':0}
+            st.markdown('No CM tests found')
+            return {'return':0}
 
         for s in selection:
             c_uid = s.get('compute_uid','')
@@ -593,15 +593,15 @@ def gui(i):
                 if c_tags!='':
                     s['all_tags']+=c_tags.split(',')
 
-                s['compute_meta']=compute_meta[c_uid]    
+                s['compute_meta']=compute_meta[c_uid]
 
-        
+
         if len(selection)>1:
             # Update selection with compute tags
             test_tags = ''
             x = params.get('tags',[''])
             if len(x)>0 and x[0]!='': test_tags = x[0].strip()
-            
+
             test_tags = st.text_input('Found {} CM tests. Prune them by tags:'.format(str(len(selection))), value=test_tags, key='test_tags').strip()
 
             if test_tags!='':
@@ -621,24 +621,24 @@ def gui(i):
 
                     if add:
                         pruned_selection.append(s)
-        
+
                 selection = pruned_selection
 
         test_selection = [{'name':''}] + selection
-        
-        
-        
+
+
+
         if len(selection)<200:
             # Creating compute selector
             test_id_index = 1 if len(selection)==1 else 0
-                
+
             test_id = st.selectbox('Select a test from {}:'.format(str(len(selection))),
-                                     range(len(test_selection)), 
+                                     range(len(test_selection)),
                                      format_func=lambda x: test_selection[x]['name'],
                                      index = test_id_index,
                                      key = 'test')
-        
-            
+
+
             if test_id >0:
                 test_meta = test_selection[test_id]
             else:
@@ -646,19 +646,19 @@ def gui(i):
                 # View many (table)
                 ii = {'selection':selection,
                       'misc_module':misc}
-                
+
                 # Check if dimensions in the bench
                 dimensions = bench_meta.get('dimensions', [])
                 if len(dimensions)>0:
-                     viewer_selection = ['benchmark specific', 'universal']
-                     
-                     viewer = st.selectbox('Viewer:', viewer_selection, key = 'viewer')
+                    viewer_selection = ['benchmark specific', 'universal']
 
-                     if viewer == 'benchmark specific':
-                         ii['dimensions'] = dimensions
-                
+                    viewer = st.selectbox('Viewer:', viewer_selection, key = 'viewer')
+
+                    if viewer == 'benchmark specific':
+                        ii['dimensions'] = dimensions
+
                 else:
-                     st.markdown('---')
+                    st.markdown('---')
 
                 r = prepare_table(ii)
                 if r['return']>0: return r
@@ -667,7 +667,7 @@ def gui(i):
 
                 html=df.to_html(escape=False, justify='left')
                 st.write(html, unsafe_allow_html = True)
-            
+
 #                st.dataframe(df, unsafe_allow_html = True)
 
 
@@ -686,14 +686,14 @@ def gui(i):
                 if c_tags!='':
                     test_meta['all_tags']+=c_tags.split(',')
 
-                test_meta['compute_meta']=compute_meta[c_uid]    
+                test_meta['compute_meta']=compute_meta[c_uid]
 
-        
+
         if uid == '':
             st.markdown('---')
 
             uid = test_meta['uid']
-        
+
         # First, check if there is a README
         test_path = test_meta['full_path']
 
@@ -717,16 +717,15 @@ def gui(i):
 ```
             """.format(json.dumps(test_meta, indent=2))
         st.markdown(x)
-        
 
 
 
-        
-        
+
+
+
         # Create self link
         # This misc module is in CM "gui" script
         x1 = misc.make_url(uid, key='uid', action='howtorun', md=False)
         end_html='<center><small><i><a href="{}">Self link</a></i></small></center>'.format(x1)
 
     return {'return':0, 'end_html': end_html}
-

@@ -86,43 +86,43 @@ def postprocess(i):
     model_full_name = env.get('CM_ML_MODEL_FULL_NAME', model)
 
     if mode == "accuracy" or mode== "compliance" and env['CM_MLPERF_LOADGEN_COMPLIANCE_TEST'] == "TEST01":
-      if model == "resnet50":
-        accuracy_filename = "accuracy-imagenet.py"
-        accuracy_filepath = os.path.join(env['CM_MLPERF_INFERENCE_CLASSIFICATION_AND_DETECTION_PATH'], "tools", \
-                        accuracy_filename)
-        dataset_args = " --imagenet-val-file " + \
-        os.path.join(env['CM_DATASET_AUX_PATH'], "val.txt")
-        accuracy_log_file_option_name = " --mlperf-accuracy-file "
-        datatype_option = " --dtype "+env['CM_IMAGENET_ACCURACY_DTYPE']
+        if model == "resnet50":
+            accuracy_filename = "accuracy-imagenet.py"
+            accuracy_filepath = os.path.join(env['CM_MLPERF_INFERENCE_CLASSIFICATION_AND_DETECTION_PATH'], "tools", \
+                            accuracy_filename)
+            dataset_args = " --imagenet-val-file " + \
+            os.path.join(env['CM_DATASET_AUX_PATH'], "val.txt")
+            accuracy_log_file_option_name = " --mlperf-accuracy-file "
+            datatype_option = " --dtype "+env['CM_IMAGENET_ACCURACY_DTYPE']
 
-      elif model == "retinanet":
-        accuracy_filename = "accuracy-openimages.py"
-        accuracy_filepath = os.path.join(env['CM_MLPERF_INFERENCE_CLASSIFICATION_AND_DETECTION_PATH'], "tools", \
-                        accuracy_filename)
-        dataset_args = " --openimages-dir " + os.getcwd() #just to make the script happy
-        accuracy_log_file_option_name = " --mlperf-accuracy-file "
-        datatype_option = ""
+        elif model == "retinanet":
+            accuracy_filename = "accuracy-openimages.py"
+            accuracy_filepath = os.path.join(env['CM_MLPERF_INFERENCE_CLASSIFICATION_AND_DETECTION_PATH'], "tools", \
+                            accuracy_filename)
+            dataset_args = " --openimages-dir " + os.getcwd() #just to make the script happy
+            accuracy_log_file_option_name = " --mlperf-accuracy-file "
+            datatype_option = ""
 
-      elif 'bert' in model:
-        accuracy_filename = "accuracy-squad.py"
-        accuracy_filepath = os.path.join(env['CM_MLPERF_INFERENCE_BERT_PATH'], accuracy_filename)
-        dataset_args = " --val_data '" + env['CM_DATASET_SQUAD_VAL_PATH'] + "' --vocab_file '" + env['CM_DATASET_SQUAD_VOCAB_PATH'] + "' --out_file predictions.json "
-        accuracy_log_file_option_name = " --log_file "
-        datatype_option = " --output_dtype "+env['CM_SQUAD_ACCURACY_DTYPE']
+        elif 'bert' in model:
+            accuracy_filename = "accuracy-squad.py"
+            accuracy_filepath = os.path.join(env['CM_MLPERF_INFERENCE_BERT_PATH'], accuracy_filename)
+            dataset_args = " --val_data '" + env['CM_DATASET_SQUAD_VAL_PATH'] + "' --vocab_file '" + env['CM_DATASET_SQUAD_VOCAB_PATH'] + "' --out_file predictions.json "
+            accuracy_log_file_option_name = " --log_file "
+            datatype_option = " --output_dtype "+env['CM_SQUAD_ACCURACY_DTYPE']
 
-      elif 'stable-diffusion-xl' in model:
-          pass #No compliance check for now
-      elif 'gpt' in model:
-          pass #No compliance check for now
-      elif 'llama2-70b' in model:
-          pass #No compliance check for now
-      elif 'mixtral-8x7b' in model:
-          pass #No compliance check for now
-      else:
-        pass # Not giving an error now. But accuracy paths need to be done for other benchmarks which may need the non-determinism test
-        #return {'return': 1, 'error': f'Accuracy paths not done for model {model}'}
+        elif 'stable-diffusion-xl' in model:
+            pass #No compliance check for now
+        elif 'gpt' in model:
+            pass #No compliance check for now
+        elif 'llama2-70b' in model:
+            pass #No compliance check for now
+        elif 'mixtral-8x7b' in model:
+            pass #No compliance check for now
+        else:
+            pass # Not giving an error now. But accuracy paths need to be done for other benchmarks which may need the non-determinism test
+            #return {'return': 1, 'error': f'Accuracy paths not done for model {model}'}
     scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
-        
+
     if not state.get('cm-mlperf-inference-results'):
         state['cm-mlperf-inference-results'] = {}
     if not state.get('cm-mlperf-inference-results-last'):
@@ -213,7 +213,7 @@ def postprocess(i):
         if env.get("CM_MLPERF_PRINT_SUMMARY", "").lower() not in [ "no", "0", "false"]:
             print("\n")
             print(mlperf_log_summary)
-        
+
         with open ("measurements.json", "w") as fp:
             json.dump(measurements, fp, indent=2)
 
@@ -243,10 +243,10 @@ def postprocess(i):
 
         if os.path.exists(env['CM_MLPERF_CONF']):
             shutil.copy(env['CM_MLPERF_CONF'], 'mlperf.conf')
-            
+
         if os.path.exists(env['CM_MLPERF_USER_CONF']):
             shutil.copy(env['CM_MLPERF_USER_CONF'], 'user.conf')
-    
+
         result, valid, power_result = mlperf_utils.get_result_from_log(env['CM_MLPERF_LAST_RELEASE'], model, scenario, output_dir, mode, env.get('CM_MLPERF_INFERENCE_SOURCE_VERSION'))
         power = None
         power_efficiency = None
@@ -274,7 +274,7 @@ def postprocess(i):
         # Record basic host info
         host_info = {
           "os_version":platform.platform(),
-          "cpu_version":platform.processor(), 
+          "cpu_version":platform.processor(),
           "python_version":sys.version,
           "cm_version":cm.__version__
         }
@@ -310,7 +310,7 @@ def postprocess(i):
 
         with open ("cm-host-info.json", "w") as fp:
             fp.write(json.dumps(host_info, indent=2)+'\n')
-        
+
         # Prepare README
         if "cmd" in inp:
             cmd = "cm run script \\\n\t"+" \\\n\t".join(inp['cmd'])
@@ -323,19 +323,19 @@ def postprocess(i):
 
         readme_init+= "*Check [CM MLPerf docs](https://docs.mlcommons.org/inference) for more details.*\n\n"
 
-        readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n\n".format(platform.platform(), 
+        readme_body = "## Host platform\n\n* OS version: {}\n* CPU version: {}\n* Python version: {}\n* MLCommons CM version: {}\n\n".format(platform.platform(),
             platform.processor(), sys.version, cm.__version__)
 
         x = repo_name
         if repo_hash!='': x+=' --checkout='+str(repo_hash)
-        
+
         readme_body += "## CM Run Command\n\nSee [CM installation guide](https://docs.mlcommons.org/inference/install/).\n\n"+ \
             "```bash\npip install -U cmind\n\ncm rm cache -f\n\ncm pull repo {}\n\n{}\n```".format(x, xcmd)
 
         readme_body += "\n*Note that if you want to use the [latest automation recipes](https://docs.mlcommons.org/inference) for MLPerf (CM scripts),\n"+ \
                        " you should simply reload {} without checkout and clean CM cache as follows:*\n\n".format(repo_name) + \
                        "```bash\ncm rm repo {}\ncm pull repo {}\ncm rm cache -f\n\n```".format(repo_name, repo_name)
-        
+
         extra_readme_init = ''
         extra_readme_body = ''
         if env.get('CM_MLPERF_README', '') == "yes":
@@ -478,7 +478,7 @@ def postprocess(i):
         '''
         #print(f"{sys_utilisation_log['timestamp'][0]} {power_begin_time}")
         #print(sys_utilisation_log['timestamp'][0]>=power_begin_time)
-        filtered_log = sys_utilisation_log[(sys_utilisation_log['timestamp'] >= power_begin_time) & 
+        filtered_log = sys_utilisation_log[(sys_utilisation_log['timestamp'] >= power_begin_time) &
                                (sys_utilisation_log['timestamp'] <= power_end_time)]
         #print(filtered_log)
         # Calculate average of cpu_utilisation and used_memory_gb

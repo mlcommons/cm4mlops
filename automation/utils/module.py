@@ -18,7 +18,7 @@ class CAutomation(Automation):
         Test automation
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -56,7 +56,7 @@ class CAutomation(Automation):
         """
         Get some host platform name (currently windows or linux) and OS bits
 
-        Args:    
+        Args:
            (CM input dict):
 
            (bits) (str): force host platform bits
@@ -267,7 +267,7 @@ class CAutomation(Automation):
         """
         Unzip file
 
-        Args:    
+        Args:
            (CM input dict):
 
            filename (str): explicit file name
@@ -292,7 +292,7 @@ class CAutomation(Automation):
 
         console = i.get('out') == 'con'
 
-        # Attempt to read cmr.json 
+        # Attempt to read cmr.json
         file_name_handle = open(file_name, 'rb')
         file_name_zip = zipfile.ZipFile(file_name_handle)
 
@@ -345,7 +345,7 @@ class CAutomation(Automation):
         """
         Compare versions
 
-        Args:    
+        Args:
 
            version1 (str): version 1
            version2 (str): version 2
@@ -393,7 +393,7 @@ class CAutomation(Automation):
         """
         Convert JSON file to YAML
 
-        Args:    
+        Args:
 
            input (str): input file (.json)
            (output) (str): output file (.yaml)
@@ -431,7 +431,7 @@ class CAutomation(Automation):
         """
         Convert YAML file to JSON
 
-        Args:    
+        Args:
 
            input (str): input file (.yaml)
            (output) (str): output file (.json)
@@ -469,7 +469,7 @@ class CAutomation(Automation):
         """
         Sort JSON file
 
-        Args:    
+        Args:
 
            input (str): input file (.json)
            (output) (str): output file
@@ -506,7 +506,7 @@ class CAutomation(Automation):
         """
         Convert DOS file to UNIX (remove \r)
 
-        Args:    
+        Args:
 
            input (str): input file (.txt)
            (output) (str): output file
@@ -543,7 +543,7 @@ class CAutomation(Automation):
         """
         Convert DOS file to UNIX (remove \r)
 
-        Args:    
+        Args:
 
            input (str): input file (.txt)
            (output) (str): output file
@@ -562,7 +562,7 @@ class CAutomation(Automation):
         input_file = i.get('input', '')
         if input_file == '':
             return {'return':1, 'error':'please specify --input={txt file}'}
-        
+
         string = i.get('string', '')
         if string == '':
             return {'return':1, 'error':'please specify --string={string to replace}'}
@@ -570,12 +570,12 @@ class CAutomation(Automation):
         replacement = i.get('replacement', '')
         if replacement == '':
             return {'return':1, 'error':'please specify --replacement={string to replace}'}
-        
+
         output_file = i.get('output','')
 
         if output_file=='':
             output_file = input_file
-        
+
         r = utils.load_txt(input_file, check_if_exists = True)
         if r['return']>0: return r
 
@@ -593,7 +593,7 @@ class CAutomation(Automation):
         """
         Convert DOS file to UNIX (remove \r)
 
-        Args:    
+        Args:
 
            input (str): input file (.md)
            (output) (str): output file (input+'.toc)
@@ -608,12 +608,12 @@ class CAutomation(Automation):
         input_file = i.get('input', '')
         if input_file == '':
             return {'return':1, 'error':'please specify --input={txt file}'}
-        
+
         output_file = i.get('output','')
 
         if output_file=='':
             output_file = input_file + '.toc'
-        
+
         r = utils.load_txt(input_file, check_if_exists = True)
         if r['return']>0: return r
 
@@ -645,12 +645,12 @@ class CAutomation(Automation):
                         x = x.replace(z, '')
 
                     y = ' '*(2*(j-1)) + '* ['+title+'](#'+x+')'
-                    
+
                     toc.append(y)
 
         toc.append('')
         toc.append('</details>')
-        
+
         r = utils.save_txt(output_file, '\n'.join(toc)+'\n')
         if r['return']>0: return r
 
@@ -661,7 +661,7 @@ class CAutomation(Automation):
         """
         Copy string to a clipboard
 
-        Args:    
+        Args:
 
            string (str): string to copy to a clipboard
            (add_quotes) (bool): add quotes to the string in a clipboard
@@ -725,13 +725,13 @@ class CAutomation(Automation):
                     warning = format(e)
 
         rr = {'return':0}
-        
+
         if failed:
             if not i.get('skip_fail',False):
                 return {'return':1, 'error':warning}
 
-            rr['warning']=warning 
-        
+            rr['warning']=warning
+
         return rr
 
     ##############################################################################
@@ -739,7 +739,7 @@ class CAutomation(Automation):
         """
         List files and concatenate into string separate by comma
 
-        Args:    
+        Args:
 
         Returns:
            (CM return dict):
@@ -772,19 +772,19 @@ class CAutomation(Automation):
         """
         Generate secret for web apps
 
-        Args:    
+        Args:
 
         Returns:
            (CM return dict):
 
            secret (str): secret
-           
+
            * return (int): return code == 0 if no error and >0 if error
            * (error) (str): error string if return>0
         """
 
         import secrets
-        s = secrets.token_urlsafe(16)       
+        s = secrets.token_urlsafe(16)
 
         print (s)
 
@@ -795,19 +795,19 @@ class CAutomation(Automation):
         """
         Detect if there are tags in an artifact name (spaces) and update input
 
-        Args:    
+        Args:
 
            input (dict) : original input
 
         Returns:
            (CM return dict):
-           
+
            * return (int): return code == 0 if no error and >0 if error
            * (error) (str): error string if return>0
         """
 
         inp = i['input']
-        
+
         artifact = inp.get('artifact','')
         if artifact == '.':
             del(inp['artifact'])
@@ -824,12 +824,12 @@ class CAutomation(Automation):
         """
         Leave only input keys and remove the rest (to regenerate CM commands)
 
-        Args:    
+        Args:
 
            input (dict) : original input
-           (extra_keys_starts_with) (list): remove keys that starts 
+           (extra_keys_starts_with) (list): remove keys that starts
                                             with the ones from this list
-        
+
         Returns:
            (CM return dict):
 
@@ -840,10 +840,10 @@ class CAutomation(Automation):
         """
 
         import copy
-        
+
         inp = i['input']
         extra_keys = i.get('extra_keys_starts_with',[])
-        
+
         i_run_cmd_arc = copy.deepcopy(inp)
         for k in inp:
             remove = False
@@ -855,7 +855,7 @@ class CAutomation(Automation):
                         remove = True
                         break
 
-            if remove:    
+            if remove:
                 del(i_run_cmd_arc[k])
 
         return {'return':0, 'new_input':i_run_cmd_arc}
@@ -894,7 +894,7 @@ class CAutomation(Automation):
         Run system command and redirect output to string.
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           * cmd (str): command line
           * (path) (str): go to this directory and return back to current
@@ -921,7 +921,7 @@ class CAutomation(Automation):
         path = i.get('path','')
         if path!='' and os.path.isdir(path):
             cur_dir = os.getcwd()
-            os.chdir(path)    
+            os.chdir(path)
 
         if i.get('stdout','')!='':
             fn1=i['stdout']
@@ -947,7 +947,7 @@ class CAutomation(Automation):
         std = ''
         stdout = ''
         stderr = ''
-            
+
         if os.path.isfile(fn1):
             r = utils.load_txt(file_name = fn1, remove_after_read = fn1_delete)
             if r['return'] == 0: stdout = r['string'].strip()
@@ -1004,7 +1004,7 @@ class CAutomation(Automation):
         """
 
         i['self_module'] = self
-        
+
         return utils.call_internal_module(self, __file__, 'module_cfg', 'select_cfg', i)
 
     ############################################################
@@ -1027,7 +1027,7 @@ class CAutomation(Automation):
         filename = i.get('file', '')
         if filename == '':
             return {'return':1, 'error':'please specify --file={YAML file}'}
-        
+
         r = utils.load_yaml(filename,check_if_exists = True)
         if r['return']>0: return r
 
@@ -1035,7 +1035,7 @@ class CAutomation(Automation):
 
         import json
         print (json.dumps(meta, indent=2))
-        
+
         return {'return':0}
 
     ############################################################
@@ -1058,7 +1058,7 @@ class CAutomation(Automation):
         filename = i.get('file', '')
         if filename == '':
             return {'return':1, 'error':'please specify --file={JSON file}'}
-        
+
         r = utils.load_json(filename,check_if_exists = True)
         if r['return']>0: return r
 
@@ -1066,5 +1066,5 @@ class CAutomation(Automation):
 
         import json
         print (json.dumps(meta, indent=2))
-        
+
         return {'return':0}

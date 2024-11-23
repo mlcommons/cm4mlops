@@ -22,7 +22,7 @@ class CAutomation(Automation):
         Test automation
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -61,7 +61,7 @@ class CAutomation(Automation):
         Set keys in configuration
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
             (out) (str): if 'con', output to console
 
@@ -105,16 +105,16 @@ class CAutomation(Automation):
                         check_to_delete(v)
                     else:
                         if k.endswith('-'):
-                           if k[:-1] in d:
-                               del(d[k[:-1]])
-                           del(d[k])
+                            if k[:-1] in d:
+                                del(d[k[:-1]])
+                            del(d[k])
                         else:
-                           vsl = str(v).lower()
-                           if vsl == 'none': v = None
-                           elif vsl == 'false': v = False
-                           elif vsl == 'true': v = True
+                            vsl = str(v).lower()
+                            if vsl == 'none': v = None
+                            elif vsl == 'false': v = False
+                            elif vsl == 'true': v = True
 
-                           d[k]=v
+                            d[k]=v
 
             utils.merge_dicts({'dict1':config, 'dict2':new_config, 'append_lists':True, 'append_unique':True})
 
@@ -136,7 +136,7 @@ class CAutomation(Automation):
         Load configuration
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
             (out) (str): if 'con', output to console
 
@@ -160,7 +160,7 @@ class CAutomation(Automation):
     def _find_cfg_artifact(self, i):
         """
         Args:
-          (CM input dict): 
+          (CM input dict):
 
             (out) (str): if 'con', output to console
 
@@ -188,7 +188,7 @@ class CAutomation(Automation):
 
         artifact = i.get('artifact', '')
 
-        if artifact == '': 
+        if artifact == '':
             ii['artifact'] = 'default'
 
         tags = ii.get('tags', '')
@@ -200,11 +200,11 @@ class CAutomation(Automation):
         ii['tags'] = tags
 
         automation = ii['automation']
-        if automation!='.' and ',' not in automation: 
+        if automation!='.' and ',' not in automation:
             ii['automation'] = automation + ',' + self.meta['uid']
 
         # Add placeholder (use common action)
-       
+
         ii['action']='find'
         ii['out']=''
         ii['common']=True # Avoid recursion - use internal CM add function to add the script artifact

@@ -21,4 +21,3 @@ def check_key_value(d, key, value, absent_ok=False):
             raise Exception(f"{key} is missing. Current values are {d}")
     elif d[key] != value:
         raise Exception(f"{key} is not having the expected value of {value}. Current value is {d[key]}")
-

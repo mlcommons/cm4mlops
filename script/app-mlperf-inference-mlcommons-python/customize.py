@@ -14,7 +14,7 @@ def preprocess(i):
     if env.get('CM_MLPERF_SKIP_RUN', '') == "yes":
         return {'return':0}
 
-    if env.get('CM_RUN_DOCKER_CONTAINER', '') == "yes": 
+    if env.get('CM_RUN_DOCKER_CONTAINER', '') == "yes":
         return {'return':0}
 
     if env.get('CM_MLPERF_POWER','') == "yes":
@@ -154,7 +154,7 @@ def preprocess(i):
     if env.get('CM_MLPERF_OUTPUT_DIR', '') == '':
         env['CM_MLPERF_OUTPUT_DIR'] = os.getcwd()
 
-    mlperf_implementation = env.get('CM_MLPERF_IMPLEMENTATION', 'reference') 
+    mlperf_implementation = env.get('CM_MLPERF_IMPLEMENTATION', 'reference')
     cmd, run_dir = get_run_cmd(os_info, env, scenario_extra_options, mode_extra_options, dataset_options, mlperf_implementation)
 
     if env.get('CM_NETWORK_LOADGEN', '') == "lon":
@@ -233,7 +233,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
 
 
         env['LOG_PATH'] = env['CM_MLPERF_OUTPUT_DIR']
-        
+
         extra_options = " --output "+ env['CM_MLPERF_OUTPUT_DIR'] +" --model-name resnet50  --dataset " + env['CM_MLPERF_VISION_DATASET_OPTION'] + ' --max-batchsize ' + env.get('CM_MLPERF_LOADGEN_MAX_BATCHSIZE', '1') + \
                 " --dataset-path "+env['CM_DATASET_PREPROCESSED_PATH']+" --model "+env['MODEL_FILE'] + \
                 " --preprocessed_dir "+env['CM_DATASET_PREPROCESSED_PATH']
@@ -336,7 +336,7 @@ def get_run_cmd_reference(os_info, env, scenario_extra_options, mode_extra_optio
 
         cmd = cmd.replace("--count", "--total-sample-count")
         cmd = cmd.replace("--max-batchsize", "--batch-size")
-    
+
     elif "mixtral-8x7b" in env['CM_MODEL']:
         env['RUN_DIR'] = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "mixtral-8x7b")
         backend = env['CM_MLPERF_BACKEND']

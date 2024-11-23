@@ -728,14 +728,14 @@ class CAutomation(Automation):
 
             # Prune cache list with the selected script
             if len(list_of_found_scripts) > 0:
-                 script_artifact_uid = list_of_found_scripts[select_script].meta['uid']
+                script_artifact_uid = list_of_found_scripts[select_script].meta['uid']
 
-                 new_cache_list = []
-                 for cache_entry in cache_list:
-                     if cache_entry.meta['associated_script_artifact_uid'] == script_artifact_uid:
-                         new_cache_list.append(cache_entry)
+                new_cache_list = []
+                for cache_entry in cache_list:
+                    if cache_entry.meta['associated_script_artifact_uid'] == script_artifact_uid:
+                        new_cache_list.append(cache_entry)
 
-                 cache_list = new_cache_list
+                cache_list = new_cache_list
 
         # Here a specific script is found and meta obtained
         # Set some useful local variables
@@ -1531,9 +1531,9 @@ class CAutomation(Automation):
                         cached_tags.append('version-' + r['version'])
 
                     if len(r.get('add_extra_cache_tags',[]))>0:
-                       for t in r['add_extra_cache_tags']:
-                           if t not in cached_tags:
-                               cached_tags.append(t)
+                        for t in r['add_extra_cache_tags']:
+                            if t not in cached_tags:
+                                cached_tags.append(t)
 
 
             if print_env:
@@ -1721,7 +1721,7 @@ class CAutomation(Automation):
             if len(script_prefix)>0:
                 env_script.insert(where_to_add, '\n')
                 for x in reversed(script_prefix):
-                     env_script.insert(where_to_add, x)
+                    env_script.insert(where_to_add, x)
 
             if shell:
                 x=['cmd', '.', '','.bat',''] if os_info['platform'] == 'windows' else ['bash', ' ""', '"','.sh','. ./']
@@ -1749,7 +1749,7 @@ class CAutomation(Automation):
                 os.system(x)
 
         if not version and detected_version:
-          version = detected_version
+            version = detected_version
 
         # Add detected or forced version to the CM script run time state
         # to aggregate all resolved versions and dump them at the end
@@ -1804,17 +1804,17 @@ class CAutomation(Automation):
             docker_template_path = os.path.join(self.path, 'docker_repro_example')
             if os.path.isdir(docker_template_path):
                 try:
-                   shutil.copytree(docker_template_path, repro_dir, dirs_exist_ok=True)
+                    shutil.copytree(docker_template_path, repro_dir, dirs_exist_ok=True)
                 except Exception as e:
-                   pass
+                    pass
 
             docker_container = self._get_docker_container(cmd, run_state)
 
             try:
-               with open (os.path.join(repro_dir, 'ubuntu-23.04.Dockerfile'), 'a+') as f:
-                  f.write(docker_container)
+                with open (os.path.join(repro_dir, 'ubuntu-23.04.Dockerfile'), 'a+') as f:
+                    f.write(docker_container)
             except:
-               pass
+                pass
 
         if print_readme:
             with open('README-cm.md', 'w') as f:
@@ -1838,7 +1838,7 @@ class CAutomation(Automation):
         if repro_prefix !='':
 
             with open(repro_prefix+'-README-cm.md', 'w', encoding='utf-8') as f:
-               f.write(readme)
+                f.write(readme)
 
             dump_repro(repro_prefix, rr, run_state)
 
@@ -1956,7 +1956,7 @@ class CAutomation(Automation):
         run_state['variation_groups'] = variation_groups
 
         # Add variation(s) if specified in the "tags" input prefixed by _
-          # If there is only 1 default variation, then just use it or substitute from CMD
+            # If there is only 1 default variation, then just use it or substitute from CMD
 
         default_variation = meta.get('default_variation', '')
 
@@ -2368,7 +2368,7 @@ class CAutomation(Automation):
             for script in r['list']:
 #                This should not be logging since the output can be consumed by other external tools and scripts
 #                logging.info(script.path)
-                 print (script.path)
+                print (script.path)
 
         # Finalize output
         r['script_tags'] = script_tags
@@ -2415,7 +2415,7 @@ class CAutomation(Automation):
 
         # Check parsed automation
         if 'parsed_automation' not in i:
-           return {'return':1, 'error':'automation is not specified'}
+            return {'return':1, 'error':'automation is not specified'}
 
         console = i.get('out') == 'con'
 
@@ -2461,7 +2461,7 @@ class CAutomation(Automation):
                                 run_inputs = run_inputs[index_index-1:]
                             else:
                                 run_inputs = [ run_inputs[input_index - 1] ]
-                    
+
                     for run_input in run_inputs:
                         if test_input_id:
                             if run_input.get('id', '') != test_input_id:
@@ -2648,11 +2648,11 @@ class CAutomation(Automation):
 
         script_name = ''
         if 'script_name' in i:
-           script_name = i.get('script_name','').strip()
-           del(i['script_name'])
+            script_name = i.get('script_name','').strip()
+            del(i['script_name'])
 
-           if script_name != '' and not os.path.isfile(script_name):
-               return {'return':1, 'error':'file {} not found'.format(script_name)}
+            if script_name != '' and not os.path.isfile(script_name):
+                return {'return':1, 'error':'file {} not found'.format(script_name)}
 
         # Move tags from input to meta of the newly created script artifact
         tags_list = utils.convert_tags_to_list(i)
@@ -2678,10 +2678,10 @@ class CAutomation(Automation):
         template = i.get('template','')
 
         if template == '':
-           if i.get('python', False):
-               template = 'python'
-           elif i.get('pytorch', False):
-               template = 'pytorch'
+            if i.get('python', False):
+                template = 'python'
+            elif i.get('pytorch', False):
+                template = 'pytorch'
 
         if template!='':
             template_dir += '-'+template
@@ -3475,9 +3475,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                         if not duplicate:
                             skip = False
                             if hook!=None:
-                               r=hook({'file':f})
-                               if r['return']>0: return r
-                               skip = r['skip']
+                                r=hook({'file':f})
+                                if r['return']>0: return r
+                                skip = r['skip']
                             if not skip:
                                 found_files.append(f)
 
@@ -3515,9 +3515,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                             if not duplicate:
                                 skip = False
                                 if hook!=None:
-                                   r=hook({'file':f})
-                                   if r['return']>0: return r
-                                   skip = r['skip']
+                                    r=hook({'file':f})
+                                    if r['return']>0: return r
+                                    skip = r['skip']
                                 if not skip:
                                     found_files.append(f)
 
@@ -3561,27 +3561,27 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                     run_script_input['recursion_spaces'] = recursion_spaces
 
                     if rx['return']>0:
-                       if rx['return'] != 2:
-                           return rx
+                        if rx['return'] != 2:
+                            return rx
                     else:
-                       # Version was detected
-                       detected_version = rx.get('version','')
+                        # Version was detected
+                        detected_version = rx.get('version','')
 
-                       if detected_version != '':
-                           if detected_version == -1:
-                               logging.info(recursion_spaces + '    SKIPPED due to incompatibility ...')
-                           else:
-                               ry = check_version_constraints({'detected_version': detected_version,
-                                                               'version': version,
-                                                               'version_min': version_min,
-                                                               'version_max': version_max,
-                                                               'cmind':self.cmind})
-                               if ry['return']>0: return ry
+                        if detected_version != '':
+                            if detected_version == -1:
+                                logging.info(recursion_spaces + '    SKIPPED due to incompatibility ...')
+                            else:
+                                ry = check_version_constraints({'detected_version': detected_version,
+                                                                'version': version,
+                                                                'version_min': version_min,
+                                                                'version_max': version_max,
+                                                                'cmind':self.cmind})
+                                if ry['return']>0: return ry
 
-                               if not ry['skip']:
-                                   found_files_with_good_version.append(path_to_file)
-                               else:
-                                   logging.info(recursion_spaces + '    SKIPPED due to version constraints ...')
+                                if not ry['skip']:
+                                    found_files_with_good_version.append(path_to_file)
+                                else:
+                                    logging.info(recursion_spaces + '    SKIPPED due to version constraints ...')
 
                 found_files = found_files_with_good_version
 
@@ -3669,19 +3669,19 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         run_script_input['recursion_spaces'] = recursion_spaces
 
         if rx['return'] == 0:
-           # Version was detected
-           detected_version = rx.get('version','')
+            # Version was detected
+            detected_version = rx.get('version','')
 
-           if detected_version != '':
-               ry = check_version_constraints({'detected_version': detected_version,
-                                               'version': version,
-                                               'version_min': version_min,
-                                               'version_max': version_max,
-                                               'cmind':self.cmind})
-               if ry['return']>0: return ry
+            if detected_version != '':
+                ry = check_version_constraints({'detected_version': detected_version,
+                                                'version': version,
+                                                'version_min': version_min,
+                                                'version_max': version_max,
+                                                'cmind':self.cmind})
+                if ry['return']>0: return ry
 
-               if not ry['skip']:
-                   return {'return':0, 'detected_version':detected_version}
+                if not ry['skip']:
+                    return {'return':0, 'detected_version':detected_version}
 
         return {'return':16, 'error':'version was not detected'}
 
@@ -3878,14 +3878,14 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                     p2 = os.path.join(p, f)
 
                     if os.path.isdir(p2):
-                       r = self.find_file_deep({'paths':[p2], 'file_name': file_name, 'restrict_paths':restrict_paths})
-                       if r['return']>0: return r
+                        r = self.find_file_deep({'paths':[p2], 'file_name': file_name, 'restrict_paths':restrict_paths})
+                        if r['return']>0: return r
 
-                       found_paths += r['found_paths']
+                        found_paths += r['found_paths']
                     else:
-                       if f == file_name:
-                           found_paths.append(p)
-                           break
+                        if f == file_name:
+                            found_paths.append(p)
+                            break
 
         if len(found_paths) > 0 and len(restrict_paths) > 0:
             filtered_found_paths = []
@@ -3982,12 +3982,12 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                            match_text = match_text,
                            fail_if_no_match = 'version was not detected')
         if r['return']>0:
-           if r.get('string','')!='':
-              r['error'] += ' ({})'.format(r['string'])
-           return r
+            if r.get('string','')!='':
+                r['error'] += ' ({})'.format(r['string'])
+            return r
 
         string = r['string']
-        
+
         if r['match'].lastindex and r['match'].lastindex >= group_number:
             version = r['match'].group(group_number)
         else:
@@ -4196,7 +4196,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
           (docker_shm_size)
 
           (docker_extra_run_args)
-    
+
 
         Returns:
           (CM return dict):
@@ -4255,10 +4255,10 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         cur_work_dir = env.get('CM_TMP_CURRENT_SCRIPT_WORK_PATH','')
         if cur_work_dir !='' and os.path.isdir(cur_work_dir):
-           for x in ['tmp-run.bat', 'tmp-state.json']:
-               xx = os.path.join(cur_work_dir, x)
-               if os.path.isfile(xx):
-                   os.remove(xx)
+            for x in ['tmp-run.bat', 'tmp-state.json']:
+                xx = os.path.join(cur_work_dir, x)
+                if os.path.isfile(xx):
+                    os.remove(xx)
 
         return {'return':0}
 
@@ -4777,15 +4777,15 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
             # Check if print files when error
             print_files = meta.get('print_files_if_script_error', [])
             if len(print_files)>0:
-               for pr in print_files:
-                   if os.path.isfile(pr):
-                       r = utils.load_txt(file_name = pr)
-                       if r['return'] == 0:
-                           logging.info("========================================================")
-                           logging.info("Print file {}:".format(pr))
-                           logging.info("")
-                           logging.info(r['string'])
-                           logging.info("")
+                for pr in print_files:
+                    if os.path.isfile(pr):
+                        r = utils.load_txt(file_name = pr)
+                        if r['return'] == 0:
+                            logging.info("========================================================")
+                            logging.info("Print file {}:".format(pr))
+                            logging.info("")
+                            logging.info(r['string'])
+                            logging.info("")
 
 
             # Check where to report errors and failures

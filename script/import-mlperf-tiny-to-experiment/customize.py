@@ -248,26 +248,26 @@ def convert_repo_to_experiment(path, version, env):
                                                     for line in lines:
                                                         j = line.find('ulp-mlperf: ')
                                                         if j>=0:
-                                                           j1 = line.find(':', j+12)
-                                                           if j1>=0:
-                                                               accuracy_key = 'accuracy_'+line[j+12:j1]
-                                                               value = line[j1+2:]
+                                                            j1 = line.find(':', j+12)
+                                                            if j1>=0:
+                                                                accuracy_key = 'accuracy_'+line[j+12:j1]
+                                                                value = line[j1+2:]
 
-                                                               if value.endswith('%'):
-                                                                   value = value[:-1]
-                                                                   results[accuracy_key+'_metric']='%'
+                                                                if value.endswith('%'):
+                                                                    value = value[:-1]
+                                                                    results[accuracy_key+'_metric']='%'
 
-                                                               value = float(value)
+                                                                value = float(value)
 
-                                                               results[accuracy_key] = value
+                                                                results[accuracy_key] = value
 
-                                                               if not found:
-                                                                   # first value
-                                                                   results['Accuracy'] = value
-                                                                   results['_Accuracy'] = value
+                                                                if not found:
+                                                                    # first value
+                                                                    results['Accuracy'] = value
+                                                                    results['_Accuracy'] = value
 
 
-                                                               found = True
+                                                                found = True
 
                                                     if not found:
                                                         print ('           * Warning: accuracy not found in the file {}'.format(paccuracy))

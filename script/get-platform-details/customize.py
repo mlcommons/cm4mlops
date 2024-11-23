@@ -15,7 +15,7 @@ def preprocess(i):
 
     if not check_installation("numactl",os_info):
         env['CM_INSTALL_NUMACTL'] = 'True'
-    
+
     #if not check_installation("cpupower",os_info):
     env['CM_INSTALL_CPUPOWER'] = 'True'
 
@@ -24,7 +24,7 @@ def preprocess(i):
             env['CM_PLATFORM_DETAILS_DIR_PATH'] = os.getcwd()
         if env.get('CM_PLATFORM_DETAILS_FILE_NAME', '') == '':
             env['CM_PLATFORM_DETAILS_FILE_NAME'] = "system-info.txt"
-        env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(env['CM_PLATFORM_DETAILS_DIR_PATH'], env['CM_PLATFORM_DETAILS_FILE_NAME'])        
+        env['CM_PLATFORM_DETAILS_FILE_PATH'] = os.path.join(env['CM_PLATFORM_DETAILS_DIR_PATH'], env['CM_PLATFORM_DETAILS_FILE_NAME'])
 
     return {'return':0}
 
@@ -38,5 +38,5 @@ def postprocess(i):
     os_info = i['os_info']
 
     automation = i['automation']
-    
+
     return {'return':0}

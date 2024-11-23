@@ -21,7 +21,7 @@ def preprocess(i):
         # Check which dataset
         p = os.path.join(path, 'annotations')
         if os.path.isdir(p):
-            for d in [('val2017','val','2017'), 
+            for d in [('val2017','val','2017'),
                       ('train2017','train','2017')]:
                 p = os.path.join(path, d[0])
 
@@ -36,7 +36,7 @@ def preprocess(i):
 
         print ('')
         print ('Detected COCO dataset {} {}'.format(tp,ver))
-        
+
         env['CM_DATASET_COCO_DETECTED'] = 'yes'
         env['CM_DATASET_COCO_PATH'] = path
     else:
@@ -57,7 +57,7 @@ def preprocess(i):
     else:
         url_data = env['CM_DATASET_COCO_URL_DATA']
         url_ann = env['CM_DATASET_COCO_URL_ANNOTATIONS']
-        
+
         filename_data = tp + ver + '.zip'
         filename_annotation = 'annotations_trainval' + ver + '.zip'
 
@@ -91,7 +91,7 @@ def preprocess(i):
     if path_to!='':
         dae_input_data['extract_path'] = path_to
         dae_input_annotation['extract_path'] = path_to
-    
+
     path_store = env.get('CM_STORE', '')
     if path_store!='':
         dae_input_data['download_path'] = path_store
@@ -99,7 +99,7 @@ def preprocess(i):
         dae_input_annotation['download_path'] = path_store
         dae_input_annotation['tags'] = '_keep'
 
-    
+
     r = automation.update_deps({'deps':meta['prehook_deps'],
                                 'update_deps':{
                                   '746e5dad5e784ad6': dae_input_data,
@@ -122,11 +122,11 @@ def preprocess(i):
     if ver == '2017':
         if tp == 'val':
             if size == 'small':
-               md5sum_data = '16fab985a33afa66beeb987f68c2023c'
-               md5sum_ann = '78c0cfd9fc32c825d4ae693fd0d91407'
+                md5sum_data = '16fab985a33afa66beeb987f68c2023c'
+                md5sum_ann = '78c0cfd9fc32c825d4ae693fd0d91407'
             else:
-               md5sum_data = '442b8da7639aecaf257c1dceb8ba8c80'
-               md5sum_ann = 'f4bbac642086de4f52a3fdda2de5fa2c'
+                md5sum_data = '442b8da7639aecaf257c1dceb8ba8c80'
+                md5sum_ann = 'f4bbac642086de4f52a3fdda2de5fa2c'
 
     if md5sum_data != '':
         env['CM_DATASET_COCO_MD5SUM_DATA'] = md5sum_data
@@ -141,7 +141,7 @@ def preprocess(i):
     # Add version and type to tags
     extra_cache_tags = []
     for tag in [ver, tp]:
-        if tag not in variation_tags: 
+        if tag not in variation_tags:
             extra_cache_tags.append(tag)
 
     return {'return':0, 'add_extra_cache_tags':extra_cache_tags}
@@ -155,7 +155,7 @@ def postprocess(i):
     tp_ver = env['CM_DATASET_COCO_TYPE_AND_VERSION']
 
     path_to = env.get('CM_TO','')
-    
+
     # Check if detected or downloaded
     if env.get('CM_DATASET_COCO_DETECTED', '').lower() == 'yes' or path_to!='':
         path_all = env['CM_DATASET_COCO_PATH'] if path_to=='' else path_to
@@ -164,9 +164,9 @@ def postprocess(i):
         env['CM_DATASET_COCO_ANNOTATIONS_PATH'] = os.path.join(path_all, 'annotations')
     else:
         path_all = os.getcwd()
-    
+
         # Moving 2 directories to 1 place
-        
+
         path_data = env['CM_DATASET_COCO_DATA_PATH']
         path_ann = env['CM_DATASET_COCO_ANNOTATIONS_PATH']
 
@@ -180,16 +180,16 @@ def postprocess(i):
         if os_info['platform'] == 'windows':
             # Moving to this directory since can't make symbolic links
             command1 = '  move /y ' + path_data_full + ' ' + tp_ver
-            command2 = '  move /y ' + path_ann_full + ' annotations' 
+            command2 = '  move /y ' + path_ann_full + ' annotations'
 
             env['CM_DATASET_COCO_DATA_PATH'] = os.path.join(path_all, tp_ver)
             env['CM_DATASET_COCO_ANNOTATIONS_PATH'] = os.path.join(path_all, 'annotations')
         else:
-            # Make soft links from data and annotations into 1 directory 
+            # Make soft links from data and annotations into 1 directory
             # (standard way for COCO)
 
             command1 = '  ln -s ' + path_data_full + ' ' + tp_ver
-            command2 = '  ln -s ' + path_ann_full + ' annotations' 
+            command2 = '  ln -s ' + path_ann_full + ' annotations'
 
         for command in [command1, command2]:
             print (command)

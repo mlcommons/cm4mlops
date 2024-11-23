@@ -15,10 +15,10 @@ def preprocess(i):
         print ('WARNING: this script was not thoroughly tested on Windows and compilation may fail - please help us test and improve it!')
         print ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 #        # Currently support only LLVM on Windows
-#        print ('# Forcing LLVM on Windows')        
+#        print ('# Forcing LLVM on Windows')
 #        r = automation.update_deps({'deps':meta['post_deps'], 'update_deps':{'compile-program': {'adr':{'compiler':{'tags':'llvm'}}}}})
 #        if r['return']>0: return r
-    
+
     env = i['env']
 
     if env.get('CM_MLPERF_SKIP_RUN', '') == "yes":
@@ -46,7 +46,7 @@ def preprocess(i):
     if '+CPLUS_INCLUDE_PATH' not in env:
         env['+CPLUS_INCLUDE_PATH']  = []
 
-    env['+CPLUS_INCLUDE_PATH'].append(os.path.join(script_path, "inc")) 
+    env['+CPLUS_INCLUDE_PATH'].append(os.path.join(script_path, "inc"))
     env['+C_INCLUDE_PATH'].append(os.path.join(script_path, "inc"))
 
     if env['CM_MLPERF_DEVICE'] == 'gpu':

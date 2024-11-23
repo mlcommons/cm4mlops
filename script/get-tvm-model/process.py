@@ -5,7 +5,7 @@ from typing import Dict, Tuple, Optional, List, Any, Union
 if os.environ.get("CM_TVM_FRONTEND_FRAMEWORK", None) == "pytorch":
     import torch
     import torchvision
-    
+
 import tvm
 from tvm import relay, meta_schedule
 from tvm.driver.tvmc.frontends import load_model
@@ -74,13 +74,13 @@ def get_mod_params(
     else:
         tvmc_model = load_model(path=model_path, shape_dict=shape_dict)
         mod, params = tvm.relay.transform.DynamicToStatic()(tvmc_model.mod), tvmc_model.params
-    
+
     input_layer_name_file = os.path.join(os.getcwd(), "input_layer_name")
     if not input_layer_name:
         input_layer_name = shape_dict.keys()[0]
     with open(input_layer_name_file, 'w') as file:
         file.write(input_layer_name)
-    
+
     return mod, params
 
 def tune_model(
@@ -117,7 +117,7 @@ def tune_model(
             evaluator_config=evaluator_config
         ),
     )
-    
+
     return work_dir, database
 
 
@@ -140,7 +140,7 @@ def compile_model(
             )
         build_conf["relay.backend.use_meta_schedule"] = True
         with tvm.transform.PassContext(
-            opt_level=opt_level, 
+            opt_level=opt_level,
             config=build_conf
         ):
             lib = meta_schedule.relay_integration.compile_relay(
@@ -152,19 +152,19 @@ def compile_model(
             )
     else:
         with tvm.transform.PassContext(
-            opt_level=opt_level, 
-            config=build_conf, 
+            opt_level=opt_level,
+            config=build_conf,
         ):
             if use_vm:
                 lib = tvm.relay.backend.vm.compile(
-                    mod=mod, 
-                    target=target, 
+                    mod=mod,
+                    target=target,
                     params=params
                 )
             else:
                 lib = tvm.relay.build(
-                    mod, 
-                    target=target, 
+                    mod,
+                    target=target,
                     params=params
                 )
     return lib
@@ -174,9 +174,9 @@ def serialize_vm(
 ) -> tvm.runtime.Module:
     path_consts = os.path.join(
         tempfile.mkdtemp(
-            dir=os.getcwd(), 
+            dir=os.getcwd(),
             suffix="-tvm-tmp"
-        ), 
+        ),
         "consts"
     )
     code_path = os.path.join(os.getcwd(), "vm_exec_code.ro")
@@ -224,9 +224,9 @@ def main() -> None:
         use_vm = os.environ.get('CM_TVM_USE_VM', 'no') == 'yes'
         if tune_model_flag:
             work_dir, database = tune_model(
-                mod=mod, 
-                params=params, 
-                target=tvm_target, 
+                mod=mod,
+                params=params,
+                target=tvm_target,
             )
         lib = compile_model(
             mod=mod,
@@ -242,7 +242,7 @@ def main() -> None:
             lib = serialize_vm(
                 vm_exec=lib
             )
-            
+
         with open(os.path.join(os.getcwd(), "tvm_executor"), "w") as file:
             file.write("virtual_machine" if use_vm else "graph_executor")
         lib.export_library(compiled_model)

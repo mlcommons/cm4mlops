@@ -15,7 +15,7 @@ def preprocess(i):
     # Query cache for results dirs
     env_repo_tags=env.get('CM_IMPORT_TINYMLPERF_REPO_TAGS','').strip()
     xtags='' if env_repo_tags =='' else ',version-'+env_repo_tags
-    
+
     r = cm.access({'action':'find',
                    'automation':'cache,541d6f712a6b464e',
                    'tags':'get,repo,mlperf-tiny-results'+xtags})
@@ -51,8 +51,8 @@ def preprocess(i):
             print ('')
             print ('Repo path: {}'.format(path))
 
-            r = automation.run_native_script({'run_script_input':run_script_input, 
-                                              'env':env, 
+            r = automation.run_native_script({'run_script_input':run_script_input,
+                                              'env':env,
                                               'script_name':'run_submission_checker'})
             if r['return']>0:
                 return r
@@ -68,7 +68,7 @@ def postprocess(i):
     version = env['CM_TINYMLPERF_REPO_VERSION']
 
     for ext in ['.csv', '.xlsx']:
-        
+
         p1 = os.path.join (path, 'summary'+ext)
         p2 = os.path.join (cur_dir, 'summary-{}{}'.format(version,ext))
 
