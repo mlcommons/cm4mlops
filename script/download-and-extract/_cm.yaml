@@ -33,6 +33,8 @@ posthook_deps:
   names:
   - extract-script
   tags: extract,file
+  force_env_keys:
+    - CM_OUTDIRNAME
   update_tags_from_env_with_prefix:
     _path.:
     - CM_DOWNLOAD_DOWNLOADED_PATH
@@ -45,6 +47,8 @@ prehook_deps:
     - 'yes'
     - 'True'
   tags: download,file
+  force_env_keys:
+    - CM_OUTDIRNAME
   update_tags_from_env_with_prefix:
     _url.:
     - CM_DAE_URL
