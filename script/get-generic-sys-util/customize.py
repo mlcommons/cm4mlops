@@ -89,10 +89,8 @@ def preprocess(i):
             return {'return': 1,
                 'error': 'variable {} is not in env'.format(tmp_value)}
         if tmp_value in env:
-
-
-        if isinstance(package_name, str):
-            package_name = package_name.replace("<<<" + tmp_value + ">>>", str(env[tmp_value]))
+            if isinstance(package_name, str):
+                package_name = package_name.replace("<<<" + tmp_value + ">>>", str(env[tmp_value]))
 
   install_cmd = env.get('CM_HOST_OS_PACKAGE_MANAGER_INSTALL_CMD')
    if not install_cmd:
