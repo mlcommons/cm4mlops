@@ -92,8 +92,8 @@ def preprocess(i):
             if isinstance(package_name, str):
                 package_name = package_name.replace("<<<" + tmp_value + ">>>", str(env[tmp_value]))
 
-  install_cmd = env.get('CM_HOST_OS_PACKAGE_MANAGER_INSTALL_CMD')
-   if not install_cmd:
+    install_cmd = env.get('CM_HOST_OS_PACKAGE_MANAGER_INSTALL_CMD')
+    if not install_cmd:
         return {
             'return': 1, 'error': 'Package manager installation command not detected for the given OS'}
 
