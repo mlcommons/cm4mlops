@@ -2172,30 +2172,31 @@ class CAutomation(Automation):
         new_env = env  # just a reference
 
         for key, val in new_env.items():
-
-            # may need a cleaner way
-if isinstance(val,             if)                if "/local/cache/" in val:
-                    sep = "/"
-                else:
-                    sep = "\\"
+            # Check for a path separator in a string and determine the
+            # separator
+            if isinstance(val, str) and any(sep in val for sep in [
+                          "/local/cache/", "\\local\\cache\\"]):
+                sep = "/" if "/local/cache/" in val else "\\"
 
                 path_split = val.split(sep)
                 repo_entry_index = path_split.index("local")
-                loaded_cache_path = sep.join(path_split[0:repo_entry_index +2])
+                loaded_cache_path = sep.join(
+                    path_split[0:repo_entry_index + 2])
                 if loaded_cache_path != current_cache_path and os.path.exists(
                     current_cache_path):
                     new_env[key] = val.replace(
     loaded_cache_path, current_cache_path)
 
-elif isinstance(val,             elif )                for val2, i in enumerate(val):
-if isinstance(val2,                     if )                        if "/local/cache/" in val:
-                            sep = "/"
-                        else:
-                            sep = "\\"
+            elif isinstance(val, list):
+                for i, val2 in enumerate(val):
+                    if isinstance(val2, str) and any(sep in val2 for sep in [
+                                  "/local/cache/", "\\local\\cache\\"]):
+                        sep = "/" if "/local/cache/" in val2 else "\\"
 
                         path_split = val2.split(sep)
                         repo_entry_index = path_split.index("local")
-                        loaded_cache_path = sep.join(path_split[0:repo_entry_index +2])
+                        loaded_cache_path = sep.join(
+                            path_split[0:repo_entry_index + 2])
                         if loaded_cache_path != current_cache_path and os.path.exists(
                             current_cache_path):
                             new_env[key][i] = val2.replace(
@@ -2204,7 +2205,8 @@ if isinstance(val2,                     if )                        if "/local/c
         return {'return': 0, 'new_env': new_env}
 
     ##########################################################################
-    def _dump_version_info_for_script(self, output_dir= os.getcwd(), quiet = False, silent = False):
+    def _dump_version_info_for_script(
+        self, output_dir=os.getcwd(), quiet=False, silent=False):
 
         if not quiet and not silent:
             pass
@@ -2212,7 +2214,7 @@ if isinstance(val2,                     if )                        if "/local/c
             if not quiet and not silent:
                 logging.info('Dumping versions to {}'.format(f))
             r = utils.save_json(f, self.run_state.get('version_info', []))
-            if r['return']>0:
+            if r['return'] > 0:
                 return r
 
         return {'return': 0}
@@ -2248,7 +2250,8 @@ if isinstance(val2,                     if )                        if "/local/c
         run_state['variation_groups'] = variation_groups
 
         # Add variation(s) if specified in the "tags" input prefixed by _
-           # If there is only 1 default variation, then just use it or substitute from CMD
+           # If there is only 1 default variation, then just use it or
+           # substitute from CMD
 
         default_variation = meta.get('default_variation', '')
 
@@ -2283,19 +2286,21 @@ if isinstance(val2,                     if )                        if "/local/c
         valid_variation_combinations = meta.get(
             'valid_variation_combinations', [])
         if valid_variation_combinations:
-            if not any (all(t in variation_tags for t in s) for s in valid_variation_combinations):
+            if not any(all(t in variation_tags for t in s)
+                       for s in valid_variation_combinations):
                 return {'return': 1, 'error': 'Invalid variation combination "{}" prepared. Valid combinations: "{}" '.format(
                     variation_tags, valid_variation_combinations)}
 
         invalid_variation_combinations = meta.get(
             'invalid_variation_combinations', [])
         if invalid_variation_combinations:
-            if any (all(t in variation_tags for t in s) for s in invalid_variation_combinations):
+            if any(all(t in variation_tags for t in s)
+                   for s in invalid_variation_combinations):
                 return {'return': 1, 'error': 'Invalid variation combination "{}" prepared. Invalid combinations: "{}" '.format(
                     variation_tags, invalid_variation_combinations)}
 
         variation_tags_string = ''
-        if len(variation_tags) >0:
+        if len(variation_tags) > 0:
             for t in variation_tags:
                 if variation_tags_string != '':
                     variation_tags_string += ','
@@ -2303,10 +2308,12 @@ if isinstance(val2,                     if )                        if "/local/c
                 x = '_' + t
                 variation_tags_string += x
 
-            logging.debug(recursion_spaces +'    Prepared variations: {}'.format(variation_tags_string))
+            logging.debug(
+    recursion_spaces +
+     '    Prepared variations: {}'.format(variation_tags_string))
 
         # Update env and other keys if variations
-        if len(variation_tags) >0:
+        if len(variation_tags) > 0:
             for variation_tag in variation_tags:
                 if variation_tag.startswith('~'):
                     # ignore such tag (needed for caching only to differentiate
@@ -2321,13 +2328,16 @@ if isinstance(val2,                     if )                        if "/local/c
                 variation_tag_dynamic_suffix = None
                 if variation_tag not in variations:
                     if '.' in variation_tag and variation_tag[-1] != '.':
-                        variation_tag_dynamic_suffix = variation_tag[variation_tag.index(".") +1:]
+                        variation_tag_dynamic_suffix = variation_tag[variation_tag.index(
+                            ".") + 1:]
                         if not variation_tag_dynamic_suffix:
-                            return {'return': 1, 'error':'tag {} is not in variations {}'.format(variation_tag, variations.keys())}
+                            return {'return': 1, 'error': 'tag {} is not in variations {}'.format(
+                                variation_tag, variations.keys())}
                         variation_tag = self._get_name_for_dynamic_variation_tag(
                             variation_tag)
                     if variation_tag not in variations:
-                        return {'return': 1, 'error':'tag {} is not in variations {}'.format(variation_tag, variations.keys())}
+                        return {'return': 1, 'error': 'tag {} is not in variations {}'.format(
+                            variation_tag, variations.keys())}
 
                 variation_meta = variations[variation_tag]
                 if variation_tag_dynamic_suffix:
@@ -2348,13 +2358,13 @@ if isinstance(val2,                     if )                        if "/local/c
     new_state_keys_from_meta,
     run_state,
      i)
-                if r['return']>0:
+                if r['return'] > 0:
                     return r
 
-                if variation_meta.get('script_name', '') !='':
+                if variation_meta.get('script_name', '') != '':
                     meta['script_name'] = variation_meta['script_name']
 
-                if variation_meta.get('default_version', '') !='':
+                if variation_meta.get('default_version', '') != '':
                     run_state['default_version'] = variation_meta['default_version']
 
                 if variation_meta.get(
@@ -2370,7 +2380,7 @@ if isinstance(val2,                     if )                        if "/local/c
                 if adr:
                     self._merge_dicts_with_tags(add_deps_recursive, adr)
 
-                combined_variations = [t for t in variations if ',' in t ]
+                combined_variations = [t for t in variations if ',' in t]
 
                 combined_variations.sort(key=lambda x: x.count(','))
                 ''' By sorting based on the number of variations users can safely override
@@ -2398,7 +2408,7 @@ if isinstance(val2,                     if )                        if "/local/c
     new_state_keys_from_meta,
     run_state,
      i)
-                        if r['return']>0:
+                        if r['return'] > 0:
                             return r
 
                         adr = get_adr(combined_variation_meta)
@@ -2406,10 +2416,11 @@ if isinstance(val2,                     if )                        if "/local/c
                             self._merge_dicts_with_tags(
                                 add_deps_recursive, adr)
 
-                        if combined_variation_meta.get('script_name', '') !='':
+                        if combined_variation_meta.get(
+                            'script_name', '') != '':
                             meta['script_name'] = combined_variation_meta['script_name']
 
-                        if variation_meta.get('default_version', '') !='':
+                        if variation_meta.get('default_version', '') != '':
                             run_state['default_version'] = variation_meta['default_version']
 
                         if combined_variation_meta.get(
@@ -2429,17 +2440,18 @@ if isinstance(val2,                     if )                        if "/local/c
     posthook_deps,
     add_deps_recursive,
      env)
-            if r['return']>0:
+            if r['return'] > 0:
                 return r
 
-        if len(required_disk_space) >0:
+        if len(required_disk_space) > 0:
             required_disk_space_sum_mb = sum(
                 list(required_disk_space.values()))
 
             warnings.append(
     'Required disk space: {} MB'.format(required_disk_space_sum_mb))
 
-        return {'return': 0, 'variation_tags_string': variation_tags_string, 'explicit_variation_tags': explicit_variation_tags, 'warnings': warnings}
+        return {'return': 0, 'variation_tags_string': variation_tags_string,
+            'explicit_variation_tags': explicit_variation_tags, 'warnings': warnings}
 
     ##########################################################################
     def _update_variation_tags_from_variations(
@@ -2454,7 +2466,7 @@ if isinstance(val2,                     if )                        if "/local/c
                 v_static = self._get_name_for_dynamic_variation_tag(v)
                 tmp_variation_tags_static[v_i] = v_static
 
-        combined_variations = [t for t in variations if ',' in t ]
+        combined_variations = [t for t in variations if ',' in t]
         # We support default_variations in the meta of cmbined_variations
         combined_variations.sort(key=lambda x: x.count(','))
         ''' By sorting based on the number of variations users can safely override
@@ -2495,7 +2507,8 @@ if isinstance(val2,                     if )                        if "/local/c
                                         base_variation, variation_name)}
                                 else:
                                     dynamic_base_variation = True
-                                    base_prefix = base_variation_dynamic.split(".")[0] +"."
+                                    base_prefix = base_variation_dynamic.split(".")[
+                                                                               0] + "."
                                     for x in variation_tags:
                                         if x.startswith(base_prefix):
                                             dynamic_base_variation_already_added = True
@@ -2573,7 +2586,10 @@ if isinstance(val2,                     if )                        if "/local/c
     ##########################################################################
     def _get_variation_tags_from_default_variations(
         self, variation_meta, variations, variation_groups, tmp_variation_tags_static, excluded_variation_tags):
-        # default_variations dictionary specifies the default_variation for each variation group. A default variation in a group is turned on if no other variation from that group is turned on and it is not excluded using the '-' prefix
+        # default_variations dictionary specifies the default_variation for
+        # each variation group. A default variation in a group is turned on if
+        # no other variation from that group is turned on and it is not
+        # excluded using the '-' prefix
 
         tmp_variation_tags = []
         if "default_variations" in variation_meta:
@@ -2629,7 +2645,7 @@ if isinstance(val2,                     if )                        if "/local/c
         if console:
             logging.info(version)
 
-        return {'return': 0, 'version':version}
+        return {'return': 0, 'version': version}
 
     ############################################################
 
@@ -2648,9 +2664,9 @@ if isinstance(val2,                     if )                        if "/local/c
         if ' ' in artifact:  # or ',' in artifact:
             del (i['artifact'])
             if 'parsed_artifact' in i:
-                del(i['parsed_artifact'])
+                del (i['parsed_artifact'])
             # Force substitute tags
-            i['tags'] = artifact.replace(' ',',')
+            i['tags'] = artifact.replace(' ', ',')
 
         #######################################################################
         # Process tags to find script(s) and separate variations
@@ -2676,15 +2692,18 @@ if isinstance(val2,                     if )                        if "/local/c
                 else:
                     script_tags.append(t)
 
-        excluded_tags =  [v[1:] for v in script_tags if v.startswith("-") ]
+        excluded_tags = [v[1:] for v in script_tags if v.startswith("-")]
         common = set(script_tags).intersection(set(excluded_tags))
         if common:
-            return {'return': 1, 'error': 'There is common tags {} in the included and excluded lists'.format(common)}
+            return {
+                'return': 1, 'error': 'There is common tags {} in the included and excluded lists'.format(common)}
 
-        excluded_variation_tags =  [v[1:] for v in variation_tags if v.startswith("-") ]
+        excluded_variation_tags = [v[1:]
+            for v in variation_tags if v.startswith("-")]
         common = set(variation_tags).intersection(set(excluded_variation_tags))
         if common:
-            return {'return': 1, 'error': 'There is common variation tags {} in the included and excluded lists'.format(common)}
+            return {
+                'return': 1, 'error': 'There is common variation tags {} in the included and excluded lists'.format(common)}
 
         #######################################################################
         # Find CM script(s) based on thier tags to get their meta (can be more than 1)
@@ -2696,7 +2715,7 @@ if isinstance(val2,                     if )                        if "/local/c
         i['common'] = True
 
         r = super(CAutomation, self).search(i)
-        if r['return']>0:
+        if r['return'] > 0:
             return r
 
         lst = r['list']
@@ -2705,7 +2724,7 @@ if isinstance(val2,                     if )                        if "/local/c
 
         found_scripts = False if len(lst) == 0 else True
 
-        if found_scripts and len(variation_tags) >0:
+        if found_scripts and len(variation_tags) > 0:
             filtered = []
 
             for script_artifact in lst:
@@ -2795,7 +2814,7 @@ if isinstance(val2,                     if )                        if "/local/c
 
         # Check parsed automation
         if 'parsed_automation' not in i:
-            return {'return': 1, 'error':'automation is not specified'}
+            return {'return': 1, 'error': 'automation is not specified'}
 
         console = i.get('out') == 'con'
 
@@ -2803,7 +2822,7 @@ if isinstance(val2,                     if )                        if "/local/c
         i['out'] = None
         r = self.search(i)
 
-        if r['return']>0:
+        if r['return'] > 0:
             return r
 
         lst = r['list']
@@ -2823,7 +2842,8 @@ if isinstance(val2,                     if )                        if "/local/c
                     tags_string = ",".join(meta.get("tags"))
                     test_input_index = i.get('test_input_index')
                     test_input_id = i.get('test_input_id')
-                    run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version": "22.04"} ]))
+                    run_inputs = i.get("run_inputs", test_config.get(
+                        'run_inputs', [{"docker_os": "ubuntu", "docker_os_version": "22.04"}]))
                     if test_input_index:
                         index_plus = False
                         try:
@@ -2840,9 +2860,9 @@ if isinstance(val2,                     if )                        if "/local/c
                             run_inputs = []
                         else:
                             if index_plus:
-                                run_inputs = run_inputs[index_index -1:]
+                                run_inputs = run_inputs[index_index - 1:]
                             else:
-                                run_inputs = [run_inputs[input_index - 1] ]
+                                run_inputs = [run_inputs[input_index - 1]]
 
                     for run_input in run_inputs:
                         if test_input_id:
@@ -2856,7 +2876,16 @@ if isinstance(val2,                     if )                        if "/local/c
                         test_all_variations = run_input.get(
                             'test-all-variations', False)
                         if test_all_variations:
-                            run_variations = [f"_{v}" for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
+                            run_variations = [
+    f"_{v}" for v in variations if variations[v].get(
+        'group',
+        '') == '' and str(
+            variations[v].get(
+                'exclude-in-test',
+                '')).lower() not in [
+                    "1",
+                    "true",
+                     "yes"]]
                         else:
                             given_variations = run_input.get(
                                 'variations_list', [])
@@ -2867,16 +2896,22 @@ if isinstance(val2,                     if )                        if "/local/c
                                     v_split = v.split(",")
                                     for t in v_split:
                                         if not t.startswith("_"):
-                                            given_variations[i] = f"_{t}"  # variations must begin with _. We support both with and without _ in the meta
+                                            # variations must begin with _. We
+                                            # support both with and without _
+                                            # in the meta
+                                            given_variations[i] = f"_{t}"
                                     if v_split:
                                         run_variations.append(
                                             ",".join(v_split))
                             else:
-                                run_variations = ["" ] #run the test without any variations
+                                # run the test without any variations
+                                run_variations = [""]
                         use_docker = run_input.get('docker', False)
-                        for key in run_input: #override meta with any user inputs like for docker_cm_repo
+                        for key in run_input:  # override meta with any user inputs like for docker_cm_repo
                             if i.get(key, '') != '':
-if isinstance(run_input[key],                                 if )                                    utils.merge_dicts({'dict1': run_input[key] , 'dict2': i[key], 'append_lists':True, 'append_unique':True})
+
+
+if isinstance(run_input[key],                                 if)                                    utils.merge_dicts({'dict1': run_input[key], 'dict2': i[key], 'append_lists': True, 'append_unique': True})
                                 else:
                                     run_input[key] = i[key]
                         ii = {**ii, **run_input}
