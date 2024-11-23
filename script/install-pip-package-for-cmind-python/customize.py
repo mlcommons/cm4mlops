@@ -3,9 +3,11 @@ import os
 import subprocess
 import sys
 
+
 def install(package):
     additional_install_options = []
-    r = subprocess.run([sys.executable, "-m", "pip", "--version"], check=True, capture_output=True)
+    r = subprocess.run([sys.executable, "-m", "pip",
+                       "--version"], check=True, capture_output=True)
     r = r.stdout.decode("utf-8")
     if "pip" in r:
         out_split = r.split(" ")
@@ -18,7 +20,8 @@ def install(package):
     run_cmd += additional_install_options
     r = subprocess.run(run_cmd, check=True)
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def preprocess(i):
 
@@ -29,10 +32,11 @@ def preprocess(i):
         if r['return'] > 0:
             return r
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
     env = i['env']
 
-    return {'return':0}
+    return {'return': 0}

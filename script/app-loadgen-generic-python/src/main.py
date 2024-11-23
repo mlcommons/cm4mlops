@@ -38,7 +38,7 @@ def main(
     loadgen_duration_sec: float
 ):
 
-    print ('=====================================================================')
+    print('=====================================================================')
 
     if backend == 'onnxruntime':
         from backend_onnxruntime import XModelFactory
@@ -51,21 +51,21 @@ def main(
 
     # Load model cfg
     model_cfg_dict = {}
-    if model_cfg!='':
+    if model_cfg != '':
         import json
 
         with open(model_cfg) as mc:
             model_cfg_dict = json.load(mc)
 
     model_factory = XModelFactory(
-         model_path,
-         execution_provider,
-         execution_mode,
-         interop_threads,
-         intraop_threads,
-         model_code,
-         model_cfg_dict,
-         model_sample_pickle
+        model_path,
+        execution_provider,
+        execution_mode,
+        interop_threads,
+        intraop_threads,
+        model_code,
+        model_cfg_dict,
+        model_sample_pickle
     )
 
     model_dataset = XModelInputSampler(model_factory)
@@ -106,7 +106,10 @@ def main(
     # samples_per_query = Max(min_query_count, target_sample_count)
 
     output_path = "results" if not output_path else output_path
-    output_path = os.path.join(output_path, os.path.basename(model_path), runner_name)
+    output_path = os.path.join(
+        output_path,
+        os.path.basename(model_path),
+        runner_name)
     os.makedirs(output_path, exist_ok=True)
 
     output_settings = mlperf_loadgen.LogOutputSettings()
@@ -135,7 +138,7 @@ def main(
             harness.issue_query, harness.flush_queries
         )
 
-        print ('=====================================================================')
+        print('=====================================================================')
         logger.info("Test Started")
 
         mlperf_loadgen.StartTestWithLogSettings(
@@ -143,27 +146,31 @@ def main(
         )
 
         logger.info("Test Finished")
-        print ('=====================================================================')
+        print('=====================================================================')
 
         # Parse output file
         output_summary = {}
-        output_summary_path = os.path.join(output_path, "mlperf_log_summary.txt")
+        output_summary_path = os.path.join(
+            output_path, "mlperf_log_summary.txt")
         with open(output_summary_path, "r") as output_summary_file:
             for line in output_summary_file:
-                m = re.match(r"^\s*([\w\s.\(\)\/]+)\s*\:\s*([\w\+\.]+).*", line)
+                m = re.match(
+                    r"^\s*([\w\s.\(\)\/]+)\s*\:\s*([\w\+\.]+).*", line)
                 if m:
                     output_summary[m.group(1).strip()] = m.group(2).strip()
-        logger.info("Observed QPS: " + output_summary.get("Samples per second"))
+        logger.info(
+            "Observed QPS: " +
+            output_summary.get("Samples per second"))
         logger.info("Result: " + output_summary.get("Result is"))
 
         mlperf_loadgen.DestroySUT(system_under_test)
         mlperf_loadgen.DestroyQSL(query_sample_libary)
         logger.info("Test Completed")
-        print ('=====================================================================')
+        print('=====================================================================')
 
 
 if __name__ == "__main__":
-    print ('')
+    print('')
 
     logging.basicConfig(
         level=logging.DEBUG,
@@ -174,7 +181,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "model_path", help="path to input model", default="models/yolov5s.onnx"
     )
-    parser.add_argument("-b", "--backend", help="backend", default="onnxruntime")
+    parser.add_argument(
+        "-b",
+        "--backend",
+        help="backend",
+        default="onnxruntime")
     parser.add_argument("-o", "--output", help="path to store loadgen results")
     parser.add_argument(
         "-r",
@@ -198,8 +209,16 @@ if __name__ == "__main__":
     parser.add_argument(
         "--ep", help="Execution Provider", default="CPUExecutionProvider"
     )
-    parser.add_argument("--intraop", help="IntraOp threads", default=0, type=int)
-    parser.add_argument("--interop", help="InterOp threads", default=0, type=int)
+    parser.add_argument(
+        "--intraop",
+        help="IntraOp threads",
+        default=0,
+        type=int)
+    parser.add_argument(
+        "--interop",
+        help="InterOp threads",
+        default=0,
+        type=int)
     parser.add_argument(
         "--execmode",
         help="Execution Mode",
@@ -212,11 +231,28 @@ if __name__ == "__main__":
         default=100,
         type=int,
     )
-    parser.add_argument("--loadgen_expected_qps", help="Expected QPS", default=1, type=float)
-    parser.add_argument("--loadgen_duration_sec", help="Expected duration in sec.", default=1, type=float)
-    parser.add_argument("--model_code", help="(for PyTorch models) path to model code with cmc.py", default="")
-    parser.add_argument("--model_cfg", help="(for PyTorch models) path to model's configuration in JSON file", default="")
-    parser.add_argument("--model_sample_pickle", help="(for PyTorch models) path to a model sample in pickle format", default="")
+    parser.add_argument(
+        "--loadgen_expected_qps",
+        help="Expected QPS",
+        default=1,
+        type=float)
+    parser.add_argument(
+        "--loadgen_duration_sec",
+        help="Expected duration in sec.",
+        default=1,
+        type=float)
+    parser.add_argument(
+        "--model_code",
+        help="(for PyTorch models) path to model code with cmc.py",
+        default="")
+    parser.add_argument(
+        "--model_cfg",
+        help="(for PyTorch models) path to model's configuration in JSON file",
+        default="")
+    parser.add_argument(
+        "--model_sample_pickle",
+        help="(for PyTorch models) path to a model sample in pickle format",
+        default="")
 
     args = parser.parse_args()
     main(

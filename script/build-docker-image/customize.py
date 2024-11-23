@@ -2,13 +2,14 @@ from cmind import utils
 import os
 from os.path import exists
 
+
 def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
 
     dockerfile_path = env.get('CM_DOCKERFILE_WITH_PATH', '')
-    if dockerfile_path!='' and os.path.exists(dockerfile_path):
+    if dockerfile_path != '' and os.path.exists(dockerfile_path):
         build_dockerfile = False
         env['CM_BUILD_DOCKERFILE'] = "no"
         os.chdir(os.path.dirname(dockerfile_path))
@@ -17,14 +18,14 @@ def preprocess(i):
         env['CM_BUILD_DOCKERFILE'] = "yes"
         env['CM_DOCKERFILE_BUILD_FROM_IMAGE_SCRIPT'] = "yes"
 
-
     CM_DOCKER_BUILD_ARGS = env.get('+ CM_DOCKER_BUILD_ARGS', [])
 
     if env.get('CM_GH_TOKEN', '') != '':
-        CM_DOCKER_BUILD_ARGS.append( "CM_GH_TOKEN="+env['CM_GH_TOKEN'] )
+        CM_DOCKER_BUILD_ARGS.append("CM_GH_TOKEN=" + env['CM_GH_TOKEN'])
 
     if CM_DOCKER_BUILD_ARGS:
-        build_args = "--build-arg "+ " --build-arg ".join(CM_DOCKER_BUILD_ARGS)
+        build_args = "--build-arg " + \
+            " --build-arg ".join(CM_DOCKER_BUILD_ARGS)
     else:
         build_args = ""
 
@@ -40,7 +41,9 @@ def preprocess(i):
 
     docker_image_name = env.get('CM_DOCKER_IMAGE_NAME', '')
     if docker_image_name == '':
-        docker_image_name = "cm-script-" +env.get('CM_DOCKER_RUN_SCRIPT_TAGS','').replace(',', '-').replace('_','-')
+        docker_image_name = "cm-script-" + \
+            env.get('CM_DOCKER_RUN_SCRIPT_TAGS', '').replace(
+                ',', '-').replace('_', '-')
         env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 
     if env.get("CM_DOCKER_IMAGE_TAG", "") == '':
@@ -62,12 +65,12 @@ def preprocess(i):
 
     # Prepare CMD to build image
     XCMD = [
-            'docker build ' + env.get('CM_DOCKER_CACHE_ARG',''),
-            ' ' + build_args,
-            ' -f "' + dockerfile_path + '"',
-            ' -t "' + image_name,
-            ' .'
-            ]
+        'docker build ' + env.get('CM_DOCKER_CACHE_ARG', ''),
+        ' ' + build_args,
+        ' -f "' + dockerfile_path + '"',
+        ' -t "' + image_name,
+        ' .'
+    ]
 
     with open(dockerfile_path + '.build.sh', 'w') as f:
         f.write(' \\\n'.join(XCMD) + '\n')
@@ -77,24 +80,26 @@ def preprocess(i):
 
     CMD = ''.join(XCMD)
 
-    print ('================================================')
-    print ('CM generated the following Docker build command:')
-    print ('')
-    print (CMD)
+    print('================================================')
+    print('CM generated the following Docker build command:')
+    print('')
+    print(CMD)
 
-    print ('')
+    print('')
 
     env['CM_DOCKER_BUILD_CMD'] = CMD
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def get_image_name(env):
 
     image_name = env.get('CM_DOCKER_IMAGE_REPO', '') + '/' + \
-                 env.get('CM_DOCKER_IMAGE_NAME', '') + ':' + \
-                 env.get('CM_DOCKER_IMAGE_TAG', '') + '"'
+        env.get('CM_DOCKER_IMAGE_NAME', '') + ':' + \
+        env.get('CM_DOCKER_IMAGE_TAG', '') + '"'
 
     return image_name
+
 
 def postprocess(i):
 
@@ -108,24 +113,24 @@ def postprocess(i):
         PCMD = 'docker image push ' + image_name
 
         dockerfile_path = env.get('CM_DOCKERFILE_WITH_PATH', '')
-        if dockerfile_path!='' and os.path.isfile(dockerfile_path):
+        if dockerfile_path != '' and os.path.isfile(dockerfile_path):
             with open(dockerfile_path + '.push.sh', 'w') as f:
                 f.write(PCMD + '\n')
 
             with open(dockerfile_path + '.build.bat', 'w') as f:
                 f.write(PCMD + '\n')
 
-        print ('================================================')
-        print ('CM generated the following Docker push command:')
-        print ('')
-        print (PCMD)
+        print('================================================')
+        print('CM generated the following Docker push command:')
+        print('')
+        print(PCMD)
 
-        print ('')
+        print('')
 
         r = os.system(PCMD)
-        print ('')
+        print('')
 
-        if r>0:
-            return {'return':1, 'error':'pushing to Docker Hub failed'}
+        if r > 0:
+            return {'return': 1, 'error': 'pushing to Docker Hub failed'}
 
-    return {'return':0}
+    return {'return': 0}

@@ -4,13 +4,23 @@ import sys
 import argparse
 import yaml
 
+
 def parse_args(add_help=True):
-    parser = argparse.ArgumentParser(description='Print node precision info for the onnx file', add_help=add_help)
-    parser.add_argument('--input', default="retinanet.onnx", help='input onnx file')
-    parser.add_argument('--output', default="node-precision.yaml", help='output node precision file')
+    parser = argparse.ArgumentParser(
+        description='Print node precision info for the onnx file',
+        add_help=add_help)
+    parser.add_argument(
+        '--input',
+        default="retinanet.onnx",
+        help='input onnx file')
+    parser.add_argument(
+        '--output',
+        default="node-precision.yaml",
+        help='output node precision file')
     args = parser.parse_args()
 
     return args
+
 
 def main(args):
 
@@ -32,11 +42,11 @@ def main(args):
         "1625",
     ]
 
-    #check which list of node names is valid
+    # check which list of node names is valid
     node_names = []
     valid_list = None
 
-    #for n in enumerate_model_node_outputs(onnx_model):
+    # for n in enumerate_model_node_outputs(onnx_model):
     for n in onnx_model.graph.node:
         node_names.append(n.output[0])
 
@@ -52,9 +62,18 @@ def main(args):
     node_precision_info['FP16NodeInstanceNames'] = []
 
     fp16nodes = valid_list
-    fp16nodes += [ "boxes_1", "boxes_2", "boxes_3", "boxes_4", "boxes_5", "scores_1", "scores_2", "scores_3", "scores_4", "scores_5"]
+    fp16nodes += ["boxes_1",
+                  "boxes_2",
+                  "boxes_3",
+                  "boxes_4",
+                  "boxes_5",
+                  "scores_1",
+                  "scores_2",
+                  "scores_3",
+                  "scores_4",
+                  "scores_5"]
 
-    #node_precision_info['FP16NodeInstanceNames'] = "["+", ".join(fp16nodes)+"]"
+    # node_precision_info['FP16NodeInstanceNames'] = "["+", ".join(fp16nodes)+"]"
     node_precision_info['FP16NodeInstanceNames'] = fp16nodes
 
     yaml_output = yaml.safe_dump(node_precision_info, default_style=None)
