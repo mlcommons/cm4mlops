@@ -19,8 +19,8 @@
   "hw_notes": "",
   "number_of_nodes": "1",
   "status": "available",
-  "submitter": "cTuning",
-  "sw_notes": "Automated by MLCommons CM",
+  "submitter": "",
+  "sw_notes": "",
   "system_type": "edge",
   "system_type_detail": "edge server"
 }
