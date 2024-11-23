@@ -28,7 +28,7 @@ if package_name != '':
             if error!='': error += '\n'
             error += format(e)
 
-    # We generally skip error since it usually means that 
+    # We generally skip error since it usually means that
     # package is not installed
 
     with open(filename, 'w') as file:

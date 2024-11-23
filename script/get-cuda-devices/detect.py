@@ -44,4 +44,3 @@ if __name__ == "__main__":
             print(f"GPU {idx}:")
             for key, value in gpu_info.items():
                 f.write(f"{key}: {value}\n")
-

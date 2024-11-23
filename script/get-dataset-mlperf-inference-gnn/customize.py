@@ -17,7 +17,7 @@ def preprocess(i):
     graph_folder = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], 'graph', 'R-GAT')
 
     download_loc = env.get('CM_IGBH_DATASET_OUT_PATH', os.getcwd())
-    
+
     run_cmd += f"cd {graph_folder} "
     x_sep = " && "
 
@@ -33,7 +33,7 @@ def preprocess(i):
     # compress graph(for glt implementation)
     if env.get('CM_IGBH_GRAPH_COMPRESS', '') == "yes":
         run_cmd += x_sep + f"{env['CM_PYTHON_BIN_WITH_PATH']} tools/compress_graph.py --path {download_loc} --dataset_size {env['CM_IGBH_DATASET_SIZE']} --layout {env['CM_IGBH_GRAPH_COMPRESS_LAYOUT']}"
-    
+
     env['CM_RUN_CMD'] = run_cmd
 
     return {'return':0}

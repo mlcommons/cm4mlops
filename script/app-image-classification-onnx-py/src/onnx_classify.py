@@ -141,7 +141,7 @@ for batch_idx in range(batch_count):
     batch_predictions = sess.run([output_layer_name], {input_layer_name: batch_data})[0]
 
     cm_status = {'classifications':[]}
-    
+
     print ('')
     top_classification = ''
     for in_batch_idx in range(batch_size):
@@ -169,4 +169,4 @@ cm_status['avg_time'] = avg_time
 
 # Record cm_status to embedded it into CM workflows
 with open('tmp-run-state.json', 'w') as cm_file:
-   cm_file.write(json.dumps({'cm_app_image_classification_onnx_py':cm_status}, sort_keys=True, indent=2))
+    cm_file.write(json.dumps({'cm_app_image_classification_onnx_py':cm_status}, sort_keys=True, indent=2))

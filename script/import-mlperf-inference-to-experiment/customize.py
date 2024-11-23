@@ -150,12 +150,12 @@ def convert_summary_csv_to_experiment(path, version, env):
                         v=True
                     else:
                         try:
-                           v=float(v)
+                            v=float(v)
 
-                           if v==int(v):
-                              v=int(v)
+                            if v==int(v):
+                                v=int(v)
                         except ValueError:
-                           pass
+                            pass
 
                     result[k] = v
 
@@ -223,7 +223,7 @@ def convert_summary_csv_to_experiment(path, version, env):
         env_target_repo=env.get('CM_IMPORT_MLPERF_INFERENCE_TARGET_REPO','').strip()
         target_repo='' if env_target_repo=='' else env_target_repo+':'
 
-        
+
         print ('')
         for name in experiment:
             print ('    Preparing experiment artifact "{}"'.format(name))

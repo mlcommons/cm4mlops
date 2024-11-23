@@ -20,7 +20,7 @@ def main():
     for user in sorted(users, key = lambda u: (u['last'].lower(), u['first'].lower())):
 
         full_name = user['first']+' '+user['last']
-        
+
         name = full_name + ' ('+user['affiliation']+')'
 
         print (name)
@@ -64,7 +64,7 @@ def main():
 
     print ('')
     print ('Saved HTML to {}'.format(fo))
-    
+
     cmind.utils.save_txt(fo, html)
 
 

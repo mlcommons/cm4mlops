@@ -12,7 +12,7 @@ def preprocess(i):
     automation = i['automation']
 
     quiet = (env.get('CM_QUIET', False) == 'yes')
-    
+
     work_dir = env.get('CM_TUNE_TVM_MODEL_WORKDIR', '')
 
     if work_dir != '':
@@ -31,8 +31,8 @@ def preprocess(i):
         if env.get('CM_TUNE_TVM_MODEL', '') != '':
             print("The \"tune-model\" variation is selected, but at the same time the path to the existing \"work_dir\" is also specified. The compiled model will be based on the found existing \"work_dir\".")
             env["CM_TUNE_TVM_MODEL"] = "no"
-            
-    
+
+
 
     return {'return':0}
 

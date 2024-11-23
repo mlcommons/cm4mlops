@@ -97,10 +97,10 @@ def page(st, params):
 
                 # Check if README
                 md = ''
-                
+
                 readme = os.path.join(path, 'README.md')
                 if os.path.isfile(readme):
-                    
+
                     r = cmind.utils.load_txt(readme)
                     if r['return']>0: return r
 
@@ -111,7 +111,7 @@ def page(st, params):
 
 
         else:
-           st.markdown('**Warning:** Contributor "{}" not found!'.format(name))
+            st.markdown('**Warning:** Contributor "{}" not found!'.format(name))
 
         return {'return':0, 'end_html':end_html}
 
@@ -153,7 +153,7 @@ def page_list(st, params):
 
         m = l.meta
 
-        # Skip from stats 
+        # Skip from stats
         if m.get('skip', False):
             continue
 
@@ -245,7 +245,7 @@ def page_list(st, params):
         <center>
          <i>
           <i>
-           Check <a href="{}?action=challenges">on-going challenges</a> 
+           Check <a href="{}?action=challenges">on-going challenges</a>
            and register <a href="https://github.com/mlcommons/ck/blob/master/platform/register.md">here</a>
            to be added to this leaderboard.
           </i>
@@ -257,7 +257,7 @@ def page_list(st, params):
     st.write(x, unsafe_allow_html = True)
 
     st.write('<center>'+df.to_html(escape=False, justify='left')+'</center>', unsafe_allow_html=True)
-    
+
 
 
 #    from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
@@ -340,7 +340,7 @@ def calculate_points(meta):
     # Automatic challenges
     points += len(meta.get('challenges',[]))
     points += len(meta.get('ongoing',[]))
-    
+
     return points
 
 
@@ -354,5 +354,5 @@ def prepare_name(meta):
         md = '* '+misc.make_url(name, alias=alias)+'\n'
     elif org!='':
         md = '* *'+misc.make_url(org, alias=alias)+'*\n'
-  
+
     return md

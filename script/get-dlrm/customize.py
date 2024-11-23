@@ -34,4 +34,3 @@ def postprocess(i):
     env['DLRM_DIR'] = os.path.join(os.getcwd(), "dlrm")
 
     return {'return':0}
-

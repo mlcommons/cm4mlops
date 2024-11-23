@@ -55,12 +55,12 @@ for _os in docker_os:
                         variation_string=",_"+model+",_"+backend+",_"+device+",_"+implementation
                         file_name_ext = "_" + implementation + "_" + backend+"_"+device
                         dockerfile_path = os.path.join(current_file_path,'dockerfiles', model, _os +'_'+version+ file_name_ext +'.Dockerfile')
-                        cm_input = {'action': 'run', 
+                        cm_input = {'action': 'run',
                             'automation': 'script',
                             'tags': 'app,mlperf,inference,generic'+variation_string,
-                            'adr': {'compiler': 
+                            'adr': {'compiler':
                                       {'tags': 'gcc'},
-                                    'inference-src': 
+                                    'inference-src':
                                       {'tags': '_octoml'},
                                       'openimages-preprocessed':
                                       {'tags': '_50'}
@@ -75,11 +75,11 @@ for _os in docker_os:
                         comments = [ "#RUN " + dep for dep in print_deps ]
                         comments.append("")
                         comments.append("# Run CM workflow for MLPerf inference")
-                        cm_docker_input = {'action': 'run', 
-                            'automation': 'script', 
-                            'tags': 'build,dockerfile', 
-                            'docker_os': _os, 
-                            'docker_os_version': version, 
+                        cm_docker_input = {'action': 'run',
+                            'automation': 'script',
+                            'tags': 'build,dockerfile',
+                            'docker_os': _os,
+                            'docker_os_version': version,
                             'file_path': dockerfile_path,
                             'comments': comments,
                             'run_cmd': 'cm run script --tags=app,mlperf,inference,generic'+variation_string+' --adr.compiler.tags=gcc --adr.inference-src.tags=_octoml',
@@ -95,4 +95,3 @@ for _os in docker_os:
 
                         print ('')
                         print ("Dockerfile generated at " + dockerfile_path)
-

@@ -37,11 +37,11 @@ def page(st, params):
         x = '''
              <i>
              <small>
-             <a href="https://github.com/mlcommons/cm4mlops/tree/main/script">Collective Mind</a> is a collection of open-source, portable, extensible and ready-to-use 
-             automation scripts with a human-friendly interface and minimal dependencies to make it easier to compose, benchmark and optimize 
+             <a href="https://github.com/mlcommons/cm4mlops/tree/main/script">Collective Mind</a> is a collection of open-source, portable, extensible and ready-to-use
+             automation scripts with a human-friendly interface and minimal dependencies to make it easier to compose, benchmark and optimize
              complex AI, ML and other applications and systems across diverse and continuously changing models, data sets, software and hardware.
-             Note that this is a <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">collaborative engineering effort</a> 
-             to make sure that they work across all possible versions and configurations 
+             Note that this is a <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">collaborative engineering effort</a>
+             to make sure that they work across all possible versions and configurations
              - please report encountered issues and provide feedback
              <a href="https://github.com/mlcommons/ck/issues">here</a>
              and get in touch via <a href="https://discord.gg/JjWNWXKxwT">Discord</a>!
@@ -57,7 +57,7 @@ def page(st, params):
     script_tags = st.text_input('Search open-source automation recipes by tags:', value=script_tags, key='script_tags').strip()
 
     # Searching automation recipes
-    
+
     ii = {'action':'find',
           'automation':'script,5b4e0237da074764'}
 
@@ -89,7 +89,7 @@ def page(st, params):
             recipe = lst[0]
 
             meta = recipe.meta
-            
+
             alias = meta['alias']
             uid = meta['uid']
 
@@ -111,9 +111,9 @@ def page(st, params):
 
                 ii = {'st': st,
                       'params': params,
-                      'script_path': script_path, 
-                      'script_alias': script_alias, 
-                      'script_tags': script_tags, 
+                      'script_path': script_path,
+                      'script_alias': script_alias,
+                      'script_tags': script_tags,
                       'script_meta': meta,
                       'script_repo_meta': recipe.repo_meta,
                       'skip_bottom': True}
@@ -121,7 +121,7 @@ def page(st, params):
                 return script.page(ii)
 
             else:
-                
+
                 st.markdown('### CM script "{}" ({})'.format(alias, uid))
 
                 repo_meta = recipe.repo_meta
@@ -138,9 +138,9 @@ def page(st, params):
 
                 xtags = tags
                 if len(variations)>0:
-                   if xtags!='':
-                       xtags+=' '
-                   xtags+=' '.join(variations)
+                    if xtags!='':
+                        xtags+=' '
+                    xtags+=' '.join(variations)
 
                 x = '''
 ```bash
@@ -159,12 +159,12 @@ cm run script "{}" --shell
 cm docker script "{}"
 cm gui script "{}"
 ```
-                    
+
                     '''.format(extra_repo,xtags,xtags,xtags,xtags,xtags,xtags)
 
 
-                
-                
+
+
                 # Check original link
 
                 url = repo_meta.get('url','')
@@ -186,7 +186,7 @@ cm gui script "{}"
                         url += repo_meta['prefix']
 
                     if not url.endswith('/'): url=url+'/'
-                    
+
                     url += 'script/'+alias
 
                     # Check README.md
@@ -209,23 +209,23 @@ cm gui script "{}"
                         y = os.path.join(recipe.path, z)
                         if os.path.isfile(y):
                             url_meta_description = url+'/'+z
-                    
+
                 url_gui = url_prefix_script+'&name='+alias+','+uid+'&gui=true'
-                
+
                 z  = '* ***Check [open source code (Apache 2.0 license)]({}) at GitHub.***\n'.format(url)
                 z += '* ***Check [detailed auto-generated README on GitHub]({}).***\n'.format(url_readme)
                 z += '* ***Check [experimental GUI]({}) to run this script.***\n'.format(url_gui)
                 z += '---\n'
-                
+
                 st.markdown(z)
-                
+
                 st.markdown('Default run on Linux, Windows, MacOS and any other OS (check [CM installation guide]({}) for more details):\n{}\n'.format(url_prefix + '?action=install', x))
 
                 st.markdown('*The [Collective Mind concept](https://doi.org/10.5281/zenodo.8105339) is to gradually improve portability and reproducibility of common automation recipes based on user feedback'
                              ' while keeping the same human-friendly interface. If you encounter issues, please report them [here](https://github.com/mlcommons/ck/issues) '
                              ' to help this community project!*')
 
-                
+
 
                 if url_readme_extra!='':
                     st.markdown('* See [extra README]({}) for this automation recipe at GitHub.'.format(url_readme_extra))
@@ -252,15 +252,15 @@ cm gui script "{}"
                             continue
 
                         url_deps = url_prefix_script+'&tags='+t
-                        
+
                         x+='* [{}]({})\n'.format(t, url_deps)
-                                        
+
                     st.markdown(x)
 
 
         else:
             categories={}
-            
+
             for l in sorted(lst, key=lambda x: (
                                                 x.meta.get('alias','')
                                                )):
@@ -272,13 +272,13 @@ cm gui script "{}"
                     categories[category]=[]
 
                 categories[category].append(l)
-            
+
             if len(categories)>1:
                 category_selection = [''] + sorted(list(categories.keys()), key = lambda v: v.upper())
 
                 # Creating compute selector
                 category_id = st.selectbox('Prune by category:',
-                                           range(len(category_selection)), 
+                                           range(len(category_selection)),
                                            format_func=lambda x: category_selection[x],
                                            index = 0,
                                            key = 'category')
@@ -291,7 +291,7 @@ cm gui script "{}"
             recipes = 0
             for category in sorted(categories, key = lambda v: v.upper()):
                 recipes += len(categories[category])
-            
+
             x = '''
                 <small>
                  Found {} automation recipes:
@@ -299,10 +299,10 @@ cm gui script "{}"
                 '''.format(str(recipes))
             st.write(x, unsafe_allow_html = True)
 
-            
+
             for category in sorted(categories, key = lambda v: v.upper()):
                 md = '### {}'.format(category)+'\n'
-                
+
                 for recipe in categories[category]:
                     meta = recipe.meta
 
@@ -310,9 +310,9 @@ cm gui script "{}"
                     uid = meta['uid']
 
                     url = url_prefix_script+'&name='+alias+','+uid
-                    
+
                     md += '* [{}]({})'.format(alias, url)+'\n'
 
                 st.markdown(md)
-    
+
     return {'return':0, 'end_html':end_html}

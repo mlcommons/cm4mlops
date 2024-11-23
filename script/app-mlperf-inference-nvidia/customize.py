@@ -43,7 +43,7 @@ def preprocess(i):
         model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'ResNet50', 'resnet50_v1.onnx')
 
         if not os.path.exists(os.path.dirname(model_path)):
-          cmds.append(f"mkdir -p {os.path.dirname(model_path)}")
+            cmds.append(f"mkdir -p {os.path.dirname(model_path)}")
 
         if not os.path.exists(model_path):
             cmds.append(f"ln -sf {env['CM_ML_MODEL_FILE_WITH_PATH']} {model_path}")
@@ -59,7 +59,7 @@ def preprocess(i):
         vocab_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'bert', 'vocab.txt')
 
         if not os.path.exists(os.path.dirname(fp32_model_path)):
-          cmds.append(f"mkdir -p {os.path.dirname(fp32_model_path)}")
+            cmds.append(f"mkdir -p {os.path.dirname(fp32_model_path)}")
 
         if not os.path.exists(fp32_model_path):
             cmds.append(f"ln -sf {env['CM_ML_MODEL_BERT_LARGE_FP32_PATH']} {fp32_model_path}")
@@ -104,7 +104,7 @@ def preprocess(i):
         target_data_path_base_dir = os.path.dirname(target_data_path)
         if not os.path.exists(target_data_path_base_dir):
             cmds.append(f"mkdir -p {target_data_path_base_dir}")
- 
+
         inference_cases_json_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'KiTS19', 'inference_cases.json')
         calibration_cases_json_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'data', 'KiTS19', 'calibration_cases.json')
 
@@ -134,7 +134,7 @@ def preprocess(i):
 
         model_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'dlrm', 'tb00_40M.pt')
         if not os.path.exists(os.path.dirname(model_path)):
-          cmds.append(f"mkdir -p {os.path.dirname(model_path)}")
+            cmds.append(f"mkdir -p {os.path.dirname(model_path)}")
 
         if not os.path.exists(model_path):
             cmds.append(f"ln -sf {env['CM_ML_MODEL_FILE_WITH_PATH']} {model_path}")
@@ -192,9 +192,9 @@ def preprocess(i):
         vocab_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'models', 'bert', 'vocab.txt')
 
         if not os.path.exists(os.path.dirname(fp32_model_path)):
-          cmds.append(f"mkdir -p {os.path.dirname(fp32_model_path)}")
+            cmds.append(f"mkdir -p {os.path.dirname(fp32_model_path)}")
         if not os.path.exists(os.path.dirname(fp8_model_path)):
-          cmds.append(f"mkdir -p {os.path.dirname(fp8_model_path)}")
+            cmds.append(f"mkdir -p {os.path.dirname(fp8_model_path)}")
 
         if not os.path.exists(fp32_model_path):
             env['CM_REQUIRE_GPTJ_MODEL_DOWNLOAD'] = 'yes' # download via prehook_deps
@@ -203,7 +203,7 @@ def preprocess(i):
 
         model_name = "gptj"
         model_path = fp8_model_path
-    
+
     elif "llama2" in env["CM_MODEL"]:
         # path to which the data file is present
         target_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca')
@@ -221,8 +221,8 @@ def preprocess(i):
                 cmds.append(f"mkdir {target_data_path}")
             cmds.append(f"ln -sf {env['CM_NVIDIA_LLAMA_DATASET_FILE_PATH']} {target_data_file_path}")
 
-        
-        
+
+
         model_name = "llama2-70b"
         model_path = fp8_model_path
 
@@ -230,10 +230,10 @@ def preprocess(i):
     if make_command == "download_model":
         if not os.path.exists(model_path):
             if "llama2" in env['CM_MODEL']:
-              if not os.path.exists(os.path.join(model_path, 'config.json')):
-                return {'return': 1, 'error': f'Quantised model absent - did not detect config.json in path {model_path}'}
+                if not os.path.exists(os.path.join(model_path, 'config.json')):
+                    return {'return': 1, 'error': f'Quantised model absent - did not detect config.json in path {model_path}'}
             else:
-              cmds.append(f"make download_model BENCHMARKS='{model_name}'")
+                cmds.append(f"make download_model BENCHMARKS='{model_name}'")
         elif "stable-diffusion" in env['CM_MODEL']:
             folders = ["clip1", "clip2", "unetxl", "vae"]
             for folder in folders:
@@ -255,14 +255,14 @@ def preprocess(i):
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_dev_clean_500_raw')}")
             cmds.append(f"rm -rf {os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'rnnt_train_clean_512_wav')}")
         if "llama2" in env["CM_MODEL"]:
-            # Preprocessing script in the inference results repo is not checking whether the preprocessed 
+            # Preprocessing script in the inference results repo is not checking whether the preprocessed
             # file is already there, so we are handling it here.
             target_preprocessed_data_path = os.path.join(env['MLPERF_SCRATCH_PATH'], 'preprocessed_data', 'open_orca', 'input_ids_padded.npy')
             if not os.path.exists(target_preprocessed_data_path):
                 cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
         else:
             cmds.append(f"make preprocess_data BENCHMARKS='{model_name}'")
-    
+
     else:
         scenario=scenario.lower()
 
@@ -472,7 +472,7 @@ def preprocess(i):
         enable_sort = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
         if enable_sort and enable_sort.lower() not in [ "no", "false", "0" ]:
             run_config += f" --enable_sort"
-        
+
         sdxl_server_batcher_time_limit = env.get('CM_MLPERF_NVIDIA_HARNESS_ENABLE_SORT')
         if sdxl_server_batcher_time_limit:
             run_config += f" --sdxl_batcher_time_limit {sdxl_server_batcher_time_limit}"

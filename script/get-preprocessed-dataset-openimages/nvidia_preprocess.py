@@ -48,7 +48,7 @@ def preprocess_openimage_for_retinanet(data_dir, preprocessed_data_dir, formats,
 
     def quantizer(image):
         # Dynamic range of image is [-2.64064, 2.64064] based on calibration cache.
-        # Calculated by: 
+        # Calculated by:
         # np.uint32(int("3caa54fc", base=16)).view(np.dtype('float32')).item() * 127.0
         max_abs = 2.64064
         image_int8 = image.clip(-max_abs, max_abs) / max_abs * 127.0

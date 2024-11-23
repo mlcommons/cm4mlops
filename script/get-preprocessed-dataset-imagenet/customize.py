@@ -23,9 +23,9 @@ def preprocess(i):
             "val_map.txt"))
 
     preprocessed_path = env['CM_DATASET_PREPROCESSED_PATH']
-    
+
     if env.get('CM_DATASET_TYPE', '') == "validation" and not exists(os.path.join(preprocessed_path, "val_map.txt")):
-        shutil.copy(os.path.join(env['CM_DATASET_AUX_PATH'], "val.txt"), 
+        shutil.copy(os.path.join(env['CM_DATASET_AUX_PATH'], "val.txt"),
                     os.path.join(preprocessed_path, "val_map.txt"))
 
     if env.get('CM_DATASET_TYPE', '') == "calibration":

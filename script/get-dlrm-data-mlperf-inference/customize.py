@@ -13,7 +13,7 @@ def preprocess(i):
         dlrm_data_path = os.getcwd()
     elif not os.path.exists(dlrm_data_path):
         return {'return':1, 'error':"given dlrm data path does not exists"}
-    
+
     # creating required folders inside the dlrm data path if not exists
     # criteo dataset
     criteo_fp32_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32")
@@ -38,7 +38,7 @@ def preprocess(i):
     if variation == "nvidia":
         if not os.path.exists(os.path.join(dlrm_data_path, "model")):
             print(f'model directory is missing inside {dlrm_data_path}')
-            env['CM_DLRM_MODEL_DOWNLOAD'] = True 
+            env['CM_DLRM_MODEL_DOWNLOAD'] = True
         if not os.path.exists(os.path.join(dlrm_data_path, "criteo")):
             print(f'criteo directory is missing inside {dlrm_data_path}')
             env['CM_DLRM_DATASET_DOWNLOAD'] = True
@@ -78,11 +78,11 @@ def preprocess(i):
                 os.system(f"unzip {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot.npz')} -d {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot_unpacked')}")
         else:
             run_cmd += f"unzip {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot.npz')} -d {os.path.join(dlrm_data_path, 'criteo', 'day23', 'fp32', 'day_23_sparse_multi_hot_unpacked')}" + xsep
-        
+
         if os.path.exists(os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")) or env['CM_DLRM_DATASET_DOWNLOAD'] == True:
             file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_sparse_multi_hot.npz")
             run_cmd += ("echo {} {} | md5sum -c").format('c46b7e31ec6f2f8768fa60bdfc0f6e40', file_path) + xsep
-        
+
         file_path = os.path.join(dlrm_data_path, "criteo", "day23", "fp32", "day_23_dense.npy")
         run_cmd += ("echo {} {} | md5sum -c").format('cdf7af87cbc7e9b468c0be46b1767601', file_path) + xsep
 

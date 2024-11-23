@@ -9,18 +9,18 @@ def escape_special_chars(text, tool=None):
 
     for char in special_chars:
         text = text.replace(char, f'^{char}')
-    
-    #handle URL special cases 
+
+    #handle URL special cases
     if tool != "rclone":
         text = text.replace('%', "%%")
-        
+
     return text
 
 def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
-    
+
     # env to be passed to the  subprocess
     subprocess_env = os.environ.copy()
     subprocess_env['PATH'] += os.pathsep + os.pathsep.join(env.get('+PATH', ''))
@@ -63,7 +63,7 @@ def preprocess(i):
             print ('Using local file: {}'.format(filepath))
     else:
         url = env.get('CM_DOWNLOAD_URL','')
- 
+
         if url=='':
             return {'return':1, 'error': 'please specify URL using --url={URL} or --env.CM_DOWNLOAD_URL={URL}'}
 
@@ -152,9 +152,9 @@ def preprocess(i):
                     if url == '':
                         break
                     print(f"Download from {oldurl} failed, trying from {url}")
-                        
+
                 if r['return']>0: return r
-    
+
                 env['CM_DOWNLOAD_CMD'] = ""
                 env['CM_DOWNLOAD_FILENAME'] = r['filename']
 

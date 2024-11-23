@@ -12,7 +12,7 @@ def preprocess(i):
     env = i['env']
     meta = i['meta']
 
-    
+
     env_key = get_env_key(env)
 
     cm_git_url = env['CM_GIT_URL']

@@ -14,7 +14,7 @@ def preprocess(i):
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
     if env.get('CM_RCLONE_CONFIG_CMD', '') != '':
-      env['CM_RUN_CMD'] = env['CM_RCLONE_CONFIG_CMD']
+        env['CM_RUN_CMD'] = env['CM_RCLONE_CONFIG_CMD']
 
     return {'return':0}
 

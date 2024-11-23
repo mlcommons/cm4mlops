@@ -64,7 +64,7 @@ def preprocess(i):
                                            'env_path_key':env_key,
                                            'run_script_input':i['run_script_input'],
                                            'recursion_spaces':recursion_spaces})
-        if r['return'] >0 : 
+        if r['return'] >0 :
             if os_info['platform'] == 'windows':
                 return r
 
@@ -175,7 +175,7 @@ def postprocess(i):
 
     # Check extra paths
     for key in ['+C_INCLUDE_PATH', '+CPLUS_INCLUDE_PATH', '+LD_LIBRARY_PATH', '+DYLD_FALLBACK_LIBRARY_PATH']:
-         env[key] = []
+        env[key] = []
 
     ## Include
     cuda_path_include = os.path.join(cuda_path, 'include')

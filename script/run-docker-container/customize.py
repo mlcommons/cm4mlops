@@ -21,8 +21,8 @@ def preprocess(i):
     else:
         CM_RUN_CMD="cm run script --tags=" + env['CM_DOCKER_RUN_SCRIPT_TAGS'] + ' --quiet'
 
-    r = cm.access({'action':'search', 
-                   'automation':'script', 
+    r = cm.access({'action':'search',
+                   'automation':'script',
                    'tags': env['CM_DOCKER_RUN_SCRIPT_TAGS']})
     if len(r['list']) < 1:
         raise Exception('CM script with tags '+ env['CM_DOCKER_RUN_SCRIPT_TAGS'] + ' not found!')
@@ -52,7 +52,7 @@ def preprocess(i):
         CMD += " 2> /dev/null"
     print ('  '+CMD)
     print ('')
- 
+
     try:
         docker_container = subprocess.check_output(CMD, shell=True).decode("utf-8")
     except Exception as e:
@@ -81,7 +81,7 @@ def preprocess(i):
         print ('')
         print ('  '+CMD)
         print ('')
-    
+
         try:
             docker_image = subprocess.check_output(CMD, shell=True).decode("utf-8")
         except Exception as e:
@@ -180,7 +180,7 @@ def postprocess(i):
                 mount_parts = [mount_cmd[:j], mount_cmd[j+1:]]
             else:
                 return {'return':1, 'error': 'Can\'t find separator : in a mount string: {}'.format(mount_cmd)}
-            
+
 #            mount_parts = mount_cmd.split(":")
 #            if len(mount_parts) != 2:
 #                return {'return': 1, 'error': 'Invalid mount {} specified'.format(mount_parts)}
@@ -339,7 +339,7 @@ def update_docker_info(env):
         env['CM_DOCKER_IMAGE_NAME'] = docker_image_name
 
     docker_image_tag_extra = env.get('CM_DOCKER_IMAGE_TAG_EXTRA', '-latest')
-    
+
     docker_image_tag = env.get('CM_DOCKER_IMAGE_TAG', docker_image_base.replace(':','-').replace('_','').replace("/","-") + docker_image_tag_extra)
     env['CM_DOCKER_IMAGE_TAG'] = docker_image_tag
 

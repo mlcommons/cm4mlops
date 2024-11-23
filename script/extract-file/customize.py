@@ -25,7 +25,7 @@ def preprocess(i):
     filename = env.get('CM_EXTRACT_FILEPATH','')
     if filename == '':
         return {'return': 1, 'error': 'Extract with no download requested and CM_EXTRACT_FILEPATH is not set'}
-    
+
     if windows:
         filename = filename.replace("%", "%%")
 
@@ -93,7 +93,7 @@ def preprocess(i):
         return {'return': 1, 'error': 'Neither CM_EXTRACT_UNZIP nor CM_EXTRACT_UNTAR is yes'}
 
     env['CM_EXTRACT_PRE_CMD'] = ''
-    
+
     extract_to_folder = env.get('CM_EXTRACT_TO_FOLDER', '')
 
     # Check if extract to additional folder in the current directory (or external path)
@@ -123,7 +123,7 @@ def preprocess(i):
     print ('Current directory: {}'.format(os.getcwd()))
     print ('Command line: "{}"'.format(env['CM_EXTRACT_CMD']))
     print ('')
-    
+
     final_file = env.get('CM_EXTRACT_EXTRACTED_FILENAME', '')
 
     if final_file!='':
@@ -143,7 +143,7 @@ def preprocess(i):
 #        for x in ['CM_EXTRACT_CMD', 'CM_EXTRACT_EXTRACTED_CHECKSUM_CMD']:
 #            env[x+'_USED']='YES' if env.get(x,'')!='' else 'NO'
 
-    
+
     # If force cache, add filepath to tag unless _path is used ...
     path_tag = 'path.'+filename
 
@@ -162,12 +162,12 @@ def postprocess(i):
 
     extract_to_folder = env.get('CM_EXTRACT_TO_FOLDER', '')
     extract_path = env.get('CM_EXTRACT_PATH', '')
-    
+
     extracted_file = env.get('CM_EXTRACT_EXTRACTED_FILENAME', '')
 
     # Preparing filepath
     #   Can be either full extracted filename (such as model) or folder
-    
+
     if extracted_file != '':
         filename = os.path.basename(extracted_file)
 
@@ -190,7 +190,7 @@ def postprocess(i):
     if env.get('CM_EXTRACT_FINAL_ENV_NAME', '')!='':
         env[env['CM_EXTRACT_FINAL_ENV_NAME']] = filepath
 
-    # Detect if this file will be deleted or moved 
+    # Detect if this file will be deleted or moved
     env['CM_GET_DEPENDENT_CACHED_PATH'] =  filepath
 
     # Check if need to remove archive after extraction

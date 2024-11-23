@@ -2088,6 +2088,7 @@ class CAutomation(Automation):
                 self.path, 'docker_repro_example')
             if os.path.isdir(docker_template_path):
                 try:
+
                     shutil.copytree(
                         docker_template_path,
                         repro_dir,
@@ -2098,6 +2099,7 @@ class CAutomation(Automation):
             docker_container = self._get_docker_container(cmd, run_state)
 
             try:
+
                 with open(os.path.join(repro_dir, 'ubuntu-23.04.Dockerfile'), 'a+') as f:
                     f.write(docker_container)
             except BaseException:
@@ -2264,6 +2266,7 @@ class CAutomation(Automation):
         run_state['variation_groups'] = variation_groups
 
         # Add variation(s) if specified in the "tags" input prefixed by _
+
         # If there is only 1 default variation, then just use it or
         # substitute from CMD
 
@@ -2779,6 +2782,7 @@ class CAutomation(Automation):
         # Print filtered paths if console
         if console:
             for script in r['list']:
+
                 #                This should not be logging since the output can be consumed by other external tools and scripts
                 #                logging.info(script.path)
                 print(script.path)
@@ -4068,6 +4072,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                             return rx
                     else:
                         # Version was detected
+
                         detected_version = rx.get('version', '')
 
                         if detected_version != '':
@@ -5409,6 +5414,7 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
         if rc > 0 and not i.get('ignore_script_error', False):
             # Check if print files when error
             print_files = meta.get('print_files_if_script_error', [])
+
             if len(print_files) > 0:
                 for pr in print_files:
                     if os.path.isfile(pr):

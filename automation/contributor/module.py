@@ -18,7 +18,7 @@ class CAutomation(Automation):
         Test automation
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -57,7 +57,7 @@ class CAutomation(Automation):
         Add CM script
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -97,9 +97,9 @@ class CAutomation(Automation):
         if r['return']>0: return r
         elif r['return']==0 and len(r['list'])>0:
             return {'return':1, 'error':'CM artifact with name {} already exists in {}'.format(name, r['list'][0].path)}
-        
+
         meta = i.get('meta',{})
-        
+
         # Prepare meta
         org = meta.get('organization','')
         if org=='':
@@ -128,7 +128,7 @@ class CAutomation(Automation):
         i['action'] = 'add'
         i['automation'] = self_automation
         i['artifact'] = artifact
-        
+
         i['meta'] = meta
 
         print ('')
@@ -139,7 +139,7 @@ class CAutomation(Automation):
         path = r['path']
 
         path2 = os.path.dirname(path)
-        
+
         print ('')
         print ('Please go to {}, add your directory to Git, commit and create PR:'.format(path2))
         print ('')

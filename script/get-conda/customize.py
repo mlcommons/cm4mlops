@@ -37,7 +37,7 @@ def preprocess(i):
         bin_dir = 'Scripts' if os_info['platform'] == 'windows' else 'bin'
         env['CM_CONDA_BIN_WITH_PATH'] = os.path.join(env['CM_CONDA_INSTALL_PATH'], bin_dir, file_name)
 
-    if conda_prefix_name != '' or r['return'] >0 : 
+    if conda_prefix_name != '' or r['return'] >0 :
         if conda_prefix_name != '' or r['return'] == 16:
             if conda_prefix_name == '':
                 if env.get('CM_TMP_FAIL_IF_NOT_FOUND','').lower() == 'yes':

@@ -18,7 +18,7 @@ class CAutomation(Automation):
         Test automation
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -57,7 +57,7 @@ class CAutomation(Automation):
         Show cache
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -77,7 +77,7 @@ class CAutomation(Automation):
 
         # Check parsed automation
         if 'parsed_automation' not in i:
-           return {'return':1, 'error':'automation is not specified'}
+            return {'return':1, 'error':'automation is not specified'}
 
         console = i.get('out') == 'con'
 

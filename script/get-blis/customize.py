@@ -32,5 +32,3 @@ def postprocess(i):
     env['+LD_LIBRARY_PATH'] = [ blis_lib_path ] if '+LD_LIBRARY_PATH' not in env else env['+LD_LIBRARY_PATH'] + [ blis_lib_path ]
 
     return {'return':0}
-
-

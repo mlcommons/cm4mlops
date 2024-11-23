@@ -17,7 +17,7 @@ def preprocess(i):
     cur_dir = os.getcwd()
 
     name = env.get('CM_NAME', '')
-    if name == '': 
+    if name == '':
         artifacts = i.get('input', {}).get('artifacts', [])
         if len(artifacts)>0:
             name = artifacts[0]

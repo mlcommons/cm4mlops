@@ -63,7 +63,7 @@ def main(args):
 
     print(f"Node precision info successfully printed out to {args.output}")
 
-    
+
 if __name__ == "__main__":
     args = parse_args()
     main(args)

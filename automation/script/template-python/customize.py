@@ -17,7 +17,7 @@ def preprocess(i):
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
     print ('  ENV CM_VAR1: {}'.format(env.get('CM_VAR1','')))
-    
+
     return {'return':0}
 
 def postprocess(i):

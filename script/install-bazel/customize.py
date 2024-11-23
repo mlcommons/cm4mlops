@@ -2,7 +2,7 @@ from cmind import utils
 import os
 
 def preprocess(i):
-    
+
     os_info = i['os_info']
 
     env = i['env']
@@ -31,24 +31,24 @@ def preprocess(i):
         platform = env['CM_HOST_PLATFORM_FLAVOR']
         ext = '.sh'
 
-    
-    filename = 'bazel-{}-{}{}-{}{}'.format(need_version, 
+
+    filename = 'bazel-{}-{}{}-{}{}'.format(need_version,
                                            prefix,
                                            xos,
                                            platform,
                                            ext)
-    
+
     url = 'https://github.com/bazelbuild/bazel/releases/download/{}/{}'.format(need_version, filename)
 
     cur_dir = os.getcwd()
-    
+
     if os_info['platform'] == 'windows':
-        bazel_bin = 'bazel.exe' 
+        bazel_bin = 'bazel.exe'
         path = cur_dir
     else:
         bazel_bin = 'bazel'
         path = os.path.join(cur_dir, 'install', 'bin')
-    
+
     env['CM_BAZEL_DOWNLOAD_URL'] = url
     env['CM_BAZEL_DOWNLOAD_FILE'] = filename
 
