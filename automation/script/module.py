@@ -1481,6 +1481,8 @@ class CAutomation(Automation):
 
             tmp_curdir = os.getcwd()
             if env.get('CM_OUTDIRNAME', '') != '':
+                if not os.path.exists(env['CM_OUTDIRNAME']):
+                    os.makedirs(env['CM_OUTDIRNAME'])
                 os.chdir(env['CM_OUTDIRNAME'])
 
             # Check if pre-process and detect

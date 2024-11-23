@@ -22,6 +22,8 @@ prehook_deps:
     CM_EXTRACT_FINAL_ENV_NAME: CM_ML_MODEL_FILE_WITH_PATH
   extra_cache_tags: ml-model,resnet50,raw,ml-model-resnet50,_<<<CM_ML_MODEL_FRAMEWORK>>>
   force_cache: true
+  force_env_keys:
+    - CM_OUTDIRNAME
   names:
   - model-downloader
   tags: download-and-extract
