@@ -1,7 +1,7 @@
 import os
 import sys
 
-package_name = os.environ.get('CM_GENERIC_PYTHON_PACKAGE_NAME','')
+package_name = os.environ.get('CM_GENERIC_PYTHON_PACKAGE_NAME', '')
 
 filename = 'tmp-ver.out'
 
@@ -25,11 +25,12 @@ if package_name != '':
             version = pkg_resources.get_distribution(package_name).version
             error = ''
         except Exception as e:
-            if error!='': error += '\n'
+            if error != '':
+                error += '\n'
             error += format(e)
 
     # We generally skip error since it usually means that
     # package is not installed
 
     with open(filename, 'w') as file:
-        file.write(str(version)+'\n')
+        file.write(str(version) + '\n')

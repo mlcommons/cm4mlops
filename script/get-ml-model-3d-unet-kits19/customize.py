@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -19,6 +20,6 @@ def preprocess(i):
     else:
         env['CM_ML_MODEL_PATH'] = path
 
-    env['CM_GET_DEPENDENT_CACHED_PATH'] =  env['CM_ML_MODEL_PATH']
+    env['CM_GET_DEPENDENT_CACHED_PATH'] = env['CM_ML_MODEL_PATH']
 
-    return {'return':0}
+    return {'return': 0}

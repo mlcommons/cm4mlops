@@ -45,7 +45,12 @@ def main():
 
         f = open(csv_file, "r")
         values = [r for r in csv.reader(f)]
-        request = service.spreadsheets().values().update(spreadsheetId=DOCUMENT_ID, range=sheet_name, valueInputOption="USER_ENTERED", body={"values": values}).execute()
+        request = service.spreadsheets().values().update(
+            spreadsheetId=DOCUMENT_ID,
+            range=sheet_name,
+            valueInputOption="USER_ENTERED",
+            body={
+                "values": values}).execute()
 
     except HttpError as err:
         print(err)

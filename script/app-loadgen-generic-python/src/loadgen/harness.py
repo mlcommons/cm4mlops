@@ -58,7 +58,8 @@ class Harness:
             self._complete_query(result)
 
     # Called after the last call to issue queries in a series is made.
-    # Client can use this to flush any deferred queries rather than waiting for a timeout.
+    # Client can use this to flush any deferred queries rather than waiting
+    # for a timeout.
     def flush_queries(self):
         result = self.runner.flush_queries()
         logger.info(f"Queries flushed")

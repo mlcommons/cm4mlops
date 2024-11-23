@@ -2,6 +2,7 @@ from cmind import utils
 import os
 import subprocess
 
+
 def preprocess(i):
 
     env = i['env']
@@ -17,7 +18,7 @@ def preprocess(i):
     # Update state (demo)
     # state['os_info'] = os_info
 
-    return {'return':0}
+    return {'return': 0}
 
 
 def postprocess(i):
@@ -30,7 +31,8 @@ def postprocess(i):
     if os_info['platform'] != 'windows':
         if os_info['platform'] == 'linux':
             sys_cmd = "ld --verbose | grep SEARCH_DIR "
-            result = subprocess.check_output(sys_cmd, shell=True).decode("utf-8")
+            result = subprocess.check_output(
+                sys_cmd, shell=True).decode("utf-8")
             result = result.replace("SEARCH_DIR(\"=", "")
             result = result.replace("SEARCH_DIR(\"", "")
             result = result.replace("\")", "")
@@ -39,14 +41,15 @@ def postprocess(i):
             dirs = result.split(';')
             lib_dir = []
             for _dir in dirs:
-                if _dir != '' and  _dir not in lib_dir:
+                if _dir != '' and _dir not in lib_dir:
                     lib_dir.append(_dir)
             env['+CM_HOST_OS_DEFAULT_LIBRARY_PATH'] = lib_dir
 
         r = utils.load_txt(file_name='tmp-run.out',
-                           check_if_exists = True,
-                           split = True)
-        if r['return']>0: return r
+                           check_if_exists=True,
+                           split=True)
+        if r['return'] > 0:
+            return r
 
         s = r['list']
 
@@ -63,20 +66,20 @@ def postprocess(i):
     env['CM_HOST_SYSTEM_NAME'] = platform.node()
 
     if 'CM_HOST_OS_PACKAGE_MANAGER' not in env:
-        if env.get('CM_HOST_OS_FLAVOR','') == "ubuntu" or \
-           "debian" in env.get('CM_HOST_OS_FLAVOR_LIKE','') or \
-           env.get('CM_HOST_OS_FLAVOR','') == "debian":
+        if env.get('CM_HOST_OS_FLAVOR', '') == "ubuntu" or \
+           "debian" in env.get('CM_HOST_OS_FLAVOR_LIKE', '') or \
+           env.get('CM_HOST_OS_FLAVOR', '') == "debian":
             env['CM_HOST_OS_PACKAGE_MANAGER'] = "apt"
-        if env.get('CM_HOST_OS_FLAVOR','') == "rhel" or \
-                "rhel" in env.get('CM_HOST_OS_FLAVOR_LIKE',''):
+        if env.get('CM_HOST_OS_FLAVOR', '') == "rhel" or \
+                "rhel" in env.get('CM_HOST_OS_FLAVOR_LIKE', ''):
             env['CM_HOST_OS_PACKAGE_MANAGER'] = "dnf"
-        if env.get('CM_HOST_OS_FLAVOR','') == "amzn":
+        if env.get('CM_HOST_OS_FLAVOR', '') == "amzn":
             env['CM_HOST_OS_PACKAGE_MANAGER'] = "yum"
-        if env.get('CM_HOST_OS_FLAVOR_LIKE','') == "arch":
+        if env.get('CM_HOST_OS_FLAVOR_LIKE', '') == "arch":
             env['CM_HOST_OS_PACKAGE_MANAGER'] = "arch"
-        if env.get('CM_HOST_OS_FLAVOR','') == "macos":
+        if env.get('CM_HOST_OS_FLAVOR', '') == "macos":
             env['CM_HOST_OS_PACKAGE_MANAGER'] = "brew"
-        if env.get('CM_HOST_OS_FLAVOR','') == "sles":
+        if env.get('CM_HOST_OS_FLAVOR', '') == "sles":
             env['CM_HOST_OS_PACKAGE_MANAGER'] = "zypper"
     if env.get('CM_HOST_OS_PACKAGE_MANAGER', '') == "apt":
         env['CM_HOST_OS_PACKAGE_MANAGER_INSTALL_CMD'] = "DEBIAN_FRONTEND=noninteractive apt-get install -y"
@@ -103,4 +106,4 @@ def postprocess(i):
     if os.path.exists("/.dockerenv"):
         env['CM_RUN_INSIDE_DOCKER'] = "yes"
 
-    return {'return':0}
+    return {'return': 0}

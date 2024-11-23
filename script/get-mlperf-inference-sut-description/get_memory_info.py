@@ -10,7 +10,7 @@ with open("meminfo.out", "r") as f:
     parsedObj = json.loads(str(parser))
     memory = []
 
-    ind = 0;
+    ind = 0
     needed_global_keys = ['Speed', 'Configured Memory Speed', 'Type']
     added_global_keys = []
     needed_keys = ['Size', 'Rank']
@@ -20,7 +20,7 @@ with open("meminfo.out", "r") as f:
             ecc_value = item['props']['Error Correction Type']['values'][0]
             if not ecc_value or 'None' in ecc_value:
                 ecc_value = "No ECC"
-            memory.append({"info": ['Error Correction Type: ' +  ecc_value ]})
+            memory.append({"info": ['Error Correction Type: ' + ecc_value]})
             ind += 1
             continue
         if item['name'] != 'Memory Device':
@@ -44,16 +44,18 @@ with open("meminfo.out", "r") as f:
 
         for key in item['props']:
             if key in needed_global_keys and key not in added_global_keys:
-                memory[0]['info'].append(f'{key}: {";".join(item["props"][key]["values"])}')
+                memory[0]['info'].append(
+                    f'{key}: {";".join(item["props"][key]["values"])}')
                 added_global_keys.append(key)
             elif key in needed_keys:
-                memory[ind]['info'].append(f'{key}: {";".join(item["props"][key]["values"])}')
-        ind+=1
+                memory[ind]['info'].append(
+                    f'{key}: {";".join(item["props"][key]["values"])}')
+        ind += 1
 
     meminfo = []
     for item in memory:
-        meminfo.append( "; ".join(item['info']))
+        meminfo.append("; ".join(item['info']))
 
-    meminfo_string =",   ".join(meminfo)
+    meminfo_string = ",   ".join(meminfo)
     with open("tmp-run-env.out", "w") as f:
         f.write(f"CM_HOST_MEM_INFO={meminfo_string}")

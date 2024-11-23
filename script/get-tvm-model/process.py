@@ -10,6 +10,7 @@ import tvm
 from tvm import relay, meta_schedule
 from tvm.driver.tvmc.frontends import load_model
 
+
 def get_shape_dict_from_onnx(
     shape: List[int],
     model_path: str
@@ -24,9 +25,10 @@ def get_shape_dict_from_onnx(
                     if dimension.dim_value != 0:
                         shape.append(dimension.dim_value)
     input_all = [node.name for node in onnx_model.graph.input]
-    input_initializer =  [node.name for node in onnx_model.graph.initializer]
-    net_feed_input = list(set(input_all)  - set(input_initializer))
+    input_initializer = [node.name for node in onnx_model.graph.initializer]
+    net_feed_input = list(set(input_all) - set(input_initializer))
     return {input_name: shape for input_name in net_feed_input}
+
 
 def get_mod_params(
     model_path: str,
@@ -40,12 +42,18 @@ def get_mod_params(
     image_height: Optional[int] = None,
     max_seq_length: Optional[int] = None
 ) -> Tuple[tvm.IRModule, Dict[str, tvm.nd.NDArray]]:
-    if not input_shapes_str and (not image_width or not image_height) and not max_seq_length and frontend != "onnx":
+    if not input_shapes_str and (
+            not image_width or not image_height) and not max_seq_length and frontend != "onnx":
         raise RuntimeError(
             "Error: None of environment variables storing shape is set!"
         )
     if input_shapes_str:
-        shape_dict = eval('{' + input_shapes_str.replace('BATCH_SIZE', str(batch_size)) + '}')
+        shape_dict = eval(
+            '{' +
+            input_shapes_str.replace(
+                'BATCH_SIZE',
+                str(batch_size)) +
+            '}')
     else:
         shape = []
         if image_width and image_height:
@@ -53,7 +61,8 @@ def get_mod_params(
         elif max_seq_length:
             shape = [batch_size, max_seq_length]
         if frontend == "onnx":
-            shape_dict = get_shape_dict_from_onnx(shape if len(shape) > 0 else [batch_size], model_path)
+            shape_dict = get_shape_dict_from_onnx(
+                shape if len(shape) > 0 else [batch_size], model_path)
         else:
             raise RuntimeError(
                 "Error: Cannot find proper shapes in environment variables"
@@ -73,7 +82,8 @@ def get_mod_params(
         mod, params = tvm.relay.frontend.from_pytorch(traced_model, shape_list)
     else:
         tvmc_model = load_model(path=model_path, shape_dict=shape_dict)
-        mod, params = tvm.relay.transform.DynamicToStatic()(tvmc_model.mod), tvmc_model.params
+        mod, params = tvm.relay.transform.DynamicToStatic()(
+            tvmc_model.mod), tvmc_model.params
 
     input_layer_name_file = os.path.join(os.getcwd(), "input_layer_name")
     if not input_layer_name:
@@ -82,6 +92,7 @@ def get_mod_params(
         file.write(input_layer_name)
 
     return mod, params
+
 
 def tune_model(
     mod: tvm.IRModule,
@@ -169,6 +180,7 @@ def compile_model(
                 )
     return lib
 
+
 def serialize_vm(
     vm_exec: tvm.runtime.vm.Executable
 ) -> tvm.runtime.Module:
@@ -185,6 +197,7 @@ def serialize_vm(
     with open(code_path, "wb") as file:
         file.write(code)
     return lib
+
 
 def main() -> None:
     model_path = os.environ.get('CM_ML_MODEL_FILE_WITH_PATH', None)
@@ -204,11 +217,17 @@ def main() -> None:
             batch_size=int(os.environ.get('CM_ML_MODEL_MAX_BATCH_SIZE', 1)),
             frontend=os.environ.get("CM_TVM_FRONTEND_FRAMEWORK", None),
             input_shapes_str=os.environ.get('CM_ML_MODEL_INPUT_SHAPES', None),
-            input_layer_name=os.environ.get('CM_ML_MODEL_INPUT_LAYER_NAME', None),
-            num_channels=int(os.environ.get('CM_ML_MODEL_IMAGE_NUM_CHANNELS', 3)),
+            input_layer_name=os.environ.get(
+                'CM_ML_MODEL_INPUT_LAYER_NAME', None),
+            num_channels=int(
+                os.environ.get(
+                    'CM_ML_MODEL_IMAGE_NUM_CHANNELS',
+                    3)),
             image_width=int(os.environ.get('CM_ML_MODEL_IMAGE_WIDTH', 0)),
             image_height=int(os.environ.get('CM_ML_MODEL_IMAGE_HEIGHT', 0)),
-            max_seq_length=int(os.environ.get('CM_ML_MODEL_MAX_SEQ_LENGTH', 0)),
+            max_seq_length=int(
+                os.environ.get(
+                    'CM_ML_MODEL_MAX_SEQ_LENGTH', 0)),
         )
         opt_level = int(os.environ.get('CM_MLPERF_TVM_OPT_LEVEL', 3))
         target = os.environ.get(
@@ -231,7 +250,8 @@ def main() -> None:
         lib = compile_model(
             mod=mod,
             params=params,
-            work_dir=work_dir if work_dir != '' else os.environ.get('CM_TUNE_TVM_MODEL_WORKDIR', ''),
+            work_dir=work_dir if work_dir != '' else os.environ.get(
+                'CM_TUNE_TVM_MODEL_WORKDIR', ''),
             target=tvm_target,
             opt_level=opt_level,
             build_conf=build_conf,
@@ -247,6 +267,7 @@ def main() -> None:
             file.write("virtual_machine" if use_vm else "graph_executor")
         lib.export_library(compiled_model)
         print('TVM compiled model: ' + compiled_model)
+
 
 if __name__ == "__main__":
     main()

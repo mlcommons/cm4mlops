@@ -2,6 +2,7 @@ from cmind import utils
 import os
 import cmind as cm
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -24,19 +25,21 @@ def preprocess(i):
     elif cmd == "uninstall":
         run_cmd = f"cd {env['CM_GH_ACTIONS_RUNNER_CODE_PATH']} && sudo ./svc.sh uninstall"
         cache_rm_tags = "gh,runner,_install"
-        r = cm.access({'action': 'rm', 'automation': 'cache', 'tags': cache_rm_tags, 'f': True})
+        r = cm.access({'action': 'rm', 'automation': 'cache',
+                      'tags': cache_rm_tags, 'f': True})
         print(r)
-        if r['return'] != 0 and r['return'] != 16: ## ignore missing ones
+        if r['return'] != 0 and r['return'] != 16:  # ignore missing ones
             return r
     elif cmd == "start":
         run_cmd = f"cd {env['CM_GH_ACTIONS_RUNNER_CODE_PATH']} && sudo ./svc.sh start"
 
     env['CM_RUN_CMD'] = run_cmd
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
     env = i['env']
 
-    return {'return':0}
+    return {'return': 0}

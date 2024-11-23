@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -10,4 +11,4 @@ def preprocess(i):
     env['CM_TMP_PATH'] = os.path.join(os.getcwd(), 'install', 'bin')
     env['CM_TMP_FAIL_IF_NOT_FOUND'] = 'yes'
 
-    return {'return':0}
+    return {'return': 0}

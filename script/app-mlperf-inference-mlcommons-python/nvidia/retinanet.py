@@ -30,7 +30,7 @@ from importlib import import_module
 from typing import Dict, Tuple, List, Optional
 
 from code.common.fix_sys_path import ScopedRestrictedImport
-#with ScopedRestrictedImport():
+# with ScopedRestrictedImport():
 import numpy as np
 import torch  # Retinanet model source requires GPU installation of PyTorch 1.10
 from torchvision.transforms import functional as F
@@ -45,16 +45,27 @@ from code.common.systems.system_list import DETECTED_SYSTEM
 from code.common.runner import EngineRunner, get_input_format
 from code.common.systems.system_list import SystemClassifications
 from code.plugin import load_trt_plugin
-RetinanetEntropyCalibrator = import_module("code.retinanet.tensorrt.calibrator").RetinanetEntropyCalibrator
+RetinanetEntropyCalibrator = import_module(
+    "code.retinanet.tensorrt.calibrator").RetinanetEntropyCalibrator
 
 G_RETINANET_NUM_CLASSES = 264
 G_RETINANET_IMG_SIZE = (800, 800)
 G_RETINANET_INPUT_SHAPE = (3, 800, 800)
 G_OPENIMAGE_CALSET_PATH = "build/data/open-images-v6-mlperf/calibration/train/data"
 G_OPENIMAGE_CALMAP_PATH = "data_maps/open-images-v6-mlperf/cal_map.txt"
-G_OPENIMAGE_VALSET_PATH = os.path.join(os.environ.get("CM_DATASET_PATH", "build/data/open-images-v6-mlperf"), "validation", "data")
+G_OPENIMAGE_VALSET_PATH = os.path.join(
+    os.environ.get(
+        "CM_DATASET_PATH",
+        "build/data/open-images-v6-mlperf"),
+    "validation",
+    "data")
 G_OPENIMAGE_VALMAP_PATH = "data_maps/open-images-v6-mlperf/val_map.txt"
-G_OPENIMAGE_ANNO_PATH = os.path.join(os.environ.get("CM_DATASET_PATH","build/data/open-images-v6-mlperf"), "annotations", "openimages-mlperf.json")
+G_OPENIMAGE_ANNO_PATH = os.path.join(
+    os.environ.get(
+        "CM_DATASET_PATH",
+        "build/data/open-images-v6-mlperf"),
+    "annotations",
+    "openimages-mlperf.json")
 G_OPENIMAGE_PREPROCESSED_INT8_PATH = "build/preprocessed_data/open-images-v6-mlperf/validation/Retinanet/int8_linear"
 # Using EfficientNMS now
 G_RETINANET_CALIBRATION_CACHE_PATH = "code/retinanet/tensorrt/calibrator.cache"
@@ -91,7 +102,8 @@ class FirstLayerConvActPoolTacticSelector(trt.IAlgorithmSelector):
     def select_algorithms(self, ctx, choices):
         if "Conv_0 + 1783 + Mul_1 + 1785 + Add_2 + Relu_3 + MaxPool_4" in ctx.name:  # Apply to the first layer
             # MLPINF-1833: Disabled CaskConvActPool for TRT 8.5.0.4
-            # TRT 8.5.0.4 has a bug with CaskConvActPool which has been fixed since 8.5.0.5
+            # TRT 8.5.0.4 has a bug with CaskConvActPool which has been fixed
+            # since 8.5.0.5
             forbidden_set = {
                 -3689373275198309793,  # 0xccccb68da7fc3a5f
                 -4219016963003938541,  # 0xc5730a6ceacd8913
@@ -116,7 +128,8 @@ class FirstLayerConvActPoolTacticSelector(trt.IAlgorithmSelector):
                 -7700711094551245800,  # 0xf126325c0aa4aa02
                 -1070112490556970494,  # 0x97d50e90c139753e
             }
-            filtered_idxs = [idx for idx, choice in enumerate(choices) if choice.algorithm_variant.tactic not in forbidden_set]
+            filtered_idxs = [idx for idx, choice in enumerate(
+                choices) if choice.algorithm_variant.tactic not in forbidden_set]
             to_ret = filtered_idxs
         else:
             # By default, say that all tactics are acceptable:
@@ -149,7 +162,8 @@ class TRTTester:
         self.dla_core = None
 
         # Initiate the plugin and logger
-        self.logger = TRT_LOGGER  # Use the global singleton, which is required by TRT.
+        # Use the global singleton, which is required by TRT.
+        self.logger = TRT_LOGGER
         self.logger.min_severity = trt.Logger.VERBOSE if self.verbose else trt.Logger.INFO
         load_trt_plugin("retinanet")
         trt.init_libnvinfer_plugins(self.logger, "")
@@ -159,7 +173,8 @@ class TRTTester:
             self.create_trt_engine()
         else:
             if not os.path.exists(engine_file):
-                raise RuntimeError(f"Cannot find engine file {engine_file}. Please supply the onnx file or engine file.")
+                raise RuntimeError(
+                    f"Cannot find engine file {engine_file}. Please supply the onnx file or engine file.")
 
         self.runner = EngineRunner(self.engine_file, verbose=verbose)
 
@@ -170,11 +185,15 @@ class TRTTester:
 
     def apply_flag(self, flag):
         """Apply a TRT builder flag."""
-        self.builder_config.flags = (self.builder_config.flags) | (1 << int(flag))
+        self.builder_config.flags = (
+            self.builder_config.flags) | (
+            1 << int(flag))
 
     def clear_flag(self, flag):
         """Clear a TRT builder flag."""
-        self.builder_config.flags = (self.builder_config.flags) & ~(1 << int(flag))
+        self.builder_config.flags = (
+            self.builder_config.flags) & ~(
+            1 << int(flag))
 
     # Helper function to build a TRT engine from ONNX file
     def create_trt_engine(self):
@@ -195,7 +214,9 @@ class TRTTester:
 
             # Calibrator for int8
             preprocessed_data_dir = "build/preprocessed_data"
-            calib_image_dir = os.path.join(preprocessed_data_dir, "open-images-v6-mlperf/calibration/Retinanet/fp32")
+            calib_image_dir = os.path.join(
+                preprocessed_data_dir,
+                "open-images-v6-mlperf/calibration/Retinanet/fp32")
             self.calibrator = RetinanetEntropyCalibrator(data_dir=calib_image_dir,
                                                          cache_file=self.cache_file, batch_size=10, max_batches=50,
                                                          force_calibration=False, calib_data_map=G_OPENIMAGE_CALMAP_PATH)
@@ -208,13 +229,15 @@ class TRTTester:
         else:
             raise Exception(f"{self.precision} not supported yet.")
 
-        self.network = self.builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
+        self.network = self.builder.create_network(
+            1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
         model = onnx.load(self.onnx_path)
         parser = trt.OnnxParser(self.network, self.logger)
         success = parser.parse(onnx._serialize(model))
         if not success:
             err_desc = parser.get_error(0).desc()
-            raise RuntimeError(f"Retinanet onnx model processing failed! Error: {err_desc}")
+            raise RuntimeError(
+                f"Retinanet onnx model processing failed! Error: {err_desc}")
 
         # Set the network input type
         if self.precision == "int8":
@@ -236,7 +259,8 @@ class TRTTester:
                     min_shape[0] = 1
                     max_shape = trt.Dims(input_shape)
                     max_shape[0] = self.batch_size
-                    profile.set_shape(input_name, min_shape, max_shape, max_shape)
+                    profile.set_shape(
+                        input_name, min_shape, max_shape, max_shape)
                 if not profile:
                     raise RuntimeError("Invalid optimization profile!")
                 self.builder_config.add_optimization_profile(profile)
@@ -250,7 +274,8 @@ class TRTTester:
 
         engine = self.builder.build_engine(self.network, self.builder_config)
         engine_inspector = engine.create_engine_inspector()
-        layer_info = engine_inspector.get_engine_information(trt.LayerInformationFormat.ONELINE)
+        layer_info = engine_inspector.get_engine_information(
+            trt.LayerInformationFormat.ONELINE)
         logging.info("========= TensorRT Engine Layer Information =========")
         logging.info(layer_info)
 
@@ -264,14 +289,16 @@ class TRTTester:
         image_ids = cocoGt.getImgIds()
         cat_ids = cocoGt.getCatIds()
         num_images = min(num_samples, len(image_ids))
-        print(f"Total number of images: {len(image_ids)}, number of categories: {len(cat_ids)}, running num_images: {num_images}")
+        print(
+            f"Total number of images: {len(image_ids)}, number of categories: {len(cat_ids)}, running num_images: {num_images}")
 
         detections = []
         batch_idx = 0
         for image_idx in range(0, num_images, self.batch_size):
             # Print Progress
             if batch_idx % 20 == 0:
-                print(f"Processing batch: {batch_idx} image: {image_idx}/{num_images}")
+                print(
+                    f"Processing batch: {batch_idx} image: {image_idx}/{num_images}")
 
             end_idx = min(image_idx + self.batch_size, num_images)
             imgs = []
@@ -279,14 +306,24 @@ class TRTTester:
             for idx in range(image_idx, end_idx):
                 image_id = image_ids[idx]
                 if self.precision == "fp32":
-                    # Load the image using pytorch routine, but perform extra resize+normalize steps
-                    img = load_img_pytorch(os.path.join(self.image_dir, cocoGt.imgs[image_id]["file_name"]), do_transform=True).numpy()
+                    # Load the image using pytorch routine, but perform extra
+                    # resize+normalize steps
+                    img = load_img_pytorch(
+                        os.path.join(
+                            self.image_dir,
+                            cocoGt.imgs[image_id]["file_name"]),
+                        do_transform=True).numpy()
                 elif self.precision == "int8":
-                    img = np.load(os.path.join(G_OPENIMAGE_PREPROCESSED_INT8_PATH, cocoGt.imgs[image_id]["file_name"] + '.npy'))
+                    img = np.load(
+                        os.path.join(
+                            G_OPENIMAGE_PREPROCESSED_INT8_PATH,
+                            cocoGt.imgs[image_id]["file_name"] +
+                            '.npy'))
                 else:
                     raise Exception(f"Unsupported precision {self.precision}")
                 imgs.append(img)
-                img_original_sizes.append([cocoGt.imgs[image_id]["height"], cocoGt.imgs[image_id]["width"]])
+                img_original_sizes.append(
+                    [cocoGt.imgs[image_id]["height"], cocoGt.imgs[image_id]["width"]])
 
             if self.precision == "fp32":
                 imgs = np.ascontiguousarray(np.stack(imgs), dtype=np.float32)
@@ -298,7 +335,8 @@ class TRTTester:
 
             if self.verbose:
                 duration = time.time() - start_time
-                logging.info(f"Batch {batch_idx} >>> Inference time:  {duration}")
+                logging.info(
+                    f"Batch {batch_idx} >>> Inference time:  {duration}")
 
             # Concatted outputs is in the shape of [BS, 7001]
             # image_ids (duplicate of score for loadgen): [BS, 1000, 1]
@@ -318,7 +356,14 @@ class TRTTester:
                 for prediction_idx in range(0, keep_count):
                     # Each detection is in the order of [dummy_image_idx, xmin, ymin, xmax, ymax, score, label]
                     # This is pre-callback (otherwise x and y are swapped).
-                    single_detection = concat_output[idx * 7001 + prediction_idx * 7: idx * 7001 + prediction_idx * 7 + 7]
+                    single_detection = concat_output[idx *
+                                                     7001 +
+                                                     prediction_idx *
+                                                     7: idx *
+                                                     7001 +
+                                                     prediction_idx *
+                                                     7 +
+                                                     7]
                     loc = single_detection[1:5]
                     label = single_detection[6]
                     score = single_detection[5]
@@ -371,8 +416,10 @@ class PytorchTester:
     To run this tester, you would need to clone the repo, and mount it to the container.
     """
 
-    def __init__(self, pyt_ckpt_path, training_repo_path, batch_size=8, output_file="build/retinanet_pytorch.out"):
-        ssd_model_path = os.path.join(training_repo_path, "single_stage_detector", "ssd")
+    def __init__(self, pyt_ckpt_path, training_repo_path,
+                 batch_size=8, output_file="build/retinanet_pytorch.out"):
+        ssd_model_path = os.path.join(
+            training_repo_path, "single_stage_detector", "ssd")
         with ScopedRestrictedImport([ssd_model_path] + sys.path):
             from model.retinanet import retinanet_from_backbone
             pyt_model = retinanet_from_backbone(
@@ -409,7 +456,8 @@ class PytorchTester:
         image_ids = cocoGt.getImgIds()
         cat_ids = cocoGt.getCatIds()
         num_images = min(num_samples, len(image_ids))
-        print(f"Total number of images: {len(image_ids)}, number of categories: {len(cat_ids)}, running num_images: {num_images}")
+        print(
+            f"Total number of images: {len(image_ids)}, number of categories: {len(cat_ids)}, running num_images: {num_images}")
 
         coco_detections = []
         for image_idx in range(0, num_images, self.batch_size):
@@ -418,7 +466,8 @@ class PytorchTester:
             imgs = []
             for idx in range(image_idx, end_idx):
                 image_id = image_ids[idx]
-                image_path = os.path.join(self.image_dir, cocoGt.imgs[image_id]["file_name"])
+                image_path = os.path.join(
+                    self.image_dir, cocoGt.imgs[image_id]["file_name"])
                 img = load_img_pytorch(image_path).to(self.device)
                 imgs.append(img)
                 # print(cocoGt.imgs[image_id]["height"], cocoGt.imgs[image_id]["width"])
@@ -426,7 +475,11 @@ class PytorchTester:
             img = []
             for idx in range(image_idx, end_idx):
                 image_id = image_ids[idx]
-                tensor = load_img_pytorch(os.path.join(self.image_dir, cocoGt.imgs[image_id]["file_name"]), do_transform=True).numpy()
+                tensor = load_img_pytorch(
+                    os.path.join(
+                        self.image_dir,
+                        cocoGt.imgs[image_id]["file_name"]),
+                    do_transform=True).numpy()
                 print(tensor.shape)
                 img.append(tensor)
             img = np.ascontiguousarray(np.stack(img), dtype=np.float32)
@@ -445,7 +498,8 @@ class PytorchTester:
                     # Convert from lrtb to [xmin, ymin, w, h] for cocoeval
                     box_pred = boxes[pred_idx][:]
                     xmin, ymin, xmax, ymax = box_pred
-                    box_pred = np.array([xmin, ymin, xmax - xmin, ymax - ymin], dtype=np.float32)
+                    box_pred = np.array(
+                        [xmin, ymin, xmax - xmin, ymax - ymin], dtype=np.float32)
                     score_pred = float(scores[pred_idx])
                     label_pred = int(labels[pred_idx])
                     coco_detection = {
@@ -526,24 +580,40 @@ def main():
     # Pytorch Tester
     if args.pytorch:
         # TODO: Check existence of training repo.
-        logging.info(f"Running Accuracy test for Pytorch reference implementation.")
-        if args.training_repo_path is None or not os.path.exists(args.training_repo_path):
-            raise RuntimeError("Please pull mlcommon training repo from https://github.com/mlcommons/training, and specify with --training_repo_path")
-        pt_tester = PytorchTester(args.pyt_ckpt_path, args.training_repo_path, args.batch_size)
+        logging.info(
+            f"Running Accuracy test for Pytorch reference implementation.")
+        if args.training_repo_path is None or not os.path.exists(
+                args.training_repo_path):
+            raise RuntimeError(
+                "Please pull mlcommon training repo from https://github.com/mlcommons/training, and specify with --training_repo_path")
+        pt_tester = PytorchTester(
+            args.pyt_ckpt_path,
+            args.training_repo_path,
+            args.batch_size)
         pt_acc = pt_tester.run_openimage(args.num_samples)
-        logging.info(f"Pytorch mAP Score: {pt_acc}, Reference: 0.375, % of ref: {pt_acc / 0.375}")
+        logging.info(
+            f"Pytorch mAP Score: {pt_acc}, Reference: 0.375, % of ref: {pt_acc / 0.375}")
     else:
         # TRT Tester
-        logging.info(f"Running accuracy test for retinanet using {args.engine_file} ...")
-        tester = TRTTester(args.engine_file, args.batch_size, args.trt_precision, args.onnx_path, args.skip_engine_build, args.verbose)
+        logging.info(
+            f"Running accuracy test for retinanet using {args.engine_file} ...")
+        tester = TRTTester(
+            args.engine_file,
+            args.batch_size,
+            args.trt_precision,
+            args.onnx_path,
+            args.skip_engine_build,
+            args.verbose)
         # acc = tester.run_openimage(args.num_samples)
         acc = tester.run_openimage(args.num_samples)
-        logging.info(f"mAP Score: {acc}, Reference: 0.375, % of ref: {acc / 0.375}")
+        logging.info(
+            f"mAP Score: {acc}, Reference: 0.375, % of ref: {acc / 0.375}")
 
     # To run the TRT tester:
     # python3 -m code.retinanet.tensorrt.infer --engine_file /tmp/retina.b8.int8.engine --num_samples=1200 --batch_size=8 --trt_precision int8
     # To run the pytorch tester:
-    # python3 -m code.retinanet.tensorrt.infer --pytorch --num_samples=1200 --batch_size=8
+    # python3 -m code.retinanet.tensorrt.infer --pytorch --num_samples=1200
+    # --batch_size=8
 
 
 if __name__ == "__main__":

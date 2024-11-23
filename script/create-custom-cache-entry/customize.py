@@ -2,27 +2,30 @@ from cmind import utils
 import os
 import shutil
 
+
 def preprocess(i):
 
     # CM script internal variables
     env = i['env']
 
     extra_cache_tags = []
-    if env.get('CM_EXTRA_CACHE_TAGS','').strip() == '':
-        print ('')
-        extra_cache_tags_str = input('Enter extra tags for the custom CACHE entry separated by comma: ')
+    if env.get('CM_EXTRA_CACHE_TAGS', '').strip() == '':
+        print('')
+        extra_cache_tags_str = input(
+            'Enter extra tags for the custom CACHE entry separated by comma: ')
 
         extra_cache_tags = extra_cache_tags_str.strip().split(',')
 
-    return {'return':0, 'add_extra_cache_tags':extra_cache_tags}
+    return {'return': 0, 'add_extra_cache_tags': extra_cache_tags}
+
 
 def postprocess(i):
 
     env = i['env']
 
-    path = env.get('CM_CUSTOM_CACHE_ENTRY_PATH','').strip()
+    path = env.get('CM_CUSTOM_CACHE_ENTRY_PATH', '').strip()
 
-    if path!='':
+    if path != '':
         if not os.path.isdir(path):
             os.makedirs(path)
     else:
@@ -30,7 +33,8 @@ def postprocess(i):
 
     x = ''
     env_key = env.get('CM_CUSTOM_CACHE_ENTRY_ENV_KEY', '')
-    if env_key != '': x = env_key+'_'
+    if env_key != '':
+        x = env_key + '_'
 
     env['CM_CUSTOM_CACHE_ENTRY_{}PATH'.format(x)] = path
     env['CM_CUSTOM_CACHE_ENTRY_PATH'] = path

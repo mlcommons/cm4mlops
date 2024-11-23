@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -15,16 +16,17 @@ def preprocess(i):
         i['run_script_input']['script_name'] = "run-rhel"
 
     # Test (not needed - will be removed)
-    if str(env.get('CM_SKIP_SYS_UTILS','')).lower() in [True, 'yes', 'on']:
-        return {'return':0, 'skip':True}
+    if str(env.get('CM_SKIP_SYS_UTILS', '')).lower() in [True, 'yes', 'on']:
+        return {'return': 0, 'skip': True}
 
 
-# Windows has moved to get-sys-utils-min and will be always run with "detect,os"!
+# Windows has moved to get-sys-utils-min and will be always run with
+# "detect,os"!
 
     if os_info['platform'] == 'windows':
-        print ('')
-        print ('This script is not used on Windows')
-        print ('')
+        print('')
+        print('This script is not used on Windows')
+        print('')
 
    # If windows, download here otherwise use run.sh
 
@@ -78,10 +80,10 @@ def preprocess(i):
 #        env['+PATH']=[os.path.join(path, 'bin')]
 #
     else:
-        print ('')
-        print ('***********************************************************************')
-        print ('This script will attempt to install minimal system dependencies for CM.')
-        print ('Note that you may be asked for your SUDO password ...')
-        print ('***********************************************************************')
+        print('')
+        print('***********************************************************************')
+        print('This script will attempt to install minimal system dependencies for CM.')
+        print('Note that you may be asked for your SUDO password ...')
+        print('***********************************************************************')
 
-    return {'return':0}
+    return {'return': 0}

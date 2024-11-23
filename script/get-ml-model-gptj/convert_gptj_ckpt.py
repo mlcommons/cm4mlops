@@ -145,20 +145,25 @@ def convert(base_model_path, pax_model_path):
                 ].data.numpy(),
             },
         }
-        jax_weights['lm']['transformer']['x_layers_%d' % layer_idx] = layer_weight
+        jax_weights['lm']['transformer']['x_layers_%d' %
+                                         layer_idx] = layer_weight
 
     print(f'Saving the pax model to {pax_model_path}')
     jax_states = train_states.TrainState(
         step=0, mdl_vars={'params': jax_weights}, opt_states={}
     )
     device_mesh = py_utils.create_device_mesh([1, 1, num_gpus])
-    global_mesh = jax.sharding.Mesh(device_mesh, ['replica', 'data_mdl2', 'mdl'])
+    global_mesh = jax.sharding.Mesh(
+        device_mesh, ['replica', 'data_mdl2', 'mdl'])
 
     # Identity pjit is needed to output a GDA model_states.
     def identity(x):
         return x
 
-    pjitted_identity = pjit.pjit(identity, in_shardings=None, out_shardings=None)
+    pjitted_identity = pjit.pjit(
+        identity,
+        in_shardings=None,
+        out_shardings=None)
     with global_mesh:
         jax_states_gda = pjitted_identity(jax_states)
 
