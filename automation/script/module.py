@@ -2172,26 +2172,21 @@ class CAutomation(Automation):
         new_env = env  # just a reference
 
         for key, val in new_env.items():
-
-            # may need a cleaner way
-if isinstance(val,             if)                if "/local/cache/" in val:
-                    sep = "/"
-                else:
-                    sep = "\\"
+            # Check for a path separator in a string and determine the separator
+            if isinstance(val, str) and any(sep in val for sep in ["/local/cache/", "\\local\\cache\\"]):
+                sep = "/" if "/local/cache/" in val else "\\"
 
                 path_split = val.split(sep)
                 repo_entry_index = path_split.index("local")
                 loaded_cache_path = sep.join(path_split[0:repo_entry_index +2])
                 if loaded_cache_path != current_cache_path and os.path.exists(
                     current_cache_path):
-                    new_env[key] = val.replace(
-    loaded_cache_path, current_cache_path)
+                    new_env[key] = val.replace(loaded_cache_path, current_cache_path)
 
-elif isinstance(val,             elif )                for val2, i in enumerate(val):
-if isinstance(val2,                     if )                        if "/local/cache/" in val:
-                            sep = "/"
-                        else:
-                            sep = "\\"
+            elif isinstance(val, list):
+                for i, val2 in enumerate(val):
+                    if isinstance(val2, str) and any(sep in val2 for sep in ["/local/cache/", "\\local\\cache\\"]):
+                        sep = "/" if "/local/cache/" in val2 else "\\"
 
                         path_split = val2.split(sep)
                         repo_entry_index = path_split.index("local")
