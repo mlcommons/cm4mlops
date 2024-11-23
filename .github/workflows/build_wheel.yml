@@ -71,8 +71,8 @@ jobs:
       - name: Commit updated version
         if: steps.version_changed.outputs.version_changed == 'false'
         run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name mlcommons-bot
+          git config --global user.email "mlcommons-bot@users.noreply.github.com"
           git add VERSION
           git commit -m "Increment version to ${{ steps.do_version_increment.outputs.new_version }}"
           git push
@@ -86,7 +86,14 @@ jobs:
         working-directory: ./
         run: python3 -m build && rm dist/*.whl
 
-      # Step 8: Publish to PyPI
+      # Step 8: Install the built wheel (as a test)
+      - name: Install wheel
+        working-directory: ./
+        run: |
+          wheel_file=$(ls dist/*.whl | tail -n 1)
+          python3 -m pip install "$wheel_file"
+
+      # Step 9: Publish to PyPI
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
