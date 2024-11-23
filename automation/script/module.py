@@ -52,6 +52,8 @@ class CAutomation(Automation):
                                'CM_DETECTED_VERSION',
                                'CM_INPUT',
                                'CM_OUTPUT',
+                               'CM_OUTBASENAME',
+                               'CM_OUTDIRNAME',
                                'CM_NAME',
                                'CM_EXTRA_CACHE_TAGS',
                                'CM_TMP_*',
@@ -62,6 +64,8 @@ class CAutomation(Automation):
 
         self.input_flags_converted_to_env = ['input',
                                              'output',
+                                             'outdirname',
+                                             'outbasename',
                                              'name',
                                              'extra_cache_tags',
                                              'skip_compile',
@@ -106,6 +110,9 @@ class CAutomation(Automation):
 
           (input) (str): converted to env.CM_INPUT  (local env)
           (output) (str): converted to env.CM_OUTPUT (local env)
+
+          (outbasename) (str): converted to env.CM_OUTBASENAME (local env)
+          (outdirname) (str): converted to env.CM_OUTDIRNAME (local env)
 
           (extra_cache_tags) (str): converted to env.CM_EXTRA_CACHE_TAGS and used to add to caching (local env)
 
@@ -1472,6 +1479,10 @@ class CAutomation(Automation):
                 logging.debug(recursion_spaces+'    # potential PIP version string (if needed): '+pip_version_string)
 
 
+            tmp_curdir = os.getcwd()
+            if env.get('CM_OUTDIRNAME', '') != '':
+                os.chdir(env['CM_OUTDIRNAME'])
+
             # Check if pre-process and detect
             if 'preprocess' in dir(customize_code) and not fake_run:
 
@@ -1594,6 +1605,9 @@ class CAutomation(Automation):
                         x = 'deps-' + prefix + t
                         if x not in cached_tags:
                             cached_tags.append(x)
+
+            if env.get('CM_OUTDIRNAME', '') != '':
+                os.chdir(tmp_curdir)
 
 
         detected_version = env.get('CM_DETECTED_VERSION', env.get('CM_VERSION',''))
