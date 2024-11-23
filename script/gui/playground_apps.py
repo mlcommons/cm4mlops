@@ -32,7 +32,7 @@ def page(st, params, action = ''):
     global initialized, external_module_path, external_module_meta
 
     end_html = ''
-    
+
     st.markdown('----')
     st.markdown(announcement)
 

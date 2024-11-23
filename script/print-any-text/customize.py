@@ -11,7 +11,7 @@ def postprocess(i):
     os_env_keys = env.get('CM_PRINT_ANY_OS_ENV_KEYS', '').strip()
 
     printed = False
-    for k,e,t in [(cm_env_keys, env, 'CM_ENV'), 
+    for k,e,t in [(cm_env_keys, env, 'CM_ENV'),
                   (os_env_keys, os.environ, 'OS_ENV')]:
 
         if k!='':
@@ -27,4 +27,3 @@ def postprocess(i):
         print ('')
 
     return {'return':0}
-

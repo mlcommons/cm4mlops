@@ -198,7 +198,7 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
                 test_pass = checker.check_compliance_perf_dir(test_path) if test != "TEST06" else True
                 if test_pass and test in [ "TEST01", "TEST06" ]:
                     #test_pass = checker.check_compliance_acc_dir(test_path, mlperf_model, config)
-                    pass # accuracy truncation script is done after submission generation. We assume here that it'll pass 
+                    pass # accuracy truncation script is done after submission generation. We assume here that it'll pass
                 if test_pass:
                     result[test] = "passed"
                 else:
@@ -242,8 +242,8 @@ def get_result_string(version, model, scenario, result_path, has_power, sub_res,
     return result_string, result
 
 def get_result_table(results):
-   
-    
+
+
     headers = ["Model", "Scenario", "Accuracy", "Throughput", "Latency (in ms)", "Power Efficiency (in samples/J)", "TEST01", "TEST04"]
     table = []
     for model in results:
@@ -260,7 +260,7 @@ def get_result_table(results):
                 row.append("-")
 
             if results[model][scenario].get('performance'):
-            
+
                 if "stream" in scenario.lower():
                     if float(results[model][scenario]['performance']) == 0:
                         row.append("-")

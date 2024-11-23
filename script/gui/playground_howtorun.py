@@ -26,7 +26,7 @@ def main():
 def page(st, params, action = ''):
 
     end_html = ''
-    
+
     # Announcement
 #    st.markdown('----')
 
@@ -36,10 +36,10 @@ def page(st, params, action = ''):
     x = '''
          <i>
          <small>
-         This interface will help you generate a command line or Python API 
-         to run modular benchmarks composed from 
+         This interface will help you generate a command line or Python API
+         to run modular benchmarks composed from
          <a href="{}">automation recipes (CM scripts)</a>.
-         Note that this is a <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">collaborative engineering effort</a> 
+         Note that this is a <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">collaborative engineering effort</a>
          to make sure that they work across all possible versions and configurations of models, data sets, software and hardware
          - please report encountered issues and provide feedback
          <a href="https://github.com/mlcommons/ck/issues">here</a>
@@ -51,16 +51,16 @@ def page(st, params, action = ''):
         '''.format(url_script)
 
     st.write(x, unsafe_allow_html = True)
-    
+
 #    st.markdown(announcement)
-    
+
 
     ############################################################################################
     # Select target hardware
     compute_uid = ''
     x = params.get('compute_uid',[''])
     if len(x)>0 and x[0]!='': compute_uid = x[0].strip()
-    
+
     ii = {'action':'load_cfg',
           'automation':'utils',
           'tags':'benchmark,compute',
@@ -83,7 +83,7 @@ def page(st, params, action = ''):
     bench_uid = ''
     x = params.get('bench_uid',[''])
     if len(x)>0 and x[0]!='': bench_uid = x[0].strip()
-    
+
     ii = {'action':'load_cfg',
           'automation':'utils',
           'tags':'benchmark,list',
@@ -105,7 +105,7 @@ def page(st, params, action = ''):
         xtags = set(compute_meta['tags'].split(','))
 
 #        st.markdown(str(xtags))
-        
+
         for s in selection:
             add = True
 
@@ -118,7 +118,7 @@ def page(st, params, action = ''):
                     if cc.issubset(xtags):
                         add = True
                         break
-            
+
             if add:
                 pruned_selection.append(s)
 
@@ -130,7 +130,7 @@ def page(st, params, action = ''):
             j += 1
             if q['uid'] == '39877bb63fb54725':
                 force_bench_index = j
-    
+
     r = misc.make_selection(st, pruned_selection, 'benchmark', 'benchmark', bench_uid, force_index = force_bench_index)
     if r['return']>0: return r
 
@@ -170,7 +170,7 @@ def page(st, params, action = ''):
                 script_alias = script_meta['alias']
 
                 repo_meta = script_obj.repo_meta
-                
+
                 url = repo_meta.get('url','')
                 if url=='' and repo_meta.get('git', False):
                     url = 'https://github.com/'+repo_meta['alias'].replace('@','/')
@@ -185,7 +185,7 @@ def page(st, params, action = ''):
                         url += repo_meta['prefix']
 
                     if not url.endswith('/'): url=url+'/'
-                    
+
                     url += 'script/'+script_alias
 
                     script_url = url
@@ -193,7 +193,7 @@ def page(st, params, action = ''):
                 if not bench_meta.get('skip_extra_urls', False):
                     url_script = misc.make_url(script_name, key='name', action='scripts', md=False)
                     url_script += '&gui=true'
-                    
+
                     urls.append({'name': 'Universal CM GUI to run this benchmark',
                                  'url': url_script})
 
@@ -207,7 +207,7 @@ def page(st, params, action = ''):
                         urls.append({'name': 'Notes about how to run this benchmark from the command line',
                                      'url': url_readme_extra})
 
-        
+
         # Check URLS
         if len(urls)>0:
             x = '\n'
@@ -224,11 +224,11 @@ def page(st, params, action = ''):
         # Check if has customization
         extra = {}
         skip = False
-        
+
         script_tags = script_meta.get('tags_help','')
         if script_tags =='':
             script_tags = ','.join(script_meta.get('tags',[]))
-        
+
         if script_obj!=None:
             ii = {'st': st,
                   'params': params,
@@ -253,8 +253,8 @@ def page(st, params, action = ''):
                     found_automation_spec.loader.exec_module(tmp_module)
 #               tmp_module=importlib.import_module('customize')
             except Exception as e:
-               st.markdown('WARNING: {}'.format(e))
-               pass
+                st.markdown('WARNING: {}'.format(e))
+                pass
 
             if tmp_module!=None:
                 if hasattr(tmp_module, 'gui'):
@@ -276,14 +276,14 @@ def page(st, params, action = ''):
 
             ii = {'st': st,
                   'params': params,
-                  'script_path': script_path, 
-                  'script_alias': script_alias, 
-                  'script_tags': script_tags, 
+                  'script_path': script_path,
+                  'script_alias': script_alias,
+                  'script_tags': script_tags,
                   'script_meta': script_meta,
                   'script_repo_meta': script_repo_meta,
                   'skip_bottom': True,
                   'extra': extra}
-            
+
             rr = script.page(ii)
             if rr['return']>0: return rr
 

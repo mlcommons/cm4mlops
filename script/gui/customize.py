@@ -25,8 +25,8 @@ def preprocess(i):
 
         print ('Searching CM scripts using tags "{}"'.format(script_tags))
 
-        r = cm.access({'action':'find', 
-                       'automation':'script', 
+        r = cm.access({'action':'find',
+                       'automation':'script',
                        'tags':script_tags})
         if r['return']>0: return r
 

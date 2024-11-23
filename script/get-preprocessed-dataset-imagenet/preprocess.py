@@ -35,6 +35,6 @@ else:
                         image_format=img_format,
                         pre_process = pre_process,
                         use_cache=True,
-                        count=count, 
+                        count=count,
                         threads=threads,
                         preprocessed_dir=preprocessed_dir)

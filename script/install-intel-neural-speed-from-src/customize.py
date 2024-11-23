@@ -11,7 +11,7 @@ def preprocess(i):
     env = i['env']
 
     env['CM_PYTHON_BIN_WITH_PATH'] = os.path.join(env['CM_CONDA_BIN_PATH'], "python")
-    
+
     automation = i['automation']
 
     recursion_spaces = i['recursion_spaces']

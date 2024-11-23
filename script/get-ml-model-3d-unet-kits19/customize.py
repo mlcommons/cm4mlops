@@ -12,7 +12,7 @@ def preprocess(i):
     cm = automation.cmind
 
     path = os.path.dirname(env['CM_ML_MODEL_FILE_WITH_PATH'])
-         
+
     if env.get("CM_DAE_EXTRACT_DOWNLOADED", " ") != " ":
         env['CM_ML_MODEL_PATH'] = os.path.join(path, env['CM_ML_MODEL_FILE'])
         env['CM_ML_MODEL_FILE_WITH_PATH'] = env['CM_ML_MODEL_PATH']
@@ -20,5 +20,5 @@ def preprocess(i):
         env['CM_ML_MODEL_PATH'] = path
 
     env['CM_GET_DEPENDENT_CACHED_PATH'] =  env['CM_ML_MODEL_PATH']
-    
+
     return {'return':0}

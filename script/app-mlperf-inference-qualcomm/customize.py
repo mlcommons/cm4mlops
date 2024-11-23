@@ -87,7 +87,7 @@ def preprocess(i):
         env['+ CXXFLAGS'].append("-DNETWORK_DIVISION=1")
     elif env.get('CM_BENCHMARK', '') == 'NETWORK_BERT_CLIENT':
         #source_files.append(os.path.join(kilt_root, "benchmarks", "network", "bert", "client", "pack.cpp"))
-        #env['+CPLUS_INCLUDE_PATH'].append(kilt_root) 
+        #env['+CPLUS_INCLUDE_PATH'].append(kilt_root)
         #source_files.append(os.path.join(kilt_root, "benchmarks", "network", "bert", "client", "client.cpp"))
         env['+ CXXFLAGS'].append("-DNETWORK_DIVISION")
     elif env.get('CM_BENCHMARK', '') == 'STANDALONE_BERT':
@@ -107,7 +107,7 @@ def preprocess(i):
 
     #source_files.append(env['CM_QAIC_API_SRC_FILE'])
 
-    env['+CPLUS_INCLUDE_PATH'].append(kilt_root) 
+    env['+CPLUS_INCLUDE_PATH'].append(kilt_root)
     env['+C_INCLUDE_PATH'].append(kilt_root)
 
     if env['CM_MLPERF_DEVICE'] == 'gpu':
@@ -163,7 +163,7 @@ def preprocess(i):
     if 'CM_MLPERF_USER_CONF' not in env:
         env['CM_MLPERF_USER_CONF'] = os.path.join(env['CM_MLPERF_INFERENCE_CLASSIFICATION_AND_DETECTION_PATH'], "user.conf")
 
-    
+
     env['loadgen_mlperf_conf_path'] = env['CM_MLPERF_CONF']# to LOADGEN_MLPERF_CONF
     env['loadgen_user_conf_path'] = env['CM_MLPERF_USER_CONF']# to LOADGEN_USER_CONF
     env['loadgen_scenario'] = env['CM_MLPERF_LOADGEN_SCENARIO']

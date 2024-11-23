@@ -9,7 +9,7 @@ def preprocess(i):
     if str(env.get('CM_DETECT_USING_HIP-PYTHON', '')).lower() in [ "1", "yes", "true"]:
         i['run_script_input']['script_name'] = 'detect'
 
-    return {'return':0} 
+    return {'return':0}
 
 def postprocess(i):
 
@@ -47,16 +47,16 @@ def postprocess(i):
             if gpu_id < 0:
                 continue
 
-            gpu[gpu_id][key] = val 
+            gpu[gpu_id][key] = val
             p[key] = val
 
             key_env = 'CM_ROCM_DEVICE_PROP_'+key.upper().replace(' ','_')
             env[key_env] = val
-    
+
     state['cm_rocm_num_devices'] = gpu_id + 1
     env['CM_ROCM_NUM_DEVICES'] = gpu_id + 1
 
     state['cm_rocm_device_prop'] = p
     state['cm_rocm_devices_prop'] = gpu
-    
-    return {'return':0} 
+
+    return {'return':0}

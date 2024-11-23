@@ -22,7 +22,7 @@ def preprocess(i):
                                            'env_path_key':'CM_LLVM_CLANG_BIN_WITH_PATH',
                                            'run_script_input':i['run_script_input'],
                                            'recursion_spaces':recursion_spaces})
-        if r['return'] >0 : 
+        if r['return'] >0 :
             if r['return'] == 16:
                 env['CM_REQUIRE_INSTALL'] = "yes"
                 return {'return': 0}

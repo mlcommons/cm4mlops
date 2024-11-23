@@ -21,15 +21,15 @@ def preprocess(i):
         env["CM_GIT_URL"] = "https://github.com/mlcommons/inference"
     elif env.get('CM_GIT_CHECKOUT', '' ) != '' and env.get('CM_TMP_GIT_CHECKOUT', '' ) != '' and env.get('CM_GIT_CHECKOUT', '' )!=env.get('CM_TMP_GIT_CHECKOUT', '' ):
         # if checkout branch is assigned inside version and custom branch is also specified
-        return {"return":1, "error":"Conflicting branches between version assigned and user specified."} 
+        return {"return":1, "error":"Conflicting branches between version assigned and user specified."}
     elif env.get('CM_GIT_URL', '' ) != '' and env.get('CM_TMP_GIT_URL', '' ) != '' and env.get('CM_GIT_URL', '' )!=env.get('CM_TMP_GIT_URL', '' ):
         # if GIT URL is assigned inside version and custom branch is also specified
-        return {"return":1, "error":"Conflicting URL's between version assigned and user specified."} 
-    
+        return {"return":1, "error":"Conflicting URL's between version assigned and user specified."}
+
     if env.get('CM_VERSION','') == '':
         env['CM_VERSION'] = "custom"
-    
-    # check whether branch and url is specified, 
+
+    # check whether branch and url is specified,
     # if not try to assign the values specified in version parameters,
     # if version parameters does not have the value to a parameter, set the default one
     if env.get('CM_GIT_CHECKOUT', '' ) == '':
@@ -37,13 +37,13 @@ def preprocess(i):
             env["CM_GIT_CHECKOUT"] = env["CM_TMP_GIT_CHECKOUT"]
         else:
             env["CM_GIT_CHECKOUT"] = "master"
-    
+
     if env.get('CM_GIT_URL', '' ) == '':
         if env.get('CM_TMP_GIT_URL', '' ) != '':
             env["CM_GIT_URL"] = env["CM_TMP_GIT_URL"]
         else:
             env["CM_GIT_URL"] = "https://github.com/mlcommons/inference"
-    
+
     if env.get("CM_MLPERF_LAST_RELEASE", '') == '':
         env["CM_MLPERF_LAST_RELEASE"] = "v4.1"
 

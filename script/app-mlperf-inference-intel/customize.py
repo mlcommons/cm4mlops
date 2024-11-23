@@ -59,7 +59,7 @@ def preprocess(i):
     if 'CM_MLPERF_USER_CONF' not in env:
         env['CM_MLPERF_USER_CONF'] = os.path.join(env['CM_MLPERF_INFERENCE_CLASSIFICATION_AND_DETECTION_PATH'], "user.conf")
 
-    
+
     loadgen_mode = env['CM_MLPERF_LOADGEN_MODE']
     env['CONDA_PREFIX'] = env['CM_CONDA_PREFIX']
 
@@ -136,8 +136,8 @@ def preprocess(i):
     elif env['CM_LOCAL_MLPERF_INFERENCE_INTEL_RUN_MODE'] == "run_harness":
         print(f"Harness Root: {harness_root}")
         if env.get('CM_MLPERF_LOADGEN_MODE', '') == "compliance":
-         audit_path = env['CM_MLPERF_INFERENCE_AUDIT_PATH']
-         shutil.copy(audit_path, env['CM_RUN_DIR'])
+            audit_path = env['CM_MLPERF_INFERENCE_AUDIT_PATH']
+            shutil.copy(audit_path, env['CM_RUN_DIR'])
 
         if env['CM_MLPERF_LOADGEN_MODE'] == "accuracy":
             env['LOADGEN_MODE'] = 'Accuracy'

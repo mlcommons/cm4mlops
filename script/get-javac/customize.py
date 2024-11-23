@@ -23,7 +23,7 @@ def preprocess(i):
     install = env.get('CM_JAVAC_PREBUILT_INSTALL','') in ['on', 'True', True]
 
     env_path_key = 'CM_JAVAC_BIN_WITH_PATH'
-    
+
     # If not force install, search for artifact
     if not install:
         rr = i['automation'].find_artifact({'file_name': file_name,
@@ -35,7 +35,7 @@ def preprocess(i):
                                            'run_script_input':i['run_script_input'],
                                            'hook': skip_path,
                                            'recursion_spaces':recursion_spaces})
-        if rr['return'] == 0 : 
+        if rr['return'] == 0 :
             found = True
         elif rr['return'] != 16:
             return rr
@@ -43,49 +43,49 @@ def preprocess(i):
     # If not found or force install
     if not found or install:
 
-       if os_info['platform'] == 'windows':
-           env['CM_JAVAC_PREBUILT_HOST_OS']='windows'
-           env['CM_JAVAC_PREBUILT_EXT']='.zip'
-       else:
-           env['CM_JAVAC_PREBUILT_HOST_OS']='linux'
-           env['CM_JAVAC_PREBUILT_EXT']='.tar.gz'
+        if os_info['platform'] == 'windows':
+            env['CM_JAVAC_PREBUILT_HOST_OS']='windows'
+            env['CM_JAVAC_PREBUILT_EXT']='.zip'
+        else:
+            env['CM_JAVAC_PREBUILT_HOST_OS']='linux'
+            env['CM_JAVAC_PREBUILT_EXT']='.tar.gz'
 
-       url = env['CM_JAVAC_PREBUILT_URL']
-       filename = env['CM_JAVAC_PREBUILT_FILENAME']
+        url = env['CM_JAVAC_PREBUILT_URL']
+        filename = env['CM_JAVAC_PREBUILT_FILENAME']
 
-       javac_prebuilt_version = env['CM_JAVAC_PREBUILT_VERSION']
-       javac_prebuilt_build = env['CM_JAVAC_PREBUILT_BUILD']
+        javac_prebuilt_version = env['CM_JAVAC_PREBUILT_VERSION']
+        javac_prebuilt_build = env['CM_JAVAC_PREBUILT_BUILD']
 
-       for key in ['CM_JAVAC_PREBUILT_VERSION',
-                   'CM_JAVAC_PREBUILT_BUILD',
-                   'CM_JAVAC_PREBUILT_HOST_OS',
-                   'CM_JAVAC_PREBUILT_EXT']:
-           url = url.replace('${'+key+'}', env[key])
-           filename = filename.replace('${'+key+'}', env[key])
+        for key in ['CM_JAVAC_PREBUILT_VERSION',
+                    'CM_JAVAC_PREBUILT_BUILD',
+                    'CM_JAVAC_PREBUILT_HOST_OS',
+                    'CM_JAVAC_PREBUILT_EXT']:
+            url = url.replace('${'+key+'}', env[key])
+            filename = filename.replace('${'+key+'}', env[key])
 
-       env['CM_JAVAC_PREBUILT_URL'] = url
-       env['CM_JAVAC_PREBUILT_FILENAME'] = filename
+        env['CM_JAVAC_PREBUILT_URL'] = url
+        env['CM_JAVAC_PREBUILT_FILENAME'] = filename
 
-       print ('')
-       print (recursion_spaces + '    Downloading and installing prebuilt Java from {} ...'.format(url+filename))
+        print ('')
+        print (recursion_spaces + '    Downloading and installing prebuilt Java from {} ...'.format(url+filename))
 
-       
-       rr = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install-prebuilt'})
-       if rr['return']>0: return rr
 
-       target_path = os.path.join(cur_dir, 'jdk-'+java_prebuilt_version, 'bin')
-       target_file = os.path.join(target_path, file_name)
+        rr = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install-prebuilt'})
+        if rr['return']>0: return rr
 
-       if not os.path.isfile(target_file):
-           return {'return':1, 'error':'can\'t find target file {}'.format(target_file)}
+        target_path = os.path.join(cur_dir, 'jdk-'+java_prebuilt_version, 'bin')
+        target_file = os.path.join(target_path, file_name)
 
-       print ('')
-       print (recursion_spaces + '    Registering file {} ...'.format(target_file))
+        if not os.path.isfile(target_file):
+            return {'return':1, 'error':'can\'t find target file {}'.format(target_file)}
 
-       env[env_path_key] = target_file
+        print ('')
+        print (recursion_spaces + '    Registering file {} ...'.format(target_file))
 
-       if '+PATH' not in env: env['+PATH'] = []
-       env['+PATH'].append(target_path)
+        env[env_path_key] = target_file
+
+        if '+PATH' not in env: env['+PATH'] = []
+        env['+PATH'].append(target_path)
 
     return {'return':0}
 

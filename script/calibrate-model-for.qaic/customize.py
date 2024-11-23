@@ -201,4 +201,3 @@ def get_scale_offset(min_val, max_val):
     scale = total_range/256.0
     offset = round(-min_val / scale)
     return scale, offset
-

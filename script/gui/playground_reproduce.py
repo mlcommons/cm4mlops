@@ -48,13 +48,13 @@ def page(st, params, action = ''):
     x = '''
          <i>
          <small>
-         [Under development] This is a new project to reproduce <a href="{}">modular benchmarks</a> 
-         across different models, data sets, software and hardware 
+         [Under development] This is a new project to reproduce <a href="{}">modular benchmarks</a>
+         across different models, data sets, software and hardware
          via <a href="{}">open challenges</a>
          based on the <a href="https://cTuning.org/ae">ACM/cTuning reproducibility methodology and badges</a>
-         and <a href="https://sites.google.com/g.harvard.edu/mlperf-bench-hpca24/home">automatically compose 
+         and <a href="https://sites.google.com/g.harvard.edu/mlperf-bench-hpca24/home">automatically compose
          High-Performance and Cost-Efficient AI Systems with MLCommons' Collective Mind and MLPerf</a>.
-         Note that this is a <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">collaborative engineering effort</a> 
+         Note that this is a <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">collaborative engineering effort</a>
          - please report encountered issues and provide feedback
          <a href="https://github.com/mlcommons/ck/issues">here</a>
          and get in touch via <a href="https://discord.gg/JjWNWXKxwT">Discord</a>!
@@ -65,7 +65,7 @@ def page(st, params, action = ''):
         '''.format(url_benchmarks, url_challenges)
 
     st.write(x, unsafe_allow_html = True)
-    
+
 
     return {'return':0}
 
@@ -87,7 +87,7 @@ def page(st, params, action = ''):
     if test_uid == '':
         x = params.get('compute_uid',[''])
         if len(x)>0 and x[0]!='': compute_uid = x[0].strip()
-    
+
     ii = {'action':'load_cfg',
           'automation':'utils',
           'tags':'benchmark,compute',
@@ -211,7 +211,7 @@ def page(st, params, action = ''):
                 if bench_uid != '':
                     url_bench = url_benchmarks + '&bench_uid='+bench_uid
                     st.markdown('[Link to benchmark GUI]({})'.format(url_bench))
-                
+
                 # Check notes
                 test_md = full_path[:-10]+'.md'
                 if os.path.isfile(test_md):
@@ -239,16 +239,16 @@ def page(st, params, action = ''):
 
                 cmd = inp.get('cmd',[])
                 if len(cmd)>0:
-                   xcmd = ' \\\n   '.join(cmd)
+                    xcmd = ' \\\n   '.join(cmd)
 
-                   st.markdown("""
-**CM command line:**
-```bash
-cm run script {}
-```
-                               """.format(xcmd))
+                    st.markdown("""
+ **CM command line:**
+ ```bash
+ cm run script {}
+ ```
+                                """.format(xcmd))
 
-                
+
                 st.markdown("""
 **CM input dictionary:**
 ```json
@@ -264,7 +264,7 @@ cm run script {}
 ```
                                """.format(json.dumps(out, indent=2)))
 
-                               
+
                 st.markdown("""
 
 **Test meta:**
@@ -283,7 +283,7 @@ cm run script {}
                 html = ''
 
                 all_data = []
-                
+
 
                 # TBD: should be taken from a given benchmark
                 dimensions = []
@@ -293,7 +293,7 @@ cm run script {}
 
                 dimension_values = {}
                 dimension_keys = []
-                              
+
                 if len(dimensions) == 0:
                     keys = [('test', 'CM test', 400, 'leftAligned')]
                 else:
@@ -325,14 +325,14 @@ cm run script {}
                 for s in selection:
 
                     row = {}
-                    
+
                     full_path = s['full_path']
                     test_uid = s['uid']
 
                     uid = s['uid']
 
                     url_test = misc.make_url(uid, key='test_uid', action='reproduce', md=False)
-                    
+
                     bench_meta = s['main_meta']
 
                     inp = {}
@@ -363,13 +363,13 @@ cm run script {}
                             if len(k)>2 and k[2]=='tick':
                                 if v!=None and v!='':
                                     v = '✅'
-                            
+
                             row[kk] = str(v)
 
 
                     # Check ACM/IEEE functional badge
                     url = ''
-                    
+
                     x = ''
                     if s.get('functional', False):
                         x = '<center><a href="{}" target="_blank"><img src="{}" height="32"></a></center>'.format(url, badges['functional']['url'])
@@ -393,10 +393,10 @@ cm run script {}
                         url_bench = url_benchmarks + '&bench_uid='+bench_uid
                         x = '<center><a href="{}" target="_blank"><img src="{}" height="32"></a></center>'.format(url_bench, badges['support_cm']['url'])
                     row['support_cm'] = x
-                    
+
                     # Check misc notes
                     row['notes']='<small>'+s.get('notes','')+'</small>'
-                    
+
                     # Finish row
                     all_data.append(row)
 
@@ -426,11 +426,11 @@ cm run script {}
     if bench_name!='':
         self_url+='&bench_name='+bench_name
     if test_uid!='':
-        self_url+='&test_uid='+test_uid    
+        self_url+='&test_uid='+test_uid
     elif compute_uid!='':
         self_url+='&compute_uid='+compute_uid
 
     end_html='<center><small><i><a href="{}">Self link</a></i></small></center>'.format(self_url)
 
-    
+
     return {'return': 0, 'end_html': end_html}

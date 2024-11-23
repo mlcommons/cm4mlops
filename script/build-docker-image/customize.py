@@ -125,7 +125,7 @@ def postprocess(i):
         r = os.system(PCMD)
         print ('')
 
-        if r>0: 
+        if r>0:
             return {'return':1, 'error':'pushing to Docker Hub failed'}
 
     return {'return':0}

@@ -1,4 +1,4 @@
-# Universal experiment automation to support universal benchmarking 
+# Universal experiment automation to support universal benchmarking
 # and optimization of apps and systems
 #
 # Written by Grigori Fursin
@@ -19,7 +19,7 @@ class CAutomation(Automation):
     CM_RESULT_FILE = 'cm-result.json'
     CM_INPUT_FILE = 'cm-input.json'
     CM_OUTPUT_FILE = 'cm-output.json'
-    
+
     ############################################################
     def __init__(self, cmind, automation_file):
         super().__init__(cmind, __file__)
@@ -30,7 +30,7 @@ class CAutomation(Automation):
         Test automation
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -63,16 +63,16 @@ class CAutomation(Automation):
         return {'return':0}
 
 
-    
-    
-    
+
+
+
     ############################################################
     def run(self, i):
         """
         Run experiment
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
             (out) (str): if 'con', output to console
 
@@ -80,8 +80,8 @@ class CAutomation(Automation):
             (tags) (str): experiment tags separated by comma
 
             (dir) (str): force recording into a specific directory
-            
-            
+
+
             (script) (str): find and run CM script by name
             (s)
 
@@ -110,11 +110,11 @@ class CAutomation(Automation):
         # Find or add artifact based on repo/alias/tags
         r = self._find_or_add_artifact(i)
         if r['return']>0: return r
-        
+
         experiment = r['experiment']
-        
+
         console = i.get('out','')=='con'
-        
+
         # Print experiment folder
         experiment_path = experiment.path
 
@@ -140,7 +140,7 @@ class CAutomation(Automation):
                 print ('Select experiment:')
 
                 datetimes = sorted(datetimes)
-                
+
                 num = 0
                 print ('')
                 for d in datetimes:
@@ -163,7 +163,7 @@ class CAutomation(Automation):
 
                 datetime = datetimes[selection]
 
-        
+
         if datetime!='':
             experiment_path2 = os.path.join(experiment_path, datetime)
         else:
@@ -207,10 +207,10 @@ class CAutomation(Automation):
 
         r = utils.save_json(file_name=experiment_input_file, meta=ii_copy)
         if r['return']>0: return r
-        
+
         # Prepare run command
         cmd = ''
-        
+
         unparsed = i.get('unparsed_cmd', [])
         if len(unparsed)>0:
             for u in unparsed:
@@ -229,32 +229,32 @@ class CAutomation(Automation):
         # Prepare exploration
         # Note that from Python 3.7, dictionaries are ordered so we can define order for exploration in json/yaml
         # ${{XYZ}} ${{ABC(range(1,2,3))}}
-        
+
         # Extract exploration expressions from {{VAR{expression}}}
         explore = i.get('explore', {})
 
         j = 1
         k = 0
         while j>=0:
-           j = cmd.find('}}}', k)
-           if j>=0:
-               k = j+1
+            j = cmd.find('}}}', k)
+            if j>=0:
+                k = j+1
 
-               l = cmd.rfind('{{',0, j)
+                l = cmd.rfind('{{',0, j)
 
-               if l>=0:
-                   l2 = cmd.find('{', l+2, j)
-                   if l2>=0:
-                       k = l2+1
+                if l>=0:
+                    l2 = cmd.find('{', l+2, j)
+                    if l2>=0:
+                        k = l2+1
 
-                       var = cmd[l+2:l2]
-                       expr = cmd[l2+1:j]
+                        var = cmd[l+2:l2]
+                        expr = cmd[l2+1:j]
 
-                       explore[var] = expr
+                        explore[var] = expr
 
-                       cmd = cmd[:l2]+ cmd[j+1:]
+                        cmd = cmd[:l2]+ cmd[j+1:]
 
-        
+
         # Separate Design Space Exploration into var and range
         explore_keys=[]
         explore_dimensions=[]
@@ -281,9 +281,9 @@ class CAutomation(Automation):
         ii_copy = copy.deepcopy(ii)
 
         for dimensions in steps:
-            
+
             step += 1
-            
+
             print ('================================================================')
             print ('Experiment step: {} out of {}'.format(step, num_steps))
 
@@ -330,9 +330,9 @@ class CAutomation(Automation):
 
             # Prepare and run experiment in a given placeholder directory
             os.chdir(experiment_path3)
-                    
+
             ii['env'] = env
-            
+
             # Change only in CMD
             env_local={'CD':cur_dir,
                        'CM_EXPERIMENT_STEP':str(step),
@@ -340,38 +340,38 @@ class CAutomation(Automation):
                        'CM_EXPERIMENT_PATH2':experiment_path2,
                        'CM_EXPERIMENT_PATH3':experiment_path3}
 
-            
+
             # Update {{}} in CMD
             cmd_step = cmd
-            
+
             j = 1
             k = 0
             while j>=0:
-               j = cmd_step.find('{{', k)
-               if j>=0:
-                   k = j
-                   l = cmd_step.find('}}',j+2)
-                   if l>=0:
-                       var = cmd_step[j+2:l]
+                j = cmd_step.find('{{', k)
+                if j>=0:
+                    k = j
+                    l = cmd_step.find('}}',j+2)
+                    if l>=0:
+                        var = cmd_step[j+2:l]
 
-                       # Such vars must be in env
-                       if var not in env and var not in env_local:
-                           return {'return':1, 'error':'key "{}" is not in env during exploration'.format(var)}
+                        # Such vars must be in env
+                        if var not in env and var not in env_local:
+                            return {'return':1, 'error':'key "{}" is not in env during exploration'.format(var)}
 
-                       if var in env:
-                           value = env[var]
-                       else:
-                           value = env_local[var]
+                        if var in env:
+                            value = env[var]
+                        else:
+                            value = env_local[var]
 
-                       cmd_step = cmd_step[:j] + str(value) + cmd_step[l+2:]
+                        cmd_step = cmd_step[:j] + str(value) + cmd_step[l+2:]
 
             ii['command'] = cmd_step
-                       
+
             print ('Generated CMD:')
             print ('')
             print (cmd_step)
             print ('')
-            
+
             # Prepare experiment step input
             experiment_step_input_file = os.path.join(experiment_path3, self.CM_INPUT_FILE)
 
@@ -401,7 +401,7 @@ class CAutomation(Automation):
                     result = flatten_result
                 except:
                     pass
-            
+
             # Add extra info
             result['uid'] = uid
             result['iso_datetime'] = current_datetime
@@ -420,46 +420,46 @@ class CAutomation(Automation):
             r = utils.save_json(file_name=experiment_result_file, meta = all_results)
             if r['return']>0: return r
 
-        
+
         rr = {'return':0,
               'experiment_path':experiment_path,
               'experiment_path2':experiment_path2}
-        
+
         return rr
 
 
-    
-    
+
+
     ############################################################
     def rerun(self, i):
         """
         Rerun experiment
-    
+
         cm run experiment --rerun=True ...
         """
 
         i['rerun']=True
 
         return self.run(i)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
     ############################################################
     def replay(self, i):
         """
         Replay experiment
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
              (out) (str): if 'con', output to console
 
@@ -485,11 +485,11 @@ class CAutomation(Automation):
         i['fail_if_not_found']=True
         r = self._find_or_add_artifact(i)
         if r['return']>0: return r
-        
+
         experiment = r['experiment']
-        
+
         console = i.get('out','')=='con'
-        
+
         # Print experiment folder
         experiment_path = experiment.path
 
@@ -510,7 +510,7 @@ class CAutomation(Automation):
 
         if len(datetimes)==0:
             return {'return':1, 'error':'experiment(s) not found in {}'.format(experiment_path)}
-        
+
         # Check datetime directory
         found_result = {}
 
@@ -524,7 +524,7 @@ class CAutomation(Automation):
                     datetime = d
                     experiment_path2 = os.path.join(experiment_path, datetime)
                     break
-                
+
             if len(found_result)==0:
                 return {'return':1, 'error':'couldn\'t find result with UID {} in {}'.format(uid, experiment_path)}
 
@@ -536,7 +536,7 @@ class CAutomation(Automation):
                 print ('Available experiments:')
 
                 datetimes = sorted(datetimes)
-                
+
                 num = 0
                 print ('')
                 for d in datetimes:
@@ -545,7 +545,7 @@ class CAutomation(Automation):
 
                 if not console:
                     return {'return':1, 'error':'more than 1 experiment found.\nPlease use "cm run experiment --dir={date and time}"'}
-                
+
                 print ('')
                 x=input('Make your selection or press Enter for 0: ')
 
@@ -558,7 +558,7 @@ class CAutomation(Automation):
                     selection = 0
 
                 datetime = datetimes[selection]
-        
+
             # Final path to experiment
             experiment_path2 = os.path.join(experiment_path, datetime)
 
@@ -581,7 +581,7 @@ class CAutomation(Automation):
                 print ('Available Unique IDs of results:')
 
                 results = sorted(results, key=lambda x: x.get('uid',''))
-                
+
                 num = 0
                 print ('')
                 for r in results:
@@ -604,7 +604,7 @@ class CAutomation(Automation):
 
             found_result = results[selection]
             uid = found_result['uid']
-            
+
         # Final info
         if console:
             print ('')
@@ -629,21 +629,21 @@ class CAutomation(Automation):
             if tags!='': tags+=','
             tags+='replay'
         cm_input['tags'] = tags
-        
+
         if console:
             print ('')
             print ('Experiment input:')
             print ('')
             print (json.dumps(cm_input, indent=2))
             print ('')
-        
+
         # Run experiment again
         r = self.cmind.access(cm_input)
         if r['return']>0: return r
 
         # TBA - validate experiment, etc ...
-        
-        
+
+
         return {'return':0}
 
 
@@ -653,7 +653,7 @@ class CAutomation(Automation):
         Find or add experiment artifact (reused in run and reply)
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
             (fail_if_not_found) (bool) - if True, fail if experiment is not found
 
@@ -666,7 +666,7 @@ class CAutomation(Automation):
           * (error) (str): error string if return>0
 
           experiment (CM artifact class): Experiment artifact
-        
+
         """
 
         console = i.get('out','')=='con'
@@ -692,7 +692,7 @@ class CAutomation(Automation):
             print ('More than 1 experiment artifact found:')
 
             lst = sorted(lst, key=lambda x: x.path)
-            
+
             num = 0
             print ('')
             for e in lst:
@@ -702,7 +702,7 @@ class CAutomation(Automation):
 
             if not console:
                 return {'return':1, 'error':'more than 1 experiment artifact found.\nPlease use "cm run experiment {name}" or "cm run experiment --tags={tags separated by comma}"'}
-            
+
             print ('')
             x=input('Make your selection or press Enter for 0: ')
 
@@ -719,10 +719,10 @@ class CAutomation(Automation):
         elif len(lst)==1:
             experiment = lst[0]
         else:
-           # Create new entry
+            # Create new entry
             if i.get('fail_if_not_found',False):
                 return {'return':1, 'error':'experiment not found'}
-            
+
             ii = copy.deepcopy(ii_copy)
             ii['action']='add'
             r = self.cmind.access(ii)
@@ -740,7 +740,7 @@ class CAutomation(Automation):
                 return {'return':1, 'error':'created experiment artifact with UID {} but can\'t find it - weird'.format(experiment_uid)}
 
             experiment = lst[0]
-        
+
         return {'return':0, 'experiment':experiment}
 
     ############################################################
@@ -749,7 +749,7 @@ class CAutomation(Automation):
         Find experiment result with a given UID
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
             path (str): path to experiment artifact
             datetime (str): sub-path to experiment
@@ -766,7 +766,7 @@ class CAutomation(Automation):
           path_to_file (str): path to experiment result file
           meta (dict): complete list of all results
           result (dict): result dictionary with a given UID
-          
+
         """
 
         path = i['path']
@@ -802,8 +802,8 @@ def flatten_dict(d, flat_dict = {}, prefix = ''):
         v = d[k]
 
         if type(v) is dict:
-           flatten_dict(v, flat_dict, prefix+k+'.')
+            flatten_dict(v, flat_dict, prefix+k+'.')
         else:
-           flat_dict[prefix+k] = v    
+            flat_dict[prefix+k] = v
 
     return flat_dict

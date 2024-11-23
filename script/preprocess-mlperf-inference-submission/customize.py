@@ -43,5 +43,5 @@ def postprocess(i):
     shutil.copytree(submission_dir, submission_backup)
     shutil.rmtree(submission_dir)
     os.rename(submission_processed, submission_dir)
-            
+
     return {'return':0}

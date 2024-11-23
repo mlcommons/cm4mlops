@@ -52,7 +52,7 @@ def preprocess(i):
     if env.get('CM_ML_MODEL_CODE_WITH_PATH', '') != '':
         run_opts +=" --model_code "+env['CM_ML_MODEL_CODE_WITH_PATH']
 
-    
+
     if env.get('CM_ML_MODEL_CFG_WITH_PATH', '') != '':
         run_opts +=" --model_cfg "+env['CM_ML_MODEL_CFG_WITH_PATH']
     else:
@@ -76,7 +76,7 @@ def preprocess(i):
 
     if env.get('CM_ML_MODEL_SAMPLE_WITH_PATH', '') != '':
         run_opts +=" --model_sample_pickle "+env['CM_ML_MODEL_SAMPLE_WITH_PATH']
-                            
+
     # Add path to file model weights at the end of command line
 
     run_opts += ' '+env['CM_ML_MODEL_FILE_WITH_PATH']
@@ -85,16 +85,16 @@ def preprocess(i):
 
     print ('')
     print ('Assembled flags: {}'.format(run_opts))
-    print ('')    
+    print ('')
 
     return {'return':0}
 
 def postprocess(i):
 
     env = i['env']
-    
+
     tfile =  env.get('CM_APP_LOADGEN_GENERIC_PYTHON_TMP_CFG_FILE', '')
-    
+
     if tfile!='' and os.path.isfile(tfile):
         os.remove(tfile)
 

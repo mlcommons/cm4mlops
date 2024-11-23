@@ -66,10 +66,10 @@ def prompt_retry(timeout=10, default_retry=False):
         return default_retry  # Automatically use the default in non-interactive terminals
 
     print(f"Timeout occurred. Do you want to try again? (y/n): ", end='', flush=True)
-    
+
     # Use select to wait for user input with a timeout
     ready, _, _ = select.select([sys.stdin], [], [], timeout)
-    
+
     if ready:
         answer = sys.stdin.readline().strip().lower()
         if answer in ['y', 'n']:
@@ -117,7 +117,7 @@ def prompt_sudo():
                     text=True,
                     stderr=subprocess.STDOUT,
                     timeout=15      # Capture the command output
-                )   
+                )
             else:
                 r = subprocess.check_output(
                     ['sudo', '-S', 'echo'] ,

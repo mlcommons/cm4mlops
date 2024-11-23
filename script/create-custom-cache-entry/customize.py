@@ -26,7 +26,7 @@ def postprocess(i):
         if not os.path.isdir(path):
             os.makedirs(path)
     else:
-       path = os.getcwd()
+        path = os.getcwd()
 
     x = ''
     env_key = env.get('CM_CUSTOM_CACHE_ENTRY_ENV_KEY', '')

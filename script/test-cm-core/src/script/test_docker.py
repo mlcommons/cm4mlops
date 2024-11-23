@@ -3,9 +3,9 @@
 import cmind as cm
 import check as checks
 
-r = cm.access({'action':'run', 
-               'automation':'script', 
-               'tags': 'run,docker,container', 
+r = cm.access({'action':'run',
+               'automation':'script',
+               'tags': 'run,docker,container',
                'add_deps_recursive': {
                   'compiler': {'tags': "gcc"}
                },
@@ -15,14 +15,14 @@ r = cm.access({'action':'run',
                  'CM_DOCKER_RUN_SCRIPT_TAGS': 'app,image-classification,onnx,python',
                  'CM_DOCKER_IMAGE_BASE': 'ubuntu:22.04',
                  'CM_DOCKER_IMAGE_REPO': 'cknowledge'
-               }, 
+               },
                'quiet': 'yes'
               })
 checks.check_return(r)
 
-r = cm.access({'action':'run', 
-               'automation':'script', 
-               'tags': 'run,docker,container', 
+r = cm.access({'action':'run',
+               'automation':'script',
+               'tags': 'run,docker,container',
                'add_deps_recursive': {
                   'compiler': {'tags': "gcc"}
                },
@@ -32,7 +32,7 @@ r = cm.access({'action':'run',
                  'CM_DOCKER_RUN_SCRIPT_TAGS': 'app,image-classification,onnx,python',
                  'CM_DOCKER_IMAGE_BASE': 'ubuntu:24.04',
                  'CM_DOCKER_IMAGE_REPO': 'local'
-               }, 
+               },
                'quiet': 'yes'
               })
 checks.check_return(r)
