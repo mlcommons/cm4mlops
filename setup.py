@@ -134,8 +134,8 @@ class CustomInstallCommand(install):
         commit_hash = get_commit_hash()
         import cmind
         #r = cmind.access({'action':'rm', 'automation':'repo', 'data_uoa':'mlcommons@cm4mlops', 'force': True})
-        #r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'branch': 'mlperf-inference', 'checkout': commit_hash})
-        r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'checkout': commit_hash})
+        r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'branch': 'mlperf-inference', 'checkout': commit_hash})
+        #r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'checkout': commit_hash})
         print(r)
         if r['return'] > 0:
            return r['return']
