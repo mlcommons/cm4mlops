@@ -1,5 +1,6 @@
 import subprocess
 
+
 def get_git_commit_hash():
     try:
         commit_hash = subprocess.check_output(
