@@ -128,9 +128,6 @@ def generate_submission(env, state, inp, submission_division):
 
     print('* MLPerf inference submitter: {}'.format(submitter))
 
-    if 'Collective' not in system_meta_default.get('sw_notes'):
-        system_meta_tmp['sw_notes'] =  "Automated by MLCommons CM v{}. ".format(cmind.__version__) + system_meta_default['sw_notes']
-
     if env.get('CM_MLPERF_SUT_SW_NOTES_EXTRA','') != '':
         sw_notes = f"{system_meta_tmp['sw_notes']} {env['CM_MLPERF_SUT_SW_NOTES_EXTRA']}"
         system_meta_tmp['sw_notes'] = sw_notes
