@@ -5020,8 +5020,8 @@ def enable_or_skip_script(meta, env):
     (AND function)
     """
 
-
-if not isinstance(meta,     if)        logging.info("The meta entry is not a dictionary for skip/enable if_env {}".format(meta))
+    if not isinstance(meta, dict):
+        logging.info("The meta entry is not a dictionary for skip/enable if_env: %s", meta)
 
     for key in meta:
         meta_key = [str(v).lower() for v in meta[key]]
@@ -5097,58 +5097,55 @@ def _update_env(env, key=None, value=None):
 
 
 ##########################################################################
-def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
+def update_env_with_values(env, fail_on_not_found=False, extra_env=None):
     """
     Update any env key used as part of values in meta
     """
     import re
-    for key in env:
 
+    extra_env = extra_env or {}  # Default to an empty dictionary if not provided
 
-if key.startswith("+") and not isinstance(env[key],         if key.startswith("+") and)            return {'return': 1,
-                'error': 'List value expected for {} in env'.format(key)}
+    for key, value in env.items():
+        # Check for keys starting with "+" and ensure their values are lists
+        if key.startswith("+") and not isinstance(value, list):
+            return {'return': 1, 'error': f'List value expected for {key} in env'}
 
-        value = env[key]
-
-        # Check cases such as --env.CM_SKIP_COMPILE
-        if type(value) == bool:
+        # Handle boolean values directly
+        if isinstance(value, bool):
             env[key] = value
             continue
 
-        tmp_values = re.findall(r'<<<(.*?)>>>', str(value))
+        # Search for placeholders like <<<...>>>
+        placeholders = re.findall(r'<<<(.*?)>>>', str(value))
 
-        if not tmp_values:
+        # No placeholders found
+        if not placeholders:
+            # Special handling for CM_GIT_URL
             if key == 'CM_GIT_URL' and env.get('CM_GIT_AUTH', "no") == "yes":
-                if env.get('CM_GH_TOKEN',
-                           '') != '' and '@' not in env['CM_GIT_URL']:
-                    params = {}
-                    params["token"] = env['CM_GH_TOKEN']
+                if env.get('CM_GH_TOKEN', '') and '@' not in env['CM_GIT_URL']:
+                    params = {"token": env['CM_GH_TOKEN']}
                     value = get_git_url("token", value, params)
                 elif 'CM_GIT_SSH' in env:
                     value = get_git_url("ssh", value)
                 env[key] = value
-
             continue
 
-        for tmp_value in tmp_values:
-            if tmp_value not in env and tmp_value not in extra_env and fail_on_not_found:
-                return {'return': 1,
-                    'error': 'variable {} is not in env'.format(tmp_value)}
-            found_env = {}
-            if tmp_value in env:
-                found_env = env
-            elif tmp_value in extra_env:
-                found_env = extra_env
+        # Process each placeholder
+        for placeholder in placeholders:
+            if placeholder not in env and placeholder not in extra_env and fail_on_not_found:
+                return {'return': 1, 'error': f'Variable {placeholder} is not in env'}
+
+            # Determine the source of the value
+            found_env = env if placeholder in env else extra_env if placeholder in extra_env else None
             if found_env:
-if isinstance(value,                 if)                    value = value.replace("<<<" + tmp_value + ">>>", str(found_env[tmp_value]))
-elif isinstance(value,                 elif)                    for i, val in enumerate(value):
-                        value[i] = value[i].replace(
-                            "<<<" + tmp_value + ">>>", str(found_env[tmp_value]))
+                if isinstance(value, str):
+                    value = value.replace(f"<<<{placeholder}>>>", str(found_env[placeholder]))
+                elif isinstance(value, list):
+                    value = [v.replace(f"<<<{placeholder}>>>", str(found_env[placeholder])) if isinstance(v, str) else v for v in value]
 
         env[key] = value
 
     return {'return': 0}
-
 
 ##############################################################################
 def check_version_constraints(i):
@@ -5689,31 +5686,50 @@ def update_dynamic_env_values(mydict, env):
 ##############################################################################
 def update_dep_info(dep, new_info):
     """
-    Internal: add additional info to a dependency
+    Internal: Add additional info to a dependency.
     """
-    for info in new_info:
+    for info, value in new_info.items():
 
         if info == "tags":
-            tags = dep.get('tags', '')
-            tags_list = tags.split(",")
-            new_tags_list = new_info["tags"].split(",")
-            filtered_new_tags_list = [i for i in new_tags_list if "<<<" not in i]
-            combined_tags = tags_list + \
-                list(set(filtered_new_tags_list) - set(tags_list))
+            # Process tags
+            existing_tags = dep.get('tags', '').split(",")
+            new_tags = value.split(",")
+            # Filter and combine unique tags
+            filtered_new_tags = [tag for tag in new_tags if "<<<" not in tag]
+            combined_tags = existing_tags + list(set(filtered_new_tags) - set(existing_tags))
             dep['tags'] = ",".join(combined_tags)
 
-        elif "enable_if_" in info or "skip_if_" in info:  # These are meant for adding ad/adr and not for the dependency
+        elif "enable_if_" in info or "skip_if_" in info:
+            # Skip special cases meant for conditions
             continue
-elif isinstance(new_info[info],         elif )            if not dep.get(info, {}):
-                dep[info] = new_info[info]
-elif isinstance(dep[info],             elif )                utils.merge_dicts({'dict1': dep[info], 'dict2':new_info[info], 'append_lists':True, 'append_unique':True})
-            # else: Throw error?
-elif isinstance(new_info[info],         elif )            if not dep.get(info, []):
-                dep[info] = new_info[info]
-elif isinstance(dep[info],             elif )                dep[info] += new_info[info]
-            # else: Throw error?
+
+        elif isinstance(value, dict):
+            # Merge dictionaries
+            dep.setdefault(info, {})
+            if isinstance(dep[info], dict):
+                utils.merge_dicts({
+                    'dict1': dep[info],
+                    'dict2': value,
+                    'append_lists': True,
+                    'append_unique': True
+                })
+            # Optional: Throw an error if types are mismatched
+            # else:
+            #     raise ValueError(f"Cannot merge non-dict type into dict for key '{info}'")
+
+        elif isinstance(value, list):
+            # Merge lists
+            dep.setdefault(info, [])
+            if isinstance(dep[info], list):
+                dep[info].extend(value)
+            # Optional: Throw an error if types are mismatched
+            # else:
+            #     raise ValueError(f"Cannot append non-list type into list for key '{info}'")
+
         else:
-            dep[info] = new_info[info]
+            # Overwrite or set other types of values
+            dep[info] = value
+
 
 ##############################################################################
 
