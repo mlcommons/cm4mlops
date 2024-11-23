@@ -94,7 +94,14 @@ jobs:
         working-directory: ./
         run: python3 -m build && rm dist/*.whl
 
-      # Step 9: Publish to PyPI
+      # Step 9: Install the built wheel (as a test)
+      - name: Install wheel
+        working-directory: ./
+        run: |
+          wheel_file=$(ls dist/*.whl | tail -n 1)
+          python3 -m pip install "$wheel_file"
+
+      # Step 10: Publish to PyPI
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
