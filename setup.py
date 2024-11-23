@@ -131,9 +131,11 @@ class CustomInstallCommand(install):
             return subprocess.call([command, '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) == 0
 
     def custom_function(self):
+        commit_hash = get_commit_hash()
         import cmind
         #r = cmind.access({'action':'rm', 'automation':'repo', 'data_uoa':'mlcommons@cm4mlops', 'force': True})
-        r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'branch': 'mlperf-inference'})
+        r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'branch': 'mlperf-inference', 'checkout': commit_hash})
+        #r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'checkout': commit_hash})
         print(r)
         if r['return'] > 0:
             return r['return']
@@ -147,6 +149,13 @@ def read_file(file_name, default=""):
         with open(file_name, "r") as f:
             return f.read().strip()
     return default
+
+def get_commit_hash():
+    try:
+        with open(os.path.join(os.path.dirname(__file__), 'git_commit_hash.txt'), 'r') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return "unknown"
 
 long_description = read_file("README.md", "No description available.")
 version_ = read_file("VERSION", "0.3.1")

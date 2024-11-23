@@ -1,2 +1,3 @@
 include README.md
 include VERSION
+include git_commit_hash.txt
