@@ -2908,12 +2908,17 @@ class CAutomation(Automation):
                                 run_variations = [""]
                         use_docker = run_input.get('docker', False)
                         for key in run_input:  # override meta with any user inputs like for docker_cm_repo
-                            if i.get(key, '') != '':
-
-
-if isinstance(run_input[key],                                 if)                                    utils.merge_dicts({'dict1': run_input[key], 'dict2': i[key], 'append_lists': True, 'append_unique': True})
+                            if i.get(key):
+                                if isinstance(run_input[key], dict):
+                                    utils.merge_dicts({
+                                        'dict1': run_input[key],
+                                        'dict2': i[key],
+                                        'append_lists': True,
+                                        'append_unique': True
+                                    })
                                 else:
                                     run_input[key] = i[key]
+
                         ii = {**ii, **run_input}
                         i_env = ii.get('env', i.get('env', {}))
                         if use_docker:
