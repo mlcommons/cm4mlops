@@ -35,20 +35,12 @@ jobs:
       # Step 2: Set up Python
       - uses: actions/setup-python@v3
 
-      # Step 3: Update the git hash in the repository
-      - name: Commit updated git hash
-        run: |
-          python3 get_git_version.py > git_commit_hash.txt
-          git config --global user.name mlcommons-bot
-          git config --global user.email "mlcommons-bot@users.noreply.github.com"
-          git add git_commit_hash.txt
-          git commit -m "Updated git_commit_hash.txt"
-          git push
-
-      # Step 4: Check if VERSION file has changed in this push
+      # Step 3: Check if VERSION file has changed in this push
       - name: Check if VERSION file has changed
         id: version_changed
         run: |
+          git config --global user.name mlcommons-bot
+          git config --global user.email "mlcommons-bot@users.noreply.github.com"
           if git diff --name-only $(git merge-base HEAD HEAD~1) | grep -q "VERSION"; then
             echo "VERSION file has been modified"
             echo "::set-output name=version_changed::true"
@@ -59,7 +51,7 @@ jobs:
           fi
           echo "::set-output name=new_version::$new_version"
 
-      # Step 5: Increment version if VERSION was not changed
+      # Step 4: Increment version if VERSION was not changed
       - name: Increment version if necessary
         id: do_version_increment
         if: steps.version_changed.outputs.version_changed == 'false'
@@ -77,12 +69,20 @@ jobs:
           echo "New version: $new_version"
           echo "::set-output name=new_version::$new_version"
 
-      # Step 6: Commit the updated version to the repository
+      # Step 5: Commit the updated version to the repository
       - name: Commit updated version
         if: steps.version_changed.outputs.version_changed == 'false'
         run: |
           git add VERSION
           git commit -m "Increment version to ${{ steps.do_version_increment.outputs.new_version }}"
+          git push
+
+      # Step 6: Update the git hash in the repository
+      - name: Commit updated git hash
+        run: |
+          python3 get_git_version.py > git_commit_hash.txt
+          git add git_commit_hash.txt
+          git commit -m "Updated git_commit_hash.txt"
           git push
 
       # Step 7: Install required dependencies
