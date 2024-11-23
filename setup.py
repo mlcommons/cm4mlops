@@ -10,7 +10,7 @@ import platform
 import os
 import shutil
 
-# Try to use importlib.metadata for Python 3.8+ 
+# Try to use importlib.metadata for Python 3.8+
 try:
     if sys.version_info >= (3, 8):
         from importlib.metadata import version, PackageNotFoundError
@@ -48,11 +48,11 @@ class CustomInstallCommand(install):
         except PackageNotFoundError:
             return False
 
-    
+
     def install_system_packages(self):
         # List of packages to install via system package manager
         packages = []
-        
+
         git_status = self.command_exists('git')
         if not git_status:
             packages.append("git")
@@ -71,7 +71,7 @@ class CustomInstallCommand(install):
             pass
         else:
             packages.append("python3-venv")
-        
+
         if packages:
             if self.system == 'Linux' or self.system == 'Darwin':
                 manager, details = self.get_package_manager_details()
@@ -123,7 +123,7 @@ class CustomInstallCommand(install):
     # Checks if command exists(for installing required packages).
     # If the command exists, which returns 0, making the function return True.
     # If the command does not exist, which returns a non-zero value, making the function return False.
-    # NOTE: The standard output and standard error streams are redirected to PIPES so that it could be captured in future if needed.    
+    # NOTE: The standard output and standard error streams are redirected to PIPES so that it could be captured in future if needed.
     def command_exists(self, command):
         if self.system == "Linux" or self.system == 'Darwin':
             return subprocess.call(['which', command], stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
@@ -138,10 +138,10 @@ class CustomInstallCommand(install):
         #r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'checkout': commit_hash})
         print(r)
         if r['return'] > 0:
-           return r['return']
-    
+            return r['return']
+
     def get_sys_platform(self):
-        self.system =  platform.system() 
+        self.system =  platform.system()
 
 # Read long description and version
 def read_file(file_name, default=""):

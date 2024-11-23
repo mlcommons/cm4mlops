@@ -50,7 +50,7 @@ def preprocess(i):
     # additional arguments and tags for measuring system informations(only if 'CM_PROFILE_NVIDIA_POWER' is 'on')
     if env.get('CM_PROFILE_NVIDIA_POWER', '') == "on":
         env['CM_SYS_UTILISATION_SCRIPT_TAGS'] = ''
-        # this section is for selecting the variation 
+        # this section is for selecting the variation
         if env.get('CM_MLPERF_DEVICE', '') == "gpu":
             env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += ',_cuda'
         elif env.get('CM_MLPERF_DEVICE', '') == "cpu":
@@ -59,8 +59,8 @@ def preprocess(i):
         env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += ' --log_dir=\'' + logs_dir + '\''   # specify the logs directory
         if env.get('CM_SYSTEM_INFO_MEASUREMENT_INTERVAL', '') != '':        # specifying the interval in which the system information should be measured
             env['CM_SYS_UTILISATION_SCRIPT_TAGS'] += ' --interval=\"' + env['CM_SYSTEM_INFO_MEASUREMENT_INTERVAL'] + '\"'
-    
-    # generate the pre run cmd - recording runtime system infos 
+
+    # generate the pre run cmd - recording runtime system infos
     pre_run_cmd = ""
 
     if env.get('CM_PRE_RUN_CMD_EXTERNAL', '') != '':

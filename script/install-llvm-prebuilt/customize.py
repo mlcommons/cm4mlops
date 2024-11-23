@@ -61,95 +61,95 @@ def preprocess(i):
             input('Press Enter to continue!')
 
         else:
-           if host_os_machine.startswith('arm') or host_os_machine.startswith('aarch'):
-              if host_os_bits=='64':
-                 package_name = 'clang+llvm-' + need_version + '-aarch64-linux-gnu.tar.xz'
-              else:
-                 package_name = 'clang+llvm-' + need_version + '-armv7a-linux-gnueabihf.tar.xz'
-           else:
-              host_os_flavor = env['CM_HOST_OS_FLAVOR']
+            if host_os_machine.startswith('arm') or host_os_machine.startswith('aarch'):
+                if host_os_bits=='64':
+                    package_name = 'clang+llvm-' + need_version + '-aarch64-linux-gnu.tar.xz'
+                else:
+                    package_name = 'clang+llvm-' + need_version + '-armv7a-linux-gnueabihf.tar.xz'
+            else:
+                host_os_flavor = env['CM_HOST_OS_FLAVOR']
 
-              host_os_version = env['CM_HOST_OS_VERSION']
+                host_os_version = env['CM_HOST_OS_VERSION']
 
 #              if 'debian' in host_os_flavor:
 #                  return {'return':1, 'error':'debian is not supported yet'}
 #
 #              else:
-              # Treat all Linux flavours as Ubuntu for now ...
+                # Treat all Linux flavours as Ubuntu for now ...
 
-              if True:
-                  default_os = '22.04'
+                if True:
+                    default_os = '22.04'
 
-                  if len(need_version_split)>0:
-                      hver = 0
-                      try:
-                          hver = int(need_version_split[0])
-                      except:
-                          pass
+                    if len(need_version_split)>0:
+                        hver = 0
+                        try:
+                            hver = int(need_version_split[0])
+                        except:
+                            pass
 
-                      if hver>0:
-                          if hver<16:
-                              default_os='18.04'
-                          else:
-                              default_os='22.04'
+                        if hver>0:
+                            if hver<16:
+                                default_os='18.04'
+                            else:
+                                default_os='22.04'
 
-                  if need_version == '10.0.1':
-                      default_os = '16.04'
+                    if need_version == '10.0.1':
+                        default_os = '16.04'
 
-                  elif need_version == '11.0.0':
-                      default_os = '20.04'
+                    elif need_version == '11.0.0':
+                        default_os = '20.04'
 
-                  elif need_version == '11.0.1':
-                      default_os = '16.04'
-                      if host_os_version == '20.10':
-                          default_os = '20.10'
+                    elif need_version == '11.0.1':
+                        default_os = '16.04'
+                        if host_os_version == '20.10':
+                            default_os = '20.10'
 
-                  elif need_version == '12.0.0':
-                      default_os = '16.04'
-                      if host_os_version == '20.04' or host_os_version == '20.10':
-                         default_os = '20.04'
+                    elif need_version == '12.0.0':
+                        default_os = '16.04'
+                        if host_os_version == '20.04' or host_os_version == '20.10':
+                            default_os = '20.04'
 
-                  elif need_version == '12.0.1':
-                      default_os = '16.04'
-                      #if host_os_version.startswith('18') or host_os_version.startswith('20'):
-                      #   default_os = '18.04'
+                    elif need_version == '12.0.1':
+                        default_os = '16.04'
+                        #if host_os_version.startswith('18') or host_os_version.startswith('20'):
+                        #   default_os = '18.04'
 
-                  elif need_version == '13.0.0':
-                      default_os = '16.04'
-                      if host_os_version.startswith('20'):
-                         default_os = '20.04'
+                    elif need_version == '13.0.0':
+                        default_os = '16.04'
+                        if host_os_version.startswith('20'):
+                            default_os = '20.04'
 
-                  elif need_version == '13.0.1':
-                      default_os = '18.04'
+                    elif need_version == '13.0.1':
+                        default_os = '18.04'
 
-                  elif need_version == '14.0.0':
-                      default_os = '18.04'
+                    elif need_version == '14.0.0':
+                        default_os = '18.04'
 
-                  elif need_version == '15.0.6':
-                      default_os = '18.04'
+                    elif need_version == '15.0.6':
+                        default_os = '18.04'
 
-                  elif need_version == '16.0.0':
-                      default_os = '18.04'
+                    elif need_version == '16.0.0':
+                        default_os = '18.04'
 
-                  elif need_version == '16.0.4':
-                      default_os = '22.04'
+                    elif need_version == '16.0.4':
+                        default_os = '22.04'
 
-                  elif need_version == '17.0.2':
-                      default_os = '22.04'
+                    elif need_version == '17.0.2':
+                        default_os = '22.04'
 
-                  elif need_version == '17.0.2':
-                      default_os = '22.04'
+                    elif need_version == '17.0.2':
+                        default_os = '22.04'
 
-                  elif need_version == '17.0.4':
-                      default_os = '22.04'
+                    elif need_version == '17.0.4':
+                        default_os = '22.04'
 
-                  elif need_version == '17.0.5':
-                      default_os = '22.04'
+                    elif need_version == '17.0.5':
+                        default_os = '22.04'
 
-                  elif need_version == '17.0.6':
-                      default_os = '22.04'
+                    elif need_version == '17.0.6':
+                        default_os = '22.04'
 
-              package_name = 'clang+llvm-' + need_version + '-x86_64-linux-gnu-ubuntu-' + default_os + '.tar.xz'
+                package_name = 'clang+llvm-' + need_version + '-x86_64-linux-gnu-ubuntu-' + default_os + '.tar.xz'
 
 
     package_url = 'https://github.com/llvm/llvm-project/releases/download/llvmorg-' + need_version + '/' + package_name
@@ -161,8 +161,8 @@ def preprocess(i):
 
     cm = automation.cmind
 
-    r = cm.access({'action':'download_file', 
-                   'automation':'utils,dc2743f8450541e3', 
+    r = cm.access({'action':'download_file',
+                   'automation':'utils,dc2743f8450541e3',
                    'url':package_url})
     if r['return']>0: return r
 
@@ -204,5 +204,5 @@ def postprocess(i):
 #           if cur_dir_include not in env['+CPLUS_INCLUDE_PATH']:
 #               env['+CPLUS_INCLUDE_PATH'].append(cur_dir_include)
 
-    
+
     return {'return':0, 'version': version}

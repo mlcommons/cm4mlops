@@ -46,17 +46,17 @@ def preprocess(i):
         package_name += '.zip'
 
     else:
-       package_name='cmake-' + need_version + '-linux-'
+        package_name='cmake-' + need_version + '-linux-'
 
-       if host_os_machine.startswith('arm') or host_os_machine.startswith('aarch'):
-          if host_os_bits=='64':
-              package_name += 'aarch64'
-          else:
-              return {'return':1, 'error':'this script doesn\'t support armv7'}
-       else:
-          package_name += 'x86_64'
+        if host_os_machine.startswith('arm') or host_os_machine.startswith('aarch'):
+            if host_os_bits=='64':
+                package_name += 'aarch64'
+            else:
+                return {'return':1, 'error':'this script doesn\'t support armv7'}
+        else:
+            package_name += 'x86_64'
 
-       package_name +=  '.tar.gz'
+        package_name +=  '.tar.gz'
 
 
     package_url = 'https://github.com/Kitware/CMake/releases/download/v' + need_version + '/' + package_name
@@ -68,8 +68,8 @@ def preprocess(i):
 
     cm = automation.cmind
 
-    r = cm.access({'action':'download_file', 
-                   'automation':'utils,dc2743f8450541e3', 
+    r = cm.access({'action':'download_file',
+                   'automation':'utils,dc2743f8450541e3',
                    'url':package_url})
     if r['return']>0: return r
 
@@ -79,8 +79,8 @@ def preprocess(i):
     if os_info['platform'] == 'windows':
         print ('Unzipping file {}'.format(filename))
 
-        r = cm.access({'action':'unzip_file', 
-                       'automation':'utils,dc2743f8450541e3', 
+        r = cm.access({'action':'unzip_file',
+                       'automation':'utils,dc2743f8450541e3',
                        'strip_folders':1,
                        'filename':filename})
         if r['return']>0: return r

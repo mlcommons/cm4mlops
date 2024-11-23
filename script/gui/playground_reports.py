@@ -130,7 +130,7 @@ def page(st, params):
             </center>
             '''
         st.write(x, unsafe_allow_html = True)
-        
+
         st.markdown(md)
-    
+
     return {'return':0, 'end_html':end_html}

@@ -35,7 +35,7 @@ def preprocess(i):
                                            'run_script_input':i['run_script_input'],
                                            'hook': skip_path,
                                            'recursion_spaces':recursion_spaces})
-        if rr['return'] == 0 : 
+        if rr['return'] == 0 :
             found = True
         elif rr['return'] != 16:
             return rr
@@ -43,48 +43,48 @@ def preprocess(i):
     # If not found or force install
     if not found or install:
 
-       if os_info['platform'] == 'windows':
-           env['CM_JAVA_PREBUILT_HOST_OS']='windows'
-           env['CM_JAVA_PREBUILT_EXT']='.zip'
-       else:
-           env['CM_JAVA_PREBUILT_HOST_OS']='linux'
-           env['CM_JAVA_PREBUILT_EXT']='.tar.gz'
+        if os_info['platform'] == 'windows':
+            env['CM_JAVA_PREBUILT_HOST_OS']='windows'
+            env['CM_JAVA_PREBUILT_EXT']='.zip'
+        else:
+            env['CM_JAVA_PREBUILT_HOST_OS']='linux'
+            env['CM_JAVA_PREBUILT_EXT']='.tar.gz'
 
-       url = env['CM_JAVA_PREBUILT_URL']
-       filename = env['CM_JAVA_PREBUILT_FILENAME']
+        url = env['CM_JAVA_PREBUILT_URL']
+        filename = env['CM_JAVA_PREBUILT_FILENAME']
 
-       java_prebuilt_version = env['CM_JAVA_PREBUILT_VERSION']
-       java_prebuilt_build = env['CM_JAVA_PREBUILT_BUILD']
+        java_prebuilt_version = env['CM_JAVA_PREBUILT_VERSION']
+        java_prebuilt_build = env['CM_JAVA_PREBUILT_BUILD']
 
-       for key in ['CM_JAVA_PREBUILT_VERSION',
-                   'CM_JAVA_PREBUILT_BUILD',
-                   'CM_JAVA_PREBUILT_HOST_OS',
-                   'CM_JAVA_PREBUILT_EXT']:
-           url = url.replace('${'+key+'}', env[key])
-           filename = filename.replace('${'+key+'}', env[key])
+        for key in ['CM_JAVA_PREBUILT_VERSION',
+                    'CM_JAVA_PREBUILT_BUILD',
+                    'CM_JAVA_PREBUILT_HOST_OS',
+                    'CM_JAVA_PREBUILT_EXT']:
+            url = url.replace('${'+key+'}', env[key])
+            filename = filename.replace('${'+key+'}', env[key])
 
-       env['CM_JAVA_PREBUILT_URL'] = url
-       env['CM_JAVA_PREBUILT_FILENAME'] = filename
+        env['CM_JAVA_PREBUILT_URL'] = url
+        env['CM_JAVA_PREBUILT_FILENAME'] = filename
 
-       print ('')
-       print (recursion_spaces + '    Downloading and installing prebuilt Java from {} ...'.format(url+filename))
+        print ('')
+        print (recursion_spaces + '    Downloading and installing prebuilt Java from {} ...'.format(url+filename))
 
-       rr = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install-prebuilt'})
-       if rr['return']>0: return rr
+        rr = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':'install-prebuilt'})
+        if rr['return']>0: return rr
 
-       target_path = os.path.join(cur_dir, 'jdk-'+java_prebuilt_version, 'bin')
-       target_file = os.path.join(target_path, file_name)
+        target_path = os.path.join(cur_dir, 'jdk-'+java_prebuilt_version, 'bin')
+        target_file = os.path.join(target_path, file_name)
 
-       if not os.path.isfile(target_file):
-           return {'return':1, 'error':'can\'t find target file {}'.format(target_file)}
+        if not os.path.isfile(target_file):
+            return {'return':1, 'error':'can\'t find target file {}'.format(target_file)}
 
-       print ('')
-       print (recursion_spaces + '    Registering file {} ...'.format(target_file))
+        print ('')
+        print (recursion_spaces + '    Registering file {} ...'.format(target_file))
 
-       env[env_path_key] = target_file
+        env[env_path_key] = target_file
 
-       if '+PATH' not in env: env['+PATH'] = []
-       env['+PATH'].append(target_path)
+        if '+PATH' not in env: env['+PATH'] = []
+        env['+PATH'].append(target_path)
 
     return {'return':0}
 

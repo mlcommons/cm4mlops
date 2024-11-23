@@ -27,7 +27,7 @@ def preprocess(i):
           'recursion_spaces':recursion_spaces}
 
     rr = automation.find_artifact(ii)
-    if rr['return'] >0 : 
+    if rr['return'] >0 :
         # If not found in PATH, try a longer search
         if rr['return'] != 16:
             return rr
@@ -40,30 +40,30 @@ def preprocess(i):
                      'C:\\Program Files (x86)\\Microsoft Visual Studio',
                      'C:\\Program Files (x86)\\Microsoft Visual Studio 14']
 
-            restrict_paths = ['Hostx64\\x64']         
+            restrict_paths = ['Hostx64\\x64']
 
-            r = automation.find_file_deep({'paths':paths, 
-                                           'file_name':file_name, 
+            r = automation.find_file_deep({'paths':paths,
+                                           'file_name':file_name,
                                            'restrict_paths':restrict_paths})
             if r['return']>0: return r
 
             found_paths = r['found_paths']
 
             if len(found_paths) == 0:
-               return rr
+                return rr
 
             tmp_paths = ';'.join(found_paths)
-        
+
             env['CM_TMP_PATH'] = tmp_paths
             env['CM_TMP_PATH_IGNORE_NON_EXISTANT'] = 'yes'
-        
+
             ii['env']=env
 
             rr = automation.find_artifact(ii)
             if rr['return'] >0 : return rr
 
         else:
-           return rr
+            return rr
 
     found_path = rr['found_path']
 

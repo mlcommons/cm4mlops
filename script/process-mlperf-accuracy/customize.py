@@ -7,7 +7,7 @@ def preprocess(i):
     os_info = i['os_info']
 
     xsep = ';' if os_info['platform'] == 'windows' else ':'
-    
+
     env = i['env']
     results_dir = env.get("CM_MLPERF_ACCURACY_RESULTS_DIR", "")
 
@@ -83,7 +83,7 @@ def preprocess(i):
                 checkpoint_path = env['CM_VLLM_SERVER_MODEL_NAME']
             CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + accuracy_checker_file + "' --checkpoint-path '" + checkpoint_path + "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + \
                 "' --dataset-file '" + env['CM_DATASET_PREPROCESSED_PATH'] + "'"+ " --dtype " + env.get('CM_ACCURACY_DTYPE', "int32")  +" > '" + out_file + "'"
-        
+
         elif dataset == "openorca-gsm8k-mbxp-combined":
             accuracy_checker_file = os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "language", "mixtral-8x7b",
                 "evaluate-accuracy.py")
@@ -164,7 +164,7 @@ def postprocess(i):
     xsep = ';' if os_info['platform'] == 'windows' else ':'
 
     results_dir = env.get("CM_MLPERF_ACCURACY_RESULTS_DIR", "")
-    
+
     results_dir_split = results_dir.split(xsep)
 
     for result_dir in results_dir_split:
@@ -189,13 +189,12 @@ def postprocess(i):
                         import json
 
                         try:
-                           z=json.loads(y)
-                           state['app_mlperf_inference_accuracy']=z
+                            z=json.loads(y)
+                            state['app_mlperf_inference_accuracy']=z
 
-                           break
+                            break
                         except ValueError as e:
-                           pass
+                            pass
 
             print ('')
     return {'return':0}
-

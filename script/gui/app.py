@@ -7,7 +7,7 @@ import cmind
 import misc
 
 def main():
-    
+
     query_params = misc.get_params(st)
 
     script_path = os.environ.get('CM_GUI_SCRIPT_PATH','')
@@ -32,8 +32,8 @@ def main():
 
         print ('Searching CM scripts using tags "{}"'.format(script_tags))
 
-        r = cmind.access({'action':'find', 
-                          'automation':'script,5b4e0237da074764', 
+        r = cmind.access({'action':'find',
+                          'automation':'script,5b4e0237da074764',
                           'tags':script_tags})
         if r['return']>0: return r
 
@@ -60,12 +60,12 @@ def main():
 
     ii = {'st': st,
           'params': query_params,
-          'script_path': script_path, 
-          'script_alias': script_alias, 
-          'script_tags': script_tags, 
+          'script_path': script_path,
+          'script_alias': script_alias,
+          'script_tags': script_tags,
           'script_meta': meta,
           'skip_bottom': False}
-    
+
     return script.page(ii)
 
 if __name__ == "__main__":

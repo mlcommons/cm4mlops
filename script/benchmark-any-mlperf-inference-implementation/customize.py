@@ -139,7 +139,7 @@ def preprocess(i):
     r = automation.run_native_script({'run_script_input':run_script_input, 'env':env, 'script_name':run_file_name})
 
     if r['return']>0: return r
-    
+
     return {'return':0}
 
 def assemble_tflite_cmds(cmds):

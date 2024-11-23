@@ -1,6 +1,6 @@
 import os
 from cmind import utils
-    
+
 # Pring help about script
 def print_help(i):
 
@@ -44,8 +44,8 @@ def print_help(i):
             v = input_description[k]
             if v.get('sort',0)>0:
                 sorted_keys.append(k)
-        
-        
+
+
         print ('')
         print ('Available flags (Python API dict keys):')
         print ('')
@@ -94,7 +94,7 @@ def print_help(i):
 
     r = {'return':0}
 
-    if skip_delayed_help: 
+    if skip_delayed_help:
         r['skip_delayed_help'] = True
 
     return r

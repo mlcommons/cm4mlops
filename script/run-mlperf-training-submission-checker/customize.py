@@ -10,7 +10,7 @@ def preprocess(i):
     submission_dir = env.get("CM_MLPERF_SUBMISSION_DIR", "")
 
     version = env.get('CM_MLPERF_SUBMISSION_CHECKER_VERSION','v3.1')
-    
+
     if submission_dir == "":
         return {'return': 1, 'error': 'Please set CM_MLPERF_SUBMISSION_DIR'}
 

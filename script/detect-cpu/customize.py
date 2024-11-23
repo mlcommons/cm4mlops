@@ -21,13 +21,13 @@ def postprocess(i):
 
     automation = i['automation']
     logger = automation.cmind.logger
-    
+
     if os_info['platform'] == 'windows':
         sys = []
         sys1 = []
         cpu = []
         cpu1 = []
-        
+
         import csv
 
         try:
@@ -47,7 +47,7 @@ def postprocess(i):
                             for k in range(0, len(s)):
                                 x[keys[k]]=s[k]
 
-                            sys.append(x)    
+                            sys.append(x)
 
                             if j==1:
                                 sys1 = x
@@ -76,20 +76,20 @@ def postprocess(i):
                             for k in range(0, len(s)):
                                 x[keys[k]]=s[k]
 
-                            cpu.append(x)    
+                            cpu.append(x)
 
                             if j==2:
                                 cpu1 = x
 
                         j+=1
-        
+
         except Exception as e:
             logger.warning ('WARNING: problem processing file {} ({})!'.format(f, format(e)))
             pass
-        
+
 
         state['host_device_raw_info']={'sys':sys, 'sys1':sys1, 'cpu':cpu, 'cpu1':cpu1}
-        
+
         logger.warning ('WARNING: need to unify system and cpu output on Windows')
 
         return {'return':0}

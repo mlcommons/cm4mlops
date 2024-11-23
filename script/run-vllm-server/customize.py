@@ -393,7 +393,7 @@ def preprocess(i):
 
     cmd = f"{env['CM_PYTHON_BIN_WITH_PATH']} -m vllm.entrypoints.openai.api_server {cmd_args}"
     print(cmd)
-    
+
     env['CM_VLLM_RUN_CMD'] = cmd
 
     return {'return':0}

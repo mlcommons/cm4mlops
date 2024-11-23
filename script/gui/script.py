@@ -28,7 +28,7 @@ def page(i):
     if gui_func!='':
         ii = {'streamlit_module':st,
               'meta':meta}
-        return cmind.utils.call_internal_module(None, os.path.join(script_path, 'dummy') , 
+        return cmind.utils.call_internal_module(None, os.path.join(script_path, 'dummy') ,
                                                 'customize', gui_func, ii)
 
     st.markdown("""---""")
@@ -56,19 +56,19 @@ def page(i):
                 url += repo_meta['prefix']
 
             if not url.endswith('/'): url=url+'/'
-            
+
             url += 'script/'+script_alias
 
             url_script = url
 
     hide = params.get('hide_script_customization', False)
-    
+
     if script_alias!='':
         show_customize = st.toggle('**Customize input for the CM script "[{}]({})"**'.format(script_alias, url_script), value = not hide)
         hide = not show_customize
 
 
-    
+
     # Check if found path and there is meta
     # TBD (Grigori): need to cache it using @st.cache
     variation_groups = {}
@@ -94,7 +94,7 @@ def page(i):
 
             if alias!='':
                 aliases = variation_alias.get(alias, [])
-                if variation_key not in aliases: 
+                if variation_key not in aliases:
                     aliases.append(variation_key)
                 variation_alias[alias]=aliases
 
@@ -133,66 +133,66 @@ def page(i):
 
         # Prepare variation_groups
         if len(variations)>0:
-             if not hide:
-                 st.markdown('**Select variations to update multiple flags and environment variables:**')
+            if not hide:
+                st.markdown('**Select variations to update multiple flags and environment variables:**')
 
-             variation_groups_order = meta.get('variation_groups_order',[])
-             for variation in sorted(variation_groups):
-                 if variation not in variation_groups_order:
-                     variation_groups_order.append(variation)
+            variation_groups_order = meta.get('variation_groups_order',[])
+            for variation in sorted(variation_groups):
+                if variation not in variation_groups_order:
+                    variation_groups_order.append(variation)
 
-             for group_key in variation_groups_order:
-                 group_key_cap = group_key.replace('-',' ').capitalize()
-                 if not group_key.startswith('*'):
-                     y = ['']
+            for group_key in variation_groups_order:
+                group_key_cap = group_key.replace('-',' ').capitalize()
+                if not group_key.startswith('*'):
+                    y = ['']
 
-                     index = 0
-                     selected_index = 0
-                     for variation_key in sorted(variation_groups[group_key]):
-                         index += 1
-                         y.append(variation_key)
-                         if variation_key in default_variations:
-                             selected_index=index
+                    index = 0
+                    selected_index = 0
+                    for variation_key in sorted(variation_groups[group_key]):
+                        index += 1
+                        y.append(variation_key)
+                        if variation_key in default_variations:
+                            selected_index=index
 
-                     key2 = '~~'+group_key
+                    key2 = '~~'+group_key
 
-                     x = params.get(key2, None)
-                     if x!=None and len(x)>0 and x[0]!=None:
-                         x = x[0]
-                         if x in y:
-                             selected_index = y.index(x) if x in y else 0
-                     
-                     if hide:
-                         st_variations[key2] = sorted(y)[selected_index]
-                     else:
-                         st_variations[key2] = st.selectbox(group_key_cap, sorted(y), index=selected_index, key=key2)
+                    x = params.get(key2, None)
+                    if x!=None and len(x)>0 and x[0]!=None:
+                        x = x[0]
+                        if x in y:
+                            selected_index = y.index(x) if x in y else 0
 
-                 elif group_key == '*no-group*':
-                     for variation_key in sorted(variation_groups[group_key]):
-                         v = False
-                         if variation_key in default_variations:
-                             v=True
+                    if hide:
+                        st_variations[key2] = sorted(y)[selected_index]
+                    else:
+                        st_variations[key2] = st.selectbox(group_key_cap, sorted(y), index=selected_index, key=key2)
 
-                         key2 = '~'+variation_key
+                elif group_key == '*no-group*':
+                    for variation_key in sorted(variation_groups[group_key]):
+                        v = False
+                        if variation_key in default_variations:
+                            v=True
 
-                         x = params.get(key2, None)
-                         if x!=None and len(x)>0 and x[0]!=None:
-                             if x[0].lower()=='true':
-                                 v = True
-                             elif x[0].lower()=='false':
-                                 v = False
-                         
-                         if hide:
-                             st_variations[key2] = v
-                         else:
-                             st_variations[key2] = st.checkbox(variation_key.capitalize(), key=key2, value=v)
+                        key2 = '~'+variation_key
+
+                        x = params.get(key2, None)
+                        if x!=None and len(x)>0 and x[0]!=None:
+                            if x[0].lower()=='true':
+                                v = True
+                            elif x[0].lower()=='false':
+                                v = False
+
+                        if hide:
+                            st_variations[key2] = v
+                        else:
+                            st_variations[key2] = st.checkbox(variation_key.capitalize(), key=key2, value=v)
 
 
         # Prepare inputs
         input_desc=meta.get('input_description',{})
 
         if len(input_desc)>0:
-            
+
             sort_desc = {}
             sort_keys = []
             for k in input_desc:
@@ -203,7 +203,7 @@ def page(i):
                 sort_keys = sorted(sort_desc, key = lambda k: sort_desc[k])
 
             other_keys = sorted([k for k in input_desc if input_desc[k].get('sort',0)==0])
-            
+
             all_keys = [] if len(sort_keys)==0 else sort_keys
             all_keys += other_keys
 
@@ -228,7 +228,7 @@ def page(i):
                     'st':st,
                     'st_inputs':st_inputs,
                     'hide':hide}
-                
+
                 r2 = misc.make_selector(ii)
                 if r2['return']>0: return r2
 
@@ -262,13 +262,13 @@ def page(i):
 
 
 
-    
+
     # Add extras to inputs
     add_to_st_inputs = extra.get('add_to_st_inputs',{})
     if len(add_to_st_inputs)>0:
         st_inputs.update(add_to_st_inputs)
 
-    
+
     ############################################################################
     st.markdown("""---""")
     st.markdown('**Run this CM script (Linux/MacOS/Windows):**')
@@ -281,7 +281,7 @@ def page(i):
 
     extra_faq_online = extra.get('extra_faq_online', '')
     if extra_faq_online != '': x+=' [ '+extra_faq_online+' ] '
-    
+
     if x !='':
         st.markdown('*'+x.strip()+'*')
 
@@ -297,7 +297,7 @@ def page(i):
         var1 = '\\'
         host_os_flag = 'linux'
 
-        
+
     show_cm_install = st.toggle('Install MLCommons Collective Mind', value=False)
 
     if show_cm_install:
@@ -308,7 +308,7 @@ def page(i):
         r = playground_install.page(st, params, extra)
         if r['return']>0: return r
 
-        
+
         st.markdown('---')
 
 
@@ -333,17 +333,17 @@ def page(i):
                 x = str(value)
                 z = x
 
-                if ' ' in x or ':' in x or '/' in x or '\\' in x: 
+                if ' ' in x or ':' in x or '/' in x or '\\' in x:
                     x='"'+x+'"'
                 flags+='='+x
 
             flags_dict[key2]=z
 
 
- 
-    
-    
-    
+
+
+
+
     ############################################################################
     run_via_docker = False
     if not extra.get('skip_script_docker_func', False) and len(meta.get('docker',{}))>0:
@@ -358,7 +358,7 @@ def page(i):
 
     ############################################################################
     use_experiment_from_extra = extra.get('use_experiment', False)
-    
+
     use_experiment = st.toggle('Use CM experiment for reproducibility', key='use_cm_experiment', value=use_experiment_from_extra)
 
     extra_cm_prefix = ''
@@ -366,7 +366,7 @@ def page(i):
         cli = 'cm run experiment --tags={} -- {}\n '.format("repro,"+script_tags, var1) + cli
 
     ############################################################################
-    
+
     extra_setup = extra.get('extra_setup','').strip()
     if len(extra_setup)>2:
         show_extra_setup_notes = st.toggle('Show extra setup notes?', value = True)
@@ -376,75 +376,75 @@ def page(i):
             st.markdown(extra_setup)
 #            st.markdown('---')
 
-    
+
     show_python_api = st.toggle('Run via Python API', value=False)
 
     # Python API
     if show_python_api:
-         
-         final_script_tags = script_tags
-         if len(selected_variations)>0:
-             for sv in selected_variations:
-                 final_script_tags += ' '+sv
-         final_script_tags = final_script_tags.replace(' ',',')
-                 
-         if use_experiment:
-             dd = {
-                   'action': 'run',
-                   'automation': 'experiment,a0a2d123ef064bcb',
-                   'tags': script_tags,
-                   'out': 'con'
-                  }
 
-             unparsed_cmd = ['cm',
-                             'run',
-                             'script,5b4e0237da074764',
-                             '--tags='+final_script_tags]
+        final_script_tags = script_tags
+        if len(selected_variations)>0:
+            for sv in selected_variations:
+                final_script_tags += ' '+sv
+        final_script_tags = final_script_tags.replace(' ',',')
 
-             for flag in flags_dict:
-                 value = flags_dict[flag]
-                 unparsed_cmd.append('--' + flag + '=' + str(value))
+        if use_experiment:
+            dd = {
+                  'action': 'run',
+                  'automation': 'experiment,a0a2d123ef064bcb',
+                  'tags': script_tags,
+                  'out': 'con'
+                 }
 
-             dd['unparsed_cmd'] = unparsed_cmd
+            unparsed_cmd = ['cm',
+                            'run',
+                            'script,5b4e0237da074764',
+                            '--tags='+final_script_tags]
 
-         else:
-             dd = {
-                   'action':action,
-                   'automation':'script,5b4e0237da074764',
-                  }
-                  
-             dd['tags']=final_script_tags
+            for flag in flags_dict:
+                value = flags_dict[flag]
+                unparsed_cmd.append('--' + flag + '=' + str(value))
 
-             dd['out']='con'
-             
-             dd.update(flags_dict)
+            dd['unparsed_cmd'] = unparsed_cmd
 
-         import json
-         dd_json=json.dumps(dd, indent=2)
-         dd_json=dd_json.replace(': true', ': True').replace(': false', ': False')
+        else:
+            dd = {
+                  'action':action,
+                  'automation':'script,5b4e0237da074764',
+                 }
 
-         y = 'import cmind\n'
-         y+= 'r = cmind.access('+dd_json+')\n'
-         y+= 'if r[\'return\']>0: print (r[\'error\'])\n'
+            dd['tags']=final_script_tags
 
-         x='''
-     ```python
-               {}
-           '''.format(y)
+            dd['out']='con'
 
-     #    st.write(x.replace('\n','<br>\n'), unsafe_allow_html=True)
+            dd.update(flags_dict)
 
-         st.markdown(x)
+        import json
+        dd_json=json.dumps(dd, indent=2)
+        dd_json=dd_json.replace(': true', ': True').replace(': false', ': False')
 
-    
-    
+        y = 'import cmind\n'
+        y+= 'r = cmind.access('+dd_json+')\n'
+        y+= 'if r[\'return\']>0: print (r[\'error\'])\n'
+
+        x='''
+    ```python
+              {}
+          '''.format(y)
+
+    #    st.write(x.replace('\n','<br>\n'), unsafe_allow_html=True)
+
+        st.markdown(x)
+
+
+
     ############################################################################
     show_cli = st.toggle('Run from the command line', value = True)
 
     if show_cli:
         # Add explicit button "Run"
         cli = st.text_area('', cli, height=600)
-        
+
         if no_run=='' and st.button("Run in the new terminal"):
             cli = cli+var1+'--pause\n'
 
@@ -471,8 +471,8 @@ def page(i):
     x = '''
          <i>
          <center>
-         We would like to thank <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">all Collective Mind users and contributors</a> 
-         for supporting this collaborative engineering effort -<br> 
+         We would like to thank <a href="https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md">all Collective Mind users and contributors</a>
+         for supporting this collaborative engineering effort -<br>
          please don't hesitate report issues or suggest features at <a href="https://github.com/mlcommons/ck/issues">CM GitHub</a>!
          </center>
         '''

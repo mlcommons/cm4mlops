@@ -18,7 +18,7 @@ class CAutomation(Automation):
         Test automation
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 

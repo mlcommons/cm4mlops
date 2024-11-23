@@ -21,7 +21,7 @@ def preprocess(i):
           " --gpu_batch_size="+env['CM_MODEL_BATCH_SIZE'] +\
           " --gpu_copy_streams="+env['CM_GPU_COPY_STREAMS'] +\
           " --workspace_size="+env['CM_TENSORRT_WORKSPACE_SIZE']
-~                    
+~
     return {'return':0}
 
 def postprocess(i):

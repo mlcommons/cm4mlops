@@ -9,7 +9,7 @@ def preprocess(i):
 
     if env.get("CM_MODEL_HUGG_PATH","") == "":
         return {'return': 1, 'error': 'CM_MODEL_HUGG_PATH is not set'}
-    
+
     automation = i['automation']
 
     cm = automation.cmind

@@ -8,17 +8,17 @@ import misc
 def page(st, params, extra):
 
     end_html = ''
-    
+
     url_prefix = st.config.get_option('server.baseUrlPath')+'/'
 
     if not extra.get('skip_header', False):
         st.markdown('---')
         st.markdown('**Install [MLCommons Collective Mind automation framework](https://github.com/mlcommons/ck):**')
-    
+
 
 
     md = ''
-    
+
     ###################################################################
     # Select OS
     choices = [('Ubuntu, Debian and similar Linux', 'linux'),
@@ -31,10 +31,10 @@ def page(st, params, extra):
     if extra.get('run_on_windows', False):
         host_os_selection = 3
 
-    host_os = st.selectbox('Select your host OS:', 
+    host_os = st.selectbox('Select your host OS:',
                            range(len(choices)),
-                           format_func = lambda x: choices[x][0], 
-                           index = host_os_selection, 
+                           format_func = lambda x: choices[x][0],
+                           index = host_os_selection,
                            key = 'install_select_host_os')
 
     host_os_index = choices[host_os][1]
@@ -43,7 +43,7 @@ def page(st, params, extra):
     cur_script_file = __file__
     cur_script_path = os.path.dirname(cur_script_file)
 
-    
+
     notes = os.path.join(cur_script_path, 'install', host_os_index+'.md')
 
     if os.path.isfile(notes):
@@ -62,8 +62,8 @@ def page(st, params, extra):
         need_user = ' --user'
     elif host_os_index == 'windows':
         python = 'python'
-    
-    
+
+
     ###################################################################
     # Select repository
 
@@ -76,8 +76,8 @@ def page(st, params, extra):
 
     repo = st.selectbox('Select repository with [automation recipes (CM scripts)](https://access.cknowledge.org/playground/?action=scripts):',
                          range(len(choices)),
-                         format_func = lambda x: choices[x][0], 
-                         index=0, 
+                         format_func = lambda x: choices[x][0],
+                         index=0,
                          key='select_repo')
 
     repo_index = choices[repo][1]
@@ -92,11 +92,11 @@ def page(st, params, extra):
         cm_repo = '--url=https://github.com/mlcommons/cm4mlops/archive/refs/tags/r20240416.zip --skip-zip-parent-dir'
     else:
         cm_repo = 'mlcommons@cm4mlops'
-    
+
     x =  '{} -m pip install cmind -U {}\n\n'.format(python, need_user)
     x += 'cm test core \n\n'
     x += 'cm pull repo {}\n\n'.format(cm_repo)
-    
+
     clean_cm_cache = st.toggle('Clean CM cache', value=True, key = 'install_clean_cm_cache')
 
     cm_clean_cache = 'cm rm cache -f\n\n' if clean_cm_cache else ''
@@ -110,13 +110,13 @@ def page(st, params, extra):
     python_ver=params.get('@adr.python.version', '')
 
     if python_venv_name == '':
-         use_python_venv = st.toggle('Use Python Virtual Environment for CM scripts?', value = False)
-         if use_python_venv:
-             python_venv_name = st.text_input('Enter some CM python venv name for your project:', value = "mlperf-v4.0")
+        use_python_venv = st.toggle('Use Python Virtual Environment for CM scripts?', value = False)
+        if use_python_venv:
+            python_venv_name = st.text_input('Enter some CM python venv name for your project:', value = "mlperf-v4.0")
 
-             if python_ver_min == '':
-                 python_ver_min = st.text_input('[Optional] Specify min version such as 3.8:')
-         
+            if python_ver_min == '':
+                python_ver_min = st.text_input('[Optional] Specify min version such as 3.8:')
+
     y = ''
     if python_venv_name!='':# or python_ver!='' or python_ver_min!='':
         y = 'cm run script "get sys-utils-cm"\n'

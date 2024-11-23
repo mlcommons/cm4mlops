@@ -57,7 +57,7 @@ def get_run_cmd(model, i):
         run_dir = os.path.join(env['CM_MLPERF_INFERENCE_IMPLEMENTATION_REPO'], "open", submitter, "code", "gptj-99")
 
         return {'return': 0, 'run_cmd': run_cmd, 'run_dir': run_dir}
-    
+
     if "llama2" in model:
         scenario = env['CM_MLPERF_LOADGEN_SCENARIO']
         device = env['CM_MLPERF_DEVICE']

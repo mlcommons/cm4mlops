@@ -19,7 +19,7 @@ def preprocess(i):
         if r['return'] > 0:
             return r
         cmd = r['cmd']
-    
+
         print("Compiling from "+ os.getcwd())
 
         env['CM_QAIC_MODEL_FINAL_COMPILATION_CMD'] = cmd

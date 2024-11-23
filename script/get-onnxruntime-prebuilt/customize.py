@@ -12,17 +12,17 @@ def preprocess(i):
     hostos=env['CM_HOST_OS_TYPE']
 
     ext = '.tgz'
-    
+
     if hostos =='darwin': hostos='osx'
-    elif hostos =='windows': 
-       hostos='win'
-       ext = '.zip'
+    elif hostos =='windows':
+        hostos='win'
+        ext = '.zip'
 
     device=env.get('CM_ONNXRUNTIME_DEVICE','')
     if device!='':  machine+='-'+device
 
     version = env['CM_VERSION']
-    
+
     FOLDER = 'onnxruntime-{}-{}-{}'.format(hostos, machine, version)
 
     FILENAME = FOLDER + ext
@@ -37,7 +37,7 @@ def preprocess(i):
     env['FILENAME'] = FILENAME
     env['URL'] = URL
 
-    
+
 
     return {'return':0}
 
@@ -64,7 +64,7 @@ def postprocess(i):
     env['+LD_LIBRARY_PATH'].append(lib_path)
     env['+DYLD_FALLBACK_LIBRARY_PATH'].append(lib_path)
 
-    if hostos =='windows': 
+    if hostos =='windows':
         # For dynamic libraries
         env['+PATH'] = [lib_path]
 

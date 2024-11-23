@@ -12,7 +12,7 @@ def preprocess(i):
     submission_dir = env.get("CM_MLPERF_INFERENCE_SUBMISSION_DIR", "")
 
     version = env.get('CM_MLPERF_SUBMISSION_CHECKER_VERSION','')
-    
+
     if submission_dir == "":
         return {'return': 1, 'error': 'Please set --env.CM_MLPERF_INFERENCE_SUBMISSION_DIR'}
 
@@ -20,7 +20,7 @@ def preprocess(i):
     if ' ' in submitter:
         return {'return': 1, 'error': 'CM_MLPERF_SUBMITTER cannot contain a space. Please provide a name without space using --submitter input. Given value: {}'.format(submitter)}
 
-    if 'CM_MLPERF_SKIP_COMPLIANCE' in env: 
+    if 'CM_MLPERF_SKIP_COMPLIANCE' in env:
         skip_compliance = " --skip_compliance"
     else:
         skip_compliance = ""

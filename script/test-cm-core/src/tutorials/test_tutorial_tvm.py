@@ -21,4 +21,3 @@ r = cm.access({'action':'run', 'automation':'script', 'tags': 'run,mlperf,infere
         'implementation': 'python', 'hw_name': 'default', 'model': 'resnet50', 'backend': 'tvm-onnx', 'device': 'cpu', 'scenario': 'Offline', \
         'test_query_count': '500', 'clean': 'true', 'quiet': 'yes'})
 checks.check_return(r)
-

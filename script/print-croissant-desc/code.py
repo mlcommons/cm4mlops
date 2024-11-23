@@ -4,13 +4,13 @@ import os
 import mlcroissant as mlc
 
 def main():
-    
+
     url = os.environ.get('CM_PRINT_CROISSANT_URL', '')
 
     if url=='':
         print ('Error: --url is not specified')
         exit(1)
-    
+
     ds = mlc.Dataset(url)
     metadata = ds.metadata.to_json()
 

@@ -22,16 +22,16 @@ class XModel(Model):
         self.session = session
 
     def predict(self, input: ModelInput):
-        
+
         print ('')
         utils.print_host_memory_use('Host memory used')
-                                        
+
         print ('Running inference ...')
         with torch.no_grad():
             output = self.session(input)
-        
+
         utils.print_host_memory_use('Host memory used')
-        
+
         return output
 
 
@@ -67,7 +67,7 @@ class XModelFactory(ModelFactory):
                 raise Exception('Error: CUDA is forced but not available or installed in PyTorch!')
         else:
             raise Exception('Error: execution provider is unknown ({})!'.format(self.execution_provider))
-                            
+
         checkpoint = torch.load(self.model_path, map_location=torch.device(torch_provider))
 
         if self.model_code == '':
@@ -79,8 +79,8 @@ class XModelFactory(ModelFactory):
         # Load sample
         import pickle
         with open (self.model_sample_pickle, 'rb') as handle:
-           self.input_sample = pickle.load(handle)
-                
+            self.input_sample = pickle.load(handle)
+
         # Check if has CM connector
         cm_model_module = os.path.join(self.model_code, 'cmc.py')
         if not os.path.isfile(cm_model_module):
@@ -89,7 +89,7 @@ class XModelFactory(ModelFactory):
         print ('')
         print ('Collective Mind Connector for the model found: {}'.format(cm_model_module))
 
-        
+
         # Load CM interface for the model
         import sys
         sys.path.insert(0, self.model_code)
@@ -99,7 +99,7 @@ class XModelFactory(ModelFactory):
         # Init model
         if len(self.model_cfg)>0:
             print ('Model cfg: {}'.format(self.model_cfg))
-        
+
         r = model_module.model_init(checkpoint, self.model_cfg)
         if r['return']>0:
             raise Exception('Error: {}'.format(r['error']))
@@ -108,7 +108,7 @@ class XModelFactory(ModelFactory):
 
         if torch_provider=='cuda':
             model.cuda()
-        
+
         model.eval()
 
         return XModel(model)
@@ -123,4 +123,3 @@ class XModelInputSampler(ModelInputSampler):
     def sample(self, id_: int) -> ModelInput:
         input = self.input_sample
         return input
-

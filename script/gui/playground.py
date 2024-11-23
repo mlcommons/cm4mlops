@@ -33,7 +33,7 @@ def main():
             </style>
             """
 
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
     # Set title (check extra user HTML to embed before title if needed)
     extra = os.environ.get('CM_GUI_EXTRA_HTML','')
@@ -65,7 +65,7 @@ def main():
         s = '\n\n'+r['string']+'\n\n'
 
         st.write(s, unsafe_allow_html=True)
-    
+
 
     # Check action and basic menu
     action = params.get('action',['scripts'])[0].lower()
@@ -100,7 +100,7 @@ def main():
                    style_action_scripts,
                    style_action_howtorun,
                    style_action_challenges,
-                   style_action_experiments, 
+                   style_action_experiments,
                    style_action_reproduce,
                    style_action_contributors,
                    style_action_reports,
@@ -164,7 +164,7 @@ def main():
              <center>
               Powered by <a href="https://github.com/mlcommons/ck">MLCommons Collective Mind</a>
              </center>
-             """,  
+             """,
              unsafe_allow_html=True)
 
 

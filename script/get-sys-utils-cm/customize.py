@@ -20,7 +20,7 @@ def preprocess(i):
 
 
 # Windows has moved to get-sys-utils-min and will be always run with "detect,os"!
-   
+
     if os_info['platform'] == 'windows':
         print ('')
         print ('This script is not used on Windows')
@@ -43,19 +43,19 @@ def preprocess(i):
 #        url = env['CM_PACKAGE_WIN_URL']
 #
 #        urls = [url] if ';' not in url else url.split(';')
-#        
+#
 #        print ('')
 #        print ('Current directory: {}'.format(os.getcwd()))
-#        
+#
 #        for url in urls:
-#            
+#
 #            url = url.strip()
 #
 #            print ('')
 #            print ('Downloading from {}'.format(url))
 #
-#            r = cm.access({'action':'download_file', 
-#                           'automation':'utils,dc2743f8450541e3', 
+#            r = cm.access({'action':'download_file',
+#                           'automation':'utils,dc2743f8450541e3',
 #                           'url':url})
 #            if r['return']>0: return r
 #
@@ -63,8 +63,8 @@ def preprocess(i):
 #
 #            print ('Unzipping file {}'.format(filename))
 #
-#            r = cm.access({'action':'unzip_file', 
-#                           'automation':'utils,dc2743f8450541e3', 
+#            r = cm.access({'action':'unzip_file',
+#                           'automation':'utils,dc2743f8450541e3',
 #                           'filename':filename})
 #            if r['return']>0: return r
 #
