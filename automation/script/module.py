@@ -514,12 +514,9 @@ class CAutomation(Automation):
                 env['CM_TMP_' + key.upper()] = value
 
         for key in self.input_flags_converted_to_env:
-            value = i.get(key, '')
-
-
-if isinstance(value,             if )                value = value.strip()
-            if value != '':
-                env['CM_' + key.upper()] = value
+            value = i.get(key, '').strip() if isinstance(i.get(key, ''), str) else i.get(key, '')
+            if value:
+                env[f"CM_{key.upper()}"] = value
 
         r = update_env_with_values(env)
         if r['return'] > 0:
@@ -5576,65 +5573,54 @@ def update_env_keys(env, env_key_mappings):
                 # del(env[key])
 
 ##############################################################################
-
-
-def convert_env_to_script(env, os_info, start_script = []):
+def convert_env_to_script(env, os_info, start_script=None):
     """
-    Internal: convert env to script for a given platform
+    Internal: Convert env to script for a given platform.
     """
-
     import copy
-    script = copy.deepcopy(start_script)
 
-    windows = True if os_info['platform'] == 'windows' else False
+    # Initialize script with a deep copy of the start_script or an empty list
+    script = copy.deepcopy(start_script) if start_script else []
+
+    # Determine if the platform is Windows
+    is_windows = os_info['platform'] == 'windows'
 
     for k in sorted(env):
         env_value = env[k]
 
-        if windows:
-            x = env_value
-            if type(env_value) != list:
-                x = [x]
+        # Handle Windows-specific value processing
+        if is_windows:
+            if not isinstance(env_value, list):
+                env_value = [env_value]
 
-            xx = []
-            for v in x:
-                # If " is already in env value, it means that there was some
-                # custom processing to consider special characters
+            processed_values = []
+            for v in env_value:
+                v_str = str(v)
+                if '"' not in v_str:
+                    # Add quotes if special characters are present
+                    if any(char in v_str for char in ['|', '&', '>', '<']):
+                        v_str = f'"{v_str}"'
+                processed_values.append(v_str)
 
-                y = str(v)
+            env_value = processed_values if isinstance(env[k], list) else processed_values[0]
 
-                if '"' not in y:
-                    for z in ['|', '&', '>', '<']:
-                        if z in y:
-                            y = '"' + y + '"'
-                            break
-                xx.append(y)
-
-env_value = xx if isinstance(env_value,             env_value = xx if )
-        # Process special env
+        # Process special keys
         key = k
-
         if k.startswith('+'):
-            # List and append the same key at the end (+PATH, +LD_LIBRARY_PATH,
-            # +PYTHONPATH)
             key = k[1:]
-            first = key[0]
-            env_separator = os_info['env_separator']
-            # If key starts with a symbol use it as the list separator (+ CFLAG will use ' ' the
-            # list separator while +;TEMP will use ';' as the separator)
-            if not first.isalnum():
-                env_separator = first
+            env_separator = os_info.get('env_separator', ';')
+
+            # Custom separator if key starts with a non-alphanumeric character
+            if not key[0].isalnum():
+                env_separator = key[0]
                 key = key[1:]
 
-            env_value = env_separator.join(env_value) + \
-                env_separator + \
-                os_info['env_var'].replace('env_var', key)
+            # Append the existing environment variable to the new value
+            env_value = f"{env_separator.join(env_value)}{env_separator}{os_info['env_var'].replace('env_var', key)}"
 
-        v = os_info['set_env'].replace(
-            '${key}', key).replace(
-        '${value}', str(env_value))
-
-        script.append(v)
+        # Replace placeholders in the platform-specific environment command
+        env_command = os_info['set_env'].replace('${key}', key).replace('${value}', str(env_value))
+        script.append(env_command)
 
     return script
 
