@@ -24,29 +24,29 @@ def preprocess(i):
     models_all = {
         "mobilenet": {
             "v1": {
-                "multiplier": [ "multiplier-1.0", "multiplier-0.75", "multiplier-0.5", "multiplier-0.25" ],
-                "resolution": [ "resolution-224", "resolution-192", "resolution-160", "resolution-128" ],
+                "multiplier": ["multiplier-1.0", "multiplier-0.75", "multiplier-0.5", "multiplier-0.25"],
+                "resolution": ["resolution-224", "resolution-192", "resolution-160", "resolution-128"],
                 "kind": [""]
-                },
+            },
             "v2": {
-                "multiplier": [ "multiplier-1.0", "multiplier-0.75", "multiplier-0.5", "multiplier-0.35" ],
-                "resolution": [ "resolution-224", "resolution-192", "resolution-160", "resolution-128" ],
+                "multiplier": ["multiplier-1.0", "multiplier-0.75", "multiplier-0.5", "multiplier-0.35"],
+                "resolution": ["resolution-224", "resolution-192", "resolution-160", "resolution-128"],
                 "kind": [""]
-                },
+            },
             "v3": {
                 "multiplier": [""],
                 "resolution": [""],
-                "kind": [ "large", "large-minimalistic", "small", "small-minimalistic" ]
-                }
-            },
+                "kind": ["large", "large-minimalistic", "small", "small-minimalistic"]
+            }
+        },
         "efficientnet": {
             "": {
                 "multiplier": [""],
                 "resolution": [""],
-                "kind": [ "lite0", "lite1", "lite2", "lite3", "lite4" ]
-                }
+                "kind": ["lite0", "lite1", "lite2", "lite3", "lite4"]
             }
         }
+    }
 
     models = {}
     if env.get('CM_MLPERF_RUN_MOBILENET_V1', '') == "yes":
@@ -71,41 +71,41 @@ def preprocess(i):
         for version in models[t1]:
             variation_list = []
             if version.strip():
-                variation_list.append("_"+version)
+                variation_list.append("_" + version)
             variation_list_saved = variation_list.copy()
             for k1 in models[t1][version]["multiplier"]:
                 variation_list = variation_list_saved.copy()
                 if k1.strip():
-                    variation_list.append("_"+k1)
+                    variation_list.append("_" + k1)
                 variation_list_saved_2 = variation_list.copy()
                 for k2 in models[t1][version]["resolution"]:
                     variation_list = variation_list_saved_2.copy()
                     if k2.strip():
-                        variation_list.append("_"+k2)
+                        variation_list.append("_" + k2)
                     variation_list_saved_3 = variation_list.copy()
                     for k3 in models[t1][version]["kind"]:
                         variation_list = variation_list_saved_3.copy()
                         if k3.strip():
-                            variation_list.append("_"+k3)
+                            variation_list.append("_" + k3)
                         variation_strings[t1].append(",".join(variation_list))
 
-    if env.get('CM_MLPERF_SUBMISSION_MODE','') == "yes":
-        var="_submission"
-        execution_mode="valid"
-    elif env.get('CM_MLPERF_ACCURACY_MODE','') == "yes" and env.get('CM_MLPERF_PERFORMANCE_MODE','') == "yes":
-        var="_full,_performance-and-accuracy"
-        execution_mode="valid"
-    elif env.get('CM_MLPERF_ACCURACY_MODE','') == "yes":
-        var="_full,_accuracy-only"
-        execution_mode="valid"
-    elif env.get('CM_MLPERF_PERFORMANCE_MODE','') == "yes":
-        var="_full,_performance-only"
-        execution_mode="valid"
+    if env.get('CM_MLPERF_SUBMISSION_MODE', '') == "yes":
+        var = "_submission"
+        execution_mode = "valid"
+    elif env.get('CM_MLPERF_ACCURACY_MODE', '') == "yes" and env.get('CM_MLPERF_PERFORMANCE_MODE', '') == "yes":
+        var = "_full,_performance-and-accuracy"
+        execution_mode = "valid"
+    elif env.get('CM_MLPERF_ACCURACY_MODE', '') == "yes":
+        var = "_full,_accuracy-only"
+        execution_mode = "valid"
+    elif env.get('CM_MLPERF_PERFORMANCE_MODE', '') == "yes":
+        var = "_full,_performance-only"
+        execution_mode = "valid"
     else:
-        var="_find-performance"
-        execution_mode="test"
+        var = "_find-performance"
+        execution_mode = "test"
 
-    precisions = [ ]
+    precisions = []
     if env.get('CM_MLPERF_RUN_FP32', '') == "yes":
         precisions.append("fp32")
     if env.get('CM_MLPERF_RUN_INT8', '') == "yes":
@@ -156,10 +156,12 @@ def preprocess(i):
                     }
                 }
                 if add_deps_recursive:
-                    cm_input['add_deps_recursive'] = add_deps_recursive #script automation will merge adr and add_deps_recursive
+                    # script automation will merge adr and add_deps_recursive
+                    cm_input['add_deps_recursive'] = add_deps_recursive
 
                 if adr:
-                    utils.merge_dicts({'dict1':cm_input['adr'], 'dict2':adr, 'append_lists':True, 'append_unique':True})
+                    utils.merge_dicts(
+                        {'dict1': cm_input['adr'], 'dict2': adr, 'append_lists': True, 'append_unique': True})
 
                 if env.get('CM_MLPERF_INFERENCE_RESULTS_DIR', '') != '':
                     cm_input['results_dir'] = env['CM_MLPERF_INFERENCE_RESULTS_DIR']
@@ -167,20 +169,21 @@ def preprocess(i):
                 if env.get('CM_MLPERF_INFERENCE_SUBMISSION_DIR', '') != '':
                     cm_input['submission_dir'] = env['CM_MLPERF_INFERENCE_SUBMISSION_DIR']
 
-                if env.get('CM_MLPERF_FIND_PERFORMANCE_MODE','') == "yes" and env.get('CM_MLPERF_NO_RERUN','') != 'yes':
+                if env.get('CM_MLPERF_FIND_PERFORMANCE_MODE', '') == "yes" and env.get(
+                        'CM_MLPERF_NO_RERUN', '') != 'yes':
                     cm_input['rerun'] = True
 
-                if env.get('CM_MLPERF_POWER','') == "yes":
+                if env.get('CM_MLPERF_POWER', '') == "yes":
                     cm_input['power'] = 'yes'
 
-                if env.get('CM_MLPERF_ACCURACY_MODE','') == "yes":
+                if env.get('CM_MLPERF_ACCURACY_MODE', '') == "yes":
                     cm_input['mode'] = 'accuracy'
                     print(cm_input)
                     r = cmind.access(cm_input)
                     if r['return'] > 0:
                         return r
 
-                if env.get('CM_MLPERF_PERFORMANCE_MODE','') == "yes":
+                if env.get('CM_MLPERF_PERFORMANCE_MODE', '') == "yes":
                     cm_input['mode'] = 'performance'
 
                     print(cm_input)
@@ -189,21 +192,22 @@ def preprocess(i):
                         return r
 
                 if env.get('CM_TEST_ONE_RUN', '') == "yes":
-                    return {'return':0}
+                    return {'return': 0}
 
         clean_input = {
-                    'action': 'rm',
-                    'automation': 'cache',
-                    'tags': 'get,preprocessed,dataset,_for.mobilenet',
+            'action': 'rm',
+            'automation': 'cache',
+            'tags': 'get,preprocessed,dataset,_for.mobilenet',
                     'quiet': True,
                     'v': verbose,
                     'f': 'True'
-                }
+        }
         r = cmind.access(clean_input)
-        #if r['return'] > 0:
+        # if r['return'] > 0:
         #    return r
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
-    return {'return':0}
+    return {'return': 0}

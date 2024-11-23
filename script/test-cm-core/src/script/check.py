@@ -1,8 +1,10 @@
 def check_return(r):
     if 'return' not in r:
-        raise Exception('CM access function should always return key \'return\'!')
+        raise Exception(
+            'CM access function should always return key \'return\'!')
     if 'error' in r:
         raise Exception(r['error'])
+
 
 def check_list(r, string, found=True):
     check_return(r)

@@ -4,6 +4,7 @@ import os
 import subprocess
 from os.path import exists
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -17,13 +18,15 @@ def preprocess(i):
     output_file = env.get("CM_TAR_OUTFILE", "")
     input_dirname = os.path.basename(input_dir)
     if output_file == "":
-        output_file = input_dirname+".tar.gz"
+        output_file = input_dirname + ".tar.gz"
     from pathlib import Path
     input_path = Path(input_dir)
     cd_dir = input_path.parent.absolute()
-    CMD =  'tar --directory '+str(cd_dir)+' -czf ' + os.path.join(output_dir, output_file) + ' ' + input_dirname
+    CMD = 'tar --directory ' + \
+        str(cd_dir) + ' -czf ' + os.path.join(output_dir,
+                                              output_file) + ' ' + input_dirname
     print(CMD)
     ret = os.system(CMD)
-    print("Tar file "+os.path.join(output_dir, output_file)+ " created")
+    print("Tar file " + os.path.join(output_dir, output_file) + " created")
 
-    return {'return':ret}
+    return {'return': ret}

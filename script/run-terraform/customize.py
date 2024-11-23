@@ -4,12 +4,15 @@ import os
 import shutil
 import json
 
+
 def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
     script_dir = i['run_script_input']['path']
-    config_dir = os.path.join(script_dir, env.get('CM_TERRAFORM_CONFIG_DIR_NAME', ''))
+    config_dir = os.path.join(
+        script_dir, env.get(
+            'CM_TERRAFORM_CONFIG_DIR_NAME', ''))
     env['CM_TERRAFORM_CONFIG_DIR'] = config_dir
     cache_dir = os.getcwd()
 
@@ -19,6 +22,7 @@ def preprocess(i):
     env['CM_TERRAFORM_RUN_DIR'] = cache_dir
 
     return {'return': 0}
+
 
 def postprocess(i):
     env = i['env']
@@ -47,7 +51,7 @@ def postprocess(i):
                 'action': 'run',
                 'tags': 'remote,run,ssh',
                 'env': {
-                    },
+                },
                 'host': public_ip,
                 'user': user,
                 'skip_host_verify': True,
@@ -62,18 +66,18 @@ def postprocess(i):
                     "source ~/.profile",
                     "cm pull repo ctuning@mlcommons-ck",
                     "cm run script --tags=get,sys-utils-cm"
-                    ]
-                }
+                ]
+            }
             if env.get('CM_TERRAFORM_RUN_COMMANDS'):
                 run_cmds = env.get('CM_TERRAFORM_RUN_COMMANDS')
                 for cmd in run_cmds:
-                    cmd=cmd.replace(":", "=")
-                    cmd=cmd.replace(";;", ",")
+                    cmd = cmd.replace(":", "=")
+                    cmd = cmd.replace(";;", ",")
                     run_input['run_cmds'].append(cmd)
             r = cm.access(run_input)
             if r['return'] > 0:
                 return r
-            #print(r)
+            # print(r)
         print_attr(instance_attributes, "id")
         print_attr(instance_attributes, "instance_type")
         print_attr(instance_attributes, "public_ip")
@@ -81,6 +85,7 @@ def postprocess(i):
         print_attr(instance_attributes, "security_groups")
 
     return {'return': 0}
+
 
 def print_attr(instance_attributes, key):
     if key in instance_attributes:

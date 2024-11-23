@@ -146,14 +146,14 @@ class CAutomation(Automation):
                     if len(new_env) > 0:
                         print('    New env:')
                         print(
-    json.dumps(
-        new_env,
-        indent=6,
-        sort_keys=True).replace(
-            '{',
-            '').replace(
-                '}',
-                 ''))
+                            json.dumps(
+                                new_env,
+                                indent=6,
+                                sort_keys=True).replace(
+                                '{',
+                                '').replace(
+                                '}',
+                                ''))
 
                     new_state = cached_state.get('new_state', {})
                     if len(new_state) > 0:

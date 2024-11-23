@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -13,7 +14,8 @@ def preprocess(i):
 
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
@@ -26,4 +28,4 @@ def postprocess(i):
     env['CM_CACHE_DIR'] = cache_dir
     env['CM_GET_DEPENDENT_CACHED_PATH'] = cache_dir
 
-    return {'return':0}
+    return {'return': 0}
