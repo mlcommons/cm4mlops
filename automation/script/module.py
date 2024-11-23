@@ -15,6 +15,7 @@ from cmind.automation import Automation
 from cmind import utils
 from cmind import __version__ as current_cm_version
 
+
 class CAutomation(Automation):
     """
     CM "script" automation actions
@@ -52,6 +53,8 @@ class CAutomation(Automation):
                                'CM_DETECTED_VERSION',
                                'CM_INPUT',
                                'CM_OUTPUT',
+                               'CM_OUTBASENAME',
+                               'CM_OUTDIRNAME',
                                'CM_NAME',
                                'CM_EXTRA_CACHE_TAGS',
                                'CM_TMP_*',
@@ -62,6 +65,8 @@ class CAutomation(Automation):
 
         self.input_flags_converted_to_env = ['input',
                                              'output',
+                                             'outdirname',
+                                             'outbasename',
                                              'name',
                                              'extra_cache_tags',
                                              'skip_compile',
@@ -71,10 +76,8 @@ class CAutomation(Automation):
                                              'git_ssh',
                                              'gh_token']
 
-
-
-
     ############################################################
+
     def run(self, i):
         """
         Run CM script
@@ -106,6 +109,9 @@ class CAutomation(Automation):
 
           (input) (str): converted to env.CM_INPUT  (local env)
           (output) (str): converted to env.CM_OUTPUT (local env)
+
+          (outbasename) (str): converted to env.CM_OUTBASENAME (local env)
+          (outdirname) (str): converted to env.CM_OUTDIRNAME (local env)
 
           (extra_cache_tags) (str): converted to env.CM_EXTRA_CACHE_TAGS and used to add to caching (local env)
 
@@ -212,8 +218,8 @@ class CAutomation(Automation):
 
         return r
 
-
     ############################################################
+
     def _run(self, i):
 
         from cmind import utils
@@ -227,7 +233,8 @@ class CAutomation(Automation):
 
         if repro:
             repro_prefix = i.get('repro_prefix', '')
-            if repro_prefix == '': repro_prefix = 'cm-run-script'
+            if repro_prefix == '':
+                repro_prefix = 'cm-run-script'
 
             repro_dir = i.get('repro_dir', '')
             if repro_dir == '':
@@ -235,9 +242,9 @@ class CAutomation(Automation):
                 if not os.path.isdir(repro_dir):
                     os.makedirs(repro_dir)
 
-            repro_prefix = os.path.join (repro_dir, repro_prefix)
+            repro_prefix = os.path.join(repro_dir, repro_prefix)
 
-        if repro_prefix!='':
+        if repro_prefix != '':
             dump_repro_start(repro_prefix, i)
 
         recursion = i.get('recursion', False)
@@ -245,21 +252,22 @@ class CAutomation(Automation):
         # If first script run, check if can write to current directory
         if not recursion and not i.get('skip_write_test', False):
             if not can_write_to_current_directory():
-                return {'return':1, 'error':'Current directory "{}" is not writable - please change it'.format(os.getcwd())}
+                return {
+                    'return': 1, 'error': 'Current directory "{}" is not writable - please change it'.format(os.getcwd())}
 
             # Check if has default config
-            r = self.cmind.access({'action':'load', 'automation':'cfg,88dce9c160324c5d', 'artifact':'default'})
+            r = self.cmind.access({'action': 'load',
+                                   'automation': 'cfg,88dce9c160324c5d',
+                                   'artifact': 'default'})
             if r['return'] == 0:
                 config = r['config']
 
-                script_input = config.get('script',{})
+                script_input = config.get('script', {})
 
-                if len(script_input)>0:
-                    utils.merge_dicts({'dict1':i, 'dict2':script_input})
+                if len(script_input) > 0:
+                    utils.merge_dicts({'dict1': i, 'dict2': script_input})
 
-
-
-        recursion_int = int(i.get('recursion_int',0))+1
+        recursion_int = int(i.get('recursion_int', 0)) + 1
 
         start_time = time.time()
 
@@ -269,32 +277,38 @@ class CAutomation(Automation):
         if extra_cli != '':
             from cmind import cli
             r = cli.parse(extra_cli)
-            if r['return']>0: return r
+            if r['return'] > 0:
+                return r
 
             cm_input = r['cm_input']
 
-            utils.merge_dicts({'dict1':i, 'dict2':cm_input, 'append_lists':True, 'append_unique':True})
+            utils.merge_dicts({'dict1': i,
+                               'dict2': cm_input,
+                               'append_lists': True,
+                               'append_unique': True})
 
         # Check simplified CMD: cm run script "get compiler"
         # If artifact has spaces, treat them as tags!
-        artifact = i.get('artifact','')
-        if ' ' in artifact: # or ',' in artifact:
-            del(i['artifact'])
-            if 'parsed_artifact' in i: del(i['parsed_artifact'])
+        artifact = i.get('artifact', '')
+        if ' ' in artifact:  # or ',' in artifact:
+            del (i['artifact'])
+            if 'parsed_artifact' in i:
+                del (i['parsed_artifact'])
             # Force substitute tags
-            i['tags']=artifact.replace(' ',',')
+            i['tags'] = artifact.replace(' ', ',')
 
         # Check if has extra tags as a second artifact
         # Example: cmr . "_python _tiny"
 
-        parsed_artifacts = i.get('parsed_artifacts',[])
-        if len(parsed_artifacts)>0:
+        parsed_artifacts = i.get('parsed_artifacts', [])
+        if len(parsed_artifacts) > 0:
             extra_tags = parsed_artifacts[0][0][0]
             if ' ' in extra_tags or ',' in extra_tags:
                 # Add tags
-                x=i.get('tags','')
-                if x!='': x+=','
-                i['tags']=x+extra_tags.replace(' ',',')
+                x = i.get('tags', '')
+                if x != '':
+                    x += ','
+                i['tags'] = x + extra_tags.replace(' ', ',')
 
         # Recursion spaces needed to format log and print
         recursion_spaces = i.get('recursion_spaces', '')
@@ -302,32 +316,38 @@ class CAutomation(Automation):
         remembered_selections = i.get('remembered_selections', [])
 
         # Get current env and state before running this script and sub-scripts
-        env = i.get('env',{})
-        state = i.get('state',{})
-        const = i.get('const',{})
-        const_state = i.get('const_state',{})
+        env = i.get('env', {})
+        state = i.get('state', {})
+        const = i.get('const', {})
+        const_state = i.get('const_state', {})
 
-        # Save current env and state to detect new env and state after running a given script
+        # Save current env and state to detect new env and state after running
+        # a given script
         saved_env = copy.deepcopy(env)
         saved_state = copy.deepcopy(state)
 
-        for key in [ "env", "state", "const", "const_state" ]:
-            if i.get("local_"+key):
+        for key in ["env", "state", "const", "const_state"]:
+            if i.get("local_" + key):
                 if not i.get(key, {}):
                     i[key] = {}
-                utils.merge_dicts({'dict1':i[key], 'dict2':i['local_'+key], 'append_lists':True, 'append_unique':True})
+                utils.merge_dicts({'dict1': i[key],
+                                   'dict2': i['local_' + key],
+                                   'append_lists': True,
+                                   'append_unique': True})
 
-        add_deps = i.get('ad',{})
+        add_deps = i.get('ad', {})
         if not add_deps:
-            add_deps = i.get('add_deps',{})
+            add_deps = i.get('add_deps', {})
         else:
-            utils.merge_dicts({'dict1':add_deps, 'dict2':i.get('add_deps', {}), 'append_lists':True, 'append_unique':True})
+            utils.merge_dicts({'dict1': add_deps, 'dict2': i.get(
+                'add_deps', {}), 'append_lists': True, 'append_unique': True})
 
         add_deps_recursive = i.get('adr', {})
         if not add_deps_recursive:
             add_deps_recursive = i.get('add_deps_recursive', {})
         else:
-            utils.merge_dicts({'dict1':add_deps_recursive, 'dict2':i.get('add_deps_recursive', {}), 'append_lists':True, 'append_unique':True})
+            utils.merge_dicts({'dict1': add_deps_recursive, 'dict2': i.get(
+                'add_deps_recursive', {}), 'append_lists': True, 'append_unique': True})
 
         save_env = i.get('save_env', False)
 
@@ -339,27 +359,34 @@ class CAutomation(Automation):
         if not recursion and show_space:
             start_disk_stats = shutil.disk_usage("/")
 
-        extra_recursion_spaces = '  '# if verbose else ''
+        extra_recursion_spaces = '  '  # if verbose else ''
 
         skip_cache = i.get('skip_cache', False)
         force_cache = i.get('force_cache', False)
 
         fake_run = i.get('fake_run', False)
-        fake_run = i.get('fake_run', False) if 'fake_run' in i else i.get('prepare', False)
-        if fake_run: env['CM_TMP_FAKE_RUN']='yes'
+        fake_run = i.get(
+            'fake_run',
+            False) if 'fake_run' in i else i.get(
+            'prepare',
+            False)
+        if fake_run:
+            env['CM_TMP_FAKE_RUN'] = 'yes'
 
         debug_uid = i.get('debug_uid', '')
-        if debug_uid!='':
+        if debug_uid != '':
             r = _update_env(env, 'CM_TMP_DEBUG_UID', debug_uid)
-            if r['return']>0: return r
+            if r['return'] > 0:
+                return r
 
         fake_deps = i.get('fake_deps', False)
-        if fake_deps: env['CM_TMP_FAKE_DEPS']='yes'
+        if fake_deps:
+            env['CM_TMP_FAKE_DEPS'] = 'yes'
 
         if str(i.get('skip_sys_utils', '')).lower() in ['true', 'yes']:
-            env['CM_SKIP_SYS_UTILS']='yes'
+            env['CM_SKIP_SYS_UTILS'] = 'yes'
         if str(i.get('skip_sudo', '')).lower() in ['true', 'yes']:
-            env['CM_TMP_SKIP_SUDO']='yes'
+            env['CM_TMP_SKIP_SUDO'] = 'yes'
 
         run_state = i.get('run_state', self.run_state)
         if not run_state.get('version_info', []):
@@ -372,25 +399,30 @@ class CAutomation(Automation):
         # Check verbose and silent
         verbose = False
 
-        silent = True if str(i.get('silent', '')).lower() in ['true', 'yes', 'on'] else False
+        silent = True if str(i.get('silent', '')).lower() in [
+            'true', 'yes', 'on'] else False
 
         if not silent:
-            silent = True if str(i.get('s', '')).lower() in ['true', 'yes', 'on'] else False
+            silent = True if str(i.get('s', '')).lower() in [
+                'true', 'yes', 'on'] else False
 
         if silent:
-            if 'verbose' in i: del(i['verbose'])
-            if 'v' in i: del(i['v'])
-            env['CM_TMP_SILENT']='yes'
-            run_state['tmp_silent']=True
+            if 'verbose' in i:
+                del (i['verbose'])
+            if 'v' in i:
+                del (i['v'])
+            env['CM_TMP_SILENT'] = 'yes'
+            run_state['tmp_silent'] = True
 
-        if 'verbose' in i: verbose=i['verbose']
-        elif 'v' in i: verbose=i['v']
+        if 'verbose' in i:
+            verbose = i['verbose']
+        elif 'v' in i:
+            verbose = i['v']
 
         if verbose:
-            env['CM_VERBOSE']='yes'
-            run_state['tmp_verbose']=True
+            env['CM_VERBOSE'] = 'yes'
+            run_state['tmp_verbose'] = True
             logging.getLogger().setLevel(logging.DEBUG)
-
 
         print_deps = i.get('print_deps', False)
         print_versions = i.get('print_versions', False)
@@ -402,7 +434,7 @@ class CAutomation(Automation):
 
         cmd = i.get('cmd', '')
         # Capturing the input command if it is coming from an access function
-        if not cmd and 'cmd' in i.get('input',''):
+        if not cmd and 'cmd' in i.get('input', ''):
             i['cmd'] = i['input']['cmd']
             cmd = i['cmd']
 
@@ -412,32 +444,39 @@ class CAutomation(Automation):
 
         ignore_script_error = i.get('ignore_script_error', False)
 
-        # Detect current path and record in env for further use in native scripts
+        # Detect current path and record in env for further use in native
+        # scripts
         current_path = os.path.abspath(os.getcwd())
         r = _update_env(env, 'CM_TMP_CURRENT_PATH', current_path)
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
         # Check if quiet mode
-        quiet = i.get('quiet', False) if 'quiet' in i else (env.get('CM_QUIET','').lower() == 'yes')
-        if quiet: env['CM_QUIET'] = 'yes'
+        quiet = i.get(
+            'quiet',
+            False) if 'quiet' in i else (
+            env.get(
+                'CM_QUIET',
+                '').lower() == 'yes')
+        if quiet:
+            env['CM_QUIET'] = 'yes'
 
         skip_remembered_selections = i.get('skip_remembered_selections', False) if 'skip_remembered_selections' in i \
-            else (env.get('CM_SKIP_REMEMBERED_SELECTIONS','').lower() == 'yes')
-        if skip_remembered_selections: env['CM_SKIP_REMEMBERED_SELECTIONS'] = 'yes'
+            else (env.get('CM_SKIP_REMEMBERED_SELECTIONS', '').lower() == 'yes')
+        if skip_remembered_selections:
+            env['CM_SKIP_REMEMBERED_SELECTIONS'] = 'yes'
 
         # Prepare debug info
         parsed_script = i.get('parsed_artifact')
         parsed_script_alias = parsed_script[0][0] if parsed_script is not None else ''
 
-
-
-
-
-        # Get and cache minimal host OS info to be able to run scripts and manage OS environment
+        # Get and cache minimal host OS info to be able to run scripts and
+        # manage OS environment
         if len(self.os_info) == 0:
-            r = self.cmind.access({'action':'get_host_os_info',
-                                   'automation':'utils,dc2743f8450541e3'})
-            if r['return']>0: return r
+            r = self.cmind.access({'action': 'get_host_os_info',
+                                   'automation': 'utils,dc2743f8450541e3'})
+            if r['return'] > 0:
+                return r
 
             self.os_info = r['info']
 
@@ -447,12 +486,23 @@ class CAutomation(Automation):
         bat_ext = os_info['bat_ext']
 
         # Add permanent env from OS (such as CM_WINDOWS:"yes" on Windows)
-        env_from_os_info = os_info.get('env',{})
-        if len(env_from_os_info)>0:
+        env_from_os_info = os_info.get('env', {})
+        if len(env_from_os_info) > 0:
             env.update(env_from_os_info)
 
-        #take some env from the user environment
-        keys = [ "GH_TOKEN", "ftp_proxy", "FTP_PROXY", "http_proxy", "HTTP_PROXY", "https_proxy", "HTTPS_PROXY", "no_proxy", "NO_PROXY", "socks_proxy", "SOCKS_PROXY" ]
+        # take some env from the user environment
+        keys = [
+            "GH_TOKEN",
+            "ftp_proxy",
+            "FTP_PROXY",
+            "http_proxy",
+            "HTTP_PROXY",
+            "https_proxy",
+            "HTTPS_PROXY",
+            "no_proxy",
+            "NO_PROXY",
+            "socks_proxy",
+            "SOCKS_PROXY"]
         for key in keys:
             if os.environ.get(key, '') != '' and env.get(key, '') == '':
                 env[key] = os.environ[key]
@@ -464,22 +514,28 @@ class CAutomation(Automation):
                 env['CM_TMP_' + key.upper()] = value
 
         for key in self.input_flags_converted_to_env:
-            value = i.get(key, '')
-            if type(value)==str: value=value.strip()
-            if value != '':
-                env['CM_' + key.upper()] = value
+            value = i.get(
+                key,
+                '').strip() if isinstance(
+                i.get(
+                    key,
+                    ''),
+                str) else i.get(
+                key,
+                '')
+            if value:
+                env[f"CM_{key.upper()}"] = value
 
         r = update_env_with_values(env)
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
-
-        ############################################################################################################
+        #######################################################################
         # Check if we want to skip cache (either by skip_cache or by fake_run)
         force_skip_cache = True if skip_cache else False
         force_skip_cache = True if fake_run else force_skip_cache
 
-
-        ############################################################################################################
+        #######################################################################
         # Find CM script(s) based on their tags and variations to get their meta and customize this workflow.
         # We will need to decide how to select if more than 1 (such as "get compiler")
         #
@@ -488,20 +544,22 @@ class CAutomation(Automation):
         # STEP 100 Input: Search sripts by i['tags'] (includes variations starting from _) and/or i['parsed_artifact']
         #                 tags_string = i['tags']
 
-        tags_string = i.get('tags','').strip()
+        tags_string = i.get('tags', '').strip()
 
         ii = utils.sub_input(i, self.cmind.cfg['artifact_keys'])
 
         ii['tags'] = tags_string
         ii['out'] = None
 
-
         # if cm run script without tags/artifact and with --help
-        if len(ii.get('parsed_artifact',[]))==0 and ii.get('tags','')=='' and i.get('help',False):
-            return utils.call_internal_module(self, __file__, 'module_help', 'print_help', {'meta':{}, 'path':''})
+        if len(ii.get('parsed_artifact', [])) == 0 and ii.get(
+                'tags', '') == '' and i.get('help', False):
+            return utils.call_internal_module(
+                self, __file__, 'module_help', 'print_help', {'meta': {}, 'path': ''})
 
         r = self.search(ii)
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
         # Search function will return
 
@@ -534,28 +592,30 @@ class CAutomation(Automation):
 #        else:
 #            logging.info(recursion_spaces + '* Running ' + cm_script_info)
 
-
         cm_script_info = i.get('script_call_prefix', '').strip()
-        if cm_script_info == '': cm_script_info = 'cm run script'
-        if not cm_script_info.endswith(' '): cm_script_info+=' '
+        if cm_script_info == '':
+            cm_script_info = 'cm run script'
+        if not cm_script_info.endswith(' '):
+            cm_script_info += ' '
 
         x = '"'
         y = ' '
-        if parsed_script_alias !='' :
+        if parsed_script_alias != '':
             cm_script_info += parsed_script_alias
             x = ' --tags="'
             y = ','
 
-        if len(script_tags)>0 or len(variation_tags)>0:
+        if len(script_tags) > 0 or len(variation_tags) > 0:
             cm_script_info += x
 
-            if len(script_tags)>0:
-                cm_script_info += script_tags_string.replace(',',y)
+            if len(script_tags) > 0:
+                cm_script_info += script_tags_string.replace(',', y)
 
-            if len(variation_tags)>0:
-                if len(script_tags)>0: cm_script_info+=' '
+            if len(variation_tags) > 0:
+                if len(script_tags) > 0:
+                    cm_script_info += ' '
 
-                x_variation_tags = ['_'+v for v in variation_tags]
+                x_variation_tags = ['_' + v for v in variation_tags]
                 cm_script_info += y.join(x_variation_tags)
 
             cm_script_info += '"'
@@ -563,62 +623,56 @@ class CAutomation(Automation):
 #        if verbose:
 #            logging.info('')
 
-        if not run_state.get('tmp_silent', False):            logging.info(recursion_spaces + '* ' + cm_script_info)
+        if not run_state.get('tmp_silent', False):
+            logging.info(recursion_spaces + '* ' + cm_script_info)
 
-
-        #############################################################################
+        #######################################################################
         # Report if scripts were not found or there is an ambiguity with UIDs
         if not r['found_scripts']:
-            return {'return':1, 'error': 'no scripts were found with above tags (when variations ignored)'}
+            return {
+                'return': 1, 'error': 'no scripts were found with above tags (when variations ignored)'}
 
         if len(list_of_found_scripts) == 0:
-            return {'return':16, 'error':'no scripts were found with above tags and variations\n'+r.get('warning', '')}
+            return {
+                'return': 16, 'error': 'no scripts were found with above tags and variations\n' + r.get('warning', '')}
 
         # Sometimes there is an ambiguity when someone adds a script
         # while duplicating a UID. In such case, we will return >1 script
         # and will start searching in the cache ...
         # We are detecing such cases here:
-        if len(list_of_found_scripts)>1 and script_tags_string=='' and parsed_script_alias!='' and '?' not in parsed_script_alias and '*' not in parsed_script_alias:
-            x='Ambiguity in the following scripts have the same UID - please change that in _cm.json or _cm.yaml:\n'
+        if len(list_of_found_scripts) > 1 and script_tags_string == '' and parsed_script_alias != '' and '?' not in parsed_script_alias and '*' not in parsed_script_alias:
+            x = 'Ambiguity in the following scripts have the same UID - please change that in _cm.json or _cm.yaml:\n'
             for y in list_of_found_scripts:
-                x+=' * '+y.path+'\n'
+                x += ' * ' + y.path + '\n'
 
-            return {'return':1, 'error':x}
+            return {'return': 1, 'error': x}
 
         # STEP 100 Output: list_of_found_scripts based on tags (with variations) and/or parsed_artifact
         #                  script_tags [] - contains tags without variations (starting from _ such as _cuda)
         #                  variation_tags [] - contains only variations tags (without _)
         #                  string_tags_string [str] (joined script_tags)
 
-
-
-
-
-
-
-
-        #############################################################################
+        #######################################################################
         # Sort scripts for better determinism
-        list_of_found_scripts = sorted(list_of_found_scripts, key = lambda a: (a.meta.get('sort',0),
-                                                                               a.path))
-        logging.debug(recursion_spaces + '  - Number of scripts found: {}'.format(len(list_of_found_scripts)))
+        list_of_found_scripts = sorted(list_of_found_scripts, key=lambda a: (a.meta.get('sort', 0),
+                                                                             a.path))
+        logging.debug(recursion_spaces +
+                      '  - Number of scripts found: {}'.format(len(list_of_found_scripts)))
 
         # Check if script selection is remembered
         if not skip_remembered_selections and len(list_of_found_scripts) > 1:
             for selection in remembered_selections:
-                if selection['type'] == 'script' and set(selection['tags'].split(',')) == set(script_tags_string.split(',')):
+                if selection['type'] == 'script' and set(
+                        selection['tags'].split(',')) == set(script_tags_string.split(',')):
                     # Leave 1 entry in the found list
                     list_of_found_scripts = [selection['cached_script']]
-                    logging.debug(recursion_spaces + '  - Found remembered selection with tags: {}'.format(script_tags_string))
+                    logging.debug(
+                        recursion_spaces +
+                        '  - Found remembered selection with tags: {}'.format(script_tags_string))
                     break
 
-
-        # STEP 200 Output: potentially pruned list_of_found_scripts if selection of multple scripts was remembered
-
-
-
-
-
+        # STEP 200 Output: potentially pruned list_of_found_scripts if
+        # selection of multple scripts was remembered
 
         # STEP 300: If more than one CM script found (example: "get compiler"),
         # first, check if selection was already remembered!
@@ -630,55 +684,59 @@ class CAutomation(Automation):
 
         # If 1 script found and script_tags == '', pick them from the meta
         if script_tags_string == '' and len(list_of_found_scripts) == 1:
-            script_tags_string = ','.join(list_of_found_scripts[0].meta.get('tags',[]))
+            script_tags_string = ','.join(
+                list_of_found_scripts[0].meta.get('tags', []))
 
-        # Found 1 or more scripts. Scans cache tags to find at least 1 with cache==True
+        # Found 1 or more scripts. Scans cache tags to find at least 1 with
+        # cache==True
         preload_cached_scripts = False
         for script in list_of_found_scripts:
-            if script.meta.get('cache', False) == True or (script.meta.get('can_force_cache', False) and force_cache):
+            if script.meta.get('cache', False) == True or (
+                    script.meta.get('can_force_cache', False) and force_cache):
                 preload_cached_scripts = True
                 break
 
-        # STEP 300 Output: preload_cached_scripts = True if at least one of the list_of_found_scripts must be cached
-
-
-
-
-
+        # STEP 300 Output: preload_cached_scripts = True if at least one of the
+        # list_of_found_scripts must be cached
 
         # STEP 400: If not force_skip_cache and at least one script can be cached, find (preload) related cache entries for found scripts
-        # STEP 400 input:  script_tags and -tmp (to avoid unfinished scripts particularly when installation fails)
+        # STEP 400 input:  script_tags and -tmp (to avoid unfinished scripts
+        # particularly when installation fails)
 
         cache_list = []
 
         if not force_skip_cache and preload_cached_scripts:
             cache_tags_without_tmp_string = '-tmp'
-            if script_tags_string !='':
+            if script_tags_string != '':
                 cache_tags_without_tmp_string += ',' + script_tags_string
             if variation_tags:
-                cache_tags_without_tmp_string += ',_' + ",_".join(variation_tags)
+                cache_tags_without_tmp_string += ',_' + \
+                    ",_".join(variation_tags)
             # variation_tags are prefixed with "_" but the CM search function knows only tags and so we need to change "_-" to "-_" for excluding any variations
-            # This change can later be moved to a search function specific to cache
-            cache_tags_without_tmp_string = cache_tags_without_tmp_string.replace(",_-", ",-_")
+            # This change can later be moved to a search function specific to
+            # cache
+            cache_tags_without_tmp_string = cache_tags_without_tmp_string.replace(
+                ",_-", ",-_")
 
-            logging.debug(recursion_spaces + '  - Searching for cached script outputs with the following tags: {}'.format(cache_tags_without_tmp_string))
+            logging.debug(
+                recursion_spaces +
+                '  - Searching for cached script outputs with the following tags: {}'.format(cache_tags_without_tmp_string))
 
-            search_cache = {'action':'find',
-                            'automation':self.meta['deps']['cache'],
-                            'tags':cache_tags_without_tmp_string}
+            search_cache = {'action': 'find',
+                            'automation': self.meta['deps']['cache'],
+                            'tags': cache_tags_without_tmp_string}
             rc = self.cmind.access(search_cache)
-            if rc['return']>0: return rc
+            if rc['return'] > 0:
+                return rc
 
             cache_list = rc['list']
 
-            logging.debug(recursion_spaces + '    - Number of cached script outputs found: {}'.format(len(cache_list)))
+            logging.debug(
+                recursion_spaces +
+                '    - Number of cached script outputs found: {}'.format(
+                    len(cache_list)))
 
             # STEP 400 output: cache_list
-
-
-
-
-
 
         # STEP 500: At this stage with have cache_list related to either 1 or more scripts (in case of get,compiler)
         #           If more than 1: Check if in cache and reuse it or ask user to select
@@ -687,19 +745,22 @@ class CAutomation(Automation):
         if len(list_of_found_scripts) > 0:
             # If only tags are used, check if there are no cached scripts with tags - then we will reuse them
             # The use case: cm run script --tags=get,compiler
-            #  CM script will always ask to select gcc,llvm,etc even if any of them will be already cached
+            # CM script will always ask to select gcc,llvm,etc even if any of
+            # them will be already cached
             if len(cache_list) > 0:
                 new_list_of_found_scripts = []
 
                 for cache_entry in cache_list:
-                    # Find associated script and add to the list_of_found_scripts
+                    # Find associated script and add to the
+                    # list_of_found_scripts
                     associated_script_artifact = cache_entry.meta['associated_script_artifact']
 
                     x = associated_script_artifact.find(',')
-                    if x<0:
-                        return {'return':1, 'error':'CM artifact format is wrong "{}" - no comma found'.format(associated_script_artifact)}
+                    if x < 0:
+                        return {'return': 1, 'error': 'CM artifact format is wrong "{}" - no comma found'.format(
+                            associated_script_artifact)}
 
-                    associated_script_artifact_uid = associated_script_artifact[x+1:]
+                    associated_script_artifact_uid = associated_script_artifact[x + 1:]
 
                     cache_entry.meta['associated_script_artifact_uid'] = associated_script_artifact_uid
 
@@ -710,19 +771,27 @@ class CAutomation(Automation):
                             if script not in new_list_of_found_scripts:
                                 new_list_of_found_scripts.append(script)
 
-                # Avoid case when all scripts are pruned due to just 1 variation used
-                if len(new_list_of_found_scripts)>0:
+                # Avoid case when all scripts are pruned due to just 1
+                # variation used
+                if len(new_list_of_found_scripts) > 0:
                     list_of_found_scripts = new_list_of_found_scripts
 
             # Select scripts
             if len(list_of_found_scripts) > 1:
-                select_script = select_script_artifact(list_of_found_scripts, 'script', recursion_spaces, False, script_tags_string, quiet, verbose)
+                select_script = select_script_artifact(
+                    list_of_found_scripts,
+                    'script',
+                    recursion_spaces,
+                    False,
+                    script_tags_string,
+                    quiet,
+                    verbose)
 
                 # Remember selection
                 if not skip_remembered_selections:
                     remembered_selections.append({'type': 'script',
-                                                  'tags':script_tags_string,
-                                                  'cached_script':list_of_found_scripts[select_script]})
+                                                  'tags': script_tags_string,
+                                                  'cached_script': list_of_found_scripts[select_script]})
             else:
                 select_script = 0
 
@@ -745,60 +814,71 @@ class CAutomation(Automation):
         path = script_artifact.path
 
         # Check min CM version requirement
-        min_cm_version = meta.get('min_cm_version','').strip()
+        min_cm_version = meta.get('min_cm_version', '').strip()
         if min_cm_version != '':
             # Check compare version while avoiding craches for older version
             if 'compare_versions' in dir(utils):
-                comparison = utils.compare_versions(current_cm_version, min_cm_version)
+                comparison = utils.compare_versions(
+                    current_cm_version, min_cm_version)
                 if comparison < 0:
-                    return {'return':1, 'error':'CM script requires CM version >= {} while current CM version is {} - please update using "pip install cmind -U"'.format(min_cm_version, current_cm_version)}
+                    return {'return': 1, 'error': 'CM script requires CM version >= {} while current CM version is {} - please update using "pip install cmind -U"'.format(
+                        min_cm_version, current_cm_version)}
 
         # Check path to repo
         script_repo_path = script_artifact.repo_path
 
         script_repo_path_with_prefix = script_artifact.repo_path
         if script_artifact.repo_meta.get('prefix', '') != '':
-            script_repo_path_with_prefix = os.path.join(script_repo_path, script_artifact.repo_meta['prefix'])
+            script_repo_path_with_prefix = os.path.join(
+                script_repo_path, script_artifact.repo_meta['prefix'])
 
         env['CM_TMP_CURRENT_SCRIPT_REPO_PATH'] = script_repo_path
         env['CM_TMP_CURRENT_SCRIPT_REPO_PATH_WITH_PREFIX'] = script_repo_path_with_prefix
 
         # Check if has --help
-        if i.get('help',False):
-            return utils.call_internal_module(self, __file__, 'module_help', 'print_help', {'meta':meta, 'path':path})
+        if i.get('help', False):
+            return utils.call_internal_module(self, __file__, 'module_help', 'print_help', {
+                                              'meta': meta, 'path': path})
 
         run_state['script_id'] = meta['alias'] + "," + meta['uid']
         run_state['script_tags'] = script_tags
         run_state['script_variation_tags'] = variation_tags
-        run_state['script_repo_alias'] = script_artifact.repo_meta.get('alias', '')
-        run_state['script_repo_git'] = script_artifact.repo_meta.get('git', False)
+        run_state['script_repo_alias'] = script_artifact.repo_meta.get(
+            'alias', '')
+        run_state['script_repo_git'] = script_artifact.repo_meta.get(
+            'git', False)
 
         if not recursion:
-            run_state['script_entry_repo_to_report_errors'] = meta.get('repo_to_report_errors', '')
-            run_state['script_entry_repo_alias'] = script_artifact.repo_meta.get('alias', '')
-            run_state['script_entry_repo_git'] = script_artifact.repo_meta.get('git', False)
+            run_state['script_entry_repo_to_report_errors'] = meta.get(
+                'repo_to_report_errors', '')
+            run_state['script_entry_repo_alias'] = script_artifact.repo_meta.get(
+                'alias', '')
+            run_state['script_entry_repo_git'] = script_artifact.repo_meta.get(
+                'git', False)
 
-        deps = meta.get('deps',[])
-        post_deps = meta.get('post_deps',[])
-        prehook_deps = meta.get('prehook_deps',[])
-        posthook_deps = meta.get('posthook_deps',[])
+        deps = meta.get('deps', [])
+        post_deps = meta.get('post_deps', [])
+        prehook_deps = meta.get('prehook_deps', [])
+        posthook_deps = meta.get('posthook_deps', [])
         input_mapping = meta.get('input_mapping', {})
         docker_settings = meta.get('docker')
         docker_input_mapping = {}
         if docker_settings:
-            docker_input_mapping = docker_settings.get('docker_input_mapping', {})
+            docker_input_mapping = docker_settings.get(
+                'docker_input_mapping', {})
         new_env_keys_from_meta = meta.get('new_env_keys', [])
         new_state_keys_from_meta = meta.get('new_state_keys', [])
 
-        found_script_artifact = utils.assemble_cm_object(meta['alias'], meta['uid'])
+        found_script_artifact = utils.assemble_cm_object(
+            meta['alias'], meta['uid'])
 
-        found_script_tags = meta.get('tags',[])
+        found_script_tags = meta.get('tags', [])
 
         if i.get('debug_script', False):
-            debug_script_tags=','.join(found_script_tags)
+            debug_script_tags = ','.join(found_script_tags)
 
-        logging.debug(recursion_spaces+'  - Found script::{} in {}'.format(found_script_artifact, path))
-
+        logging.debug(recursion_spaces +
+                      '  - Found script::{} in {}'.format(found_script_artifact, path))
 
         # STEP 500 output: script_artifact - unique selected script artifact
         #                  (cache_list) pruned for the unique script if cache is used
@@ -806,50 +886,32 @@ class CAutomation(Automation):
         #                  path - script path
         #                  found_script_tags [] - all tags of the found script
 
-
-
-
-
-
-
-
-
-
-
-
-
         # HERE WE HAVE ORIGINAL ENV
 
         # STEP 600: Continue updating env
         # Add default env from meta to new env if not empty
         # (env NO OVERWRITE)
-        script_artifact_default_env = meta.get('default_env',{})
+        script_artifact_default_env = meta.get('default_env', {})
         for key in script_artifact_default_env:
             env.setdefault(key, script_artifact_default_env[key])
 
-
         # Force env from meta['env'] as a CONST
         # (env OVERWRITE)
-        script_artifact_env = meta.get('env',{})
+        script_artifact_env = meta.get('env', {})
         env.update(script_artifact_env)
 
-        script_artifact_state = meta.get('state',{})
-        utils.merge_dicts({'dict1':state, 'dict2':script_artifact_state, 'append_lists':True, 'append_unique':True})
+        script_artifact_state = meta.get('state', {})
+        utils.merge_dicts({'dict1': state,
+                           'dict2': script_artifact_state,
+                           'append_lists': True,
+                           'append_unique': True})
 
-        # Store the default_version in run_state -> may be overridden by variations
-        default_version = meta.get('default_version', '') #not used if version is given
+        # Store the default_version in run_state -> may be overridden by
+        # variations
+        default_version = meta.get(
+            'default_version',
+            '')  # not used if version is given
         run_state['default_version'] = default_version
-
-
-
-
-
-
-
-
-
-
-
 
         # STEP 700: Overwrite env with keys from the script input (to allow user friendly CLI)
         #           IT HAS THE PRIORITY OVER meta['default_env'] and meta['env'] but not over the meta from versions/variations
@@ -860,35 +922,52 @@ class CAutomation(Automation):
             update_env_from_input_mapping(const, i, input_mapping)
 
         # This mapping is done in module_misc
-        #if docker_input_mapping:
+        # if docker_input_mapping:
         #    update_env_from_input_mapping(env, i, docker_input_mapping)
         #    update_env_from_input_mapping(const, i, docker_input_mapping)
 
-
-        #Update env/state with cost
+        # Update env/state with cost
         env.update(const)
-        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
-
-
+        utils.merge_dicts({'dict1': state,
+                           'dict2': const_state,
+                           'append_lists': True,
+                           'append_unique': True})
 
         # STEP 800: Process variations and update env (overwrite from env and update form default_env)
         #           VARIATIONS HAS THE PRIORITY OVER
-        # MULTIPLE VARIATIONS (THAT CAN BE TURNED ON AT THE SAME TIME) SHOULD NOT HAVE CONFLICTING ENV
+        # MULTIPLE VARIATIONS (THAT CAN BE TURNED ON AT THE SAME TIME) SHOULD
+        # NOT HAVE CONFLICTING ENV
 
-        # VARIATIONS OVERWRITE current ENV but not input keys (they become const)
-
-
-
+        # VARIATIONS OVERWRITE current ENV but not input keys (they become
+        # const)
 
         variations = script_artifact.meta.get('variations', {})
         state['docker'] = meta.get('docker', {})
 
-        r = self._update_state_from_variations(i, meta, variation_tags, variations, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose)
+        r = self._update_state_from_variations(
+            i,
+            meta,
+            variation_tags,
+            variations,
+            env,
+            state,
+            const,
+            const_state,
+            deps,
+            post_deps,
+            prehook_deps,
+            posthook_deps,
+            new_env_keys_from_meta,
+            new_state_keys_from_meta,
+            add_deps_recursive,
+            run_state,
+            recursion_spaces,
+            verbose)
         if r['return'] > 0:
             return r
 
         warnings = meta.get('warnings', [])
-        if len(r.get('warnings', [])) >0:
+        if len(r.get('warnings', [])) > 0:
             warnings += r['warnings']
 
         variation_tags_string = r['variation_tags_string']
@@ -909,17 +988,26 @@ class CAutomation(Automation):
         version_max_usable = i.get('version_max_usable', '').strip()
 
         # Second, take from env
-        if version == '': version = env.get('CM_VERSION','')
-        if version_min == '': version_min = env.get('CM_VERSION_MIN','')
-        if version_max == '': version_max = env.get('CM_VERSION_MAX','')
-        if version_max_usable == '': version_max_usable = env.get('CM_VERSION_MAX_USABLE','')
-
+        if version == '':
+            version = env.get('CM_VERSION', '')
+        if version_min == '':
+            version_min = env.get('CM_VERSION_MIN', '')
+        if version_max == '':
+            version_max = env.get('CM_VERSION_MAX', '')
+        if version_max_usable == '':
+            version_max_usable = env.get(
+                'CM_VERSION_MAX_USABLE', '')
 
         # Third, take from meta
-        if version == '': version = meta.get('version', '')
-        if version_min == '': version_min = meta.get('version_min', '')
-        if version_max == '': version_max = meta.get('version_max', '')
-        if version_max_usable == '': version_max_usable = meta.get('version_max_usable', '')
+        if version == '':
+            version = meta.get('version', '')
+        if version_min == '':
+            version_min = meta.get('version_min', '')
+        if version_max == '':
+            version_max = meta.get('version_max', '')
+        if version_max_usable == '':
+            version_max_usable = meta.get(
+                'version_max_usable', '')
 
         # Update env with resolved versions
         notes = []
@@ -931,7 +1019,7 @@ class CAutomation(Automation):
             key = version_index[1]
             note = version_index[2]
 
-            if version_value !='':
+            if version_value != '':
                 env[key] = version_value
 
                 notes.append(note.format(version_value))
@@ -939,98 +1027,136 @@ class CAutomation(Automation):
 #                # If version_X is "", remove related key from ENV ...
 #                del(env[key])
 
-        if len(notes)>0:
-            logging.debug(recursion_spaces+'    - Requested version: ' + '  '.join(notes))
+        if len(notes) > 0:
+            logging.debug(
+                recursion_spaces +
+                '    - Requested version: ' +
+                '  '.join(notes))
 
         # STEP 900 output: version* set
         #                  env['CM_VERSION*] set
-
-
 
         # STEP 1000: Update version only if in "versions" (not obligatory)
         # can be useful when handling complex Git revisions
         versions = script_artifact.meta.get('versions', {})
 
-        if version!='' and version in versions:
+        if version != '' and version in versions:
             versions_meta = versions[version]
-            r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, run_state, i)
-            if r['return']>0: return r
-            adr=get_adr(versions_meta)
+            r = update_state_from_meta(
+                versions_meta,
+                env,
+                state,
+                const,
+                const_state,
+                deps,
+                post_deps,
+                prehook_deps,
+                posthook_deps,
+                new_env_keys_from_meta,
+                new_state_keys_from_meta,
+                run_state,
+                i)
+            if r['return'] > 0:
+                return r
+            adr = get_adr(versions_meta)
             if adr:
                 self._merge_dicts_with_tags(add_deps_recursive, adr)
-                #Processing them again using updated deps for add_deps_recursive
-                r = update_adr_from_meta(deps, post_deps, prehook_deps, posthook_deps, add_deps_recursive, env)
+                # Processing them again using updated deps for
+                # add_deps_recursive
+                r = update_adr_from_meta(
+                    deps,
+                    post_deps,
+                    prehook_deps,
+                    posthook_deps,
+                    add_deps_recursive,
+                    env)
 
         # STEP 1100: Update deps from input
-        r = update_deps_from_input(deps, post_deps, prehook_deps, posthook_deps, i)
-        if r['return']>0: return r
-
+        r = update_deps_from_input(
+            deps, post_deps, prehook_deps, posthook_deps, i)
+        if r['return'] > 0:
+            return r
 
         r = update_env_with_values(env)
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
-        if str(env.get('CM_RUN_STATE_DOCKER', False)).lower() in ['true', '1', 'yes']:
+        if str(env.get('CM_RUN_STATE_DOCKER', False)
+               ).lower() in ['true', '1', 'yes']:
             if state.get('docker'):
-                if str(state['docker'].get('run', True)).lower() in ['false', '0', 'no']:
-                    logging.info(recursion_spaces+'  - Skipping script::{} run as we are inside docker'.format(found_script_artifact))
+                if str(state['docker'].get('run', True)
+                       ).lower() in ['false', '0', 'no']:
+                    logging.info(
+                        recursion_spaces +
+                        '  - Skipping script::{} run as we are inside docker'.format(found_script_artifact))
 
                     # restore env and state
                     for k in list(env.keys()):
-                        del(env[k])
+                        del (env[k])
                     for k in list(state.keys()):
-                        del(state[k])
+                        del (state[k])
 
                     env.update(saved_env)
                     state.update(saved_state)
 
-                    rr = {'return':0, 'env':env, 'new_env':{}, 'state':state, 'new_state':{}, 'deps': []}
+                    rr = {
+                        'return': 0,
+                        'env': env,
+                        'new_env': {},
+                        'state': state,
+                        'new_state': {},
+                        'deps': []}
                     return rr
 
                 elif str(state['docker'].get('real_run', True)).lower() in ['false', '0', 'no']:
-                    logging.info(recursion_spaces+'  - Doing fake run for script::{} as we are inside docker'.format(found_script_artifact))
+                    logging.info(
+                        recursion_spaces +
+                        '  - Doing fake run for script::{} as we are inside docker'.format(found_script_artifact))
                     fake_run = True
-                    env['CM_TMP_FAKE_RUN']='yes'
+                    env['CM_TMP_FAKE_RUN'] = 'yes'
 
-
-
-        ############################################################################################################
+        #######################################################################
         # Check extra cache tags
-        x = env.get('CM_EXTRA_CACHE_TAGS','').strip()
-        extra_cache_tags = [] if x=='' else x.split(',')
+        x = env.get('CM_EXTRA_CACHE_TAGS', '').strip()
+        extra_cache_tags = [] if x == '' else x.split(',')
 
-        if i.get('extra_cache_tags','')!='':
+        if i.get('extra_cache_tags', '') != '':
             for x in i['extra_cache_tags'].strip().split(','):
-                if x!='':
+                if x != '':
                     if '<<<' in x:
                         import re
                         tmp_values = re.findall(r'<<<(.*?)>>>', str(x))
                         for tmp_value in tmp_values:
-                            xx = str(env.get(tmp_value,''))
-                            x = x.replace("<<<"+tmp_value+">>>", xx)
+                            xx = str(env.get(tmp_value, ''))
+                            x = x.replace("<<<" + tmp_value + ">>>", xx)
                     if x not in extra_cache_tags:
                         extra_cache_tags.append(x)
 
-        if env.get('CM_NAME','')!='':
-            extra_cache_tags.append('name-'+env['CM_NAME'].strip().lower())
+        if env.get('CM_NAME', '') != '':
+            extra_cache_tags.append('name-' + env['CM_NAME'].strip().lower())
 
-
-        ############################################################################################################
+        #######################################################################
         # Check if need to clean output files
         clean_output_files = meta.get('clean_output_files', [])
 
-        if len(clean_output_files)>0:
+        if len(clean_output_files) > 0:
             clean_tmp_files(clean_output_files, recursion_spaces)
 
-
-
-
-
-
-        ############################################################################################################
+        #######################################################################
         # Check if the output of a selected script should be cached
-        cache = False if i.get('skip_cache', False) else meta.get('cache', False)
-        cache = cache or (i.get('force_cache', False) and meta.get('can_force_cache', False))
-        cache = False if fake_run else cache #fake run skips run script - should not pollute cache
+        cache = False if i.get(
+            'skip_cache',
+            False) else meta.get(
+            'cache',
+            False)
+        cache = cache or (
+            i.get(
+                'force_cache',
+                False) and meta.get(
+                'can_force_cache',
+                False))
+        # fake run skips run script - should not pollute cache
+        cache = False if fake_run else cache
 
         cached_uid = ''
         cached_tags = []
@@ -1044,41 +1170,43 @@ class CAutomation(Automation):
 
         local_env_keys_from_meta = meta.get('local_env_keys', [])
 
-
-
-
-
-        ############################################################################################################
+        #######################################################################
         # Check if script is cached if we need to skip deps from cached entries
         this_script_cached = False
 
-        ############################################################################################################
+        #######################################################################
         # Check if the output of a selected script should be cached
         if cache:
-            # TBD - need to reuse and prune cache_list instead of a new CM search inside find_cached_script
+            # TBD - need to reuse and prune cache_list instead of a new CM
+            # search inside find_cached_script
 
-            r = find_cached_script({'self':self,
-                                    'recursion_spaces':recursion_spaces,
-                                    'script_tags':script_tags,
-                                    'found_script_tags':found_script_tags,
-                                    'variation_tags':variation_tags,
-                                    'explicit_variation_tags':explicit_variation_tags,
-                                    'version':version,
-                                    'version_min':version_min,
-                                    'version_max':version_max,
-                                    'extra_cache_tags':extra_cache_tags,
-                                    'new_cache_entry':new_cache_entry,
-                                    'meta':meta,
-                                    'env':env,
-                                    'skip_remembered_selections':skip_remembered_selections,
-                                    'remembered_selections':remembered_selections,
-                                    'quiet':quiet,
-                                    'verbose':verbose
-                                   })
-            if r['return'] >0: return r
+            r = find_cached_script({'self': self,
+                                    'recursion_spaces': recursion_spaces,
+                                    'script_tags': script_tags,
+                                    'found_script_tags': found_script_tags,
+                                    'variation_tags': variation_tags,
+                                    'explicit_variation_tags': explicit_variation_tags,
+                                    'version': version,
+                                    'version_min': version_min,
+                                    'version_max': version_max,
+                                    'extra_cache_tags': extra_cache_tags,
+                                    'new_cache_entry': new_cache_entry,
+                                    'meta': meta,
+                                    'env': env,
+                                    'skip_remembered_selections': skip_remembered_selections,
+                                    'remembered_selections': remembered_selections,
+                                    'quiet': quiet,
+                                    'verbose': verbose
+                                    })
+            if r['return'] > 0:
+                return r
 
-            # Sort by tags to ensure determinism in order (and later add versions)
-            found_cached_scripts = sorted(r['found_cached_scripts'], key = lambda x: sorted(x.meta['tags']))
+            # Sort by tags to ensure determinism in order (and later add
+            # versions)
+            found_cached_scripts = sorted(
+                r['found_cached_scripts'],
+                key=lambda x: sorted(
+                    x.meta['tags']))
 
             cached_tags = r['cached_tags']
             search_tags = r['search_tags']
@@ -1094,65 +1222,86 @@ class CAutomation(Automation):
                         num_found_cached_scripts = 1
 
                 if num_found_cached_scripts > 1:
-                    selection = select_script_artifact(found_cached_scripts, 'cached script output', recursion_spaces, True, script_tags_string, quiet, verbose)
+                    selection = select_script_artifact(
+                        found_cached_scripts,
+                        'cached script output',
+                        recursion_spaces,
+                        True,
+                        script_tags_string,
+                        quiet,
+                        verbose)
 
                     if selection >= 0:
                         if not skip_remembered_selections:
                             # Remember selection
                             remembered_selections.append({'type': 'cache',
-                                                          'tags':search_tags,
-                                                          'cached_script':found_cached_scripts[selection]})
+                                                          'tags': search_tags,
+                                                          'cached_script': found_cached_scripts[selection]})
                     else:
                         num_found_cached_scripts = 0
 
-
                 elif num_found_cached_scripts == 1:
-                    logging.debug(recursion_spaces+'    - Found cached script output: {}'.format(found_cached_scripts[0].path))
-
+                    logging.debug(
+                        recursion_spaces +
+                        '    - Found cached script output: {}'.format(
+                            found_cached_scripts[0].path))
 
                 if num_found_cached_scripts > 0:
                     found_cached = True
 
                     # Check chain of dynamic dependencies on other CM scripts
-                    if len(deps)>0:
-                        logging.debug(recursion_spaces + '  - Checking dynamic dependencies on other CM scripts:')
+                    if len(deps) > 0:
+                        logging.debug(
+                            recursion_spaces +
+                            '  - Checking dynamic dependencies on other CM scripts:')
 
                         r = self._call_run_deps(deps, self.local_env_keys, local_env_keys_from_meta, env, state, const, const_state, add_deps_recursive,
-                            recursion_spaces + extra_recursion_spaces,
-                            remembered_selections, variation_tags_string, True, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                        if r['return']>0: return r
+                                                recursion_spaces + extra_recursion_spaces,
+                                                remembered_selections, variation_tags_string, True, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                        if r['return'] > 0:
+                            return r
 
-                        logging.debug(recursion_spaces + '  - Processing env after dependencies ...')
+                        logging.debug(
+                            recursion_spaces +
+                            '  - Processing env after dependencies ...')
 
                         r = update_env_with_values(env)
-                        if r['return']>0: return r
+                        if r['return'] > 0:
+                            return r
 
-
-                    # Check chain of prehook dependencies on other CM scripts. (No execution of customize.py for cached scripts)
-                    logging.debug(recursion_spaces + '    - Checking prehook dependencies on other CM scripts:')
+                    # Check chain of prehook dependencies on other CM scripts.
+                    # (No execution of customize.py for cached scripts)
+                    logging.debug(
+                        recursion_spaces +
+                        '    - Checking prehook dependencies on other CM scripts:')
 
                     r = self._call_run_deps(prehook_deps, self.local_env_keys, local_env_keys_from_meta, env, state, const, const_state, add_deps_recursive,
-                            recursion_spaces + extra_recursion_spaces,
-                            remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                    if r['return']>0: return r
+                                            recursion_spaces + extra_recursion_spaces,
+                                            remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                    if r['return'] > 0:
+                        return r
 
                     # Continue with the selected cached script
                     cached_script = found_cached_scripts[selection]
 
-                    logging.debug(recursion_spaces+'      - Loading state from cached entry ...')
+                    logging.debug(
+                        recursion_spaces +
+                        '      - Loading state from cached entry ...')
 
                     path_to_cached_state_file = os.path.join(cached_script.path,
-                        self.file_with_cached_state)
+                                                             self.file_with_cached_state)
 
-                    r =  utils.load_json(file_name = path_to_cached_state_file)
-                    if r['return']>0: return r
+                    r = utils.load_json(file_name=path_to_cached_state_file)
+                    if r['return'] > 0:
+                        return r
                     version = r['meta'].get('version')
 
                     if not run_state.get('tmp_silent', False):
-                        logging.info(recursion_spaces + '     ! load {}'.format(path_to_cached_state_file))
+                        logging.info(
+                            recursion_spaces +
+                            '     ! load {}'.format(path_to_cached_state_file))
 
-
-                    ################################################################################################
+                    ###########################################################
                     # IF REUSE FROM CACHE - update env and state from cache!
                     cached_state = r['meta']
 
@@ -1161,42 +1310,48 @@ class CAutomation(Automation):
                         return r
                     new_env = r['new_env']
 
-                    utils.merge_dicts({'dict1':env, 'dict2':new_env, 'append_lists':True, 'append_unique':True})
+                    utils.merge_dicts(
+                        {'dict1': env, 'dict2': new_env, 'append_lists': True, 'append_unique': True})
 
                     new_state = cached_state['new_state']
-                    utils.merge_dicts({'dict1':state, 'dict2':new_state, 'append_lists':True, 'append_unique':True})
+                    utils.merge_dicts({'dict1': state,
+                                       'dict2': new_state,
+                                       'append_lists': True,
+                                       'append_unique': True})
 
-                    utils.merge_dicts({'dict1':new_env, 'dict2':const, 'append_lists':True, 'append_unique':True})
-                    utils.merge_dicts({'dict1':new_state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
-
-
-
-
-
+                    utils.merge_dicts(
+                        {'dict1': new_env, 'dict2': const, 'append_lists': True, 'append_unique': True})
+                    utils.merge_dicts({'dict1': new_state,
+                                       'dict2': const_state,
+                                       'append_lists': True,
+                                       'append_unique': True})
 
                     if not fake_run:
                         # Check chain of posthook dependencies on other CM scripts. We consider them same as postdeps when
                         # script is in cache
-                        logging.debug(recursion_spaces + '    - Checking posthook dependencies on other CM scripts:')
+                        logging.debug(
+                            recursion_spaces +
+                            '    - Checking posthook dependencies on other CM scripts:')
 
-                        clean_env_keys_post_deps = meta.get('clean_env_keys_post_deps',[])
+                        clean_env_keys_post_deps = meta.get(
+                            'clean_env_keys_post_deps', [])
 
                         r = self._call_run_deps(posthook_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive,
-                            recursion_spaces + extra_recursion_spaces,
-                            remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                        if r['return']>0: return r
+                                                recursion_spaces + extra_recursion_spaces,
+                                                remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                        if r['return'] > 0:
+                            return r
 
-                        logging.debug(recursion_spaces + '    - Checking post dependencies on other CM scripts:')
+                        logging.debug(
+                            recursion_spaces +
+                            '    - Checking post dependencies on other CM scripts:')
 
                         # Check chain of post dependencies on other CM scripts
                         r = self._call_run_deps(post_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive,
-                            recursion_spaces + extra_recursion_spaces,
-                            remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                        if r['return']>0: return r
-
-
-
-
+                                                recursion_spaces + extra_recursion_spaces,
+                                                remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                        if r['return'] > 0:
+                            return r
 
             if renew or (not found_cached and num_found_cached_scripts == 0):
                 # Add more tags to cached tags
@@ -1210,14 +1365,14 @@ class CAutomation(Automation):
                     if x not in cached_tags:
                         cached_tags.append(x)
 
-
             if not found_cached and num_found_cached_scripts == 0:
 
-                # If not cached, create cached script artifact and mark as tmp (remove if cache successful)
+                # If not cached, create cached script artifact and mark as tmp
+                # (remove if cache successful)
                 tmp_tags = ['tmp']
 
                 # Finalize tmp tags
-                tmp_tags += [ t for t in cached_tags if not t.startswith("-") ]
+                tmp_tags += [t for t in cached_tags if not t.startswith("-")]
 
                 # Check if some variations are missing
                 # though it should not happen!
@@ -1229,21 +1384,25 @@ class CAutomation(Automation):
                         tmp_tags.append(x)
 
                 # Use update to update the tmp one if already exists
-                logging.debug(recursion_spaces+'  - Creating new "cache" script artifact in the CM local repository ...')
-                logging.debug(recursion_spaces+'    - Tags: {}'.format(','.join(tmp_tags)))
+                logging.debug(
+                    recursion_spaces +
+                    '  - Creating new "cache" script artifact in the CM local repository ...')
+                logging.debug(recursion_spaces +
+                              '    - Tags: {}'.format(','.join(tmp_tags)))
 
                 if version != '':
                     cached_meta['version'] = version
 
-                ii = {'action':'update',
+                ii = {'action': 'update',
                       'automation': self.meta['deps']['cache'],
-                      'search_tags':tmp_tags,
-                      'tags':','.join(tmp_tags),
-                      'meta':cached_meta,
-                      'force':True}
+                      'search_tags': tmp_tags,
+                      'tags': ','.join(tmp_tags),
+                      'meta': cached_meta,
+                      'force': True}
 
                 r = self.cmind.access(ii)
-                if r['return'] > 0: return r
+                if r['return'] > 0:
+                    return r
 
                 remove_tmp_tag = True
 
@@ -1256,11 +1415,11 @@ class CAutomation(Automation):
 
                 # Changing path to CM script artifact for cached output
                 # to record data and files there
-                logging.debug(recursion_spaces+'  - Changing to {}'.format(cached_path))
+                logging.debug(
+                    recursion_spaces +
+                    '  - Changing to {}'.format(cached_path))
 
                 os.chdir(cached_path)
-
-
 
             # If found cached and we want to renew it
             if found_cached and renew:
@@ -1271,7 +1430,9 @@ class CAutomation(Automation):
 
                 # Changing path to CM script artifact for cached output
                 # to record data and files there
-                logging.debug(recursion_spaces+'  - Changing to {}'.format(cached_path))
+                logging.debug(
+                    recursion_spaces +
+                    '  - Changing to {}'.format(cached_path))
 
                 os.chdir(cached_path)
 
@@ -1279,7 +1440,7 @@ class CAutomation(Automation):
                 found_cached = False
                 remove_tmp_tag = True
 
-                env['CM_RENEW_CACHE_ENTRY']='yes'
+                env['CM_RENEW_CACHE_ENTRY'] = 'yes'
 
         # Prepare files to be cleaned
         clean_files = [self.tmp_file_run_state,
@@ -1290,17 +1451,19 @@ class CAutomation(Automation):
                        self.tmp_file_state,
                        self.tmp_file_run + bat_ext]
 
-        if not found_cached and len(meta.get('clean_files', [])) >0:
+        if not found_cached and len(meta.get('clean_files', [])) > 0:
             clean_files = meta['clean_files'] + clean_files
 
         ################################
         if not found_cached:
-            if len(warnings)>0:
-                logging.warn('=================================================')
+            if len(warnings) > 0:
+                logging.warn(
+                    '=================================================')
                 logging.warn('WARNINGS:')
                 for w in warnings:
-                    logging.warn('  '+w)
-                logging.warn('=================================================')
+                    logging.warn('  ' + w)
+                logging.warn(
+                    '=================================================')
 
             # Update default version meta if version is not set
             if version == '':
@@ -1309,82 +1472,117 @@ class CAutomation(Automation):
                     version = default_version
 
                     if version_min != '':
-                        ry = self.cmind.access({'action':'compare_versions',
-                                                'automation':'utils,dc2743f8450541e3',
-                                                'version1':version,
-                                                'version2':version_min})
-                        if ry['return']>0: return ry
+                        ry = self.cmind.access({'action': 'compare_versions',
+                                                'automation': 'utils,dc2743f8450541e3',
+                                                'version1': version,
+                                                'version2': version_min})
+                        if ry['return'] > 0:
+                            return ry
 
                         if ry['comparison'] < 0:
                             version = version_min
 
                     if version_max != '':
-                        ry = self.cmind.access({'action':'compare_versions',
-                                                'automation':'utils,dc2743f8450541e3',
-                                                'version1':version,
-                                                'version2':version_max})
-                        if ry['return']>0: return ry
+                        ry = self.cmind.access({'action': 'compare_versions',
+                                                'automation': 'utils,dc2743f8450541e3',
+                                                'version1': version,
+                                                'version2': version_max})
+                        if ry['return'] > 0:
+                            return ry
 
                         if ry['comparison'] > 0:
-                            if version_max_usable!='':
+                            if version_max_usable != '':
                                 version = version_max_usable
                             else:
                                 version = version_max
 
-                    logging.debug(recursion_spaces+'  - Version is not specified - use either default_version from meta or min/max/usable: {}'.format(version))
+                    logging.debug(
+                        recursion_spaces +
+                        '  - Version is not specified - use either default_version from meta or min/max/usable: {}'.format(version))
 
                     r = _update_env(env, 'CM_VERSION', version)
-                    if r['return']>0: return r
+                    if r['return'] > 0:
+                        return r
 
-                    if 'version-'+version not in cached_tags: cached_tags.append('version-'+version)
+                    if 'version-' + version not in cached_tags:
+                        cached_tags.append('version-' + version)
 
                     if default_version in versions:
                         versions_meta = versions[default_version]
-                        r = update_state_from_meta(versions_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, run_state, i)
-                        if r['return']>0: return r
+                        r = update_state_from_meta(
+                            versions_meta,
+                            env,
+                            state,
+                            const,
+                            const_state,
+                            deps,
+                            post_deps,
+                            prehook_deps,
+                            posthook_deps,
+                            new_env_keys_from_meta,
+                            new_state_keys_from_meta,
+                            run_state,
+                            i)
+                        if r['return'] > 0:
+                            return r
 
                         if "add_deps_recursive" in versions_meta:
-                            self._merge_dicts_with_tags(add_deps_recursive, versions_meta['add_deps_recursive'])
+                            self._merge_dicts_with_tags(
+                                add_deps_recursive, versions_meta['add_deps_recursive'])
 
             r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_PATH', path)
-            if r['return']>0: return r
+            if r['return'] > 0:
+                return r
 
-            # Run chain of docker dependencies if current run cmd is from inside a docker container
+            # Run chain of docker dependencies if current run cmd is from
+            # inside a docker container
             docker_deps = []
             if i.get('docker_run_deps'):
                 docker_meta = meta.get('docker')
                 if docker_meta:
                     docker_deps = docker_meta.get('deps', [])
                     if docker_deps:
-                        docker_deps = [ dep for dep in docker_deps if not dep.get('skip_inside_docker', False) ]
+                        docker_deps = [
+                            dep for dep in docker_deps if not dep.get(
+                                'skip_inside_docker', False)]
 
-                if len(docker_deps)>0:
+                if len(docker_deps) > 0:
 
-                    logging.debug(recursion_spaces + '  - Checking docker run dependencies on other CM scripts:')
+                    logging.debug(
+                        recursion_spaces +
+                        '  - Checking docker run dependencies on other CM scripts:')
 
                     r = self._call_run_deps(docker_deps, self.local_env_keys, local_env_keys_from_meta, env, state, const, const_state, add_deps_recursive,
-                        recursion_spaces + extra_recursion_spaces,
-                        remembered_selections, variation_tags_string, False, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                    if r['return']>0: return r
+                                            recursion_spaces + extra_recursion_spaces,
+                                            remembered_selections, variation_tags_string, False, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                    if r['return'] > 0:
+                        return r
 
-                    logging.debug(recursion_spaces + '  - Processing env after docker run dependencies ...')
+                    logging.debug(
+                        recursion_spaces +
+                        '  - Processing env after docker run dependencies ...')
 
                     r = update_env_with_values(env)
-                    if r['return']>0: return r
+                    if r['return'] > 0:
+                        return r
 
             # Check chain of dependencies on other CM scripts
-            if len(deps)>0:
-                logging.debug(recursion_spaces + '  - Checking dependencies on other CM scripts:')
+            if len(deps) > 0:
+                logging.debug(recursion_spaces +
+                              '  - Checking dependencies on other CM scripts:')
 
                 r = self._call_run_deps(deps, self.local_env_keys, local_env_keys_from_meta, env, state, const, const_state, add_deps_recursive,
-                        recursion_spaces + extra_recursion_spaces,
-                        remembered_selections, variation_tags_string, False, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                if r['return']>0: return r
+                                        recursion_spaces + extra_recursion_spaces,
+                                        remembered_selections, variation_tags_string, False, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                if r['return'] > 0:
+                    return r
 
-                logging.debug(recursion_spaces + '  - Processing env after dependencies ...')
+                logging.debug(recursion_spaces +
+                              '  - Processing env after dependencies ...')
 
                 r = update_env_with_values(env)
-                if r['return']>0: return r
+                if r['return'] > 0:
+                    return r
 
             # Clean some output files
             clean_tmp_files(clean_files, recursion_spaces)
@@ -1395,52 +1593,56 @@ class CAutomation(Automation):
 
             # Prepare common input to prepare and run script
             run_script_input = {
-                   'path': path,
-                   'bat_ext': bat_ext,
-                   'os_info': os_info,
-                   'const': const,
-                   'state': state,
-                   'const_state': const_state,
-                   'reuse_cached': reuse_cached,
-                   'recursion': recursion,
-                   'recursion_spaces': recursion_spaces,
-                   'remembered_selections': remembered_selections,
-                   'tmp_file_run_state': self.tmp_file_run_state,
-                   'tmp_file_run_env': self.tmp_file_run_env,
-                   'tmp_file_state': self.tmp_file_state,
-                   'tmp_file_run': self.tmp_file_run,
-                   'local_env_keys': self.local_env_keys,
-                   'local_env_keys_from_meta': local_env_keys_from_meta,
-                   'posthook_deps': posthook_deps,
-                   'add_deps_recursive': add_deps_recursive,
-                   'remembered_selections': remembered_selections,
-                   'found_script_tags': found_script_tags,
-                   'variation_tags_string': variation_tags_string,
-                   'found_cached': False,
-                   'debug_script_tags': debug_script_tags,
-                   'verbose': verbose,
-                   'meta':meta,
-                   'self': self
+                'path': path,
+                'bat_ext': bat_ext,
+                'os_info': os_info,
+                'const': const,
+                'state': state,
+                'const_state': const_state,
+                'reuse_cached': reuse_cached,
+                'recursion': recursion,
+                'recursion_spaces': recursion_spaces,
+                'remembered_selections': remembered_selections,
+                'tmp_file_run_state': self.tmp_file_run_state,
+                'tmp_file_run_env': self.tmp_file_run_env,
+                'tmp_file_state': self.tmp_file_state,
+                'tmp_file_run': self.tmp_file_run,
+                'local_env_keys': self.local_env_keys,
+                'local_env_keys_from_meta': local_env_keys_from_meta,
+                'posthook_deps': posthook_deps,
+                'add_deps_recursive': add_deps_recursive,
+                'remembered_selections': remembered_selections,
+                'found_script_tags': found_script_tags,
+                'variation_tags_string': variation_tags_string,
+                'found_cached': False,
+                'debug_script_tags': debug_script_tags,
+                'verbose': verbose,
+                'meta': meta,
+                'self': self
             }
 
-            if repro_prefix != '': run_script_input['repro_prefix'] = repro_prefix
-            if ignore_script_error: run_script_input['ignore_script_error'] = True
+            if repro_prefix != '':
+                run_script_input['repro_prefix'] = repro_prefix
+            if ignore_script_error:
+                run_script_input['ignore_script_error'] = True
 
             if os.path.isfile(path_to_customize_py):
-                r=utils.load_python_module({'path':path, 'name':'customize'})
-                if r['return']>0: return r
+                r = utils.load_python_module(
+                    {'path': path, 'name': 'customize'})
+                if r['return'] > 0:
+                    return r
 
                 customize_code = r['code']
 
                 customize_common_input = {
-                   'input':i,
-                   'automation':self,
-                   'artifact':script_artifact,
-                   'customize':script_artifact.meta.get('customize',{}),
-                   'os_info':os_info,
-                   'recursion_spaces':recursion_spaces,
-                   'script_tags':script_tags,
-                   'variation_tags':variation_tags
+                    'input': i,
+                    'automation': self,
+                    'artifact': script_artifact,
+                    'customize': script_artifact.meta.get('customize', {}),
+                    'os_info': os_info,
+                    'recursion_spaces': recursion_spaces,
+                    'script_tags': script_tags,
+                    'variation_tags': variation_tags
                 }
 
                 run_script_input['customize_code'] = customize_code
@@ -1454,28 +1656,43 @@ class CAutomation(Automation):
             pip_version_max = env.get('CM_VERSION_MAX', '')
 
             if pip_version != '':
-                pip_version_string = '=='+pip_version
+                pip_version_string = '==' + pip_version
             elif pip_version_min != '' and pip_version_max != '':
-                pip_version_string = '>='+pip_version_min+',<='+pip_version_max
+                pip_version_string = '>=' + pip_version_min + ',<=' + pip_version_max
             elif pip_version_min != '':
-                pip_version_string = '>='+pip_version_min
+                pip_version_string = '>=' + pip_version_min
             elif pip_version_max != '':
-                pip_version_string = '<='+pip_version_max
+                pip_version_string = '<=' + pip_version_max
 
             env.update(const)
-            utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+            utils.merge_dicts({'dict1': state,
+                               'dict2': const_state,
+                               'append_lists': True,
+                               'append_unique': True})
 
-            r = _update_env(env, 'CM_TMP_PIP_VERSION_STRING', pip_version_string)
-            if r['return']>0: return r
+            r = _update_env(
+                env,
+                'CM_TMP_PIP_VERSION_STRING',
+                pip_version_string)
+            if r['return'] > 0:
+                return r
 
             if pip_version_string != '':
-                logging.debug(recursion_spaces+'    # potential PIP version string (if needed): '+pip_version_string)
+                logging.debug(
+                    recursion_spaces +
+                    '    # potential PIP version string (if needed): ' +
+                    pip_version_string)
 
+            tmp_curdir = os.getcwd()
+            if env.get('CM_OUTDIRNAME', '') != '':
+                if not os.path.exists(env['CM_OUTDIRNAME']):
+                    os.makedirs(env['CM_OUTDIRNAME'])
+                os.chdir(env['CM_OUTDIRNAME'])
 
             # Check if pre-process and detect
             if 'preprocess' in dir(customize_code) and not fake_run:
 
-                logging.debug(recursion_spaces+'  - Running preprocess ...')
+                logging.debug(recursion_spaces + '  - Running preprocess ...')
 
                 run_script_input['run_state'] = run_state
 
@@ -1483,72 +1700,82 @@ class CAutomation(Automation):
                 ii['env'] = env
                 ii['state'] = state
                 ii['meta'] = meta
-                ii['run_script_input'] = run_script_input # may need to detect versions in multiple paths
+                # may need to detect versions in multiple paths
+                ii['run_script_input'] = run_script_input
 
                 r = customize_code.preprocess(ii)
-                if r['return']>0: return r
+                if r['return'] > 0:
+                    return r
 
                 # Check if preprocess says to skip this component
                 skip = r.get('skip', False)
 
                 if skip:
-                    logging.debug(recursion_spaces+'  - this script is skipped!')
+                    logging.debug(
+                        recursion_spaces +
+                        '  - this script is skipped!')
 
-                    # Check if script asks to run other dependencies instead of the skipped one
+                    # Check if script asks to run other dependencies instead of
+                    # the skipped one
                     another_script = r.get('script', {})
 
                     if len(another_script) == 0:
-                        return {'return':0, 'skipped': True}
+                        return {'return': 0, 'skipped': True}
 
-                    logging.debug(recursion_spaces+'  - another script is executed instead!')
+                    logging.debug(
+                        recursion_spaces +
+                        '  - another script is executed instead!')
 
                     ii = {
-                           'action':'run',
-                           'automation':utils.assemble_cm_object(self.meta['alias'], self.meta['uid']),
-                           'recursion_spaces':recursion_spaces + extra_recursion_spaces,
-                           'recursion':True,
-                           'remembered_selections': remembered_selections,
-                           'env':env,
-                           'state':state,
-                           'const':const,
-                           'const_state':const_state,
-                           'save_env':save_env,
-                           'add_deps_recursive':add_deps_recursive
-                         }
+                        'action': 'run',
+                        'automation': utils.assemble_cm_object(self.meta['alias'], self.meta['uid']),
+                        'recursion_spaces': recursion_spaces + extra_recursion_spaces,
+                        'recursion': True,
+                        'remembered_selections': remembered_selections,
+                        'env': env,
+                        'state': state,
+                        'const': const,
+                        'const_state': const_state,
+                        'save_env': save_env,
+                        'add_deps_recursive': add_deps_recursive
+                    }
 
                     ii.update(another_script)
 
                     # Return to current path
                     os.chdir(current_path)
 
-                    ############################################################################################################
+                    ###########################################################
                     return self.cmind.access(ii)
 
                 # If return version
                 if cache:
-                    if r.get('version','') != '':
-                        cached_tags = [x for x in cached_tags if not x.startswith('version-')]
+                    if r.get('version', '') != '':
+                        cached_tags = [
+                            x for x in cached_tags if not x.startswith('version-')]
                         cached_tags.append('version-' + r['version'])
 
-                    if len(r.get('add_extra_cache_tags',[]))>0:
+
+                    if len(r.get('add_extra_cache_tags', [])) > 0:
                         for t in r['add_extra_cache_tags']:
                             if t not in cached_tags:
                                 cached_tags.append(t)
-
 
             if print_env:
                 import json
                 logging.debug(json.dumps(env, indent=2, sort_keys=True))
 
-
             # Check chain of pre hook dependencies on other CM scripts
-            if len(prehook_deps)>0:
-                logging.debug(recursion_spaces + '  - Checking prehook dependencies on other CM scripts:')
+            if len(prehook_deps) > 0:
+                logging.debug(
+                    recursion_spaces +
+                    '  - Checking prehook dependencies on other CM scripts:')
 
-                r = self._call_run_deps(prehook_deps, self.local_env_keys, local_env_keys_from_meta,  env, state, const, const_state, add_deps_recursive,
-                    recursion_spaces + extra_recursion_spaces,
-                    remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                if r['return']>0: return r
+                r = self._call_run_deps(prehook_deps, self.local_env_keys, local_env_keys_from_meta, env, state, const, const_state, add_deps_recursive,
+                                        recursion_spaces + extra_recursion_spaces,
+                                        remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                if r['return'] > 0:
+                    return r
 
             if not fake_run:
                 env_key_mappings = meta.get("env_key_mappings", {})
@@ -1560,51 +1787,66 @@ class CAutomation(Automation):
                 run_script_input['run_state'] = run_state
                 run_script_input['recursion'] = recursion
 
-                r = prepare_and_run_script_with_postprocessing(run_script_input)
-                if r['return']>0: return r
+                r = prepare_and_run_script_with_postprocessing(
+                    run_script_input)
+                if r['return'] > 0:
+                    return r
 
                 # If return version
-                if r.get('version','') != '':
+                if r.get('version', '') != '':
                     version = r.get('version')
                     if cache:
-                        cached_tags = [x for x in cached_tags if not x.startswith('version-')]
+                        cached_tags = [
+                            x for x in cached_tags if not x.startswith('version-')]
                         cached_tags.append('version-' + r['version'])
 
-                if len(r.get('add_extra_cache_tags',[]))>0 and cache:
+                if len(r.get('add_extra_cache_tags', [])) > 0 and cache:
                     for t in r['add_extra_cache_tags']:
                         if t not in cached_tags:
                             cached_tags.append(t)
 
                 # Check chain of post dependencies on other CM scripts
-                clean_env_keys_post_deps = meta.get('clean_env_keys_post_deps',[])
+                clean_env_keys_post_deps = meta.get(
+                    'clean_env_keys_post_deps', [])
 
                 r = self._run_deps(post_deps, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive, recursion_spaces,
-                    remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                if r['return']>0: return r
+                                   remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                if r['return'] > 0:
+                    return r
 
-            # Add extra tags from env updated by deps (such as python version and compiler version, etc)
-            extra_cache_tags_from_env = meta.get('extra_cache_tags_from_env',[])
+            # Add extra tags from env updated by deps (such as python version
+            # and compiler version, etc)
+            extra_cache_tags_from_env = meta.get(
+                'extra_cache_tags_from_env', [])
             for extra_cache_tags in extra_cache_tags_from_env:
                 key = extra_cache_tags['env']
-                prefix = extra_cache_tags.get('prefix','')
+                prefix = extra_cache_tags.get('prefix', '')
 
-                v = env.get(key,'').strip()
-                if v!='':
+                v = env.get(key, '').strip()
+                if v != '':
                     for t in v.split(','):
                         x = 'deps-' + prefix + t
                         if x not in cached_tags:
                             cached_tags.append(x)
 
+            if env.get('CM_OUTDIRNAME', '') != '':
+                os.chdir(tmp_curdir)
 
-        detected_version = env.get('CM_DETECTED_VERSION', env.get('CM_VERSION',''))
-        dependent_cached_path = env.get('CM_GET_DEPENDENT_CACHED_PATH','')
+        detected_version = env.get(
+            'CM_DETECTED_VERSION', env.get(
+                'CM_VERSION', ''))
+        dependent_cached_path = env.get('CM_GET_DEPENDENT_CACHED_PATH', '')
 
-        ############################################################################################################
-        ##################################### Finalize script
+        #######################################################################
+        # Finalize script
 
         # Force consts in the final new env and state
-        utils.merge_dicts({'dict1':env, 'dict2':const, 'append_lists':True, 'append_unique':True})
-        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': env, 'dict2': const,
+                          'append_lists': True, 'append_unique': True})
+        utils.merge_dicts({'dict1': state,
+                           'dict2': const_state,
+                           'append_lists': True,
+                           'append_unique': True})
 
         if i.get('force_new_env_keys', []):
             new_env_keys = i['force_new_env_keys']
@@ -1616,60 +1858,79 @@ class CAutomation(Automation):
         else:
             new_state_keys = new_state_keys_from_meta
 
-        r = detect_state_diff(env, saved_env, new_env_keys, new_state_keys, state, saved_state)
-        if r['return']>0: return r
+        r = detect_state_diff(
+            env,
+            saved_env,
+            new_env_keys,
+            new_state_keys,
+            state,
+            saved_state)
+        if r['return'] > 0:
+            return r
 
         new_env = r['new_env']
         new_state = r['new_state']
 
-        utils.merge_dicts({'dict1':saved_env, 'dict2':new_env, 'append_lists':True, 'append_unique':True})
-        utils.merge_dicts({'dict1':saved_state, 'dict2':new_state, 'append_lists':True, 'append_unique':True})
-
-
+        utils.merge_dicts({'dict1': saved_env,
+                           'dict2': new_env,
+                           'append_lists': True,
+                           'append_unique': True})
+        utils.merge_dicts({'dict1': saved_state,
+                           'dict2': new_state,
+                           'append_lists': True,
+                           'append_unique': True})
 
         # Restore original env/state and merge env/state
         # This is needed since we want to keep original env/state outside this script
         # If we delete env and create a new dict, the original one outside this script will be detached
         # That's why we just clean all keys in original env/state (used oustide)
         # And then copy saved_env (with new_env merged) and saved_state (with new_state merged)
-        # while getting rid of all temporal updates in env and state inside this script
+        # while getting rid of all temporal updates in env and state inside
+        # this script
 
         for k in list(env.keys()):
-            del(env[k])
+            del (env[k])
         for k in list(state.keys()):
-            del(state[k])
+            del (state[k])
 
         env.update(saved_env)
         state.update(saved_state)
 
+        # Prepare env script content (to be saved in cache and in the current
+        # path if needed)
+        env_script = convert_env_to_script(
+            new_env, os_info, start_script=os_info['start_script'])
 
-
-        # Prepare env script content (to be saved in cache and in the current path if needed)
-        env_script = convert_env_to_script(new_env, os_info, start_script = os_info['start_script'])
-
-        # If using cached script artifact, return to default path and then update the cache script artifact
-        if cache and cached_path!='':
+        # If using cached script artifact, return to default path and then
+        # update the cache script artifact
+        if cache and cached_path != '':
             # Check if need to remove tag
             if remove_tmp_tag:
                 # Save state, env and deps for reuse
-                r =  utils.save_json(file_name = os.path.join(cached_path, self.file_with_cached_state),
-                        meta={'new_state':new_state, 'new_env':new_env, 'deps':deps, 'version': version})
-                if r['return']>0: return r
+                r = utils.save_json(file_name=os.path.join(cached_path, self.file_with_cached_state),
+                                    meta={'new_state': new_state, 'new_env': new_env, 'deps': deps, 'version': version})
+                if r['return'] > 0:
+                    return r
 
                 # Save all env
-                env_all_script = convert_env_to_script(env, os_info, start_script = os_info['start_script'])
+                env_all_script = convert_env_to_script(
+                    env, os_info, start_script=os_info['start_script'])
 
                 r = record_script(os.path.join(cached_path, self.tmp_file_env_all + bat_ext),
                                   env_all_script, os_info)
-                if r['return']>0: return r
+                if r['return'] > 0:
+                    return r
 
                 # Save env
                 r = record_script(os.path.join(cached_path, self.tmp_file_env + bat_ext),
                                   env_script, os_info)
-                if r['return']>0: return r
+                if r['return'] > 0:
+                    return r
 
                 # Remove tmp tag from the "cached" arifact to finalize caching
-                logging.debug(recursion_spaces+'  - Removing tmp tag in the script cached output {} ...'.format(cached_uid))
+                logging.debug(
+                    recursion_spaces +
+                    '  - Removing tmp tag in the script cached output {} ...'.format(cached_uid))
 
                 # Check if version was detected and record in meta)
                 if detected_version != '':
@@ -1679,29 +1940,34 @@ class CAutomation(Automation):
                     cached_meta['associated_script_artifact'] = found_script_artifact
 
                     x = found_script_artifact.find(',')
-                    if x<0:
-                        return {'return':1, 'error':'CM artifact format is wrong "{}" - no comma found'.format(found_script_artifact)}
+                    if x < 0:
+                        return {
+                            'return': 1, 'error': 'CM artifact format is wrong "{}" - no comma found'.format(found_script_artifact)}
 
-                    cached_meta['associated_script_artifact_uid'] = found_script_artifact[x+1:]
+                    cached_meta['associated_script_artifact_uid'] = found_script_artifact[x + 1:]
 
-
-                # Check if the cached entry is dependent on any other cached entry
+                # Check if the cached entry is dependent on any other cached
+                # entry
                 if dependent_cached_path != '':
-                    if os.path.isdir(cached_path) and os.path.isdir(dependent_cached_path):
-                        if not os.path.samefile(cached_path, dependent_cached_path):
+                    if os.path.isdir(cached_path) and os.path.isdir(
+                            dependent_cached_path):
+                        if not os.path.samefile(
+                                cached_path, dependent_cached_path):
                             cached_meta['dependent_cached_path'] = dependent_cached_path
 
                 ii = {'action': 'update',
                       'automation': self.meta['deps']['cache'],
                       'artifact': cached_uid,
-                      'meta':cached_meta,
-                      'replace_lists': True, # To replace tags
-                      'tags':','.join(cached_tags)}
+                      'meta': cached_meta,
+                      'replace_lists': True,  # To replace tags
+                      'tags': ','.join(cached_tags)}
 
                 r = self.cmind.access(ii)
-                if r['return']>0: return r
+                if r['return'] > 0:
+                    return r
 
-        # Clean tmp files only in current path (do not touch cache - we keep all info there)
+        # Clean tmp files only in current path (do not touch cache - we keep
+        # all info there)
         script_path = os.getcwd()
         os.chdir(current_path)
 
@@ -1717,24 +1983,39 @@ class CAutomation(Automation):
             # Check if script_prefix in the state from other components
             where_to_add = len(os_info['start_script'])
 
-            script_prefix = state.get('script_prefix',[])
-            if len(script_prefix)>0:
+            script_prefix = state.get('script_prefix', [])
+            if len(script_prefix) > 0:
                 env_script.insert(where_to_add, '\n')
                 for x in reversed(script_prefix):
                     env_script.insert(where_to_add, x)
 
             if shell:
-                x=['cmd', '.', '','.bat',''] if os_info['platform'] == 'windows' else ['bash', ' ""', '"','.sh','. ./']
+                x = [
+                    'cmd',
+                    '.',
+                    '',
+                    '.bat',
+                    ''] if os_info['platform'] == 'windows' else [
+                    'bash',
+                    ' ""',
+                    '"',
+                    '.sh',
+                    '. ./']
 
                 env_script.append('\n')
                 env_script.append('echo{}\n'.format(x[1]))
-                env_script.append('echo {}Working path: {}{}'.format(x[2], script_path, x[2]))
+                env_script.append(
+                    'echo {}Working path: {}{}'.format(
+                        x[2], script_path, x[2]))
                 xtmp_run_file = ''
                 tmp_run_file = 'tmp-run{}'.format(x[3])
                 if os.path.isfile(tmp_run_file):
-                    xtmp_run_file = 'Change and run "{}". '.format(tmp_run_file)
+                    xtmp_run_file = 'Change and run "{}". '.format(
+                        tmp_run_file)
 
-                env_script.append('echo {}Running debug shell. {}Type exit to quit ...{}\n'.format(x[2], xtmp_run_file, x[2]))
+                env_script.append(
+                    'echo {}Running debug shell. {}Type exit to quit ...{}\n'.format(
+                        x[2], xtmp_run_file, x[2]))
                 env_script.append('echo{}\n'.format(x[1]))
                 env_script.append('\n')
                 env_script.append(x[0])
@@ -1742,10 +2023,11 @@ class CAutomation(Automation):
             env_file = self.tmp_file_env + bat_ext
 
             r = record_script(env_file, env_script, os_info)
-            if r['return']>0: return r
+            if r['return'] > 0:
+                return r
 
             if shell:
-                x = env_file if os_info['platform'] == 'windows' else '. ./'+env_file
+                x = env_file if os_info['platform'] == 'windows' else '. ./' + env_file
                 os.system(x)
 
         if not version and detected_version:
@@ -1763,18 +2045,18 @@ class CAutomation(Automation):
 
         version_info_tags = ",".join(script_tags)
 
-        if len(variation_tags)>0:
+        if len(variation_tags) > 0:
             for vt in variation_tags:
                 version_info_tags += ',_' + vt
 
         version_info = {}
         version_info[version_info_tags] = {
-          'script_uid': script_uid,
-          'script_alias': script_alias,
-          'script_tags': ','.join(found_script_tags),
-          'script_variations': ','.join(variation_tags),
-          'version': version,
-          'parent': run_state['parent']
+            'script_uid': script_uid,
+            'script_alias': script_alias,
+            'script_tags': ','.join(found_script_tags),
+            'script_variations': ','.join(variation_tags),
+            'version': version,
+            'parent': run_state['parent']
         }
 
         run_state['version_info'].append(version_info)
@@ -1782,38 +2064,46 @@ class CAutomation(Automation):
         script_versions = detected_versions.get(meta['uid'], [])
 
         if not script_versions:
-            detected_versions[meta['uid']] = [ version ]
+            detected_versions[meta['uid']] = [version]
         else:
             script_versions.append(version)
 
-        ############################# RETURN
+        # RETURN
         elapsed_time = time.time() - start_time
 
-        if verbose and cached_uid!='':
-            logging.info(recursion_spaces+'  - cache UID: {}'.format(cached_uid))
+        if verbose and cached_uid != '':
+            logging.info(
+                recursion_spaces +
+                '  - cache UID: {}'.format(cached_uid))
 
         if print_deps:
             print_deps_data = self._print_deps(run_state['deps'])
             new_state['print_deps'] = print_deps_data
 
-        if print_readme or repro_prefix!='':
+        if print_readme or repro_prefix != '':
             readme = self._get_readme(cmd, run_state)
 
         # Copy Docker sample
-        if repro_prefix!='' and repro_dir!='':
-            docker_template_path = os.path.join(self.path, 'docker_repro_example')
+        if repro_prefix != '' and repro_dir != '':
+            docker_template_path = os.path.join(
+                self.path, 'docker_repro_example')
             if os.path.isdir(docker_template_path):
                 try:
-                    shutil.copytree(docker_template_path, repro_dir, dirs_exist_ok=True)
+
+                    shutil.copytree(
+                        docker_template_path,
+                        repro_dir,
+                        dirs_exist_ok=True)
                 except Exception as e:
                     pass
 
             docker_container = self._get_docker_container(cmd, run_state)
 
             try:
-                with open (os.path.join(repro_dir, 'ubuntu-23.04.Dockerfile'), 'a+') as f:
+
+                with open(os.path.join(repro_dir, 'ubuntu-23.04.Dockerfile'), 'a+') as f:
                     f.write(docker_container)
-            except:
+            except BaseException:
                 pass
 
         if print_readme:
@@ -1825,43 +2115,54 @@ class CAutomation(Automation):
             if r['return'] > 0:
                 return r
 
-        rr = {'return':0, 'env':env, 'new_env':new_env, 'state':state, 'new_state':new_state, 'deps': run_state['deps']}
+        rr = {
+            'return': 0,
+            'env': env,
+            'new_env': new_env,
+            'state': state,
+            'new_state': new_state,
+            'deps': run_state['deps']}
 
         # Print output as json to console
         if i.get('json', False) or i.get('j', False):
             import json
             logging.info(json.dumps(rr, indent=2))
 
-
-
         # Check if save json to file
-        if repro_prefix !='':
+        if repro_prefix != '':
 
-            with open(repro_prefix+'-README-cm.md', 'w', encoding='utf-8') as f:
+
+            with open(repro_prefix + '-README-cm.md', 'w', encoding='utf-8') as f:
                 f.write(readme)
 
             dump_repro(repro_prefix, rr, run_state)
 
         if verbose or show_time:
-            logging.info(recursion_spaces+'  - running time of script "{}": {:.2f} sec.'.format(','.join(found_script_tags), elapsed_time))
-
+            logging.info(
+                recursion_spaces +
+                '  - running time of script "{}": {:.2f} sec.'.format(
+                    ','.join(found_script_tags),
+                    elapsed_time))
 
         if not recursion and show_space:
             stop_disk_stats = shutil.disk_usage("/")
 
-            used_disk_space_in_mb = int((start_disk_stats.free - stop_disk_stats.free) / (1024*1024))
+            used_disk_space_in_mb = int(
+                (start_disk_stats.free - stop_disk_stats.free) / (1024 * 1024))
 
             if used_disk_space_in_mb > 0:
-                logging.info(recursion_spaces+'  - used disk space: {} MB'.format(used_disk_space_in_mb))
-
+                logging.info(
+                    recursion_spaces +
+                    '  - used disk space: {} MB'.format(used_disk_space_in_mb))
 
         # Check if need to print some final info such as path to model, etc
         if not run_state.get('tmp_silent', False):
-            print_env_at_the_end = meta.get('print_env_at_the_end',{})
-            if len(print_env_at_the_end)>0:
+            print_env_at_the_end = meta.get('print_env_at_the_end', {})
+            if len(print_env_at_the_end) > 0:
                 for p in sorted(print_env_at_the_end):
                     t = print_env_at_the_end[p]
-                    if t == '': t = 'ENV[{}]'.format(p)
+                    if t == '':
+                        t = 'ENV[{}]'.format(p)
 
                     v = new_env.get(p, None)
 
@@ -1871,50 +2172,59 @@ class CAutomation(Automation):
         if print_versions:
             self._print_versions(run_state)
 
-        # Check if pause (useful if running a given script in a new terminal that may close automatically)
-        if i.get('pause', False):            input ('Press Enter to continue ...')
+        # Check if pause (useful if running a given script in a new terminal
+        # that may close automatically)
+        if i.get('pause', False):
+            input('Press Enter to continue ...')
 
         return rr
 
-    ######################################################################################
+    ##########################################################################
     def _fix_cache_paths(self, env):
-        cm_repos_path = os.environ.get('CM_REPOS', os.path.join(os.path.expanduser("~"), "CM", "repos"))
-        current_cache_path = os.path.realpath(os.path.join(cm_repos_path, "local", "cache"))
+        cm_repos_path = os.environ.get(
+            'CM_REPOS', os.path.join(
+                os.path.expanduser("~"), "CM", "repos"))
+        current_cache_path = os.path.realpath(
+            os.path.join(cm_repos_path, "local", "cache"))
 
-        new_env = env #just a reference
+        new_env = env  # just a reference
 
-        for key,val in new_env.items():
-            #may need a cleaner way
-            if type(val) == str and ("/local/cache/" in val or "\\local\\cache\\" in val):
-                if "/local/cache/" in val:
-                    sep = "/"
-                else:
-                    sep = "\\"
+        for key, val in new_env.items():
+            # Check for a path separator in a string and determine the
+            # separator
+            if isinstance(val, str) and any(sep in val for sep in [
+                    "/local/cache/", "\\local\\cache\\"]):
+                sep = "/" if "/local/cache/" in val else "\\"
 
                 path_split = val.split(sep)
                 repo_entry_index = path_split.index("local")
-                loaded_cache_path = sep.join(path_split[0:repo_entry_index+2])
-                if loaded_cache_path != current_cache_path and os.path.exists(current_cache_path):
-                    new_env[key] = val.replace(loaded_cache_path, current_cache_path)
+                loaded_cache_path = sep.join(
+                    path_split[0:repo_entry_index + 2])
+                if loaded_cache_path != current_cache_path and os.path.exists(
+                        current_cache_path):
+                    new_env[key] = val.replace(
+                        loaded_cache_path, current_cache_path)
 
-            elif type(val) == list:
-                for val2,i in enumerate(val):
-                    if type(val2) == str and ("/local/cache/" in val2 or "\\local\\cache\\" in val2):
-                        if "/local/cache/" in val:
-                            sep = "/"
-                        else:
-                            sep = "\\"
+            elif isinstance(val, list):
+                for i, val2 in enumerate(val):
+                    if isinstance(val2, str) and any(sep in val2 for sep in [
+                            "/local/cache/", "\\local\\cache\\"]):
+                        sep = "/" if "/local/cache/" in val2 else "\\"
 
                         path_split = val2.split(sep)
                         repo_entry_index = path_split.index("local")
-                        loaded_cache_path = sep.join(path_split[0:repo_entry_index+2])
-                        if loaded_cache_path != current_cache_path and os.path.exists(current_cache_path):
-                            new_env[key][i] = val2.replace(loaded_cache_path, current_cache_path)
+                        loaded_cache_path = sep.join(
+                            path_split[0:repo_entry_index + 2])
+                        if loaded_cache_path != current_cache_path and os.path.exists(
+                                current_cache_path):
+                            new_env[key][i] = val2.replace(
+                                loaded_cache_path, current_cache_path)
 
         return {'return': 0, 'new_env': new_env}
 
-    ######################################################################################
-    def _dump_version_info_for_script(self, output_dir = os.getcwd(), quiet = False, silent = False):
+    ##########################################################################
+    def _dump_version_info_for_script(
+            self, output_dir=os.getcwd(), quiet=False, silent=False):
 
         if not quiet and not silent:
             pass
@@ -1922,16 +2232,18 @@ class CAutomation(Automation):
             if not quiet and not silent:
                 logging.info('Dumping versions to {}'.format(f))
             r = utils.save_json(f, self.run_state.get('version_info', []))
-            if r['return']>0: return r
+            if r['return'] > 0:
+                return r
 
         return {'return': 0}
 
-    ######################################################################################
-    def _update_state_from_variations(self, i, meta, variation_tags, variations, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose):
+    ##########################################################################
+    def _update_state_from_variations(self, i, meta, variation_tags, variations, env, state, const, const_state, deps, post_deps, prehook_deps,
+                                      posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, add_deps_recursive, run_state, recursion_spaces, verbose):
 
         # Save current explicit variations
         import copy
-        explicit_variation_tags=copy.deepcopy(variation_tags)
+        explicit_variation_tags = copy.deepcopy(variation_tags)
 
         # Calculate space
         required_disk_space = {}
@@ -1956,46 +2268,58 @@ class CAutomation(Automation):
         run_state['variation_groups'] = variation_groups
 
         # Add variation(s) if specified in the "tags" input prefixed by _
-            # If there is only 1 default variation, then just use it or substitute from CMD
+
+        # If there is only 1 default variation, then just use it or
+        # substitute from CMD
 
         default_variation = meta.get('default_variation', '')
 
         if default_variation and default_variation not in variations:
-            return {'return': 1, 'error': 'Default variation "{}" is not in the list of variations: "{}" '.format(default_variation, variations.keys())}
+            return {'return': 1, 'error': 'Default variation "{}" is not in the list of variations: "{}" '.format(
+                default_variation, variations.keys())}
 
         if len(variation_tags) == 0:
             if default_variation != '' and default_variation not in excluded_variation_tags:
                 variation_tags = [default_variation]
 
-        r = self._update_variation_tags_from_variations(variation_tags, variations, variation_groups, excluded_variation_tags)
+        r = self._update_variation_tags_from_variations(
+            variation_tags, variations, variation_groups, excluded_variation_tags)
         if r['return'] > 0:
             return r
 
         # variation_tags get appended by any default on variation in groups
-        r = self._process_variation_tags_in_groups(variation_tags, variation_groups, excluded_variation_tags, variations)
+        r = self._process_variation_tags_in_groups(
+            variation_tags, variation_groups, excluded_variation_tags, variations)
         if r['return'] > 0:
             return r
         if variation_tags != r['variation_tags']:
             variation_tags = r['variation_tags']
 
-            # we need to again process variation tags if any new default variation is added
-            r = self._update_variation_tags_from_variations(variation_tags, variations, variation_groups, excluded_variation_tags)
+            # we need to again process variation tags if any new default
+            # variation is added
+            r = self._update_variation_tags_from_variations(
+                variation_tags, variations, variation_groups, excluded_variation_tags)
             if r['return'] > 0:
                 return r
 
-
-        valid_variation_combinations = meta.get('valid_variation_combinations', [])
+        valid_variation_combinations = meta.get(
+            'valid_variation_combinations', [])
         if valid_variation_combinations:
-            if not any ( all(t in variation_tags for t in s) for s in valid_variation_combinations):
-                return {'return': 1, 'error': 'Invalid variation combination "{}" prepared. Valid combinations: "{}" '.format(variation_tags, valid_variation_combinations)}
+            if not any(all(t in variation_tags for t in s)
+                       for s in valid_variation_combinations):
+                return {'return': 1, 'error': 'Invalid variation combination "{}" prepared. Valid combinations: "{}" '.format(
+                    variation_tags, valid_variation_combinations)}
 
-        invalid_variation_combinations = meta.get('invalid_variation_combinations', [])
+        invalid_variation_combinations = meta.get(
+            'invalid_variation_combinations', [])
         if invalid_variation_combinations:
-            if any ( all(t in variation_tags for t in s) for s in invalid_variation_combinations):
-                return {'return': 1, 'error': 'Invalid variation combination "{}" prepared. Invalid combinations: "{}" '.format(variation_tags, invalid_variation_combinations)}
+            if any(all(t in variation_tags for t in s)
+                   for s in invalid_variation_combinations):
+                return {'return': 1, 'error': 'Invalid variation combination "{}" prepared. Invalid combinations: "{}" '.format(
+                    variation_tags, invalid_variation_combinations)}
 
         variation_tags_string = ''
-        if len(variation_tags)>0:
+        if len(variation_tags) > 0:
             for t in variation_tags:
                 if variation_tags_string != '':
                     variation_tags_string += ','
@@ -2003,54 +2327,79 @@ class CAutomation(Automation):
                 x = '_' + t
                 variation_tags_string += x
 
-            logging.debug(recursion_spaces+'    Prepared variations: {}'.format(variation_tags_string))
+            logging.debug(
+                recursion_spaces +
+                '    Prepared variations: {}'.format(variation_tags_string))
 
         # Update env and other keys if variations
-        if len(variation_tags)>0:
+        if len(variation_tags) > 0:
             for variation_tag in variation_tags:
                 if variation_tag.startswith('~'):
-                    # ignore such tag (needed for caching only to differentiate variations)
+                    # ignore such tag (needed for caching only to differentiate
+                    # variations)
                     continue
 
                 if variation_tag.startswith('-'):
-                    # ignore such tag (needed for caching only to eliminate variations)
+                    # ignore such tag (needed for caching only to eliminate
+                    # variations)
                     continue
 
                 variation_tag_dynamic_suffix = None
                 if variation_tag not in variations:
                     if '.' in variation_tag and variation_tag[-1] != '.':
-                        variation_tag_dynamic_suffix = variation_tag[variation_tag.index(".")+1:]
+                        variation_tag_dynamic_suffix = variation_tag[variation_tag.index(
+                            ".") + 1:]
                         if not variation_tag_dynamic_suffix:
-                            return {'return':1, 'error':'tag {} is not in variations {}'.format(variation_tag, variations.keys())}
-                        variation_tag = self._get_name_for_dynamic_variation_tag(variation_tag)
+                            return {'return': 1, 'error': 'tag {} is not in variations {}'.format(
+                                variation_tag, variations.keys())}
+                        variation_tag = self._get_name_for_dynamic_variation_tag(
+                            variation_tag)
                     if variation_tag not in variations:
-                        return {'return':1, 'error':'tag {} is not in variations {}'.format(variation_tag, variations.keys())}
+                        return {'return': 1, 'error': 'tag {} is not in variations {}'.format(
+                            variation_tag, variations.keys())}
 
                 variation_meta = variations[variation_tag]
                 if variation_tag_dynamic_suffix:
-                    self._update_variation_meta_with_dynamic_suffix(variation_meta, variation_tag_dynamic_suffix)
+                    self._update_variation_meta_with_dynamic_suffix(
+                        variation_meta, variation_tag_dynamic_suffix)
 
-                r = update_state_from_meta(variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, run_state, i)
-                if r['return']>0: return r
+                r = update_state_from_meta(
+                    variation_meta,
+                    env,
+                    state,
+                    const,
+                    const_state,
+                    deps,
+                    post_deps,
+                    prehook_deps,
+                    posthook_deps,
+                    new_env_keys_from_meta,
+                    new_state_keys_from_meta,
+                    run_state,
+                    i)
+                if r['return'] > 0:
+                    return r
 
-                if variation_meta.get('script_name', '')!='':
+                if variation_meta.get('script_name', '') != '':
                     meta['script_name'] = variation_meta['script_name']
 
-                if variation_meta.get('default_version', '')!='':
+                if variation_meta.get('default_version', '') != '':
                     run_state['default_version'] = variation_meta['default_version']
 
-                if variation_meta.get('required_disk_space', 0) > 0 and variation_tag not in required_disk_space:
+                if variation_meta.get(
+                        'required_disk_space', 0) > 0 and variation_tag not in required_disk_space:
                     required_disk_space[variation_tag] = variation_meta['required_disk_space']
 
                 if variation_meta.get('warning', '') != '':
                     x = variation_meta['warning']
-                    if x not in warnings: warnings.append()
+                    if x not in warnings:
+                        warnings.append()
 
-                adr=get_adr(variation_meta)
+                adr = get_adr(variation_meta)
                 if adr:
                     self._merge_dicts_with_tags(add_deps_recursive, adr)
 
-                combined_variations = [ t for t in variations if ',' in t ]
+                combined_variations = [t for t in variations if ',' in t]
 
                 combined_variations.sort(key=lambda x: x.count(','))
                 ''' By sorting based on the number of variations users can safely override
@@ -2064,39 +2413,68 @@ class CAutomation(Automation):
 
                         combined_variation_meta = variations[combined_variation]
 
-                        r = update_state_from_meta(combined_variation_meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys_from_meta, new_state_keys_from_meta, run_state, i)
-                        if r['return']>0: return r
+                        r = update_state_from_meta(
+                            combined_variation_meta,
+                            env,
+                            state,
+                            const,
+                            const_state,
+                            deps,
+                            post_deps,
+                            prehook_deps,
+                            posthook_deps,
+                            new_env_keys_from_meta,
+                            new_state_keys_from_meta,
+                            run_state,
+                            i)
+                        if r['return'] > 0:
+                            return r
 
-                        adr=get_adr(combined_variation_meta)
+                        adr = get_adr(combined_variation_meta)
                         if adr:
-                            self._merge_dicts_with_tags(add_deps_recursive, adr)
+                            self._merge_dicts_with_tags(
+                                add_deps_recursive, adr)
 
-                        if combined_variation_meta.get('script_name', '')!='':
+                        if combined_variation_meta.get(
+                                'script_name', '') != '':
                             meta['script_name'] = combined_variation_meta['script_name']
 
-                        if variation_meta.get('default_version', '')!='':
+                        if variation_meta.get('default_version', '') != '':
                             run_state['default_version'] = variation_meta['default_version']
 
-                        if combined_variation_meta.get('required_disk_space', 0) > 0 and combined_variation not in required_disk_space:
+                        if combined_variation_meta.get(
+                                'required_disk_space', 0) > 0 and combined_variation not in required_disk_space:
                             required_disk_space[combined_variation] = combined_variation_meta['required_disk_space']
 
                         if combined_variation_meta.get('warning', '') != '':
                             x = combined_variation_meta['warning']
-                            if x not in warnings: warnings.append(x)
+                            if x not in warnings:
+                                warnings.append(x)
 
-            #Processing them again using updated deps for add_deps_recursive
-            r = update_adr_from_meta(deps, post_deps, prehook_deps, posthook_deps, add_deps_recursive, env)
-            if r['return']>0: return r
+            # Processing them again using updated deps for add_deps_recursive
+            r = update_adr_from_meta(
+                deps,
+                post_deps,
+                prehook_deps,
+                posthook_deps,
+                add_deps_recursive,
+                env)
+            if r['return'] > 0:
+                return r
 
-        if len(required_disk_space)>0:
-            required_disk_space_sum_mb = sum(list(required_disk_space.values()))
+        if len(required_disk_space) > 0:
+            required_disk_space_sum_mb = sum(
+                list(required_disk_space.values()))
 
-            warnings.append('Required disk space: {} MB'.format(required_disk_space_sum_mb))
+            warnings.append(
+                'Required disk space: {} MB'.format(required_disk_space_sum_mb))
 
-        return {'return': 0, 'variation_tags_string': variation_tags_string, 'explicit_variation_tags': explicit_variation_tags, 'warnings':warnings}
+        return {'return': 0, 'variation_tags_string': variation_tags_string,
+                'explicit_variation_tags': explicit_variation_tags, 'warnings': warnings}
 
-    ######################################################################################
-    def _update_variation_tags_from_variations(self, variation_tags, variations, variation_groups, excluded_variation_tags):
+    ##########################################################################
+    def _update_variation_tags_from_variations(
+            self, variation_tags, variations, variation_groups, excluded_variation_tags):
 
         import copy
         tmp_variation_tags_static = copy.deepcopy(variation_tags)
@@ -2107,7 +2485,7 @@ class CAutomation(Automation):
                 v_static = self._get_name_for_dynamic_variation_tag(v)
                 tmp_variation_tags_static[v_i] = v_static
 
-        combined_variations = [ t for t in variations if ',' in t ]
+        combined_variations = [t for t in variations if ',' in t]
         # We support default_variations in the meta of cmbined_variations
         combined_variations.sort(key=lambda x: x.count(','))
         ''' By sorting based on the number of variations users can safely override
@@ -2122,27 +2500,34 @@ class CAutomation(Automation):
                 for variation_name in variation_tags:
                     tag_to_append = None
 
-                    #ignore the excluded variations
-                    if variation_name.startswith("~") or variation_name.startswith("-"):
+                    # ignore the excluded variations
+                    if variation_name.startswith(
+                            "~") or variation_name.startswith("-"):
                         tmp_variations[variation_name] = True
                         continue
 
                     if variation_name not in variations:
-                        variation_name = self._get_name_for_dynamic_variation_tag(variation_name)
+                        variation_name = self._get_name_for_dynamic_variation_tag(
+                            variation_name)
 
-                    # base variations are automatically turned on. Only variations outside of any variation group can be added as a base_variation
+                    # base variations are automatically turned on. Only
+                    # variations outside of any variation group can be added as
+                    # a base_variation
                     if "base" in variations[variation_name]:
                         base_variations = variations[variation_name]["base"]
                         for base_variation in base_variations:
                             dynamic_base_variation = False
                             dynamic_base_variation_already_added = False
                             if base_variation not in variations:
-                                base_variation_dynamic = self._get_name_for_dynamic_variation_tag(base_variation)
+                                base_variation_dynamic = self._get_name_for_dynamic_variation_tag(
+                                    base_variation)
                                 if not base_variation_dynamic or base_variation_dynamic not in variations:
-                                    return {'return': 1, 'error': 'Variation "{}" specified as base variation of "{}" is not existing'.format(base_variation, variation_name)}
+                                    return {'return': 1, 'error': 'Variation "{}" specified as base variation of "{}" is not existing'.format(
+                                        base_variation, variation_name)}
                                 else:
                                     dynamic_base_variation = True
-                                    base_prefix = base_variation_dynamic.split(".")[0]+"."
+                                    base_prefix = base_variation_dynamic.split(".")[
+                                        0] + "."
                                     for x in variation_tags:
                                         if x.startswith(base_prefix):
                                             dynamic_base_variation_already_added = True
@@ -2152,14 +2537,24 @@ class CAutomation(Automation):
 
                             if tag_to_append:
                                 if tag_to_append in excluded_variation_tags:
-                                    return {'return': 1, 'error': 'Variation "{}" specified as base variation for the variation is in the excluded list "{}" '.format(tag_to_append, variation_name)}
+                                    return {'return': 1, 'error': 'Variation "{}" specified as base variation for the variation is in the excluded list "{}" '.format(
+                                        tag_to_append, variation_name)}
                                 variation_tags.append(tag_to_append)
                                 tmp_variations[tag_to_append] = False
 
                             tag_to_append = None
 
-                    # default_variations dictionary specifies the default_variation for each variation group. A default variation in a group is turned on if no other variation from that group is turned on and it is not excluded using the '-' prefix
-                    r = self._get_variation_tags_from_default_variations(variations[variation_name], variations, variation_groups, tmp_variation_tags_static, excluded_variation_tags)
+                    # default_variations dictionary specifies the
+                    # default_variation for each variation group. A default
+                    # variation in a group is turned on if no other variation
+                    # from that group is turned on and it is not excluded using
+                    # the '-' prefix
+                    r = self._get_variation_tags_from_default_variations(
+                        variations[variation_name],
+                        variations,
+                        variation_groups,
+                        tmp_variation_tags_static,
+                        excluded_variation_tags)
                     if r['return'] > 0:
                         return r
 
@@ -2179,7 +2574,12 @@ class CAutomation(Automation):
                             combined_variation_meta = variations[combined_variation]
                             tmp_combined_variations[combined_variation] = True
 
-                            r = self._get_variation_tags_from_default_variations(combined_variation_meta, variations, variation_groups, tmp_variation_tags_static, excluded_variation_tags)
+                            r = self._get_variation_tags_from_default_variations(
+                                combined_variation_meta,
+                                variations,
+                                variation_groups,
+                                tmp_variation_tags_static,
+                                excluded_variation_tags)
                             if r['return'] > 0:
                                 return r
 
@@ -2193,7 +2593,8 @@ class CAutomation(Automation):
                     if variation_name.startswith("-"):
                         continue
                     if variation_name not in variations:
-                        variation_name = self._get_name_for_dynamic_variation_tag(variation_name)
+                        variation_name = self._get_name_for_dynamic_variation_tag(
+                            variation_name)
                     if tmp_variations[variation_name] == False:
                         all_base_processed = False
                         break
@@ -2201,9 +2602,13 @@ class CAutomation(Automation):
                     break
         return {'return': 0}
 
-    ######################################################################################
-    def _get_variation_tags_from_default_variations(self, variation_meta, variations, variation_groups, tmp_variation_tags_static, excluded_variation_tags):
-    # default_variations dictionary specifies the default_variation for each variation group. A default variation in a group is turned on if no other variation from that group is turned on and it is not excluded using the '-' prefix
+    ##########################################################################
+    def _get_variation_tags_from_default_variations(
+            self, variation_meta, variations, variation_groups, tmp_variation_tags_static, excluded_variation_tags):
+        # default_variations dictionary specifies the default_variation for
+        # each variation group. A default variation in a group is turned on if
+        # no other variation from that group is turned on and it is not
+        # excluded using the '-' prefix
 
         tmp_variation_tags = []
         if "default_variations" in variation_meta:
@@ -2212,18 +2617,24 @@ class CAutomation(Automation):
                 tag_to_append = None
 
                 if default_base_variation not in variation_groups:
-                    return {'return': 1, 'error': 'Default variation "{}" is not a valid group. Valid groups are "{}" '.format(default_base_variation, variation_groups)}
+                    return {'return': 1, 'error': 'Default variation "{}" is not a valid group. Valid groups are "{}" '.format(
+                        default_base_variation, variation_groups)}
 
                 unique_allowed_variations = variation_groups[default_base_variation]['variations']
-                # add the default only if none of the variations from the current group is selected and it is not being excluded with - prefix
-                if len(set(unique_allowed_variations) & set(tmp_variation_tags_static)) == 0 and default_base_variations[default_base_variation] not in excluded_variation_tags and default_base_variations[default_base_variation] not in tmp_variation_tags_static:
+                # add the default only if none of the variations from the
+                # current group is selected and it is not being excluded with -
+                # prefix
+                if len(set(unique_allowed_variations) & set(tmp_variation_tags_static)) == 0 and default_base_variations[
+                        default_base_variation] not in excluded_variation_tags and default_base_variations[default_base_variation] not in tmp_variation_tags_static:
                     tag_to_append = default_base_variations[default_base_variation]
 
                 if tag_to_append:
                     if tag_to_append not in variations:
-                        variation_tag_static = self._get_name_for_dynamic_variation_tag(tag_to_append)
+                        variation_tag_static = self._get_name_for_dynamic_variation_tag(
+                            tag_to_append)
                         if not variation_tag_static or variation_tag_static not in variations:
-                            return {'return': 1, 'error': 'Invalid variation "{}" specified in default variations for the variation "{}" '.format(tag_to_append, variation_meta)}
+                            return {'return': 1, 'error': 'Invalid variation "{}" specified in default variations for the variation "{}" '.format(
+                                tag_to_append, variation_meta)}
                     tmp_variation_tags.append(tag_to_append)
 
         return {'return': 0, 'variations_to_add': tmp_variation_tags}
@@ -2253,10 +2664,10 @@ class CAutomation(Automation):
         if console:
             logging.info(version)
 
-        return {'return':0, 'version':version}
-
+        return {'return': 0, 'version': version}
 
     ############################################################
+
     def search(self, i):
         """
         Overriding the automation search function to filter out scripts not matching the given variation tags
@@ -2268,17 +2679,18 @@ class CAutomation(Automation):
 
         # Check simplified CMD: cm run script "get compiler"
         # If artifact has spaces, treat them as tags!
-        artifact = i.get('artifact','')
-        if ' ' in artifact: # or ',' in artifact:
-            del(i['artifact'])
-            if 'parsed_artifact' in i: del(i['parsed_artifact'])
+        artifact = i.get('artifact', '')
+        if ' ' in artifact:  # or ',' in artifact:
+            del (i['artifact'])
+            if 'parsed_artifact' in i:
+                del (i['parsed_artifact'])
             # Force substitute tags
-            i['tags']=artifact.replace(' ',',')
+            i['tags'] = artifact.replace(' ', ',')
 
-        ############################################################################################################
+        #######################################################################
         # Process tags to find script(s) and separate variations
         # (not needed to find scripts)
-        tags_string = i.get('tags','').strip()
+        tags_string = i.get('tags', '').strip()
 
         tags = [] if tags_string == '' else tags_string.split(',')
 
@@ -2299,17 +2711,20 @@ class CAutomation(Automation):
                 else:
                     script_tags.append(t)
 
-        excluded_tags =  [ v[1:] for v in script_tags if v.startswith("-") ]
+        excluded_tags = [v[1:] for v in script_tags if v.startswith("-")]
         common = set(script_tags).intersection(set(excluded_tags))
         if common:
-            return {'return':1, 'error': 'There is common tags {} in the included and excluded lists'.format(common)}
+            return {
+                'return': 1, 'error': 'There is common tags {} in the included and excluded lists'.format(common)}
 
-        excluded_variation_tags =  [ v[1:] for v in variation_tags if v.startswith("-") ]
+        excluded_variation_tags = [v[1:]
+                                   for v in variation_tags if v.startswith("-")]
         common = set(variation_tags).intersection(set(excluded_variation_tags))
         if common:
-            return {'return':1, 'error': 'There is common variation tags {} in the included and excluded lists'.format(common)}
+            return {
+                'return': 1, 'error': 'There is common variation tags {} in the included and excluded lists'.format(common)}
 
-        ############################################################################################################
+        #######################################################################
         # Find CM script(s) based on thier tags to get their meta (can be more than 1)
         # Then check if variations exists inside meta
 
@@ -2318,8 +2733,9 @@ class CAutomation(Automation):
         i['out'] = None
         i['common'] = True
 
-        r = super(CAutomation,self).search(i)
-        if r['return']>0: return r
+        r = super(CAutomation, self).search(i)
+        if r['return'] > 0:
+            return r
 
         lst = r['list']
 
@@ -2327,7 +2743,7 @@ class CAutomation(Automation):
 
         found_scripts = False if len(lst) == 0 else True
 
-        if found_scripts and len(variation_tags)>0:
+        if found_scripts and len(variation_tags) > 0:
             filtered = []
 
             for script_artifact in lst:
@@ -2358,7 +2774,9 @@ class CAutomation(Automation):
                 for script in lst:
                     meta = script.meta
                     variations = meta.get('variations', {})
-                    warning.append('variation tags {} are not matching for the found script {} with variations {}\n'.format(variation_tags, meta.get('alias'), variations.keys()))
+                    warning.append(
+                        'variation tags {} are not matching for the found script {} with variations {}\n'.format(
+                            variation_tags, meta.get('alias'), variations.keys()))
                 r['warning'] = "\n".join(warning)
 
             r['list'] = filtered
@@ -2366,9 +2784,10 @@ class CAutomation(Automation):
         # Print filtered paths if console
         if console:
             for script in r['list']:
-#                This should not be logging since the output can be consumed by other external tools and scripts
-#                logging.info(script.path)
-                print (script.path)
+
+                #                This should not be logging since the output can be consumed by other external tools and scripts
+                #                logging.info(script.path)
+                print(script.path)
 
         # Finalize output
         r['script_tags'] = script_tags
@@ -2415,7 +2834,7 @@ class CAutomation(Automation):
 
         # Check parsed automation
         if 'parsed_automation' not in i:
-            return {'return':1, 'error':'automation is not specified'}
+            return {'return': 1, 'error': 'automation is not specified'}
 
         console = i.get('out') == 'con'
 
@@ -2423,7 +2842,8 @@ class CAutomation(Automation):
         i['out'] = None
         r = self.search(i)
 
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
         lst = r['list']
         for script_artifact in lst:
@@ -2431,8 +2851,8 @@ class CAutomation(Automation):
             meta = script_artifact.meta
             original_meta = script_artifact.original_meta
 
-            alias = meta.get('alias','')
-            uid = meta.get('uid','')
+            alias = meta.get('alias', '')
+            uid = meta.get('uid', '')
             if console:
                 logging.info(path)
                 test_config = meta.get('tests', '')
@@ -2442,7 +2862,8 @@ class CAutomation(Automation):
                     tags_string = ",".join(meta.get("tags"))
                     test_input_index = i.get('test_input_index')
                     test_input_id = i.get('test_input_id')
-                    run_inputs = i.get("run_inputs", test_config.get('run_inputs', [ {"docker_os": "ubuntu", "docker_os_version":"22.04"} ]))
+                    run_inputs = i.get("run_inputs", test_config.get(
+                        'run_inputs', [{"docker_os": "ubuntu", "docker_os_version": "22.04"}]))
                     if test_input_index:
                         index_plus = False
                         try:
@@ -2453,30 +2874,41 @@ class CAutomation(Automation):
                                 input_index = int(test_input_index)
                         except ValueError as e:
                             print(e)
-                            return {'return': 1, 'error': f'Invalid test_input_index: {test_input_index}. Must be an integer or an integer followed by a +'}
+                            return {
+                                'return': 1, 'error': f'Invalid test_input_index: {test_input_index}. Must be an integer or an integer followed by a +'}
                         if input_index > len(run_inputs):
                             run_inputs = []
                         else:
                             if index_plus:
-                                run_inputs = run_inputs[index_index-1:]
+                                run_inputs = run_inputs[index_index - 1:]
                             else:
-                                run_inputs = [ run_inputs[input_index - 1] ]
+                                run_inputs = [run_inputs[input_index - 1]]
 
                     for run_input in run_inputs:
                         if test_input_id:
                             if run_input.get('id', '') != test_input_id:
                                 continue
 
-
                         ii = {'action': 'run',
-                              'automation':'script',
+                              'automation': 'script',
                               'quiet': i.get('quiet'),
-                            }
-                        test_all_variations = run_input.get('test-all-variations', False)
+                              }
+                        test_all_variations = run_input.get(
+                            'test-all-variations', False)
                         if test_all_variations:
-                            run_variations = [ f"_{v}" for v in variations if variations[v].get('group', '') == '' and str(variations[v].get('exclude-in-test', '')).lower() not in [ "1", "true", "yes" ] ]
+                            run_variations = [
+                                f"_{v}" for v in variations if variations[v].get(
+                                    'group',
+                                    '') == '' and str(
+                                    variations[v].get(
+                                        'exclude-in-test',
+                                        '')).lower() not in [
+                                    "1",
+                                    "true",
+                                    "yes"]]
                         else:
-                            given_variations = run_input.get('variations_list', [])
+                            given_variations = run_input.get(
+                                'variations_list', [])
                             if given_variations:
                                 v_split = []
                                 run_variations = []
@@ -2484,18 +2916,29 @@ class CAutomation(Automation):
                                     v_split = v.split(",")
                                     for t in v_split:
                                         if not t.startswith("_"):
-                                            given_variations[i] = f"_{t}" #variations must begin with _. We support both with and without _ in the meta
+                                            # variations must begin with _. We
+                                            # support both with and without _
+                                            # in the meta
+                                            given_variations[i] = f"_{t}"
                                     if v_split:
-                                        run_variations.append(",".join(v_split))
+                                        run_variations.append(
+                                            ",".join(v_split))
                             else:
-                                run_variations = [ "" ] #run the test without any variations
+                                # run the test without any variations
+                                run_variations = [""]
                         use_docker = run_input.get('docker', False)
-                        for key in run_input:#override meta with any user inputs like for docker_cm_repo
-                            if i.get(key, '') != '':
-                                if type(run_input[key]) == dict:
-                                    utils.merge_dicts({'dict1': run_input[key] , 'dict2':i[key], 'append_lists':True, 'append_unique':True})
+                        for key in run_input:  # override meta with any user inputs like for docker_cm_repo
+                            if i.get(key):
+                                if isinstance(run_input[key], dict):
+                                    utils.merge_dicts({
+                                        'dict1': run_input[key],
+                                        'dict2': i[key],
+                                        'append_lists': True,
+                                        'append_unique': True
+                                    })
                                 else:
                                     run_input[key] = i[key]
+
                         ii = {**ii, **run_input}
                         i_env = ii.get('env', i.get('env', {}))
                         if use_docker:
@@ -2518,11 +2961,10 @@ class CAutomation(Automation):
                             if r['return'] > 0:
                                 return r
 
-
-        return {'return':0, 'list': lst}
-
+        return {'return': 0, 'list': lst}
 
     ############################################################
+
     def native_run(self, i):
         """
         Add CM script
@@ -2545,41 +2987,42 @@ class CAutomation(Automation):
         env = i.get('env', {})
         cmd = i.get('command', '')
 
-        script = i.get('script',[])
+        script = i.get('script', [])
 
         # Create temporary script name
-        script_name = i.get('script_name','')
-        if script_name=='':
-            script_name='tmp-native-run.'
+        script_name = i.get('script_name', '')
+        if script_name == '':
+            script_name = 'tmp-native-run.'
 
             if os.name == 'nt':
-                script_name+='bat'
+                script_name += 'bat'
             else:
-                script_name+='sh'
+                script_name += 'sh'
 
         if os.name == 'nt':
-            xcmd = 'call '+script_name
+            xcmd = 'call ' + script_name
 
-            if len(script)==0:
+            if len(script) == 0:
                 script.append('@echo off')
                 script.append('')
         else:
-            xcmd = 'chmod 755 '+script_name+' ; ./'+script_name
+            xcmd = 'chmod 755 ' + script_name + ' ; ./' + script_name
 
-            if len(script)==0:
+            if len(script) == 0:
                 script.append('#!/bin/bash')
                 script.append('')
 
         # Assemble env
-        if len(env)>0:
+        if len(env) > 0:
             for k in env:
-                v=env[k]
+                v = env[k]
 
                 if os.name == 'nt':
-                    script.append('set '+k+'='+v)
+                    script.append('set ' + k + '=' + v)
                 else:
-                    if ' ' in v: v='"'+v+'"'
-                    script.append('export '+k+'='+v)
+                    if ' ' in v:
+                        v = '"' + v + '"'
+                    script.append('export ' + k + '=' + v)
 
             script.append('')
 
@@ -2588,12 +3031,13 @@ class CAutomation(Automation):
 
         # Record script
         r = utils.save_txt(file_name=script_name, string='\n'.join(script))
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
         # Run script
         rc = os.system(xcmd)
 
-        return {'return':0, 'return_code':rc}
+        return {'return': 0, 'return_code': rc}
 
     ############################################################
     def add(self, i):
@@ -2641,41 +3085,48 @@ class CAutomation(Automation):
         # Try to find script artifact by alias and/or tags
         ii = utils.sub_input(i, self.cmind.cfg['artifact_keys'])
 
-        parsed_artifact = i.get('parsed_artifact',[])
+        parsed_artifact = i.get('parsed_artifact', [])
 
-        artifact_obj = parsed_artifact[0] if len(parsed_artifact)>0 else None
-        artifact_repo = parsed_artifact[1] if len(parsed_artifact)>1 else None
+        artifact_obj = parsed_artifact[0] if len(parsed_artifact) > 0 else None
+        artifact_repo = parsed_artifact[1] if len(
+            parsed_artifact) > 1 else None
 
         script_name = ''
         if 'script_name' in i:
-            script_name = i.get('script_name','').strip()
-            del(i['script_name'])
+            script_name = i.get('script_name', '').strip()
+            del (i['script_name'])
 
             if script_name != '' and not os.path.isfile(script_name):
-                return {'return':1, 'error':'file {} not found'.format(script_name)}
+                return {'return': 1,
+                        'error': 'file {} not found'.format(script_name)}
 
         # Move tags from input to meta of the newly created script artifact
         tags_list = utils.convert_tags_to_list(i)
-        if 'tags' in i: del(i['tags'])
+        if 'tags' in i:
+            del (i['tags'])
 
-        if len(tags_list)==0:
+        if len(tags_list) == 0:
             if console:
-                x=input('Please specify a combination of unique tags separated by comma for this script: ')
+                x = input(
+                    'Please specify a combination of unique tags separated by comma for this script: ')
                 x = x.strip()
-                if x!='':
+                if x != '':
                     tags_list = x.split(',')
 
-        if len(tags_list)==0:
-            return {'return':1, 'error':'you must specify a combination of unique tags separate by comman using "--new_tags"'}
+        if len(tags_list) == 0:
+            return {
+                'return': 1, 'error': 'you must specify a combination of unique tags separate by comman using "--new_tags"'}
 
         # Add placeholder (use common action)
-        ii['out']='con'
-        ii['common']=True # Avoid recursion - use internal CM add function to add the script artifact
+        ii['out'] = 'con'
+        # Avoid recursion - use internal CM add function to add the script
+        # artifact
+        ii['common'] = True
 
         # Check template path
         template_dir = 'template'
 
-        template = i.get('template','')
+        template = i.get('template', '')
 
         if template == '':
             if i.get('python', False):
@@ -2683,76 +3134,84 @@ class CAutomation(Automation):
             elif i.get('pytorch', False):
                 template = 'pytorch'
 
-        if template!='':
-            template_dir += '-'+template
+        if template != '':
+            template_dir += '-' + template
 
         template_path = os.path.join(self.path, template_dir)
 
         if not os.path.isdir(template_path):
-            return {'return':1, 'error':'template path {} not found'.format(template_path)}
+            return {'return': 1, 'error': 'template path {} not found'.format(
+                template_path)}
 
         # Check if preloaded meta exists
         meta = {
-                 'cache':False
-# 20240127: Grigori commented that because newly created script meta looks ugly
-#                 'new_env_keys':[],
-#                 'new_state_keys':[],
-#                 'input_mapping':{},
-#                 'docker_input_mapping':{},
-#                 'deps':[],
-#                 'prehook_deps':[],
-#                 'posthook_deps':[],
-#                 'post_deps':[],
-#                 'versions':{},
-#                 'variations':{},
-#                 'input_description':{}
-               }
+            'cache': False
+            # 20240127: Grigori commented that because newly created script meta looks ugly
+            #                 'new_env_keys':[],
+            #                 'new_state_keys':[],
+            #                 'input_mapping':{},
+            #                 'docker_input_mapping':{},
+            #                 'deps':[],
+            #                 'prehook_deps':[],
+            #                 'posthook_deps':[],
+            #                 'post_deps':[],
+            #                 'versions':{},
+            #                 'variations':{},
+            #                 'input_description':{}
+        }
 
         fmeta = os.path.join(template_path, self.cmind.cfg['file_cmeta'])
 
         r = utils.load_yaml_and_json(fmeta)
-        if r['return']==0:
-            utils.merge_dicts({'dict1':meta, 'dict2':r['meta'], 'append_lists':True, 'append_unique':True})
+        if r['return'] == 0:
+            utils.merge_dicts({'dict1': meta,
+                               'dict2': r['meta'],
+                               'append_lists': True,
+                               'append_unique': True})
 
         # Check meta from CMD
-        xmeta = i.get('meta',{})
+        xmeta = i.get('meta', {})
 
-        if len(xmeta)>0:
-            utils.merge_dicts({'dict1':meta, 'dict2':xmeta, 'append_lists':True, 'append_unique':True})
+        if len(xmeta) > 0:
+            utils.merge_dicts({'dict1': meta, 'dict2': xmeta,
+                              'append_lists': True, 'append_unique': True})
 
-        meta['automation_alias']=self.meta['alias']
-        meta['automation_uid']=self.meta['uid']
-        meta['tags']=tags_list
+        meta['automation_alias'] = self.meta['alias']
+        meta['automation_uid'] = self.meta['uid']
+        meta['tags'] = tags_list
 
         script_name_base = script_name
         script_name_ext = ''
-        if script_name!='':
+        if script_name != '':
             # separate name and extension
-            j=script_name.rfind('.')
-            if j>=0:
+            j = script_name.rfind('.')
+            if j >= 0:
                 script_name_base = script_name[:j]
                 script_name_ext = script_name[j:]
 
             meta['script_name'] = script_name_base
 
-        ii['meta']=meta
-        ii['action']='add'
+        ii['meta'] = meta
+        ii['action'] = 'add'
 
-        use_yaml = True if not i.get('json',False) else False
+        use_yaml = True if not i.get('json', False) else False
 
         if use_yaml:
-            ii['yaml']=True
+            ii['yaml'] = True
 
-        ii['automation']='script,5b4e0237da074764'
+        ii['automation'] = 'script,5b4e0237da074764'
 
         for k in ['parsed_automation', 'parsed_artifact']:
-            if k in ii: del ii[k]
+            if k in ii:
+                del ii[k]
 
-        if artifact_repo != None:
-            ii['artifact'] = utils.assemble_cm_object2(artifact_repo) + ':' + utils.assemble_cm_object2(artifact_obj)
+        if artifact_repo is not None:
+            ii['artifact'] = utils.assemble_cm_object2(
+                artifact_repo) + ':' + utils.assemble_cm_object2(artifact_obj)
 
-        r_obj=self.cmind.access(ii)
-        if r_obj['return']>0: return r_obj
+        r_obj = self.cmind.access(ii)
+        if r_obj['return'] > 0:
+            return r_obj
 
         new_script_path = r_obj['path']
 
@@ -2761,32 +3220,32 @@ class CAutomation(Automation):
 
         # Copy files from template (only if exist)
         files = [
-                 (template_path, 'README-extra.md', ''),
-                 (template_path, 'customize.py', ''),
-                 (template_path, 'main.py', ''),
-                 (template_path, 'requirements.txt', ''),
-                 (template_path, 'install_deps.bat', ''),
-                 (template_path, 'install_deps.sh', ''),
-                 (template_path, 'plot.bat', ''),
-                 (template_path, 'plot.sh', ''),
-                 (template_path, 'analyze.bat', ''),
-                 (template_path, 'analyze.sh', ''),
-                 (template_path, 'validate.bat', ''),
-                 (template_path, 'validate.sh', '')
-                ]
+            (template_path, 'README-extra.md', ''),
+            (template_path, 'customize.py', ''),
+            (template_path, 'main.py', ''),
+            (template_path, 'requirements.txt', ''),
+            (template_path, 'install_deps.bat', ''),
+            (template_path, 'install_deps.sh', ''),
+            (template_path, 'plot.bat', ''),
+            (template_path, 'plot.sh', ''),
+            (template_path, 'analyze.bat', ''),
+            (template_path, 'analyze.sh', ''),
+            (template_path, 'validate.bat', ''),
+            (template_path, 'validate.sh', '')
+        ]
 
         if script_name == '':
             files += [(template_path, 'run.bat', ''),
-                      (template_path, 'run.sh',  '')]
+                      (template_path, 'run.sh', '')]
         else:
             if script_name_ext == '.bat':
-                files += [(template_path, 'run.sh', script_name_base+'.sh')]
+                files += [(template_path, 'run.sh', script_name_base + '.sh')]
                 files += [('', script_name, script_name)]
 
             else:
-                files += [(template_path, 'run.bat', script_name_base+'.bat')]
-                files += [('', script_name, script_name_base+'.sh')]
-
+                files += [(template_path, 'run.bat',
+                           script_name_base + '.bat')]
+                files += [('', script_name, script_name_base + '.sh')]
 
         for x in files:
             path = x[0]
@@ -2796,7 +3255,7 @@ class CAutomation(Automation):
             if f2 == '':
                 f2 = f1
 
-            if path!='':
+            if path != '':
                 f1 = os.path.join(path, f1)
 
             if os.path.isfile(f1):
@@ -2805,76 +3264,87 @@ class CAutomation(Automation):
                 if console:
                     logging.info('  * Copying {} to {}'.format(f1, f2))
 
-                shutil.copyfile(f1,f2)
+                shutil.copyfile(f1, f2)
 
         return r_obj
 
-    ##############################################################################
+    ##########################################################################
     def _get_name_for_dynamic_variation_tag(script, variation_tag):
         '''
         Returns the variation name in meta for the dynamic_variation_tag
         '''
         if "." not in variation_tag or variation_tag[-1] == ".":
             return None
-        return variation_tag[:variation_tag.index(".")+1]+"#"
+        return variation_tag[:variation_tag.index(".") + 1] + "#"
 
+    ##########################################################################
 
-    ##############################################################################
-    def _update_variation_meta_with_dynamic_suffix(script, variation_meta, variation_tag_dynamic_suffix):
+    def _update_variation_meta_with_dynamic_suffix(
+            script, variation_meta, variation_tag_dynamic_suffix):
         '''
         Updates the variation meta with dynamic suffix
         '''
         for key in variation_meta:
             value = variation_meta[key]
 
-            if type(value) is list: #deps,pre_deps...
+            if type(value) is list:  # deps,pre_deps...
                 for item in value:
                     if type(item) is dict:
                         for item_key in item:
                             item_value = item[item_key]
-                            if type(item_value) is dict: #env,default_env inside deps
+                            if type(
+                                    item_value) is dict:  # env,default_env inside deps
                                 for item_key2 in item_value:
-                                    item_value[item_key2] = item_value[item_key2].replace("#", variation_tag_dynamic_suffix)
-                            elif type(item_value) is list: #names for example
-                                for i,l_item in enumerate(item_value):
+                                    item_value[item_key2] = item_value[item_key2].replace(
+                                        "#", variation_tag_dynamic_suffix)
+                            elif type(item_value) is list:  # names for example
+                                for i, l_item in enumerate(item_value):
                                     if type(l_item) is str:
-                                        item_value[i] = l_item.replace("#", variation_tag_dynamic_suffix)
+                                        item_value[i] = l_item.replace(
+                                            "#", variation_tag_dynamic_suffix)
                             else:
-                                item[item_key] = item[item_key].replace("#", variation_tag_dynamic_suffix)
+                                item[item_key] = item[item_key].replace(
+                                    "#", variation_tag_dynamic_suffix)
 
-            elif type(value) is dict: #add_deps, env, ..
+            elif type(value) is dict:  # add_deps, env, ..
                 for item in value:
                     item_value = value[item]
-                    if type(item_value) is dict: #deps
+                    if type(item_value) is dict:  # deps
                         for item_key in item_value:
                             item_value2 = item_value[item_key]
-                            if type(item_value2) is dict: #env,default_env inside deps
+                            if type(
+                                    item_value2) is dict:  # env,default_env inside deps
                                 for item_key2 in item_value2:
-                                    item_value2[item_key2] = item_value2[item_key2].replace("#", variation_tag_dynamic_suffix)
+                                    item_value2[item_key2] = item_value2[item_key2].replace(
+                                        "#", variation_tag_dynamic_suffix)
                             else:
-                                item_value[item_key] = item_value[item_key].replace("#", variation_tag_dynamic_suffix)
+                                item_value[item_key] = item_value[item_key].replace(
+                                    "#", variation_tag_dynamic_suffix)
                     else:
-                        if type(item_value) is list: # lists inside env...
-                            for i,l_item in enumerate(item_value):
+                        if type(item_value) is list:  # lists inside env...
+                            for i, l_item in enumerate(item_value):
                                 if type(l_item) is str:
-                                    item_value[i] = l_item.replace("#", variation_tag_dynamic_suffix)
+                                    item_value[i] = l_item.replace(
+                                        "#", variation_tag_dynamic_suffix)
                         else:
-                            value[item] = value[item].replace("#", variation_tag_dynamic_suffix)
+                            value[item] = value[item].replace(
+                                "#", variation_tag_dynamic_suffix)
 
-            else: #scalar value
-                pass #no dynamic update for now
+            else:  # scalar value
+                pass  # no dynamic update for now
 
+    ##########################################################################
 
-    ##############################################################################
     def _get_variations_with_aliases(script, variation_tags, variations):
         '''
         Automatically turn on variation tags which are aliased by any given tag
         '''
         import copy
-        tmp_variation_tags=copy.deepcopy(variation_tags)
+        tmp_variation_tags = copy.deepcopy(variation_tags)
 
-        excluded_variations = [ k[1:] for k in variation_tags if k.startswith("-") ]
-        for i,e in enumerate(excluded_variations):
+        excluded_variations = [k[1:]
+                               for k in variation_tags if k.startswith("-")]
+        for i, e in enumerate(excluded_variations):
             if e not in variations:
                 dynamic_tag = script._get_name_for_dynamic_variation_tag(e)
                 if dynamic_tag and dynamic_tag in variations:
@@ -2886,29 +3356,34 @@ class CAutomation(Automation):
             if k in variations:
                 variation = variations[k]
             else:
-                variation = variations[script._get_name_for_dynamic_variation_tag(k)]
+                variation = variations[script._get_name_for_dynamic_variation_tag(
+                    k)]
             if 'alias' in variation:
 
                 if variation['alias'] in excluded_variations:
-                    return {'return': 1, 'error': 'Alias "{}" specified for the variation "{}" is conflicting with the excluded variation "-{}" '.format(variation['alias'], k, variation['alias'])}
+                    return {'return': 1, 'error': 'Alias "{}" specified for the variation "{}" is conflicting with the excluded variation "-{}" '.format(
+                        variation['alias'], k, variation['alias'])}
 
                 if variation['alias'] not in variations:
-                    return {'return': 1, 'error': 'Alias "{}" specified for the variation "{}" is not existing '.format(variation['alias'], k)}
+                    return {'return': 1, 'error': 'Alias "{}" specified for the variation "{}" is not existing '.format(
+                        variation['alias'], k)}
 
                 if 'group' in variation:
-                    return {'return': 1, 'error': 'Incompatible combinations: (alias, group) specified for the variation "{}" '.format(k)}
+                    return {
+                        'return': 1, 'error': 'Incompatible combinations: (alias, group) specified for the variation "{}" '.format(k)}
 
                 if 'default' in variation:
-                    return {'return': 1, 'error': 'Incompatible combinations: (default, group) specified for the variation "{}" '.format(k)}
+                    return {
+                        'return': 1, 'error': 'Incompatible combinations: (default, group) specified for the variation "{}" '.format(k)}
 
                 if variation['alias'] not in tmp_variation_tags:
                     tmp_variation_tags.append(variation['alias'])
 
-        return {'return':0, 'variation_tags': tmp_variation_tags, 'excluded_variation_tags': excluded_variations}
+        return {'return': 0, 'variation_tags': tmp_variation_tags,
+                'excluded_variation_tags': excluded_variations}
 
+    ##########################################################################
 
-
-    ##############################################################################
     def _get_variation_groups(script, variations):
 
         groups = {}
@@ -2924,14 +3399,16 @@ class CAutomation(Automation):
                 groups[variation['group']]['variations'].append(k)
                 if 'default' in variation:
                     if 'default' in groups[variation['group']]:
-                        return {'return': 1, 'error': 'Multiple defaults specied for the variation group "{}": "{},{}" '.format(variation['group'], k, groups[variation['group']]['default'])}
+                        return {'return': 1, 'error': 'Multiple defaults specied for the variation group "{}": "{},{}" '.format(
+                            variation['group'], k, groups[variation['group']]['default'])}
                     groups[variation['group']]['default'] = k
 
         return {'return': 0, 'variation_groups': groups}
 
+    ##########################################################################
 
-    ##############################################################################
-    def _process_variation_tags_in_groups(script, variation_tags, groups, excluded_variations, variations):
+    def _process_variation_tags_in_groups(
+            script, variation_tags, groups, excluded_variations, variations):
         import copy
         tmp_variation_tags = copy.deepcopy(variation_tags)
         tmp_variation_tags_static = copy.deepcopy(variation_tags)
@@ -2947,23 +3424,22 @@ class CAutomation(Automation):
             group = groups[k]
             unique_allowed_variations = group['variations']
 
-            if len(set(unique_allowed_variations) & set(tmp_variation_tags_static)) > 1:
-                return {'return': 1, 'error': 'Multiple variation tags selected for the variation group "{}": {} '.format(k, str(set(unique_allowed_variations) & set(tmp_variation_tags_static)))}
-            if len(set(unique_allowed_variations) & set(tmp_variation_tags_static)) == 0:
+            if len(set(unique_allowed_variations) &
+                   set(tmp_variation_tags_static)) > 1:
+                return {'return': 1, 'error': 'Multiple variation tags selected for the variation group "{}": {} '.format(
+                    k, str(set(unique_allowed_variations) & set(tmp_variation_tags_static)))}
+            if len(set(unique_allowed_variations) &
+                   set(tmp_variation_tags_static)) == 0:
                 if 'default' in group and group['default'] not in excluded_variations:
                     tmp_variation_tags.append(group['default'])
 
-        return {'return':0, 'variation_tags': tmp_variation_tags}
+        return {'return': 0, 'variation_tags': tmp_variation_tags}
 
+    ##########################################################################
 
-
-
-
-
-    ##############################################################################
     def _call_run_deps(script, deps, local_env_keys, local_env_keys_from_meta, env, state, const, const_state,
-            add_deps_recursive, recursion_spaces, remembered_selections, variation_tags_string, found_cached, debug_script_tags='',
-            verbose=False, show_time=False, extra_recursion_spaces='  ', run_state={'deps':[], 'fake_deps':[], 'parent': None}):
+                       add_deps_recursive, recursion_spaces, remembered_selections, variation_tags_string, found_cached, debug_script_tags='',
+                       verbose=False, show_time=False, extra_recursion_spaces='  ', run_state={'deps': [], 'fake_deps': [], 'parent': None}):
         if len(deps) == 0:
             return {'return': 0}
 
@@ -2973,25 +3449,26 @@ class CAutomation(Automation):
         # Get local env keys
         local_env_keys = copy.deepcopy(local_env_keys)
 
-        if len(local_env_keys_from_meta)>0:
+        if len(local_env_keys_from_meta) > 0:
             local_env_keys += local_env_keys_from_meta
 
         r = script._run_deps(deps, local_env_keys, env, state, const, const_state, add_deps_recursive, recursion_spaces,
-            remembered_selections, variation_tags_string, found_cached, debug_script_tags,
-            verbose, show_time, extra_recursion_spaces, run_state)
-        if r['return']>0: return r
+                             remembered_selections, variation_tags_string, found_cached, debug_script_tags,
+                             verbose, show_time, extra_recursion_spaces, run_state)
+        if r['return'] > 0:
+            return r
 
         return {'return': 0}
 
-    ##############################################################################
+    ##########################################################################
     def _run_deps(self, deps, clean_env_keys_deps, env, state, const, const_state, add_deps_recursive, recursion_spaces,
-                    remembered_selections, variation_tags_string='', from_cache=False, debug_script_tags='',
-                  verbose=False, show_time=False, extra_recursion_spaces='  ', run_state={'deps':[], 'fake_deps':[], 'parent': None}):
+                  remembered_selections, variation_tags_string='', from_cache=False, debug_script_tags='',
+                  verbose=False, show_time=False, extra_recursion_spaces='  ', run_state={'deps': [], 'fake_deps': [], 'parent': None}):
         """
         Runs all the enabled dependencies and pass them env minus local env
         """
 
-        if len(deps)>0:
+        if len(deps) > 0:
             # Preserve local env
             tmp_env = {}
 
@@ -3009,14 +3486,17 @@ class CAutomation(Automation):
                     continue
 
                 if d.get('env'):
-                    r = update_env_with_values(d['env'], False, env) #to update env local to a dependency
-                    if r['return']>0: return r
+                    # to update env local to a dependency
+                    r = update_env_with_values(d['env'], False, env)
+                    if r['return'] > 0:
+                        return r
 
-                update_tags_from_env_with_prefix = d.get("update_tags_from_env_with_prefix", {})
+                update_tags_from_env_with_prefix = d.get(
+                    "update_tags_from_env_with_prefix", {})
                 for t in update_tags_from_env_with_prefix:
                     for key in update_tags_from_env_with_prefix[t]:
                         if str(env.get(key, '')).strip() != '':
-                            d['tags']+=","+t+str(env[key])
+                            d['tags'] += "," + t + str(env[key])
 
                 for key in clean_env_keys_deps:
                     if '?' in key or '*' in key:
@@ -3024,18 +3504,19 @@ class CAutomation(Automation):
                         for kk in list(env.keys()):
                             if fnmatch.fnmatch(kk, key):
                                 tmp_env[kk] = env[kk]
-                                del(env[kk])
+                                del (env[kk])
                     elif key in env:
                         tmp_env[key] = env[key]
-                        del(env[key])
+                        del (env[key])
 
                 import re
                 for key in list(env.keys()):
                     value = env[key]
                     tmp_values = re.findall(r'<<<(.*?)>>>', str(value))
-                    if tmp_values == []: continue
+                    if tmp_values == []:
+                        continue
                     tmp_env[key] = env[key]
-                    del(env[key])
+                    del (env[key])
 
                 force_env_keys_deps = d.get("force_env_keys", [])
                 for key in force_env_keys_deps:
@@ -3055,26 +3536,28 @@ class CAutomation(Automation):
                 update_tags_from_env = d.get("update_tags_from_env", [])
                 for t in update_tags_from_env:
                     if env.get(t, '').strip() != '':
-                        d['tags']+=","+env[t]
+                        d['tags'] += "," + env[t]
 
                 inherit_variation_tags = d.get("inherit_variation_tags", False)
-                skip_inherit_variation_groups = d.get("skip_inherit_variation_groups", [])
+                skip_inherit_variation_groups = d.get(
+                    "skip_inherit_variation_groups", [])
                 variation_tags_to_be_skipped = []
                 if inherit_variation_tags:
-                    if skip_inherit_variation_groups: #skips inheriting variations belonging to given groups
+                    if skip_inherit_variation_groups:  # skips inheriting variations belonging to given groups
                         for group in variation_groups:
                             if group in skip_inherit_variation_groups:
                                 variation_tags_to_be_skipped += variation_groups[group]['variations']
 
                     variation_tags = variation_tags_string.split(",")
-                    variation_tags =  [ x for x in variation_tags if not x.startswith("_") or x[1:] not in set(variation_tags_to_be_skipped) ]
+                    variation_tags = [x for x in variation_tags if not x.startswith(
+                        "_") or x[1:] not in set(variation_tags_to_be_skipped)]
 
                     # handle group in case of dynamic variations
                     for t_variation in variation_tags_to_be_skipped:
                         if t_variation.endswith(".#"):
                             beg = t_variation[:-1]
                             for m_tag in variation_tags:
-                                if m_tag.startswith("_"+beg):
+                                if m_tag.startswith("_" + beg):
                                     variation_tags.remove(m_tag)
 
                     deps_tags = d['tags'].split(",")
@@ -3084,7 +3567,8 @@ class CAutomation(Automation):
                             if variation_tag in variation_tags:
                                 variation_tags.remove(variation_tag)
                     new_variation_tags_string = ",".join(variation_tags)
-                    d['tags']+=","+new_variation_tags_string #deps should have non-empty tags
+                    # deps should have non-empty tags
+                    d['tags'] += "," + new_variation_tags_string
 
                 run_state['deps'].append(d['tags'])
 
@@ -3096,55 +3580,63 @@ class CAutomation(Automation):
                     run_state_copy['parent'] = run_state['script_id']
 
                     if len(run_state['script_variation_tags']) > 0:
-                        run_state_copy['parent'] += " ( " + ',_'.join(run_state['script_variation_tags']) + " )"
+                        run_state_copy['parent'] += " ( " + ',_'.join(
+                            run_state['script_variation_tags']) + " )"
 
                     # Run collective script via CM API:
-                    # Not very efficient but allows logging - can be optimized later
+                    # Not very efficient but allows logging - can be optimized
+                    # later
 
                     ii = {
-                            'action':'run',
-                            'automation':utils.assemble_cm_object(self.meta['alias'], self.meta['uid']),
-                            'recursion_spaces':recursion_spaces, # + extra_recursion_spaces,
-                            'recursion':True,
-                            'remembered_selections': remembered_selections,
-                            'env':env,
-                            'state':state,
-                            'const':copy.deepcopy(const),
-                            'const_state':copy.deepcopy(const_state),
-                            'add_deps_recursive':add_deps_recursive,
-                            'debug_script_tags':debug_script_tags,
-                            'verbose':verbose,
-                            'silent':run_state.get('tmp_silent', False),
-                            'time':show_time,
-                            'run_state':run_state_copy
+                        'action': 'run',
+                        'automation': utils.assemble_cm_object(self.meta['alias'], self.meta['uid']),
+                        'recursion_spaces': recursion_spaces,  # + extra_recursion_spaces,
+                        'recursion': True,
+                        'remembered_selections': remembered_selections,
+                        'env': env,
+                        'state': state,
+                        'const': copy.deepcopy(const),
+                        'const_state': copy.deepcopy(const_state),
+                        'add_deps_recursive': add_deps_recursive,
+                        'debug_script_tags': debug_script_tags,
+                        'verbose': verbose,
+                        'silent': run_state.get('tmp_silent', False),
+                        'time': show_time,
+                        'run_state': run_state_copy
 
-                        }
+                    }
 
-                    for key in [ "env", "state", "const", "const_state" ]:
-                        ii['local_'+key] = d.get(key, {})
+                    for key in ["env", "state", "const", "const_state"]:
+                        ii['local_' + key] = d.get(key, {})
                         if d.get(key):
                             d[key] = {}
 
-                    utils.merge_dicts({'dict1':ii, 'dict2':d, 'append_lists':True, 'append_unique':True})
+                    utils.merge_dicts(
+                        {'dict1': ii, 'dict2': d, 'append_lists': True, 'append_unique': True})
 
                     r = self.cmind.access(ii)
-                    if r['return']>0: return r
+                    if r['return'] > 0:
+                        return r
 
-                    run_state['version_info'] = run_state_copy.get('version_info')
+                    run_state['version_info'] = run_state_copy.get(
+                        'version_info')
 
                     # Restore local env
                     env.update(tmp_env)
                     r = update_env_with_values(env)
-                    if r['return']>0: return r
+                    if r['return'] > 0:
+                        return r
 
-                    #Update env/state with cost
+                    # Update env/state with cost
                     env.update(const)
-                    utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
-
+                    utils.merge_dicts({'dict1': state,
+                                       'dict2': const_state,
+                                       'append_lists': True,
+                                       'append_unique': True})
 
         return {'return': 0}
 
-    ##############################################################################
+    ##########################################################################
     def _merge_dicts_with_tags(self, dict1, dict2):
         """
         Merges two dictionaries and append any tag strings in them
@@ -3153,20 +3645,23 @@ class CAutomation(Automation):
             return {'return': 0}
         for dep in dict1:
             if 'tags' in dict1[dep]:
-                dict1[dep]['tags_list'] = utils.convert_tags_to_list(dict1[dep])
+                dict1[dep]['tags_list'] = utils.convert_tags_to_list(
+                    dict1[dep])
         for dep in dict2:
             if 'tags' in dict2[dep]:
-                dict2[dep]['tags_list'] = utils.convert_tags_to_list(dict2[dep])
-        utils.merge_dicts({'dict1':dict1, 'dict2':dict2, 'append_lists':True, 'append_unique':True})
+                dict2[dep]['tags_list'] = utils.convert_tags_to_list(
+                    dict2[dep])
+        utils.merge_dicts({'dict1': dict1, 'dict2': dict2,
+                          'append_lists': True, 'append_unique': True})
         for dep in dict1:
             if 'tags_list' in dict1[dep]:
                 dict1[dep]['tags'] = ",".join(dict1[dep]['tags_list'])
-                del(dict1[dep]['tags_list'])
+                del (dict1[dep]['tags_list'])
         for dep in dict2:
             if 'tags_list' in dict2[dep]:
-                del(dict2[dep]['tags_list'])
+                del (dict2[dep]['tags_list'])
 
-    ##############################################################################
+    ##########################################################################
     def _get_readme(self, cmd_parts, run_state):
         """
         Outputs a Markdown README file listing the CM run commands for the dependencies
@@ -3179,7 +3674,7 @@ class CAutomation(Automation):
 
         for v in version_info:
             k = list(v.keys())[0]
-            version_info_dict[k]=v[k]
+            version_info_dict[k] = v[k]
 
         content = ''
 
@@ -3204,7 +3699,8 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         current_cm_repo = run_state['script_repo_alias']
         if current_cm_repo not in ['mlcommons@ck', 'mlcommons@cm4mlops']:
-            content += '\ncm pull repo ' + run_state['script_repo_alias'] + '\n'
+            content += '\ncm pull repo ' + \
+                run_state['script_repo_alias'] + '\n'
 
         content += """```
 
@@ -3213,7 +3709,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 ```bash
 """
 
-        cmd="cm run script "
+        cmd = "cm run script "
 
         for cmd_part in cmd_parts:
             x = '"' if ' ' in cmd_part and not cmd_part.startswith('-') else ''
@@ -3231,17 +3727,18 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         for dep_tags in deps:
 
             xversion = ''
-            version = version_info_dict.get(dep_tags, {}).get('version','')
-            if version !='' :
+            version = version_info_dict.get(dep_tags, {}).get('version', '')
+            if version != '':
                 xversion = ' --version={}\n'.format(version)
 
             content += "```bash\n"
-            content += "cm run script --tags=" + dep_tags + "{}\n".format(xversion)
+            content += "cm run script --tags=" + \
+                dep_tags + "{}\n".format(xversion)
             content += "```\n\n"
 
         return content
 
-    ##############################################################################
+    ##########################################################################
     def _get_docker_container(self, cmd_parts, run_state):
         """
         Outputs a Markdown README file listing the CM run commands for the dependencies
@@ -3254,7 +3751,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         for v in version_info:
             k = list(v.keys())[0]
-            version_info_dict[k]=v[k]
+            version_info_dict[k] = v[k]
 
         content = ''
 
@@ -3267,21 +3764,22 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 """
         current_cm_repo = run_state['script_repo_alias']
         if current_cm_repo not in ['mlcommons@ck', 'mlcommons@cm4mlops']:
-            content += '\ncm pull repo ' + run_state['script_repo_alias'] + '\n\n'
-
+            content += '\ncm pull repo ' + \
+                run_state['script_repo_alias'] + '\n\n'
 
         deps_ = ''
 
         for dep_tags in deps:
 
             xversion = ''
-            version = version_info_dict.get(dep_tags, {}).get('version','')
-            if version !='' :
+            version = version_info_dict.get(dep_tags, {}).get('version', '')
+            if version != '':
                 xversion = ' --version={}\n'.format(version)
 
-            content += "# cm run script --tags=" + dep_tags + "{}\n\n".format(xversion)
+            content += "# cm run script --tags=" + \
+                dep_tags + "{}\n\n".format(xversion)
 
-        cmd="cm run script "
+        cmd = "cm run script "
 
         for cmd_part in cmd_parts:
             x = '"' if ' ' in cmd_part and not cmd_part.startswith('-') else ''
@@ -3289,11 +3787,10 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         content += cmd + '\n'
 
-
         return content
 
+    ##########################################################################
 
-    ##############################################################################
     def _print_versions(self, run_state):
         """
         Print versions in the nice format
@@ -3305,27 +3802,27 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         logging.info('Versions of dependencies:')
         for v in version_info:
             k = list(v.keys())[0]
-            version_info_dict=v[k]
+            version_info_dict = v[k]
 
-            version = version_info_dict.get('version','')
+            version = version_info_dict.get('version', '')
 
-            if version !='' :
+            if version != '':
                 logging.info('* {}: {}'.format(k, version))
 
         logging.info('=========================')
 
         return {}
 
-    ##############################################################################
+    ##########################################################################
     def _markdown_cmd(self, cmd):
         """
         Returns a CM command in markdown format
         """
 
-        return '```bash\n '+cmd+' \n ```'
+        return '```bash\n ' + cmd + ' \n ```'
 
+    ##########################################################################
 
-    ##############################################################################
     def _print_deps(self, deps):
         """
         Prints the CM run commands for the list of CM script dependencies
@@ -3339,8 +3836,8 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         return print_deps_data
 
+    ##########################################################################
 
-    ##############################################################################
     def _get_deps_run_cmds(self, deps):
         """
         Returns the CM run commands for the list of CM script dependencies
@@ -3349,15 +3846,12 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         run_cmds = []
 
         for dep_tags in deps:
-            run_cmds.append("cm run script --tags="+dep_tags)
+            run_cmds.append("cm run script --tags=" + dep_tags)
 
         return run_cmds
 
+    ##########################################################################
 
-
-
-
-    ##############################################################################
     def run_native_script(self, i):
         """
         Run native script in a CM script entry
@@ -3380,17 +3874,19 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         run_script_input = i['run_script_input']
         script_name = i['script_name']
-        env = i.get('env','')
+        env = i.get('env', '')
 
         # Create and work on a copy to avoid contamination
-        env_copy = copy.deepcopy(run_script_input.get('env',{}))
-        run_script_input_state_copy = copy.deepcopy(run_script_input.get('state',{}))
-        script_name_copy = run_script_input.get('script_name','')
+        env_copy = copy.deepcopy(run_script_input.get('env', {}))
+        run_script_input_state_copy = copy.deepcopy(
+            run_script_input.get('state', {}))
+        script_name_copy = run_script_input.get('script_name', '')
 
         run_script_input['script_name'] = script_name
         run_script_input['env'] = env
 
-        r = prepare_and_run_script_with_postprocessing(run_script_input, postprocess="")
+        r = prepare_and_run_script_with_postprocessing(
+            run_script_input, postprocess="")
 
         env_tmp = copy.deepcopy(run_script_input['env'])
         r['env_tmp'] = env_tmp
@@ -3401,7 +3897,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         return r
 
-    ##############################################################################
+    ##########################################################################
     def find_file_in_paths(self, i):
         """
         Find file name in a list of paths
@@ -3435,14 +3931,15 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         import copy
 
         paths = i['paths']
-        select = i.get('select',False)
+        select = i.get('select', False)
         select_default = i.get('select_default', False)
-        recursion_spaces = i.get('recursion_spaces','')
+        recursion_spaces = i.get('recursion_spaces', '')
 
         hook = i.get('hook', None)
 
         verbose = i.get('verbose', False)
-        if not verbose: verbose = i.get('v', False)
+        if not verbose:
+            verbose = i.get('v', False)
 
         file_name = i.get('file_name', '')
         file_name_re = i.get('file_name_re', '')
@@ -3453,7 +3950,8 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             file_is_re = True
 
         if file_name == '':
-            raise Exception('file_name or file_name_re not specified in find_artifact')
+            raise Exception(
+                'file_name or file_name_re not specified in find_artifact')
 
         found_files = []
 
@@ -3464,7 +3962,12 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             # May happen that path is in variable but it doesn't exist anymore
             if os.path.isdir(path):
                 if file_is_re:
-                    file_list = [os.path.join(path,f)  for f in os.listdir(path) if re.match(file_name, f)]
+                    file_list = [
+                        os.path.join(
+                            path,
+                            f) for f in os.listdir(path) if re.match(
+                            file_name,
+                            f)]
 
                     for f in file_list:
                         duplicate = False
@@ -3474,9 +3977,10 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                                 break
                         if not duplicate:
                             skip = False
-                            if hook!=None:
-                                r=hook({'file':f})
-                                if r['return']>0: return r
+                            if hook is not None:
+                                r = hook({'file': f})
+                                if r['return'] > 0:
+                                    return r
                                 skip = r['skip']
                             if not skip:
                                 found_files.append(f)
@@ -3485,17 +3989,17 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                     path_to_file = os.path.join(path, file_name)
 
                     file_pattern_suffixes = [
-                            "",
-                            ".[0-9]",
-                            ".[0-9][0-9]",
-                            "-[0-9]",
-                            "-[0-9][0-9]",
-                            "[0-9]",
-                            "[0-9][0-9]",
-                            "[0-9].[0-9]",
-                            "[0-9][0-9].[0-9]",
-                            "[0-9][0-9].[0-9][0-9]"
-                            ]
+                        "",
+                        ".[0-9]",
+                        ".[0-9][0-9]",
+                        "-[0-9]",
+                        "-[0-9][0-9]",
+                        "[0-9]",
+                        "[0-9][0-9]",
+                        "[0-9].[0-9]",
+                        "[0-9][0-9].[0-9]",
+                        "[0-9][0-9].[0-9][0-9]"
+                    ]
 
                     for suff in file_pattern_suffixes:
                         file_list = glob.glob(path_to_file + suff)
@@ -3514,13 +4018,13 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
                             if not duplicate:
                                 skip = False
-                                if hook!=None:
-                                    r=hook({'file':f})
-                                    if r['return']>0: return r
+                                if hook is not None:
+                                    r = hook({'file': f})
+                                    if r['return'] > 0:
+                                        return r
                                     skip = r['skip']
                                 if not skip:
                                     found_files.append(f)
-
 
         if select:
             # Check and prune versions
@@ -3539,15 +4043,19 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
                 x = ''
 
-                if version != '': x += ' == {}'.format(version)
-                if version_min != '': x += ' >= {}'.format(version_min)
-                if version_max != '': x += ' <= {}'.format(version_max)
+                if version != '':
+                    x += ' == {}'.format(version)
+                if version_min != '':
+                    x += ' >= {}'.format(version_min)
+                if version_max != '':
+                    x += ' <= {}'.format(version_max)
 
-                if x!='':
-                    logging.info(recursion_spaces + '  - Searching for versions: {}'.format(x))
+                if x != '':
+                    logging.info(
+                        recursion_spaces +
+                        '  - Searching for versions: {}'.format(x))
 
                 new_recursion_spaces = recursion_spaces + '    '
-
 
                 for path_to_file in found_files:
                     logging.info(recursion_spaces + '    * ' + path_to_file)
@@ -3556,63 +4064,81 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                     run_script_input['env'][env_path_key] = path_to_file
                     run_script_input['recursion_spaces'] = new_recursion_spaces
 
-                    rx = prepare_and_run_script_with_postprocessing(run_script_input, postprocess="detect_version")
+                    rx = prepare_and_run_script_with_postprocessing(
+                        run_script_input, postprocess="detect_version")
 
                     run_script_input['recursion_spaces'] = recursion_spaces
 
-                    if rx['return']>0:
+                    if rx['return'] > 0:
                         if rx['return'] != 2:
                             return rx
                     else:
                         # Version was detected
-                        detected_version = rx.get('version','')
+
+                        detected_version = rx.get('version', '')
 
                         if detected_version != '':
                             if detected_version == -1:
-                                logging.info(recursion_spaces + '    SKIPPED due to incompatibility ...')
+                                logging.info(
+                                    recursion_spaces + '    SKIPPED due to incompatibility ...')
                             else:
                                 ry = check_version_constraints({'detected_version': detected_version,
                                                                 'version': version,
                                                                 'version_min': version_min,
                                                                 'version_max': version_max,
-                                                                'cmind':self.cmind})
-                                if ry['return']>0: return ry
+                                                                'cmind': self.cmind})
+                                if ry['return'] > 0:
+                                    return ry
 
                                 if not ry['skip']:
-                                    found_files_with_good_version.append(path_to_file)
+                                    found_files_with_good_version.append(
+                                        path_to_file)
                                 else:
-                                    logging.info(recursion_spaces + '    SKIPPED due to version constraints ...')
+                                    logging.info(
+                                        recursion_spaces + '    SKIPPED due to version constraints ...')
 
                 found_files = found_files_with_good_version
 
             # Continue with selection
-            if len(found_files)>1:
+            if len(found_files) > 1:
                 if len(found_files) == 1 or select_default:
                     selection = 0
                 else:
                     # Select 1 and proceed
-                    logging.info(recursion_spaces+'  - More than 1 path found:')
+                    logging.info(
+                        recursion_spaces +
+                        '  - More than 1 path found:')
                     num = 0
 
                     for file in found_files:
-                        logging.info(recursion_spaces+'  {}) {}'.format(num, file))
+                        logging.info(
+                            recursion_spaces +
+                            '  {}) {}'.format(
+                                num,
+                                file))
                         num += 1
-                    x=input(recursion_spaces+'  Make your selection or press Enter for 0: ')
+                    x = input(recursion_spaces +
+                              '  Make your selection or press Enter for 0: ')
 
-                    x=x.strip()
-                    if x=='': x='0'
+                    x = x.strip()
+                    if x == '':
+                        x = '0'
 
                     selection = int(x)
 
                     if selection < 0 or selection >= num:
                         selection = 0
-                logging.info(recursion_spaces+'  Selected {}: {}'.format(selection, found_files[selection]))
+                logging.info(
+                    recursion_spaces +
+                    '  Selected {}: {}'.format(
+                        selection,
+                        found_files[selection]))
 
                 found_files = [found_files[selection]]
 
-        return {'return':0, 'found_files':found_files}
+        return {'return': 0, 'found_files': found_files}
 
-    ##############################################################################
+    ##########################################################################
     def detect_version_using_script(self, i):
         """
         Detect version using script
@@ -3635,7 +4161,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
            (detected_version) (str): detected version
 
         """
-        recursion_spaces = i.get('recursion_spaces','')
+        recursion_spaces = i.get('recursion_spaces', '')
 
         import copy
 
@@ -3651,12 +4177,17 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         x = ''
 
-        if version != '': x += ' == {}'.format(version)
-        if version_min != '': x += ' >= {}'.format(version_min)
-        if version_max != '': x += ' <= {}'.format(version_max)
+        if version != '':
+            x += ' == {}'.format(version)
+        if version_min != '':
+            x += ' >= {}'.format(version_min)
+        if version_max != '':
+            x += ' <= {}'.format(version_max)
 
-        if x!='':
-            logging.info(recursion_spaces + '  - Searching for versions: {}'.format(x))
+        if x != '':
+            logging.info(
+                recursion_spaces +
+                '  - Searching for versions: {}'.format(x))
 
         new_recursion_spaces = recursion_spaces + '    '
 
@@ -3664,28 +4195,30 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         run_script_input['env'] = env
 
         # Prepare run script
-        rx = prepare_and_run_script_with_postprocessing(run_script_input, postprocess="detect_version")
+        rx = prepare_and_run_script_with_postprocessing(
+            run_script_input, postprocess="detect_version")
 
         run_script_input['recursion_spaces'] = recursion_spaces
 
         if rx['return'] == 0:
             # Version was detected
-            detected_version = rx.get('version','')
+            detected_version = rx.get('version', '')
 
             if detected_version != '':
                 ry = check_version_constraints({'detected_version': detected_version,
                                                 'version': version,
                                                 'version_min': version_min,
                                                 'version_max': version_max,
-                                                'cmind':self.cmind})
-                if ry['return']>0: return ry
+                                                'cmind': self.cmind})
+                if ry['return'] > 0:
+                    return ry
 
                 if not ry['skip']:
-                    return {'return':0, 'detected_version':detected_version}
+                    return {'return': 0, 'detected_version': detected_version}
 
-        return {'return':16, 'error':'version was not detected'}
+        return {'return': 16, 'error': 'version was not detected'}
 
-    ##############################################################################
+    ##########################################################################
     def find_artifact(self, i):
         """
         Find some artifact (file) by name
@@ -3737,7 +4270,8 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         # Create and work on a copy to avoid contamination
         env_copy = copy.deepcopy(env)
-        run_script_input_state_copy = copy.deepcopy(run_script_input.get('state',{}))
+        run_script_input_state_copy = copy.deepcopy(
+            run_script_input.get('state', {}))
 
         default_path_env_key = i.get('default_path_env_key', '')
         recursion_spaces = i.get('recursion_spaces', '')
@@ -3746,42 +4280,48 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         # Check if forced to search in a specific path or multiple paths
         # separated by OS var separator (usually : or ;)
-        path = env.get('CM_TMP_PATH','')
+        path = env.get('CM_TMP_PATH', '')
 
-        if path!='' and env.get('CM_TMP_PATH_IGNORE_NON_EXISTANT','')!='yes':
+        if path != '' and env.get(
+                'CM_TMP_PATH_IGNORE_NON_EXISTANT', '') != 'yes':
             # Can be a list of paths
             path_list_tmp = path.split(os_info['env_separator'])
             for path_tmp in path_list_tmp:
-                if path_tmp.strip()!='' and not os.path.isdir(path_tmp):
-                    return {'return':1, 'error':'path {} doesn\'t exist'.format(path_tmp)}
+                if path_tmp.strip() != '' and not os.path.isdir(path_tmp):
+                    return {'return': 1,
+                            'error': 'path {} doesn\'t exist'.format(path_tmp)}
 
-        # Check if forced path and file name from --input (CM_INPUT - local env - will not be visible for higher-level script)
-        forced_file = env.get('CM_INPUT','').strip()
+        # Check if forced path and file name from --input (CM_INPUT - local env
+        # - will not be visible for higher-level script)
+        forced_file = env.get('CM_INPUT', '').strip()
         if forced_file != '':
             if not os.path.isfile(forced_file):
-                return {'return':1, 'error':'file {} doesn\'t exist'.format(forced_file)}
+                return {'return': 1,
+                        'error': 'file {} doesn\'t exist'.format(forced_file)}
 
             file_name = os.path.basename(forced_file)
             path = os.path.dirname(forced_file)
 
         default_path_list = self.get_default_path_list(i)
-        #[] if default_path_env_key == '' else \
+        # [] if default_path_env_key == '' else \
         #   os.environ.get(default_path_env_key,'').split(os_info['env_separator'])
-
 
         if path == '':
             path_list_tmp = default_path_list
         else:
-            logging.info(recursion_spaces + '    # Requested paths: {}'.format(path))
+            logging.info(
+                recursion_spaces +
+                '    # Requested paths: {}'.format(path))
             path_list_tmp = path.split(os_info['env_separator'])
 
         # Check soft links
         path_list_tmp2 = []
         for path_tmp in path_list_tmp:
-#            path_tmp_abs = os.path.realpath(os.path.join(path_tmp, file_name))
-#            GF: I remarked above code because it doesn't work correcly
-#                for virtual python - it unsoftlinks virtual python and picks up
-#                native one from /usr/bin thus making workflows work incorrectly ...
+            #            path_tmp_abs = os.path.realpath(os.path.join(path_tmp, file_name))
+            #            GF: I remarked above code because it doesn't work correcly
+            #                for virtual python - it unsoftlinks virtual python and picks up
+            # native one from /usr/bin thus making workflows work incorrectly
+            # ...
             path_tmp_abs = os.path.join(path_tmp, file_name)
 
             if not path_tmp_abs in path_list_tmp2:
@@ -3792,7 +4332,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             path_list.append(os.path.dirname(path_tmp))
 
         # Check if quiet
-        select_default = True if env.get('CM_QUIET','') == 'yes' else False
+        select_default = True if env.get('CM_QUIET', '') == 'yes' else False
 
         # Prepare paths to search
         r = self.find_file_in_paths({'paths': path_list,
@@ -3801,48 +4341,52 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                                      'select_default': select_default,
                                      'detect_version': i.get('detect_version', False),
                                      'env_path_key': env_path_key,
-                                     'env':env_copy,
-                                     'hook':hook,
+                                     'env': env_copy,
+                                     'hook': hook,
                                      'run_script_input': run_script_input,
                                      'recursion_spaces': recursion_spaces})
 
         run_script_input['state'] = run_script_input_state_copy
 
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
         found_files = r['found_files']
 
-        if len(found_files)==0:
-            return {'return':16, 'error':'{} not found'.format(file_name)}
+        if len(found_files) == 0:
+            return {'return': 16, 'error': '{} not found'.format(file_name)}
 
         # Finalize output
         file_path = found_files[0]
         found_path = os.path.dirname(file_path)
 
         if found_path not in default_path_list:
-            env_key = '+'+default_path_env_key
+            env_key = '+' + default_path_env_key
 
             paths = env.get(env_key, [])
             if found_path not in paths:
                 paths.insert(0, found_path)
                 env[env_key] = paths
             for extra_path in extra_paths:
-                epath = os.path.normpath(os.path.join(found_path, "..", extra_path))
+                epath = os.path.normpath(
+                    os.path.join(found_path, "..", extra_path))
                 if os.path.exists(epath):
                     if extra_paths[extra_path] not in env:
                         env[extra_paths[extra_path]] = []
                     env[extra_paths[extra_path]].append(epath)
-        logging.info(recursion_spaces + '    # Found artifact in {}'.format(file_path))
+        logging.info(
+            recursion_spaces +
+            '    # Found artifact in {}'.format(file_path))
 
         if env_path_key != '':
             env[env_path_key] = file_path
 
-        return {'return':0, 'found_path':found_path,
-                            'found_file_path':file_path,
-                            'found_file_name':os.path.basename(file_path),
-                            'default_path_list': default_path_list}
+        return {'return': 0, 'found_path': found_path,
+                'found_file_path': file_path,
+                'found_file_name': os.path.basename(file_path),
+                'default_path_list': default_path_list}
 
-    ##############################################################################
+    ##########################################################################
     def find_file_deep(self, i):
         """
         Find file name in a list of paths
@@ -3867,7 +4411,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         paths = i['paths']
         file_name = i['file_name']
 
-        restrict_paths = i.get('restrict_paths',[])
+        restrict_paths = i.get('restrict_paths', [])
 
         found_paths = []
 
@@ -3878,8 +4422,10 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                     p2 = os.path.join(p, f)
 
                     if os.path.isdir(p2):
-                        r = self.find_file_deep({'paths':[p2], 'file_name': file_name, 'restrict_paths':restrict_paths})
-                        if r['return']>0: return r
+                        r = self.find_file_deep(
+                            {'paths': [p2], 'file_name': file_name, 'restrict_paths': restrict_paths})
+                        if r['return'] > 0:
+                            return r
 
                         found_paths += r['found_paths']
                     else:
@@ -3898,9 +4444,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
             found_paths = filtered_found_paths
 
-        return {'return':0, 'found_paths':found_paths}
+        return {'return': 0, 'found_paths': found_paths}
 
-    ##############################################################################
+    ##########################################################################
     def find_file_back(self, i):
         """
         Find file name backwards
@@ -3939,9 +4485,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             else:
                 path = path2
 
-        return {'return':0, 'found_path':path}
+        return {'return': 0, 'found_path': path}
 
-    ##############################################################################
+    ##########################################################################
     def parse_version(self, i):
         """
         Parse version (used in post processing functions)
@@ -3967,8 +4513,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         """
 
-        file_name = i.get('file_name','')
-        if file_name == '': file_name = self.tmp_file_ver
+        file_name = i.get('file_name', '')
+        if file_name == '':
+            file_name = self.tmp_file_ver
 
         match_text = i['match_text']
         group_number = i['group_number']
@@ -3976,13 +4523,13 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         which_env = i['which_env']
         debug = i.get('debug', False)
 
-        r = utils.load_txt(file_name = file_name,
-                           check_if_exists = True,
-                           split = True,
-                           match_text = match_text,
-                           fail_if_no_match = 'version was not detected')
-        if r['return']>0:
-            if r.get('string','')!='':
+        r = utils.load_txt(file_name=file_name,
+                           check_if_exists=True,
+                           split=True,
+                           match_text=match_text,
+                           fail_if_no_match='version was not detected')
+        if r['return'] > 0:
+            if r.get('string', '') != '':
                 r['error'] += ' ({})'.format(r['string'])
             return r
 
@@ -3991,14 +4538,16 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         if r['match'].lastindex and r['match'].lastindex >= group_number:
             version = r['match'].group(group_number)
         else:
-            return {'return':1, 'error': 'Invalid version detection group number. Version was not detected. Last index of match = {}. Given group number = {}'.format(r['match'].lastindex, group_number)}
+            return {'return': 1, 'error': 'Invalid version detection group number. Version was not detected. Last index of match = {}. Given group number = {}'.format(
+                r['match'].lastindex, group_number)}
 
         which_env[env_key] = version
-        which_env['CM_DETECTED_VERSION'] = version # to be recorded in the cache meta
+        # to be recorded in the cache meta
+        which_env['CM_DETECTED_VERSION'] = version
 
-        return {'return':0, 'version':version, 'string':string}
+        return {'return': 0, 'version': version, 'string': string}
 
-    ##############################################################################
+    ##########################################################################
     def update_deps(self, i):
         """
         Update deps from pre/post processing
@@ -4017,33 +4566,49 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         env = i.get('env', {})
         update_deps(deps, add_deps, False, env)
 
-        return {'return':0}
+        return {'return': 0}
 
-    ##############################################################################
-    def update_state_from_meta(self, meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, run_state, i):
+    ##########################################################################
+    def update_state_from_meta(self, meta, env, state, const, const_state, deps, post_deps,
+                               prehook_deps, posthook_deps, new_env_keys, new_state_keys, run_state, i):
         """
         Updates state and env from meta
         Args:
         """
 
-        r = update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, run_state, i)
-        if r['return']>0:
+        r = update_state_from_meta(
+            meta,
+            env,
+            state,
+            const,
+            const_state,
+            deps,
+            post_deps,
+            prehook_deps,
+            posthook_deps,
+            new_env_keys,
+            new_state_keys,
+            run_state,
+            i)
+        if r['return'] > 0:
             return r
 
-        return {'return':0}
+        return {'return': 0}
 
-    ##############################################################################
+    ##########################################################################
     def get_default_path_list(self, i):
         default_path_env_key = i.get('default_path_env_key', '')
         os_info = i['os_info']
         default_path_list = [] if default_path_env_key == '' else \
-        os.environ.get(default_path_env_key,'').split(os_info['env_separator'])
+            os.environ.get(
+            default_path_env_key,
+            '').split(
+            os_info['env_separator'])
 
         return default_path_list
 
-
-
     ############################################################
+
     def doc(self, i):
         """
         Document CM script.
@@ -4069,7 +4634,8 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         """
 
-        return utils.call_internal_module(self, __file__, 'module_misc', 'doc', i)
+        return utils.call_internal_module(
+            self, __file__, 'module_misc', 'doc', i)
 
     ############################################################
     def gui(self, i):
@@ -4091,24 +4657,23 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         tags = ''
         if artifact != '':
             if ' ' in artifact:
-                tags = artifact.replace(' ',',')
+                tags = artifact.replace(' ', ',')
 
-        if tags=='':
-            tags = i.get('tags','')
+        if tags == '':
+            tags = i.get('tags', '')
 
         if 'tags' in i:
-            del(i['tags'])
+            del (i['tags'])
 
-        i['action']='run'
-        i['artifact']='gui'
-        i['parsed_artifact']=[('gui','605cac42514a4c69')]
-        i['script']=tags.replace(',',' ')
+        i['action'] = 'run'
+        i['artifact'] = 'gui'
+        i['parsed_artifact'] = [('gui', '605cac42514a4c69')]
+        i['script'] = tags.replace(',', ' ')
 
         return self.cmind.access(i)
 
-
-
     ############################################################
+
     def dockerfile(self, i):
         """
         Generate Dockerfile for CM script.
@@ -4134,7 +4699,8 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         """
 
-        return utils.call_internal_module(self, __file__, 'module_misc', 'dockerfile', i)
+        return utils.call_internal_module(
+            self, __file__, 'module_misc', 'dockerfile', i)
 
     ############################################################
     def docker(self, i):
@@ -4206,10 +4772,11 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         """
 
-        return utils.call_internal_module(self, __file__, 'module_misc', 'docker', i)
+        return utils.call_internal_module(
+            self, __file__, 'module_misc', 'docker', i)
 
+    ##########################################################################
 
-    ##############################################################################
     def _available_variations(self, i):
         """
         return error with available variations
@@ -4230,9 +4797,11 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         meta = i['meta']
 
-        list_of_variations = sorted(['_'+v for v in list(meta.get('variations',{}.keys()))])
+        list_of_variations = sorted(
+            ['_' + v for v in list(meta.get('variations', {}.keys()))])
 
-        return {'return':1, 'error':'python package variation is not defined in "{}". Available: {}'.format(meta['alias'],' '.join(list_of_variations))}
+        return {'return': 1, 'error': 'python package variation is not defined in "{}". Available: {}'.format(
+            meta['alias'], ' '.join(list_of_variations))}
 
     ############################################################
     def prepare(self, i):
@@ -4240,7 +4809,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         Run CM script with --fake_run only to resolve deps
         """
 
-        i['fake_run']=True
+        i['fake_run'] = True
 
         return self.run(i)
 
@@ -4251,17 +4820,16 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         Clean tmp files
         """
 
-        env = i.get('env',{})
+        env = i.get('env', {})
 
-        cur_work_dir = env.get('CM_TMP_CURRENT_SCRIPT_WORK_PATH','')
-        if cur_work_dir !='' and os.path.isdir(cur_work_dir):
+        cur_work_dir = env.get('CM_TMP_CURRENT_SCRIPT_WORK_PATH', '')
+        if cur_work_dir != '' and os.path.isdir(cur_work_dir):
             for x in ['tmp-run.bat', 'tmp-state.json']:
                 xx = os.path.join(cur_work_dir, x)
                 if os.path.isfile(xx):
                     os.remove(xx)
 
-        return {'return':0}
-
+        return {'return': 0}
 
 
 ##############################################################################
@@ -4303,27 +4871,30 @@ def find_cached_script(i):
     search_tags = ''
 
     verbose = i.get('verbose', False)
-    if not verbose: verbose = i.get('v', False)
+    if not verbose:
+        verbose = i.get('v', False)
 
     found_cached_scripts = []
 
-    logging.debug(recursion_spaces + '  - Checking if script execution is already cached ...')
+    logging.debug(
+        recursion_spaces +
+        '  - Checking if script execution is already cached ...')
 
     # Create a search query to find that we already ran this script with the same or similar input
     # It will be gradually enhanced with more "knowledge"  ...
-    if len(script_tags)>0:
+    if len(script_tags) > 0:
         for x in script_tags:
             if x not in cached_tags:
                 cached_tags.append(x)
 
-    if len(found_script_tags)>0:
+    if len(found_script_tags) > 0:
         for x in found_script_tags:
             if x not in cached_tags:
                 cached_tags.append(x)
 
-    explicit_cached_tags=copy.deepcopy(cached_tags)
+    explicit_cached_tags = copy.deepcopy(cached_tags)
 
-    if len(explicit_variation_tags)>0:
+    if len(explicit_variation_tags) > 0:
         explicit_variation_tags_string = ''
 
         for t in explicit_variation_tags:
@@ -4338,9 +4909,11 @@ def find_cached_script(i):
             if x not in explicit_cached_tags:
                 explicit_cached_tags.append(x)
 
-        logging.debug(recursion_spaces+'    - Prepared explicit variations: {}'.format(explicit_variation_tags_string))
+        logging.debug(
+            recursion_spaces +
+            '    - Prepared explicit variations: {}'.format(explicit_variation_tags_string))
 
-    if len(variation_tags)>0:
+    if len(variation_tags) > 0:
         variation_tags_string = ''
 
         for t in variation_tags:
@@ -4355,29 +4928,32 @@ def find_cached_script(i):
             if x not in cached_tags:
                 cached_tags.append(x)
 
-        logging.debug(recursion_spaces+'    - Prepared variations: {}'.format(variation_tags_string))
+        logging.debug(
+            recursion_spaces +
+            '    - Prepared variations: {}'.format(variation_tags_string))
 
     # Add version
-    if version !='':
-        if 'version-'+version not in cached_tags:
-            cached_tags.append('version-'+version)
-            explicit_cached_tags.append('version-'+version)
+    if version != '':
+        if 'version-' + version not in cached_tags:
+            cached_tags.append('version-' + version)
+            explicit_cached_tags.append('version-' + version)
 
     # Add extra cache tags (such as "virtual" for python)
-    if len(extra_cache_tags)>0:
+    if len(extra_cache_tags) > 0:
         for t in extra_cache_tags:
             if t not in cached_tags:
                 cached_tags.append(t)
                 explicit_cached_tags.append(t)
 
-    # Add tags from deps (will be also duplicated when creating new cache entry)
-    extra_cache_tags_from_env = meta.get('extra_cache_tags_from_env',[])
+    # Add tags from deps (will be also duplicated when creating new cache
+    # entry)
+    extra_cache_tags_from_env = meta.get('extra_cache_tags_from_env', [])
     for extra_cache_tags in extra_cache_tags_from_env:
         key = extra_cache_tags['env']
-        prefix = extra_cache_tags.get('prefix','')
+        prefix = extra_cache_tags.get('prefix', '')
 
-        v = env.get(key,'').strip()
-        if v!='':
+        v = env.get(key, '').strip()
+        if v != '':
             for t in v.split(','):
                 x = 'deps-' + prefix + t
                 if x not in cached_tags:
@@ -4387,15 +4963,18 @@ def find_cached_script(i):
     # Check if already cached
     if not new_cache_entry:
         search_tags = '-tmp'
-        if len(cached_tags) >0 :
+        if len(cached_tags) > 0:
             search_tags += ',' + ','.join(explicit_cached_tags)
 
-        logging.debug(recursion_spaces+'    - Searching for cached script outputs with the following tags: {}'.format(search_tags))
+        logging.debug(
+            recursion_spaces +
+            '    - Searching for cached script outputs with the following tags: {}'.format(search_tags))
 
-        r = self_obj.cmind.access({'action':'find',
-                                   'automation':self_obj.meta['deps']['cache'],
-                                   'tags':search_tags})
-        if r['return']>0: return r
+        r = self_obj.cmind.access({'action': 'find',
+                                   'automation': self_obj.meta['deps']['cache'],
+                                   'tags': search_tags})
+        if r['return'] > 0:
+            return r
 
         found_cached_scripts = r['list']
 
@@ -4403,18 +4982,23 @@ def find_cached_script(i):
         if not skip_remembered_selections and len(found_cached_scripts) > 1:
             # Need to add extra cached tags here (since recorded later)
             for selection in remembered_selections:
-                if selection['type'] == 'cache' and set(selection['tags'].split(',')) == set(search_tags.split(',')):
-                    tmp_version_in_cached_script = selection['cached_script'].meta.get('version','')
+                if selection['type'] == 'cache' and set(
+                        selection['tags'].split(',')) == set(search_tags.split(',')):
+                    tmp_version_in_cached_script = selection['cached_script'].meta.get(
+                        'version', '')
 
-                    skip_cached_script = check_versions(self_obj.cmind, tmp_version_in_cached_script, version_min, version_max)
+                    skip_cached_script = check_versions(
+                        self_obj.cmind, tmp_version_in_cached_script, version_min, version_max)
 
                     if skip_cached_script:
-                        return {'return':2, 'error':'The version of the previously remembered selection for a given script ({}) mismatches the newly requested one'.format(tmp_version_in_cached_script)}
+                        return {'return': 2, 'error': 'The version of the previously remembered selection for a given script ({}) mismatches the newly requested one'.format(
+                            tmp_version_in_cached_script)}
                     else:
                         found_cached_scripts = [selection['cached_script']]
-                        logging.debug(recursion_spaces + '  - Found remembered selection with tags "{}"!'.format(search_tags))
+                        logging.debug(
+                            recursion_spaces +
+                            '  - Found remembered selection with tags "{}"!'.format(search_tags))
                         break
-
 
     if len(found_cached_scripts) > 0:
         selection = 0
@@ -4424,28 +5008,33 @@ def find_cached_script(i):
 
         for cached_script in found_cached_scripts:
             skip_cached_script = False
-            dependent_cached_path = cached_script.meta.get('dependent_cached_path', '')
+            dependent_cached_path = cached_script.meta.get(
+                'dependent_cached_path', '')
             if dependent_cached_path:
                 if not os.path.exists(dependent_cached_path):
-                    #TODO Need to restrict the below check to within container env
+                    # TODO Need to restrict the below check to within container
+                    # env
                     i['tmp_dep_cached_path'] = dependent_cached_path
-                    r = utils.call_internal_module(self_obj, __file__, 'module_misc', 'get_container_path_script', i)
+                    r = utils.call_internal_module(
+                        self_obj, __file__, 'module_misc', 'get_container_path_script', i)
                     if not os.path.exists(r['value_env']):
-                        #Need to rm this cache entry
+                        # Need to rm this cache entry
                         skip_cached_script = True
                         continue
 
             if not skip_cached_script:
                 cached_script_version = cached_script.meta.get('version', '')
 
-                skip_cached_script = check_versions(self_obj.cmind, cached_script_version, version_min, version_max)
+                skip_cached_script = check_versions(
+                    self_obj.cmind, cached_script_version, version_min, version_max)
 
             if not skip_cached_script:
                 new_found_cached_scripts.append(cached_script)
 
         found_cached_scripts = new_found_cached_scripts
 
-    return {'return':0, 'cached_tags':cached_tags, 'search_tags':search_tags, 'found_cached_scripts':found_cached_scripts}
+    return {'return': 0, 'cached_tags': cached_tags,
+            'search_tags': search_tags, 'found_cached_scripts': found_cached_scripts}
 
 
 ##############################################################################
@@ -4454,8 +5043,11 @@ def enable_or_skip_script(meta, env):
     Internal: enable a dependency based on enable_if_env and skip_if_env meta information
     (AND function)
     """
-    if type(meta) != dict:
-        logging.info( "The meta entry is not a dictionary for skip/enable if_env {}".format(meta))
+
+    if not isinstance(meta, dict):
+        logging.info(
+            "The meta entry is not a dictionary for skip/enable if_env: %s",
+            meta)
 
     for key in meta:
         meta_key = [str(v).lower() for v in meta[key]]
@@ -4472,7 +5064,8 @@ def enable_or_skip_script(meta, env):
                 continue
         else:
             if set(meta_key) & set(["no", "off", "false", "0", ""]):
-                # If key is missing in env, and if the expected value is False, consider it a match
+                # If key is missing in env, and if the expected value is False,
+                # consider it a match
                 continue
 
         return False
@@ -4480,6 +5073,8 @@ def enable_or_skip_script(meta, env):
     return True
 
 ##############################################################################
+
+
 def any_enable_or_skip_script(meta, env):
     """
     Internal: enable a dependency based on enable_if_env and skip_if_env meta information
@@ -4507,74 +5102,87 @@ def any_enable_or_skip_script(meta, env):
 
     return False
 
-############################################################################################################
+##########################################################################
+
+
 def _update_env(env, key=None, value=None):
 
-    if key == None or value == None:
-        return {'return': 1, 'error': 'None value not expected in key and value arguments in _update_env.'}
+    if key is None or value is None:
+        return {
+            'return': 1, 'error': 'None value not expected in key and value arguments in _update_env.'}
     if not isinstance(key, str):
         return {'return': 1, 'error': 'String value expected inside key argument.'}
 
     env[key] = value
 
     r = update_env_with_values(env)
-    if r['return']>0: return r
+    if r['return'] > 0:
+        return r
 
     return {'return': 0}
 
 
-############################################################################################################
-def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
+##########################################################################
+def update_env_with_values(env, fail_on_not_found=False, extra_env=None):
     """
     Update any env key used as part of values in meta
     """
     import re
-    for key in env:
-        if key.startswith("+") and type(env[key]) != list:
-            return {'return': 1, 'error': 'List value expected for {} in env'.format(key)}
 
-        value = env[key]
+    extra_env = extra_env or {}  # Default to an empty dictionary if not provided
 
-        # Check cases such as --env.CM_SKIP_COMPILE
-        if type(value)==bool:
+    for key, value in env.items():
+        # Check for keys starting with "+" and ensure their values are lists
+        if key.startswith("+") and not isinstance(value, list):
+            return {'return': 1, 'error': f'List value expected for {key} in env'}
+
+        # Handle boolean values directly
+        if isinstance(value, bool):
             env[key] = value
             continue
 
-        tmp_values = re.findall(r'<<<(.*?)>>>', str(value))
+        # Search for placeholders like <<<...>>>
+        placeholders = re.findall(r'<<<(.*?)>>>', str(value))
 
-        if not tmp_values:
+        # No placeholders found
+        if not placeholders:
+            # Special handling for CM_GIT_URL
             if key == 'CM_GIT_URL' and env.get('CM_GIT_AUTH', "no") == "yes":
-                if env.get('CM_GH_TOKEN','') != '' and '@' not in env['CM_GIT_URL']:
-                    params = {}
-                    params["token"] = env['CM_GH_TOKEN']
+                if env.get('CM_GH_TOKEN', '') and '@' not in env['CM_GIT_URL']:
+                    params = {"token": env['CM_GH_TOKEN']}
                     value = get_git_url("token", value, params)
                 elif 'CM_GIT_SSH' in env:
                     value = get_git_url("ssh", value)
                 env[key] = value
-
             continue
 
-        for tmp_value in tmp_values:
-            if tmp_value not in env and tmp_value not in extra_env and fail_on_not_found:
-                return {'return':1, 'error':'variable {} is not in env'.format(tmp_value)}
-            found_env = {}
-            if tmp_value in env:
-                found_env = env
-            elif tmp_value in extra_env:
-                found_env = extra_env
+        # Process each placeholder
+        for placeholder in placeholders:
+            if placeholder not in env and placeholder not in extra_env and fail_on_not_found:
+                return {'return': 1,
+                        'error': f'Variable {placeholder} is not in env'}
+
+            # Determine the source of the value
+            found_env = env if placeholder in env else extra_env if placeholder in extra_env else None
             if found_env:
-                if type(value) == str:
-                    value = value.replace("<<<"+tmp_value+">>>", str(found_env[tmp_value]))
-                elif type(value) == list:
-                    for i,val in enumerate(value):
-                        value[i] = value[i].replace("<<<"+tmp_value+">>>", str(found_env[tmp_value]))
+                if isinstance(value, str):
+                    value = value.replace(
+                        f"<<<{placeholder}>>>", str(
+                            found_env[placeholder]))
+                elif isinstance(value, list):
+                    value = [
+                        v.replace(
+                            f"<<<{placeholder}>>>", str(
+                                found_env[placeholder])) if isinstance(
+                            v, str) else v for v in value]
 
         env[key] = value
 
     return {'return': 0}
 
-
 ##############################################################################
+
+
 def check_version_constraints(i):
     """
     Internal: check version constaints and skip script artifact if constraints are not met
@@ -4594,26 +5202,28 @@ def check_version_constraints(i):
         skip = True
 
     if not skip and detected_version != '' and version_min != '':
-        ry = cmind.access({'action':'compare_versions',
-                           'automation':'utils,dc2743f8450541e3',
-                           'version1':detected_version,
-                           'version2':version_min})
-        if ry['return']>0: return ry
+        ry = cmind.access({'action': 'compare_versions',
+                           'automation': 'utils,dc2743f8450541e3',
+                           'version1': detected_version,
+                           'version2': version_min})
+        if ry['return'] > 0:
+            return ry
 
         if ry['comparison'] < 0:
             skip = True
 
     if not skip and detected_version != '' and version_max != '':
-        ry = cmind.access({'action':'compare_versions',
-                           'automation':'utils,dc2743f8450541e3',
-                           'version1':detected_version,
-                           'version2':version_max})
-        if ry['return']>0: return ry
+        ry = cmind.access({'action': 'compare_versions',
+                           'automation': 'utils,dc2743f8450541e3',
+                           'version1': detected_version,
+                           'version2': version_max})
+        if ry['return'] > 0:
+            return ry
 
         if ry['comparison'] > 0:
             skip = True
 
-    return {'return':0, 'skip':skip}
+    return {'return': 0, 'skip': skip}
 
 
 ##############################################################################
@@ -4626,7 +5236,7 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
     bat_ext = i['bat_ext']
     os_info = i['os_info']
     customize_code = i.get('customize_code', None)
-    customize_common_input = i.get('customize_common_input',{})
+    customize_common_input = i.get('customize_common_input', {})
 
     env = i.get('env', {})
     const = i.get('const', {})
@@ -4634,7 +5244,8 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
     const_state = i.get('const_state', {})
     run_state = i.get('run_state', {})
     verbose = i.get('verbose', False)
-    if not verbose: verbose = i.get('v', False)
+    if not verbose:
+        verbose = i.get('v', False)
 
     show_time = i.get('time', False)
 
@@ -4642,7 +5253,7 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
     found_script_tags = i.get('found_script_tags', [])
     debug_script_tags = i.get('debug_script_tags', '')
 
-    meta = i.get('meta',{})
+    meta = i.get('meta', {})
 
     reuse_cached = i.get('reused_cached', False)
     recursion_spaces = i.get('recursion_spaces', '')
@@ -4665,11 +5276,12 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
 
     # Prepare script name
     check_if_run_script_exists = False
-    script_name = i.get('script_name','').strip()
+    script_name = i.get('script_name', '').strip()
     if script_name == '':
-        script_name = meta.get('script_name','').strip()
-        if script_name !='':
-            # Script name was added by user - we need to check that it really exists (on Linux or Windows)
+        script_name = meta.get('script_name', '').strip()
+        if script_name != '':
+            # Script name was added by user - we need to check that it really
+            # exists (on Linux or Windows)
             check_if_run_script_exists = True
     if script_name == '':
         # Here is the default script name - if it doesn't exist, we skip it.
@@ -4685,11 +5297,16 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
     path_to_run_script = os.path.join(path, run_script)
 
     if check_if_run_script_exists and not os.path.isfile(path_to_run_script):
-        return {'return':16, 'error':'script {} not found - please add one'.format(path_to_run_script)}
+        return {
+            'return': 16, 'error': 'script {} not found - please add one'.format(path_to_run_script)}
 
     # Update env and state with const
-    utils.merge_dicts({'dict1':env, 'dict2':const, 'append_lists':True, 'append_unique':True})
-    utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+    utils.merge_dicts({'dict1': env,
+                       'dict2': const,
+                       'append_lists': True,
+                       'append_unique': True})
+    utils.merge_dicts({'dict1': state, 'dict2': const_state,
+                      'append_lists': True, 'append_unique': True})
 
     # Update env with the current path
     if os_info['platform'] == 'windows' and ' ' in path:
@@ -4698,17 +5315,20 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
     cur_dir = os.getcwd()
 
     r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_PATH', path)
-    if r['return']>0: return r
+    if r['return'] > 0:
+        return r
 
     r = _update_env(env, 'CM_TMP_CURRENT_SCRIPT_WORK_PATH', cur_dir)
-    if r['return']>0: return r
+    if r['return'] > 0:
+        return r
 
     # Record state
     if tmp_file_state != '':
-        r = utils.save_json(file_name = tmp_file_state, meta = state)
-        if r['return']>0: return r
+        r = utils.save_json(file_name=tmp_file_state, meta=state)
+        if r['return'] > 0:
+            return r
 
-    rr = {'return':0}
+    rr = {'return': 0}
 
     # If batch file exists, run it with current env and state
     if os.path.isfile(path_to_run_script) and not reuse_cached:
@@ -4720,20 +5340,28 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
         run_script = tmp_file_run + bat_ext
         run_script_without_cm = tmp_file_run + '-without-cm' + bat_ext
 
-        logging.debug(recursion_spaces + '  - Running native script "{}" from temporal script "{}" in "{}" ...'.format(path_to_run_script, run_script, cur_dir))
+        logging.debug(
+            recursion_spaces +
+            '  - Running native script "{}" from temporal script "{}" in "{}" ...'.format(
+                path_to_run_script,
+                run_script,
+                cur_dir))
         if not run_state.get('tmp_silent', False):
             logging.info(recursion_spaces + '       ! cd {}'.format(cur_dir))
-            logging.info(recursion_spaces + '       ! call {} from {}'.format(path_to_run_script, run_script))
-
+            logging.info(
+                recursion_spaces +
+                '       ! call {} from {}'.format(
+                    path_to_run_script,
+                    run_script))
 
         # Prepare env variables
         import copy
         script = copy.deepcopy(os_info['start_script'])
 
         # Check if script_prefix in the state from other components
-        script_prefix = state.get('script_prefix',[])
-        if len(script_prefix)>0:
-#            script = script_prefix + ['\n'] + script
+        script_prefix = state.get('script_prefix', [])
+        if len(script_prefix) > 0:
+            #            script = script_prefix + ['\n'] + script
             script += script_prefix + ['\n']
 
         script += convert_env_to_script(env, os_info)
@@ -4752,36 +5380,50 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
 
         # Append batch file to the tmp script
         script.append('\n')
-        script.append(os_info['run_bat'].replace('${bat_file}', '"'+path_to_run_script+'"') + '\n')
+        script.append(
+            os_info['run_bat'].replace(
+                '${bat_file}',
+                '"' +
+                path_to_run_script +
+                '"') +
+            '\n')
 
         # Prepare and run script
         r = record_script(run_script, script, os_info)
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
         # Save file to run without CM
-        if debug_script_tags !='' and all(item in found_script_tags for item in debug_script_tags.split(',')):
+        if debug_script_tags != '' and all(
+                item in found_script_tags for item in debug_script_tags.split(',')):
 
             import shutil
             shutil.copy(run_script, run_script_without_cm)
 
-            logging.info('================================================================================')
-            logging.info('Debug script to run without CM was recorded: {}'.format(run_script_without_cm))
-            logging.info('================================================================================')
+            logging.info(
+                '================================================================================')
+            logging.info(
+                'Debug script to run without CM was recorded: {}'.format(run_script_without_cm))
+            logging.info(
+                '================================================================================')
 
         # Run final command
-        cmd = os_info['run_local_bat_from_python'].replace('${bat_file}', run_script)
+        cmd = os_info['run_local_bat_from_python'].replace(
+            '${bat_file}', run_script)
 
         rc = os.system(cmd)
 
-        if rc>0 and not i.get('ignore_script_error', False):
+        if rc > 0 and not i.get('ignore_script_error', False):
             # Check if print files when error
             print_files = meta.get('print_files_if_script_error', [])
-            if len(print_files)>0:
+
+            if len(print_files) > 0:
                 for pr in print_files:
                     if os.path.isfile(pr):
-                        r = utils.load_txt(file_name = pr)
+                        r = utils.load_txt(file_name=pr)
                         if r['return'] == 0:
-                            logging.info("========================================================")
+                            logging.info(
+                                "========================================================")
                             logging.info("Print file {}:".format(pr))
                             logging.info("")
                             logging.info(r['string'])
@@ -4789,14 +5431,16 @@ def prepare_and_run_script_with_postprocessing(i, postprocess="postprocess"):
 
 
             # Check where to report errors and failures
-            repo_to_report = run_state.get('script_entry_repo_to_report_errors', '')
+            repo_to_report = run_state.get(
+                'script_entry_repo_to_report_errors', '')
 
             if repo_to_report == '':
                 script_repo_alias = run_state.get('script_repo_alias', '')
                 script_repo_git = run_state.get('script_repo_git', False)
 
-                if script_repo_git and script_repo_alias!='':
-                    repo_to_report = 'https://github.com/'+script_repo_alias.replace('@','/')+'/issues'
+                if script_repo_git and script_repo_alias != '':
+                    repo_to_report = 'https://github.com/' + \
+                        script_repo_alias.replace('@', '/') + '/issues'
 
             if repo_to_report == '':
                 repo_to_report = 'https://github.com/mlcommons/cm4mlops/issues'
@@ -4814,7 +5458,12 @@ The CM concept is to collaboratively fix such issues inside portable CM scripts
 to make existing tools and native scripts more portable, interoperable
 and deterministic. Thank you'''.format(repo_to_report)
 
-            rr = {'return':2, 'error':'Portable CM script failed (name = {}, return code = {})\n\n{}'.format(meta['alias'], rc, note)}
+            rr = {
+                'return': 2,
+                'error': 'Portable CM script failed (name = {}, return code = {})\n\n{}'.format(
+                    meta['alias'],
+                    rc,
+                    note)}
 
             if repro_prefix != '':
                 dump_repro(repro_prefix, rr, run_state)
@@ -4823,55 +5472,77 @@ and deterministic. Thank you'''.format(repo_to_report)
 
         # Load updated state if exists
         if tmp_file_run_state != '' and os.path.isfile(tmp_file_run_state):
-            r = utils.load_json(file_name = tmp_file_run_state)
-            if r['return']>0: return r
+            r = utils.load_json(file_name=tmp_file_run_state)
+            if r['return'] > 0:
+                return r
 
             updated_state = r['meta']
 
-            utils.merge_dicts({'dict1':state, 'dict2':updated_state, 'append_lists':True, 'append_unique':True})
+            utils.merge_dicts({'dict1': state,
+                               'dict2': updated_state,
+                               'append_lists': True,
+                               'append_unique': True})
 
         # Load updated env if exists
         if tmp_file_run_env != '' and os.path.isfile(tmp_file_run_env):
-            r = utils.load_txt(file_name = tmp_file_run_env)
-            if r['return']>0: return r
+            r = utils.load_txt(file_name=tmp_file_run_env)
+            if r['return'] > 0:
+                return r
 
             r = utils.convert_env_to_dict(r['string'])
-            if r['return']>0: return r
+            if r['return'] > 0:
+                return r
 
             updated_env = r['dict']
 
-            utils.merge_dicts({'dict1':env, 'dict2':updated_env, 'append_lists':True, 'append_unique':True})
+            utils.merge_dicts({'dict1': env,
+                               'dict2': updated_env,
+                               'append_lists': True,
+                               'append_unique': True})
 
-
-    if postprocess != '' and customize_code is not None and postprocess in dir(customize_code):
+    if postprocess != '' and customize_code is not None and postprocess in dir(
+            customize_code):
         if not run_state.get('tmp_silent', False):
-            logging.info(recursion_spaces+'       ! call "{}" from {}'.format(postprocess, customize_code.__file__))
+            logging.info(
+                recursion_spaces +
+                '       ! call "{}" from {}'.format(
+                    postprocess,
+                    customize_code.__file__))
 
-    if len(posthook_deps)>0 and (postprocess == "postprocess"):
+    if len(posthook_deps) > 0 and (postprocess == "postprocess"):
         r = script_automation._call_run_deps(posthook_deps, local_env_keys, local_env_keys_from_meta, env, state, const, const_state,
-            add_deps_recursive, recursion_spaces, remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, ' ', run_state)
-        if r['return']>0: return r
+                                             add_deps_recursive, recursion_spaces, remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, ' ', run_state)
+        if r['return'] > 0:
+            return r
 
-    if (postprocess == "postprocess") and customize_code is not None and 'postprocess' in dir(customize_code):
+    if (postprocess == "postprocess") and customize_code is not None and 'postprocess' in dir(
+            customize_code):
         rr = run_postprocess(customize_code, customize_common_input, recursion_spaces, env, state, const,
-                const_state, meta, verbose, i) # i as run_script_input
+                             const_state, meta, verbose, i)  # i as run_script_input
     elif (postprocess == "detect_version") and customize_code is not None and 'detect_version' in dir(customize_code):
         rr = run_detect_version(customize_code, customize_common_input, recursion_spaces, env, state, const,
-                const_state, meta, verbose)
+                                const_state, meta, verbose)
 
     return rr
 
 ##############################################################################
-def run_detect_version(customize_code, customize_common_input, recursion_spaces, env, state, const, const_state, meta, verbose=False):
+
+
+def run_detect_version(customize_code, customize_common_input,
+                       recursion_spaces, env, state, const, const_state, meta, verbose=False):
 
     if customize_code is not None and 'detect_version' in dir(customize_code):
         import copy
 
-        logging.debug(recursion_spaces+'  - Running detect_version ...')
+        logging.debug(recursion_spaces + '  - Running detect_version ...')
 
         # Update env and state with const
-        utils.merge_dicts({'dict1':env, 'dict2':const, 'append_lists':True, 'append_unique':True})
-        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': env, 'dict2': const,
+                          'append_lists': True, 'append_unique': True})
+        utils.merge_dicts({'dict1': state,
+                           'dict2': const_state,
+                           'append_lists': True,
+                           'append_unique': True})
 
         ii = copy.deepcopy(customize_common_input)
         ii['env'] = env
@@ -4884,23 +5555,30 @@ def run_detect_version(customize_code, customize_common_input, recursion_spaces,
     return {'return': 0}
 
 ##############################################################################
-def run_postprocess(customize_code, customize_common_input, recursion_spaces, env, state, const, const_state, meta, verbose=False, run_script_input=None):
+
+
+def run_postprocess(customize_code, customize_common_input, recursion_spaces,
+                    env, state, const, const_state, meta, verbose=False, run_script_input=None):
 
     if customize_code is not None and 'postprocess' in dir(customize_code):
         import copy
 
-        logging.debug(recursion_spaces+'  - Running postprocess ...')
+        logging.debug(recursion_spaces + '  - Running postprocess ...')
 
         # Update env and state with const
-        utils.merge_dicts({'dict1':env, 'dict2':const, 'append_lists':True, 'append_unique':True})
-        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': env, 'dict2': const,
+                          'append_lists': True, 'append_unique': True})
+        utils.merge_dicts({'dict1': state,
+                           'dict2': const_state,
+                           'append_lists': True,
+                           'append_unique': True})
 
         ii = copy.deepcopy(customize_common_input)
         ii['env'] = env
         ii['state'] = state
         ii['meta'] = meta
 
-        if run_script_input != None:
+        if run_script_input is not None:
             ii['run_script_input'] = run_script_input
 
         r = customize_code.postprocess(ii)
@@ -4909,7 +5587,9 @@ def run_postprocess(customize_code, customize_common_input, recursion_spaces, en
     return {'return': 0}
 
 ##############################################################################
-def get_script_name(env, path, script_name = 'run'):
+
+
+def get_script_name(env, path, script_name='run'):
     """
     Internal: find the most appropriate run script name for the detected OS
     """
@@ -4920,20 +5600,23 @@ def get_script_name(env, path, script_name = 'run'):
     tmp_suff2 = env.get('CM_HOST_OS_VERSION', '')
     tmp_suff3 = env.get('CM_HOST_PLATFORM_FLAVOR', '')
 
-    if exists(os.path.join(path, script_name+'-' + tmp_suff1 + '-'+ tmp_suff2 + '-' + tmp_suff3 + '.sh')):
-        return script_name+'-' + tmp_suff1 + '-' + tmp_suff2 + '-' + tmp_suff3 + '.sh'
-    elif exists(os.path.join(path, script_name+'-' + tmp_suff1 + '-' + tmp_suff3 + '.sh')):
-        return script_name+'-' + tmp_suff1 + '-' + tmp_suff3 + '.sh'
-    elif exists(os.path.join(path, script_name+'-' + tmp_suff1 + '-' + tmp_suff2 + '.sh')):
-        return script_name+'-' + tmp_suff1 + '-' + tmp_suff2 + '.sh'
-    elif exists(os.path.join(path, script_name+'-' + tmp_suff1 + '.sh')):
-        return script_name+'-' + tmp_suff1 + '.sh'
-    elif exists(os.path.join(path, script_name+'-' + tmp_suff3 + '.sh')):
-        return script_name+'-' + tmp_suff3 + '.sh'
+    if exists(os.path.join(path, script_name + '-' + tmp_suff1 +
+              '-' + tmp_suff2 + '-' + tmp_suff3 + '.sh')):
+        return script_name + '-' + tmp_suff1 + '-' + tmp_suff2 + '-' + tmp_suff3 + '.sh'
+    elif exists(os.path.join(path, script_name + '-' + tmp_suff1 + '-' + tmp_suff3 + '.sh')):
+        return script_name + '-' + tmp_suff1 + '-' + tmp_suff3 + '.sh'
+    elif exists(os.path.join(path, script_name + '-' + tmp_suff1 + '-' + tmp_suff2 + '.sh')):
+        return script_name + '-' + tmp_suff1 + '-' + tmp_suff2 + '.sh'
+    elif exists(os.path.join(path, script_name + '-' + tmp_suff1 + '.sh')):
+        return script_name + '-' + tmp_suff1 + '.sh'
+    elif exists(os.path.join(path, script_name + '-' + tmp_suff3 + '.sh')):
+        return script_name + '-' + tmp_suff3 + '.sh'
     else:
-        return script_name+'.sh';
+        return script_name + '.sh'
 
 ##############################################################################
+
+
 def update_env_keys(env, env_key_mappings):
     """
     Internal: convert env keys as per the given mapping
@@ -4944,67 +5627,68 @@ def update_env_keys(env, env_key_mappings):
             if key.startswith(key_prefix):
                 new_key = key.replace(key_prefix, env_key_mappings[key_prefix])
                 env[new_key] = env[key]
-                #del(env[key])
+                # del(env[key])
 
 ##############################################################################
-def convert_env_to_script(env, os_info, start_script = []):
-    """
-    Internal: convert env to script for a given platform
-    """
 
+
+def convert_env_to_script(env, os_info, start_script=None):
+    """
+    Internal: Convert env to script for a given platform.
+    """
     import copy
-    script = copy.deepcopy(start_script)
 
-    windows = True if os_info['platform'] == 'windows' else False
+    # Initialize script with a deep copy of the start_script or an empty list
+    script = copy.deepcopy(start_script) if start_script else []
+
+    # Determine if the platform is Windows
+    is_windows = os_info['platform'] == 'windows'
 
     for k in sorted(env):
         env_value = env[k]
 
-        if windows:
-            x = env_value
-            if type(env_value)!=list:
-                x = [x]
+        # Handle Windows-specific value processing
+        if is_windows:
+            if not isinstance(env_value, list):
+                env_value = [env_value]
 
-            xx = []
-            for v in x:
-                # If " is already in env value, it means that there was some custom processing to consider special characters
+            processed_values = []
+            for v in env_value:
+                v_str = str(v)
+                if '"' not in v_str:
+                    # Add quotes if special characters are present
+                    if any(char in v_str for char in ['|', '&', '>', '<']):
+                        v_str = f'"{v_str}"'
+                processed_values.append(v_str)
 
-                y=str(v)
+            env_value = processed_values if isinstance(
+                env[k], list) else processed_values[0]
 
-                if '"' not in y:
-                    for z in ['|', '&', '>', '<']:
-                        if z in y:
-                            y = '"'+y+'"'
-                            break
-                xx.append(y)
-
-            env_value = xx if type(env_value)==list else xx[0]
-
-        # Process special env
+        # Process special keys
         key = k
-
         if k.startswith('+'):
-            # List and append the same key at the end (+PATH, +LD_LIBRARY_PATH, +PYTHONPATH)
-            key=k[1:]
-            first = key[0]
-            env_separator = os_info['env_separator']
-            # If key starts with a symbol use it as the list separator (+ CFLAG will use ' ' the
-            # list separator while +;TEMP will use ';' as the separator)
-            if not first.isalnum():
-                env_separator = first
-                key=key[1:]
+            key = k[1:]
+            env_separator = os_info.get('env_separator', ';')
 
-            env_value = env_separator.join(env_value) + \
-                env_separator + \
-                os_info['env_var'].replace('env_var', key)
+            # Custom separator if key starts with a non-alphanumeric character
+            if not key[0].isalnum():
+                env_separator = key[0]
+                key = key[1:]
 
-        v = os_info['set_env'].replace('${key}', key).replace('${value}', str(env_value))
+            # Append the existing environment variable to the new value
+            env_value = f"{env_separator.join(env_value)}{env_separator}{os_info['env_var'].replace('env_var', key)}"
 
-        script.append(v)
+        # Replace placeholders in the platform-specific environment command
+        env_command = os_info['set_env'].replace(
+            '${key}', key).replace(
+            '${value}', str(env_value))
+        script.append(env_command)
 
     return script
 
 ##############################################################################
+
+
 def record_script(run_script, script, os_info):
     """
     Internal: record script and chmod 755 on Linux
@@ -5016,15 +5700,18 @@ def record_script(run_script, script, os_info):
         final_script += '\n'
 
     r = utils.save_txt(file_name=run_script, string=final_script)
-    if r['return']>0: return r
+    if r['return'] > 0:
+        return r
 
-    if os_info.get('set_exec_file','')!='':
+    if os_info.get('set_exec_file', '') != '':
         cmd = os_info['set_exec_file'].replace('${file_name}', run_script)
         rc = os.system(cmd)
 
-    return {'return':0}
+    return {'return': 0}
 
 ##############################################################################
+
+
 def clean_tmp_files(clean_files, recursion_spaces):
     """
     Internal: clean tmp files
@@ -5037,9 +5724,10 @@ def clean_tmp_files(clean_files, recursion_spaces):
         if os.path.isfile(tmp_file):
             os.remove(tmp_file)
 
-    return {'return':0}
+    return {'return': 0}
 
 ##############################################################################
+
 
 def update_dynamic_env_values(mydict, env):
     """
@@ -5050,7 +5738,8 @@ def update_dynamic_env_values(mydict, env):
     pattern = re.compile(r'<<<(.*?)>>>')
 
     def replace_variables(value):
-        # Function to replace the <<<variable>>> with corresponding value from env
+        # Function to replace the <<<variable>>> with corresponding value from
+        # env
         if isinstance(value, str):  # Only process if the value is a string
             matches = pattern.findall(value)
             for match in matches:
@@ -5073,56 +5762,76 @@ def update_dynamic_env_values(mydict, env):
 ##############################################################################
 def update_dep_info(dep, new_info):
     """
-    Internal: add additional info to a dependency
+    Internal: Add additional info to a dependency.
     """
-    for info in new_info:
+    for info, value in new_info.items():
 
         if info == "tags":
-            tags = dep.get('tags', '')
-            tags_list = tags.split(",")
-            new_tags_list = new_info["tags"].split(",")
-            filtered_new_tags_list = [ i for i in new_tags_list if "<<<" not in i]
-            combined_tags = tags_list + list(set(filtered_new_tags_list) - set(tags_list))
+            # Process tags
+            existing_tags = dep.get('tags', '').split(",")
+            new_tags = value.split(",")
+            # Filter and combine unique tags
+            filtered_new_tags = [tag for tag in new_tags if "<<<" not in tag]
+            combined_tags = existing_tags + \
+                list(set(filtered_new_tags) - set(existing_tags))
             dep['tags'] = ",".join(combined_tags)
 
-        elif "enable_if_" in info or "skip_if_" in info: #These are meant for adding ad/adr and not for the dependency
+        elif "enable_if_" in info or "skip_if_" in info:
+            # Skip special cases meant for conditions
             continue
-        elif type(new_info[info]) == dict:
-            if not dep.get(info, {}):
-                dep[info] = new_info[info]
-            elif type(dep[info]) == dict:
-                utils.merge_dicts({'dict1':dep[info], 'dict2':new_info[info], 'append_lists':True, 'append_unique':True})
-            #else: Throw error?
-        elif type(new_info[info]) == list:
-            if not dep.get(info, []):
-                dep[info] = new_info[info]
-            elif type(dep[info]) == list:
-                dep[info] += new_info[info]
-            #else: Throw error?
+
+        elif isinstance(value, dict):
+            # Merge dictionaries
+            dep.setdefault(info, {})
+            if isinstance(dep[info], dict):
+                utils.merge_dicts({
+                    'dict1': dep[info],
+                    'dict2': value,
+                    'append_lists': True,
+                    'append_unique': True
+                })
+            # Optional: Throw an error if types are mismatched
+            # else:
+            #     raise ValueError(f"Cannot merge non-dict type into dict for key '{info}'")
+
+        elif isinstance(value, list):
+            # Merge lists
+            dep.setdefault(info, [])
+            if isinstance(dep[info], list):
+                dep[info].extend(value)
+            # Optional: Throw an error if types are mismatched
+            # else:
+            #     raise ValueError(f"Cannot append non-list type into list for key '{info}'")
+
         else:
-            dep[info] = new_info[info]
+            # Overwrite or set other types of values
+            dep[info] = value
+
 
 ##############################################################################
+
 def update_deps(deps, add_deps, fail_error=False, env={}):
     """
     Internal: add deps tags, version etc. by name
     """
-    #deps_info_to_add = [ "version", "version_min", "version_max", "version_max_usable", "path", "tags", .... ]
+    # deps_info_to_add = [ "version", "version_min", "version_max",
+    # "version_max_usable", "path", "tags", .... ]
     new_deps_info = {}
     for new_dep_name in add_deps:
         if is_dep_tobe_skipped(add_deps[new_dep_name], env):
             continue
         dep_found = False
         for dep in deps:
-            names = dep.get('names',[])
+            names = dep.get('names', [])
             if new_dep_name in names:
                 update_dynamic_env_values(add_deps[new_dep_name], env)
                 update_dep_info(dep, add_deps[new_dep_name])
                 dep_found = True
         if not dep_found and fail_error:
-            return {'return':1, 'error':new_dep_name + ' is not one of the dependency'}
+            return {'return': 1, 'error': new_dep_name +
+                    ' is not one of the dependency'}
 
-    return {'return':0}
+    return {'return': 0}
 
 
 ##############################################################################
@@ -5133,23 +5842,23 @@ def append_deps(deps, new_deps):
 
     for new_dep in new_deps:
         existing = False
-        new_dep_names = new_dep.get('names',[])
-        if len(new_dep_names)>0:
+        new_dep_names = new_dep.get('names', [])
+        if len(new_dep_names) > 0:
             for i in range(len(deps)):
                 dep = deps[i]
-                dep_names = dep.get('names',[])
-                if len(dep_names)>0:
+                dep_names = dep.get('names', [])
+                if len(dep_names) > 0:
                     if set(new_dep_names) == set(dep_names):
                         deps[i] = new_dep
                         existing = True
                         break
-        else: #when no name, check for tags
+        else:  # when no name, check for tags
             new_dep_tags = new_dep.get('tags')
             new_dep_tags_list = new_dep_tags.split(",")
             for i in range(len(deps)):
                 dep = deps[i]
                 dep_tags_list = dep.get('tags').split(",")
-                if set(new_dep_tags_list) == set (dep_tags_list):
+                if set(new_dep_tags_list) == set(dep_tags_list):
                     deps[i] = new_dep
                     existing = True
                     break
@@ -5157,14 +5866,17 @@ def append_deps(deps, new_deps):
         if not existing:
             deps.append(new_dep)
 
-    return {'return':0}
+    return {'return': 0}
 
 ##############################################################################
+
+
 def is_dep_tobe_skipped(d, env):
     """
     Internal: check if this dependency is to be skipped
     """
-    if d.get('skip_if_fake_run', False) and env.get('CM_TMP_FAKE_RUN','')=='yes':
+    if d.get('skip_if_fake_run', False) and env.get(
+            'CM_TMP_FAKE_RUN', '') == 'yes':
         return True
 
     if "enable_if_env" in d:
@@ -5186,21 +5898,25 @@ def is_dep_tobe_skipped(d, env):
     return False
 
 ##############################################################################
+
+
 def update_deps_from_input(deps, post_deps, prehook_deps, posthook_deps, i):
     """
     Internal: update deps from meta
     """
-    add_deps_info_from_input = i.get('ad',{})
+    add_deps_info_from_input = i.get('ad', {})
     if not add_deps_info_from_input:
-        add_deps_info_from_input = i.get('add_deps',{})
+        add_deps_info_from_input = i.get('add_deps', {})
     else:
-        utils.merge_dicts({'dict1':add_deps_info_from_input, 'dict2':i.get('add_deps', {}), 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': add_deps_info_from_input, 'dict2': i.get(
+            'add_deps', {}), 'append_lists': True, 'append_unique': True})
 
     add_deps_recursive_info_from_input = i.get('adr', {})
     if not add_deps_recursive_info_from_input:
         add_deps_recursive_info_from_input = i.get('add_deps_recursive', {})
     else:
-        utils.merge_dicts({'dict1':add_deps_recursive_info_from_input, 'dict2':i.get('add_deps_recursive', {}), 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': add_deps_recursive_info_from_input, 'dict2': i.get(
+            'add_deps_recursive', {}), 'append_lists': True, 'append_unique': True})
 
     env = i.get('env', {})
 
@@ -5209,14 +5925,23 @@ def update_deps_from_input(deps, post_deps, prehook_deps, posthook_deps, i):
         r2 = update_deps(post_deps, add_deps_info_from_input, True, env)
         r3 = update_deps(prehook_deps, add_deps_info_from_input, True, env)
         r4 = update_deps(posthook_deps, add_deps_info_from_input, True, env)
-        if r1['return']>0 and r2['return']>0 and r3['return']>0 and r4['return']>0: return r1
+        if r1['return'] > 0 and r2['return'] > 0 and r3['return'] > 0 and r4['return'] > 0:
+            return r1
     if add_deps_recursive_info_from_input:
         update_deps(deps, add_deps_recursive_info_from_input, False, env)
         update_deps(post_deps, add_deps_recursive_info_from_input, False, env)
-        update_deps(prehook_deps, add_deps_recursive_info_from_input, False, env)
-        update_deps(posthook_deps, add_deps_recursive_info_from_input, False, env)
+        update_deps(
+            prehook_deps,
+            add_deps_recursive_info_from_input,
+            False,
+            env)
+        update_deps(
+            posthook_deps,
+            add_deps_recursive_info_from_input,
+            False,
+            env)
 
-    return {'return':0}
+    return {'return': 0}
 
 
 ##############################################################################
@@ -5229,12 +5954,15 @@ def update_env_from_input_mapping(env, inp, input_mapping):
             env[input_mapping[key]] = inp[key]
 
 ##############################################################################
-def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps, prehook_deps, posthook_deps, new_env_keys, new_state_keys, run_state, i):
+
+
+def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps,
+                           prehook_deps, posthook_deps, new_env_keys, new_state_keys, run_state, i):
     """
     Internal: update env and state from meta
     """
 
-    default_env = meta.get('default_env',{})
+    default_env = meta.get('default_env', {})
     for key in default_env:
         env.setdefault(key, default_env[key])
 
@@ -5243,17 +5971,23 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
 
     update_meta_if_env = meta.get('update_meta_if_env', [])
     update_meta_if_env_from_state = run_state.get('update_meta_if_env', [])
-    run_state['update_meta_if_env'] = update_meta_if_env + update_meta_if_env_from_state
+    run_state['update_meta_if_env'] = update_meta_if_env + \
+        update_meta_if_env_from_state
 
     for c_meta in run_state['update_meta_if_env']:
         if is_dep_tobe_skipped(c_meta, env):
             continue
-        utils.merge_dicts({'dict1':env, 'dict2':c_meta.get('env', {}), 'append_lists':True, 'append_unique':True})
-        utils.merge_dicts({'dict1':state, 'dict2':c_meta.get('state', {}), 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': env, 'dict2': c_meta.get(
+            'env', {}), 'append_lists': True, 'append_unique': True})
+        utils.merge_dicts({'dict1': state, 'dict2': c_meta.get(
+            'state', {}), 'append_lists': True, 'append_unique': True})
         if c_meta.get('docker', {}):
             if not state.get('docker', {}):
                 state['docker'] = {}
-            utils.merge_dicts({'dict1':state['docker'], 'dict2':c_meta['docker'], 'append_lists':True, 'append_unique':True})
+            utils.merge_dicts({'dict1': state['docker'],
+                               'dict2': c_meta['docker'],
+                               'append_lists': True,
+                               'append_unique': True})
 
     update_const = meta.get('const', {})
     if update_const:
@@ -5261,15 +5995,22 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
         env.update(const)
 
     update_state = meta.get('state', {})
-    utils.merge_dicts({'dict1':state, 'dict2':update_state, 'append_lists':True, 'append_unique':True})
+    utils.merge_dicts({'dict1': state, 'dict2': update_state,
+                      'append_lists': True, 'append_unique': True})
 
     update_const_state = meta.get('const_state', {})
     if const_state:
-        utils.merge_dicts({'dict1':const_state, 'dict2':update_const_state, 'append_lists':True, 'append_unique':True})
-        utils.merge_dicts({'dict1':state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': const_state,
+                           'dict2': update_const_state,
+                           'append_lists': True,
+                           'append_unique': True})
+        utils.merge_dicts({'dict1': state,
+                           'dict2': const_state,
+                           'append_lists': True,
+                           'append_unique': True})
 
     new_deps = meta.get('deps', [])
-    if len(new_deps)>0:
+    if len(new_deps) > 0:
         append_deps(deps, new_deps)
 
     new_post_deps = meta.get("post_deps", [])
@@ -5288,13 +6029,15 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
     if not add_deps_info:
         add_deps_info = meta.get('add_deps', {})
     else:
-        utils.merge_dicts({'dict1':add_deps_info, 'dict2':meta.get('add_deps', {}), 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': add_deps_info, 'dict2': meta.get(
+            'add_deps', {}), 'append_lists': True, 'append_unique': True})
     if add_deps_info:
         r1 = update_deps(deps, add_deps_info, True, env)
         r2 = update_deps(post_deps, add_deps_info, True, env)
         r3 = update_deps(prehook_deps, add_deps_info, True, env)
         r4 = update_deps(posthook_deps, add_deps_info, True, env)
-        if r1['return']>0 and r2['return']>0 and r3['return'] > 0 and r4['return'] > 0: return r1
+        if r1['return'] > 0 and r2['return'] > 0 and r3['return'] > 0 and r4['return'] > 0:
+            return r1
 
     # i would have 'input' when called through cm.access
     input_update_env = i.get('input', i)
@@ -5305,25 +6048,30 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
 
     # handle dynamic env values
     r = update_env_with_values(env)
-    if r['return']>0:
+    if r['return'] > 0:
         return r
 
     # Possibly restrict this to within docker environment
-    add_deps_info = meta.get('ad', i.get('ad', {})) #we need to see input here
+    # we need to see input here
+    add_deps_info = meta.get('ad', i.get('ad', {}))
     if not add_deps_info:
         add_deps_info = meta.get('add_deps', i.get('add_deps_recursive', {}))
     else:
-        utils.merge_dicts({'dict1':add_deps_info, 'dict2':meta.get('add_deps', {}), 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': add_deps_info, 'dict2': meta.get(
+            'add_deps', {}), 'append_lists': True, 'append_unique': True})
 
     new_docker_settings = meta.get('docker')
     if new_docker_settings:
         docker_settings = state.get('docker', {})
-        #docker_input_mapping = docker_settings.get('docker_input_mapping', {})
-        #new_docker_input_mapping = new_docker_settings.get('docker_input_mapping', {})
-        #if new_docker_input_mapping:
+        # docker_input_mapping = docker_settings.get('docker_input_mapping', {})
+        # new_docker_input_mapping = new_docker_settings.get('docker_input_mapping', {})
+        # if new_docker_input_mapping:
         #    #    update_env_from_input_mapping(env, i['input'], docker_input_mapping)
         #    utils.merge_dicts({'dict1':docker_input_mapping, 'dict2':new_docker_input_mapping, 'append_lists':True, 'append_unique':True})
-        utils.merge_dicts({'dict1':docker_settings, 'dict2':new_docker_settings, 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': docker_settings,
+                           'dict2': new_docker_settings,
+                           'append_lists': True,
+                           'append_unique': True})
         if docker_settings.get('deps', []):
             update_deps(docker_settings['deps'], add_deps_info, False, env)
         state['docker'] = docker_settings
@@ -5336,10 +6084,13 @@ def update_state_from_meta(meta, env, state, const, const_state, deps, post_deps
     if new_state_keys_from_meta:
         new_state_keys += new_state_keys_from_meta
 
-    return {'return':0}
+    return {'return': 0}
 
 ##############################################################################
-def update_adr_from_meta(deps, post_deps, prehook_deps, posthook_deps, add_deps_recursive_info, env={}):
+
+
+def update_adr_from_meta(deps, post_deps, prehook_deps,
+                         posthook_deps, add_deps_recursive_info, env={}):
     """
     Internal: update add_deps_recursive from meta
     """
@@ -5349,19 +6100,25 @@ def update_adr_from_meta(deps, post_deps, prehook_deps, posthook_deps, add_deps_
         update_deps(prehook_deps, add_deps_recursive_info, False, env)
         update_deps(posthook_deps, add_deps_recursive_info, False, env)
 
-    return {'return':0}
+    return {'return': 0}
 
 ##############################################################################
+
+
 def get_adr(meta):
     add_deps_recursive_info = meta.get('adr', {})
     if not add_deps_recursive_info:
-        add_deps_recursive_info = meta.get('add_deps_recursive',{})
+        add_deps_recursive_info = meta.get('add_deps_recursive', {})
     else:
-        utils.merge_dicts({'dict1':add_deps_recursive_info, 'dict2':meta.get('add_deps_recursive', {}), 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': add_deps_recursive_info, 'dict2': meta.get(
+            'add_deps_recursive', {}), 'append_lists': True, 'append_unique': True})
     return add_deps_recursive_info
 
 ##############################################################################
-def detect_state_diff(env, saved_env, new_env_keys, new_state_keys, state, saved_state):
+
+
+def detect_state_diff(env, saved_env, new_env_keys,
+                      new_state_keys, state, saved_state):
     """
     Internal: detect diff in env and state
     """
@@ -5404,15 +6161,20 @@ def detect_state_diff(env, saved_env, new_env_keys, new_state_keys, state, saved
                     if value in state:
                         new_state[value] = state[value]
 
-    return {'return':0, 'env':env, 'new_env':new_env, 'state':state, 'new_state':new_state}
+    return {'return': 0, 'env': env, 'new_env': new_env,
+            'state': state, 'new_state': new_state}
 
 ##############################################################################
-def select_script_artifact(lst, text, recursion_spaces, can_skip, script_tags_string, quiet, verbose):
+
+
+def select_script_artifact(lst, text, recursion_spaces,
+                           can_skip, script_tags_string, quiet, verbose):
     """
     Internal: select script
     """
 
-    string1 = recursion_spaces+'    - More than 1 {} found for "{}":'.format(text,script_tags_string)
+    string1 = recursion_spaces + \
+        '    - More than 1 {} found for "{}":'.format(text, script_tags_string)
 
     # If quiet, select 0 (can be sorted for determinism)
     if quiet:
@@ -5431,40 +6193,49 @@ def select_script_artifact(lst, text, recursion_spaces, can_skip, script_tags_st
         name = meta.get('name', '')
 
         s = a.path
-        if name !='': s = '"'+name+'" '+s
+        if name != '':
+            s = '"' + name + '" ' + s
 
-        x = recursion_spaces+'      {}) {} ({})'.format(num, s, ','.join(meta['tags']))
+        x = recursion_spaces + \
+            '      {}) {} ({})'.format(num, s, ','.join(meta['tags']))
 
-        version = meta.get('version','')
-        if version!='':
-            x+=' (Version {})'.format(version)
+        version = meta.get('version', '')
+        if version != '':
+            x += ' (Version {})'.format(version)
 
         logging.info(x)
-        num+=1
+        num += 1
 
     s = 'Make your selection or press Enter for 0'
     if can_skip:
         s += ' or use -1 to skip'
 
-    x = input(recursion_spaces+'      '+s+': ')
+    x = input(recursion_spaces + '      ' + s + ': ')
     x = x.strip()
-    if x == '': x = '0'
+    if x == '':
+        x = '0'
 
     selection = int(x)
 
-    if selection <0 and not can_skip:
+    if selection < 0 and not can_skip:
         selection = 0
 
-    if selection <0:
-        logging.info(recursion_spaces+'      Skipped')
+    if selection < 0:
+        logging.info(recursion_spaces + '      Skipped')
     else:
         if selection >= num:
             selection = 0
-        logging.info(recursion_spaces+'      Selected {}: {}'.format(selection, lst[selection].path))
+        logging.info(
+            recursion_spaces +
+            '      Selected {}: {}'.format(
+                selection,
+                lst[selection].path))
 
     return selection
 
 ##############################################################################
+
+
 def check_versions(cmind, cached_script_version, version_min, version_max):
     """
     Internal: check versions of the cached script
@@ -5473,21 +6244,23 @@ def check_versions(cmind, cached_script_version, version_min, version_max):
 
     if cached_script_version != '':
         if version_min != '':
-            ry = cmind.access({'action':'compare_versions',
-                                    'automation':'utils,dc2743f8450541e3',
-                                    'version1':cached_script_version,
-                                    'version2':version_min})
-            if ry['return']>0: return ry
+            ry = cmind.access({'action': 'compare_versions',
+                               'automation': 'utils,dc2743f8450541e3',
+                               'version1': cached_script_version,
+                               'version2': version_min})
+            if ry['return'] > 0:
+                return ry
 
             if ry['comparison'] < 0:
                 skip_cached_script = True
 
         if not skip_cached_script and version_max != '':
-            ry = cmind.access({'action':'compare_versions',
-                               'automation':'utils,dc2743f8450541e3',
-                               'version1':cached_script_version,
-                               'version2':version_max})
-            if ry['return']>0: return ry
+            ry = cmind.access({'action': 'compare_versions',
+                               'automation': 'utils,dc2743f8450541e3',
+                               'version1': cached_script_version,
+                               'version2': version_max})
+            if ry['return'] > 0:
+                return ry
 
             if ry['comparison'] > 0:
                 skip_cached_script = True
@@ -5495,7 +6268,9 @@ def check_versions(cmind, cached_script_version, version_min, version_max):
     return skip_cached_script
 
 ##############################################################################
-def get_git_url(get_type, url, params = {}):
+
+
+def get_git_url(get_type, url, params={}):
     from giturlparse import parse
     p = parse(url)
     if get_type == "ssh":
@@ -5506,6 +6281,8 @@ def get_git_url(get_type, url, params = {}):
     return url
 
 ##############################################################################
+
+
 def can_write_to_current_directory():
 
     import tempfile
@@ -5517,7 +6294,7 @@ def can_write_to_current_directory():
 #    except Exception as e:
 #        return False
 
-    tmp_file_name = next(tempfile._get_candidate_names())+'.tmp'
+    tmp_file_name = next(tempfile._get_candidate_names()) + '.tmp'
 
     tmp_path = os.path.join(cur_dir, tmp_file_name)
 
@@ -5532,23 +6309,26 @@ def can_write_to_current_directory():
 
     return True
 
-######################################################################################
+##########################################################################
+
+
 def dump_repro_start(repro_prefix, ii):
     import json
 
     # Clean reproducibility and experiment files
-    for f in ['cm-output.json', 'version_info.json', '-input.json', '-info.json', '-output.json', '-run-state.json']:
-        ff = repro_prefix+f if f.startswith('-') else f
+    for f in ['cm-output.json', 'version_info.json', '-input.json',
+              '-info.json', '-output.json', '-run-state.json']:
+        ff = repro_prefix + f if f.startswith('-') else f
         if os.path.isfile(ff):
             try:
                 os.remove(ff)
-            except:
+            except BaseException:
                 pass
 
     try:
-        with open(repro_prefix+'-input.json', 'w', encoding='utf-8') as f:
+        with open(repro_prefix + '-input.json', 'w', encoding='utf-8') as f:
             json.dump(ii, f, ensure_ascii=False, indent=2)
-    except:
+    except BaseException:
         pass
 
     # Get some info
@@ -5567,50 +6347,51 @@ def dump_repro_start(repro_prefix, ii):
         info['host_sys_version'] = sys.version
 
         r = utils.gen_uid()
-        if r['return']==0:
+        if r['return'] == 0:
             info['run_uid'] = r['uid']
 
         r = utils.get_current_date_time({})
-        if r['return']==0:
+        if r['return'] == 0:
             info['run_iso_datetime'] = r['iso_datetime']
 
-        with open(repro_prefix+'-info.json', 'w', encoding='utf-8') as f:
+        with open(repro_prefix + '-info.json', 'w', encoding='utf-8') as f:
             json.dump(info, f, ensure_ascii=False, indent=2)
-    except:
+    except BaseException:
         pass
-
 
     # For experiment
     cm_output = {}
 
-    cm_output['tmp_test_value']=10.0
+    cm_output['tmp_test_value'] = 10.0
 
-    cm_output['info']=info
-    cm_output['input']=ii
+    cm_output['info'] = info
+    cm_output['input'] = ii
 
     try:
         with open('cm-output.json', 'w', encoding='utf-8') as f:
             json.dump(cm_output, f, ensure_ascii=False, indent=2)
-    except:
+    except BaseException:
         pass
 
     return {'return': 0}
 
-######################################################################################
+##########################################################################
+
+
 def dump_repro(repro_prefix, rr, run_state):
     import json
     import copy
 
     try:
-        with open(repro_prefix+'-output.json', 'w', encoding='utf-8') as f:
+        with open(repro_prefix + '-output.json', 'w', encoding='utf-8') as f:
             json.dump(rr, f, ensure_ascii=False, indent=2)
-    except:
+    except BaseException:
         pass
 
     try:
-        with open(repro_prefix+'-run-state.json', 'w', encoding='utf-8') as f:
+        with open(repro_prefix + '-run-state.json', 'w', encoding='utf-8') as f:
             json.dump(run_state, f, ensure_ascii=False, indent=2)
-    except:
+    except BaseException:
         pass
 
     # For experiment
@@ -5618,10 +6399,10 @@ def dump_repro(repro_prefix, rr, run_state):
 
     # Attempt to read
     try:
-        r =  utils.load_json('cm-output.json')
-        if r['return']==0:
+        r = utils.load_json('cm-output.json')
+        if r['return'] == 0:
             cm_output = r['meta']
-    except:
+    except BaseException:
         pass
 
     cm_output['output'] = rr
@@ -5634,11 +6415,11 @@ def dump_repro(repro_prefix, rr, run_state):
 
     if 'version_info' in cm_output['state']:
         version_info_orig = cm_output['state']['version_info']
-        del(cm_output['state']['version_info'])
+        del (cm_output['state']['version_info'])
 
     try:
-        r =  utils.load_json('version_info.json')
-        if r['return']==0:
+        r = utils.load_json('version_info.json')
+        if r['return'] == 0:
             version_info_orig += r['meta']
 
             for v in version_info_orig:
@@ -5646,10 +6427,10 @@ def dump_repro(repro_prefix, rr, run_state):
                     dep = v[key]
                     version_info[key] = dep
 
-    except:
+    except BaseException:
         pass
 
-    if len(version_info)>0:
+    if len(version_info) > 0:
         cm_output['version_info'] = version_info
 
     if rr['return'] == 0:
@@ -5659,10 +6440,14 @@ def dump_repro(repro_prefix, rr, run_state):
 
     try:
         with open('cm-output.json', 'w', encoding='utf-8') as f:
-            json.dump(cm_output, f, ensure_ascii=False, indent=2, sort_keys=True)
-    except:
+            json.dump(
+                cm_output,
+                f,
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True)
+    except BaseException:
         pass
-
 
     return {'return': 0}
 
@@ -5673,6 +6458,6 @@ if __name__ == "__main__":
     import cmind
     auto = CAutomation(cmind, __file__)
 
-    r=auto.test({'x':'y'})
+    r = auto.test({'x': 'y'})
 
     logging.info(r)
