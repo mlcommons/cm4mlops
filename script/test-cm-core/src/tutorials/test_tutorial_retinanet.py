@@ -1,7 +1,6 @@
 # This test covers version, variation, compilation from src, add_deps,
 # add_deps_recursive, deps, post_deps
 
-import check as checks
 import cmind as cm
 from pathlib import Path
 import sys
@@ -12,6 +11,7 @@ sys.path.insert(
     os.path.join(
         Path(__file__).parent.parent.resolve(),
         "script"))
+import check as checks # noqa
 
 r = cm.access({'action': 'run', 'automation': 'script', 'tags': 'app,mlperf,inference,generic,_cpp,_retinanet,_onnxruntime,_cpu', 'adr':
                {'python': {'version_min': '3.8'}, 'compiler': {'tags': "gcc"}, 'openimages-preprocessed': {'tags': '_50'}}, 'scenario': 'Offline',

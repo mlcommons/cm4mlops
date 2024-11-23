@@ -1,4 +1,3 @@
-import check as checks
 import cmind as cm
 
 from pathlib import Path
@@ -10,6 +9,7 @@ sys.path.insert(
     os.path.join(
         Path(__file__).parent.parent.resolve(),
         "script"))
+import check as checks # noqa
 
 r = cm.access({'action': 'run', 'automation': 'script', 'tags': 'run,mlperf,inference,generate-run-cmds', 'adr':
                {'python': {'name': 'mlperf', 'version_min': '3.8'}, 'tvm': {
