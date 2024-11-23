@@ -2941,7 +2941,6 @@ class CAutomation(Automation):
                             if r['return'] > 0:
                                 return r
 
-
         return {'return': 0, 'list': lst}
 
     ############################################################
@@ -2972,7 +2971,7 @@ class CAutomation(Automation):
 
         # Create temporary script name
         script_name = i.get('script_name', '')
-        if script_name =='':
+        if script_name == '':
             script_name = 'tmp-native-run.'
 
             if os.name == 'nt':
@@ -2981,29 +2980,29 @@ class CAutomation(Automation):
                 script_name += 'sh'
 
         if os.name == 'nt':
-            xcmd = 'call ' +script_name
+            xcmd = 'call ' + script_name
 
-            if len(script) ==0:
+            if len(script) == 0:
                 script.append('@echo off')
                 script.append('')
         else:
-            xcmd = 'chmod 755 ' +script_name +' ; ./' +script_name
+            xcmd = 'chmod 755 ' + script_name + ' ; ./' + script_name
 
-            if len(script) ==0:
+            if len(script) == 0:
                 script.append('#!/bin/bash')
                 script.append('')
 
         # Assemble env
-        if len(env) >0:
+        if len(env) > 0:
             for k in env:
                 v = env[k]
 
                 if os.name == 'nt':
-                    script.append('set ' +k +'=' +v)
+                    script.append('set ' + k + '=' + v)
                 else:
                     if ' ' in v:
-                        v='"'+v+'"'
-                    script.append('export '+k+'='+v)
+                        v = '"' + v + '"'
+                    script.append('export ' + k + '=' + v)
 
             script.append('')
 
@@ -3012,13 +3011,13 @@ class CAutomation(Automation):
 
         # Record script
         r = utils.save_txt(file_name=script_name, string='\n'.join(script))
-        if r['return']>0:
+        if r['return'] > 0:
             return r
 
         # Run script
         rc = os.system(xcmd)
 
-        return {'return': 0, 'return_code':rc}
+        return {'return': 0, 'return_code': rc}
 
     ############################################################
     def add(self, i):
@@ -3069,7 +3068,8 @@ class CAutomation(Automation):
         parsed_artifact = i.get('parsed_artifact', [])
 
         artifact_obj = parsed_artifact[0] if len(parsed_artifact) > 0 else None
-        artifact_repo = parsed_artifact[1] if len(parsed_artifact) > 1 else None
+        artifact_repo = parsed_artifact[1] if len(
+            parsed_artifact) > 1 else None
 
         script_name = ''
         if 'script_name' in i:
@@ -3077,26 +3077,31 @@ class CAutomation(Automation):
             del (i['script_name'])
 
             if script_name != '' and not os.path.isfile(script_name):
-                return {'return': 1, 'error':'file {} not found'.format(script_name)}
+                return {'return': 1,
+                    'error': 'file {} not found'.format(script_name)}
 
         # Move tags from input to meta of the newly created script artifact
         tags_list = utils.convert_tags_to_list(i)
         if 'tags' in i:
-            del(i['tags'])
+            del (i['tags'])
 
-        if len(tags_list) ==0:
+        if len(tags_list) == 0:
             if console:
-                x = input('Please specify a combination of unique tags separated by comma for this script: ')
+                x = input(
+                    'Please specify a combination of unique tags separated by comma for this script: ')
                 x = x.strip()
-                if x !='':
+                if x != '':
                     tags_list = x.split(',')
 
-        if len(tags_list) ==0:
-            return {'return': 1, 'error':'you must specify a combination of unique tags separate by comman using "--new_tags"'}
+        if len(tags_list) == 0:
+            return {
+                'return': 1, 'error': 'you must specify a combination of unique tags separate by comman using "--new_tags"'}
 
         # Add placeholder (use common action)
         ii['out'] = 'con'
-        ii['common'] = True # Avoid recursion - use internal CM add function to add the script artifact
+        # Avoid recursion - use internal CM add function to add the script
+        # artifact
+        ii['common'] = True
 
         # Check template path
         template_dir = 'template'
@@ -3109,13 +3114,14 @@ class CAutomation(Automation):
             elif i.get('pytorch', False):
                 template = 'pytorch'
 
-        if template !='':
-            template_dir += '-' +template
+        if template != '':
+            template_dir += '-' + template
 
         template_path = os.path.join(self.path, template_dir)
 
         if not os.path.isdir(template_path):
-            return {'return': 1, 'error':'template path {} not found'.format(template_path)}
+            return {'return': 1, 'error': 'template path {} not found'.format(
+                template_path)}
 
         # Check if preloaded meta exists
         meta = {
@@ -3137,14 +3143,18 @@ class CAutomation(Automation):
         fmeta = os.path.join(template_path, self.cmind.cfg['file_cmeta'])
 
         r = utils.load_yaml_and_json(fmeta)
-        if r['return'] ==0:
-            utils.merge_dicts({'dict1': meta, 'dict2':r['meta'], 'append_lists':True, 'append_unique':True})
+        if r['return'] == 0:
+            utils.merge_dicts({'dict1': meta,
+    'dict2': r['meta'],
+    'append_lists': True,
+     'append_unique': True})
 
         # Check meta from CMD
         xmeta = i.get('meta', {})
 
-        if len(xmeta) >0:
-            utils.merge_dicts({'dict1': meta, 'dict2':xmeta, 'append_lists':True, 'append_unique':True})
+        if len(xmeta) > 0:
+            utils.merge_dicts({'dict1': meta, 'dict2': xmeta,
+                              'append_lists': True, 'append_unique': True})
 
         meta['automation_alias'] = self.meta['alias']
         meta['automation_uid'] = self.meta['uid']
@@ -3152,10 +3162,10 @@ class CAutomation(Automation):
 
         script_name_base = script_name
         script_name_ext = ''
-        if script_name !='':
+        if script_name != '':
             # separate name and extension
             j = script_name.rfind('.')
-            if j >=0:
+            if j >= 0:
                 script_name_base = script_name[:j]
                 script_name_ext = script_name[j:]
 
@@ -3180,7 +3190,7 @@ class CAutomation(Automation):
                 artifact_repo) + ':' + utils.assemble_cm_object2(artifact_obj)
 
         r_obj = self.cmind.access(ii)
-        if r_obj['return']>0:
+        if r_obj['return'] > 0:
             return r_obj
 
         new_script_path = r_obj['path']
@@ -3209,12 +3219,13 @@ class CAutomation(Automation):
                       (template_path, 'run.sh', '')]
         else:
             if script_name_ext == '.bat':
-                files += [(template_path, 'run.sh', script_name_base +'.sh')]
+                files += [(template_path, 'run.sh', script_name_base + '.sh')]
                 files += [('', script_name, script_name)]
 
             else:
-                files += [(template_path, 'run.bat', script_name_base +'.bat')]
-                files += [('', script_name, script_name_base +'.sh')]
+                files += [(template_path, 'run.bat',
+                           script_name_base + '.bat')]
+                files += [('', script_name, script_name_base + '.sh')]
 
         for x in files:
             path = x[0]
@@ -3224,7 +3235,7 @@ class CAutomation(Automation):
             if f2 == '':
                 f2 = f1
 
-            if path !='':
+            if path != '':
                 f1 = os.path.join(path, f1)
 
             if os.path.isfile(f1):
@@ -3244,11 +3255,12 @@ class CAutomation(Automation):
         '''
         if "." not in variation_tag or variation_tag[-1] == ".":
             return None
-        return variation_tag[:variation_tag.index(".") +1]+"#"
+        return variation_tag[:variation_tag.index(".") + 1] + "#"
 
     ##########################################################################
 
-    def _update_variation_meta_with_dynamic_suffix(script, variation_meta, variation_tag_dynamic_suffix):
+    def _update_variation_meta_with_dynamic_suffix(
+        script, variation_meta, variation_tag_dynamic_suffix):
         '''
         Updates the variation meta with dynamic suffix
         '''
@@ -3260,7 +3272,8 @@ class CAutomation(Automation):
                     if type(item) is dict:
                         for item_key in item:
                             item_value = item[item_key]
-                            if type(item_value) is dict:  # env,default_env inside deps
+                            if type(
+                                item_value) is dict:  # env,default_env inside deps
                                 for item_key2 in item_value:
                                     item_value[item_key2] = item_value[item_key2].replace(
                                         "#", variation_tag_dynamic_suffix)
@@ -3279,7 +3292,8 @@ class CAutomation(Automation):
                     if type(item_value) is dict:  # deps
                         for item_key in item_value:
                             item_value2 = item_value[item_key]
-                            if type(item_value2) is dict:  # env,default_env inside deps
+                            if type(
+                                item_value2) is dict:  # env,default_env inside deps
                                 for item_key2 in item_value2:
                                     item_value2[item_key2] = item_value2[item_key2].replace(
                                         "#", variation_tag_dynamic_suffix)
@@ -3308,7 +3322,8 @@ class CAutomation(Automation):
         import copy
         tmp_variation_tags = copy.deepcopy(variation_tags)
 
-        excluded_variations = [k[1:] for k in variation_tags if k.startswith("-") ]
+        excluded_variations = [k[1:]
+            for k in variation_tags if k.startswith("-")]
         for i, e in enumerate(excluded_variations):
             if e not in variations:
                 dynamic_tag = script._get_name_for_dynamic_variation_tag(e)
@@ -3344,8 +3359,8 @@ class CAutomation(Automation):
                 if variation['alias'] not in tmp_variation_tags:
                     tmp_variation_tags.append(variation['alias'])
 
-        return {'return': 0, 'variation_tags': tmp_variation_tags, 'excluded_variation_tags': excluded_variations}
-
+        return {'return': 0, 'variation_tags': tmp_variation_tags,
+            'excluded_variation_tags': excluded_variations}
 
     ##########################################################################
 
@@ -3372,7 +3387,8 @@ class CAutomation(Automation):
 
     ##########################################################################
 
-    def _process_variation_tags_in_groups(script, variation_tags, groups, excluded_variations, variations):
+    def _process_variation_tags_in_groups(
+        script, variation_tags, groups, excluded_variations, variations):
         import copy
         tmp_variation_tags = copy.deepcopy(variation_tags)
         tmp_variation_tags_static = copy.deepcopy(variation_tags)
@@ -3399,12 +3415,11 @@ class CAutomation(Automation):
 
         return {'return': 0, 'variation_tags': tmp_variation_tags}
 
-
     ##########################################################################
 
     def _call_run_deps(script, deps, local_env_keys, local_env_keys_from_meta, env, state, const, const_state,
                        add_deps_recursive, recursion_spaces, remembered_selections, variation_tags_string, found_cached, debug_script_tags='',
-            verbose=False, show_time=False, extra_recursion_spaces='  ', run_state={'deps': [], 'fake_deps':[], 'parent': None}):
+            verbose=False, show_time=False, extra_recursion_spaces='  ', run_state={'deps': [], 'fake_deps': [], 'parent': None}):
         if len(deps) == 0:
             return {'return': 0}
 
@@ -3414,13 +3429,13 @@ class CAutomation(Automation):
         # Get local env keys
         local_env_keys = copy.deepcopy(local_env_keys)
 
-        if len(local_env_keys_from_meta) >0:
+        if len(local_env_keys_from_meta) > 0:
             local_env_keys += local_env_keys_from_meta
 
         r = script._run_deps(deps, local_env_keys, env, state, const, const_state, add_deps_recursive, recursion_spaces,
                              remembered_selections, variation_tags_string, found_cached, debug_script_tags,
                              verbose, show_time, extra_recursion_spaces, run_state)
-        if r['return']>0:
+        if r['return'] > 0:
             return r
 
         return {'return': 0}
@@ -3428,12 +3443,12 @@ class CAutomation(Automation):
     ##########################################################################
     def _run_deps(self, deps, clean_env_keys_deps, env, state, const, const_state, add_deps_recursive, recursion_spaces,
                   remembered_selections, variation_tags_string='', from_cache=False, debug_script_tags='',
-                  verbose=False, show_time=False, extra_recursion_spaces='  ', run_state={'deps': [], 'fake_deps':[], 'parent': None}):
+                  verbose=False, show_time=False, extra_recursion_spaces='  ', run_state={'deps': [], 'fake_deps': [], 'parent': None}):
         """
         Runs all the enabled dependencies and pass them env minus local env
         """
 
-        if len(deps) >0:
+        if len(deps) > 0:
             # Preserve local env
             tmp_env = {}
 
@@ -3451,8 +3466,9 @@ class CAutomation(Automation):
                     continue
 
                 if d.get('env'):
-                    r = update_env_with_values(d['env'], False, env)  # to update env local to a dependency
-                    if r['return']>0:
+                    # to update env local to a dependency
+                    r = update_env_with_values(d['env'], False, env)
+                    if r['return'] > 0:
                         return r
 
                 update_tags_from_env_with_prefix = d.get(
@@ -3460,7 +3476,7 @@ class CAutomation(Automation):
                 for t in update_tags_from_env_with_prefix:
                     for key in update_tags_from_env_with_prefix[t]:
                         if str(env.get(key, '')).strip() != '':
-                            d['tags'] += ","+t+str(env[key])
+                            d['tags'] += "," + t + str(env[key])
 
                 for key in clean_env_keys_deps:
                     if '?' in key or '*' in key:
@@ -3500,7 +3516,7 @@ class CAutomation(Automation):
                 update_tags_from_env = d.get("update_tags_from_env", [])
                 for t in update_tags_from_env:
                     if env.get(t, '').strip() != '':
-                        d['tags'] += ","+env[t]
+                        d['tags'] += "," + env[t]
 
                 inherit_variation_tags = d.get("inherit_variation_tags", False)
                 skip_inherit_variation_groups = d.get(
@@ -3513,14 +3529,15 @@ class CAutomation(Automation):
                                 variation_tags_to_be_skipped += variation_groups[group]['variations']
 
                     variation_tags = variation_tags_string.split(",")
-                    variation_tags =  [x for x in variation_tags if not x.startswith("_") or x[1:] not in set(variation_tags_to_be_skipped) ]
+                    variation_tags = [x for x in variation_tags if not x.startswith(
+                        "_") or x[1:] not in set(variation_tags_to_be_skipped)]
 
                     # handle group in case of dynamic variations
                     for t_variation in variation_tags_to_be_skipped:
                         if t_variation.endswith(".#"):
                             beg = t_variation[:-1]
                             for m_tag in variation_tags:
-                                if m_tag.startswith("_" +beg):
+                                if m_tag.startswith("_" + beg):
                                     variation_tags.remove(m_tag)
 
                     deps_tags = d['tags'].split(",")
@@ -3530,7 +3547,8 @@ class CAutomation(Automation):
                             if variation_tag in variation_tags:
                                 variation_tags.remove(variation_tag)
                     new_variation_tags_string = ",".join(variation_tags)
-                    d['tags'] += ","+new_variation_tags_string #deps should have non-empty tags
+                    # deps should have non-empty tags
+                    d['tags'] += "," + new_variation_tags_string
 
                 run_state['deps'].append(d['tags'])
 
@@ -3552,7 +3570,7 @@ class CAutomation(Automation):
                     ii = {
                             'action': 'run',
                             'automation': utils.assemble_cm_object(self.meta['alias'], self.meta['uid']),
-                            'recursion_spaces': recursion_spaces, # + extra_recursion_spaces,
+                            'recursion_spaces': recursion_spaces,  # + extra_recursion_spaces,
                             'recursion': True,
                             'remembered_selections': remembered_selections,
                             'env': env,
@@ -3568,15 +3586,16 @@ class CAutomation(Automation):
 
                     }
 
-                    for key in ["env", "state", "const", "const_state" ]:
-                        ii['local_' +key] = d.get(key, {})
+                    for key in ["env", "state", "const", "const_state"]:
+                        ii['local_' + key] = d.get(key, {})
                         if d.get(key):
                             d[key] = {}
 
-                    utils.merge_dicts({'dict1': ii, 'dict2':d, 'append_lists':True, 'append_unique':True})
+                    utils.merge_dicts(
+                        {'dict1': ii, 'dict2': d, 'append_lists': True, 'append_unique': True})
 
                     r = self.cmind.access(ii)
-                    if r['return']>0:
+                    if r['return'] > 0:
                         return r
 
                     run_state['version_info'] = run_state_copy.get(
@@ -3585,12 +3604,15 @@ class CAutomation(Automation):
                     # Restore local env
                     env.update(tmp_env)
                     r = update_env_with_values(env)
-                    if r['return']>0:
+                    if r['return'] > 0:
                         return r
 
                     # Update env/state with cost
                     env.update(const)
-                    utils.merge_dicts({'dict1': state, 'dict2':const_state, 'append_lists':True, 'append_unique':True})
+                    utils.merge_dicts({'dict1': state,
+    'dict2': const_state,
+    'append_lists': True,
+     'append_unique': True})
 
         return {'return': 0}
 
@@ -3609,7 +3631,8 @@ class CAutomation(Automation):
             if 'tags' in dict2[dep]:
                 dict2[dep]['tags_list'] = utils.convert_tags_to_list(
                     dict2[dep])
-        utils.merge_dicts({'dict1': dict1, 'dict2':dict2, 'append_lists':True, 'append_unique':True})
+        utils.merge_dicts({'dict1': dict1, 'dict2': dict2,
+                          'append_lists': True, 'append_unique': True})
         for dep in dict1:
             if 'tags_list' in dict1[dep]:
                 dict1[dep]['tags'] = ",".join(dict1[dep]['tags_list'])
@@ -3685,7 +3708,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
             xversion = ''
             version = version_info_dict.get(dep_tags, {}).get('version', '')
-            if version != '' :
+            if version != '':
                 xversion = ' --version={}\n'.format(version)
 
             content += "```bash\n"
@@ -3730,7 +3753,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
             xversion = ''
             version = version_info_dict.get(dep_tags, {}).get('version', '')
-            if version != '' :
+            if version != '':
                 xversion = ' --version={}\n'.format(version)
 
             content += "# cm run script --tags=" + \
@@ -3763,7 +3786,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
             version = version_info_dict.get('version', '')
 
-            if version != '' :
+            if version != '':
                 logging.info('* {}: {}'.format(k, version))
 
         logging.info('=========================')
@@ -3776,7 +3799,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         Returns a CM command in markdown format
         """
 
-        return '```bash\n ' +cmd+' \n ```'
+        return '```bash\n ' + cmd + ' \n ```'
 
     ##########################################################################
 
@@ -3803,10 +3826,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         run_cmds = []
 
         for dep_tags in deps:
-            run_cmds.append("cm run script --tags=" +dep_tags)
+            run_cmds.append("cm run script --tags=" + dep_tags)
 
         return run_cmds
-
 
     ##########################################################################
 
@@ -3836,7 +3858,8 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         # Create and work on a copy to avoid contamination
         env_copy = copy.deepcopy(run_script_input.get('env', {}))
-        run_script_input_state_copy = copy.deepcopy(run_script_input.get('state', {}))
+        run_script_input_state_copy = copy.deepcopy(
+            run_script_input.get('state', {}))
         script_name_copy = run_script_input.get('script_name', '')
 
         run_script_input['script_name'] = script_name
@@ -3919,7 +3942,12 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             # May happen that path is in variable but it doesn't exist anymore
             if os.path.isdir(path):
                 if file_is_re:
-                    file_list = [os.path.join(path, f)  for f in os.listdir(path) if re.match(file_name, f)]
+                    file_list = [
+    os.path.join(
+        path,
+        f) for f in os.listdir(path) if re.match(
+            file_name,
+             f)]
 
                     for f in file_list:
                         duplicate = False
@@ -3929,9 +3957,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                                 break
                         if not duplicate:
                             skip = False
-                            if hook !=None:
-                                r = hook({'file':f})
-                                if r['return']>0:
+                            if hook != None:
+                                r = hook({'file': f})
+                                if r['return'] > 0:
                                     return r
                                 skip = r['skip']
                             if not skip:
@@ -3970,9 +3998,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
                             if not duplicate:
                                 skip = False
-                                if hook !=None:
-                                    r = hook({'file':f})
-                                    if r['return']>0:
+                                if hook != None:
+                                    r = hook({'file': f})
+                                    if r['return'] > 0:
                                         return r
                                     skip = r['skip']
                                 if not skip:
@@ -4001,7 +4029,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                 if version_max != '':
                     x += ' <= {}'.format(version_max)
 
-                if x !='':
+                if x != '':
                     logging.info(
     recursion_spaces +
      '  - Searching for versions: {}'.format(x))
@@ -4020,7 +4048,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
                     run_script_input['recursion_spaces'] = recursion_spaces
 
-                    if rx['return'] >0:
+                    if rx['return'] > 0:
                         if rx['return'] != 2:
                             return rx
                     else:
@@ -4037,7 +4065,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                                                                 'version_min': version_min,
                                                                 'version_max': version_max,
                                                                 'cmind': self.cmind})
-                                if ry['return']>0:
+                                if ry['return'] > 0:
                                     return ry
 
                                 if not ry['skip']:
@@ -4050,32 +4078,43 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                 found_files = found_files_with_good_version
 
             # Continue with selection
-            if len(found_files) >1:
+            if len(found_files) > 1:
                 if len(found_files) == 1 or select_default:
                     selection = 0
                 else:
                     # Select 1 and proceed
-                    logging.info(recursion_spaces +'  - More than 1 path found:')
+                    logging.info(
+    recursion_spaces +
+     '  - More than 1 path found:')
                     num = 0
 
                     for file in found_files:
-                        logging.info(recursion_spaces +'  {}) {}'.format(num, file))
+                        logging.info(
+    recursion_spaces +
+    '  {}) {}'.format(
+        num,
+         file))
                         num += 1
-                    x = input(recursion_spaces+'  Make your selection or press Enter for 0: ')
+                    x = input(recursion_spaces +
+     '  Make your selection or press Enter for 0: ')
 
                     x = x.strip()
-                    if x=='':
-                        x='0'
+                    if x == '':
+                        x = '0'
 
                     selection = int(x)
 
                     if selection < 0 or selection >= num:
                         selection = 0
-                logging.info(recursion_spaces +'  Selected {}: {}'.format(selection, found_files[selection]))
+                logging.info(
+    recursion_spaces +
+    '  Selected {}: {}'.format(
+        selection,
+         found_files[selection]))
 
                 found_files = [found_files[selection]]
 
-        return {'return': 0, 'found_files':found_files}
+        return {'return': 0, 'found_files': found_files}
 
     ##########################################################################
     def detect_version_using_script(self, i):
@@ -4122,7 +4161,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         if version_max != '':
             x += ' <= {}'.format(version_max)
 
-        if x !='':
+        if x != '':
             logging.info(
     recursion_spaces +
      '  - Searching for versions: {}'.format(x))
@@ -4148,13 +4187,13 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                                                 'version_min': version_min,
                                                 'version_max': version_max,
                                                 'cmind': self.cmind})
-                if ry['return']>0:
+                if ry['return'] > 0:
                     return ry
 
                 if not ry['skip']:
-                    return {'return': 0, 'detected_version':detected_version}
+                    return {'return': 0, 'detected_version': detected_version}
 
-        return {'return': 16, 'error':'version was not detected'}
+        return {'return': 16, 'error': 'version was not detected'}
 
     ##########################################################################
     def find_artifact(self, i):
@@ -4208,7 +4247,8 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         # Create and work on a copy to avoid contamination
         env_copy = copy.deepcopy(env)
-        run_script_input_state_copy = copy.deepcopy(run_script_input.get('state', {}))
+        run_script_input_state_copy = copy.deepcopy(
+            run_script_input.get('state', {}))
 
         default_path_env_key = i.get('default_path_env_key', '')
         recursion_spaces = i.get('recursion_spaces', '')
@@ -4219,19 +4259,22 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         # separated by OS var separator (usually : or ;)
         path = env.get('CM_TMP_PATH', '')
 
-        if path !='' and env.get('CM_TMP_PATH_IGNORE_NON_EXISTANT','')!='yes':
+        if path != '' and env.get(
+            'CM_TMP_PATH_IGNORE_NON_EXISTANT', '') != 'yes':
             # Can be a list of paths
             path_list_tmp = path.split(os_info['env_separator'])
             for path_tmp in path_list_tmp:
-                if path_tmp.strip() !='' and not os.path.isdir(path_tmp):
-                    return {'return': 1, 'error':'path {} doesn\'t exist'.format(path_tmp)}
+                if path_tmp.strip() != '' and not os.path.isdir(path_tmp):
+                    return {'return': 1,
+                        'error': 'path {} doesn\'t exist'.format(path_tmp)}
 
         # Check if forced path and file name from --input (CM_INPUT - local env
         # - will not be visible for higher-level script)
         forced_file = env.get('CM_INPUT', '').strip()
         if forced_file != '':
             if not os.path.isfile(forced_file):
-                return {'return': 1, 'error':'file {} doesn\'t exist'.format(forced_file)}
+                return {'return': 1,
+                    'error': 'file {} doesn\'t exist'.format(forced_file)}
 
             file_name = os.path.basename(forced_file)
             path = os.path.dirname(forced_file)
@@ -4254,7 +4297,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
     #            path_tmp_abs = os.path.realpath(os.path.join(path_tmp, file_name))
     #            GF: I remarked above code because it doesn't work correcly
     #                for virtual python - it unsoftlinks virtual python and picks up
-    #                native one from /usr/bin thus making workflows work incorrectly ...
+    # native one from /usr/bin thus making workflows work incorrectly ...
             path_tmp_abs = os.path.join(path_tmp, file_name)
 
             if not path_tmp_abs in path_list_tmp2:
@@ -4281,20 +4324,20 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         run_script_input['state'] = run_script_input_state_copy
 
-        if r['return']>0:
+        if r['return'] > 0:
             return r
 
         found_files = r['found_files']
 
-        if len(found_files) ==0:
-            return {'return': 16, 'error':'{} not found'.format(file_name)}
+        if len(found_files) == 0:
+            return {'return': 16, 'error': '{} not found'.format(file_name)}
 
         # Finalize output
         file_path = found_files[0]
         found_path = os.path.dirname(file_path)
 
         if found_path not in default_path_list:
-            env_key = '+' +default_path_env_key
+            env_key = '+' + default_path_env_key
 
             paths = env.get(env_key, [])
             if found_path not in paths:
@@ -4314,7 +4357,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         if env_path_key != '':
             env[env_path_key] = file_path
 
-        return {'return': 0, 'found_path':found_path,
+        return {'return': 0, 'found_path': found_path,
                             'found_file_path': file_path,
                             'found_file_name': os.path.basename(file_path),
                             'default_path_list': default_path_list}
@@ -4355,8 +4398,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
                     p2 = os.path.join(p, f)
 
                     if os.path.isdir(p2):
-                        r = self.find_file_deep({'paths': [p2], 'file_name': file_name, 'restrict_paths':restrict_paths})
-                        if r['return']>0:
+                        r = self.find_file_deep(
+                            {'paths': [p2], 'file_name': file_name, 'restrict_paths': restrict_paths})
+                        if r['return'] > 0:
                             return r
 
                         found_paths += r['found_paths']
@@ -4376,7 +4420,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
             found_paths = filtered_found_paths
 
-        return {'return': 0, 'found_paths':found_paths}
+        return {'return': 0, 'found_paths': found_paths}
 
     ##########################################################################
     def find_file_back(self, i):
@@ -4417,7 +4461,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             else:
                 path = path2
 
-        return {'return': 0, 'found_path':path}
+        return {'return': 0, 'found_path': path}
 
     ##########################################################################
     def parse_version(self, i):
@@ -4455,13 +4499,13 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         which_env = i['which_env']
         debug = i.get('debug', False)
 
-        r = utils.load_txt(file_name= file_name,
-                           check_if_exists= True,
-                           split= True,
-                           match_text= match_text,
-                           fail_if_no_match= 'version was not detected')
-        if r['return'] >0:
-            if r.get('string','') !='':
+        r = utils.load_txt(file_name=file_name,
+                           check_if_exists=True,
+                           split=True,
+                           match_text=match_text,
+                           fail_if_no_match='version was not detected')
+        if r['return'] > 0:
+            if r.get('string', '') != '':
                 r['error'] += ' ({})'.format(r['string'])
             return r
 
@@ -4470,12 +4514,14 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         if r['match'].lastindex and r['match'].lastindex >= group_number:
             version = r['match'].group(group_number)
         else:
-            return {'return': 1, 'error': 'Invalid version detection group number. Version was not detected. Last index of match = {}. Given group number = {}'.format(r['match'].lastindex, group_number)}
+            return {'return': 1, 'error': 'Invalid version detection group number. Version was not detected. Last index of match = {}. Given group number = {}'.format(
+                r['match'].lastindex, group_number)}
 
         which_env[env_key] = version
-        which_env['CM_DETECTED_VERSION'] = version  # to be recorded in the cache meta
+        # to be recorded in the cache meta
+        which_env['CM_DETECTED_VERSION'] = version
 
-        return {'return': 0, 'version':version, 'string':string}
+        return {'return': 0, 'version': version, 'string': string}
 
     ##########################################################################
     def update_deps(self, i):
@@ -4520,7 +4566,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
     new_state_keys,
     run_state,
      i)
-        if r['return'] >0:
+        if r['return'] > 0:
             return r
 
         return {'return': 0}
@@ -4530,10 +4576,12 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         default_path_env_key = i.get('default_path_env_key', '')
         os_info = i['os_info']
         default_path_list = [] if default_path_env_key == '' else \
-        os.environ.get(default_path_env_key, '').split(os_info['env_separator'])
+        os.environ.get(
+    default_path_env_key,
+    '').split(
+        os_info['env_separator'])
 
         return default_path_list
-
 
     ############################################################
 
@@ -4587,7 +4635,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
             if ' ' in artifact:
                 tags = artifact.replace(' ', ',')
 
-        if tags =='':
+        if tags == '':
             tags = i.get('tags', '')
 
         if 'tags' in i:
@@ -4595,11 +4643,10 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         i['action'] = 'run'
         i['artifact'] = 'gui'
-        i['parsed_artifact'] = [('gui','605cac42514a4c69')]
-        i['script'] = tags.replace(',',' ')
+        i['parsed_artifact'] = [('gui', '605cac42514a4c69')]
+        i['script'] = tags.replace(',', ' ')
 
         return self.cmind.access(i)
-
 
     ############################################################
 
@@ -4726,9 +4773,11 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
 
         meta = i['meta']
 
-        list_of_variations = sorted(['_'+v for v in list(meta.get('variations', {}.keys()))])
+        list_of_variations = sorted(
+            ['_' + v for v in list(meta.get('variations', {}.keys()))])
 
-        return {'return': 1, 'error':'python package variation is not defined in "{}". Available: {}'.format(meta['alias'],' '.join(list_of_variations))}
+        return {'return': 1, 'error': 'python package variation is not defined in "{}". Available: {}'.format(
+            meta['alias'], ' '.join(list_of_variations))}
 
     ############################################################
     def prepare(self, i):
@@ -4809,19 +4858,19 @@ def find_cached_script(i):
 
     # Create a search query to find that we already ran this script with the same or similar input
     # It will be gradually enhanced with more "knowledge"  ...
-    if len(script_tags) >0:
+    if len(script_tags) > 0:
         for x in script_tags:
             if x not in cached_tags:
                 cached_tags.append(x)
 
-    if len(found_script_tags) >0:
+    if len(found_script_tags) > 0:
         for x in found_script_tags:
             if x not in cached_tags:
                 cached_tags.append(x)
 
     explicit_cached_tags = copy.deepcopy(cached_tags)
 
-    if len(explicit_variation_tags) >0:
+    if len(explicit_variation_tags) > 0:
         explicit_variation_tags_string = ''
 
         for t in explicit_variation_tags:
@@ -4836,9 +4885,11 @@ def find_cached_script(i):
             if x not in explicit_cached_tags:
                 explicit_cached_tags.append(x)
 
-        logging.debug(recursion_spaces +'    - Prepared explicit variations: {}'.format(explicit_variation_tags_string))
+        logging.debug(
+    recursion_spaces +
+     '    - Prepared explicit variations: {}'.format(explicit_variation_tags_string))
 
-    if len(variation_tags) >0:
+    if len(variation_tags) > 0:
         variation_tags_string = ''
 
         for t in variation_tags:
@@ -4853,16 +4904,18 @@ def find_cached_script(i):
             if x not in cached_tags:
                 cached_tags.append(x)
 
-        logging.debug(recursion_spaces +'    - Prepared variations: {}'.format(variation_tags_string))
+        logging.debug(
+    recursion_spaces +
+     '    - Prepared variations: {}'.format(variation_tags_string))
 
     # Add version
     if version != '':
-        if 'version-' +version not in cached_tags:
-            cached_tags.append('version-' +version)
-            explicit_cached_tags.append('version-' +version)
+        if 'version-' + version not in cached_tags:
+            cached_tags.append('version-' + version)
+            explicit_cached_tags.append('version-' + version)
 
     # Add extra cache tags (such as "virtual" for python)
-    if len(extra_cache_tags) >0:
+    if len(extra_cache_tags) > 0:
         for t in extra_cache_tags:
             if t not in cached_tags:
                 cached_tags.append(t)
@@ -4876,7 +4929,7 @@ def find_cached_script(i):
         prefix = extra_cache_tags.get('prefix', '')
 
         v = env.get(key, '').strip()
-        if v !='':
+        if v != '':
             for t in v.split(','):
                 x = 'deps-' + prefix + t
                 if x not in cached_tags:
@@ -4886,15 +4939,17 @@ def find_cached_script(i):
     # Check if already cached
     if not new_cache_entry:
         search_tags = '-tmp'
-        if len(cached_tags) > 0 :
+        if len(cached_tags) > 0:
             search_tags += ',' + ','.join(explicit_cached_tags)
 
-        logging.debug(recursion_spaces +'    - Searching for cached script outputs with the following tags: {}'.format(search_tags))
+        logging.debug(
+    recursion_spaces +
+     '    - Searching for cached script outputs with the following tags: {}'.format(search_tags))
 
         r = self_obj.cmind.access({'action': 'find',
                                    'automation': self_obj.meta['deps']['cache'],
                                    'tags': search_tags})
-        if r['return']>0:
+        if r['return'] > 0:
             return r
 
         found_cached_scripts = r['list']
@@ -4905,13 +4960,15 @@ def find_cached_script(i):
             for selection in remembered_selections:
                 if selection['type'] == 'cache' and set(
                     selection['tags'].split(',')) == set(search_tags.split(',')):
-                    tmp_version_in_cached_script = selection['cached_script'].meta.get('version', '')
+                    tmp_version_in_cached_script = selection['cached_script'].meta.get(
+                        'version', '')
 
                     skip_cached_script = check_versions(
     self_obj.cmind, tmp_version_in_cached_script, version_min, version_max)
 
                     if skip_cached_script:
-                        return {'return': 2, 'error':'The version of the previously remembered selection for a given script ({}) mismatches the newly requested one'.format(tmp_version_in_cached_script)}
+                        return {'return': 2, 'error': 'The version of the previously remembered selection for a given script ({}) mismatches the newly requested one'.format(
+                            tmp_version_in_cached_script)}
                     else:
                         found_cached_scripts = [selection['cached_script']]
                         logging.debug(
@@ -4931,7 +4988,8 @@ def find_cached_script(i):
                 'dependent_cached_path', '')
             if dependent_cached_path:
                 if not os.path.exists(dependent_cached_path):
-                    # TODO Need to restrict the below check to within container env
+                    # TODO Need to restrict the below check to within container
+                    # env
                     i['tmp_dep_cached_path'] = dependent_cached_path
                     r = utils.call_internal_module(
     self_obj, __file__, 'module_misc', 'get_container_path_script', i)
@@ -4951,7 +5009,8 @@ def find_cached_script(i):
 
         found_cached_scripts = new_found_cached_scripts
 
-    return {'return': 0, 'cached_tags':cached_tags, 'search_tags':search_tags, 'found_cached_scripts':found_cached_scripts}
+    return {'return': 0, 'cached_tags': cached_tags,
+        'search_tags': search_tags, 'found_cached_scripts': found_cached_scripts}
 
 
 ##############################################################################
@@ -4960,7 +5019,9 @@ def enable_or_skip_script(meta, env):
     Internal: enable a dependency based on enable_if_env and skip_if_env meta information
     (AND function)
     """
-if not isinstance(meta,     if )        logging.info("The meta entry is not a dictionary for skip/enable if_env {}".format(meta))
+
+
+if not isinstance(meta,     if)        logging.info("The meta entry is not a dictionary for skip/enable if_env {}".format(meta))
 
     for key in meta:
         meta_key = [str(v).lower() for v in meta[key]]
@@ -4986,6 +5047,7 @@ if not isinstance(meta,     if )        logging.info("The meta entry is not a di
     return True
 
 ##############################################################################
+
 
 def any_enable_or_skip_script(meta, env):
     """
@@ -5016,6 +5078,7 @@ def any_enable_or_skip_script(meta, env):
 
 ##########################################################################
 
+
 def _update_env(env, key=None, value=None):
 
     if key is None or value == None:
@@ -5027,7 +5090,7 @@ def _update_env(env, key=None, value=None):
     env[key] = value
 
     r = update_env_with_values(env)
-    if r['return']>0:
+    if r['return'] > 0:
         return r
 
     return {'return': 0}
@@ -5040,13 +5103,15 @@ def update_env_with_values(env, fail_on_not_found=False, extra_env={}):
     """
     import re
     for key in env:
-if key.startswith("+") and not isinstance(env[key],         if key.startswith("+") and )            return {'return': 1,
+
+
+if key.startswith("+") and not isinstance(env[key],         if key.startswith("+") and)            return {'return': 1,
                 'error': 'List value expected for {} in env'.format(key)}
 
         value = env[key]
 
         # Check cases such as --env.CM_SKIP_COMPILE
-        if type(value) ==bool:
+        if type(value) == bool:
             env[key] = value
             continue
 
@@ -5054,7 +5119,8 @@ if key.startswith("+") and not isinstance(env[key],         if key.startswith("+
 
         if not tmp_values:
             if key == 'CM_GIT_URL' and env.get('CM_GIT_AUTH', "no") == "yes":
-                if env.get('CM_GH_TOKEN', '') != '' and '@' not in env['CM_GIT_URL']:
+                if env.get('CM_GH_TOKEN',
+                           '') != '' and '@' not in env['CM_GIT_URL']:
                     params = {}
                     params["token"] = env['CM_GH_TOKEN']
                     value = get_git_url("token", value, params)
@@ -5066,16 +5132,18 @@ if key.startswith("+") and not isinstance(env[key],         if key.startswith("+
 
         for tmp_value in tmp_values:
             if tmp_value not in env and tmp_value not in extra_env and fail_on_not_found:
-                return {'return': 1, 'error':'variable {} is not in env'.format(tmp_value)}
+                return {'return': 1,
+                    'error': 'variable {} is not in env'.format(tmp_value)}
             found_env = {}
             if tmp_value in env:
                 found_env = env
             elif tmp_value in extra_env:
                 found_env = extra_env
             if found_env:
-if isinstance(value,                 if )                    value = value.replace("<<<" +tmp_value +">>>", str(found_env[tmp_value]))
-elif isinstance(value,                 elif )                    for i, val in enumerate(value):
-                        value[i] = value[i].replace("<<<" +tmp_value +">>>", str(found_env[tmp_value]))
+if isinstance(value,                 if)                    value = value.replace("<<<" + tmp_value + ">>>", str(found_env[tmp_value]))
+elif isinstance(value,                 elif)                    for i, val in enumerate(value):
+                        value[i] = value[i].replace(
+                            "<<<" + tmp_value + ">>>", str(found_env[tmp_value]))
 
         env[key] = value
 
