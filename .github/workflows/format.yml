@@ -48,9 +48,9 @@ jobs:
             git commit -m '[Automated Commit] Format Codebase'
       
             # Push changes to a new branch
-            BRANCH_NAME="auto/code-format-$(date +%Y%m%d%H%M%S)"
+            BRANCH_NAME="auto/code-format"
             git branch $BRANCH_NAME
-            git push origin $BRANCH_NAME
+            git push origin $BRANCH_NAME --force
       
             # Create a pull request to the "code-format" branch
             gh pr create --base code-format --head $BRANCH_NAME --title "[Automated PR] Format Codebase" --body "This pull request contains automated code formatting changes."
