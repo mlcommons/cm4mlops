@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -9,7 +10,8 @@ def preprocess(i):
     if env.get('CM_TMP_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
         i['run_script_input']['script_name'] = "donotrun"
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
@@ -17,12 +19,12 @@ def postprocess(i):
     env = i['env']
 
     if env.get('CM_TMP_MLPERF_INFERENCE_LOADGEN_INSTALL_FROM_PIP', '') == 'yes':
-        return {'return':0}
+        return {'return': 0}
 
-
-    for key in ['+PYTHONPATH', '+C_INCLUDE_PATH', '+CPLUS_INCLUDE_PATH', '+LD_LIBRARY_PATH', '+DYLD_FALLBACK_LIBRARY_PATH']:
-#        20221024: we save and restore env in the main script and can clean env here for determinism
-#        if key not in env:
+    for key in ['+PYTHONPATH', '+C_INCLUDE_PATH', '+CPLUS_INCLUDE_PATH',
+                '+LD_LIBRARY_PATH', '+DYLD_FALLBACK_LIBRARY_PATH']:
+        #        20221024: we save and restore env in the main script and can clean env here for determinism
+        #        if key not in env:
         env[key] = []
 
     # On Windows installs directly into Python distro for simplicity
@@ -52,4 +54,4 @@ def postprocess(i):
     env['+PYTHONPATH'].append(python_path)
     env['CM_MLPERF_INFERENCE_LOADGEN_PYTHON_PATH'] = python_path
 
-    return {'return':0}
+    return {'return': 0}

@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -9,8 +10,9 @@ def preprocess(i):
 
     meta = i['meta']
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
-    return {'return':0}
+    return {'return': 0}

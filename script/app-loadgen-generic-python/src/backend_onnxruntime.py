@@ -45,7 +45,7 @@ class XModelFactory(ModelFactory):
         inter_op_threads=0,
         model_code='',         # Not used here
         model_cfg={},          # Not used here
-        model_sample_pickle='' # Not used here
+        model_sample_pickle=''  # Not used here
     ):
         self.model_path = model_path
         self.execution_provider = execution_provider
@@ -58,11 +58,12 @@ class XModelFactory(ModelFactory):
         self.session_options.inter_op_num_threads = inter_op_threads
 
     def create(self) -> Model:
-        print ('Loading model: {}'.format(self.model_path))
+        print('Loading model: {}'.format(self.model_path))
 #        model = onnx.load(self.model_path)
         session_eps = [self.execution_provider]
         session = ort.InferenceSession(
-#            model.SerializeToString(), self.session_options, providers=session_eps
+            # model.SerializeToString(), self.session_options,
+            # providers=session_eps
             self.model_path, self.session_options, providers=session_eps
         )
         return XModel(session)
@@ -72,12 +73,14 @@ class XModelInputSampler(ModelInputSampler):
     def __init__(self, model_factory: XModelFactory):
         model = model_factory.create()
         input_defs = model.session.get_inputs()
-        self.inputs: typing.Dict[str, typing.Tuple[np.dtype, typing.List[int]]] = dict()
+        self.inputs: typing.Dict[str,
+                                 typing.Tuple[np.dtype,
+                                              typing.List[int]]] = dict()
         for input in input_defs:
             input_name = input.name
             input_type = ONNX_TO_NP_TYPE_MAP[input.type]
             input_dim = [
-                1 if (x is None or (type(x) is str)) else x for x in input.shape
+                1 if (x is None or (isinstance(x, str))) else x for x in input.shape
             ]
             self.inputs[input_name] = (input_type, input_dim)
 

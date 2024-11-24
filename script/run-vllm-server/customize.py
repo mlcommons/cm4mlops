@@ -1,5 +1,7 @@
 from cmind import utils
-import os, subprocess
+import os
+import subprocess
+
 
 def preprocess(i):
 
@@ -31,7 +33,8 @@ def preprocess(i):
     if pp_size:
         cmd_args += f" --api-key {api_key}"
 
-    distributed_executor_backend = env.get("CM_VLLM_SERVER_DIST_EXEC_BACKEND", False)
+    distributed_executor_backend = env.get(
+        "CM_VLLM_SERVER_DIST_EXEC_BACKEND", False)
     if distributed_executor_backend:
         cmd_args += f" --distributed-executor-backend {distributed_executor_backend}"
 
@@ -147,7 +150,8 @@ def preprocess(i):
     if kv_cache_dtype:
         cmd_args += f" --kv-cache-dtype {kv_cache_dtype}"
 
-    quantization_param_path = env.get("CM_VLLM_SERVER_QUANTIZATION_PARAM_PATH", False)
+    quantization_param_path = env.get(
+        "CM_VLLM_SERVER_QUANTIZATION_PARAM_PATH", False)
     if quantization_param_path:
         cmd_args += f" --quantization-param-path {quantization_param_path}"
 
@@ -155,7 +159,8 @@ def preprocess(i):
     if max_model_len:
         cmd_args += f" --max-model-len {max_model_len}"
 
-    guided_decoding_backend = env.get("CM_VLLM_SERVER_GUIDED_DECODING_BACKEND", False)
+    guided_decoding_backend = env.get(
+        "CM_VLLM_SERVER_GUIDED_DECODING_BACKEND", False)
     if guided_decoding_backend:
         cmd_args += f" --guided-decoding-backend {guided_decoding_backend}"
 
@@ -163,11 +168,13 @@ def preprocess(i):
     if worker_use_ray:
         cmd_args += f" --worker-use-ray"
 
-    max_parallel_loading_workers = env.get("CM_VLLM_SERVER_MAX_PARALLEL_LOADING_WORKERS", False)
+    max_parallel_loading_workers = env.get(
+        "CM_VLLM_SERVER_MAX_PARALLEL_LOADING_WORKERS", False)
     if max_parallel_loading_workers:
         cmd_args += f" --max-parallel-loading-workers {max_parallel_loading_workers}"
 
-    ray_workers_use_nsight = env.get("CM_VLLM_SERVER_RAY_WORKERS_USE_NSIGHT", False)
+    ray_workers_use_nsight = env.get(
+        "CM_VLLM_SERVER_RAY_WORKERS_USE_NSIGHT", False)
     if ray_workers_use_nsight:
         cmd_args += f" --ray-workers-use-nsight"
 
@@ -175,15 +182,18 @@ def preprocess(i):
     if block_size:
         cmd_args += f" --block-size {block_size}"
 
-    enable_prefix_caching = env.get("CM_VLLM_SERVER_ENABLE_PREFIX_CACHING", False)
+    enable_prefix_caching = env.get(
+        "CM_VLLM_SERVER_ENABLE_PREFIX_CACHING", False)
     if enable_prefix_caching:
         cmd_args += f" --enable-prefix-caching"
 
-    disable_sliding_window = env.get("CM_VLLM_SERVER_DISABLE_SLIDING_WINDOW", False)
+    disable_sliding_window = env.get(
+        "CM_VLLM_SERVER_DISABLE_SLIDING_WINDOW", False)
     if disable_sliding_window:
         cmd_args += f" --disable-sliding-window"
 
-    use_v2_block_manager = env.get("CM_VLLM_SERVER_USE_V2_BLOCK_MANAGER", False)
+    use_v2_block_manager = env.get(
+        "CM_VLLM_SERVER_USE_V2_BLOCK_MANAGER", False)
     if use_v2_block_manager:
         cmd_args += f" --use-v2-block-manager"
 
@@ -199,15 +209,18 @@ def preprocess(i):
     if swap_space:
         cmd_args += f" --swap-space {swap_space}"
 
-    gpu_memory_utilization = env.get("CM_VLLM_SERVER_GPU_MEMORY_UTILIZATION", False)
+    gpu_memory_utilization = env.get(
+        "CM_VLLM_SERVER_GPU_MEMORY_UTILIZATION", False)
     if gpu_memory_utilization:
         cmd_args += f" --gpu-memory-utilization {gpu_memory_utilization}"
 
-    num_gpu_blocks_override = env.get("CM_VLLM_SERVER_NUM_GPU_BLOCKS_OVERRIDE", False)
+    num_gpu_blocks_override = env.get(
+        "CM_VLLM_SERVER_NUM_GPU_BLOCKS_OVERRIDE", False)
     if num_gpu_blocks_override:
         cmd_args += f" --num-gpu-blocks-override {num_gpu_blocks_override}"
 
-    max_num_batched_tokens = env.get("CM_VLLM_SERVER_MAX_NUM_BATCHED_TOKENS", False)
+    max_num_batched_tokens = env.get(
+        "CM_VLLM_SERVER_MAX_NUM_BATCHED_TOKENS", False)
     if max_num_batched_tokens:
         cmd_args += f" --max-num-batched-tokens {max_num_batched_tokens}"
 
@@ -239,15 +252,18 @@ def preprocess(i):
     if enforce_eager:
         cmd_args += f" --enforce-eager"
 
-    max_context_len_to_capture = env.get("CM_VLLM_SERVER_MAX_CONTEXT_LEN_TO_CAPTURE", False)
+    max_context_len_to_capture = env.get(
+        "CM_VLLM_SERVER_MAX_CONTEXT_LEN_TO_CAPTURE", False)
     if max_context_len_to_capture:
         cmd_args += f" --max-context-len-to-capture {max_context_len_to_capture}"
 
-    max_seq_len_to_capture = env.get("CM_VLLM_SERVER_MAX_SEQ_LEN_TO_CAPTURE", False)
+    max_seq_len_to_capture = env.get(
+        "CM_VLLM_SERVER_MAX_SEQ_LEN_TO_CAPTURE", False)
     if max_seq_len_to_capture:
         cmd_args += f" --max-seq-len-to-capture {max_seq_len_to_capture}"
 
-    disable_custom_all_reduce = env.get("CM_VLLM_SERVER_DISABLE_CUSTOM_ALL_REDUCE", False)
+    disable_custom_all_reduce = env.get(
+        "CM_VLLM_SERVER_DISABLE_CUSTOM_ALL_REDUCE", False)
     if disable_custom_all_reduce:
         cmd_args += f" --disable-custom-all-reduce"
 
@@ -259,7 +275,8 @@ def preprocess(i):
     if tokenizer_pool_type:
         cmd_args += f" --tokenizer-pool-type {tokenizer_pool_type}"
 
-    tokenizer_pool_extra_config = env.get("CM_VLLM_SERVER_TOKENIZER_POOL_EXTRA_CONFIG", False)
+    tokenizer_pool_extra_config = env.get(
+        "CM_VLLM_SERVER_TOKENIZER_POOL_EXTRA_CONFIG", False)
     if tokenizer_pool_extra_config:
         cmd_args += f" --tokenizer-pool-extra-config {tokenizer_pool_extra_config}"
 
@@ -275,7 +292,8 @@ def preprocess(i):
     if max_lora_rank:
         cmd_args += f" --max-lora-rank {max_lora_rank}"
 
-    lora_extra_vocab_size = env.get("CM_VLLM_SERVER_LORA_EXTRA_VOCAB_SIZE", False)
+    lora_extra_vocab_size = env.get(
+        "CM_VLLM_SERVER_LORA_EXTRA_VOCAB_SIZE", False)
     if lora_extra_vocab_size:
         cmd_args += f" --lora-extra-vocab-size {lora_extra_vocab_size}"
 
@@ -283,7 +301,8 @@ def preprocess(i):
     if lora_dtype:
         cmd_args += f" --lora-dtype {lora_dtype}"
 
-    long_lora_scaling_factors = env.get("CM_VLLM_SERVER_LONG_LORA_SCALING_FACTORS", False)
+    long_lora_scaling_factors = env.get(
+        "CM_VLLM_SERVER_LONG_LORA_SCALING_FACTORS", False)
     if long_lora_scaling_factors:
         cmd_args += f" --long-lora-scaling-factors {long_lora_scaling_factors}"
 
@@ -295,7 +314,8 @@ def preprocess(i):
     if fully_sharded_loras:
         cmd_args += f" --fully-sharded-loras"
 
-    enable_prompt_adapter = env.get("CM_VLLM_SERVER_ENABLE_PROMPT_ADAPTER", False)
+    enable_prompt_adapter = env.get(
+        "CM_VLLM_SERVER_ENABLE_PROMPT_ADAPTER", False)
     if enable_prompt_adapter:
         cmd_args += f" --enable-prompt-adapter"
 
@@ -303,7 +323,8 @@ def preprocess(i):
     if max_prompt_adapters:
         cmd_args += f" --max-prompt-adapters {max_prompt_adapters}"
 
-    max_prompt_adapter_token = env.get("CM_VLLM_SERVER_MAX_PROMPT_ADAPTER_TOKEN", False)
+    max_prompt_adapter_token = env.get(
+        "CM_VLLM_SERVER_MAX_PROMPT_ADAPTER_TOKEN", False)
     if max_prompt_adapter_token:
         cmd_args += f" --max-prompt-adapter-token {max_prompt_adapter_token}"
 
@@ -311,11 +332,13 @@ def preprocess(i):
     if device:
         cmd_args += f" --device {device}"
 
-    scheduler_delay_factor = env.get("CM_VLLM_SERVER_SCHEDULER_DELAY_FACTOR", False)
+    scheduler_delay_factor = env.get(
+        "CM_VLLM_SERVER_SCHEDULER_DELAY_FACTOR", False)
     if scheduler_delay_factor:
         cmd_args += f" --scheduler-delay-factor {scheduler_delay_factor}"
 
-    enable_chunked_prefill = env.get("CM_VLLM_SERVER_ENABLE_CHUNKED_PREFILL", False)
+    enable_chunked_prefill = env.get(
+        "CM_VLLM_SERVER_ENABLE_CHUNKED_PREFILL", False)
     if enable_chunked_prefill:
         cmd_args += f" --enable-chunked-prefill"
 
@@ -323,43 +346,53 @@ def preprocess(i):
     if speculative_model:
         cmd_args += f" --speculative-model {speculative_model}"
 
-    num_speculative_tokens = env.get("CM_VLLM_SERVER_NUM_SPECULATIVE_TOKENS", False)
+    num_speculative_tokens = env.get(
+        "CM_VLLM_SERVER_NUM_SPECULATIVE_TOKENS", False)
     if num_speculative_tokens:
         cmd_args += f" --num-speculative-tokens {num_speculative_tokens}"
 
-    speculative_draft_tensor_parallel_size = env.get("CM_VLLM_SERVER_SPECULATIVE_DRAFT_TENSOR_PARALLEL_SIZE", False)
+    speculative_draft_tensor_parallel_size = env.get(
+        "CM_VLLM_SERVER_SPECULATIVE_DRAFT_TENSOR_PARALLEL_SIZE", False)
     if speculative_draft_tensor_parallel_size:
         cmd_args += f" --speculative-draft-tensor-parallel-size {speculative_draft_tensor_parallel_size}"
 
-    speculative_max_model_len = env.get("CM_VLLM_SERVER_SPECULATIVE_MAX_MODEL_LEN", False)
+    speculative_max_model_len = env.get(
+        "CM_VLLM_SERVER_SPECULATIVE_MAX_MODEL_LEN", False)
     if speculative_max_model_len:
         cmd_args += f" --speculative-max-model-len {speculative_max_model_len}"
 
-    speculative_disable_by_batch_size = env.get("CM_VLLM_SERVER_SPECULATIVE_DISABLE_BY_BATCH_SIZE", False)
+    speculative_disable_by_batch_size = env.get(
+        "CM_VLLM_SERVER_SPECULATIVE_DISABLE_BY_BATCH_SIZE", False)
     if speculative_disable_by_batch_size:
         cmd_args += f" --speculative-disable-by-batch-size {speculative_disable_by_batch_size}"
 
-    ngram_prompt_lookup_max = env.get("CM_VLLM_SERVER_NGRAM_PROMPT_LOOKUP_MAX", False)
+    ngram_prompt_lookup_max = env.get(
+        "CM_VLLM_SERVER_NGRAM_PROMPT_LOOKUP_MAX", False)
     if ngram_prompt_lookup_max:
         cmd_args += f" --ngram-prompt-lookup-max {ngram_prompt_lookup_max}"
 
-    ngram_prompt_lookup_min = env.get("CM_VLLM_SERVER_NGRAM_PROMPT_LOOKUP_MIN", False)
+    ngram_prompt_lookup_min = env.get(
+        "CM_VLLM_SERVER_NGRAM_PROMPT_LOOKUP_MIN", False)
     if ngram_prompt_lookup_min:
         cmd_args += f" --ngram-prompt-lookup-min {ngram_prompt_lookup_min}"
 
-    spec_decoding_acceptance_method = env.get("CM_VLLM_SERVER_SPEC_DECODING_ACCEPTANCE_METHOD", False)
+    spec_decoding_acceptance_method = env.get(
+        "CM_VLLM_SERVER_SPEC_DECODING_ACCEPTANCE_METHOD", False)
     if spec_decoding_acceptance_method:
         cmd_args += f" --spec-decoding-acceptance-method {spec_decoding_acceptance_method}"
 
-    typical_acceptance_sampler_posterior_threshold = env.get("CM_VLLM_SERVER_TYPICAL_ACCEPTANCE_SAMPLER_POSTERIOR_THRESHOLD", False)
+    typical_acceptance_sampler_posterior_threshold = env.get(
+        "CM_VLLM_SERVER_TYPICAL_ACCEPTANCE_SAMPLER_POSTERIOR_THRESHOLD", False)
     if typical_acceptance_sampler_posterior_threshold:
         cmd_args += f" --typical-acceptance-sampler-posterior-threshold {typical_acceptance_sampler_posterior_threshold}"
 
-    typical_acceptance_sampler_posterior_alpha = env.get("CM_VLLM_SERVER_TYPICAL_ACCEPTANCE_SAMPLER_POSTERIOR_ALPHA", False)
+    typical_acceptance_sampler_posterior_alpha = env.get(
+        "CM_VLLM_SERVER_TYPICAL_ACCEPTANCE_SAMPLER_POSTERIOR_ALPHA", False)
     if typical_acceptance_sampler_posterior_alpha:
         cmd_args += f" --typical-acceptance-sampler-posterior-alpha {typical_acceptance_sampler_posterior_alpha}"
 
-    model_loader_extra_config = env.get("CM_VLLM_SERVER_MODEL_LOADER_EXTRA_CONFIG", False)
+    model_loader_extra_config = env.get(
+        "CM_VLLM_SERVER_MODEL_LOADER_EXTRA_CONFIG", False)
     if model_loader_extra_config:
         cmd_args += f" --model-loader-extra-config {model_loader_extra_config}"
 
@@ -371,11 +404,13 @@ def preprocess(i):
     if served_model_name:
         cmd_args += f" --served-model-name {served_model_name}"
 
-    qlora_adapter_name_or_path = env.get("CM_VLLM_SERVER_QLORA_ADAPTER_NAME_OR_PATH", False)
+    qlora_adapter_name_or_path = env.get(
+        "CM_VLLM_SERVER_QLORA_ADAPTER_NAME_OR_PATH", False)
     if qlora_adapter_name_or_path:
         cmd_args += f" --qlora-adapter-name-or-path {qlora_adapter_name_or_path}"
 
-    otlp_traces_endpoint = env.get("CM_VLLM_SERVER_OTLP_TRACES_ENDPOINT", False)
+    otlp_traces_endpoint = env.get(
+        "CM_VLLM_SERVER_OTLP_TRACES_ENDPOINT", False)
     if otlp_traces_endpoint:
         cmd_args += f" --otlp-traces-endpoint {otlp_traces_endpoint}"
 
@@ -383,7 +418,8 @@ def preprocess(i):
     if engine_use_ray:
         cmd_args += f" --engine-use-ray"
 
-    disable_log_requests = env.get("CM_VLLM_SERVER_DISABLE_LOG_REQUESTS", False)
+    disable_log_requests = env.get(
+        "CM_VLLM_SERVER_DISABLE_LOG_REQUESTS", False)
     if disable_log_requests:
         cmd_args += f" --disable-log-requests"
 
@@ -396,10 +432,11 @@ def preprocess(i):
 
     env['CM_VLLM_RUN_CMD'] = cmd
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
     env = i['env']
 
-    return {'return':0}
+    return {'return': 0}

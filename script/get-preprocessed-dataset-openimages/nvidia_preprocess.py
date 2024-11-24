@@ -29,7 +29,8 @@ from code.common import logging
 from code.common.image_preprocessor import ImagePreprocessor, center_crop, resize_with_aspectratio
 
 
-def preprocess_openimage_for_retinanet(data_dir, preprocessed_data_dir, formats, overwrite=False, cal_only=False, val_only=False):
+def preprocess_openimage_for_retinanet(
+        data_dir, preprocessed_data_dir, formats, overwrite=False, cal_only=False, val_only=False):
     def loader(fpath):
         loaded_tensor = F.to_tensor(Image.open(fpath).convert("RGB"))
         dtype = torch.float32
@@ -45,7 +46,6 @@ def preprocess_openimage_for_retinanet(data_dir, preprocessed_data_dir, formats,
         img = img_resize.numpy()
         return img
 
-
     def quantizer(image):
         # Dynamic range of image is [-2.64064, 2.64064] based on calibration cache.
         # Calculated by:
@@ -54,23 +54,33 @@ def preprocess_openimage_for_retinanet(data_dir, preprocessed_data_dir, formats,
         image_int8 = image.clip(-max_abs, max_abs) / max_abs * 127.0
         return image_int8.astype(dtype=np.int8, order='C')
 
-
     preprocessor = ImagePreprocessor(loader, quantizer)
     if not val_only:
-        # Preprocess calibration set. FP32 only because calibrator always takes FP32 input.
+        # Preprocess calibration set. FP32 only because calibrator always takes
+        # FP32 input.
         preprocessor.run(os.path.join(data_dir, "open-images-v6-mlperf", "calibration", "train", "data"),
-                         os.path.join(preprocessed_data_dir, "open-images-v6-mlperf", "calibration", "Retinanet"),
-                         "data_maps/open-images-v6-mlperf/cal_map.txt", ["fp32"], overwrite)
+                         os.path.join(
+            preprocessed_data_dir,
+            "open-images-v6-mlperf",
+            "calibration",
+            "Retinanet"),
+            "data_maps/open-images-v6-mlperf/cal_map.txt", ["fp32"], overwrite)
     if not cal_only:
         # Preprocess validation set.
         preprocessor.run(os.path.join(data_dir, "open-images-v6-mlperf", "validation", "data"),
-                         os.path.join(preprocessed_data_dir, "open-images-v6-mlperf", "validation", "Retinanet"),
-                         "data_maps/open-images-v6-mlperf/val_map.txt", formats, overwrite)
+                         os.path.join(
+            preprocessed_data_dir,
+            "open-images-v6-mlperf",
+            "validation",
+            "Retinanet"),
+            "data_maps/open-images-v6-mlperf/val_map.txt", formats, overwrite)
 
 
 def copy_openimage_annotations(data_dir, preprocessed_data_dir):
     src_dir = os.path.join(data_dir, "open-images-v6-mlperf/annotations")
-    dst_dir = os.path.join(preprocessed_data_dir, "open-images-v6-mlperf/annotations")
+    dst_dir = os.path.join(
+        preprocessed_data_dir,
+        "open-images-v6-mlperf/annotations")
     if not os.path.exists(dst_dir):
         shutil.copytree(src_dir, dst_dir)
 
@@ -135,10 +145,17 @@ def main():
     default_formats = ["int8_linear"]
 
     # Now, actually preprocess the input images
-    logging.info("Loading and preprocessing images. This might take a while...")
+    logging.info(
+        "Loading and preprocessing images. This might take a while...")
     if args.formats == "default":
         formats = default_formats
-    preprocess_openimage_for_retinanet(data_dir, preprocessed_data_dir, formats, overwrite, cal_only, val_only)
+    preprocess_openimage_for_retinanet(
+        data_dir,
+        preprocessed_data_dir,
+        formats,
+        overwrite,
+        cal_only,
+        val_only)
 
     # Copy annotations from data_dir to preprocessed_data_dir.
     copy_openimage_annotations(data_dir, preprocessed_data_dir)

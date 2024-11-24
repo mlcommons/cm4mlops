@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -11,10 +12,11 @@ def preprocess(i):
 
     automation = i['automation']
 
-    env['CM_GIT_CHECKOUT'] = "v"+env['CM_VERSION']
+    env['CM_GIT_CHECKOUT'] = "v" + env['CM_VERSION']
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
@@ -30,4 +32,4 @@ def postprocess(i):
     env['+C_INCLUDE_PATH'].append(os.path.join(gtest_install_path, "include"))
     env['+LD_LIBRARY_PATH'].append(os.path.join(gtest_install_path, "lib"))
 
-    return {'return':0}
+    return {'return': 0}

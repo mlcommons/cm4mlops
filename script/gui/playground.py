@@ -8,6 +8,7 @@ import os
 import cmind
 import misc
 
+
 def main():
 
     st.set_page_config(layout="wide",
@@ -36,15 +37,16 @@ def main():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
     # Set title (check extra user HTML to embed before title if needed)
-    extra = os.environ.get('CM_GUI_EXTRA_HTML','')
+    extra = os.environ.get('CM_GUI_EXTRA_HTML', '')
 
-    if extra!='':
+    if extra != '':
         url = ''
         for p in params:
-            v=str(','.join(params[p]))
-            if url!='': url+=';'
-            url+=p+'='+v
-        extra=extra.replace('{{CM_URL}}', url)+'\n\n'
+            v = str(','.join(params[p]))
+            if url != '':
+                url += ';'
+            url += p + '=' + v
+        extra = extra.replace('{{CM_URL}}', url) + '\n\n'
 
     st.write('''
         <center>
@@ -54,32 +56,32 @@ def main():
         <br>
         </center>
         '''.format(extra),
-        unsafe_allow_html=True
-    )
+             unsafe_allow_html=True
+             )
 
-    extra_file = os.environ.get('CM_GUI_EXTRA_HTML_FILE','')
-    if extra_file!='':
+    extra_file = os.environ.get('CM_GUI_EXTRA_HTML_FILE', '')
+    if extra_file != '':
         r = cmind.utils.load_txt(extra_file)
-        if r['return']>0: return r
+        if r['return'] > 0:
+            return r
 
-        s = '\n\n'+r['string']+'\n\n'
+        s = '\n\n' + r['string'] + '\n\n'
 
         st.write(s, unsafe_allow_html=True)
 
-
     # Check action and basic menu
-    action = params.get('action',['scripts'])[0].lower()
+    action = params.get('action', ['scripts'])[0].lower()
 
-    style_action_scripts='font-style:italic;font-weight:bold;color:#ffffff' if action=='scripts' else ''
-    style_action_howtorun='font-style:italic;font-weight:bold;color:#ffffff' if action=='howtorun' else ''
-    style_action_challenges='font-style:italic;font-weight:bold;color:#ffffff' if action=='challenges' else ''
-    style_action_contributors='font-style:italic;font-weight:bold;color:#ffffff' if action=='contributors' else ''
-    style_action_experiments='font-style:italic;font-weight:bold;color:#ffffff' if action=='experiments' else ''
-    style_action_reproduce='font-style:italic;font-weight:bold;color:#ffffff' if action=='reproduce' else ''
-    style_action_apps='font-style:italic;font-weight:bold;color:#ffffff' if action=='apps' else ''
-    style_action_reports='font-style:italic;font-weight:bold;color:#ffffff' if action=='reports' else ''
-    style_action_beta='font-style:italic;font-weight:bold;color:#ffffff' if action=='beta' else ''
-    style_action_install='font-style:italic;font-weight:bold;color:#ffffff' if action=='install' else ''
+    style_action_scripts = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'scripts' else ''
+    style_action_howtorun = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'howtorun' else ''
+    style_action_challenges = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'challenges' else ''
+    style_action_contributors = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'contributors' else ''
+    style_action_experiments = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'experiments' else ''
+    style_action_reproduce = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'reproduce' else ''
+    style_action_apps = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'apps' else ''
+    style_action_reports = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'reports' else ''
+    style_action_beta = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'beta' else ''
+    style_action_install = 'font-style:italic;font-weight:bold;color:#ffffff' if action == 'install' else ''
 
     st.write('''
         <center>
@@ -97,17 +99,17 @@ def main():
         <a target="_self" href="?action=install"><button style="{}">Install</button></a>
         </center>
         '''.format(
-                   style_action_scripts,
-                   style_action_howtorun,
-                   style_action_challenges,
-                   style_action_experiments,
-                   style_action_reproduce,
-                   style_action_contributors,
-                   style_action_reports,
-                   style_action_beta,
-                   style_action_apps,
-                   style_action_install
-                   ),
+        style_action_scripts,
+        style_action_howtorun,
+        style_action_challenges,
+        style_action_experiments,
+        style_action_reproduce,
+        style_action_contributors,
+        style_action_reports,
+        style_action_beta,
+        style_action_apps,
+        style_action_install
+    ),
         unsafe_allow_html=True
     )
 
@@ -115,7 +117,7 @@ def main():
 #    st.markdown("""---""")
     st.markdown('')
 
-    r={'return':0}
+    r = {'return': 0}
 
     if action == 'challenges':
         from playground_challenges import page
@@ -125,7 +127,7 @@ def main():
         r = page(st, params)
     elif action == 'experiments':
         from graph import visualize
-        r = visualize(st, params, action = 'experiments')
+        r = visualize(st, params, action='experiments')
     elif action == 'contributors':
         from playground_contributors import page
         r = page(st, params)
@@ -148,16 +150,16 @@ def main():
         from playground_install import page
         r = page(st, params, {})
 
-    if r['return']>0:
-        st.markdown('**CM error:** {} . Please report [here](https://github.com/mlcommons/ck/issues)'.format(r['error']))
+    if r['return'] > 0:
+        st.markdown(
+            '**CM error:** {} . Please report [here](https://github.com/mlcommons/ck/issues)'.format(r['error']))
 
-    end_html=r.get('end_html','')
-
+    end_html = r.get('end_html', '')
 
     # Finalize all pages
     st.markdown("""---""")
 
-    if end_html!='':
+    if end_html != '':
         st.write(end_html, unsafe_allow_html=True)
 
     st.write("""
@@ -172,9 +174,11 @@ def make_url(name, alias='', action='contributors', key='name', md=True):
 
     import urllib
 
-    if alias == '': alias = name
+    if alias == '':
+        alias = name
 
-    url = '?action={}&{}={}'.format(action, key, urllib.parse.quote_plus(alias))
+    url = '?action={}&{}={}'.format(
+        action, key, urllib.parse.quote_plus(alias))
 
     if md:
         md = '[{}]({})'.format(name, url)
@@ -194,9 +198,10 @@ def convert_date(date):
         month = calendar.month_abbr[int(date[4:6])]
         day = str(int(date[6:8]))
     except Exception as e:
-        return {'return':1, 'error':'date "{}" is not of format YYYYMMDD: {}'.format(date, format(e))}
+        return {'return': 1, 'error': 'date "{}" is not of format YYYYMMDD: {}'.format(
+            date, format(e))}
 
-    return {'return':0, 'string':year+' '+month+' '+day}
+    return {'return': 0, 'string': year + ' ' + month + ' ' + day}
 
 
 if __name__ == "__main__":

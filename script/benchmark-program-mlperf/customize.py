@@ -1,11 +1,13 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
     os_info = i['os_info']
     env = i['env']
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
@@ -13,7 +15,6 @@ def postprocess(i):
     env = i['env']
 
     env['CM_MLPERF_RUN_CMD'] = env.get('CM_RUN_CMD')
-
 
     if env.get('CM_MLPERF_POWER', '') == "yes":
 
@@ -57,4 +58,4 @@ if !CM_MLPERF_RUN_COUNT! EQU 1 (
             # Just use the existing CM_RUN_CMD if no ranging run is needed
             env['CM_MLPERF_RUN_CMD'] = env.get('CM_RUN_CMD', '').strip()
 
-    return {'return':0}
+    return {'return': 0}

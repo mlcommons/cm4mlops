@@ -3285,33 +3285,33 @@ class CAutomation(Automation):
         for key in variation_meta:
             value = variation_meta[key]
 
-            if type(value) is list:  # deps,pre_deps...
+            if isinstance(value, list):  # deps,pre_deps...
                 for item in value:
-                    if type(item) is dict:
+                    if isinstance(item, dict):
                         for item_key in item:
                             item_value = item[item_key]
-                            if type(
-                                    item_value) is dict:  # env,default_env inside deps
+                            if isinstance(
+                                    item_value, dict):  # env,default_env inside deps
                                 for item_key2 in item_value:
                                     item_value[item_key2] = item_value[item_key2].replace(
                                         "#", variation_tag_dynamic_suffix)
-                            elif type(item_value) is list:  # names for example
+                            elif isinstance(item_value, list):  # names for example
                                 for i, l_item in enumerate(item_value):
-                                    if type(l_item) is str:
+                                    if isinstance(l_item, str):
                                         item_value[i] = l_item.replace(
                                             "#", variation_tag_dynamic_suffix)
                             else:
                                 item[item_key] = item[item_key].replace(
                                     "#", variation_tag_dynamic_suffix)
 
-            elif type(value) is dict:  # add_deps, env, ..
+            elif isinstance(value, dict):  # add_deps, env, ..
                 for item in value:
                     item_value = value[item]
-                    if type(item_value) is dict:  # deps
+                    if isinstance(item_value, dict):  # deps
                         for item_key in item_value:
                             item_value2 = item_value[item_key]
-                            if type(
-                                    item_value2) is dict:  # env,default_env inside deps
+                            if isinstance(
+                                    item_value2, dict):  # env,default_env inside deps
                                 for item_key2 in item_value2:
                                     item_value2[item_key2] = item_value2[item_key2].replace(
                                         "#", variation_tag_dynamic_suffix)
@@ -3319,9 +3319,9 @@ class CAutomation(Automation):
                                 item_value[item_key] = item_value[item_key].replace(
                                     "#", variation_tag_dynamic_suffix)
                     else:
-                        if type(item_value) is list:  # lists inside env...
+                        if isinstance(item_value, list):  # lists inside env...
                             for i, l_item in enumerate(item_value):
-                                if type(l_item) is str:
+                                if isinstance(l_item, str):
                                     item_value[i] = l_item.replace(
                                         "#", variation_tag_dynamic_suffix)
                         else:

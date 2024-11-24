@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -12,11 +13,13 @@ def preprocess(i):
     automation = i['automation']
 
     if env.get('CM_DUMP_RAW_PIP_FREEZE_FILE_PATH', '') == '':
-        env['CM_DUMP_RAW_PIP_FREEZE_FILE_PATH'] = os.path.join(os.getcwd(), "tmp-pip-freeze")
+        env['CM_DUMP_RAW_PIP_FREEZE_FILE_PATH'] = os.path.join(
+            os.getcwd(), "tmp-pip-freeze")
 
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
@@ -33,10 +36,10 @@ def postprocess(i):
         # If was not created, sometimes issues on Windows
         # There is another workaround
         if os_info['platform'] == 'windows':
-            r = automation.cmind.access({'action':'system',
-                           'automation':'utils',
-                           'cmd':'py -m pip freeze',
-                           'stdout':pip_freeze_file})
+            r = automation.cmind.access({'action': 'system',
+                                         'automation': 'utils',
+                                         'cmd': 'py -m pip freeze',
+                                         'stdout': pip_freeze_file})
             # skip output
 
     if os.path.isfile(pip_freeze_file):
@@ -46,7 +49,6 @@ def postprocess(i):
                     split = line.split("==")
                     pip_freeze[split[0]] = split[1].strip()
 
-
     state['pip_freeze'] = pip_freeze
 
-    return {'return':0}
+    return {'return': 0}

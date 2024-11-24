@@ -1,7 +1,8 @@
 from cmind import utils
 import os
 import shutil
-import psutil       # used to measure the system infos(have not tested for obtaining gpu info)
+# used to measure the system infos(have not tested for obtaining gpu info)
+import psutil
 import csv         # used to write the measurements to csv format as txt file
 from datetime import datetime, timezone
 import time
@@ -9,26 +10,30 @@ import signal
 import sys
 
 # format of time measurement in mlperf logs
-#:::MLLOG {"key": "power_begin", "value": "07-20-2024 17:54:38.800", "time_ms": 1580.314812, "namespace": "mlperf::logging", "event_type": "POINT_IN_TIME", "metadata": {"is_error": false, "is_warning": false, "file": "loadgen.cc", "line_no": 564, "pid": 9473, "tid": 9473}}
-#:::MLLOG {"key": "power_end", "value": "07-20-2024 17:54:39.111", "time_ms": 1580.314812, "namespace": "mlperf::logging", "event_type": "POINT_IN_TIME", "metadata": {"is_error": false, "is_warning": false, "file": "loadgen.cc", "line_no": 566, "pid": 9473, "tid": 9473}}
+# :::MLLOG {"key": "power_begin", "value": "07-20-2024 17:54:38.800", "time_ms": 1580.314812, "namespace": "mlperf::logging", "event_type": "POINT_IN_TIME", "metadata": {"is_error": false, "is_warning": false, "file": "loadgen.cc", "line_no": 564, "pid": 9473, "tid": 9473}}
+# :::MLLOG {"key": "power_end", "value": "07-20-2024 17:54:39.111", "time_ms": 1580.314812, "namespace": "mlperf::logging", "event_type": "POINT_IN_TIME", "metadata": {"is_error": false, "is_warning": false, "file": "loadgen.cc", "line_no": 566, "pid": 9473, "tid": 9473}}
 
 # inorder to safely close when recieving interrupt signal
 # argument sig: signal number
 # argument frame: current stack frame
+
+
 def signal_handler(sig, frame):
     print("Signal received, closing the system information file safely.")
     f.close()
     sys.exit(0)
 
+
 # Register signal handlers for SIGTERM
 signal.signal(signal.SIGTERM, signal_handler)
+
 
 def preprocess(i):
 
     os_info = i['os_info']
 
     if os_info['platform'] == 'windows':
-        return {'return':1, 'error': 'Windows is not supported in this script yet'}
+        return {'return': 1, 'error': 'Windows is not supported in this script yet'}
 
     env = i['env']
 
@@ -47,7 +52,11 @@ def preprocess(i):
 
     print("Started measuring system info!")
 
-    csv_headers = ['timestamp', 'cpu_utilisation', 'total_memory_gb', 'used_memory_gb']
+    csv_headers = [
+        'timestamp',
+        'cpu_utilisation',
+        'total_memory_gb',
+        'used_memory_gb']
 
     # done to be made available to signal_handler function in case of kill signals
     # as of now handles for only SIGTERM
@@ -76,10 +85,11 @@ def preprocess(i):
             time.sleep(interval)
             f.close()
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
     env = i['env']
 
-    return {'return':0}
+    return {'return': 0}

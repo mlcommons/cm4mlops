@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -21,10 +22,11 @@ def preprocess(i):
     if env.get('CM_OUTPUT_MERMAID_PATH', '') != '':
         env['CM_RUN_CMD'] += f""" --output_mermaid {env['CM_OUTPUT_MERMAID_PATH']}"""
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
     env = i['env']
 
-    return {'return':0}
+    return {'return': 0}

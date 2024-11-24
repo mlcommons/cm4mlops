@@ -5,7 +5,7 @@ import check as checks
 import json
 import yaml
 
-files=sys.argv[1:]
+files = sys.argv[1:]
 
 for file in files:
     print(file)
@@ -20,12 +20,12 @@ for file in files:
     elif file.endswith(".yaml"):
         data = yaml.safe_load(f)
     if data.get('uid', '') == '':
-        continue #not a CM script meta
+        continue  # not a CM script meta
     uid = data['uid']
 
     ii = {
-            'action':'test', 'automation':'script', 'artifact': uid, 'quiet': 'yes', 'out': 'con'
-            }
+        'action': 'test', 'automation': 'script', 'artifact': uid, 'quiet': 'yes', 'out': 'con'
+    }
     if os.environ.get('DOCKER_CM_REPO', '') != '':
         ii['docker_cm_repo'] = os.environ['DOCKER_CM_REPO']
     if os.environ.get('DOCKER_CM_REPO_BRANCH', '') != '':
