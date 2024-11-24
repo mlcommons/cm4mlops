@@ -56,4 +56,4 @@ jobs:
             gh pr create --base code-format --head $BRANCH_NAME --title "[Automated PR] Format Codebase" --body "This pull request contains automated code formatting changes."
           fi
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
