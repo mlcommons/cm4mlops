@@ -140,7 +140,7 @@ class CustomInstallCommand(install):
     def custom_function(self):
         commit_hash = get_commit_hash()
         import cmind
-        r = cmind.access({'action':'rm', 'automation':'repo', 'data_uoa':'mlcommons@cm4mlops', 'force': True, 'all': True})
+        r = cmind.access({'action':'rm', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'force': True, 'all': True})
         r = cmind.access({'action': 'pull',
                           'automation': 'repo',
                           'artifact': 'mlcommons@cm4mlops',
