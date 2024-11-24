@@ -1,5 +1,5 @@
 # Automatic code formatting
-name: "format"
+name: "Code formatting"
 on:
   push:
     branches: [ "main", "mlperf-inference" ]
