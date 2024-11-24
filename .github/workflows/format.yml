@@ -2,7 +2,7 @@
 name: "format"
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "mlperf-inference" ]
 
 env:
   python_version: "3.9"
