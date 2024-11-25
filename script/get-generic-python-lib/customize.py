@@ -1,7 +1,6 @@
 from cmind import utils
 import os
 import cmind as cm
-import shutil
 
 def preprocess(i):
 
@@ -178,7 +177,5 @@ def postprocess(i):
     pip_version = env.get('CM_PIP_VERSION', '').strip().split('.')
     if pip_version and len(pip_version) > 1 and int(pip_version[0]) >= 23:
         env['CM_PYTHON_PIP_COMMON_EXTRA'] = " --break-system-packages"
-
-    shutil.copyfile(os.path.join(env['CM_TMP_CURRENT_SCRIPT_PATH'], "run.sh"), "validate.sh")
 
     return {'return': 0, 'version': version}

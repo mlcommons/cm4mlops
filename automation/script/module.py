@@ -1184,6 +1184,7 @@ class CAutomation(Automation):
                                     'recursion_spaces': recursion_spaces,
                                     'script_tags': script_tags,
                                     'found_script_tags': found_script_tags,
+                                    'found_script_path': path,
                                     'variation_tags': variation_tags,
                                     'explicit_variation_tags': explicit_variation_tags,
                                     'version': version,
@@ -5019,23 +5020,27 @@ def find_cached_script(i):
                         skip_cached_script = True
                         continue
 
-            if os.path.exists(os.path.join(cached_script.path, "validate.sh")):
-                os_info = self_obj.os_info
+            os_info = self_obj.os_info
 
-                # Bat extension for this host OS
-                bat_ext = os_info['bat_ext']
+            # Bat extension for this host OS
+            bat_ext = os_info['bat_ext']
+            script_path = i['found_script_path']
+
+            if os.path.exists(os.path.join(script_path, f"validate_cache{bat_ext}")):
                 run_script_input = {
-                    'path': cached_script.path,
+                    'path': script_path,
                     'bat_ext': bat_ext,
                     'os_info': os_info,
                     'recursion_spaces': recursion_spaces,
                     'tmp_file_run': self_obj.tmp_file_run,
                     'self': self_obj,
-                    'meta': i['meta']
+                    'meta': meta
                 }
-                ii = {'run_script_input': run_script_input, 'env': env, 'script_name': 'validate'}
+                ii = {'run_script_input': run_script_input, 'env': env, 'script_name': 'validate_cache'}
                 r = self_obj.run_native_script(ii)
+
                 if r['return'] > 0:
+                    #return r
                     continue
 
             if not skip_cached_script:
