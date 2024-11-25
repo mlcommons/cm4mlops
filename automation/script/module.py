@@ -1169,13 +1169,13 @@ class CAutomation(Automation):
         cached_path = ''
 
         local_env_keys_from_meta = meta.get('local_env_keys', [])
-            
+        
         # Check if has customize.py
         path_to_customize_py = os.path.join(path, 'customize.py')
         customize_code = None
-        customize_common_input = None
+        customize_common_input = {}
 
-        if os.path.isfile(path_to_customize_py):
+        if os.path.isfile(path_to_customize_py) and cache:
             r = utils.load_python_module(
                 {'path': path, 'name': 'customize'})
             if r['return'] > 0:
@@ -1647,7 +1647,24 @@ class CAutomation(Automation):
                 'meta': meta,
                 'self': self
             }
-            if customize_code:
+            if os.path.isfile(path_to_customize_py): #possible duplicate execution - needs fix
+                r = utils.load_python_module(
+                    {'path': path, 'name': 'customize'})
+                if r['return'] > 0:
+                    return r
+
+                customize_code = r['code']
+
+                customize_common_input = {
+                    'input': i,
+                    'automation': self,
+                    'artifact': script_artifact,
+                    'customize': script_artifact.meta.get('customize', {}),
+                    'os_info': os_info,
+                    'recursion_spaces': recursion_spaces,
+                    'script_tags': script_tags,
+                    'variation_tags': variation_tags
+                }
                 run_script_input['customize_code'] = customize_code
                 run_script_input['customize_common_input'] = customize_common_input
 
