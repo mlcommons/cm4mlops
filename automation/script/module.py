@@ -5077,6 +5077,7 @@ def find_cached_script(i):
             # Bat extension for this host OS
             bat_ext = os_info['bat_ext']
             script_path = i['found_script_path']
+            detected_version = None
 
             if os.path.exists(os.path.join(script_path,
                               f"validate_cache{bat_ext}")):
@@ -5089,8 +5090,7 @@ def find_cached_script(i):
                     'self': self_obj,
                     'meta': meta,
                     'customize_code': customize_code,
-                    'customize_common_input': customize_common_input,
-                    'detect_version': True
+                    'customize_common_input': customize_common_input
                 }
 
                 deps = meta.get('deps')
@@ -5121,15 +5121,21 @@ def find_cached_script(i):
                 ii = {
                     'run_script_input': run_script_input,
                     'env': env,
-                    'script_name': 'validate_cache'}
+                    'script_name': 'validate_cache',
+                    'detect_version': True
+                    }
                 r = self_obj.run_native_script(ii)
-
+                #print(r)
                 if r['return'] > 0:
                     # return r
                     continue
+                if r.get('version'):
+                    detected_version = r['version']
 
             if not skip_cached_script:
                 cached_script_version = cached_script.meta.get('version', '')
+                if cached_script_version and detected_version and cached_script_version != detected_version:
+                    continue
 
                 skip_cached_script = check_versions(
                     self_obj.cmind, cached_script_version, version_min, version_max)
