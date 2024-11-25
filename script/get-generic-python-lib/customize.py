@@ -2,6 +2,7 @@ from cmind import utils
 import os
 import cmind as cm
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -102,6 +103,13 @@ def preprocess(i):
                         '${CM_TORCH_CUDA}', env.get('CM_TORCH_CUDA'))
 
                 extra += ' --extra-index-url ' + extra_index_url
+
+            # check find-links
+            find_links_url = env.get(
+                'CM_GENERIC_PYTHON_PIP_EXTRA_FIND_LINKS_URL', '').strip()
+
+            if find_links_url != '':
+                extra += ' -f ' + find_links_url
 
             # Check update
             if env.get('CM_GENERIC_PYTHON_PIP_UPDATE', '') in [
