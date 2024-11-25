@@ -5026,7 +5026,8 @@ def find_cached_script(i):
             bat_ext = os_info['bat_ext']
             script_path = i['found_script_path']
 
-            if os.path.exists(os.path.join(script_path, f"validate_cache{bat_ext}")):
+            if os.path.exists(os.path.join(script_path,
+                              f"validate_cache{bat_ext}")):
                 run_script_input = {
                     'path': script_path,
                     'bat_ext': bat_ext,
@@ -5036,11 +5037,14 @@ def find_cached_script(i):
                     'self': self_obj,
                     'meta': meta
                 }
-                ii = {'run_script_input': run_script_input, 'env': env, 'script_name': 'validate_cache'}
+                ii = {
+                    'run_script_input': run_script_input,
+                    'env': env,
+                    'script_name': 'validate_cache'}
                 r = self_obj.run_native_script(ii)
 
                 if r['return'] > 0:
-                    #return r
+                    # return r
                     continue
 
             if not skip_cached_script:
