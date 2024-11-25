@@ -1173,6 +1173,7 @@ class CAutomation(Automation):
         # Check if has customize.py
         path_to_customize_py = os.path.join(path, 'customize.py')
         customize_code = None
+        customize_common_input = None
 
         if os.path.isfile(path_to_customize_py):
             r = utils.load_python_module(
