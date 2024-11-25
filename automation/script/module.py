@@ -1393,6 +1393,9 @@ class CAutomation(Automation):
                         cached_tags.append(x)
 
             if not found_cached and num_found_cached_scripts == 0:
+                if i.get('only_execute_from_cache'):
+                    #useful to check valid cache entries for a script (cm show cache can return invalid cache entries for a script too)
+                    return {'return': 1, 'error': f'No valid cache entry found for {cached_tags}'}
 
                 # If not cached, create cached script artifact and mark as tmp
                 # (remove if cache successful)

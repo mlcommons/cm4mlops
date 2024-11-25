@@ -110,6 +110,11 @@ class CAutomation(Automation):
             #        for artifact in lst:
             path = artifact.path
             meta = artifact.meta
+            dependent_cached_path = meta.get(
+                'dependent_cached_path', '')
+            if dependent_cached_path and not os.path.exists(dependent_cached_path):
+                continue
+
             original_meta = artifact.original_meta
 
             alias = meta.get('alias', '')
