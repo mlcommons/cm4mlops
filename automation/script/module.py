@@ -1207,12 +1207,15 @@ class CAutomation(Automation):
 
             r = find_cached_script({'self': self,
                                     'recursion_spaces': recursion_spaces,
+                                    'extra_recursion_spaces': extra_recursion_spaces,
+                                    'add_deps_recursive': add_deps_recursive,
                                     'script_tags': script_tags,
                                     'found_script_tags': found_script_tags,
                                     'found_script_path': path,
                                     'customize_code': customize_code,
                                     'customize_common_input': customize_common_input,
                                     'variation_tags': variation_tags,
+                                    'variation_tags_string': variation_tags_string,
                                     'explicit_variation_tags': explicit_variation_tags,
                                     'version': version,
                                     'version_min': version_min,
@@ -1221,10 +1224,14 @@ class CAutomation(Automation):
                                     'new_cache_entry': new_cache_entry,
                                     'meta': meta,
                                     'env': env,
+                                    'state': state,
+                                    'const': const,
+                                    'const_state': const_state,
                                     'skip_remembered_selections': skip_remembered_selections,
                                     'remembered_selections': remembered_selections,
                                     'quiet': quiet,
-                                    'verbose': verbose
+                                    'verbose': verbose,
+                                    'show_time': show_time
                                     })
             if r['return'] > 0:
                 return r
@@ -2146,7 +2153,7 @@ class CAutomation(Automation):
             'new_env': new_env,
             'state': state,
             'new_state': new_state,
-            'deps': run_state['deps']}
+            'deps': run_state.get('deps')}
 
         # Print output as json to console
         if i.get('json', False) or i.get('j', False):
@@ -3594,18 +3601,22 @@ class CAutomation(Automation):
                     # deps should have non-empty tags
                     d['tags'] += "," + new_variation_tags_string
 
-                run_state['deps'].append(d['tags'])
+                if run_state:
+                    run_state['deps'].append(d['tags'])
 
-                if not run_state['fake_deps']:
+                if not run_state.get('fake_deps'):
                     import copy
-                    run_state_copy = copy.deepcopy(run_state)
-                    run_state_copy['deps'] = []
+                    if not run_state:
+                        run_state_copy = {}
+                    else:
+                        run_state_copy = copy.deepcopy(run_state)
+                        run_state_copy['deps'] = []
 
-                    run_state_copy['parent'] = run_state['script_id']
+                        run_state_copy['parent'] = run_state['script_id']
 
-                    if len(run_state['script_variation_tags']) > 0:
-                        run_state_copy['parent'] += " ( " + ',_'.join(
-                            run_state['script_variation_tags']) + " )"
+                        if len(run_state['script_variation_tags']) > 0:
+                            run_state_copy['parent'] += " ( " + ',_'.join(
+                                run_state['script_variation_tags']) + " )"
 
                     # Run collective script via CM API:
                     # Not very efficient but allows logging - can be optimized
@@ -4882,24 +4893,31 @@ def find_cached_script(i):
     import copy
 
     recursion_spaces = i['recursion_spaces']
+    extra_recursion_spaces = i['extra_recursion_spaces']
     script_tags = i['script_tags']
     cached_tags = []
     customize_code = i.get('customize_code')
     customize_common_input = i.get('customize_common_input', {})
     found_script_tags = i['found_script_tags']
     variation_tags = i['variation_tags']
+    variation_tags_string = i['variation_tags_string']
     explicit_variation_tags = i['explicit_variation_tags']
     version = i['version']
     version_min = i['version_min']
     version_max = i['version_max']
     extra_cache_tags = i['extra_cache_tags']
+    add_deps_recursive = i['add_deps_recursive']
     new_cache_entry = i['new_cache_entry']
     meta = i['meta']
     env = i['env']
+    state = i['state']
+    const = i['const']
+    const_state = i['const_state']
     self_obj = i['self']
     skip_remembered_selections = i['skip_remembered_selections']
     remembered_selections = i['remembered_selections']
     quiet = i['quiet']
+    show_time = i.get('show_time', False)
     search_tags = ''
 
     verbose = i.get('verbose', False)
@@ -5074,7 +5092,15 @@ def find_cached_script(i):
                     'customize_common_input': customize_common_input,
                     'detect_version': True
                 }
-            
+
+                deps = meta.get('deps')
+                if deps:
+                    r = self_obj._call_run_deps(deps, self_obj.local_env_keys, meta.get('local_env_keys', []), env, state, const, const_state, add_deps_recursive,
+                                                recursion_spaces + extra_recursion_spaces,
+                                                remembered_selections, variation_tags_string, True, '', False, show_time, extra_recursion_spaces, {})
+                    if r['return'] > 0:
+                        return r
+
                 # Check if pre-process and detect
                 #if 'preprocess' in dir(customize_code):
 

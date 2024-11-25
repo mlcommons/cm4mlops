@@ -33,7 +33,7 @@ checks.check_list(r, "_NHWC", False)
 
 r = cm.access({'action': 'run',
                'automation': 'script',
-               'tags': 'get,generic-python-lib,_scipy',
+               'tags': 'get,generic-python-lib,_package.scipy',
                'version': '1.11.0',
                'quiet': 'yes'})
 
@@ -45,11 +45,12 @@ r = cm.access({'action': 'run',
 
 r = cm.access({'action': 'run',
                'automation': 'script',
-               'tags': 'get,generic-python-lib,_scipy',
+               'tags': 'get,generic-python-lib,_package.scipy',
                'version': '1.11.0',
                'only_execute_from_cache': True,
                'quiet': 'yes'})
 
 #r should return error
 if 'error' not in r:
+    print(r)
     raise Exception('Invalidated cache entry for scipy==1.11.0 found in cache')
