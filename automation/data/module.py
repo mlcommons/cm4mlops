@@ -3,6 +3,7 @@ import os
 from cmind.automation import Automation
 from cmind import utils
 
+
 class CAutomation(Automation):
     """
     Automation actions
@@ -18,7 +19,7 @@ class CAutomation(Automation):
         Test automation
 
         Args:
-          (CM input dict): 
+          (CM input dict):
 
           (out) (str): if 'con', output to console
 
@@ -47,6 +48,6 @@ class CAutomation(Automation):
         """
 
         import json
-        print (json.dumps(i, indent=2))
+        print(json.dumps(i, indent=2))
 
-        return {'return':0}
+        return {'return': 0}

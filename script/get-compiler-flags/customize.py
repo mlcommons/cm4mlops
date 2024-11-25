@@ -2,6 +2,7 @@ from cmind import utils
 import os
 import subprocess
 
+
 def preprocess(i):
     os_info = i['os_info']
 
@@ -13,12 +14,13 @@ def preprocess(i):
 
     # TBD: add unified flags for Windows
     if os_info['platform'] == 'windows':
-        return {'return':0}
+        return {'return': 0}
 
-    if env.get("CM_FAST_COMPILATION") in [ "yes", "on", "1" ]:
+    if env.get("CM_FAST_COMPILATION") in ["yes", "on", "1"]:
         DEFAULT_COMPILER_FLAGS = env.get("CM_COMPILER_FLAGS_FAST", "-O3")
-        DEFAULT_LINKER_FLAGS = env.get("CM_LINKER_FLAGS_FAST", "-O3") # -flto") - this flag is not always available
-    elif env.get("CM_DEBUG_COMPILATION") in ["yes", "on", "1" ]:
+        # -flto") - this flag is not always available
+        DEFAULT_LINKER_FLAGS = env.get("CM_LINKER_FLAGS_FAST", "-O3")
+    elif env.get("CM_DEBUG_COMPILATION") in ["yes", "on", "1"]:
         DEFAULT_COMPILER_FLAGS = env.get("CM_COMPILER_FLAGS_DEBUG", "-O0")
         DEFAULT_LINKER_FLAGS = env.get("CM_LINKER_FLAGS_DEBUG", "-O0")
     else:
@@ -60,4 +62,4 @@ def preprocess(i):
 #            if int(env['CM_HOST_CPU_FAMILY']) >= 0:
 #                env['+ CFLAGS'] += ["-march=znver2", "-flto"]
 
-    return {'return':0}
+    return {'return': 0}

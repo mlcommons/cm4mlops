@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -16,16 +17,18 @@ def preprocess(i):
     recursion_spaces = i['recursion_spaces']
 
     # Add extra tags to python
-    add_extra_cache_tags = [] # for this script
-    add_python_extra_cache_tags = ['virtual'] # for get-python script
+    add_extra_cache_tags = []  # for this script
+    add_python_extra_cache_tags = ['virtual']  # for get-python script
 
-    name = env.get('CM_NAME','')
+    name = env.get('CM_NAME', '')
     if not quiet and name == '':
-        print ('')
-        x = input('Enter some tag to describe this virtual env (mlperf-inf,octoml-bench,etc): ')
+        print('')
+        x = input(
+            'Enter some tag to describe this virtual env (mlperf-inf,octoml-bench,etc): ')
         x = x.strip()
 
-        if x != '': name = x
+        if x != '':
+            name = x
 
     directory_name = 'venv'
     if name != '':
@@ -39,20 +42,22 @@ def preprocess(i):
     env['CM_VIRTUAL_ENV_PATH'] = os.path.join(os.getcwd(), directory_name)
 
     s = 'Scripts' if os_info['platform'] == 'windows' else 'bin'
-    env['CM_VIRTUAL_ENV_SCRIPTS_PATH'] = os.path.join(env['CM_VIRTUAL_ENV_PATH'], s)
+    env['CM_VIRTUAL_ENV_SCRIPTS_PATH'] = os.path.join(
+        env['CM_VIRTUAL_ENV_PATH'], s)
 
     env['CM_TMP_PATH'] = env['CM_VIRTUAL_ENV_SCRIPTS_PATH']
     env['CM_TMP_FAIL_IF_NOT_FOUND'] = 'yes'
 
-
-    r = automation.update_deps({'deps':meta['post_deps'], 
-                                'update_deps':{'register-python':
-                                   {'extra_cache_tags':','.join(add_python_extra_cache_tags)}}})
-    if r['return']>0: return r
+    r = automation.update_deps({'deps': meta['post_deps'],
+                                'update_deps': {'register-python':
+                                                {'extra_cache_tags': ','.join(add_python_extra_cache_tags)}}})
+    if r['return'] > 0:
+        return r
 
     env['CM_PYTHON_INSTALLED_PATH'] = env['CM_VIRTUAL_ENV_SCRIPTS_PATH']
 
-    return {'return':0, 'add_extra_cache_tags':add_extra_cache_tags}
+    return {'return': 0, 'add_extra_cache_tags': add_extra_cache_tags}
+
 
 def postprocess(i):
 
@@ -62,15 +67,16 @@ def postprocess(i):
 
     state = i['state']
 
-    script_prefix = state.get('script_prefix',[])
+    script_prefix = state.get('script_prefix', [])
 
-    path_to_activate = os.path.join(env['CM_VIRTUAL_ENV_SCRIPTS_PATH'], 'activate')
+    path_to_activate = os.path.join(
+        env['CM_VIRTUAL_ENV_SCRIPTS_PATH'], 'activate')
 
     # If windows, download here otherwise use run.sh
     if os_info['platform'] == 'windows':
         path_to_activate += '.bat'
 
-    s = os_info['run_bat'].replace('${bat_file}', '"'+path_to_activate+'"')
+    s = os_info['run_bat'].replace('${bat_file}', '"' + path_to_activate + '"')
 
     script_prefix.append(s)
     state['script_prefix'] = script_prefix
@@ -78,6 +84,7 @@ def postprocess(i):
     python_name = 'python.exe' if os_info['platform'] == 'windows' else 'python3'
 
     # Will be passed to get-python to finalize registering of the new python
-    env['CM_PYTHON_BIN_WITH_PATH'] = os.path.join(env['CM_PYTHON_INSTALLED_PATH'], python_name)
+    env['CM_PYTHON_BIN_WITH_PATH'] = os.path.join(
+        env['CM_PYTHON_INSTALLED_PATH'], python_name)
 
-    return {'return':0}
+    return {'return': 0}

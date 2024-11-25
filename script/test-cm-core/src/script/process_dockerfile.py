@@ -5,7 +5,7 @@ import check as checks
 import json
 import yaml
 
-files=sys.argv[1:]
+files = sys.argv[1:]
 
 for file in files:
     if not os.path.isfile(file):
@@ -26,5 +26,8 @@ for file in files:
 
     uid = data['uid']
 
-    r = cm.access({'action':'dockerfile', 'automation':'script', 'artifact': uid, 'quiet': 'yes'})
+    r = cm.access({'action': 'dockerfile',
+                   'automation': 'script',
+                   'artifact': uid,
+                   'quiet': 'yes'})
     checks.check_return(r)

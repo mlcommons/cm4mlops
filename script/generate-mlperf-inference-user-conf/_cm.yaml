@@ -26,6 +26,7 @@ default_env:
   CM_TEST_QUERY_COUNT: '10'
   CM_FAST_FACTOR: '5'
   CM_MLPERF_QUANTIZATION: off
+  CM_MLPERF_RESULTS_DIR_SHARED: yes
 
 docker:
   real_run: False

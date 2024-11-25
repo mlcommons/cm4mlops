@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -11,7 +12,8 @@ def preprocess(i):
 
     cm = automation.cmind
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 

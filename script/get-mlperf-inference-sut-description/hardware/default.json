@@ -9,7 +9,7 @@
   "accelerator_on-chip_memories": "",
   "accelerators_per_node": "0",
   "cooling": "air",
-  "division": "open",
+  "division": "closed",
   "host_memory_configuration": "undefined",
   "host_networking": "Gig Ethernet",
   "host_network_card_count": "1",
@@ -19,8 +19,8 @@
   "hw_notes": "",
   "number_of_nodes": "1",
   "status": "available",
-  "submitter": "cTuning",
-  "sw_notes": "Automated by MLCommons CM",
+  "submitter": "",
+  "sw_notes": "",
   "system_type": "edge",
   "system_type_detail": "edge server"
 }

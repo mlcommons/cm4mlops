@@ -10,7 +10,7 @@ from loadgen.model import Model, ModelFactory, ModelInput
 
 logger = logging.getLogger(__name__)
 
-######## Runner implementations
+# Runner implementations
 
 
 class ModelRunnerInline(ModelRunner):
@@ -172,7 +172,9 @@ class ModelRunnerMultiProcessingPool(ModelRunner):
             return result
         else:
             task_result = self.task.get()
-            result = {query_id: query_result for query_id, query_result in task_result}
+            result = {
+                query_id: query_result for query_id,
+                query_result in task_result}
             return result
 
     @staticmethod

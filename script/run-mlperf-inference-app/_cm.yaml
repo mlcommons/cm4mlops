@@ -35,6 +35,7 @@ default_env:
   CM_MLPERF_MODEL: resnet50
   CM_MLPERF_RUN_STYLE: test
   CM_MLPERF_SKIP_SUBMISSION_GENERATION: no
+  CM_DOCKER_PRIVILEGED_MODE: yes
 
 input_mapping:
   api_server: CM_MLPERF_INFERENCE_API_SERVER
@@ -66,6 +67,8 @@ input_mapping:
   imagenet_path: IMAGENET_PATH
   implementation: CM_MLPERF_IMPLEMENTATION
   lang: CM_MLPERF_IMPLEMENTATION
+  min_query_count: CM_MLPERF_INFERENCE_MIN_QUERY_COUNT
+  max_query_count: CM_MLPERF_INFERENCE_MAX_QUERY_COUNT
   mode: CM_MLPERF_LOADGEN_MODE
   model: CM_MLPERF_MODEL
   multistream_target_latency: CM_MLPERF_LOADGEN_MULTISTREAM_TARGET_LATENCY
@@ -113,6 +116,7 @@ input_mapping:
   all_models: CM_MLPERF_ALL_MODELS
   criteo_day23_raw_data_path: CM_CRITEO_DAY23_RAW_DATA_PATH
   use_dataset_from_host: CM_USE_DATASET_FROM_HOST
+  use_model_from_host: CM_USE_MODEL_FROM_HOST
 
 new_state_keys:
 - app_mlperf_inference_*
@@ -227,6 +231,8 @@ variations:
         tags: _full
       openorca-preprocessed:
         tags: _full
+      coco2014-dataset:
+        tags: _full
     env:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: full
     group: submission-generation-style
@@ -257,6 +263,7 @@ variations:
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-base
       CM_DOCKER_IMAGE_NAME: scc24
+      CM_MLPERF_INFERENCE_MIN_QUERY_COUNT: 50 
     adr:
       coco2014-preprocessed:
         tags: _size.50,_with-sample-ids
@@ -264,9 +271,6 @@ variations:
         tags: _size.50,_with-sample-ids
       nvidia-preprocess-data:
         extra_cache_tags: "scc24-base"
-      inference-src:
-        tags: _branch.dev
-        version: custom
     deps:
       - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
         extra_cache_rm_tags: scc24-main
@@ -281,12 +285,10 @@ variations:
         tags: _size.500,_with-sample-ids
       nvidia-preprocess-data:
         extra_cache_tags: "scc24-main"
-      inference-src:
-        tags: _branch.dev
-        version: custom
     env:
       CM_MLPERF_SUT_NAME_RUN_CONFIG_SUFFIX4: scc24-main
       CM_DOCKER_IMAGE_NAME: scc24
+      CM_MLPERF_INFERENCE_MIN_QUERY_COUNT: 500 
     deps:
       - tags: clean,nvidia,scratch,_sdxl,_downloaded-data
         extra_cache_rm_tags: scc24-base
@@ -359,9 +361,10 @@ variations:
     add_deps_recursive:
       submission-checker:
         tags: _short-run
-
     default: 'true'
     env:
+      CM_MLPERF_SUBMISSION_DIVISION: open
+      CM_RUN_MLPERF_SUBMISSION_PREPROCESSOR: off
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: short
     group: submission-generation-style
 

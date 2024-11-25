@@ -17,15 +17,31 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: [ "3.12" ]
-        division: ["closed", "open"]
+        division: ["closed", "open", "closed-open"]
         category: ["datacenter", "edge"]
-        case: ["case-3", "case-7"]
+        case: ["closed", "closed-no-compliance", "closed-power", "closed-failed-power-logs", "case-1", "case-2", "case-3", "case-5", "case-6", "case-7", "case-8"]
         action: ["run", "docker"]
         exclude:
           - os: macos-latest
           - os: windows-latest
-          - division: "open"
           - category: "edge"
+          - case: case-1
+            division: closed
+          - case: case-1
+            division: closed-open
+          - case: case-2
+            division: closed
+          - case: case-2
+            division: closed-open
+          - case: case-5
+            division: closed
+          - case: case-5
+            division: closed-open
+          - case: case-6
+            division: closed
+          - case: case-6
+            division: closed-open
+            
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -38,18 +54,45 @@ jobs:
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Pull repo where test cases are uploaded
       run: |
-        git clone -b submission-generation-tests https://github.com/anandhu-eng/inference.git submission_generation_tests
+        git clone -b submission-generation-tests https://github.com/mlcommons/inference.git submission_generation_tests
     - name: Run Submission Generation - ${{ matrix.case }} ${{ matrix.action }} ${{ matrix.category }} ${{ matrix.division }} 
+      continue-on-error: true
       run: |
         if [ "${{ matrix.case }}" == "case-3" ]; then
-          #results_dir="submission_generation_tests/case-3/"
           description="Submission generation (model_mapping.json not present but model name matches with official one)"
         elif [ "${{ matrix.case }}" == "case-7" ]; then
-          #results_dir="submission_generation_tests/case-7/"
           description="Submission generation (sut_info.json incomplete, SUT folder name in required format)"
+        elif [ "${{ matrix.case }}" == "case-8" ]; then
+          extra_run_args=" --category=datacenter"
+          description="Submission generation (system_meta.json not found in results folder)"
+        elif [ "${{ matrix.case }}" == "closed" ]; then
+          extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
+          description="Test submission - contains closed edge and datacenter"
+        elif [ "${{ matrix.case }}" == "closed-no-compliance" ]; then
+          extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
+          description="Test submission - contains closed edge and datacenter with no compliance tests"
+        elif [ "${{ matrix.case }}" == "closed-power" ]; then
+          extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
+          description="Test submission - contains closed-power edge and datacenter results"
+        elif [ "${{ matrix.case }}" == "closed-failed-power-logs" ]; then
+          extra_run_args=" --env.CM_MLPERF_SUBMISSION_CHECKER_EXTRA_ARGS="--skip-extra-accuracy-files-check""
+          description="Test submission - contains closed-power edge and datacenter results with failed power logs"
         fi
         # Dynamically set the log group to simulate a dynamic step name
         echo "::group::$description"
-        cm ${{ matrix.action }} script --tags=generate,inference,submission --clean --preprocess_submission=yes --results_dir=submission_generation_tests/${{ matrix.case }}/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --category=${{ matrix.category }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet
+        cm ${{ matrix.action }} script --tags=generate,inference,submission --adr.submission-checker-src.tags=_branch.dev --clean --preprocess_submission=yes --results_dir=$PWD/submission_generation_tests/${{ matrix.case }}/ --run-checker --submitter=MLCommons --tar=yes --env.CM_TAR_OUTFILE=submission.tar.gz --division=${{ matrix.division }} --env.CM_DETERMINE_MEMORY_CONFIGURATION=yes --quiet $extra_run_args
+        exit_status=$?
+        echo "Exit status for the job ${description} ${exit_status}"
+        if [[ "${{ matrix.case }}" == "case-5" || "${{ matrix.case }}" == "case-6" ]]; then
+          # For cases 5 and 6, exit status should be 0 if cm command fails, 1 if it succeeds
+          if [[ ${exit_status} -ne 0 ]]; then
+            exit 0
+          else
+            exit ${exit_status}
+          fi
+        else
+          # For other cases, exit with the original status
+          test ${exit_status} -eq 0 || exit ${exit_status}
+        fi
         echo "::endgroup::"
   

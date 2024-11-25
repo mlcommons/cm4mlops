@@ -11,23 +11,35 @@ import torch
 import torchvision.models as models
 
 import imagenet_helper
-from imagenet_helper import (load_preprocessed_batch, image_list, class_labels, BATCH_SIZE)
+from imagenet_helper import (
+    load_preprocessed_batch,
+    image_list,
+    class_labels,
+    BATCH_SIZE)
 
-## Writing the results out:
+# Writing the results out:
 #
-RESULTS_DIR             = os.getenv('CM_RESULTS_DIR')
-FULL_REPORT             = os.getenv('CM_SILENT_MODE', '0') in ('NO', 'no', 'OFF', 'off', '0')
+RESULTS_DIR = os.getenv('CM_RESULTS_DIR')
+FULL_REPORT = os.getenv(
+    'CM_SILENT_MODE',
+    '0') in (
+        'NO',
+        'no',
+        'OFF',
+        'off',
+    '0')
 
-## Processing by batches:
+# Processing by batches:
 #
-BATCH_COUNT             = int(os.getenv('CM_BATCH_COUNT', 1))
+BATCH_COUNT = int(os.getenv('CM_BATCH_COUNT', 1))
 
-## Enabling GPU if available and not disabled:
+# Enabling GPU if available and not disabled:
 #
-USE_CUDA                = (os.getenv('USE_CUDA', '').strip()=='yes')
+USE_CUDA = (os.getenv('USE_CUDA', '').strip() == 'yes')
 
 
-labels_path         = os.environ['CM_CAFFE_IMAGENET_SYNSET_WORDS_TXT']
+labels_path = os.environ['CM_CAFFE_IMAGENET_SYNSET_WORDS_TXT']
+
 
 def load_labels(labels_filepath):
     my_labels = []
@@ -37,11 +49,10 @@ def load_labels(labels_filepath):
     return my_labels
 
 
-labels              = load_labels(labels_path)
+labels = load_labels(labels_path)
 
 
-data_layout         = os.environ['ML_MODEL_DATA_LAYOUT']
-
+data_layout = os.environ['ML_MODEL_DATA_LAYOUT']
 
 
 def main():
@@ -50,7 +61,7 @@ def main():
 
     setup_time_begin = time.time()
 
-    bg_class_offset=0
+    bg_class_offset = 0
 
     # Cleanup results directory
     if os.path.isdir(RESULTS_DIR):
@@ -60,7 +71,7 @@ def main():
     # Load the [cached] Torch model
     path_to_model_pth = os.environ['CM_ML_MODEL_FILE_WITH_PATH']
 
-    model=models.resnet50(pretrained=False)
+    model = models.resnet50(pretrained=False)
     model.load_state_dict(torch.load(path_to_model_pth))
 
     model.eval()
@@ -79,22 +90,23 @@ def main():
     first_classification_time = 0
     images_loaded = 0
 
-    image_path = os.environ.get('CM_INPUT','')
-    if image_path !='':
+    image_path = os.environ.get('CM_INPUT', '')
+    if image_path != '':
 
-        normalize_data_bool=True
-        subtract_mean_bool=False
-        
+        normalize_data_bool = True
+        subtract_mean_bool = False
+
         from PIL import Image
 
         def load_and_resize_image(image_filepath, height, width):
-            pillow_img = Image.open(image_filepath).resize((width, height)) # sic! The order of dimensions in resize is (W,H)
+            pillow_img = Image.open(image_filepath).resize(
+                (width, height))  # sic! The order of dimensions in resize is (W,H)
 
             input_data = np.float32(pillow_img)
 
             # Normalize
             if normalize_data_bool:
-                input_data = input_data/127.5 - 1.0
+                input_data = input_data / 127.5 - 1.0
 
             # Subtract mean value
             if subtract_mean_bool:
@@ -110,27 +122,27 @@ def main():
                 # print(nhwc_data.shape)
                 return nhwc_data
             else:
-                nchw_data = nhwc_data.transpose(0,3,1,2)
+                nchw_data = nhwc_data.transpose(0, 3, 1, 2)
                 # print(nchw_data.shape)
                 return nchw_data
 
-        BATCH_COUNT=1
-    
-    
+        BATCH_COUNT = 1
+
     for batch_index in range(BATCH_COUNT):
-        batch_number = batch_index+1
+        batch_number = batch_index + 1
         if FULL_REPORT or (batch_number % 10 == 0):
             print("\nBatch {} of {}".format(batch_number, BATCH_COUNT))
-      
+
         begin_time = time.time()
 
-        if image_path=='':
-            batch_data, image_index = load_preprocessed_batch(image_list, image_index)
+        if image_path == '':
+            batch_data, image_index = load_preprocessed_batch(
+                image_list, image_index)
         else:
             batch_data = load_and_resize_image(image_path, 224, 224)
             image_index = 1
 
-        torch_batch = torch.from_numpy( batch_data )
+        torch_batch = torch.from_numpy(batch_data)
 
         load_time = time.time() - begin_time
         total_load_time += load_time
@@ -146,7 +158,7 @@ def main():
             torch_batch = torch_batch.to('cuda')
 
         with torch.no_grad():
-            batch_results = model( torch_batch )
+            batch_results = model(torch_batch)
 
         classification_time = time.time() - begin_time
         if FULL_REPORT:
@@ -159,7 +171,8 @@ def main():
 
         # Process results
         for index_in_batch in range(BATCH_SIZE):
-            softmax_vector = batch_results[index_in_batch][bg_class_offset:]    # skipping the background class on the left (if present)
+            # skipping the background class on the left (if present)
+            softmax_vector = batch_results[index_in_batch][bg_class_offset:]
             global_index = batch_index * BATCH_SIZE + index_in_batch
 
             res_file = os.path.join(RESULTS_DIR, image_list[global_index])
@@ -170,14 +183,18 @@ def main():
 
             top5_indices = list(reversed(softmax_vector.argsort()))[:5]
             for class_idx in top5_indices:
-                print("\t{}\t{}\t{}".format(class_idx, softmax_vector[class_idx], labels[class_idx]))
+                print(
+                    "\t{}\t{}\t{}".format(
+                        class_idx,
+                        softmax_vector[class_idx],
+                        labels[class_idx]))
             print("")
-                    
 
     test_time = time.time() - test_time_begin
- 
+
     if BATCH_COUNT > 1:
-        avg_classification_time = (total_classification_time - first_classification_time) / (images_loaded - BATCH_SIZE)
+        avg_classification_time = (
+            total_classification_time - first_classification_time) / (images_loaded - BATCH_SIZE)
     else:
         avg_classification_time = total_classification_time / images_loaded
 
