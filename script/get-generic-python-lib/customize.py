@@ -135,8 +135,11 @@ def detect_version(i):
 
     env = i['env']
 
-    env_version_key = 'CM_' + \
-        env['CM_TMP_PYTHON_PACKAGE_NAME_ENV'].upper() + '_VERSION'
+    if env.get('CM_TMP_PYTHON_PACKAGE_NAME_ENV', '') != '':
+        env_version_key = 'CM_' + \
+            env['CM_TMP_PYTHON_PACKAGE_NAME_ENV'].upper() + '_VERSION'
+    else:
+        env_version_key = 'CM_CACHE_TMP_VERSION'
 
     r = i['automation'].parse_version({'match_text': r'\s*([\d.a-z\-]+)',
                                        'group_number': 1,

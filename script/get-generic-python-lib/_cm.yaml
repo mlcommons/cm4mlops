@@ -14,6 +14,7 @@ deps:
     CM_TMP_USE_CUSTOM_PYTHON:
     - 'on'
   tags: get,python3
+  dynamic: true
 - names:
   - python-pip
   - pip
