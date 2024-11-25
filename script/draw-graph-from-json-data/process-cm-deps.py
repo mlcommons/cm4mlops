@@ -112,7 +112,7 @@ def main():
     G = generate_graph_from_nested_json(
         json_data, output_image=args.output_image)
 
-    generate_mermaid_output(json_data, mermaid_file="graph.mmd")
+    generate_mermaid_output(json_data, mermaid_file=args.output_mermaid)
 
     # Export the graph data
     export_graph_data(G, filename=args.output_graphml)
