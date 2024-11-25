@@ -104,6 +104,12 @@ def preprocess(i):
 
                 extra += ' --extra-index-url ' + extra_index_url
 
+            # check find-links
+            find_links_url = env.get('CM_GENERIC_PYTHON_PIP_EXTRA_FIND_LINKS_URL', '').strip()
+
+            if find_links_url != '':
+                extra += ' -f ' + find_links
+                
             # Check update
             if env.get('CM_GENERIC_PYTHON_PIP_UPDATE', '') in [
                     True, 'true', 'yes', 'on']:
