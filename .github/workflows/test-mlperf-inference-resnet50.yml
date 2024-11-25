@@ -37,7 +37,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip install git+https://git@github.com/mlcommons/ck.git@mlperf-inference#egg=cmind&subdirectory=cm
+        pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#egg=cmind&subdirectory=cm"
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf Inference ResNet50 (Windows)
       if: matrix.os == 'windows-latest'
