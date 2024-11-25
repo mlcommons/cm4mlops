@@ -1169,7 +1169,7 @@ class CAutomation(Automation):
         cached_path = ''
 
         local_env_keys_from_meta = meta.get('local_env_keys', [])
-        
+
         # Check if has customize.py
         path_to_customize_py = os.path.join(path, 'customize.py')
         customize_code = None
@@ -1193,7 +1193,6 @@ class CAutomation(Automation):
                 'script_tags': script_tags,
                 'variation_tags': variation_tags
             }
-
 
         #######################################################################
         # Check if script is cached if we need to skip deps from cached entries
@@ -1402,8 +1401,10 @@ class CAutomation(Automation):
 
             if not found_cached and num_found_cached_scripts == 0:
                 if i.get('only_execute_from_cache'):
-                    #useful to check valid cache entries for a script (cm show cache can return invalid cache entries for a script too)
-                    return {'return': 1, 'error': f'No valid cache entry found for {cached_tags}'}
+                    # useful to check valid cache entries for a script (cm show
+                    # cache can return invalid cache entries for a script too)
+                    return {
+                        'return': 1, 'error': f'No valid cache entry found for {cached_tags}'}
 
                 # If not cached, create cached script artifact and mark as tmp
                 # (remove if cache successful)
@@ -1654,7 +1655,8 @@ class CAutomation(Automation):
                 'meta': meta,
                 'self': self
             }
-            if os.path.isfile(path_to_customize_py): #possible duplicate execution - needs fix
+            if os.path.isfile(
+                    path_to_customize_py):  # possible duplicate execution - needs fix
                 r = utils.load_python_module(
                     {'path': path, 'name': 'customize'})
                 if r['return'] > 0:
@@ -1675,12 +1677,10 @@ class CAutomation(Automation):
                 run_script_input['customize_code'] = customize_code
                 run_script_input['customize_common_input'] = customize_common_input
 
-
             if repro_prefix != '':
                 run_script_input['repro_prefix'] = repro_prefix
             if ignore_script_error:
                 run_script_input['ignore_script_error'] = True
-
 
             # Assemble PIP versions
             pip_version_string = ''
@@ -3913,9 +3913,9 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         detect_version = i.get('detect_version', '')
 
         if detect_version:
-            postprocess="detect_version"
+            postprocess = "detect_version"
         else:
-            postprocess=""
+            postprocess = ""
 
         # Create and work on a copy to avoid contamination
         env_copy = copy.deepcopy(run_script_input.get('env', {}))
@@ -5102,10 +5102,9 @@ def find_cached_script(i):
                         return r
 
                 # Check if pre-process and detect
-                #if 'preprocess' in dir(customize_code):
+                # if 'preprocess' in dir(customize_code):
 
-                    #logging.debug(recursion_spaces + '  - Running preprocess ...')
-
+                    # logging.debug(recursion_spaces + '  - Running preprocess ...')
 
                 #    ii = copy.deepcopy(customize_common_input)
                 #    ii['env'] = env
@@ -5113,19 +5112,18 @@ def find_cached_script(i):
                 #    # may need to detect versions in multiple paths
                 #    ii['run_script_input'] = run_script_input
 
-                    #r = customize_code.preprocess(ii)
-                    #if r['return'] > 0:
+                    # r = customize_code.preprocess(ii)
+                    # if r['return'] > 0:
                     #    return r
 
-               
                 ii = {
                     'run_script_input': run_script_input,
                     'env': env,
                     'script_name': 'validate_cache',
                     'detect_version': True
-                    }
+                }
                 r = self_obj.run_native_script(ii)
-                #print(r)
+                # print(r)
                 if r['return'] > 0:
                     # return r
                     continue

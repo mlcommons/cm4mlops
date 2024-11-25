@@ -325,7 +325,7 @@ def preprocess(i):
             # Better to do this in a stand alone CM script with proper deps but
             # currently we manage this by modifying the sys path of the python
             # executing CM
-            from tabulate import tabulate # noqa
+            from tabulate import tabulate  # noqa
 
             print(sut)
             result_table, headers = mlperf_utils.get_result_table(
