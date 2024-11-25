@@ -48,7 +48,7 @@ r = cm.access({'action': 'run',
                'tags': 'get,generic-python-lib,_scipy',
                'version': '1.11.0',
                'only_execute_from_cache': True,
-               'quiet': 'yes'}
+               'quiet': 'yes'})
 
 #r should return error
 if 'error' not in r:
