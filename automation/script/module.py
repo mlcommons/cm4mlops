@@ -1945,10 +1945,9 @@ class CAutomation(Automation):
 
                     cached_meta['associated_script_artifact_uid'] = found_script_artifact[x + 1:]
 
-                # Check if the cached entry is dependent on any other cached
-                # entry
+                # Check if the cached entry is dependent on any path
                 if dependent_cached_path != '':
-                    if os.path.isdir(cached_path) and os.path.isdir(
+                    if os.path.isdir(cached_path) and os.path.exists(
                             dependent_cached_path):
                         if not os.path.samefile(
                                 cached_path, dependent_cached_path):
@@ -5019,6 +5018,25 @@ def find_cached_script(i):
                         # Need to rm this cache entry
                         skip_cached_script = True
                         continue
+
+            if os.path.exists(os.path.join(cached_script.path, "validate.sh")):
+                os_info = self_obj.os_info
+
+                # Bat extension for this host OS
+                bat_ext = os_info['bat_ext']
+                run_script_input = {
+                    'path': cached_script.path,
+                    'bat_ext': bat_ext,
+                    'os_info': os_info,
+                    'recursion_spaces': recursion_spaces,
+                    'tmp_file_run': self_obj.tmp_file_run,
+                    'self': self_obj,
+                    'meta': i['meta']
+                }
+                ii = {'run_script_input': run_script_input, 'env': env, 'script_name': 'validate'}
+                r = self_obj.run_native_script(ii)
+                if r['return'] > 0:
+                    continue
 
             if not skip_cached_script:
                 cached_script_version = cached_script.meta.get('version', '')
