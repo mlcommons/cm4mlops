@@ -233,6 +233,8 @@ variations:
         tags: _full
       coco2014-dataset:
         tags: _full
+      igbh-dataset:
+        tags: _full
     env:
       CM_MLPERF_SUBMISSION_GENERATION_STYLE: full
     group: submission-generation-style
@@ -445,6 +447,7 @@ input_description:
     - mixtral-8x7b
     - mobilenet
     - efficientnet
+    - rgat
     default: resnet50
     desc: MLPerf model
     sort: 200
