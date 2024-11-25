@@ -1251,12 +1251,14 @@ def regenerate_script_cmd(i):
     # Cleanup from env everything that has a host path value
     if i_run_cmd.get('env'):
         for key in list(i_run_cmd.get('env')):
-            if isinstance(i_run_cmd['env'][key], str) and ((os.path.join("local", "cache", "") in i_run_cmd['env'][key]) or (os.path.join("CM", "repos", "") in i_run_cmd['env'][key])):
+            if isinstance(i_run_cmd['env'][key], str) and ((os.path.join("local", "cache", "") in i_run_cmd['env'][key]) or (
+                    os.path.join("CM", "repos", "") in i_run_cmd['env'][key])):
                 del (i_run_cmd['env'][key])
             elif isinstance(i_run_cmd['env'][key], list):
                 values_to_remove = []
                 for val in i_run_cmd['env'][key]:
-                    if isinstance(val, str) and ((os.path.join("local", "cache", "") in val) or (os.path.join("CM", "repos", "") in val)):
+                    if isinstance(val, str) and ((os.path.join("local", "cache", "") in val) or (
+                            os.path.join("CM", "repos", "") in val)):
                         values_to_remove.append(val)
                 if values_to_remove == i_run_cmd['env'][key]:
                     del (i_run_cmd['env'][key])
