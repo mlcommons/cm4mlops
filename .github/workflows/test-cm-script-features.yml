@@ -11,7 +11,7 @@ on:
       - '!**.md'
 
 jobs:
-  build:
+  test_cm_script_features:
 
     runs-on: ${{ matrix.on }}
     strategy:
