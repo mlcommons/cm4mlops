@@ -1169,6 +1169,30 @@ class CAutomation(Automation):
         cached_path = ''
 
         local_env_keys_from_meta = meta.get('local_env_keys', [])
+            
+        # Check if has customize.py
+        path_to_customize_py = os.path.join(path, 'customize.py')
+        customize_code = None
+
+        if os.path.isfile(path_to_customize_py):
+            r = utils.load_python_module(
+                {'path': path, 'name': 'customize'})
+            if r['return'] > 0:
+                return r
+
+            customize_code = r['code']
+
+            customize_common_input = {
+                'input': i,
+                'automation': self,
+                'artifact': script_artifact,
+                'customize': script_artifact.meta.get('customize', {}),
+                'os_info': os_info,
+                'recursion_spaces': recursion_spaces,
+                'script_tags': script_tags,
+                'variation_tags': variation_tags
+            }
+
 
         #######################################################################
         # Check if script is cached if we need to skip deps from cached entries
@@ -1185,6 +1209,8 @@ class CAutomation(Automation):
                                     'script_tags': script_tags,
                                     'found_script_tags': found_script_tags,
                                     'found_script_path': path,
+                                    'customize_code': customize_code,
+                                    'customize_common_input': customize_common_input,
                                     'variation_tags': variation_tags,
                                     'explicit_variation_tags': explicit_variation_tags,
                                     'version': version,
@@ -1588,10 +1614,6 @@ class CAutomation(Automation):
             # Clean some output files
             clean_tmp_files(clean_files, recursion_spaces)
 
-            # Check if has customize.py
-            path_to_customize_py = os.path.join(path, 'customize.py')
-            customize_code = None
-
             # Prepare common input to prepare and run script
             run_script_input = {
                 'path': path,
@@ -1621,33 +1643,16 @@ class CAutomation(Automation):
                 'meta': meta,
                 'self': self
             }
+            if customize_code:
+                run_script_input['customize_code'] = customize_code
+                run_script_input['customize_common_input'] = customize_common_input
+
 
             if repro_prefix != '':
                 run_script_input['repro_prefix'] = repro_prefix
             if ignore_script_error:
                 run_script_input['ignore_script_error'] = True
 
-            if os.path.isfile(path_to_customize_py):
-                r = utils.load_python_module(
-                    {'path': path, 'name': 'customize'})
-                if r['return'] > 0:
-                    return r
-
-                customize_code = r['code']
-
-                customize_common_input = {
-                    'input': i,
-                    'automation': self,
-                    'artifact': script_artifact,
-                    'customize': script_artifact.meta.get('customize', {}),
-                    'os_info': os_info,
-                    'recursion_spaces': recursion_spaces,
-                    'script_tags': script_tags,
-                    'variation_tags': variation_tags
-                }
-
-                run_script_input['customize_code'] = customize_code
-                run_script_input['customize_common_input'] = customize_common_input
 
             # Assemble PIP versions
             pip_version_string = ''
@@ -3873,6 +3878,12 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         run_script_input = i['run_script_input']
         script_name = i['script_name']
         env = i.get('env', '')
+        detect_version = i.get('detect_version', '')
+
+        if detect_version:
+            postprocess="detect_version"
+        else:
+            postprocess=""
 
         # Create and work on a copy to avoid contamination
         env_copy = copy.deepcopy(run_script_input.get('env', {}))
@@ -3884,7 +3895,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         run_script_input['env'] = env
 
         r = prepare_and_run_script_with_postprocessing(
-            run_script_input, postprocess="")
+            run_script_input, postprocess=postprocess)
 
         env_tmp = copy.deepcopy(run_script_input['env'])
         r['env_tmp'] = env_tmp
@@ -4852,6 +4863,8 @@ def find_cached_script(i):
     recursion_spaces = i['recursion_spaces']
     script_tags = i['script_tags']
     cached_tags = []
+    customize_code = i.get('customize_code')
+    customize_common_input = i.get('customize_common_input', {})
     found_script_tags = i['found_script_tags']
     variation_tags = i['variation_tags']
     explicit_variation_tags = i['explicit_variation_tags']
@@ -5034,9 +5047,29 @@ def find_cached_script(i):
                     'recursion_spaces': recursion_spaces,
                     'tmp_file_run': self_obj.tmp_file_run,
                     'self': self_obj,
-                    'meta': meta
+                    'meta': meta,
+                    'customize_code': customize_code,
+                    'customize_common_input': customize_common_input,
+                    'detect_version': True
                 }
-                ii = {'run_script_input': run_script_input, 'env': env, 'script_name': 'validate_cache'}
+            
+                # Check if pre-process and detect
+                #if 'preprocess' in dir(customize_code):
+
+                    #logging.debug(recursion_spaces + '  - Running preprocess ...')
+
+
+                #    ii = copy.deepcopy(customize_common_input)
+                #    ii['env'] = env
+                #    ii['meta'] = meta
+                #    # may need to detect versions in multiple paths
+                #    ii['run_script_input'] = run_script_input
+
+                    #r = customize_code.preprocess(ii)
+                    #if r['return'] > 0:
+                    #    return r
+
+                ii = {'run_script_input': run_script_input, 'env': env, 'script_name': 'validate_cache', 'detect_version': True}
                 r = self_obj.run_native_script(ii)
 
                 if r['return'] > 0:
