@@ -34,19 +34,19 @@ checks.check_list(r, "_NHWC", False)
 r = cm.access({'action': 'run',
                'automation': 'script',
                'tags': 'get,generic-python-lib,_package.scipy',
-               'version': '1.11.0',
+               'version': '1.10.1',
                'quiet': 'yes'})
 
 r = cm.access({'action': 'run',
                'automation': 'script',
                'tags': 'get,generic-python-lib,_package.scipy',
-               'version': '1.10.0',
+               'version': '1.9.3',
                'quiet': 'yes'})
 
 r = cm.access({'action': 'run',
                'automation': 'script',
                'tags': 'get,generic-python-lib,_package.scipy',
-               'version': '1.11.0',
+               'version': '1.10.1',
                'only_execute_from_cache': True,
                'quiet': 'yes'})
 
