@@ -5,7 +5,6 @@ import shutil
 import subprocess
 import cmind as cm
 import copy
-from tabulate import tabulate
 
 summary_ext = ['.csv', '.json', '.xlsx']
 
@@ -325,7 +324,8 @@ def preprocess(i):
             # Better to do this in a stand alone CM script with proper deps but
             # currently we manage this by modifying the sys path of the python
             # executing CM
-            import mlperf_utils
+            from tabulate import tabulate # noqa
+            import mlperf_utils # noqa
 
             print(sut)
             result_table, headers = mlperf_utils.get_result_table(
