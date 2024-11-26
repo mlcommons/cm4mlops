@@ -18,8 +18,8 @@ def preprocess(i):
 
     if env.get('CM_GENERIC_SYS_UTIL_RUN_MODE', '') == "install":
         if env.get('CM_SYS_UTIL_INSTALL_WITH_RETRY', '') == "yes":
-            i['run_script_input']['script_name'] = "install-with-retry" 
-        else:   
+            i['run_script_input']['script_name'] = "install-with-retry"
+        else:
             i['run_script_input']['script_name'] = "install"
 
     if env.get('CM_GENERIC_SYS_UTIL_RUN_MODE', '') == "detect":
