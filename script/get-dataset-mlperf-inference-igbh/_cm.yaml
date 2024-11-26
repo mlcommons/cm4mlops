@@ -10,7 +10,8 @@ tags:
 - igbh
 - inference
 uid: 824e61316c074253
-# new_env_keys:
+new_env_keys:
+  - CM_IGBH_DATASET_PATH
 input_mapping:
   out_path: CM_IGBH_DATASET_OUT_PATH
 deps:
