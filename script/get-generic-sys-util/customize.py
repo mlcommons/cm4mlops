@@ -77,7 +77,7 @@ def preprocess(i):
     if util == "libffi":
         if env.get("CM_HOST_OS_FLAVOR", "") == "ubuntu":
             if env.get("CM_HOST_OS_VERSION", "") in [
-                       "20.04", "20.10", "21.04", "21.10"]:
+                    "20.04", "20.10", "21.04", "21.10"]:
                 package_name = "libffi7"
             else:
                 package_name = "libffi8"
@@ -87,10 +87,11 @@ def preprocess(i):
     for tmp_value in tmp_values:
         if tmp_value not in env:
             return {'return': 1,
-                'error': 'variable {} is not in env'.format(tmp_value)}
+                    'error': 'variable {} is not in env'.format(tmp_value)}
         if tmp_value in env:
             if isinstance(package_name, str):
-                package_name = package_name.replace("<<<" + tmp_value + ">>>", str(env[tmp_value]))
+                package_name = package_name.replace(
+                    "<<<" + tmp_value + ">>>", str(env[tmp_value]))
 
     install_cmd = env.get('CM_HOST_OS_PACKAGE_MANAGER_INSTALL_CMD')
     if not install_cmd:
@@ -111,7 +112,7 @@ def preprocess(i):
             env['+PATH'] = ["/opt/rh/gcc-toolset-12/root/usr/bin"]
 
         if env['CM_SYS_UTIL_NAME'] == "numactl" and env['CM_HOST_OS_VERSION'] in [
-            "9.1", "9.2", "9.3"]:
+                "9.1", "9.2", "9.3"]:
             env['CM_SYS_UTIL_INSTALL_CMD'] = ''
 
     if env.get('CM_SYS_UTIL_CHECK_CMD',
@@ -156,9 +157,10 @@ def postprocess(i):
             'CM_TMP_GENERIC_SYS_UTIL_PACKAGE_INSTALL_IGNORED', '')).lower() not in ["yes", "1", "true"] and env.get('CM_GET_GENERIC_SYS_UTIL_INSTALL_FAILED', '') != 'yes':
         automation = i['automation']
 
-        r = automation.run_native_script({'run_script_input': i['run_script_input'], 'env': env, 'script_name': 'detect'})
+        r = automation.run_native_script(
+            {'run_script_input': i['run_script_input'], 'env': env, 'script_name': 'detect'})
         if r['return'] > 0 and str(env.get(
-            'CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in ["1", "yes", "true"]:
+                'CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE', '')).lower() not in ["1", "yes", "true"]:
             return {'return': 1, 'error': 'Version detection failed after installation. Please check the provided version command or use env.CM_GENERIC_SYS_UTIL_IGNORE_VERSION_DETECTION_FAILURE=yes to ignore the error.'}
 
         elif r['return'] == 0:
@@ -172,8 +174,8 @@ def postprocess(i):
             env[version_env_key] = version
 
             # Not used now
-            env['CM_GENERIC_SYS_UTIL_' + env['CM_SYS_UTIL_NAME'].upper() + \
-                                                                       '_CACHE_TAGS'] = 'version-' + version
+            env['CM_GENERIC_SYS_UTIL_' + env['CM_SYS_UTIL_NAME'].upper() +
+                '_CACHE_TAGS'] = 'version-' + version
 
     if env.get(version_env_key, '') == '':
         env[version_env_key] = "undetected"

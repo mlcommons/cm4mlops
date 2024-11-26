@@ -32,6 +32,6 @@ jobs:
         for file in ${{ steps.getfile.outputs.files }}; do
           echo $file
         done
-        python3 -m pip install cmind
+        python3 -m pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
         cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
         DOCKER_CM_REPO=${{ github.event.pull_request.head.repo.html_url }} DOCKER_CM_REPO_BRANCH=${{ github.event.pull_request.head.ref }} TEST_INPUT_INDEX=${{ matrix.test-input-index }} python3 tests/script/process_tests.py ${{ steps.getfile.outputs.files }}
