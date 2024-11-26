@@ -480,7 +480,7 @@ def get_run_cmd_reference(
             mode_extra_options += " --dataset igbh-dgl --profile rgat-dgl-full "
         else:
             mode_extra_options += " --dataset igbh-dgl-tiny --profile debug-dgl "
-            
+
         device = env['CM_MLPERF_DEVICE'] if env['CM_MLPERF_DEVICE'] != "gpu" else "cuda"
         # have to add the condition for running in debug mode or real run mode
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " main.py " \

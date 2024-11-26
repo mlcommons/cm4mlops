@@ -20,7 +20,8 @@ def postprocess(i):
     env = i['env']
 
     if env.get('RGAT_CHECKPOINT_PATH', '') == '':
-        env['RGAT_CHECKPOINT_PATH'] = os.path.join(env['CM_ML_MODEL_PATH'], "RGAT.pt")
+        env['RGAT_CHECKPOINT_PATH'] = os.path.join(
+            env['CM_ML_MODEL_PATH'], "RGAT.pt")
     elif env.get('CM_ML_MODEL_PATH', '') == '':
         env['CM_ML_MODEL_PATH'] = env['RGAT_CHECKPOINT_PATH']
 
