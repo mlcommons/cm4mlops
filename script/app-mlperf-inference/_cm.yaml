@@ -128,6 +128,16 @@ posthook_deps:
     env: 
       CM_PLATFORM_DETAILS_FILE_PATH: '<<<CM_MLPERF_OUTPUT_DIR>>>/system_info.txt'
 
+post_deps:
+  - tags: draw,graph,from-json
+    enable_if_env:
+      CM_MLPERF_RUN_JSON_VERSION_INFO_FILE:
+        - on
+    env:
+      CM_JSON_INPUT_FILE: <<<CM_MLPERF_RUN_JSON_VERSION_INFO_FILE>>>
+      CM_OUTPUT_IMAGE_PATH: <<<CM_MLPERF_RUN_DEPS_GRAPH>>>
+      CM_OUTPUT_MERMAID_PATH: <<<CM_MLPERF_RUN_DEPS_MERMAID>>>
+
 # Order of variations for documentation
 variation_groups_order:
   - implementation
@@ -331,8 +341,21 @@ variations:
 
 
 
+  nvidia-original,gptj_:
+    env:
+      BUILD_TRTLLM: 1
+
+  nvidia-original,llama2-70b_:
+    env:
+      BUILD_TRTLLM: 1
+
+  nvidia-original,mixtral-8x7b:
+    env:
+      BUILD_TRTLLM: 1
+
   nvidia-original,r4.1-dev_default,gptj_:
     docker:
+      image_name: mlperf-inference-nvidia-v4.1-dev-llm
       deps:
         - tags: get,ml-model,gptj,_nvidia,_fp8
           update_tags_from_env_with_prefix:
@@ -351,11 +374,10 @@ variations:
             _tp-size.:
               - CM_NVIDIA_TP_SIZE
         
-    env:
-      BUILD_TRTLLM: 1
   
   nvidia-original,r4.1-dev_default,llama2-70b_:
     docker:
+      image_name: mlperf-inference-nvidia-v4.1-dev-llm
       deps:
         - tags: get,ml-model,llama2-70b,_nvidia,_fp8
           update_tags_from_env_with_prefix:
@@ -747,8 +769,10 @@ variations:
   sdxl,nvidia-original:
     docker:
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,sdxl,_fp16,_rclone
 
@@ -756,8 +780,10 @@ variations:
     docker:
       image_name: mlperf-inference-mlcommons-python-implementation-sdxl-float16
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,sdxl,_fp16,_rclone
 
@@ -765,8 +791,10 @@ variations:
     docker:
       image_name: mlperf-inference-mlcommons-python-implementation-sdxl-bfloat16
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,sdxl,_fp16,_rclone
 
@@ -774,8 +802,10 @@ variations:
     docker:
       image_name: mlperf-inference-mlcommons-python-implementation-sdxl-float32
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_SDXL_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,sdxl,_fp32,_rclone
 
@@ -827,8 +857,10 @@ variations:
     docker:
       image_name: mlperf-inference-mlcommons-python-implementation-llama2-70b
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,llama2
 
@@ -838,8 +870,10 @@ variations:
       mounts:
         - "${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }}:${{ CM_LLAMA2_FINAL_SAFE_TENSORS_PATH }"
       deps:
-        - enable_if_env:
+        - enable_if_any_env:
             CM_MLPERF_MODEL_LLAMA2_70B_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
           tags: get,ml-model,llama2,_amd,_pytorch
   
@@ -879,8 +913,10 @@ variations:
           names:
           - ml-model
           - mixtral-model
-          enable_if_env:
+          enable_if_any_env:
             CM_MLPERF_MODEL_MIXTRAL_8X7B_DOWNLOAD_TO_HOST:
+            - 'yes'
+            CM_USE_MODEL_FROM_HOST:
             - 'yes'
         - tags: get,dataset-mixtral,openorca-mbxp-gsm8k-combined
           names:

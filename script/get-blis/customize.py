@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -15,8 +16,8 @@ def preprocess(i):
 
     env['CM_BLIS_SRC_PATH'] = env['CM_GIT_CHECKOUT_PATH']
 
+    return {'return': 0}
 
-    return {'return':0}
 
 def postprocess(i):
 
@@ -29,8 +30,6 @@ def postprocess(i):
 
     blis_lib_path = os.path.join(install_dir, 'lib')
 
-    env['+LD_LIBRARY_PATH'] = [ blis_lib_path ] if '+LD_LIBRARY_PATH' not in env else env['+LD_LIBRARY_PATH'] + [ blis_lib_path ]
+    env['+LD_LIBRARY_PATH'] = [blis_lib_path] if '+LD_LIBRARY_PATH' not in env else env['+LD_LIBRARY_PATH'] + [blis_lib_path]
 
-    return {'return':0}
-
-
+    return {'return': 0}

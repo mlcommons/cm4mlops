@@ -2,6 +2,7 @@ from cmind import utils
 import os
 import xml.etree.ElementTree as et
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -14,19 +15,21 @@ def preprocess(i):
 
     platform_sdk_path = None
 
-    if env.get('CM_INPUT','').strip() != '':
+    if env.get('CM_INPUT', '').strip() != '':
         path = env['CM_INPUT']
         if os.path.exists(os.path.join(path, "exec", "qaic-runner")):
             platform_sdk_path = path
         else:
-            return {'return':1, 'error': 'exec/qaic-runner not found in the input path (--input)'}
+            return {
+                'return': 1, 'error': 'exec/qaic-runner not found in the input path (--input)'}
     else:
         path = "/opt/qti-aic/"
         if os.path.exists(os.path.join(path, "exec", "qaic-runner")):
             platform_sdk_path = path
 
     if not platform_sdk_path:
-        return {'return':1, 'error': f'qaic-runner not found in the default path: {path}'}
+        return {'return': 1,
+                'error': f'qaic-runner not found in the default path: {path}'}
 
     env['CM_QAIC_PLATFORM_SDK_PATH'] = path
     env['CM_QAIC_RUNNER_PATH'] = os.path.join(path, "exec", "qaic-runner")
@@ -34,7 +37,8 @@ def preprocess(i):
 
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def detect_version(i):
 
@@ -55,13 +59,14 @@ def detect_version(i):
                 if child2.tag == "build_id":
                     build_id = child2.text
     if build_id:
-        version=version+"."+build_id
+        version = version + "." + build_id
 
     if not version:
-        return {'return':1, 'error': f'qaic platform sdk version info not found'}
+        return {'return': 1, 'error': f'qaic platform sdk version info not found'}
 
-    print (i['recursion_spaces'] + '    Detected version: {}'.format(version))
-    return {'return':0, 'version':version}
+    print(i['recursion_spaces'] + '    Detected version: {}'.format(version))
+    return {'return': 0, 'version': version}
+
 
 def postprocess(i):
 
@@ -78,11 +83,11 @@ def postprocess(i):
     env['+PATH'].append(os.path.dirname(env['CM_QAIC_RUNNER_PATH']))
 
     paths = [
-            "+C_INCLUDE_PATH",
-            "+CPLUS_INCLUDE_PATH",
-            "+LD_LIBRARY_PATH",
-            "+DYLD_FALLBACK_LIBRARY_PATH"
-            ]
+        "+C_INCLUDE_PATH",
+        "+CPLUS_INCLUDE_PATH",
+        "+LD_LIBRARY_PATH",
+        "+DYLD_FALLBACK_LIBRARY_PATH"
+    ]
 
     for key in paths:
         env[key] = []
@@ -98,8 +103,11 @@ def postprocess(i):
         env['+C_INCLUDE_PATH'].append(inc_path)
         env['+CPLUS_INCLUDE_PATH'].append(inc_path)
 
-
-    lib_path = os.path.join(env['CM_QAIC_PLATFORM_SDK_PATH'], "dev", "lib", env['CM_HOST_PLATFORM_FLAVOR'])
+    lib_path = os.path.join(
+        env['CM_QAIC_PLATFORM_SDK_PATH'],
+        "dev",
+        "lib",
+        env['CM_HOST_PLATFORM_FLAVOR'])
     if os.path.exists(lib_path):
         lib_paths.append(lib_path)
 
@@ -107,4 +115,4 @@ def postprocess(i):
         env['+LD_LIBRARY_PATH'].append(lib_path)
         env['+DYLD_FALLBACK_LIBRARY_PATH'].append(lib_path)
 
-    return {'return':0, 'version': version}
+    return {'return': 0, 'version': version}

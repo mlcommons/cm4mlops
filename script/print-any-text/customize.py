@@ -3,6 +3,7 @@
 from cmind import utils
 import os
 
+
 def postprocess(i):
 
     env = i['env']
@@ -11,20 +12,19 @@ def postprocess(i):
     os_env_keys = env.get('CM_PRINT_ANY_OS_ENV_KEYS', '').strip()
 
     printed = False
-    for k,e,t in [(cm_env_keys, env, 'CM_ENV'), 
-                  (os_env_keys, os.environ, 'OS_ENV')]:
+    for k, e, t in [(cm_env_keys, env, 'CM_ENV'),
+                    (os_env_keys, os.environ, 'OS_ENV')]:
 
-        if k!='':
+        if k != '':
             for kk in k.split(','):
                 kk = kk.strip()
-                if kk!='':
+                if kk != '':
                     vv = e.get(kk)
 
-                    print ('{}[{}]: {}'.format(t, kk, vv))
+                    print('{}[{}]: {}'.format(t, kk, vv))
                     printed = True
 
     if printed:
-        print ('')
+        print('')
 
-    return {'return':0}
-
+    return {'return': 0}

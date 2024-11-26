@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -14,27 +15,30 @@ def preprocess(i):
 
     quiet = (env.get('CM_QUIET', False) == 'yes')
 
-    if not state.get('mlperf-inference-implementation'): #No state information. Just returning
+    if not state.get(
+            'mlperf-inference-implementation'):  # No state information. Just returning
         return {'return': 0}
 
     if env.get('CM_MLPERF_README', "") == "yes":
         import cmind as cm
         inp = i['input']
 
-        script_tags = state['mlperf-inference-implementation'].get('script_tags', '')
-        script_adr = state['mlperf-inference-implementation'].get('script_adr', {})
+        script_tags = state['mlperf-inference-implementation'].get(
+            'script_tags', '')
+        script_adr = state['mlperf-inference-implementation'].get(
+            'script_adr', {})
 
         if script_tags != '':
             cm_input = {'action': 'run',
-                'automation': 'script',
-                'tags': script_tags,
-                'adr': script_adr,
-                'env': env,
-                'print_deps': True,
-                'quiet': True,
-                'silent': True,
-                'fake_run': True
-                }
+                        'automation': 'script',
+                        'tags': script_tags,
+                        'adr': script_adr,
+                        'env': env,
+                        'print_deps': True,
+                        'quiet': True,
+                        'silent': True,
+                        'fake_run': True
+                        }
 
             r = cm.access(cm_input)
             if r['return'] > 0:
@@ -54,10 +58,11 @@ def preprocess(i):
 
         state['mlperf-inference-implementation']['version_info'] = version_info
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
     env = i['env']
 
-    return {'return':0}
+    return {'return': 0}

@@ -14,6 +14,7 @@ initialized = False
 external_module_path = ''
 external_module_meta = {}
 
+
 def main():
     params = misc.get_params(st)
 
@@ -25,16 +26,13 @@ def main():
     return page(st, params)
 
 
-
-
-def page(st, params, action = ''):
+def page(st, params, action=''):
 
     global initialized, external_module_path, external_module_meta
 
     end_html = ''
-    
+
     st.markdown('----')
     st.markdown(announcement)
 
-
-    return {'return':0, 'end_html':end_html}
+    return {'return': 0, 'end_html': end_html}

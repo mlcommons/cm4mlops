@@ -1,8 +1,10 @@
 def check_return(r):
     if 'return' not in r:
-        raise Exception('CM access function should always return key \'return\'!')
+        raise Exception(
+            'CM access function should always return key \'return\'!')
     if 'error' in r:
         raise Exception(r['error'])
+
 
 def check_list(r, string, found=True):
     check_return(r)
@@ -13,6 +15,7 @@ def check_list(r, string, found=True):
     if len(r['list']) > 0 and not found:
         raise Exception('CM search returned at lease one entry for ' + string)
 
+
 def check_key_value(d, key, value, absent_ok=False):
     if not d.get(key):
         if absent_ok:
@@ -20,5 +23,5 @@ def check_key_value(d, key, value, absent_ok=False):
         else:
             raise Exception(f"{key} is missing. Current values are {d}")
     elif d[key] != value:
-        raise Exception(f"{key} is not having the expected value of {value}. Current value is {d[key]}")
-
+        raise Exception(
+            f"{key} is not having the expected value of {value}. Current value is {d[key]}")

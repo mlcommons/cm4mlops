@@ -9,6 +9,7 @@ import torchvision
 
 SUPPORTED_EXTENSIONS = ['jpeg', 'jpg', 'gif', 'png']
 
+
 def load_image(image_path, target_size, data_type='uint8', convert_to_bgr=False,
                normalize_data=False, normalize_lower=-1, normalize_upper=1,
                subtract_mean=False, given_channel_means='', given_channel_stds='',
@@ -21,14 +22,17 @@ def load_image(image_path, target_size, data_type='uint8', convert_to_bgr=False,
     tensor_image = torchvision.transforms.functional.to_tensor(image)
     mean = torch.as_tensor(given_channel_means)
     std = torch.as_tensor(given_channel_stds)
-    normalized_image = (tensor_image - mean[:, None, None]) / std[:, None, None]
+    normalized_image = (
+        tensor_image - mean[:, None, None]) / std[:, None, None]
 
     resized_image = torch.nn.functional.interpolate(normalized_image[None],
-                                                    size=(target_size, target_size),
+                                                    size=(target_size,
+                                                          target_size),
                                                     mode='bilinear')[0].numpy()
 
     if quantize == 1:
-        resized_image = quantize_to_uint8(resized_image, quant_scale, quant_offset)
+        resized_image = quantize_to_uint8(
+            resized_image, quant_scale, quant_offset)
 
     original_height, original_width, _ = resized_image.shape
     batch_shape = (1, target_size, target_size, 3)
@@ -36,11 +40,18 @@ def load_image(image_path, target_size, data_type='uint8', convert_to_bgr=False,
 
     return batch_data, original_width, original_height
 
+
 def quantize_to_uint8(image, scale, offset):
-    quantized_image = (image.astype(np.float64) / scale + offset).astype(np.float64)
+    quantized_image = (
+        image.astype(
+            np.float64) /
+        scale +
+        offset).astype(
+            np.float64)
     output = np.round(quantized_image)
     output = np.clip(output, 0, 255)
     return output.astype(np.uint8)
+
 
 def preprocess_files(selected_filenames, source_dir, destination_dir, square_side,
                      data_type, convert_to_bgr, normalize_data, normalize_lower,
@@ -73,15 +84,18 @@ def preprocess_files(selected_filenames, source_dir, destination_dir, square_sid
         image_data.tofile(full_output_path)
 
         print(f"[{current_idx+1}]:  Stored {full_output_path}")
-        output_signatures.append(f'{output_filename};{original_width};{original_height}')
+        output_signatures.append(
+            f'{output_filename};{original_width};{original_height}')
 
     return output_signatures
+
 
 def preprocess():
     source_directory = os.environ['CM_DATASET_PATH']
     destination_directory = os.environ['CM_DATASET_PREPROCESSED_PATH']
 
-    intermediate_data_type = os.environ.get('CM_DATASET_INTERMEDIATE_DATA_TYPE', np.float32)
+    intermediate_data_type = os.environ.get(
+        'CM_DATASET_INTERMEDIATE_DATA_TYPE', np.float32)
     square_side = int(os.environ['CM_DATASET_INPUT_SQUARE_SIDE'])
     crop_percentage = float(os.environ['CM_DATASET_CROP_FACTOR'])
     inter_size = int(os.getenv('CM_DATASET_INTERMEDIATE_SIZE', 0))
@@ -100,7 +114,8 @@ def preprocess():
     quant_scale = float(os.environ['CM_DATASET_QUANT_SCALE'])
     quant_offset = float(os.environ['CM_DATASET_QUANT_OFFSET'])
     quantize = int(os.environ['CM_DATASET_QUANTIZE'])  # 1 for quantize to int8
-    convert_to_unsigned = int(os.environ['CM_DATASET_CONVERT_TO_UNSIGNED'])  # 1 for int8 to uint8
+    convert_to_unsigned = int(
+        os.environ['CM_DATASET_CONVERT_TO_UNSIGNED'])  # 1 for int8 to uint8
 
     images_list = os.getenv('CM_DATASET_IMAGES_LIST')
     interpolation_method = os.getenv('CM_DATASET_INTERPOLATION_METHOD', '')
@@ -113,21 +128,26 @@ def preprocess():
     normalize_upper = float(os.getenv('CM_DATASET_NORMALIZE_UPPER', 1.0))
 
     if given_channel_means:
-        given_channel_means = np.fromstring(given_channel_means, dtype=np.float32, sep=' ').astype(intermediate_data_type)
+        given_channel_means = np.fromstring(
+            given_channel_means,
+            dtype=np.float32,
+            sep=' ').astype(intermediate_data_type)
         if convert_to_bgr:
             given_channel_means = given_channel_means[::-1]
 
     given_channel_stds = os.getenv('CM_DATASET_GIVEN_CHANNEL_STDS', '')
     if given_channel_stds:
-        given_channel_stds = np.fromstring(given_channel_stds, dtype=np.float32, sep=' ').astype(intermediate_data_type)
+        given_channel_stds = np.fromstring(
+            given_channel_stds,
+            dtype=np.float32,
+            sep=' ').astype(intermediate_data_type)
         if convert_to_bgr:
             given_channel_stds = given_channel_stds[::-1]
 
     print(f"From: {source_directory}, To: {destination_directory}, Size: {square_side}, Crop: {crop_percentage}, InterSize: {inter_size}, 2BGR: {convert_to_bgr}, " +
-      f"OFF: {offset}, VOL: '{volume}', FOF: {fof_name}, DTYPE: {data_type}, DLAYOUT: {data_layout}, EXT: {new_file_extension}, " +
-      f"NORM: {normalize_data}, SMEAN: {subtract_mean}, GCM: {given_channel_means}, GSTD: {given_channel_stds}, QUANTIZE: {quantize}, QUANT_SCALE: {quant_scale}, " +
-      f"QUANT_OFFSET: {quant_offset}, CONV_UNSIGNED: {convert_to_unsigned}, INTER: {interpolation_method}")
-
+          f"OFF: {offset}, VOL: '{volume}', FOF: {fof_name}, DTYPE: {data_type}, DLAYOUT: {data_layout}, EXT: {new_file_extension}, " +
+          f"NORM: {normalize_data}, SMEAN: {subtract_mean}, GCM: {given_channel_means}, GSTD: {given_channel_stds}, QUANTIZE: {quantize}, QUANT_SCALE: {quant_scale}, " +
+          f"QUANT_OFFSET: {quant_offset}, CONV_UNSIGNED: {convert_to_unsigned}, INTER: {interpolation_method}")
 
     if image_file:
         source_directory = os.path.dirname(image_file)
@@ -136,11 +156,17 @@ def preprocess():
         if annotations_filepath and not is_calibration:
             with open(annotations_filepath, "r") as annotations_fh:
                 annotations_struct = json.load(annotations_fh)
-            ordered_filenames = [image_entry['file_name'] for image_entry in annotations_struct['images']]
+            ordered_filenames = [image_entry['file_name']
+                                 for image_entry in annotations_struct['images']]
         elif os.path.isdir(source_directory):
-            ordered_filenames = [filename for filename in sorted(os.listdir(source_directory)) if any(filename.lower().endswith(extension) for extension in SUPPORTED_EXTENSIONS)]
+            ordered_filenames = [
+                filename for filename in sorted(
+                    os.listdir(source_directory)) if any(
+                    filename.lower().endswith(extension) for extension in SUPPORTED_EXTENSIONS)]
         else:
-            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), source_directory)
+            raise FileNotFoundError(
+                errno.ENOENT, os.strerror(
+                    errno.ENOENT), source_directory)
 
         total_volume = len(ordered_filenames)
 
@@ -162,6 +188,6 @@ def preprocess():
         for filename in output_signatures:
             fof_file.write(f'{filename}\n')
 
+
 if __name__ == "__main__":
     preprocess()
-

@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -18,10 +19,11 @@ def preprocess(i):
 
     env['ZENDNN_SRC_PATH'] = env['CM_GIT_REPO_CHECKOUT_PATH']
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
     env = i['env']
 
-    return {'return':0}
+    return {'return': 0}

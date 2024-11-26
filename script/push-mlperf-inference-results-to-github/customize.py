@@ -2,6 +2,7 @@ from cmind import utils
 import cmind as cm
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -19,17 +20,20 @@ def preprocess(i):
     else:
         extra_tags_string = ""
 
-    r = automation.update_deps({'deps':meta['prehook_deps'],
-        'update_deps':{
-            'get-git-repo':{
-                'tags':"_repo."+repo+extra_tags_string
-                }
-            }
-        })
-    if r['return']>0: return r
-    env['CM_MLPERF_RESULTS_REPO_COMMIT_MESSAGE'] = env.get('CM_MLPERF_RESULTS_REPO_COMMIT_MESSAGE', 'Added new results')
+    r = automation.update_deps({'deps': meta['prehook_deps'],
+                                'update_deps': {
+        'get-git-repo': {
+            'tags': "_repo." + repo + extra_tags_string
+        }
+    }
+    })
+    if r['return'] > 0:
+        return r
+    env['CM_MLPERF_RESULTS_REPO_COMMIT_MESSAGE'] = env.get(
+        'CM_MLPERF_RESULTS_REPO_COMMIT_MESSAGE', 'Added new results')
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
-    return {'return':0}
+    return {'return': 0}

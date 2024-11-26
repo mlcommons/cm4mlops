@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     recursion_spaces = i['recursion_spaces']
@@ -11,7 +12,7 @@ def preprocess(i):
 
     env = i['env']
 
-    if str(env.get('CUDA_SKIP_SUDO','')).lower() == 'true':
+    if str(env.get('CUDA_SKIP_SUDO', '')).lower() == 'true':
         env['CM_SUDO'] = ''
 
     meta = i['meta']
@@ -21,7 +22,8 @@ def preprocess(i):
     supported_versions = list(meta['versions'].keys())
 
     if version not in supported_versions:
-        return {'return': 1, 'error': "Only CUSPARSELT versions {} are supported now".format(', '.join(supported_versions))}
+        return {'return': 1, 'error': "Only CUSPARSELT versions {} are supported now".format(
+            ', '.join(supported_versions))}
 
     env['CM_CUSPARSELT_VERSION'] = version
 
@@ -39,12 +41,12 @@ def preprocess(i):
 
     cusparselt_url = f'https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/linux-x86_64/{filename}'
 
-    print ('')
-    print (f'URL to download CUSPARSELT: {cusparselt_url}')
+    print('')
+    print(f'URL to download CUSPARSELT: {cusparselt_url}')
 
     env['CM_CUSPARSELT_TAR_DIR'] = cusparselt_dir
     env['CM_CUSPARSELT_UNTAR_PATH'] = os.path.join(cur_dir, cusparselt_dir)
     env['WGET_URL'] = cusparselt_url
     env['CM_DOWNLOAD_CHECKSUM'] = cusparselt_md5sum
 
-    return {'return':0}
+    return {'return': 0}

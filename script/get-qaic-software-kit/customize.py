@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 
+
 def preprocess(i):
 
     os_info = i['os_info']
@@ -46,17 +47,20 @@ def preprocess(i):
         if clang_major_version == 12:
             env['+ CXXFLAGS'].append("-Wno-error=unknown-warning-option")
 
-    return {'return':0}
+    return {'return': 0}
+
 
 def postprocess(i):
 
     env = i['env']
-    env['CM_QAIC_RUNNER_PATH'] = os.path.join(env['CM_QAIC_SOFTWARE_KIT_PATH'], "build", "utils", "qaic-runner")
+    env['CM_QAIC_RUNNER_PATH'] = os.path.join(
+        env['CM_QAIC_SOFTWARE_KIT_PATH'], "build", "utils", "qaic-runner")
 
     if '+PATH' not in env:
-      env['+PATH'] = []
+        env['+PATH'] = []
 
     env['+PATH'].append(env['CM_QAIC_RUNNER_PATH'])
-    env['CM_QAIC_RUNNER_PATH'] = os.path.join(env['CM_QAIC_RUNNER_PATH'], "qaic-runner")
+    env['CM_QAIC_RUNNER_PATH'] = os.path.join(
+        env['CM_QAIC_RUNNER_PATH'], "qaic-runner")
 
-    return {'return':0}
+    return {'return': 0}

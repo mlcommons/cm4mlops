@@ -10,7 +10,7 @@ import platform
 import os
 import shutil
 
-# Try to use importlib.metadata for Python 3.8+ 
+# Try to use importlib.metadata for Python 3.8+
 try:
     if sys.version_info >= (3, 8):
         from importlib.metadata import version, PackageNotFoundError
@@ -43,16 +43,16 @@ class CustomInstallCommand(install):
                 sys.modules[package_name] = module
                 spec.loader.exec_module(module)
             else:
-                pkg_resources.get_distribution(package_name)  # Fallback for < 3.8
+                pkg_resources.get_distribution(
+                    package_name)  # Fallback for < 3.8
             return True
         except PackageNotFoundError:
             return False
 
-    
     def install_system_packages(self):
         # List of packages to install via system package manager
         packages = []
-        
+
         git_status = self.command_exists('git')
         if not git_status:
             packages.append("git")
@@ -63,15 +63,15 @@ class CustomInstallCommand(install):
         if not curl_status:
             packages.append("curl")
 
-        name='venv'
+        name = 'venv'
 
         if name in sys.modules:
-            pass #nothing needed
+            pass  # nothing needed
         elif self.is_package_installed(name):
             pass
         else:
             packages.append("python3-venv")
-        
+
         if packages:
             if self.system == 'Linux' or self.system == 'Darwin':
                 manager, details = self.get_package_manager_details()
@@ -79,19 +79,22 @@ class CustomInstallCommand(install):
                     if manager == "apt-get":
                         # Check if 'sudo' is available
                         if shutil.which('sudo'):
-                            subprocess.check_call(['sudo', 'apt-get', 'update'])
-                            subprocess.check_call(['sudo', 'apt-get', 'install', '-y'] + packages)
+                            subprocess.check_call(
+                                ['sudo', 'apt-get', 'update'])
+                            subprocess.check_call(
+                                ['sudo', 'apt-get', 'install', '-y'] + packages)
                         else:
                             print("sudo not found, trying without sudo.")
                             try:
                                 subprocess.check_call(['apt-get', 'update'])
-                                subprocess.check_call(['apt-get', 'install', '-y'] + packages)
+                                subprocess.check_call(
+                                    ['apt-get', 'install', '-y'] + packages)
                             except subprocess.CalledProcessError:
-                                print(f"Installation of {packages} without sudo failed. Please install these packages manually to continue!")
+                                print(
+                                    f"Installation of {packages} without sudo failed. Please install these packages manually to continue!")
             elif self.system == 'Windows':
-                print(f"Please install the following packages manually: {packages}")
-
-
+                print(
+                    f"Please install the following packages manually: {packages}")
 
     def detect_package_manager(self):
         package_managers = {
@@ -113,7 +116,8 @@ class CustomInstallCommand(install):
         manager = self.detect_package_manager()
         if manager:
             try:
-                version_output = subprocess.check_output([manager, '--version'], stderr=subprocess.STDOUT).decode('utf-8')
+                version_output = subprocess.check_output(
+                    [manager, '--version'], stderr=subprocess.STDOUT).decode('utf-8')
                 return manager, version_output.split('\n')[0]
             except subprocess.CalledProcessError:
                 return manager, 'Version information not available'
@@ -123,30 +127,54 @@ class CustomInstallCommand(install):
     # Checks if command exists(for installing required packages).
     # If the command exists, which returns 0, making the function return True.
     # If the command does not exist, which returns a non-zero value, making the function return False.
-    # NOTE: The standard output and standard error streams are redirected to PIPES so that it could be captured in future if needed.    
+    # NOTE: The standard output and standard error streams are redirected to
+    # PIPES so that it could be captured in future if needed.
     def command_exists(self, command):
         if self.system == "Linux" or self.system == 'Darwin':
-            return subprocess.call(['which', command], stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
+            return subprocess.call(
+                ['which', command], stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
         elif self.system == "Windows":
-            return subprocess.call([command, '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) == 0
+            return subprocess.call(
+                [command, '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) == 0
 
     def custom_function(self):
+        commit_hash = get_commit_hash()
         import cmind
-        #r = cmind.access({'action':'rm', 'automation':'repo', 'data_uoa':'mlcommons@cm4mlops', 'force': True})
-        r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'branch': 'mlperf-inference'})
+        r = cmind.access({'action': 'rm',
+                          'automation': 'repo',
+                          'artifact': 'mlcommons@cm4mlops',
+                          'force': True,
+                          'all': True})
+        r = cmind.access({'action': 'pull',
+                          'automation': 'repo',
+                          'artifact': 'mlcommons@cm4mlops',
+                          'branch': 'mlperf-inference',
+                          'checkout': commit_hash})
+        # r = cmind.access({'action':'pull', 'automation':'repo', 'artifact':'mlcommons@cm4mlops', 'checkout': commit_hash})
         print(r)
         if r['return'] > 0:
-           return r['return']
-    
+            return r['return']
+
     def get_sys_platform(self):
-        self.system =  platform.system() 
+        self.system = platform.system()
 
 # Read long description and version
+
+
 def read_file(file_name, default=""):
     if os.path.isfile(file_name):
         with open(file_name, "r") as f:
             return f.read().strip()
     return default
+
+
+def get_commit_hash():
+    try:
+        with open(os.path.join(os.path.dirname(__file__), 'git_commit_hash.txt'), 'r') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return "unknown"
+
 
 long_description = read_file("README.md", "No description available.")
 version_ = read_file("VERSION", "0.3.1")
@@ -166,7 +194,7 @@ setup(
         "requests",
         "tabulate",
         "pyyaml"
-        ],
+    ],
     cmdclass={
         'install': CustomInstallCommand,
     },
