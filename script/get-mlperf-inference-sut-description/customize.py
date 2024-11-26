@@ -89,7 +89,8 @@ def preprocess(i):
             python_version + ", " + compiler + "-" + compiler_version
 
         if env.get('CM_DOCKER_VERSION', '') != '':
-            state['CM_SUT_META']['other_software_stack'] += " Docker version:" + env['CM_DOCKER_VERSION']
+            state['CM_SUT_META']['other_software_stack'] += " Docker version:" + \
+                env['CM_DOCKER_VERSION']
         else:
             if os.path.exists('/.dockerenv'):
                 state['CM_SUT_META']['other_software_stack'] += ", Using Docker "
