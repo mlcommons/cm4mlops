@@ -479,6 +479,15 @@ deps:
         - 'on'
 
 
+  ## RGAT
+  - tags: get,ml-model,rgat
+    names:
+    - ml-model
+    - rgat-model
+    enable_if_env:
+      CM_MODEL:
+      - rgat
+
   ########################################################################
   # Install datasets
 
@@ -599,6 +608,15 @@ deps:
     skip_if_env:
       CM_CRITEO_PREPROCESSED_PATH:
       - on
+
+  ## igbh for rgat
+  - tags: get,dataset,mlperf,inference,igbh
+    names:
+    - igbh-dataset
+    - illinois-graph-benchmark-heterogeneous
+    enable_if_env:
+      CM_MODEL:
+      - rgat
 
   ########################################################################
   # Install MLPerf inference dependencies
@@ -1195,6 +1213,32 @@ variations:
         CM_MLPERF_BACKEND:
         - tf
         - tflite
+
+  rgat:
+    group: models
+    env:
+      CM_MODEL: rgat
+    deps:
+      - tags: get,generic-python-lib,_package.colorama
+      - tags: get,generic-python-lib,_package.tqdm
+      - tags: get,generic-python-lib,_package.requests
+      - tags: get,generic-python-lib,_package.torchdata
+      - tags: get,generic-python-lib,_package.torch-geometric
+      - tags: get,generic-python-lib,_package.torch-scatter
+      - tags: get,generic-python-lib,_package.torch-sparse
+      - tags: get,generic-python-lib,_package.pybind11
+      - tags: get,generic-python-lib,_package.PyYAML
+      - tags: get,generic-python-lib,_package.pydantic 
+      - tags: get,generic-python-lib,_package.igb,_url.git+https://github.com/IllinoisGraphBenchmark/IGB-Datasets.git
+      - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-2.1/repo.html
+        enable_if_env:
+          CM_MLPERF_DEVICE:
+          - cpu
+      - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-2.1/cu121/repo.html
+        enable_if_env:
+          CM_MLPERF_DEVICE:
+          - gpu
+
 
   # Target devices
   cpu:
