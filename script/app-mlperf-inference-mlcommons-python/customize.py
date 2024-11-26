@@ -474,6 +474,8 @@ def get_run_cmd_reference(
             "R-GAT")
         backend = env['CM_MLPERF_BACKEND']
 
+        dtype_rgat = env['CM_MLPERF_MODEL_PRECISION'].replace("float", "fp")
+
         if env.get('CM_MLPERF_SUBMISSION_GENERATION_STYLE', '') == "full":
             mode_extra_options += " --dataset igbh-dgl --profile rgat-dgl-full "
         else:
@@ -488,7 +490,7 @@ def get_run_cmd_reference(
             env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
             scenario_extra_options + mode_extra_options + \
             " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
-            ' --dtype ' + env['CM_MLPERF_MODEL_PRECISION'] + \
+            ' --dtype ' + dtype_rgat + \
             " --model-path " + env['RGAT_CHECKPOINT_PATH']
 
     if env.get('CM_NETWORK_LOADGEN', '') in ["lon", "sut"]:
