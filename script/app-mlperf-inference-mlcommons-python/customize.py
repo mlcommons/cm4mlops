@@ -491,7 +491,8 @@ def get_run_cmd_reference(
             scenario_extra_options + mode_extra_options + \
             " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
             ' --dtype ' + dtype_rgat + \
-            " --model-path " + env['RGAT_CHECKPOINT_PATH']
+            " --model-path " + env['RGAT_CHECKPOINT_PATH'] + \
+            " --mlperf_conf " + os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "mlperf.conf")
 
     if env.get('CM_NETWORK_LOADGEN', '') in ["lon", "sut"]:
         cmd = cmd + " " + "--network " + env['CM_NETWORK_LOADGEN']
