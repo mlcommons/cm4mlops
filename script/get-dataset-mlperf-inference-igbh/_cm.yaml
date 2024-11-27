@@ -21,6 +21,319 @@ deps:
   - tags: get,python
     names:
       - get-python
+prehook_deps:
+  #paper  
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper/node_feat.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: node_feet.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper/
+    extra_cache_tags: dataset,igbh,paper,node_feat
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper/node_label_19.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: node_label_19.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper/
+    extra_cache_tags: dataset,igbh,paper,node_label_19
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper/node_label_2K.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: node_label_2K.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper/
+    extra_cache_tags: dataset,igbh,paper,node_label_2K
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper/paper_id_index_mapping.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: paper_id_index_mapping.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper/
+    extra_cache_tags: dataset,igbh,paper,paper_id_index_mapping
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  #paper_cites_paper
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper__cites__paper/edge_index.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: edge_index.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper__cites__paper/
+    extra_cache_tags: dataset,igbh,paper_cites_paper,edge_index
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # author
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/author/author_id_index_mapping.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: author_id_index_mapping.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/author/
+    extra_cache_tags: dataset,igbh,author,author_id_index_mapping
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/author/node_feat.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: node_feat.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/author/
+    extra_cache_tags: dataset,igbh,author,node_feat
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # conference
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/conference/conference_id_index_mapping.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: conference_id_index_mapping.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/conference/
+    extra_cache_tags: dataset,igbh,conference,conference_id_index_mapping
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/conference/node_feat.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: node_feat.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/conference/
+    extra_cache_tags: dataset,igbh,conference,node_feat
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL  
+  # institute
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/institute/institute_id_index_mapping.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: institute_id_index_mapping.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/institute/
+    extra_cache_tags: dataset,igbh,institute,institute_id_index_mapping
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/institute/node_feat.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: node_feat.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/institute/
+    extra_cache_tags: dataset,igbh,institute,node_feat
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # journal
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/journal/journal_id_index_mapping.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: journal_id_index_mapping.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/journal/
+    extra_cache_tags: dataset,igbh,journal,journal_id_index_mapping
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/journal/node_feat.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: node_feat.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/journal/
+    extra_cache_tags: dataset,igbh,journal,node_feat
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # fos
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/fos/fos_id_index_mapping.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: fos_id_index_mapping.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/fos/
+    extra_cache_tags: dataset,igbh,fos,fos_id_index_mapping
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/fos/node_feat.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: node_feat.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/fos/
+    extra_cache_tags: dataset,igbh,fos,node_feat
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # author__affiliated_to__institute
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/author__affiliated_to__institute/edge_index.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: edge_index.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/author__affiliated_to__institute/
+    extra_cache_tags: dataset,igbh,author_affiliated_to_institute,edge_index
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # paper__published__journal
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper__published__journal/edge_index.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: edge_index.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper__published__journal/
+    extra_cache_tags: dataset,igbh,paper_published_journal,edge_index
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # paper__topic__fos
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper__topic__fos/edge_index.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: edge_index.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper__topic__fos/
+    extra_cache_tags: dataset,igbh,paper_topic_fos,edge_index
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # paper__venue__conference
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper__venue__conference/edge_index.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: edge_index.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper__venue__conference/
+    extra_cache_tags: dataset,igbh,paper_venue_conference,edge_index
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
+  # paper__written_by__author
+  - env:
+      CM_PACKAGE_URL: https://igb-public.s3.us-east-2.amazonaws.com/IGBH/processed/paper__written_by__author/edge_index.npy
+      CM_DOWNLOAD_CHECKSUM: AAA
+      CM_DOWNLOAD_FILENAME: edge_index.npy
+      CM_DOWNLOAD_PATH: <<<CM_IGBH_DATASET_DOWNLOAD_LOCATION>>>/full/processed/paper__written_by__author/
+    extra_cache_tags: dataset,igbh,paper_written_by_author,edge_index
+    force_cache: true
+    enable_if_env:
+      CM_IGBH_DATASET_TYPE: full
+    names:
+    - dae
+    tags: download-and-extract
+    update_tags_from_env_with_prefix:
+      _url.:
+        - CM_PACKAGE_URL
 variations:
   debug:
     default: true
