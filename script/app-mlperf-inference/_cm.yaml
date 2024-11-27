@@ -254,6 +254,10 @@ variations:
     default_variations:
       backend: pytorch
 
+  reference,rgat:
+    default_variations:
+      backend: pytorch
+
   reference,sdxl_:
     default_variations:
       backend: pytorch
@@ -750,6 +754,16 @@ variations:
             CM_MLPERF_DATASET_3DUNET_DOWNLOAD_TO_HOST:
             - 'yes'
           tags: get,dataset,kits19,preprocessed
+
+  rgat:
+    group:
+      model
+    add_deps_recursive:
+      mlperf-inference-implementation:
+        tags: _rgat
+    env:
+      CM_MODEL:
+        rgat
 
   sdxl:
     group:

@@ -49,7 +49,7 @@ r = cm.access({'action': 'run',
                'only_execute_from_cache': True,
                'quiet': 'yes'})
 
-#r should return error
+# r should return error
 if 'error' not in r:
     print(r)
     raise Exception('Invalidated cache entry for scipy==1.9.3 found in cache')
