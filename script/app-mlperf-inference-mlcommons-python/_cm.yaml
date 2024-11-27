@@ -487,6 +487,9 @@ deps:
     enable_if_env:
       CM_MODEL:
       - rgat
+    skip_if_env:
+      RGAT_CHECKPOINT_PATH:
+        - 'on'
 
   ########################################################################
   # Install datasets
