@@ -399,7 +399,7 @@ variations:
   nvidia-original:
     docker:
       interactive: True
-      extra_run_args: ' --runtime=nvidia --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
+      extra_run_args: ' --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
       base_image: nvcr.io/nvidia/mlperf/mlperf-inference:mlpinf-v3.1-cuda12.2-cudnn8.9-x86_64-ubuntu20.04-l4-public
       os: "ubuntu"
       os_version: "20.04"
@@ -411,6 +411,14 @@ variations:
           skip_if_env:
             CM_SKIP_GET_NVIDIA_DOCKER:
               - yes
+    update_meta_if_env:
+      - enable_if_env:
+         CM_HOST_OS_FLAVOR: 
+           - ubuntu
+         CM_HOST_OS_VERSION:
+           - 20.04
+        docker:
+          extra_run_args: ' --runtime=nvidia --ulimit memlock=-1 --cap-add SYS_ADMIN --cap-add SYS_TIME --security-opt apparmor=unconfined --security-opt seccomp=unconfined'
 
       mounts:
         - "${{ CM_CUDNN_TAR_FILE_PATH }}:${{ CM_CUDNN_TAR_FILE_PATH }}"
