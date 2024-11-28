@@ -1,6 +1,7 @@
 from cmind import utils
 import os
 import shutil
+import stat
 
 
 def preprocess(i):
@@ -22,6 +23,16 @@ def postprocess(i):
     if env.get('CM_MLPERF_PTD_PATH', '') == '':
         env['CM_MLPERF_PTD_PATH'] = os.path.join(
             env['CM_MLPERF_POWER_SOURCE'], 'PTD', 'binaries', binary_name)
+
+    file_path = env['CM_MLPERF_PTD_PATH']
+    current_permissions = os.stat(file_path).st_mode
+
+    # Check if the file already has execute permissions
+    if not (current_permissions & stat.S_IXUSR):  # Check user execute permission
+        # Add execute permissions for the user
+        os.chmod(file_path, current_permissions | stat.S_IXUSR)
+
+
     env['CM_SPEC_PTD_PATH'] = env['CM_MLPERF_PTD_PATH']
 
     return {'return': 0}
