@@ -30,12 +30,15 @@ def postprocess(i):
 CM_MLPERF_RUN_COUNT=\$(cat \${CM_RUN_DIR}/count.txt);
 echo \${CM_MLPERF_RUN_COUNT};
 CM_MLPERF_RUN_COUNT=\$((CM_MLPERF_RUN_COUNT+1));
-echo \${CM_MLPERF_RUN_COUNT} > \${CM_RUN_DIR}/count.txt &&
+echo \${CM_MLPERF_RUN_COUNT} > \${CM_RUN_DIR}/count.txt;
+
 if [ \${CM_MLPERF_RUN_COUNT} -eq 1 ]; then
 export CM_MLPERF_USER_CONF="${CM_MLPERF_RANGING_USER_CONF}";
 else
 export CM_MLPERF_USER_CONF="${CM_MLPERF_TESTING_USER_CONF}";
-fi &&
+fi
+;
+
                 """ + env.get('CM_RUN_CMD', '').strip()
             else:
                 env['CM_MLPERF_RUN_CMD'] = r"""
