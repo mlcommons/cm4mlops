@@ -10,7 +10,7 @@ env:
 jobs:
   format-code:
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner = 'mlcommons' }}
+    if: ${{ github.repository_owner == 'mlcommons' }}
     steps:
       - uses: actions/checkout@v4
         with:
