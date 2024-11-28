@@ -45,6 +45,7 @@ input_mapping:
   ntp_server: CM_MLPERF_POWER_NTP_SERVER
   conf_file: CM_MLPERF_POWER_SERVER_CONF_FILE
   screen: CM_MLPERF_POWER_SERVER_USE_SCREEN
+  num_analyzers: CM_MLPERF_POWER_NUM_ANALYZERS
 tags:
 - run
 - mlc

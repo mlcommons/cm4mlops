@@ -39,11 +39,11 @@ def preprocess(i):
     network_port_start = int(env.get('CM_MLPERF_POWER_NETWORK_PORT_START', 8888))
 
     # Ensure 'ptd' section exists
-    if 'ptd' in config:
-        config.remove_section('ptd')
+    if 'ptd' not in config:
+        config.add_section('ptd')
 
-    config.add_section('ptd')
     config['ptd']['ptd'] = str(env.get('CM_MLPERF_PTD_PATH', ''))
+    config['ptd']['analyzercount'] = str(num_analyzers)
 
     # Add analyzers to the configuration
     for aid in range(1, num_analyzers + 1):
