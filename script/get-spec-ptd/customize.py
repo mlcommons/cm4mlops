@@ -32,7 +32,6 @@ def postprocess(i):
         # Add execute permissions for the user
         os.chmod(file_path, current_permissions | stat.S_IXUSR)
 
-
     env['CM_SPEC_PTD_PATH'] = env['CM_MLPERF_PTD_PATH']
 
     return {'return': 0}
