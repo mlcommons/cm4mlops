@@ -31,10 +31,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper,node_feat
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -46,10 +47,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper,node_label_19
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -61,10 +63,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper,node_label_2K
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -76,10 +79,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper,paper_id_index_mapping
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -92,10 +96,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper_cites_paper,edge_index
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -108,10 +113,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,author,author_id_index_mapping
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -123,10 +129,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,author,node_feat
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -139,10 +146,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,conference,conference_id_index_mapping
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -154,10 +162,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,conference,node_feat
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL  
@@ -170,10 +179,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,institute,institute_id_index_mapping
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -185,10 +195,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,institute,node_feat
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -201,10 +212,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,journal,journal_id_index_mapping
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -216,10 +228,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,journal,node_feat
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -232,10 +245,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,fos,fos_id_index_mapping
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -247,10 +261,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,fos,node_feat
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -263,10 +278,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,author_affiliated_to_institute,edge_index
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -279,10 +295,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper_published_journal,edge_index
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -295,10 +312,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper_topic_fos,edge_index
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -311,10 +329,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper_venue_conference,edge_index
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
@@ -327,10 +346,11 @@ prehook_deps:
     extra_cache_tags: dataset,igbh,paper_written_by_author,edge_index
     force_cache: true
     enable_if_env:
-      CM_IGBH_DATASET_TYPE: full
+      CM_IGBH_DATASET_TYPE: 
+      - 'full'
     names:
     - dae
-    tags: download-and-extract
+    tags: download-and-extract,_wget
     update_tags_from_env_with_prefix:
       _url.:
         - CM_PACKAGE_URL
