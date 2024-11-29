@@ -43,7 +43,9 @@ input_mapping:
   device_type: CM_MLPERF_POWER_DEVICE_TYPE
   interface_flag: CM_MLPERF_POWER_INTERFACE_FLAG
   ntp_server: CM_MLPERF_POWER_NTP_SERVER
+  conf_file: CM_MLPERF_POWER_SERVER_CONF_FILE
   screen: CM_MLPERF_POWER_SERVER_USE_SCREEN
+  num_analyzers: CM_MLPERF_POWER_NUM_ANALYZERS
 tags:
 - run
 - mlc

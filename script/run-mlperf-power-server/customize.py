@@ -12,12 +12,14 @@ def preprocess(i):
     # Initialize ConfigParser
     config = configparser.ConfigParser()
 
-    # Define the server config file path
-    server_config_file = os.path.join(
-        env.get('CM_MLPERF_POWER_SOURCE', ''),
-        'ptd_client_server',
-        'server.template.conf'
-    )
+    if env.get('CM_MLPERF_POWER_SERVER_CONF_FILE', '') != '':
+        server_config_file = env['CM_MLPERF_POWER_SERVER_CONF_FILE']
+    else:
+        server_config_file = os.path.join(
+            env.get('CM_MLPERF_POWER_SOURCE', ''),
+            'ptd_client_server',
+            'server.template.conf'
+        )
 
     # Read the configuration file with error handling
     if not os.path.exists(server_config_file):
@@ -40,11 +42,11 @@ def preprocess(i):
             8888))
 
     # Ensure 'ptd' section exists
-    if 'ptd' in config:
-        config.remove_section('ptd')
+    if 'ptd' not in config:
+        config.add_section('ptd')
 
-    config.add_section('ptd')
     config['ptd']['ptd'] = str(env.get('CM_MLPERF_PTD_PATH', ''))
+    config['ptd']['analyzercount'] = str(num_analyzers)
 
     # Add analyzers to the configuration
     for aid in range(1, num_analyzers + 1):
@@ -52,17 +54,17 @@ def preprocess(i):
         if analyzer_section not in config:
             config.add_section(analyzer_section)
 
-        # Add the analyzer subsection as keys under the 'ptd' section
-        config[f'{analyzer_section}']['interfaceFlag'] = str(
-            env.get('CM_MLPERF_POWER_INTERFACE_FLAG', ''))
-        config[f'{analyzer_section}']['deviceType'] = str(
-            env.get('CM_MLPERF_POWER_DEVICE_TYPE', ''))
-        config[f'{analyzer_section}']['devicePort'] = str(
-            env.get('CM_MLPERF_POWER_DEVICE_PORT', ''))
-        config[f'{analyzer_section}']['networkPort'] = str(
-            network_port_start + aid - 1)
+            # Add the analyzer subsection as keys under the 'ptd' section
+            config[f'{analyzer_section}']['interfaceFlag'] = str(
+                env.get('CM_MLPERF_POWER_INTERFACE_FLAG', ''))
+            config[f'{analyzer_section}']['deviceType'] = str(
+                env.get('CM_MLPERF_POWER_DEVICE_TYPE', ''))
+            config[f'{analyzer_section}']['devicePort'] = str(
+                env.get('CM_MLPERF_POWER_DEVICE_PORT', ''))
+            config[f'{analyzer_section}']['networkPort'] = str(
+                network_port_start + aid - 1)
 
-    with open('power-server.conf', 'w') as configfile:
+    with open('tmp-power-server.conf', 'w') as configfile:
         config.write(configfile)
 
     print({section: dict(config[section]) for section in config.sections()})
@@ -75,7 +77,7 @@ def preprocess(i):
     cmd = env['CM_PYTHON_BIN_WITH_PATH'] + ' ' + os.path.join(
         env['CM_MLPERF_POWER_SOURCE'],
         'ptd_client_server',
-        'server.py') + ' -c power-server.conf'
+        'server.py') + ' -c tmp-power-server.conf'
     if env.get('CM_MLPERF_POWER_SERVER_USE_SCREEN', 'no') == 'yes':
         cmd = cmd_prefix + ' screen -d -m ' + cmd + ' '
     else:
