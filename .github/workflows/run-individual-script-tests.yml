@@ -13,8 +13,6 @@ env:
   PR_HEAD_REPO_URL: ${{ github.event.pull_request.head.repo.html_url }}
   PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
   
-  
-
 jobs:
   run-script-tests:
     runs-on: ubuntu-latest
