@@ -8,6 +8,13 @@ on:
       - 'script/**_cm.json'
       - 'script/**_cm.yml'
 
+env:
+  PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+  PR_HEAD_REPO_URL: ${{ github.event.pull_request.head.repo.html_url }}
+  PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+  
+  
+
 jobs:
   run-script-tests:
     runs-on: ubuntu-latest
@@ -23,9 +30,9 @@ jobs:
     - name: Get changed files
       id: getfile
       run: |
-        git remote add upstream ${{ github.event.pull_request.base.repo.clone_url }}
+        git remote add upstream $PR_BASE_REF
         git fetch upstream
-        echo "files=$(git diff upstream/${{ github.event.pull_request.base.ref }} --name-only | xargs)" >> $GITHUB_OUTPUT
+        echo "files=$(git diff upstream/$PR_BASE_REF --name-only | xargs)" >> $GITHUB_OUTPUT
     - name: RUN Script Tests
       run: |
         echo ${{ steps.getfile.outputs.files }}
@@ -33,5 +40,5 @@ jobs:
           echo $file
         done
         python3 -m pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-        DOCKER_CM_REPO=${{ github.event.pull_request.head.repo.html_url }} DOCKER_CM_REPO_BRANCH=${{ github.event.pull_request.head.ref }} TEST_INPUT_INDEX=${{ matrix.test-input-index }} python3 tests/script/process_tests.py ${{ steps.getfile.outputs.files }}
+        cm pull repo --url=$PR_HEAD_REPO_URL --checkout=$PR_HEAD_REF
+        DOCKER_CM_REPO=$PR_HEAD_REPO_URL DOCKER_CM_REPO_BRANCH=$PR_HEAD_REF TEST_INPUT_INDEX=${{ matrix.test-input-index }} python3 tests/script/process_tests.py ${{ steps.getfile.outputs.files }}
