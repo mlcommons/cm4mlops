@@ -37,7 +37,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
-        cm pull repo --url=$PR_HEAD_REPO_URL --checkout=$PR_HEAD_REF
+        cm pull repo --url=${{ env.PR_HEAD_REPO_URL }} --checkout=${{ env.PR_HEAD_REF }}
         cm run script --quiet --tags=get,sys-utils-cm
     - name: Run test_docker on linux
       if: runner.os == 'linux'
