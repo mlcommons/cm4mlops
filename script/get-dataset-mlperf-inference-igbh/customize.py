@@ -21,15 +21,15 @@ def preprocess(i):
 
     download_loc = env.get('CM_IGBH_DATASET_OUT_PATH', os.getcwd())
 
+    env['CM_IGBH_DATASET_DOWNLOAD_LOCATION'] = download_loc
+
     run_cmd += f"cd {graph_folder} "
     x_sep = " && "
 
     # download the model
     if env['CM_IGBH_DATASET_TYPE'] == "debug":
         run_cmd += x_sep + env['CM_PYTHON_BIN_WITH_PATH'] + \
-            f" tools/download_igbh_test.py --target-path {download_loc}"
-    else:
-        run_cmd += x_sep + f"./tools/download_igbh_full.sh {download_loc}"
+            f" tools/download_igbh_test.py --target-path {download_loc} "
 
     # split seeds
     run_cmd += x_sep + \

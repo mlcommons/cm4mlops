@@ -13,12 +13,20 @@
 [![Test QAIC Software kit Compilation](https://github.com/mlcommons/cm4mlops/actions/workflows/test-qaic-software-kit.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-qaic-software-kit.yml)
 
 
-Please see the [docs](https://docs.mlcommons.org/cm4mlops/) site for understanding CM scripts better. The `mlperf-branch` of the **cm4mlops** repository contains updated CM scripts specifically for MLPerf Inference. For more information on using CM for MLPerf Inference, visit the [MLPerf Inference Documentation site](https://docs.mlcommons.org/inference/).
+# Collective Mind (CM)
+
+**Collective Mind (CM)** is a Python package with a CLI and API designed for creating and managing automations. Two key automations developed using CM are **Script** and **Cache**, which streamline machine learning (ML) workflows, including managing Docker runs. Both Script and Cache automations are part of the **cm4mlops** repository.
+
+The CM scripts, also housed in the **cm4mlops** repository, consist of hundreds of modular Python-wrapped scripts accompanied by `yaml` metadata, enabling the creation of robust and flexible ML workflows.
+
+- **CM Scripts Documentation**: [https://docs.mlcommons.org/cm4mlops/](https://docs.mlcommons.org/cm4mlops/)
+- **CM CLI Documentation**: [https://docs.mlcommons.org/ck/specs/cm-cli/](https://docs.mlcommons.org/ck/specs/cm-cli/)  
+
+The `mlperf-branch` of the **cm4mlops** repository is dedicated to developments specific to MLPerf Inference. Please submit any pull requests (PRs) to this branch. For more information about using CM for MLPerf Inference, refer to the [MLPerf Inference Documentation](https://docs.mlcommons.org/inference/).
 
 ## News
 
-* [Upcoming Changes](https://github.com/mlcommons/cm4mlops/discussions/categories/announcements)
-* [Ongoing Discussions](https://github.com/mlcommons/cm4mlops/discussions/categories/ideas)
+* [Ongoing Discussions](https://github.com/mlcommons/cm4mlops/discussions)
 
 ## License
 
@@ -43,5 +51,5 @@ and [MLCommons](https://mlcommons.org) for sponsoring this project!
 
 ## Acknowledgments
 
-We thank all [volunteers, collaborators and contributors](https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md) 
+We thank all [volunteers, collaborators and contributors](https://github.com/mlcommons/cm4mlops/graphs/contributors) 
 for their support, fruitful discussions, and useful feedback! 

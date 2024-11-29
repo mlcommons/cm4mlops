@@ -8,21 +8,56 @@ def preprocess(i):
 
     os_info = i['os_info']
     env = i['env']
+
+
+    # Initialize ConfigParser
     config = configparser.ConfigParser()
+
+    # Define the server config file path
     server_config_file = os.path.join(
-        env['CM_MLPERF_POWER_SOURCE'],
+        env.get('CM_MLPERF_POWER_SOURCE', ''),
         'ptd_client_server',
-        'server.template.conf')
+        'server.template.conf'
+    )
+
+    # Read the configuration file with error handling
+    if not os.path.exists(server_config_file):
+        raise FileNotFoundError(f"Server config file not found: {server_config_file}")
+
     config.read(server_config_file)
-    config['server']['ntpServer'] = env['CM_MLPERF_POWER_NTP_SERVER']
-    config['server']['listen'] = env['CM_MLPERF_POWER_SERVER_ADDRESS'] + \
-        " " + env['CM_MLPERF_POWER_SERVER_PORT']
-    config['ptd']['ptd'] = env['CM_MLPERF_PTD_PATH']
-    config['ptd']['interfaceFlag'] = env['CM_MLPERF_POWER_INTERFACE_FLAG']
-    config['ptd']['deviceType'] = env['CM_MLPERF_POWER_DEVICE_TYPE']
-    config['ptd']['devicePort'] = env['CM_MLPERF_POWER_DEVICE_PORT']
+    # Update the server section
+    try:
+        config['server']['ntpServer'] = env['CM_MLPERF_POWER_NTP_SERVER']
+        config['server']['listen'] = f"{env['CM_MLPERF_POWER_SERVER_ADDRESS']} {env['CM_MLPERF_POWER_SERVER_PORT']}"
+    except KeyError as e:
+        raise KeyError(f"Missing required environment variable: {e}")
+
+    # Define number of analyzers and network port start
+    num_analyzers = int(env.get('CM_MLPERF_POWER_NUM_ANALYZERS', 1))
+    network_port_start = int(env.get('CM_MLPERF_POWER_NETWORK_PORT_START', 8888))
+
+    # Ensure 'ptd' section exists
+    if 'ptd' in config:
+        config.remove_section('ptd')
+
+    config.add_section('ptd')
+    config['ptd']['ptd'] = str(env.get('CM_MLPERF_PTD_PATH', ''))
+
+    # Add analyzers to the configuration
+    for aid in range(1, num_analyzers + 1):
+        analyzer_section = f'analyzer{aid}'
+        if analyzer_section not in config:
+            config.add_section(analyzer_section)
+
+        # Add the analyzer subsection as keys under the 'ptd' section
+        config[f'{analyzer_section}']['interfaceFlag'] = str(env.get('CM_MLPERF_POWER_INTERFACE_FLAG', ''))
+        config[f'{analyzer_section}']['deviceType'] = str(env.get('CM_MLPERF_POWER_DEVICE_TYPE', ''))
+        config[f'{analyzer_section}']['devicePort'] = str(env.get('CM_MLPERF_POWER_DEVICE_PORT', ''))
+        config[f'{analyzer_section}']['networkPort'] = str(network_port_start + aid - 1)
+
     with open('power-server.conf', 'w') as configfile:
         config.write(configfile)
+
     print({section: dict(config[section]) for section in config.sections()})
 
     if env['CM_HOST_OS_TYPE'] == "windows":

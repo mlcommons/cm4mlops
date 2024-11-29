@@ -69,6 +69,7 @@ def preprocess(i):
                 if cm_tmp_path != '':
                     cm_tmp_path += ':'
                 cm_tmp_path += '/usr/local/cuda/lib64:/usr/cuda/lib64:/usr/local/cuda/lib:/usr/cuda/lib:/usr/local/cuda-11/lib64:/usr/cuda-11/lib:/usr/local/cuda-12/lib:/usr/cuda-12/lib:/usr/local/packages/cuda/lib'
+                cm_tmp_path += os.path.expandvars(':$CUDNN_ROOT/lib')
                 env['CM_TMP_PATH'] = cm_tmp_path
                 env['CM_TMP_PATH_IGNORE_NON_EXISTANT'] = 'yes'
 

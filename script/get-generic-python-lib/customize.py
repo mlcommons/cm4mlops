@@ -104,6 +104,13 @@ def preprocess(i):
 
                 extra += ' --extra-index-url ' + extra_index_url
 
+            # check find-links
+            find_links_url = env.get(
+                'CM_GENERIC_PYTHON_PIP_EXTRA_FIND_LINKS_URL', '').strip()
+
+            if find_links_url != '':
+                extra += ' -f ' + find_links_url
+
             # Check update
             if env.get('CM_GENERIC_PYTHON_PIP_UPDATE', '') in [
                     True, 'true', 'yes', 'on']:
@@ -128,8 +135,11 @@ def detect_version(i):
 
     env = i['env']
 
-    env_version_key = 'CM_' + \
-        env['CM_TMP_PYTHON_PACKAGE_NAME_ENV'].upper() + '_VERSION'
+    if env.get('CM_TMP_PYTHON_PACKAGE_NAME_ENV', '') != '':
+        env_version_key = 'CM_' + \
+            env['CM_TMP_PYTHON_PACKAGE_NAME_ENV'].upper() + '_VERSION'
+    else:
+        env_version_key = 'CM_CACHE_TMP_VERSION'
 
     r = i['automation'].parse_version({'match_text': r'\s*([\d.a-z\-]+)',
                                        'group_number': 1,
