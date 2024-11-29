@@ -66,6 +66,8 @@ input_mapping:
   tp_size: CM_NVIDIA_TP_SIZE
   use_dataset_from_host: CM_USE_DATASET_FROM_HOST
 
+predeps: False
+
 # Duplicate CM environment variables to the ones used in native apps
 env_key_mappings:
   CM_HOST_: HOST_
