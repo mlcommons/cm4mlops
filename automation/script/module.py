@@ -1636,7 +1636,7 @@ class CAutomation(Automation):
             }
 
             # Check if pre-process and detect
-            if str(meta.get('predeps', 'True')) not in ["0", "false", "no"] and os.path.isfile(
+            if str(meta.get('predeps', 'True')).lower() not in ["0", "false", "no"] and  os.path.isfile(
                     path_to_customize_py):  # possible duplicate execution - needs fix
                 r = utils.load_python_module(
                     {'path': path, 'name': 'customize'})
