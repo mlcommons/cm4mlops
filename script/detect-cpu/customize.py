@@ -3,6 +3,7 @@ import os
 
 lscpu_out = 'tmp-lscpu.out'
 
+
 def preprocess(i):
 
     if os.path.isfile(lscpu_out):

@@ -1700,7 +1700,6 @@ class CAutomation(Automation):
             # Clean some output files
             clean_tmp_files(clean_files, recursion_spaces)
 
-
             # Assemble PIP versions
             pip_version_string = ''
 
