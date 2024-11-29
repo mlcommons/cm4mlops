@@ -10,6 +10,14 @@ on:
       - '.github/workflows/test-mlperf-inference-resnet50.yml'
       - '**'
       - '!**.md'
+
+env:
+  USER: "GitHub Action"
+  EMAIL: "admin@gateoverflow.com"
+  GITHUB_TOKEN: ${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}
+  HEAD_REPO_URL: ${{ github.event.pull_request.head.repo.html_url }}
+  HEAD_REF: ${{ github.event.pull_request.head.ref }}
+  
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -42,7 +50,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+        cm pull repo --url=$HEAD_REPO_URL --checkout=$HEAD_REF
     - name: Test MLPerf Inference ResNet50 (Windows)
       if: matrix.os == 'windows-latest'
       run: |
@@ -53,13 +61,9 @@ jobs:
         cm run script --tags=run-mlperf,inference,_submission,_short --submitter="MLCommons" --hw_name=gh_${{ matrix.os }}_x86 --model=resnet50 --implementation=${{ matrix.implementation }} --backend=${{ matrix.backend }} --device=cpu --scenario=Offline --test_query_count=500 --target_qps=1 -v --quiet 
     - name: Push Results
       if: github.repository_owner == 'gateoverflow'
-      env:
-          USER: "GitHub Action"
-          EMAIL: "admin@gateoverflow.com"
-          GITHUB_TOKEN: ${{ secrets.TEST_RESULTS_GITHUB_TOKEN }}
       run: |
-        git config --global user.name "${{ env.USER }}"
-        git config --global user.email "${{ env.EMAIL }}"
+        git config --global user.name "$USER"
+        git config --global user.email "$EMAIL"
         git config --global credential.https://github.com.helper ""
         git config --global credential.https://github.com.helper "!gh auth git-credential"
         git config --global credential.https://gist.github.com.helper ""
