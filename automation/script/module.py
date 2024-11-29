@@ -1636,7 +1636,7 @@ class CAutomation(Automation):
             }
 
             # Check if pre-process and detect
-            if str( meta.get('predeps', 'True')) not in ["0", "false", "no"] and  os.path.isfile(
+            if str(meta.get('predeps', 'True')) not in ["0", "false", "no"] and os.path.isfile(
                     path_to_customize_py):  # possible duplicate execution - needs fix
                 r = utils.load_python_module(
                     {'path': path, 'name': 'customize'})
@@ -1663,8 +1663,10 @@ class CAutomation(Automation):
                 if ignore_script_error:
                     run_script_input['ignore_script_error'] = True
                 if 'predeps' in dir(customize_code) and not fake_run:
-    
-                    logging.debug(recursion_spaces + '  - Running preprocess ...')
+
+                    logging.debug(
+                        recursion_spaces +
+                        '  - Running preprocess ...')
 
                     run_script_input['run_state'] = run_state
 
@@ -1700,7 +1702,7 @@ class CAutomation(Automation):
             # Clean some output files
             clean_tmp_files(clean_files, recursion_spaces)
 
-            #Repeated code
+            # Repeated code
             '''
             # Prepare common input to prepare and run script
             run_script_input = {
@@ -1758,7 +1760,6 @@ class CAutomation(Automation):
                 run_script_input['repro_prefix'] = repro_prefix
             if ignore_script_error:
                 run_script_input['ignore_script_error'] = True
-
 
             # Assemble PIP versions
             pip_version_string = ''
