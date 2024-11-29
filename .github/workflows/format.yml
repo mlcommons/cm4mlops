@@ -6,6 +6,9 @@ on:
 
 env:
   python_version: "3.9"
+  # GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}  
+  DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}    
+  GH_EVENT_BEFORE: ${{ github.event.before }}
 
 jobs:
   format-code:
@@ -15,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          ssh-key: $DEPLOY_KEY
       - name: Set up Python ${{ env.python_version }}
         uses: actions/setup-python@v3
         with:
@@ -24,7 +27,7 @@ jobs:
       - name: Format modified python files
         run: |
           python3 -m pip install autopep8
-          for FILE in $(git diff --name-only ${{ github.event.before }} | grep -E '.*\.py$')
+          for FILE in $(git diff --name-only $GH_EVENT_BEFORE | grep -E '.*\.py$')
           do
             autopep8 --in-place -a $FILE
             git add $FILE
@@ -32,7 +35,7 @@ jobs:
 
       - name: Format modified C++ files
         run: |
-          for FILE in $(git diff --name-only ${{ github.event.before }} | grep -E '.*\.(cc|cpp|h|hpp)$')
+          for FILE in $(git diff --name-only $GH_EVENT_BEFORE | grep -E '.*\.(cc|cpp|h|hpp)$')
           do
             clang-format -i -style=file $FILE
             git add $FILE
