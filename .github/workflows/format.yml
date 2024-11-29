@@ -2,7 +2,8 @@
 name: "Code formatting"
 on:
   push:
-    branches: [ "main", "mlperf-inference" ]
+    branches:
+    - "**"
 
 env:
   python_version: "3.9"
@@ -10,7 +11,6 @@ env:
 jobs:
   format-code:
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner == 'mlcommons' }}
     steps:
       - uses: actions/checkout@v4
         with:
