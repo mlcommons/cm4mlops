@@ -9,6 +9,11 @@ on:
       - '.github/workflows/test-cm-based-submission-generation.yml'
       - '**'  
       - '!**.md'
+
+env:
+  PR_HEAD_REPO_URL: ${{ github.event.pull_request.head.repo.html_url }}
+  PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+  
 jobs:
   submission_generation:
     runs-on: ${{ matrix.os }}
@@ -51,7 +56,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+        cm pull repo --url=$PR_HEAD_REPO_URL --checkout=$PR_HEAD_REF
     - name: Pull repo where test cases are uploaded
       run: |
         git clone -b submission-generation-tests https://github.com/mlcommons/inference.git submission_generation_tests
