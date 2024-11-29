@@ -8,6 +8,11 @@ on:
       - 'script/**'
       - '!**.md'
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # OpenAI API key for accessing the GPT model
+  GITHUB_PR_ID: ${{ github.event.pull_request.number }}  # ID of the pull request to review
+  
 permissions:
   issues: write
   pull-requests: write
@@ -22,9 +27,9 @@ jobs:
     - name: Run OpenAI Code Review
       uses: GATEOverflow/genai-code-review@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
-        openai_api_key: ${{ secrets.OPENAI_API_KEY }}  # OpenAI API key for accessing the GPT model
-        github_pr_id: ${{ github.event.pull_request.number }}  # ID of the pull request to review
+        github_token: $GITHUB_TOKEN 
+        openai_api_key: $OPENAI_API_KEY
+        github_pr_id: $GITHUB_PR_ID
         openai_model: "gpt-4o"  # Model to use for the code review
         openai_temperature: 0.5  # Temperature setting for the model's output
         openai_max_tokens: 2048  # Maximum number of tokens for the model's response
