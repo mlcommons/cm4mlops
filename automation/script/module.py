@@ -1311,7 +1311,7 @@ class CAutomation(Automation):
 
                     r = self._call_run_deps(prehook_deps, self.local_env_keys, local_env_keys_from_meta, env, state, const, const_state, add_deps_recursive,
                                             recursion_spaces + extra_recursion_spaces,
-                                            remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                                            remembered_selections, variation_tags_string, True, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
                     if r['return'] > 0:
                         return r
 
@@ -1372,7 +1372,7 @@ class CAutomation(Automation):
 
                         r = self._call_run_deps(posthook_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive,
                                                 recursion_spaces + extra_recursion_spaces,
-                                                remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                                                remembered_selections, variation_tags_string, True, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
                         if r['return'] > 0:
                             return r
 
@@ -1383,7 +1383,7 @@ class CAutomation(Automation):
                         # Check chain of post dependencies on other CM scripts
                         r = self._call_run_deps(post_deps, self.local_env_keys, clean_env_keys_post_deps, env, state, const, const_state, add_deps_recursive,
                                                 recursion_spaces + extra_recursion_spaces,
-                                                remembered_selections, variation_tags_string, found_cached, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                                                remembered_selections, variation_tags_string, True, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
                         if r['return'] > 0:
                             return r
 
@@ -1605,27 +1605,6 @@ class CAutomation(Automation):
                     if r['return'] > 0:
                         return r
 
-            # Check chain of dependencies on other CM scripts
-            if len(deps) > 0:
-                logging.debug(recursion_spaces +
-                              '  - Checking dependencies on other CM scripts:')
-
-                r = self._call_run_deps(deps, self.local_env_keys, local_env_keys_from_meta, env, state, const, const_state, add_deps_recursive,
-                                        recursion_spaces + extra_recursion_spaces,
-                                        remembered_selections, variation_tags_string, False, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
-                if r['return'] > 0:
-                    return r
-
-                logging.debug(recursion_spaces +
-                              '  - Processing env after dependencies ...')
-
-                r = update_env_with_values(env)
-                if r['return'] > 0:
-                    return r
-
-            # Clean some output files
-            clean_tmp_files(clean_files, recursion_spaces)
-
             # Prepare common input to prepare and run script
             run_script_input = {
                 'path': path,
@@ -1681,6 +1660,46 @@ class CAutomation(Automation):
                 run_script_input['repro_prefix'] = repro_prefix
             if ignore_script_error:
                 run_script_input['ignore_script_error'] = True
+
+            # Check if pre-process and detect
+            if 'predeps' in dir(customize_code) and not fake_run:
+
+                logging.debug(recursion_spaces + '  - Running preprocess ...')
+
+                run_script_input['run_state'] = run_state
+
+                ii = copy.deepcopy(customize_common_input)
+                ii['env'] = env
+                ii['state'] = state
+                ii['meta'] = meta
+                # may need to detect versions in multiple paths
+                ii['run_script_input'] = run_script_input
+
+                r = customize_code.predeps(ii)
+                if r['return'] > 0:
+                    return r
+
+            # Check chain of dependencies on other CM scripts
+            if len(deps) > 0:
+                logging.debug(recursion_spaces +
+                              '  - Checking dependencies on other CM scripts:')
+
+                r = self._call_run_deps(deps, self.local_env_keys, local_env_keys_from_meta, env, state, const, const_state, add_deps_recursive,
+                                        recursion_spaces + extra_recursion_spaces,
+                                        remembered_selections, variation_tags_string, False, debug_script_tags, verbose, show_time, extra_recursion_spaces, run_state)
+                if r['return'] > 0:
+                    return r
+
+                logging.debug(recursion_spaces +
+                              '  - Processing env after dependencies ...')
+
+                r = update_env_with_values(env)
+                if r['return'] > 0:
+                    return r
+
+            # Clean some output files
+            clean_tmp_files(clean_files, recursion_spaces)
+
 
             # Assemble PIP versions
             pip_version_string = ''
