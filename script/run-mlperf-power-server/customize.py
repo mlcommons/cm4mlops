@@ -9,7 +9,6 @@ def preprocess(i):
     os_info = i['os_info']
     env = i['env']
 
-
     # Initialize ConfigParser
     config = configparser.ConfigParser()
 
@@ -24,7 +23,8 @@ def preprocess(i):
 
     # Read the configuration file with error handling
     if not os.path.exists(server_config_file):
-        raise FileNotFoundError(f"Server config file not found: {server_config_file}")
+        raise FileNotFoundError(
+            f"Server config file not found: {server_config_file}")
 
     config.read(server_config_file)
     # Update the server section
@@ -36,7 +36,10 @@ def preprocess(i):
 
     # Define number of analyzers and network port start
     num_analyzers = int(env.get('CM_MLPERF_POWER_NUM_ANALYZERS', 1))
-    network_port_start = int(env.get('CM_MLPERF_POWER_NETWORK_PORT_START', 8888))
+    network_port_start = int(
+        env.get(
+            'CM_MLPERF_POWER_NETWORK_PORT_START',
+            8888))
 
     # Ensure 'ptd' section exists
     if 'ptd' not in config:
@@ -52,10 +55,14 @@ def preprocess(i):
             config.add_section(analyzer_section)
 
             # Add the analyzer subsection as keys under the 'ptd' section
-            config[f'{analyzer_section}']['interfaceFlag'] = str(env.get('CM_MLPERF_POWER_INTERFACE_FLAG', ''))
-            config[f'{analyzer_section}']['deviceType'] = str(env.get('CM_MLPERF_POWER_DEVICE_TYPE', ''))
-            config[f'{analyzer_section}']['devicePort'] = str(env.get('CM_MLPERF_POWER_DEVICE_PORT', ''))
-            config[f'{analyzer_section}']['networkPort'] = str(network_port_start + aid - 1)
+            config[f'{analyzer_section}']['interfaceFlag'] = str(
+                env.get('CM_MLPERF_POWER_INTERFACE_FLAG', ''))
+            config[f'{analyzer_section}']['deviceType'] = str(
+                env.get('CM_MLPERF_POWER_DEVICE_TYPE', ''))
+            config[f'{analyzer_section}']['devicePort'] = str(
+                env.get('CM_MLPERF_POWER_DEVICE_PORT', ''))
+            config[f'{analyzer_section}']['networkPort'] = str(
+                network_port_start + aid - 1)
 
     with open('tmp-power-server.conf', 'w') as configfile:
         config.write(configfile)
