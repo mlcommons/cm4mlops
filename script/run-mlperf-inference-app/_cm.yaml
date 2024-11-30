@@ -29,7 +29,6 @@ tags:
 - reference
 
 tags_help: "run-mlperf,inference"
-predeps: False
 
 default_env:
   CM_MLPERF_IMPLEMENTATION: reference
