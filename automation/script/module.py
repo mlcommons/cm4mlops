@@ -3605,7 +3605,9 @@ class CAutomation(Automation):
                     "update_tags_from_env_with_prefix", {})
                 for t in update_tags_from_env_with_prefix:
                     for key in update_tags_from_env_with_prefix[t]:
-                        if str(env.get(key, '')).strip() != '':
+                        if str(d.get('env', {}).get(key, '')).strip() != '':
+                            d['tags'] += "," + t + str(d.get('env')[key])
+                        elif str(env.get(key, '')).strip() != '':
                             d['tags'] += "," + t + str(env[key])
 
                 for key in clean_env_keys_deps:
