@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE.md)
 [![Python Version](https://img.shields.io/badge/python-3+-blue.svg)](https://github.com/mlcommons/ck/tree/master/cm/cmind)
-[![Powered by CM](https://img.shields.io/badge/Powered_by-MLCommons%20CM-blue)](https://github.com/mlcommons/ck).
+[![Powered by CM](https://img.shields.io/badge/Powered_by-MLCommons%20CM-blue)](https://pypi.org/project/cmind).
 [![Downloads](https://static.pepy.tech/badge/cm4mlops)](https://pepy.tech/project/cm4mlops)
 
 [![CM script automation features test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-script-features.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-script-features.yml)
@@ -13,11 +13,16 @@
 [![Test QAIC Software kit Compilation](https://github.com/mlcommons/cm4mlops/actions/workflows/test-qaic-software-kit.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-qaic-software-kit.yml)
 
 
-# Collective Mind (CM)
+# CM4MLOps repository
 
-**Collective Mind (CM)** is a Python package with a CLI and API designed for creating and managing automations. Two key automations developed using CM are **Script** and **Cache**, which streamline machine learning (ML) workflows, including managing Docker runs. Both Script and Cache automations are part of the **cm4mlops** repository.
+**CM4MLOps** repository is powered by the [Collective Mind automation framework](https://github.com/mlcommons/ck/tree/master/cm), 
+a [Python package](https://pypi.org/project/cmind/) with a CLI and API designed for creating and managing automations. 
 
-The CM scripts, also housed in the **cm4mlops** repository, consist of hundreds of modular Python-wrapped scripts accompanied by `yaml` metadata, enabling the creation of robust and flexible ML workflows.
+Two key automations developed using CM are **Script** and **Cache**, which streamline machine learning (ML) workflows, 
+including managing Docker runs. Both Script and Cache automations are part of the **cm4mlops** repository.
+
+The CM scripts, also housed in this repository, consist of hundreds of modular Python-wrapped scripts accompanied 
+by `yaml` metadata, enabling the creation of robust and flexible ML workflows.
 
 - **CM Scripts Documentation**: [https://docs.mlcommons.org/cm4mlops/](https://docs.mlcommons.org/cm4mlops/)
 - **CM CLI Documentation**: [https://docs.mlcommons.org/ck/specs/cm-cli/](https://docs.mlcommons.org/ck/specs/cm-cli/)  
@@ -34,9 +39,9 @@ The `mlperf-branch` of the **cm4mlops** repository is dedicated to developments 
 
 ## CM concepts
 
-Check our [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339).
+Check the [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339).
 
-## Authors
+## CM4MLOps authors
 
 [Grigori Fursin](https://cKnowledge.org/gfursin) and [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh)
 
