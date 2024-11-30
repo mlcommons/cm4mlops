@@ -980,6 +980,9 @@ variations:
       - tags: get,generic-python-lib,_package.scipy
         names:
           - scipy
+      - tags: get,generic-python-lib,_package.pandas
+        names:
+          - pandas
 
   llama2-70b_:
     env:
