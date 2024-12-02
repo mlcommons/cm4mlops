@@ -492,6 +492,9 @@ def get_run_cmd_reference(
             " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
             ' --dtype ' + dtype_rgat + \
             " --model-path " + env['RGAT_CHECKPOINT_PATH']
+        
+        if env.get('CM_ACTIVATE_RGAT_IN_MEMORY', '') == "yes":
+            cmd += " --in-memory "
 
     if env.get('CM_NETWORK_LOADGEN', '') in ["lon", "sut"]:
         cmd = cmd + " " + "--network " + env['CM_NETWORK_LOADGEN']
