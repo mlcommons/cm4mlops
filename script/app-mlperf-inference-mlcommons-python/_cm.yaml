@@ -1228,7 +1228,7 @@ variations:
     env:
       CM_MODEL: rgat
     adr:
-      torch:
+      pytorch:
         version: 2.1.0
     deps:
       - tags: get,generic-python-lib,_package.colorama
