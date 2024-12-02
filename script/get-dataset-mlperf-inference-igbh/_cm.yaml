@@ -22,6 +22,7 @@ deps:
     names:
       - get-python
   - tags: get,generic-python-lib,_package.igb,_url.git+https://github.com/IllinoisGraphBenchmark/IGB-Datasets.git
+  - tags: get,generic-python-lib,_package.colorama
 prehook_deps:
   #paper  
   - env:
