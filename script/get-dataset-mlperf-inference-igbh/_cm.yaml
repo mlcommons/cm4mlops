@@ -364,8 +364,8 @@ variations:
   full:
     group: dataset-type
     env:
-      CM_IGBH_DATASET_TYPE: full
-      CM_IGBH_DATASET_SIZE: full
+      CM_IGBH_DATASET_TYPE: debug
+      CM_IGBH_DATASET_SIZE: tiny
   glt:
     env:
       CM_IGBH_GRAPH_COMPRESS: yes
