@@ -620,6 +620,9 @@ deps:
     enable_if_env:
       CM_MODEL:
       - rgat
+    skip_if_env:
+      CM_IGBH_DATASET_PATH:
+      - "on"
 
   ########################################################################
   # Install MLPerf inference dependencies
@@ -1230,21 +1233,30 @@ variations:
       - tags: get,generic-python-lib,_package.requests
       - tags: get,generic-python-lib,_package.torchdata
       - tags: get,generic-python-lib,_package.torch-geometric
+        env:
+          CM_GENERIC_PYTHON_PIP_EXTRA_FIND_LINKS_URL: "https://data.pyg.org/whl/torch-<<<CM_TORCH_VERSION>>>.html"
       - tags: get,generic-python-lib,_package.torch-scatter
       - tags: get,generic-python-lib,_package.torch-sparse
       - tags: get,generic-python-lib,_package.pybind11
       - tags: get,generic-python-lib,_package.PyYAML
       - tags: get,generic-python-lib,_package.pydantic 
       - tags: get,generic-python-lib,_package.igb,_url.git+https://github.com/IllinoisGraphBenchmark/IGB-Datasets.git
-      - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-2.1/repo.html
-        enable_if_env:
-          CM_MLPERF_DEVICE:
-          - cpu
-      - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-2.1/cu121/repo.html
+      - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-<<<CM_TORCH_VERSION>>>/cu121/repo.html
         enable_if_env:
           CM_MLPERF_DEVICE:
           - gpu
 
+  rgat,cpu:
+    - tags: get,generic-python-lib,_package.torch-scatter
+      env:
+        CM_GENERIC_PYTHON_PIP_EXTRA_FIND_LINKS_URL: "https://data.pyg.org/whl/torch-<<<CM_TORCH_VERSION>>>+cpu.html"
+    - tags: get,generic-python-lib,_package.torch-sparse
+      env:
+        CM_GENERIC_PYTHON_PIP_EXTRA_FIND_LINKS_URL: "https://data.pyg.org/whl/torch-<<<CM_TORCH_VERSION>>>+cpu.html"
+    - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-<<<CM_TORCH_VERSION>>>/repo.html
+      enable_if_env:
+        CM_MLPERF_DEVICE:
+        - cpu
 
   # Target devices
   cpu:
