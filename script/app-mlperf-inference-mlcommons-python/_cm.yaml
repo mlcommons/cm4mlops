@@ -1249,7 +1249,7 @@ variations:
         version: 1.26.4
       - tags: get,generic-python-lib,_package.pydantic 
       - tags: get,generic-python-lib,_package.igb,_url.git+https://github.com/IllinoisGraphBenchmark/IGB-Datasets.git
-      - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-<<<CM_TORCH_VERSION>>>/cu121/repo.html
+      - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-2.1/cu121/repo.html
         enable_if_env:
           CM_MLPERF_DEVICE:
           - cuda
