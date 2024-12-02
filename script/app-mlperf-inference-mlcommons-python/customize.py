@@ -118,7 +118,8 @@ def preprocess(i):
     if int(NUM_THREADS) > 2 and env['CM_MLPERF_DEVICE'] == "gpu":
         NUM_THREADS = "2"  # Don't use more than 2 threads when run on GPU
 
-    if env['CM_MODEL'] in ['resnet50', 'retinanet', 'stable-diffusion-xl', 'rgat']:
+    if env['CM_MODEL'] in ['resnet50', 'retinanet',
+                           'stable-diffusion-xl', 'rgat']:
         scenario_extra_options += " --threads " + NUM_THREADS
 
     ml_model_name = env['CM_MODEL']
