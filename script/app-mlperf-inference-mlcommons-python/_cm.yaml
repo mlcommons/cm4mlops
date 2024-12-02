@@ -1227,6 +1227,9 @@ variations:
     group: models
     env:
       CM_MODEL: rgat
+    adr:
+      torch:
+        version: 2.1.0
     deps:
       - tags: get,generic-python-lib,_package.colorama
       - tags: get,generic-python-lib,_package.tqdm
@@ -1255,9 +1258,6 @@ variations:
         env:
           CM_GENERIC_PYTHON_PIP_EXTRA_FIND_LINKS_URL: "https://data.pyg.org/whl/torch-<<<CM_TORCH_VERSION>>>+cpu.html"
       - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-<<<CM_TORCH_VERSION>>>/repo.html
-        enable_if_env:
-          CM_MLPERF_DEVICE:
-          - cpu
 
   # Target devices
   cpu:
