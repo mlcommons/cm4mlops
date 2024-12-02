@@ -1252,6 +1252,7 @@ variations:
       - tags: get,generic-python-lib,_package.dgl,_find_links_url.https://data.dgl.ai/wheels/torch-<<<CM_TORCH_VERSION>>>/cu121/repo.html
         enable_if_env:
           CM_MLPERF_DEVICE:
+          - cuda
           - gpu
 
   rgat,cpu:
