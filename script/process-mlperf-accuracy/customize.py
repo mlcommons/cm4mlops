@@ -170,9 +170,10 @@ def preprocess(i):
                                                                                                                                          "mlperf_log_accuracy.json") + "'" + extra_options + \
                 " --dtype " + env.get('CM_ACCURACY_DTYPE',
                                       "float32") + " > '" + out_file + "'"
-            
+
         elif dataset == "igbh":
-            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "graph", "R-GAT", "tools", "accuracy_igbh.py") +  "' --mlperf-accuracy-file '" + os.path.join(result_dir, "mlperf_log_accuracy.json") + "' --dataset-path '" + env['CM_DATASET_IGBH_PATH'] + "' --dataset-size `" + env['CM_DATASET_IGBH_SIZE'] + + " > '" + out_file + "'"
+            CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "graph", "R-GAT", "tools", "accuracy_igbh.py") + "' --mlperf-accuracy-file '" + os.path.join(
+                result_dir, "mlperf_log_accuracy.json") + "' --dataset-path '" + env['CM_DATASET_IGBH_PATH'] + "' --dataset-size `" + env['CM_DATASET_IGBH_SIZE'] + + " > '" + out_file + "'"
 
         else:
             return {'return': 1, 'error': 'Unsupported dataset'}
