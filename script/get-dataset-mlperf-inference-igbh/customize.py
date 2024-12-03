@@ -27,18 +27,18 @@ def preprocess(i):
     x_sep = " && "
 
     # download the model
-    if env['CM_IGBH_DATASET_TYPE'] == "debug":
+    if env['CM_DATASET_IGBH_TYPE'] == "debug":
         run_cmd += x_sep + env['CM_PYTHON_BIN_WITH_PATH'] + \
             f" tools/download_igbh_test.py --target-path {download_loc} "
 
     # split seeds
     run_cmd += x_sep + \
-        f"{env['CM_PYTHON_BIN_WITH_PATH']} tools/split_seeds.py --path {download_loc} --dataset_size {env['CM_IGBH_DATASET_SIZE']}"
+        f"{env['CM_PYTHON_BIN_WITH_PATH']} tools/split_seeds.py --path {download_loc} --dataset_size {env['CM_DATASET_IGBH_SIZE']}"
 
     # compress graph(for glt implementation)
     if env.get('CM_IGBH_GRAPH_COMPRESS', '') == "yes":
         run_cmd += x_sep + \
-            f"{env['CM_PYTHON_BIN_WITH_PATH']} tools/compress_graph.py --path {download_loc} --dataset_size {env['CM_IGBH_DATASET_SIZE']} --layout {env['CM_IGBH_GRAPH_COMPRESS_LAYOUT']}"
+            f"{env['CM_PYTHON_BIN_WITH_PATH']} tools/compress_graph.py --path {download_loc} --dataset_size {env['CM_DATASET_IGBH_SIZE']} --layout {env['CM_IGBH_GRAPH_COMPRESS_LAYOUT']}"
 
     env['CM_RUN_CMD'] = run_cmd
 
@@ -49,10 +49,10 @@ def postprocess(i):
 
     env = i['env']
 
-    env['CM_IGBH_DATASET_PATH'] = env.get(
+    env['CM_DATASET_IGBH_PATH'] = env.get(
         'CM_IGBH_DATASET_OUT_PATH', os.getcwd())
 
     print(
-        f"Path to the IGBH dataset: {os.path.join(env['CM_IGBH_DATASET_PATH'], env['CM_IGBH_DATASET_SIZE'])}")
+        f"Path to the IGBH dataset: {os.path.join(env['CM_DATASET_IGBH_PATH'], env['CM_DATASET_IGBH_SIZE'])}")
 
     return {'return': 0}

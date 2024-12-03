@@ -11,7 +11,7 @@ tags:
 - inference
 uid: 824e61316c074253
 new_env_keys:
-  - CM_IGBH_DATASET_PATH
+  - CM_DATASET_IGBH_PATH
 input_mapping:
   out_path: CM_IGBH_DATASET_OUT_PATH
 deps:
@@ -362,13 +362,13 @@ variations:
     default: true
     group: dataset-type
     env:
-      CM_IGBH_DATASET_TYPE: debug
-      CM_IGBH_DATASET_SIZE: tiny
+      CM_DATASET_IGBH_TYPE: debug
+      CM_DATASET_IGBH_SIZE: tiny
   full:
     group: dataset-type
     env:
-      CM_IGBH_DATASET_TYPE: debug
-      CM_IGBH_DATASET_SIZE: tiny
+      CM_DATASET_IGBH_TYPE: debug
+      CM_DATASET_IGBH_SIZE: tiny
   glt:
     env:
       CM_IGBH_GRAPH_COMPRESS: yes

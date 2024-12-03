@@ -486,7 +486,7 @@ def get_run_cmd_reference(
         # have to add the condition for running in debug mode or real run mode
         cmd = env['CM_PYTHON_BIN_WITH_PATH'] + " main.py " \
             " --scenario " + env['CM_MLPERF_LOADGEN_SCENARIO'] + \
-            " --dataset-path " + env['CM_IGBH_DATASET_PATH'] + \
+            " --dataset-path " + env['CM_DATASET_IGBH_PATH'] + \
             " --device " + device.replace("cuda", "gpu") + \
             env['CM_MLPERF_LOADGEN_EXTRA_OPTIONS'] + \
             scenario_extra_options + mode_extra_options + \
