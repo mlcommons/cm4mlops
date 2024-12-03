@@ -12,6 +12,7 @@ tags:
 uid: 824e61316c074253
 new_env_keys:
   - CM_DATASET_IGBH_PATH
+  - CM_DATASET_IGBH_SIZE
 input_mapping:
   out_path: CM_IGBH_DATASET_OUT_PATH
 deps:
