@@ -482,7 +482,6 @@ deps:
   ## RGAT
   - tags: get,ml-model,rgat
     names:
-    - ml-model
     - rgat-model
     enable_if_env:
       CM_MODEL:
