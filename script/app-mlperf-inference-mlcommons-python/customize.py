@@ -477,7 +477,7 @@ def get_run_cmd_reference(
 
         dtype_rgat = env['CM_MLPERF_MODEL_PRECISION'].replace("float", "fp")
 
-        if env.get('CM_MLPERF_SUBMISSION_GENERATION_STYLE', '') == "fulll":
+        if env.get('CM_MLPERF_SUBMISSION_GENERATION_STYLE', '') == "full":
             mode_extra_options += " --dataset igbh-dgl --profile rgat-dgl-full "
         else:
             mode_extra_options += " --dataset igbh-dgl-tiny --profile debug-dgl "
