@@ -172,6 +172,11 @@ def preprocess(i):
                                       "float32") + " > '" + out_file + "'"
 
         elif dataset == "igbh":
+            if env.get('CM_DATASET_IGBH_SIZE', '') == '':
+                if env.get('CM_MLPERF_SUBMISSION_GENERATION_STYLE', '') == "full":
+                    env['CM_DATASET_IGBH_SIZE'] = "full"
+                else:
+                    env['CM_DATASET_IGBH_SIZE'] = "tiny"
             CMD = env['CM_PYTHON_BIN_WITH_PATH'] + " '" + os.path.join(env['CM_MLPERF_INFERENCE_SOURCE'], "graph", "R-GAT", "tools", "accuracy_igbh.py") + "' --mlperf-accuracy-file '" + os.path.join(
                 result_dir, "mlperf_log_accuracy.json") + "' --dataset-path '" + env['CM_DATASET_IGBH_PATH'] + "' --dataset-size '" + env['CM_DATASET_IGBH_SIZE'] + "' > '" + out_file + "'"
 
