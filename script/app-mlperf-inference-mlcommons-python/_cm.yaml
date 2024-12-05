@@ -620,7 +620,7 @@ deps:
       CM_MODEL:
       - rgat
     skip_if_env:
-      CM_IGBH_DATASET_PATH:
+      CM_DATASET_IGBH_PATH:
       - "on"
 
   ########################################################################
