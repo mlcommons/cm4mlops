@@ -173,7 +173,8 @@ def preprocess(i):
 
         elif dataset == "igbh":
             if env.get('CM_DATASET_IGBH_SIZE', '') == '':
-                if env.get('CM_MLPERF_SUBMISSION_GENERATION_STYLE', '') == "full":
+                if env.get('CM_MLPERF_SUBMISSION_GENERATION_STYLE',
+                           '') == "full":
                     env['CM_DATASET_IGBH_SIZE'] = "full"
                 else:
                     env['CM_DATASET_IGBH_SIZE'] = "tiny"
