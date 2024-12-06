@@ -1659,6 +1659,25 @@ variations:
       CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
       CM_MLPERF_INFERENCE_VERSION: '4.1'
 
+  r5.0-dev_default:
+    group:
+      reproducibility
+    add_deps_recursive:
+      nvidia-inference-common-code:
+        version: r4.1
+        tags: _mlcommons
+      nvidia-inference-server:
+        version: r4.1
+        tags: _mlcommons
+      intel-harness:
+        tags: _v4.1
+    default_env:
+      CM_SKIP_SYS_UTILS: 'yes'
+      CM_REGENERATE_MEASURE_FILES: 'yes'
+    env:
+      CM_ENV_NVMITTEN_DOCKER_WHEEL_PATH: '/opt/nvmitten-0.1.3b0-cp38-cp38-linux_x86_64.whl'
+
+
 invalid_variation_combinations:
   -
     - retinanet

@@ -168,6 +168,12 @@ versions:
     env:
       CM_MLPERF_LAST_RELEASE: v3.1
       CM_TMP_GIT_CHECKOUT: ''
+  r4.0:
+    env:
+      CM_MLPERF_LAST_RELEASE: v4.0
+  r4.1:
+    env:
+      CM_MLPERF_LAST_RELEASE: v4.1
   tvm:
     env:
       CM_MLPERF_LAST_RELEASE: v3.1
