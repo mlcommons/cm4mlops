@@ -27,7 +27,9 @@ by `yaml` metadata, enabling the creation of robust and flexible ML workflows.
 - **CM Scripts Documentation**: [https://docs.mlcommons.org/cm4mlops/](https://docs.mlcommons.org/cm4mlops/)
 - **CM CLI Documentation**: [https://docs.mlcommons.org/ck/specs/cm-cli/](https://docs.mlcommons.org/ck/specs/cm-cli/)  
 
-The `mlperf-branch` of the **cm4mlops** repository is dedicated to developments specific to MLPerf Inference. Please submit any pull requests (PRs) to this branch. For more information about using CM for MLPerf Inference, refer to the [MLPerf Inference Documentation](https://docs.mlcommons.org/inference/).
+The `mlperf-branch` of the **cm4mlops** repository is dedicated to developments specific to MLPerf Inference. 
+Please submit any pull requests (PRs) to this branch. For more information about using CM for MLPerf Inference, 
+refer to the [MLPerf Inference Documentation](https://docs.mlcommons.org/inference/).
 
 ## News
 
@@ -39,22 +41,8 @@ The `mlperf-branch` of the **cm4mlops** repository is dedicated to developments 
 
 ## CM concepts
 
-Check the [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339).
+Check our [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339) and the [white paper](https://arxiv.org/abs/2406.16791).
 
-## CM4MLOps authors
+## Parent project
 
-[Grigori Fursin](https://cKnowledge.org/gfursin) and [Arjun Suresh](https://www.linkedin.com/in/arjunsuresh)
-
-## Major script developers
-
-Arjun Suresh, Anandhu S, Grigori Fursin
-
-## Funding
-
-We thank [cKnowledge.org](https://cKnowledge.org), [cTuning foundation](https://cTuning.org)
-and [MLCommons](https://mlcommons.org) for sponsoring this project!
-
-## Acknowledgments
-
-We thank all [volunteers, collaborators and contributors](https://github.com/mlcommons/cm4mlops/graphs/contributors) 
-for their support, fruitful discussions, and useful feedback! 
+Visit the [parent Collective Knowledge project](https://github.com/mlcommons/ck) for further details.
