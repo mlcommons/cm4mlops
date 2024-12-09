@@ -43,6 +43,10 @@ refer to the [MLPerf Inference Documentation](https://docs.mlcommons.org/inferen
 
 Check our [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339) and the [white paper](https://arxiv.org/abs/2406.16791).
 
+## CM script developers
+
+Arjun Suresh, Anandhu Sooraj, Grigori Fursin
+
 ## Parent project
 
 Visit the [parent Collective Knowledge project](https://github.com/mlcommons/ck) for further details.
