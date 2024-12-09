@@ -493,7 +493,7 @@ def get_run_cmd_reference(
             scenario_extra_options + mode_extra_options + \
             " --output " + env['CM_MLPERF_OUTPUT_DIR'] + \
             ' --dtype ' + dtype_rgat + \
-            " --model-path " + env['RGAT_CHECKPOINT_PATH']
+            " --model-path " + env['CM_ML_MODEL_RGAT_CHECKPOINT_PATH']
 
         if env.get('CM_ACTIVATE_RGAT_IN_MEMORY', '') == "yes":
             cmd += " --in-memory "
