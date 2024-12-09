@@ -12,7 +12,7 @@ input_mapping:
   to: CM_DOWNLOAD_PATH
 new_env_keys:
 - CM_ML_MODEL_*
-- RGAT_CHECKPOINT_PATH
+- CM_ML_MODEL_RGAT_CHECKPOINT_PATH
 prehook_deps:
 - enable_if_env:
     CM_DOWNLOAD_TOOL:
