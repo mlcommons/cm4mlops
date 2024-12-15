@@ -20,6 +20,8 @@ if [[ ${CM_MLPERF_POWER} == "yes" && ${CM_MLPERF_LOADGEN_MODE} == "performance" 
 fi
 
 # Run
+echo "CM_RUN_DIR=${CM_RUN_DIR}"
+
 if [ -z ${CM_RUN_DIR} ]; then
   echo "CM_RUN_DIR is not set"
   exit 1
