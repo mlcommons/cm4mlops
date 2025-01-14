@@ -1,3 +1,6 @@
+### 20241123
+ [November 2024 release of cm4mlops](https://github.com/mlcommons/cm4mlops/discussions/590)
+
 ### 20240927
  * added "test dummy" script to test Docker containers
  * added more standard Nvidia Docker configuration for PyTorch

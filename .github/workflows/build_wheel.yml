@@ -75,6 +75,7 @@ jobs:
         run: |
           git add VERSION
           git commit -m "Increment version to ${{ steps.do_version_increment.outputs.new_version }}"
+          git pull --rebase
           git push
 
       # Step 6: Update the git hash in the repository
@@ -83,6 +84,7 @@ jobs:
           python3 get_git_version.py > git_commit_hash.txt
           git add git_commit_hash.txt
           git commit -m "Updated git_commit_hash.txt"
+          git pull --rebase
           git push
 
       # Step 7: Install required dependencies
