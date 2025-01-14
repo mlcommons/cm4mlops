@@ -18,6 +18,7 @@ variations:
   power:
     env:
       CM_MLPERF_POWER: 'yes'
+      CM_SAVE_CONSOLE_LOG: 'no'
     group: power-mode
     new_env_keys:
     - CM_MLPERF_*

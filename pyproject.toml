@@ -1,2 +1,2 @@
 [build-system]
-requires = ["setuptools>=60", "wheel", "cmind @ git+https://git@github.com/mlcommons/ck.git@084d4d6171a6e7ae9582a63777fbd19afa19947a#egg=cmind&subdirectory=cm"]
+requires = ["setuptools>=60", "wheel", "cmind"]

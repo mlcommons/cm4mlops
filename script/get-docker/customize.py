@@ -68,4 +68,6 @@ def postprocess(i):
 
     env['CM_DOCKER_CACHE_TAGS'] = 'version-' + version
 
+    env['CM_DOCKER_VERSION'] = version
+
     return {'return': 0, 'version': version}

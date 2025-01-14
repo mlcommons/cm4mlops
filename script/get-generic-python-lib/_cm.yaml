@@ -14,6 +14,7 @@ deps:
     CM_TMP_USE_CUSTOM_PYTHON:
     - 'on'
   tags: get,python3
+  dynamic: true
 - names:
   - python-pip
   - pip
@@ -347,6 +348,9 @@ variations:
       CM_GENERIC_PYTHON_PACKAGE_NAME: '#'
       CM_GENERIC_PYTHON_PIP_UNINSTALL_DEPS: ''
       CM_GENERIC_PYTHON_PIP_URL: ''
+  find_links_url.#:
+    env:
+      CM_GENERIC_PYTHON_PIP_EXTRA_FIND_LINKS_URL: '#'
   package.torch,cxx11-abi:
     env:
       CM_GENERIC_PYTHON_PIP_INDEX_URL: https://download.pytorch.org/whl/nightly/cpu-cxx11-abi

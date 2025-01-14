@@ -38,6 +38,8 @@ tags:
 - rgat
 uid: b409fd66c5ad4ed5
 variations:
+  pytorch:
+    default: true
   fp32:
     default: true
     env:

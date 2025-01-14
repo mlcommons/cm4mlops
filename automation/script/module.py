@@ -1170,6 +1170,30 @@ class CAutomation(Automation):
 
         local_env_keys_from_meta = meta.get('local_env_keys', [])
 
+        # Check if has customize.py
+        path_to_customize_py = os.path.join(path, 'customize.py')
+        customize_code = None
+        customize_common_input = {}
+
+        if os.path.isfile(path_to_customize_py) and cache:
+            r = utils.load_python_module(
+                {'path': path, 'name': 'customize'})
+            if r['return'] > 0:
+                return r
+
+            customize_code = r['code']
+
+            customize_common_input = {
+                'input': i,
+                'automation': self,
+                'artifact': script_artifact,
+                'customize': script_artifact.meta.get('customize', {}),
+                'os_info': os_info,
+                'recursion_spaces': recursion_spaces,
+                'script_tags': script_tags,
+                'variation_tags': variation_tags
+            }
+
         #######################################################################
         # Check if script is cached if we need to skip deps from cached entries
         this_script_cached = False
@@ -1182,9 +1206,15 @@ class CAutomation(Automation):
 
             r = find_cached_script({'self': self,
                                     'recursion_spaces': recursion_spaces,
+                                    'extra_recursion_spaces': extra_recursion_spaces,
+                                    'add_deps_recursive': add_deps_recursive,
                                     'script_tags': script_tags,
                                     'found_script_tags': found_script_tags,
+                                    'found_script_path': path,
+                                    'customize_code': customize_code,
+                                    'customize_common_input': customize_common_input,
                                     'variation_tags': variation_tags,
+                                    'variation_tags_string': variation_tags_string,
                                     'explicit_variation_tags': explicit_variation_tags,
                                     'version': version,
                                     'version_min': version_min,
@@ -1193,10 +1223,14 @@ class CAutomation(Automation):
                                     'new_cache_entry': new_cache_entry,
                                     'meta': meta,
                                     'env': env,
+                                    'state': state,
+                                    'const': const,
+                                    'const_state': const_state,
                                     'skip_remembered_selections': skip_remembered_selections,
                                     'remembered_selections': remembered_selections,
                                     'quiet': quiet,
-                                    'verbose': verbose
+                                    'verbose': verbose,
+                                    'show_time': show_time
                                     })
             if r['return'] > 0:
                 return r
@@ -1366,6 +1400,11 @@ class CAutomation(Automation):
                         cached_tags.append(x)
 
             if not found_cached and num_found_cached_scripts == 0:
+                if i.get('only_execute_from_cache'):
+                    # useful to check valid cache entries for a script (cm show
+                    # cache can return invalid cache entries for a script too)
+                    return {
+                        'return': 1, 'error': f'No valid cache entry found for {cached_tags}'}
 
                 # If not cached, create cached script artifact and mark as tmp
                 # (remove if cache successful)
@@ -1587,10 +1626,6 @@ class CAutomation(Automation):
             # Clean some output files
             clean_tmp_files(clean_files, recursion_spaces)
 
-            # Check if has customize.py
-            path_to_customize_py = os.path.join(path, 'customize.py')
-            customize_code = None
-
             # Prepare common input to prepare and run script
             run_script_input = {
                 'path': path,
@@ -1620,13 +1655,8 @@ class CAutomation(Automation):
                 'meta': meta,
                 'self': self
             }
-
-            if repro_prefix != '':
-                run_script_input['repro_prefix'] = repro_prefix
-            if ignore_script_error:
-                run_script_input['ignore_script_error'] = True
-
-            if os.path.isfile(path_to_customize_py):
+            if os.path.isfile(
+                    path_to_customize_py):  # possible duplicate execution - needs fix
                 r = utils.load_python_module(
                     {'path': path, 'name': 'customize'})
                 if r['return'] > 0:
@@ -1644,9 +1674,13 @@ class CAutomation(Automation):
                     'script_tags': script_tags,
                     'variation_tags': variation_tags
                 }
-
                 run_script_input['customize_code'] = customize_code
                 run_script_input['customize_common_input'] = customize_common_input
+
+            if repro_prefix != '':
+                run_script_input['repro_prefix'] = repro_prefix
+            if ignore_script_error:
+                run_script_input['ignore_script_error'] = True
 
             # Assemble PIP versions
             pip_version_string = ''
@@ -1945,10 +1979,9 @@ class CAutomation(Automation):
 
                     cached_meta['associated_script_artifact_uid'] = found_script_artifact[x + 1:]
 
-                # Check if the cached entry is dependent on any other cached
-                # entry
+                # Check if the cached entry is dependent on any path
                 if dependent_cached_path != '':
-                    if os.path.isdir(cached_path) and os.path.isdir(
+                    if os.path.isdir(cached_path) and os.path.exists(
                             dependent_cached_path):
                         if not os.path.samefile(
                                 cached_path, dependent_cached_path):
@@ -2120,7 +2153,7 @@ class CAutomation(Automation):
             'new_env': new_env,
             'state': state,
             'new_state': new_state,
-            'deps': run_state['deps']}
+            'deps': run_state.get('deps')}
 
         # Print output as json to console
         if i.get('json', False) or i.get('j', False):
@@ -3568,18 +3601,22 @@ class CAutomation(Automation):
                     # deps should have non-empty tags
                     d['tags'] += "," + new_variation_tags_string
 
-                run_state['deps'].append(d['tags'])
+                if run_state:
+                    run_state['deps'].append(d['tags'])
 
-                if not run_state['fake_deps']:
+                if not run_state.get('fake_deps'):
                     import copy
-                    run_state_copy = copy.deepcopy(run_state)
-                    run_state_copy['deps'] = []
+                    if not run_state:
+                        run_state_copy = {}
+                    else:
+                        run_state_copy = copy.deepcopy(run_state)
+                        run_state_copy['deps'] = []
 
-                    run_state_copy['parent'] = run_state['script_id']
+                        run_state_copy['parent'] = run_state['script_id']
 
-                    if len(run_state['script_variation_tags']) > 0:
-                        run_state_copy['parent'] += " ( " + ',_'.join(
-                            run_state['script_variation_tags']) + " )"
+                        if len(run_state['script_variation_tags']) > 0:
+                            run_state_copy['parent'] += " ( " + ',_'.join(
+                                run_state['script_variation_tags']) + " )"
 
                     # Run collective script via CM API:
                     # Not very efficient but allows logging - can be optimized
@@ -3873,6 +3910,12 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         run_script_input = i['run_script_input']
         script_name = i['script_name']
         env = i.get('env', '')
+        detect_version = i.get('detect_version', '')
+
+        if detect_version:
+            postprocess = "detect_version"
+        else:
+            postprocess = ""
 
         # Create and work on a copy to avoid contamination
         env_copy = copy.deepcopy(run_script_input.get('env', {}))
@@ -3884,7 +3927,7 @@ cm pull repo mlcommons@cm4mlops --checkout=dev
         run_script_input['env'] = env
 
         r = prepare_and_run_script_with_postprocessing(
-            run_script_input, postprocess="")
+            run_script_input, postprocess=postprocess)
 
         env_tmp = copy.deepcopy(run_script_input['env'])
         r['env_tmp'] = env_tmp
@@ -4850,22 +4893,31 @@ def find_cached_script(i):
     import copy
 
     recursion_spaces = i['recursion_spaces']
+    extra_recursion_spaces = i['extra_recursion_spaces']
     script_tags = i['script_tags']
     cached_tags = []
+    customize_code = i.get('customize_code')
+    customize_common_input = i.get('customize_common_input', {})
     found_script_tags = i['found_script_tags']
     variation_tags = i['variation_tags']
+    variation_tags_string = i['variation_tags_string']
     explicit_variation_tags = i['explicit_variation_tags']
     version = i['version']
     version_min = i['version_min']
     version_max = i['version_max']
     extra_cache_tags = i['extra_cache_tags']
+    add_deps_recursive = i['add_deps_recursive']
     new_cache_entry = i['new_cache_entry']
     meta = i['meta']
     env = i['env']
+    state = i['state']
+    const = i['const']
+    const_state = i['const_state']
     self_obj = i['self']
     skip_remembered_selections = i['skip_remembered_selections']
     remembered_selections = i['remembered_selections']
     quiet = i['quiet']
+    show_time = i.get('show_time', False)
     search_tags = ''
 
     verbose = i.get('verbose', False)
@@ -5020,8 +5072,68 @@ def find_cached_script(i):
                         skip_cached_script = True
                         continue
 
+            os_info = self_obj.os_info
+
+            # Bat extension for this host OS
+            bat_ext = os_info['bat_ext']
+            script_path = i['found_script_path']
+            detected_version = None
+
+            if os.path.exists(os.path.join(script_path,
+                              f"validate_cache{bat_ext}")):
+                run_script_input = {
+                    'path': script_path,
+                    'bat_ext': bat_ext,
+                    'os_info': os_info,
+                    'recursion_spaces': recursion_spaces,
+                    'tmp_file_run': self_obj.tmp_file_run,
+                    'self': self_obj,
+                    'meta': meta,
+                    'customize_code': customize_code,
+                    'customize_common_input': customize_common_input
+                }
+
+                deps = meta.get('deps')
+                if deps:
+                    r = self_obj._call_run_deps(deps, self_obj.local_env_keys, meta.get('local_env_keys', []), env, state, const, const_state, add_deps_recursive,
+                                                recursion_spaces + extra_recursion_spaces,
+                                                remembered_selections, variation_tags_string, True, '', False, show_time, extra_recursion_spaces, {})
+                    if r['return'] > 0:
+                        return r
+
+                # Check if pre-process and detect
+                # if 'preprocess' in dir(customize_code):
+
+                    # logging.debug(recursion_spaces + '  - Running preprocess ...')
+
+                #    ii = copy.deepcopy(customize_common_input)
+                #    ii['env'] = env
+                #    ii['meta'] = meta
+                #    # may need to detect versions in multiple paths
+                #    ii['run_script_input'] = run_script_input
+
+                    # r = customize_code.preprocess(ii)
+                    # if r['return'] > 0:
+                    #    return r
+
+                ii = {
+                    'run_script_input': run_script_input,
+                    'env': env,
+                    'script_name': 'validate_cache',
+                    'detect_version': True
+                }
+                r = self_obj.run_native_script(ii)
+                # print(r)
+                if r['return'] > 0:
+                    # return r
+                    continue
+                if r.get('version'):
+                    detected_version = r['version']
+
             if not skip_cached_script:
                 cached_script_version = cached_script.meta.get('version', '')
+                if cached_script_version and detected_version and cached_script_version != detected_version:
+                    continue
 
                 skip_cached_script = check_versions(
                     self_obj.cmind, cached_script_version, version_min, version_max)
