@@ -1,10 +1,10 @@
-This document narrates the history of the creation and design of CM and CM4MLOps (also known as CK2) 
+This document narrates the history of the creation and design of CM, CM4MLOps and MLPerf automations (also known as CK2) 
 by [Grigori Fursin](https://cKnowledge.org/gfursin). It also highlights the donation of this open-source technology to MLCommons, 
 aimed at benefiting the broader community and fostering its ongoing development as a collaborative, community-driven initiative:
 
 * Jan 28, 2021: After delivering an invited ACM TechTalk'21 about the Collective Knowledge framework (CK1) 
   and reproducibility initiatives for conferences, as well as CK-MLOps and MLPerf automations, 
-  Grigori received lots of positive feedback and suggestions for improvements to workflow automations:
+  Grigori received useful feedback and suggestions for improvements to workflow automations:
   https://learning.acm.org/techtalks/reproducibility. 
 
   Following this, Grigori began prototyping CK2 (later CM) to streamline CK1, CK-MLOps and MLPerf benchmarking. 
