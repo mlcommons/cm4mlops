@@ -31,13 +31,23 @@ The `mlperf-branch` of the **cm4mlops** repository is dedicated to developments 
 Please submit any pull requests (PRs) to this branch. For more information about using CM for MLPerf Inference, 
 refer to the [MLPerf Inference Documentation](https://docs.mlcommons.org/inference/).
 
-## News
-
-* [Ongoing Discussions](https://github.com/mlcommons/cm4mlops/discussions)
-
 ## License
 
 [Apache 2.0](LICENSE.md)
+
+## Copyright
+
+© 2022-2025 MLCommons. All Rights Reserved.
+
+Grigori Fursin, the cTuning foundation and OctoML donated the CK and CM projects to MLCommons to benefit everyone and encourage collaborative development.
+
+## Maintainer(s)
+
+* MLCommons
+
+## CM author
+
+[Grigori Fursin](https://cKnowledge.org/gfursin)
 
 ## CM concepts
 
@@ -50,3 +60,8 @@ Arjun Suresh, Anandhu Sooraj, Grigori Fursin
 ## Parent project
 
 Visit the [parent Collective Knowledge project](https://github.com/mlcommons/ck) for further details.
+
+## Citing this project
+
+If you found the CM automations helpful, kindly reference this article:
+[ [ArXiv](https://arxiv.org/abs/2406.16791) ]
