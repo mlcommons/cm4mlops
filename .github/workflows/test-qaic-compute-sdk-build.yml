@@ -26,10 +26,10 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python3 -m pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
+        python3 -m pip install cmind
         cm pull repo mlcommons@ck
-        cm run script --tags=get,sys-utils-cm --quiet
+        cmx run script --tags=get,sys-utils-cm --quiet
   
     - name: Test QAIC Compute SDK for compilation
       run: |
-        cm run script --tags=get,qaic,compute,sdk --adr.llvm.version=${{ matrix.llvm-version }} --quiet
+        cmx run script --tags=get,qaic,compute,sdk --adr.llvm.version=${{ matrix.llvm-version }} --quiet
