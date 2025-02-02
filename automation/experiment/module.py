@@ -280,8 +280,8 @@ class CAutomation(Automation):
 
             explore_keys.append(k)
 
-            if type(v)!=list:
-                v=eval(v)
+            if not isinstance(v, list):
+                v = eval(v)
 
             explore_dimensions.append(v)
 
@@ -443,8 +443,8 @@ class CAutomation(Automation):
             all_results.append(result)
 
             r = utils.save_json(
-    file_name=experiment_result_file,
-     meta=all_results)
+                file_name=experiment_result_file,
+                meta=all_results)
             if r['return'] > 0:
                 return r
 
@@ -534,7 +534,8 @@ class CAutomation(Automation):
 
         if uid != '':
             for d in datetimes:
-                r = self._find_uid({'path': experiment_path, 'datetime': d, 'uid': uid})
+                r = self._find_uid(
+                    {'path': experiment_path, 'datetime': d, 'uid': uid})
                 if r['return'] > 0:
                     return r
 
@@ -731,11 +732,11 @@ class CAutomation(Automation):
             for e in lst:
                 print('{}) {}'.format(num, e.path))
                 print(
-    '        Tags: {}'.format(
-        ','.join(
-            e.meta.get(
-                'tags',
-                 []))))
+                    '        Tags: {}'.format(
+                        ','.join(
+                            e.meta.get(
+                                'tags',
+                                []))))
                 num += 1
 
             if not console:
@@ -777,7 +778,7 @@ class CAutomation(Automation):
                 return r
 
             lst = r['list']
-            if len(lst) == 0 or len(lst) >1:
+            if len(lst) == 0 or len(lst) > 1:
                 return {
                     'return': 1, 'error': 'created experiment artifact with UID {} but can\'t find it - weird'.format(experiment_uid)}
 
@@ -833,7 +834,7 @@ class CAutomation(Automation):
             if uid != '':
                 for result in meta:
                     ruid = result.get('uid', '').strip()
-                    if ruid != '' and ruid ==uid:
+                    if ruid != '' and ruid == uid:
                         rr['result'] = result
                         break
 
@@ -842,7 +843,7 @@ class CAutomation(Automation):
 ############################################################################
 
 
-def flatten_dict(d, flat_dict= {}, prefix = ''):
+def flatten_dict(d, flat_dict={}, prefix=''):
 
     for k in d:
         v = d[k]
