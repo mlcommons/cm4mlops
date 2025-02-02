@@ -63,7 +63,7 @@ pip uninstall cmx4mlops
 pip install cmind
 cmx pull repo mlcommons@ck --dir=cmx4mlops/cmx4mlops
 cmx run script "python app image-classification onnx" --quiet
-cmx pull repo mlcommons@ck --dir=cmx4mlops/cmx4mlops
+cmx run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="MLCommons" --adr.inference-src.tags=_branch.dev --pull_changes=yes --pull_inference_changes=yes  --submitter="MLCommons" --hw_name=ubuntu-latest_x86 --model=rgat --implementation=python --backend=pytorch --device=cpu --scenario=Offline --test_query_count=500 --adr.compiler.tags=gcc --category=datacenter --quiet  --v --target_qps=1
 ```
 
 ## Parent project
