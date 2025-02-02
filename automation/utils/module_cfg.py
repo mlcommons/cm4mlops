@@ -30,7 +30,7 @@ def load_cfg(i):
     key_end = i.get('key_end', [])
 
     ii = {'action': 'find',
-        'automation': 'cfg'}
+          'automation': 'cfg'}
     if artifact != '':
         ii['artifact'] = artifact
     elif tags != '':
@@ -92,7 +92,7 @@ def load_cfg(i):
                     continue
 
                 if f.startswith('_') or (not f.endswith(
-                    '.json') and not f.endswith('.yaml')):
+                        '.json') and not f.endswith('.yaml')):
                     continue
 
                 if len(key_end) > 0:
@@ -130,11 +130,11 @@ def load_cfg(i):
                             add = False
 
                         if add and len(
-                            prune_list) > 0 and uid not in prune_list:
+                                prune_list) > 0 and uid not in prune_list:
                             add = False
 
                         if add and prune_key != '' and prune_key_uid != '' and prune_key_uid != meta.get(
-                            prune_key, None):
+                                prune_key, None):
                             add = False
 
                     if add:
@@ -152,7 +152,7 @@ def load_cfg(i):
                         if file_tags == '':
                             if name != '':
                                 add_all_tags += [v.lower()
-                                                         for v in name.split(' ')]
+                                                 for v in name.split(' ')]
                         else:
                             add_all_tags += file_tags.split(',')
 
@@ -242,17 +242,18 @@ def process_base(meta, full_path):
                     else:
                         base[k] = meta[k]
 
-                elif type(v) == list:
+                elif isinstance(v, list):
                     for vv in v:
                         base[k].append(vv)
-                elif type(v) == dict:
+                elif isinstance(v, dict):
                     base[k].merge(v)
 
         meta = base
 
-    return {'return': 0, 'meta':meta}
+    return {'return': 0, 'meta': meta}
 
 ##########################################################################
+
 
 def select_cfg(i):
 
@@ -263,7 +264,8 @@ def select_cfg(i):
     title = i.get('title', '')
 
     # Check if alias is not provided
-    r = self_module.cmind.access({'action': 'find', 'automation':'cfg', 'tags':'basic,docker,configurations'})
+    r = self_module.cmind.access(
+        {'action': 'find', 'automation': 'cfg', 'tags': 'basic,docker,configurations'})
     if r['return'] > 0:
         return r
 
@@ -277,9 +279,9 @@ def select_cfg(i):
 
         if alias != '':
             for ext in ['.json', '.yaml']:
-                p1 = os.path.join(p, alias +ext)
+                p1 = os.path.join(p, alias + ext)
                 if os.path.isfile(p1):
-                    selector.append({'path': p1, 'alias':alias})
+                    selector.append({'path': p1, 'alias': alias})
                     break
 
         else:
@@ -287,8 +289,9 @@ def select_cfg(i):
 
             for f in files:
                 if not f.startswith('_cm') and (
-                    f.endswith('.json') or f.endswith('.yaml')):
-                    selector.append({'path': os.path.join(p, f), 'alias':f[:-5]})
+                        f.endswith('.json') or f.endswith('.yaml')):
+                    selector.append(
+                        {'path': os.path.join(p, f), 'alias': f[:-5]})
 
     # Load meta for name and UID
     selector_with_meta = []
@@ -300,7 +303,7 @@ def select_cfg(i):
         full_path_without_ext = path[:-5]
 
         r = cmind.utils.load_yaml_and_json(full_path_without_ext)
-        if r['return'] >0:
+        if r['return'] > 0:
             print('Warning: problem loading configuration file {}'.format(path))
 
         meta = r['meta']
@@ -311,7 +314,7 @@ def select_cfg(i):
 
     # Quit if no configurations found
     if len(selector_with_meta) == 0:
-        return {'return': 16, 'error':'configuration was not found'}
+        return {'return': 16, 'error': 'configuration was not found'}
 
     select = 0
     if len(selector_with_meta) > 1:
@@ -321,7 +324,11 @@ def select_cfg(i):
 
         print('')
 
-        selector_with_meta = sorted(selector_with_meta, key = lambda x: x['meta'].get('name', ''))
+        selector_with_meta = sorted(
+            selector_with_meta,
+            key=lambda x: x['meta'].get(
+                'name',
+                ''))
         s = 0
         for ss in selector_with_meta:
             alias = ss['alias']
@@ -329,8 +336,8 @@ def select_cfg(i):
             name = ss['meta'].get('name', '')
 
             x = name
-            if x!='':
-                x+=' '
+            if x != '':
+                x += ' '
             x += '(' + uid + ')'
 
             print(f'{s}) {x}'.format(s, x))
@@ -345,9 +352,9 @@ def select_cfg(i):
 
     select = int(select)
 
-    if select <0 or select>=len(selector):
-        return {'return': 1, 'error':'selection is out of range'}
+    if select < 0 or select >= len(selector):
+        return {'return': 1, 'error': 'selection is out of range'}
 
     ss = selector_with_meta[select]
 
-    return {'return': 0, 'selection':ss}
+    return {'return': 0, 'selection': ss}
