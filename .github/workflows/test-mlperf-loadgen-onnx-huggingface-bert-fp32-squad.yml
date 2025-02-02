@@ -28,8 +28,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python3 -m pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+        python3 -m pip install cmind
+        cmx pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
     - name: Test MLPerf loadgen with HuggingFace bert onnx fp32 squad model
       run: |
-        cm run script --tags=python,app,loadgen-generic,_onnxruntime,_custom,_huggingface,_model-stub.ctuning/mlperf-inference-bert-onnx-fp32-squad-v1.1 --quiet
+        cmx run script --tags=python,app,loadgen-generic,_onnxruntime,_custom,_huggingface,_model-stub.ctuning/mlperf-inference-bert-onnx-fp32-squad-v1.1 --quiet
