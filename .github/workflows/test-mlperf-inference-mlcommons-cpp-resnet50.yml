@@ -34,18 +34,18 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python3 -m pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-        cm run script --quiet --tags=get,sys-utils-cm
-        cm run script --quiet --tags=install,prebuilt,llvm --version=${{ matrix.llvm-version }}
+        python3 -m pip install cmind
+        cmx pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+        cmx run script --quiet --tags=get,sys-utils-cm
+        cmx run script --quiet --tags=install,prebuilt,llvm --version=${{ matrix.llvm-version }}
     - name: Test MLPerf Inference MLCommons C++ ResNet50 on ${{ matrix.os }}
       if: matrix.os == 'windows-latest'
       run: |
-        cmr "app mlperf inference mlcommons cpp" --submitter="MLCommons" --hw_name=gh_${{ matrix.os }} --adr.loadgen.tags=_from-pip --pip_loadgen=yes -v --quiet
+        cmx run script "app mlperf inference mlcommons cpp" --submitter="MLCommons" --hw_name=gh_${{ matrix.os }} --adr.loadgen.tags=_from-pip --pip_loadgen=yes --v --quiet
     - name: Test MLPerf Inference MLCommons C++ ResNet50 on ${{ matrix.os }}
       if: matrix.os != 'windows-latest'
       run: |
-        cmr "app mlperf inference mlcommons cpp" --submitter="MLCommons" --hw_name=gh_${{ matrix.os }} -v --quiet
+        cmx run script "app mlperf inference mlcommons cpp" --submitter="MLCommons" --hw_name=gh_${{ matrix.os }} --v --quiet
     - name: Push Results
       if: github.repository_owner == 'gateoverflow'
       env:
@@ -59,4 +59,4 @@ jobs:
         git config --global credential.https://github.com.helper "!gh auth git-credential"
         git config --global credential.https://gist.github.com.helper ""
         git config --global credential.https://gist.github.com.helper "!gh auth git-credential"
-        cm run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from MLCommons C++ ResNet50 GH action on ${{ matrix.os }}" --quiet
+        cmx run script --tags=push,github,mlperf,inference,submission --repo_url=https://github.com/gateoverflow/mlperf_inference_test_submissions_v5.0 --repo_branch=main --commit_message="Results from MLCommons C++ ResNet50 GH action on ${{ matrix.os }}" --quiet

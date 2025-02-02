@@ -53,9 +53,9 @@ jobs:
         git config --system core.longpaths true
     - name: Install dependencies
       run: |
-        pip install "cmind @ git+https://git@github.com/mlcommons/ck.git@mlperf-inference#subdirectory=cm"
-        cm pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
-        cm pull repo mlcommons@cm4abtf --branch=poc
+        pip install cmind
+        cmx pull repo --url=${{ github.event.pull_request.head.repo.html_url }} --checkout=${{ github.event.pull_request.head.ref }}
+        cmx pull repo mlcommons@cm4abtf --branch=poc
   
     - name: Install Docker on macos
       if: runner.os == 'macOS-deactivated'
@@ -112,4 +112,4 @@ jobs:
 
     - name: Test MLPerf Inference ABTF POC using ${{ matrix.backend }} on ${{ matrix.os }}
       run: |
-        cm run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} -v
+        cmx run script --tags=run-abtf,inference,_poc-demo --test_query_count=2 --adr.cocoeval.version_max=1.5.7 --adr.cocoeval.version_max_usable=1.5.7 --quiet ${{ matrix.extra-args }} ${{ matrix.docker }} --v
