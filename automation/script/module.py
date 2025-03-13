@@ -6558,7 +6558,9 @@ def dump_repro(repro_prefix, rr, run_state):
         cm_output['version_info'] = version_info
 
     if rr['return'] == 0:
+
         # See https://cTuning.org/ae
+
         cm_output['acm_ctuning_repro_badge_available'] = True
         cm_output['acm_ctuning_repro_badge_functional'] = True
 
