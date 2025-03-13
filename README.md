@@ -8,19 +8,21 @@
 [![MLPerf inference MLCommons C++ ResNet50](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml)
 [![MLPerf inference ABTF POC Test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-abtf-poc.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-abtf-poc.yml)
 
-# CM4MLOps repository
+# Legacy CM4MLOps repository
 
 This repository is powered by the [Collective Mind workflow automation framework](https://github.com/mlcommons/ck/tree/master/cm).
 
+The latest sources are available in [this repository](https://github.com/mlcommons/ck/tree/master/cm4mlops).
+
 Two key automations developed using CM are **Script** and **Cache**, which streamline machine learning (ML) workflows, 
-including managing Docker runs. Both Script and Cache automations are part of the **cmx4mlops** repository.
+including managing Docker runs. Both Script and Cache automations are part of the **cm4mlops** repository.
 
 The [CM scripts](https://access.cknowledge.org/playground/?action=scripts), 
 also housed in this repository, consist of hundreds of modular Python-wrapped scripts accompanied 
 by `yaml` metadata, enabling the creation of robust and flexible ML workflows.
 
-- **CM Scripts Documentation**: [https://docs.mlcommons.org/cm4mlops/](https://docs.mlcommons.org/cm4mlops/)
-- **CM CLI Documentation**: [https://docs.mlcommons.org/ck/specs/cm-cli/](https://docs.mlcommons.org/ck/specs/cm-cli/)  
+- **CM Scripts Documentation**: [Browse](https://access.cknowledge.org/playground/?action=scripts)
+- **CM CLI Documentation**: [https://docs.mlcommons.org/ck/specs/cm-cli/](https://docs.mlcommons.org/ck/specs/cm-cli)  
 
 ## License
 
@@ -50,20 +52,8 @@ Check our [ACM REP'23 keynote](https://doi.org/10.5281/zenodo.8105339) and the [
 ## Test image classification and MLPerf R-GAT inference benchmark via CMX GitHub repo
 
 ```bash
-pip uninstall cmx4mlops
 pip install cmind
-cmx pull repo mlcommons@ck --dir=cmx4mlops/cmx4mlops
-cmx run script "python app image-classification onnx" --quiet
-cmx run script "run-mlperf inference _performance-only _short" --model=resnet50 --precision=float32 --backend=onnxruntime --scenario=Offline --device=cpu --env.CM_SUDO_USER=no --quiet
-cmx run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="MLCommons" --adr.inference-src.tags=_branch.dev --pull_changes=yes --pull_inference_changes=yes  --submitter="MLCommons" --hw_name=ubuntu-latest_x86 --model=rgat --implementation=python --backend=pytorch --device=cpu --scenario=Offline --test_query_count=500 --adr.compiler.tags=gcc --category=datacenter --quiet  --v --target_qps=1
-```
-
-## Test image classification and MLPerf R-GAT inference benchmark via CMX PYPI package
-
-```bash
-pip install cmind
-cmx rm repo cmx4mlops
-pip install cmx4mlops
+cmx pull repo mlcommons@ck --dir=cm4mlops/cm4mlops
 cmx run script "python app image-classification onnx" --quiet
 cmx run script "run-mlperf inference _performance-only _short" --model=resnet50 --precision=float32 --backend=onnxruntime --scenario=Offline --device=cpu --env.CM_SUDO_USER=no --quiet
 cmx run script --tags=run,mlperf,inference,generate-run-cmds,_submission,_short --submitter="MLCommons" --adr.inference-src.tags=_branch.dev --pull_changes=yes --pull_inference_changes=yes  --submitter="MLCommons" --hw_name=ubuntu-latest_x86 --model=rgat --implementation=python --backend=pytorch --device=cpu --scenario=Offline --test_query_count=500 --adr.compiler.tags=gcc --category=datacenter --quiet  --v --target_qps=1
