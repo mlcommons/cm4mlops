@@ -1,14 +1,8 @@
-## Unified and cross-platform CM interface for DevOps, MLOps and MLPerf
+# Legacy CM4MLOps repository with DevOps, MLOps and MLPerf automations
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE.md)
 [![Powered by CM](https://img.shields.io/badge/Powered_by-MLCommons%20CM-blue)](https://pypi.org/project/cmind).
 
-[![CM script automation features test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-script-features.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-cm-script-features.yml)
-[![MLPerf inference bert (deepsparse, tf, onnxruntime, pytorch)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-bert-deepsparse-tf-onnxruntime-pytorch.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-bert-deepsparse-tf-onnxruntime-pytorch.yml)
-[![MLPerf inference MLCommons C++ ResNet50](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-mlcommons-cpp-resnet50.yml)
-[![MLPerf inference ABTF POC Test](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-abtf-poc.yml/badge.svg)](https://github.com/mlcommons/cm4mlops/actions/workflows/test-mlperf-inference-abtf-poc.yml)
-
-# Legacy CM4MLOps repository
 
 This repository is powered by the [Collective Mind workflow automation framework](https://github.com/mlcommons/ck/tree/master/cm).
 
